@@ -30,33 +30,52 @@
 <body>
 
 <div class="navbar navbar-default navbar-fixed-top">
+
     <div class="container">
+
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">Project name</a>
+
+            <div class="navbar-brand vlt-branding">
+                <div class="vlt-brand">
+                    <a href="#">
+                        <img class="vlt-brandimg" src="./images/logo.png">
+
+                        <div class="vlt-brandname">Vaultier</div>
+                    </a>
+                </div>
+            </div>
+
         </div>
-        <div class="navbar-collapse collapse navbar-responsive-collapse">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li class="divider"></li>
-                        <li class="dropdown-header">Nav header</li>
-                        <li><a href="#">Separated link</a></li>
-                        <li><a href="#">One more separated link</a></li>
-                    </ul>
-                </li>
-            </ul>
+
+        <div class="navbar-right">
+
+            <div class="panel panel-default vlt-security-box dropdown pull-right">
+                <img class="vlt-avatar" src="http://www.gravatar.com/avatar/<?php echo md5('jan.misek@rclick.cz') ?>?s=40">
+
+                <a href="#" class="vlt-username dropdown-toggle" data-toggle="dropdown">
+                    Jan Misek
+                </a>
+
+                <ul class="dropdown-menu vlt-dropdown">
+                    <li><a href="#">Separated link</a></li>
+                    <li><a href="#">One more separated link</a></li>
+                </ul>
+            </div>
+
+            <div class="panel panel-default vlt-account-box pull-right dropdown">
+
+                <img class="vlt-accountimg" src="./resources/rclick.png">
+
+                <a href="#" class="vlt-accountname dropdown-toggle" data-toggle="dropdown">
+                    RightClick Vault
+                </a>
+
+                <ul class="dropdown-menu">
+                    <li><a href="#">Separated link</a></li>
+                    <li><a href="#">One more separated link</a></li>
+                </ul>
+            </div>
+            <div class="clearfix"></div>
         </div>
     </div>
 </div>
@@ -66,8 +85,10 @@
     <div class="container">
         <ol class="breadcrumb">
             <li><a href="#">Home</a></li>
-            <li><a href="#">Library</a></li>
-            <li class="active"><h1>Data</h1></li>
+            <li><a href="#">This</a></li>
+            <li><a href="#">Bread</a></li>
+            <li><a href="#">is</a></li>
+            <li class="active"><h2>Active</h2></li>
         </ol>
     </div>
 </div>
@@ -75,59 +96,96 @@
 
 <div class="container vlt-page">
 
+    <div class="vlt-page-nav">
 
-    <ul class="nav nav-tabs">
-        <li class="active"><a href="#">Home</a></li>
-        <li><a href="#">Profile</a></li>
-        <li><a href="#">Messages</a></li>
-    </ul>
+        <ul class="vlt-page-tabs nav nav-tabs">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#">Profile</a></li>
+            <li><a href="#">Messages</a></li>
+        </ul>
 
+        <div class="vlt-page-toolbar pull-right">
+            <div class="btn-group">
+
+                <a href="#" class="btn btn-sm btn-default">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                    Edit vault
+                </a>
+
+                <div class="btn-group">
+                    <a href="#" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-sort"></span>
+                        Dropdown
+                        <b class="caret"></b>
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Most recent</a></li>
+                        <li><a href="#">Alphabetically</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <a href="#" class="btn btn-primary">
+                <span class="glyphicon glyphicon-plus"></span>
+                New card
+            </a>
+
+        </div>
+
+        <div class="clearfix"></div>
+
+    </div>
 
     <div class="row">
         <div class="col-md-12">
 
             <?php for ($i = 0; $i < 20; $i++) : ?>
 
-                    <a href="#" class="panel panel-primary pull-left vlt-item vlt-vault-item">
-                        <div class="panel-icon">
-                            <img src="./images/icon-vault.png">
+                <a href="#" class="panel panel-primary pull-left vlt-item vlt-vault-item">
+                    <div class="panel-icon">
+                        <img src="./images/icon-vault.png">
+                    </div>
+                    <div class="panel-header">
+                        <h3>This is vault with very long name. Lorem ipsum dolor sit amet </h3>
+                    </div>
+                    <div class="panel-body">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Mauris quis est turpis. Aliquam varius, lorem a sollicitudin vehicula,
+                        diam orci tincidunt augue, quis viverra mauris nibh at dui.
+                        Nunc pretium mauris vel hendrerit interdum. Proin euismod interdum
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Mauris quis est turpis. Aliquam varius, lorem a sollicitudin vehicula,
+                        diam orci tincidunt augue, quis viverra mauris nibh at dui.
+                        Nunc pretium mauris vel hendrerit interdum. Proin euismod interdum
+                    </div>
+                    <div class="panel-footer">
+                        <div class="row">
+                            <small>
+                                <div class="col-md-4 vlt-cards">
+                                    Cards: 22
+                                </div>
+                                <div class="col-md-8 vlt-updated">
+                                    Updated: 5 days ago
+                                </div>
+                            </small>
                         </div>
-                        <div class="panel-header">
-                            <h3>This is vault with very long name. Lorem ipsum dolor sit amet </h3>
-                        </div>
-                        <div class="panel-body">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Mauris quis est turpis. Aliquam varius, lorem a sollicitudin vehicula,
-                            diam orci tincidunt augue, quis viverra mauris nibh at dui.
-                            Nunc pretium mauris vel hendrerit interdum. Proin euismod interdum
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Mauris quis est turpis. Aliquam varius, lorem a sollicitudin vehicula,
-                            diam orci tincidunt augue, quis viverra mauris nibh at dui.
-                            Nunc pretium mauris vel hendrerit interdum. Proin euismod interdum
-                        </div>
-                        <div class="panel-footer">
-                            <div class="row">
-                                <small>
-                                    <div class="col-md-4 vlt-cards">
-                                        Cards: 22
-                                    </div>
-                                    <div class="col-md-8 vlt-updated">
-                                        Updated: 5 days ago
-                                    </div>
-                                </small>
-                            </div>
-                        </div>
-                    </a>
+                    </div>
+                </a>
             <?php endfor ?>
         </div>
     </div>
-    <hr>
 
-    <footer>
-        <p>&copy; Company 2013</p>
-    </footer>
 </div>
-<!-- /container -->
+
+
+<div class="vlt-footer">
+    <div class="container">
+        <p>&copy; Company 2013</p>
+    </div>
+</div>
 
 </body>
 </html>

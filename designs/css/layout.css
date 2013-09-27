@@ -8,42 +8,63 @@
 }
 
 
-.vlt-breads .breadcrumb .active h1 {
+.vlt-breads .breadcrumb .active h2 {
+    font-size: 14px;
+    font-weight: bold;
     display: inline-block;
     margin: 0px;
 }
 
-.vlt-page {
+.vlt-page > .vlt-page-nav {
+    margin-bottom: 20px;
+}
+
+.vlt-page > .vlt-page-nav .vlt-page-tabs {
     margin-top: 20px;
 }
 
-.vlt-page > .nav {
-    margin-bottom: 40px;
+.vlt-page > .vlt-page-nav .vlt-page-toolbar {
+    padding: 5px 10px 5px 10px;
+    background-color: #F5F5F5;
+    border-radius: 0px 0px 8px 8px;
 }
 
 
+
 .vlt-item {
+    border-color: #F5F5F5;
+    border-radius: 0px 8px 8px 8px;
+    border-width: 2px;
     position: relative;
-    background-color: #F5F5F5;
-    width: 300px;
-    margin-left: 50px;
+    width: 280px;
+    margin-left: 65px;
     margin-bottom: 30px;
     margin-right: 30px;
 }
 
 .vlt-item:hover {
-    background-color: #ffffff;
+    border-color: #4AEA84;
     text-decoration: none;
 }
 
+.vlt-item:hover .panel-footer {
+    background-color: #4AEA84;
+    color: #ffffff;
+}
+
+.vlt-item:hover .panel-icon {
+    background-color: #4AEA84;
+}
+
+
 .vlt-item .panel-icon {
     position: absolute;
-    border-radius: 4px;
-    width: 65px;
-    padding: 10px 0px 10px 5px;
-    left: -60px;
-    top: -1px;
-    background-color: #2FA4E7;
+    border-radius: 14px;
+    width: 80px;
+    padding: 10px 0px 10px 10px;
+    left: -68px;
+    top: -2px;
+    background-color: #F5F5F5;
     z-index: -1;
 }
 .vlt-item .panel-icon img {
@@ -60,17 +81,90 @@
 }
 
 .vlt-item .panel-body {
+    color: #1971A3;
     height: 100px;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
 .vlt-item .panel-footer {
+    border-top: 0px;
+    color: #317EAC;
     width: 100%;
-    background-color: #2FA4E7;
-    color: #ffffff;
+    background-color: #F5F5F5;
 }
 
 .vlt-item.vlt-vault-item .panel-footer .vlt-updated {
+    text-align: right;
+}
+
+.vlt-footer {
+    text-align: right;
+    padding: 20px 0px 20px 0px;
+    background-color: #F5F5F5;
+}
+.vlt-branding {
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.vlt-branding .vlt-brand {
+    padding: 8px 0px 8px 0px;
+    float: left;
+    line-height: 32px;
+}
+
+.vlt-branding .vlt-brand > a {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+
+.vlt-branding .vlt-brand .vlt-brandimg {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+}
+
+.vlt-branding .vlt-brand .vlt-brandname {
+    display: inline-block;
+}
+
+.vlt-account-box {
+    margin: 8px 10px 8px 0px;
+    padding: 5px 10px 5px 5px;
+}
+
+.vlt-account-box .vlt-accountname {
+    display: inline-block;
+}
+
+.vlt-account-box .vlt-accountimg {
+    border-radius: 4px;
+    width: 25px;
+    height: 25px;
+}
+
+.vlt-account-box .dropdown-menu {
+    text-align: right;
+}
+
+.vlt-security-box {
+    margin: 8px 0px 8px 0px;
+    padding: 5px 10px 5px 5px;
+}
+
+.vlt-security-box img.vlt-avatar {
+    border-radius: 4px;
+    width: 25px;
+    height: 25px;
+}
+
+
+.vlt-security-box a.vlt-username {
+    padding-left: 10px;
+}
+
+.vlt-security-box .dropdown-menu {
     text-align: right;
 }
