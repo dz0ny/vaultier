@@ -86,16 +86,39 @@
     <div class="row">
         <div class="col-md-12">
 
-        <?php for ($i = 0; $i < 20; $i++) : ?>
-            <div class="panel panel-default pull-left vlt-vault-item">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Panel title</h3>
-                </div>
-                <div class="panel-body">
-                    Basic panel example
-                </div>
-            </div>
-        <?php endfor ?>
+            <?php for ($i = 0; $i < 20; $i++) : ?>
+
+                    <a href="#" class="panel panel-primary pull-left vlt-item vlt-vault-item">
+                        <div class="panel-icon">
+                            <img src="./images/icon-vault.png">
+                        </div>
+                        <div class="panel-header">
+                            <h3>This is vault with very long name. Lorem ipsum dolor sit amet </h3>
+                        </div>
+                        <div class="panel-body">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                            Mauris quis est turpis. Aliquam varius, lorem a sollicitudin vehicula,
+                            diam orci tincidunt augue, quis viverra mauris nibh at dui.
+                            Nunc pretium mauris vel hendrerit interdum. Proin euismod interdum
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                            Mauris quis est turpis. Aliquam varius, lorem a sollicitudin vehicula,
+                            diam orci tincidunt augue, quis viverra mauris nibh at dui.
+                            Nunc pretium mauris vel hendrerit interdum. Proin euismod interdum
+                        </div>
+                        <div class="panel-footer">
+                            <div class="row">
+                                <small>
+                                    <div class="col-md-4 vlt-cards">
+                                        Cards: 22
+                                    </div>
+                                    <div class="col-md-8 vlt-updated">
+                                        Updated: 5 days ago
+                                    </div>
+                                </small>
+                            </div>
+                        </div>
+                    </a>
+            <?php endfor ?>
         </div>
     </div>
     <hr>
