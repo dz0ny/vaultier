@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,11 +12,14 @@
 
     <!-- Bootstrap core CSS -->
     <link href="./boostrap/dist/css/bootstrap.css" rel="stylesheet">
+    <link href="./boostrap/assets/css/bootwatch.min.css" rel="stylesheet">
+
+    <link href="./css/layout.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="./boostrap/assets/js/html5shiv.js"></script>
-    <script src="./boostrap//assets/js/respond.min.js"></script>
+    <script src="./boostrap/assets/js/respond.min.js"></script>
     <![endif]-->
 
     <script src="./boostrap/assets/js/jquery.js"></script>
@@ -27,7 +29,7 @@
 
 <body>
 
-<div class="navbar navbar-fixed-top navbar-default">
+<div class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -55,54 +57,54 @@
                     </ul>
                 </li>
             </ul>
-            <form class="navbar-form navbar-right">
-                <div class="form-group">
-                    <input type="text" placeholder="Email" class="form-control">
-                </div>
-                <div class="form-group">
-                    <input type="password" placeholder="Password" class="form-control">
-                </div>
-                <button type="submit" class="btn btn-success">Sign in</button>
-            </form>
-        </div><!--/.navbar-collapse -->
+        </div>
     </div>
 </div>
 
-<!-- Main jumbotron for a primary marketing message or call to action -->
-<div class="jumbotron">
+
+<div class="vlt-breads">
     <div class="container">
-        <h1>Hello, world!</h1>
-        <p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-        <p><a class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Library</a></li>
+            <li class="active"><h1>Data</h1></li>
+        </ol>
     </div>
 </div>
 
-<div class="container">
-    <!-- Example row of columns -->
+
+<div class="container vlt-page">
+
+
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#">Home</a></li>
+        <li><a href="#">Profile</a></li>
+        <li><a href="#">Messages</a></li>
+    </ul>
+
+
     <div class="row">
-        <div class="col-lg-4">
-            <h2>Heading</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-default" href="#">View details &raquo;</a></p>
-        </div>
-        <div class="col-lg-4">
-            <h2>Heading</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-default" href="#">View details &raquo;</a></p>
-        </div>
-        <div class="col-lg-4">
-            <h2>Heading</h2>
-            <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-            <p><a class="btn btn-default" href="#">View details &raquo;</a></p>
+        <div class="col-md-12">
+
+        <?php for ($i = 0; $i < 20; $i++) : ?>
+            <div class="panel panel-default pull-left vlt-vault-item">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Panel title</h3>
+                </div>
+                <div class="panel-body">
+                    Basic panel example
+                </div>
+            </div>
+        <?php endfor ?>
         </div>
     </div>
-
     <hr>
 
     <footer>
         <p>&copy; Company 2013</p>
     </footer>
-</div> <!-- /container -->
+</div>
+<!-- /container -->
 
 </body>
 </html>

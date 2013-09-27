@@ -1,0 +1,29 @@
+.vlt-breads {
+    background-color: #F5F5F5;
+}
+
+.vlt-breads .breadcrumb {
+    margin-bottom: 0px;
+    padding-left: 0px;
+}
+
+
+.vlt-breads .breadcrumb .active h1 {
+    display: inline-block;
+    margin: 0px;
+}
+
+.vlt-page {
+    margin-top: 20px;
+}
+
+.vlt-page > .nav {
+    margin-bottom: 40px;
+}
+
+
+.vlt-vault-item {
+    min-width: 330px;
+    margin-bottom: 30px;
+    margin-right: 30px;
+}

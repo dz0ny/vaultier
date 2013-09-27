@@ -5,7 +5,9 @@
     <ignored path="designs.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/layout.html" changelist="511009f1-6295-4e17-83a2-d46bfdeca64e" time="1380275836741" ignored="false" />
-    <file path="/vault-list.html" changelist="511009f1-6295-4e17-83a2-d46bfdeca64e" time="1380276429273" ignored="false" />
+    <file path="/vault-list.html" changelist="511009f1-6295-4e17-83a2-d46bfdeca64e" time="1380279975896" ignored="false" />
+    <file path="/layout.css" changelist="511009f1-6295-4e17-83a2-d46bfdeca64e" time="1380280107785" ignored="false" />
+    <file path="/vault-list.php" changelist="511009f1-6295-4e17-83a2-d46bfdeca64e" time="1380280396017" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,10 +27,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="vault-list.html" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/vault-list.html">
+      <file leaf-file-name="vault-list.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/vault-list.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="0" selection-start="674" selection-end="674" vertical-scroll-proportion="0.312187">
+            <state line="89" column="44" selection-start="3051" selection-end="3051" vertical-scroll-proportion="0.6630884">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="layout.css" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/css/layout.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="25" column="18" selection-start="330" selection-end="330" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -48,6 +59,8 @@
         <option value="$PROJECT_DIR$/boostrap/cerulean/boostrap.min.css" />
         <option value="$PROJECT_DIR$/boostrap/cerulean/boostrap.css" />
         <option value="$PROJECT_DIR$/vault-list.html" />
+        <option value="$PROJECT_DIR$/css/layout.css" />
+        <option value="$PROJECT_DIR$/vault-list.php" />
       </list>
     </option>
   </component>
@@ -98,6 +111,20 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="designs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="designs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="designs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="css" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -232,9 +259,16 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/vault-list.html">
+    <entry file="file://$PROJECT_DIR$/css/layout.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="0" selection-start="674" selection-end="674" vertical-scroll-proportion="0.312187">
+        <state line="25" column="18" selection-start="330" selection-end="330" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vault-list.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="89" column="44" selection-start="3051" selection-end="3051" vertical-scroll-proportion="0.6630884">
           <folding />
         </state>
       </provider>
