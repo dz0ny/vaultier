@@ -6,7 +6,7 @@
     <ignored path=".idea/workspace.xml" />
     <file path="/layout.html" changelist="511009f1-6295-4e17-83a2-d46bfdeca64e" time="1380275836741" ignored="false" />
     <file path="/vault-list.html" changelist="511009f1-6295-4e17-83a2-d46bfdeca64e" time="1380279975896" ignored="false" />
-    <file path="/layout.css" changelist="511009f1-6295-4e17-83a2-d46bfdeca64e" time="1380314165680" ignored="false" />
+    <file path="/layout.css" changelist="511009f1-6295-4e17-83a2-d46bfdeca64e" time="1380361931064" ignored="false" />
     <file path="/vault-list.php" changelist="511009f1-6295-4e17-83a2-d46bfdeca64e" time="1380314276298" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -27,10 +27,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="vault-list.php" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="vault-list.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/vault-list.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="130" column="46" selection-start="4219" selection-end="4226" vertical-scroll-proportion="0.35724962">
+            <state line="66" column="41" selection-start="2148" selection-end="2148" vertical-scroll-proportion="-17.653847">
               <folding />
             </state>
           </provider>
@@ -48,10 +48,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="layout.css" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="layout.css" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/css/layout.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="17" selection-start="179" selection-end="179" vertical-scroll-proportion="0.0">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -72,8 +72,8 @@
         <option value="$PROJECT_DIR$/boostrap/cerulean/boostrap.css" />
         <option value="$PROJECT_DIR$/vault-list.html" />
         <option value="$PROJECT_DIR$/example.html" />
-        <option value="$PROJECT_DIR$/css/layout.css" />
         <option value="$PROJECT_DIR$/vault-list.php" />
+        <option value="$PROJECT_DIR$/css/layout.css" />
       </list>
     </option>
   </component>
@@ -298,16 +298,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/css/layout.css">
+    <entry file="file://$PROJECT_DIR$/vault-list.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="17" selection-start="179" selection-end="179" vertical-scroll-proportion="0.0">
+        <state line="66" column="41" selection-start="2148" selection-end="2148" vertical-scroll-proportion="-17.653847">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vault-list.php">
+    <entry file="file://$PROJECT_DIR$/css/layout.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="130" column="46" selection-start="4219" selection-end="4226" vertical-scroll-proportion="0.35724962">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>

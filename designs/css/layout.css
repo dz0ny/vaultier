@@ -43,16 +43,20 @@
 }
 
 .vlt-item:hover {
+    _transition: border-color 500ms;
     border-color: #4AEA84;
     text-decoration: none;
 }
 
 .vlt-item:hover .panel-footer {
+    _transition: background-color 500ms;
+    _transition: color 250ms;
     background-color: #4AEA84;
     color: #ffffff;
 }
 
 .vlt-item:hover .panel-icon {
+    _transition: background-color 500ms;
     background-color: #4AEA84;
 }
 
@@ -127,6 +131,9 @@
 }
 
 .vlt-branding .vlt-brand .vlt-brandname {
+    font-size: 32px;
+    line-height: 32px;
+    vertical-align: middle;
     display: inline-block;
 }
 
@@ -136,6 +143,9 @@
 }
 
 .vlt-account-box .vlt-accountname {
+    vertical-align: middle;
+    font-size: 14px;
+    line-height: 14px;
     display: inline-block;
 }
 
@@ -162,6 +172,9 @@
 
 
 .vlt-security-box a.vlt-username {
+    vertical-align: middle;
+    font-size: 14px;
+    line-height: 14px;
     padding-left: 10px;
 }
 
