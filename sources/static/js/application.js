@@ -1,20 +1,51 @@
-(function(root) {
-	require(["configuration"], function(configuration) {
-		require.config(configuration);
+(function (root) {
+    require(["configuration"], function (configuration) {
+        require.config(configuration);
 
-		require(["ember", "view/index"], function(Ember, view) {
-			var app_name = configuration.app_name || "Example Ember-Require Application";
+        require(["view/vaults", "ember", "ember_data"], function (view) {
 
-			var core = $.extend({
-				LOG_TRANSITIONS: true
-			}, view);
+            var app_name = configuration.app_name || "Example Ember-Require Application";
 
-			root[app_name] = Application = Ember.Application.create(core);
+            var core = $.extend({
+                LOG_TRANSITIONS: true
+            }, view);
 
-			Application.Router.map(function() {
-				this.resource("index", { path: "/" }),
-				this.resource("login")
-			});
+            root[app_name] = Application = Ember.Application.create(core);
+            Application.ApplicationAdapter = DS.FixtureAdapter.extend();
+
+
+            Application.Router.map(function () {
+                this.resource("vaults", { path: "/" })
+            });
+
+            Application.VaultsRoute = Ember.Route.extend({
+                model: function () {
+                    return this.store.find('vault');
+                }
+            });
+
+            Application.Vault = DS.Model.extend({
+                title: DS.attr('string'),
+                isCompleted: DS.attr('boolean')
+            });
+
+            Application.Vault.FIXTURES = [
+                {
+                    id: 1,
+                    title: 'Learn Ember.js',
+                    isCompleted: true
+                },
+                {
+                    id: 2,
+                    title: '...',
+                    isCompleted: false
+                },
+                {
+                    id: 3,
+                    title: 'Profit!',
+                    isCompleted: false
+                }
+            ];
 //
 //            Application.deferReadiness();
 //
@@ -22,6 +53,6 @@
 //               Application.advanceReadiness();
 //            });
 
-		});
-	});
+        });
+    });
 })(this);

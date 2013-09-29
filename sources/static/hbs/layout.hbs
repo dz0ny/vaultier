@@ -1,36 +1,3 @@
-{% load staticfiles %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <link rel="shortcut icon" href="../../assets/ico/favicon.png">
-
-    <title>template</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="{% static 'lib/bootstrap/dist/css/bootstrap.css' %}" rel="stylesheet">
-    <link href="{% static 'lib/bootstrap/assets/css/bootwatch.min.css' %}" rel="stylesheet">
-
-    <!-- Bootstrap core CSS -->
-    <link href="{% static 'css/main.css'%}" rel="stylesheet">
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="./boostrap/assets/js/html5shiv.js"></script>
-    <script src="./boostrap/assets/js/respond.min.js"></script>
-    <![endif]-->
-
-    <script src="./boostrap/assets/js/jquery.js"></script>
-    <script src="./boostrap/dist/js/bootstrap.min.js"></script>
-
-</head>
-
-<body>
-
 <div class="navbar navbar-default navbar-fixed-top">
 
     <div class="container">
@@ -40,7 +7,7 @@
             <div class="navbar-brand vlt-branding">
                 <div class="vlt-brand">
                     <a href="#">
-                        <img class="vlt-brandimg" src="{% static 'images/logo.png' %}">
+                        <img class="vlt-brandimg" src="/static/images/logo.png">
 
                         <div class="vlt-brandname">Vaultier</div>
                     </a>
@@ -66,7 +33,7 @@
 
             <div class="panel panel-default vlt-account-box pull-right dropdown">
 
-                <img class="vlt-accountimg" src="{% static 'images/user/rclick.png'%} ">
+                <img class="vlt-accountimg" src="/static/images/user/rclick.png ">
 
                 <a href="#" class="vlt-accountname dropdown-toggle" data-toggle="dropdown">
                     RightClick Vault
@@ -144,36 +111,8 @@
     <div class="row">
         <div class="col-md-12">
 
-                <a href="#" class="panel panel-primary pull-left vlt-item vlt-vault-item">
-                    <div class="panel-icon">
-                        <img src="{% static 'images/icon-vault.png' %}">
-                    </div>
-                    <div class="panel-header">
-                        <h3>This is vault with very long name. Lorem ipsum dolor sit amet </h3>
-                    </div>
-                    <div class="panel-body">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Mauris quis est turpis. Aliquam varius, lorem a sollicitudin vehicula,
-                        diam orci tincidunt augue, quis viverra mauris nibh at dui.
-                        Nunc pretium mauris vel hendrerit interdum. Proin euismod interdum
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Mauris quis est turpis. Aliquam varius, lorem a sollicitudin vehicula,
-                        diam orci tincidunt augue, quis viverra mauris nibh at dui.
-                        Nunc pretium mauris vel hendrerit interdum. Proin euismod interdum
-                    </div>
-                    <div class="panel-footer">
-                        <div class="row">
-                            <small>
-                                <div class="col-md-4 vlt-cards">
-                                    Cards: 22
-                                </div>
-                                <div class="col-md-8 vlt-updated">
-                                    Updated: 5 days ago
-                                </div>
-                            </small>
-                        </div>
-                    </div>
-                </a>
+            {{yield}}
+
         </div>
     </div>
 
@@ -185,6 +124,3 @@
         <p>&copy; Company 2013</p>
     </div>
 </div>
-
-</body>
-</html>
