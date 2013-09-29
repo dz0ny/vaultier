@@ -155,3 +155,5 @@ LOGGING = {
         },
     }
 }
+
+AUTHENTICATION_BACKENDS = ( 'core.SettingsBackends', )

@@ -1,0 +1,5 @@
+Custom login page:
+http://solutoire.com/2009/02/26/django-series-1-a-custom-login-page/
+
+Custom authentication backend
+http://www.djangorocks.com/tutorials/creating-a-custom-authentication-backend/creating-the-imap-authentication-backend.html
