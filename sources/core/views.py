@@ -1,10 +1,8 @@
-import datetime
-
-from django.http import HttpResponse
+from django.shortcuts import render
+import hashlib
 
 def index(request):
-    now = datetime.datetime.now()
-    html = "<html><body>It is now %s.</body></html>" % now
-    return HttpResponse(html)
-
-    # Create your views here.
+    md5 = hashlib.md5()
+    md5.update('jan.misek@rclick.cz');
+    avatar = md5.hexdigest()
+    return render(request, 'vaults.html',{ 'avatar': avatar })
