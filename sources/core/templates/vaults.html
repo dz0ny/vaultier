@@ -1,7 +1,11 @@
 {% load staticfiles %}
+{% load compress %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
@@ -16,15 +20,61 @@
     <link href="{% static 'lib/bootstrap/assets/css/bootwatch.min.css' %}" rel="stylesheet">
 
     <!-- Bootstrap core CSS -->
-    <link href="{% static 'css/main.css'%}" rel="stylesheet">
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
 
-    <script src="{% static 'lib/requirejs/requirejs.js' %}" data-main="{% static 'js/application' %}"></script>
+
+    {####################################################################}
+    {# libs#}
+    {####################################################################}
+
+    <script src="{% static 'lib/jquery/jquery.js' %}"></script>
+    <script src="{% static 'lib/handlebars/handlebars.js' %}"></script>
+
+    <script src="{% static 'lib/ember/ember.js' %}"></script>
+    <script src="{% static 'lib/ember/ember-data.js' %}"></script>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="{% static 'lib/bootstrap/assets/js/html5shiv.js' %}"></script>
+    <script src="{% static 'lib/bootstrap/assets/js/respond.min.js' %}"></script>
+    <![endif]-->
+
+    <script src="{% static 'lib/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+
+
+    {####################################################################}
+    {# templates#}
+    {####################################################################}
+
+
+    <script src="{% static 'hbs-compiled/Layout/SecurityBox.js' %}"></script>
+    <script src="{% static 'hbs-compiled/Layout/AccountBox.js' %}"></script>
+    <script src="{% static 'hbs-compiled/Layout/Layout.js' %}"></script>
+    <script src="{% static 'hbs-compiled/vaults.js' %}"></script>
+
+    {####################################################################}
+    {# application#}
+    {####################################################################}
+
+    <script src="{% static 'js/application.js' %}"></script>
+
+    <script src="{% static 'js/view/vaults.js' %}"></script>
+    <script src="{% static 'js/view/Layout/SecurityBox.js' %}"></script>
+    <script src="{% static 'js/view/Layout/AccountBox.js' %}"></script>
+
+
+    <script src="{% static 'js/router/router.js' %}"></script>
+    <script src="{% static 'js/model/model.js' %}"></script>
 
 </head>
 
 <body>
-    <script type="text/x-handlebars-template" data-template-name="application">
+
+{% verbatim %}
+<script type="text/x-handlebars">
     {{ outlet }}
-    </script>
+</script>
+{% endverbatim %}
+
 </body>
 </html>
