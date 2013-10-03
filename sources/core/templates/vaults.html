@@ -28,10 +28,12 @@
     {####################################################################}
 
     <script src="{% static 'lib/jquery/jquery.js' %}"></script>
+    <script src="{% static 'lib/moment/moment.js' %}"></script>
     <script src="{% static 'lib/handlebars/handlebars.js' %}"></script>
 
     <script src="{% static 'lib/ember/ember.js' %}"></script>
     <script src="{% static 'lib/ember/ember-data.js' %}"></script>
+    <script src="{% static 'lib/ember/ember-data-django.js' %}"></script>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -46,11 +48,12 @@
     {# templates#}
     {####################################################################}
 
-
     <script src="{% static 'hbs-compiled/Layout/SecurityBox.js' %}"></script>
     <script src="{% static 'hbs-compiled/Layout/AccountBox.js' %}"></script>
     <script src="{% static 'hbs-compiled/Layout/Layout.js' %}"></script>
-    <script src="{% static 'hbs-compiled/vaults.js' %}"></script>
+    <script src="{% static 'hbs-compiled/Vault/List.js' %}"></script>
+    <script src="{% static 'hbs-compiled/Vault/Item.js' %}"></script>
+    <script src="{% static 'hbs-compiled/Vault/Modal.js' %}"></script>
 
     {####################################################################}
     {# application#}
@@ -58,9 +61,12 @@
 
     <script src="{% static 'js/application.js' %}"></script>
 
-    <script src="{% static 'js/view/vaults.js' %}"></script>
     <script src="{% static 'js/view/Layout/SecurityBox.js' %}"></script>
     <script src="{% static 'js/view/Layout/AccountBox.js' %}"></script>
+    <script src="{% static 'js/view/Vault/List.js' %}"></script>
+    <script src="{% static 'js/view/Vault/Item.js' %}"></script>
+    <script src="{% static 'js/view/Vault/Modal.js' %}"></script>
+    <script src="{% static 'js/controller/Vault/List.js' %}"></script>
 
 
     <script src="{% static 'js/router/router.js' %}"></script>
@@ -71,8 +77,12 @@
 <body>
 
 {% verbatim %}
-<script type="text/x-handlebars">
+<script type="text/x-handlebars" id="application">
     {{ outlet }}
+
+    <DIV>
+    {{ outlet modal }}
+    </DIV>
 </script>
 {% endverbatim %}
 

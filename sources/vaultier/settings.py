@@ -121,17 +121,6 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
 )
 
-HANDLEBARS_TPL_DIR = os.path.join(PROJECT_ROOT, 'static/hbs');
-
-HANDLEBARS_TPL_CMPDIR = os.path.join(PROJECT_ROOT, 'static/hbs');
-
-HANDLEBARS_TPL_MASK = "\w+.hbs$"
-
-# HANDLEBARS_COMPILED = 1
-
-HANDLEBARS_TPL_JSWRAPPER = lambda compiled,path : 'Ember.TEMPLATES["'+ path.replace(HANDLEBARS_TPL_CMPDIR, '').replace('.js', '')+'"] = Ember.Handlebars.template('+compiled+');'
-
-
 EMBER_TPL_DIR = os.path.join(PROJECT_ROOT, 'static/hbs');
 
 EMBER_TPL_CMPDIR = os.path.join(PROJECT_ROOT, 'static/hbs-compiled');
@@ -139,10 +128,21 @@ EMBER_TPL_CMPDIR = os.path.join(PROJECT_ROOT, 'static/hbs-compiled');
 EMBER_TPL_MASK = "\w+.hbs$"
 
 
+REST_FRAMEWORK = {
+    # 'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
+    'DEFAULT_PERMISSION_CLASSES': (
+       'rest_framework.permissions.AllowAny',
+    ),
+    # 'PAGINATE_BY': 10
+}
+
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
+
+
 # COMPRESS_ENABLED = 1
 
 INSTALLED_APPS = (
-    # 'django.contrib.auth',
+    'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
@@ -153,8 +153,8 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'core',
-    'core.management',
     'compressor',
+    'rest_framework'
     # 'django_handlebars',
 )
 

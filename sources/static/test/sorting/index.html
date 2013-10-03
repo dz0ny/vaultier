@@ -1,0 +1,73 @@
+<html>
+<head>
+    <script src="./../../lib/jquery/jquery.js"></script>
+    <script src="./../../lib/handlebars/handlebars.js"></script>
+    <script src="./../../lib/ember/ember.js"></script>
+    <script src="./../../lib/ember/ember-data.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.1.0/moment.min.js"></script>
+    <script src="app.js"></script>
+</head>
+<body>
+
+
+<script type="text/x-handlebars" data-template-name="application">
+    <div id="main">
+        {{ outlet }}
+    </div>
+</script>
+
+<script type="text/x-handlebars" data-template-name="person">
+    <div>
+        {{ view Ember.TextField valueBinding="username"}}
+        <input type="submit" value="add" {{ action addPerson this target="view"}}/>
+    </div>
+    <br/>
+
+    <div>{{ view PersonApp.SearchField placeholder="search..." valueBinding="searchText"}}</div>
+
+    <table width="250px">
+        <thead>
+
+        {{#each context in controller.sortColumns}}
+        <th>{{#linkTo "person.sort" context.column target="controller"}}{{ context.column }}{{/linkTo}}</th>
+        {{/each}}
+
+        <th>update</th>
+        <th>delete</th>
+        </thead>
+        <tbody>
+        {{#each person in controller.paginatedContent}}
+        <tr>
+            <td>{{ person.id }}</td>
+            <td>{{ view Ember.TextField valueBinding="person.username"}}</td>
+            <td><input type="submit" value="update" {{ action updatePerson person target="controller"}}/></td>
+            <td><input type="submit" value="delete" {{ action deletePerson person target="controller"}}/></td>
+        </tr>
+        {{/each}}
+        </tbody>
+    </table>
+
+    <div name="prev">{{#linkTo "person.page" prevPage target="controller"}}Prev{{/linkTo}}</div>
+    <ul class="pagination gui-text">
+        {{#each pages}}
+        {{ view PersonApp.PaginationView contentBinding="this"}}
+        {{/each}}
+    </ul>
+    <div name="next">{{#linkTo "person.page" nextPage target="controller"}}Next{{/linkTo}}</div>
+
+</script>
+
+<script type="text/x-handlebars" data-template-name="pagination">
+
+    {{#with view}}
+    {{#linkTo "person.page" page}}
+    <span {{ bindAttr class="spanClasses isActive:active"}}>{{ content.page_id }}</span>
+    {{/linkTo}}
+    {{/with}}
+
+</script>
+</body>
+
+</html>
+

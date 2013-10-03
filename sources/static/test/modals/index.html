@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<!--
+  Created using jsbin.com
+  Source can be edited via http://jsbin.com/ixigez/83/edit
+-->
+<head>
+    <title>Example Ember.js Blog app with Bootstrap Modals</title>
+    <script src="./../../lib/jquery/jquery.js"></script>
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js"></script>
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0-rc.3/handlebars.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/ember.js/1.0.0-rc.1/ember.js"></script>
+    <script src="./ember-data.js"></script>
+    <script src="./app.js"></script>
+
+    <style id="jsbin-css">
+
+    </style>
+</head>
+<body>
+
+<script type="text/x-handlebars">
+    <h1>Blog</h1>
+    <hr/>
+    {{ outlet }}
+</script>
+
+<script type="text/x-handlebars" data-template-name="posts">
+    {{ outlet }}
+    {{ outlet modal}}
+</script>
+
+<script type="text/x-handlebars" data-template-name="posts/index">
+    <ul>
+        {{#each post in controller}}
+        <li>{{#linkTo 'post' post}}{{ post.title }}{{/linkTo}}</li>
+        {{ else }}
+        <li>No posts yet! Why don't you add one.</li>
+        {{/each}}
+    </ul>
+    {{#linkTo 'posts.new' class='btn'}}Add post{{/linkTo}}
+</script>
+
+<script type="text/x-handlebars" data-template-name="post">
+    <h2>{{ title }}</h2>
+
+    <div>
+        {{ body }}
+    </div>
+
+    {{#linkTo 'post.edit' content class='btn'}}Edit{{/linkTo}}
+
+    {{! skipping post/index template, but it would be rendered in post's outlet }}
+            {{ outlet }}
+</script>
+
+<script type="text/x-handlebars" data-template-name="posts/form">
+    <div class="modal-header">
+        <div class="button close btn-dismiss" {{ action cancel content}}>x</div>
+        <h2 class="app-icon-large">Post</h2>
+    </div>
+
+    <div class="modal-body">
+        <div class="control-group">
+            <label class="control-label" for="post-title">Title</label>
+
+            <div class="controls">
+                {{ view Em.TextField elementId='post-title' valueBinding='content.title'}}
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="post-body">Body</label>
+
+            <div class="controls">
+                {{ view Em.TextField elementId='post-body' valueBinding='content.body'}}
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <a class="btn btn-dark" href="javascript;:" {{ action cancel content}}>Cancel</a>
+        <button class="btn btn-success" type="submit" {{ action submit content}}>Save</button>
+    </div>
+</script>
+</body>
+</html>

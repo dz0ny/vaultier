@@ -1,6 +1,18 @@
 Vaultier.Vault = DS.Model.extend({
-    title: DS.attr('string'),
-    isCompleted: DS.attr('boolean')
+    name: DS.attr('string'),
+    description: DS.attr('string'),
+    created_at: DS.attr('date'),
+    updated_at: DS.attr('date'),
+    updatedAgo: function () {
+        var u = this.get('updated_at');
+        return moment(u).fromNow();
+    }.property('updatedAgo'),
+
+    becameInvalid: function() {
+        console.log('invalid');
+    }
+
+
 });
 
 Vaultier.Vault.FIXTURES = [

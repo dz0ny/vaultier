@@ -4,6 +4,8 @@ http://jsfiddle.net/qeVGG/
 routing and auth exampe
 http://www.embercasts.com/episodes/client-side-authentication-part-1
 
-
 Boostrap
 http://ember-addons.github.io/bootstrap-for-ember/dist/#/show_components/tabs-with-routes
+
+intro:
+http://usablica.github.io/intro.js/

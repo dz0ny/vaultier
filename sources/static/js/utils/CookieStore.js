@@ -1,0 +1,6 @@
+CookieStore = Ember.Object.extend({
+
+
+
+
+})

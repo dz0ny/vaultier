@@ -4,9 +4,11 @@ from django.conf.urls import patterns, include, url
 
 from django.contrib import admin
 from vaultier import settings
+from rest_framework import routers
+from core import views
 
-
-admin.autodiscover()
+router = routers.DefaultRouter()
+router.register(r'vaults', views.VaultViewSet)
 
 urlpatterns = patterns('',
     # Examples:
@@ -18,6 +20,7 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^core/', include('core.urls')),
+    url(r'^api/', include(router.urls)),
 )
 
 if settings.DEBUG :

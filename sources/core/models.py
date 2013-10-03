@@ -1,5 +1,22 @@
-# from django.db import models
-#
+from django.db import models
+
+class Workspace(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=255, blank=True)
+    class Meta:
+        db_table = u'workspace'
+
+
+class Vault(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=255)
+    description = models.CharField(max_length=1024, blank=True, null=True)
+    # workspace = models.ForeignKey(Workspace)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    class Meta:
+        db_table = u'vault'
+
 # class Card(models.Model):
 #     id = models.IntegerField(primary_key=True)
 #     name = models.CharField(max_length=255, blank=True)
@@ -7,6 +24,15 @@
 #     vault = models.ForeignKey(Vault)
 #     class Meta:
 #         db_table = u'card'
+#
+#
+# class User(models.Model):
+#     id = models.IntegerField(primary_key=True)
+#     nickname = models.CharField(max_length=255, blank=True)
+#     email = models.CharField(max_length=4096)
+#     is_active = models.IntegerField()
+#     class Meta:
+#         db_table = u'user'
 #
 # class Membership(models.Model):
 #     id = models.IntegerField(primary_key=True)
@@ -27,26 +53,3 @@
 #     card = models.ForeignKey(Card)
 #     class Meta:
 #         db_table = u'secret'
-#
-# class User(models.Model):
-#     id = models.IntegerField(primary_key=True)
-#     nickname = models.CharField(max_length=255, blank=True)
-#     email = models.CharField(max_length=4096)
-#     is_active = models.IntegerField()
-#     class Meta:
-#         db_table = u'user'
-#
-# class Vault(models.Model):
-#     id = models.IntegerField(primary_key=True)
-#     name = models.CharField(max_length=255)
-#     description = models.CharField(max_length=1024, blank=True)
-#     workspace = models.ForeignKey(Workspace)
-#     class Meta:
-#         db_table = u'vault'
-#
-# class Workspace(models.Model):
-#     id = models.IntegerField(primary_key=True)
-#     name = models.CharField(max_length=255, blank=True)
-#     class Meta:
-#         db_table = u'workspace'
-#
