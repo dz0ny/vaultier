@@ -1,9 +1,9 @@
 from django.conf.urls import patterns, include, url
 
 from vaultier import settings
-from core import urls_api
+from core import urls_api,views
 
-router = urls_api.routing()
+api_urls = urls_api.urls()
 
 urlpatterns = patterns('',
     # Examples:
@@ -14,8 +14,11 @@ urlpatterns = patterns('',
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
+
+    # url(r'^testing/$', views.SecurityViewSet.as_view()),
+
     url(r'^core/', include('core.urls')),
-    url(r'^api/', include(router.urls)),
+    url(r'^api/', include(api_urls)),
 )
 
 if settings.DEBUG :

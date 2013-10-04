@@ -135,8 +135,8 @@ REST_FRAMEWORK = {
     ),
     # 'PAGINATE_BY': 10
 }
-
-SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
+#
+# SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 
 
 # COMPRESS_ENABLED = 1
@@ -187,4 +187,6 @@ LOGGING = {
     }
 }
 
-AUTHENTICATION_BACKENDS = ( 'core.SettingsBackends', )
+# LOGIN_URL = '/login/'
+
+AUTHENTICATION_BACKENDS = ( 'core.security.Backend.Backend', )
