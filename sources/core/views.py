@@ -4,13 +4,8 @@ import hashlib
 from rest_framework import viewsets
 from rest_framework import renderers
 from rest_framework.response import Response
-from core.serializers import VaultSerializer
-from models import Vault
-
-
-class CustomJSONRenderer(renderers.JSONRenderer):
-    def render(self, data, accepted_media_type=None, renderer_context=None):
-        return super(CustomJSONRenderer, self).render(data, accepted_media_type, renderer_context)
+from core.serializers import VaultSerializer, WorkspaceSerializer
+from models import Vault, Workspace
 
 
 class VaultViewSet(viewsets.ModelViewSet):
@@ -20,9 +15,14 @@ class VaultViewSet(viewsets.ModelViewSet):
     queryset = Vault.objects.all()
     serializer_class = VaultSerializer
 
-    def get(self, request, format=None):
-        content = {'aaa': 'bbb'}
-        return Response(content)
+
+class WorkspaceViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = Workspace.objects.all()
+    serializer_class = WorkspaceSerializer
+
 
 
 def index(request):

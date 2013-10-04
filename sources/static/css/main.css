@@ -137,25 +137,25 @@
     display: inline-block;
 }
 
-.vlt-account-box {
+.vlt-wspace-box {
     margin: 8px 10px 8px 0px;
     padding: 5px 10px 5px 5px;
 }
 
-.vlt-account-box .vlt-accountname {
+.vlt-wspace-box .vlt-wspacename {
     vertical-align: middle;
     font-size: 14px;
     line-height: 14px;
     display: inline-block;
 }
 
-.vlt-account-box .vlt-accountimg {
+.vlt-wspace-box .vlt-wspaceimg {
     border-radius: 4px;
     width: 25px;
     height: 25px;
 }
 
-.vlt-account-box .dropdown-menu {
+.vlt-wspace-box .dropdown-menu {
     text-align: right;
 }
 

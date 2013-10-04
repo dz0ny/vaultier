@@ -8,8 +8,3 @@ Vaultier.Vault = DS.Model.extend({
         return moment(u).fromNow();
     }.property('updatedAgo'),
 });
-
-Vaultier.Workspace = DS.Model.extend({
-    name: DS.attr('string')
-});
-

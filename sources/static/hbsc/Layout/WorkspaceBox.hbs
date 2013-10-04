@@ -1,0 +1,22 @@
+<div class="panel panel-default vlt-wspace-box pull-right dropdown">
+
+    <img class="vlt-wspaceimg" src="/static/images/user/rclick.png ">
+
+    <a href="#" class="vlt-wspacename dropdown-toggle" data-toggle="dropdown">
+        {{tstval}} Vault {{urcite}}
+    </a>
+
+    <ul class="dropdown-menu">
+        <li>
+            {{#linkTo 'Workspace.create'}}
+                Create new workspace
+            {{/linkTo}}
+         </li>
+        <li>
+            {{#linkTo 'Workspace.switch'}}
+                Switch to another workspace
+            {{/linkTo}}
+
+        </li>
+    </ul>
+</div>

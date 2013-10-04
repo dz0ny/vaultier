@@ -1,0 +1,54 @@
+<div class="navbar navbar-default navbar-fixed-top">
+
+    <div class="container">
+
+        <div class="navbar-header">
+
+            <div class="navbar-brand vlt-branding">
+                <div class="vlt-brand">
+                    <a href="#">
+                        <img class="vlt-brandimg" src="/static/images/logo.png">
+
+                        <div class="vlt-brandname">
+                            Vaultier
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="navbar-right">
+
+            {{view Vaultier.Layout.SecurityBox}}
+            {{view Vaultier.LayoutWorkspaceBoxView}}
+
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+
+
+<div class="vlt-breads">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">This</a></li>
+            <li><a href="#">Bread</a></li>
+            <li><a href="#">is</a></li>
+            <li class="active"><h2>Active</h2></li>
+        </ol>
+    </div>
+</div>
+
+
+<div class="container vlt-page">
+            {{yield}}
+</div>
+
+
+<div class="vlt-footer">
+    <div class="container">
+        <p>&copy; Company 2013</p>
+    </div>
+</div>

@@ -1,14 +1,9 @@
 from django.conf.urls import patterns, include, url
 
-# Uncomment the next two lines to enable the admin:
-
-from django.contrib import admin
 from vaultier import settings
-from rest_framework import routers
-from core import views
+from core import urls_api
 
-router = routers.DefaultRouter()
-router.register(r'vaults', views.VaultViewSet)
+router = urls_api.routing()
 
 urlpatterns = patterns('',
     # Examples:

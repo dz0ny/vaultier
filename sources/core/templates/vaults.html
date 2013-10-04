@@ -29,11 +29,14 @@
 
     <script src="{% static 'lib/jquery/jquery.js' %}"></script>
     <script src="{% static 'lib/moment/moment.js' %}"></script>
-    <script src="{% static 'lib/handlebars/handlebars.js' %}"></script>
 
+    <script src="{% static 'lib/handlebars/handlebars.js' %}"></script>
     <script src="{% static 'lib/ember/ember.js' %}"></script>
     <script src="{% static 'lib/ember/ember-data.js' %}"></script>
     <script src="{% static 'lib/ember/ember-data-django.js' %}"></script>
+
+
+
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -44,33 +47,43 @@
     <script src="{% static 'lib/bootstrap/dist/js/bootstrap.min.js' %}"></script>
 
 
+
+
     {####################################################################}
     {# templates#}
     {####################################################################}
 
-    <script src="{% static 'hbs-compiled/Layout/SecurityBox.js' %}"></script>
-    <script src="{% static 'hbs-compiled/Layout/AccountBox.js' %}"></script>
-    <script src="{% static 'hbs-compiled/Layout/Layout.js' %}"></script>
-    <script src="{% static 'hbs-compiled/Vault/List.js' %}"></script>
-    <script src="{% static 'hbs-compiled/Vault/Item.js' %}"></script>
-    <script src="{% static 'hbs-compiled/Vault/Modal.js' %}"></script>
+    <script src="{% static 'hbsc/Layout/SecurityBox.js' %}"></script>
+    <script src="{% static 'hbsc/Layout/WorkspaceBox.js' %}"></script>
+    <script src="{% static 'hbsc/Layout/Layout.js' %}"></script>
+    <script src="{% static 'hbsc/Vault/Index.js' %}"></script>
+    <script src="{% static 'hbsc/Vault/IndexItem.js' %}"></script>
+    <script src="{% static 'hbsc/Vault/Create.js' %}"></script>
+
+    {####################################################################}
+    {# utils#}
+    {####################################################################}
+
+    <script src="{% static 'js/utils/Pohon.js' %}"></script>
+    <script src="{% static 'js/utils/ObjectModalController.js' %}"></script>
+    <script src="{% static 'js/utils/CookieStorage.js' %}"></script>
 
     {####################################################################}
     {# application#}
     {####################################################################}
 
+
+
     <script src="{% static 'js/application.js' %}"></script>
 
-    <script src="{% static 'js/view/Layout/SecurityBox.js' %}"></script>
-    <script src="{% static 'js/view/Layout/AccountBox.js' %}"></script>
-    <script src="{% static 'js/view/Vault/List.js' %}"></script>
-    <script src="{% static 'js/view/Vault/Item.js' %}"></script>
-    <script src="{% static 'js/view/Vault/Modal.js' %}"></script>
-    <script src="{% static 'js/controller/Vault/List.js' %}"></script>
+    <script src="{% static 'js/module/Layout/SecurityBox.js' %}"></script>
+    <script src="{% static 'js/module/Layout/WorkspaceBox.js' %}"></script>
+    <script src="{% static 'js/module/Vault/index.js' %}"></script>
+    <script src="{% static 'js/module/Vault/create.js' %}"></script>
+    <script src="{% static 'js/module/Vault/routes.js' %}"></script>
+    <script src="{% static 'js/module/Vault/model.js' %}"></script>
 
-
-    <script src="{% static 'js/router/router.js' %}"></script>
-    <script src="{% static 'js/model/model.js' %}"></script>
+    <script src="{% static 'js/router.js' %}"></script>
 
 </head>
 
