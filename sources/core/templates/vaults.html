@@ -53,12 +53,15 @@
     {# templates#}
     {####################################################################}
 
+    {% compress js %}
     <script src="{% static 'hbsc/Layout/SecurityBox.js' %}"></script>
     <script src="{% static 'hbsc/Layout/WorkspaceBox.js' %}"></script>
     <script src="{% static 'hbsc/Layout/Layout.js' %}"></script>
     <script src="{% static 'hbsc/Vault/Index.js' %}"></script>
     <script src="{% static 'hbsc/Vault/IndexItem.js' %}"></script>
     <script src="{% static 'hbsc/Vault/Create.js' %}"></script>
+    <script src="{% static 'hbsc/Vault/Kuba.js' %}"></script>
+    {% endcompress %}
 
     {####################################################################}
     {# utils#}

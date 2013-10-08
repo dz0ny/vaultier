@@ -139,7 +139,7 @@ REST_FRAMEWORK = {
 # SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 
 
-# COMPRESS_ENABLED = 1
+COMPRESS_ENABLED = 1
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -148,8 +148,8 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+     'django.contrib.admin',
     # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'core',
@@ -189,4 +189,6 @@ LOGGING = {
 
 # LOGIN_URL = '/login/'
 
-AUTHENTICATION_BACKENDS = ( 'core.security.Backend.Backend', )
+AUTH_USER_MODEL = 'core.User'
+
+AUTHENTICATION_BACKENDS = ( 'core.auth.backend.Backend', )

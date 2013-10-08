@@ -1,7 +1,7 @@
 Vaultier.Router.map(function () {
     this.resource('Vault', { path: '/vault' }, function () {
         this.route('index', {queryParams: ['sort']});
-        this.route('create');
+        this.route('kuba');
     });
 
     this.resource('Workspace', { path: '/workspace' }, function () {
@@ -9,6 +9,21 @@ Vaultier.Router.map(function () {
         this.route('switch');
     });
 });
+
+
+//Vaultier.IndexCreateRoute = Ember.Route.extend({
+//    renderTemplate: function (controller, model) {
+//        this.render('Kuba');
+//    }
+//});
+//
+
+
+
+
+
+
+
 
 Vaultier.IndexRoute = Ember.Route.extend({
     redirect: function () {

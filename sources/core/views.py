@@ -1,6 +1,7 @@
 from django.shortcuts import render
 import hashlib
 
+from rest_framework import status
 from rest_framework import viewsets, generics
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
@@ -14,6 +15,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from rest_framework.response import Response
+from django.core.validators import validate_email
 
 class VaultViewSet(viewsets.ModelViewSet):
     """
@@ -22,9 +24,26 @@ class VaultViewSet(viewsets.ModelViewSet):
     queryset = Vault.objects.all()
     serializer_class = VaultSerializer
 
-class SecurityViewSet(viewsets.ViewSet):
-    def list(self, request):
-       return Response({'foo':'bar'})
+
+
+
+class AuthHandshakeView(APIView):
+
+    def handshake(self, request):
+        try:
+            username = validate_email(request.POST.get('username', None) or request.GET.get('username', None));
+            d = Digest()
+            hs = d.handshake (username, request.session)
+            return Response(hs)
+        except Exception as e:
+            r = Response({'detail': e}, status=status.HTTP_400_BAD_REQUEST)
+            return r
+
+    def post(self, request):
+        return self.handshake(request)
+
+    def get(self, request):
+        return self.handshake(request)
 
 class WorkspaceViewSet(viewsets.ModelViewSet):
     """

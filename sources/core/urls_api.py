@@ -2,15 +2,17 @@ from django.conf.urls import patterns, url
 
 from rest_framework import routers
 from core import views
-
-def urls():
-    router = routers.DefaultRouter()
-
-    router.register(r'vaults', views.VaultViewSet)
-    router.register(r'workspaces', views.WorkspaceViewSet)
-    router.register(r'security', views.SecurityViewSet, base_name='security')
-
-    urls = router.urls
+from core.api.auth import HandshakeView, AuthView, StatusView, LogoutView
 
 
-    return urls;
+router = routers.DefaultRouter()
+router.register(r'vaults', views.VaultViewSet)
+router.register(r'workspaces', views.WorkspaceViewSet)
+urlpatterns = router.urls
+
+urlpatterns += patterns('',
+                        url(r'^auth/handshake$', HandshakeView.as_view()),
+                        url(r'^auth/auth$', AuthView.as_view()),
+                        url(r'^auth/status$', StatusView.as_view()),
+                        url(r'^auth/logout$', LogoutView.as_view()),
+)

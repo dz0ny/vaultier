@@ -54,6 +54,12 @@ Vaultier.VaultIndexController = Ember.ArrayController.extend({
     }
 });
 
+Vaultier.VaultKubaView = Ember.View.extend({
+    templateName: 'Vault/Kuba',
+    layoutName: 'Layout/Layout'
+});
+
+
 Vaultier.VaultIndexView = Ember.View.extend({
     templateName: 'Vault/Index',
     layoutName: 'Layout/Layout'

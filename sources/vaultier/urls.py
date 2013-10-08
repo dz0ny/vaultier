@@ -2,8 +2,9 @@ from django.conf.urls import patterns, include, url
 
 from vaultier import settings
 from core import urls_api,views
+from django.contrib import admin
 
-api_urls = urls_api.urls()
+admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
@@ -18,7 +19,8 @@ urlpatterns = patterns('',
     # url(r'^testing/$', views.SecurityViewSet.as_view()),
 
     url(r'^core/', include('core.urls')),
-    url(r'^api/', include(api_urls)),
+    url(r'^api/', include('core.urls_api')),
+    url(r'^admin/', include(admin.site.urls)),
 )
 
 if settings.DEBUG :
