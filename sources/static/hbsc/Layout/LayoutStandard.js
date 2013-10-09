@@ -12,7 +12,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   hashTypes = {};
   hashContexts = {};
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "Vaultier.LayoutWorkspaceBoxView", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
-  data.buffer.push("\r\n\r\n            <div class=\"clearfix\"></div>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n\r\n<div class=\"vlt-breads\">\r\n    <div class=\"container\">\r\n        <ol class=\"breadcrumb\">\r\n            <li><a href=\"#\">Home</a></li>\r\n            <li><a href=\"#\">This</a></li>\r\n            <li><a href=\"#\">Bread</a></li>\r\n            <li><a href=\"#\">is</a></li>\r\n            <li class=\"active\"><h2>Active</h2></li>\r\n        </ol>\r\n    </div>\r\n</div>\r\n\r\n\r\n<div class=\"container vlt-page\">\r\n            ");
+  data.buffer.push("\r\n\r\n            <div class=\"clearfix\"></div>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<div class=\"vlt-breads\">\r\n    <div class=\"container\">\r\n        <ol class=\"breadcrumb\">\r\n            <li><a href=\"#\">Home</a></li>\r\n            <li><a href=\"#\">This</a></li>\r\n            <li><a href=\"#\">Bread</a></li>\r\n            <li><a href=\"#\">is</a></li>\r\n            <li class=\"active\"><h2>Active</h2></li>\r\n        </ol>\r\n    </div>\r\n</div>\r\n\r\n\r\n<div class=\"container vlt-page\">\r\n            ");
   hashTypes = {};
   hashContexts = {};
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "yield", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));

@@ -1,0 +1,23 @@
+{{#if breadcrumbs }}
+    <div class="vlt-breads">
+        <div class="container">
+            <ol class="breadcrumb">
+                {{#each breadcrumbs.items }}
+                    {{#if last}}
+                        <li class="active">
+                            <h2>
+                               {{ title }}
+                            </h2>
+                        </li>
+                    {{else}}
+                        <li>
+                            {{#link-to link}}
+                                {{ title }}
+                            {{/link-to}}
+                        </li>
+                    {{/if}}
+                {{/each}}
+            </ol>
+        </div>
+    </div>
+{{/if}}

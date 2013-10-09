@@ -7,7 +7,12 @@ Vaultier.AuthLoginRoute = Ember.Route.extend({
 
 //will prepare layout mixins which will extend controller to optionalize layout
 Vaultier.AuthLoginController = Ember.ObjectController.extend({
-    aaa: 'bbb'
+    breadcrumbs: {
+        items: [
+            {title: 'Home', link: 'Vault.index'},
+            {title: 'Login', link: 'Auth.login', last: true}
+        ]
+    }
 })
 
 
