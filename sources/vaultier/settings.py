@@ -114,7 +114,8 @@ ROOT_URLCONF = 'vaultier.urls'
 WSGI_APPLICATION = 'vaultier.wsgi.application'
 
 TEMPLATE_DIRS = (
-    os.path.join(os.path.dirname(__file__), 'templates').replace('\\', '/')
+    os.path.join(PROJECT_ROOT, 'core/templates'),
+    os.path.join(PROJECT_ROOT, 'static/html'),
 
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.

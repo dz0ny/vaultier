@@ -53,12 +53,23 @@
     {# templates#}
     {####################################################################}
 
+
+    {############# layouts #}
+
     <script src="{% static 'hbsc/Layout/SecurityBox.js' %}"></script>
     <script src="{% static 'hbsc/Layout/WorkspaceBox.js' %}"></script>
-    <script src="{% static 'hbsc/Layout/Layout.js' %}"></script>
+    <script src="{% static 'hbsc/Layout/LayoutStandard.js' %}"></script>
+    <script src="{% static 'hbsc/Layout/LayoutWindow.js' %}"></script>
+
+    {############# vault #}
+
     <script src="{% static 'hbsc/Vault/Index.js' %}"></script>
     <script src="{% static 'hbsc/Vault/IndexItem.js' %}"></script>
     <script src="{% static 'hbsc/Vault/Create.js' %}"></script>
+
+
+    {############# auth #}
+
     <script src="{% static 'hbsc/Auth/Login.js' %}"></script>
 
     {####################################################################}
@@ -76,6 +87,7 @@
     <script src="{% static 'js/application.js' %}"></script>
 
     {############# Layout #}
+    <script src="{% static 'js/module/Layout/layout.js' %}"></script>
     <script src="{% static 'js/module/Layout/SecurityBox.js' %}"></script>
     <script src="{% static 'js/module/Layout/WorkspaceBox.js' %}"></script>
 

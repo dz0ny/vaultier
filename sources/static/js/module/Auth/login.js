@@ -5,9 +5,15 @@ Vaultier.AuthLoginRoute = Ember.Route.extend({
     }
 });
 
+//will prepare layout mixins which will extend controller to optionalize layout
+Vaultier.AuthLoginController = Ember.ObjectController.extend({
+    aaa: 'bbb'
+})
+
+
 Vaultier.AuthLoginView = Ember.View.extend({
     templateName: 'Auth/Login',
-    layoutName: 'Layout/Layout'
+    layoutName: 'Layout/LayoutWindow'
 //    controller: Vaultier.VaultListController
 });
 
