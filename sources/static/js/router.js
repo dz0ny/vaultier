@@ -1,7 +1,12 @@
 Vaultier.Router.map(function () {
+    this.resource('Auth', { path: '/auth' }, function () {
+        this.route('login');
+        this.route('register');
+    });
+
+
     this.resource('Vault', { path: '/vault' }, function () {
         this.route('index', {queryParams: ['sort']});
-        this.route('kuba');
     });
 
     this.resource('Workspace', { path: '/workspace' }, function () {

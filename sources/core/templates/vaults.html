@@ -53,15 +53,13 @@
     {# templates#}
     {####################################################################}
 
-    {% compress js %}
     <script src="{% static 'hbsc/Layout/SecurityBox.js' %}"></script>
     <script src="{% static 'hbsc/Layout/WorkspaceBox.js' %}"></script>
     <script src="{% static 'hbsc/Layout/Layout.js' %}"></script>
     <script src="{% static 'hbsc/Vault/Index.js' %}"></script>
     <script src="{% static 'hbsc/Vault/IndexItem.js' %}"></script>
     <script src="{% static 'hbsc/Vault/Create.js' %}"></script>
-    <script src="{% static 'hbsc/Vault/Kuba.js' %}"></script>
-    {% endcompress %}
+    <script src="{% static 'hbsc/Auth/Login.js' %}"></script>
 
     {####################################################################}
     {# utils#}
@@ -75,18 +73,24 @@
     {# application#}
     {####################################################################}
 
-
-
     <script src="{% static 'js/application.js' %}"></script>
 
+    {############# Layout #}
     <script src="{% static 'js/module/Layout/SecurityBox.js' %}"></script>
     <script src="{% static 'js/module/Layout/WorkspaceBox.js' %}"></script>
+
+    {############# Vault #}
     <script src="{% static 'js/module/Vault/index.js' %}"></script>
     <script src="{% static 'js/module/Vault/create.js' %}"></script>
     <script src="{% static 'js/module/Vault/routes.js' %}"></script>
     <script src="{% static 'js/module/Vault/model.js' %}"></script>
 
+    {############# Auth #}
+    <script src="{% static 'js/module/Auth/login.js' %}"></script>
+
+    {############# Router #}
     <script src="{% static 'js/router.js' %}"></script>
+
 
 </head>
 
