@@ -1,0 +1,23 @@
+Ember.TEMPLATES["Auth/Register"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', stack1, stack2, hashContexts, hashTypes, options, self=this, helperMissing=helpers.helperMissing;
+
+function program1(depth0,data) {
+  
+  
+  data.buffer.push("Login to your\r\n                    account here");
+  }
+
+  data.buffer.push("<div class=\"row\">\r\n    <div class=\"col-md-12\">\r\n\r\n        <div class=\"modal-dialog vlt-tabs-modal vlt-register\">\r\n            <div class=\"modal-content\">\r\n                <div class=\"modal-header\">\r\n                    <h2>Login</h2>\r\n\r\n                    <ul class=\"nav nav-pills\" id=\"myTab\">\r\n                        <li class=\"active\">\r\n                            <a>\r\n                                Before you register\r\n                                <span class=\"glyphicon glyphicon glyphicon-chevron-right\"></span>\r\n                            </a>\r\n                        </li>\r\n\r\n                        <li>\r\n                            <a>\r\n                                Generate your keys\r\n                                <span class=\"glyphicon glyphicon glyphicon-chevron-right\"></span>\r\n                            </a>\r\n                        </li>\r\n                        <li>\r\n                            <a>\r\n                                Your credentials\r\n                                <span class=\"glyphicon glyphicon glyphicon-chevron-right\"></span>\r\n                            </a>\r\n                        </li>\r\n                        <li>\r\n                            <a>\r\n                                Finish registration\r\n                                <span class=\"glyphicon glyphicon glyphicon-chevron-right\"></span>\r\n                            </a>\r\n                        </li>\r\n\r\n\r\n                    </ul>\r\n                </div>\r\n                <div class=\"modal-body\">\r\n\r\n                    <div class=\"tab-content\">\r\n                        <div class=\"tab-pane active\" id=\"login-latest\">\r\n\r\n                            <div class=\"row\">\r\n\r\n                                <div class=\"col-md-12\">\r\n\r\n                                    <div class=\"callout callout-info\">\r\n                                        <h4>How our security works</h4>\r\n\r\n                                        <p>\r\n                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus in diam eu\r\n                                            nisl accumsan condimentum. Duis rhoncus enim a urna aliquet fringilla.\r\n                                        </p>\r\n\r\n                                        <h4>Steps of registration</h4>\r\n\r\n                                        <p>\r\n                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus in diam eu\r\n                                            nisl accumsan condimentum. Duis rhoncus enim a urna aliquet fringilla.\r\n                                        </p>\r\n\r\n                                    </div>\r\n\r\n\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n                        <div class=\"tab-pane\" id=\"login-switch\">\r\n\r\n                        </div>\r\n                    </div>\r\n\r\n\r\n                </div>\r\n                <div class=\"modal-footer\">\r\n                    Do you have account already? ");
+  hashContexts = {'class': depth0};
+  hashTypes = {'class': "STRING"};
+  options = {hash:{
+    'class': ("btn btn-default btn-sm")
+  },inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
+  stack2 = ((stack1 = helpers['link-to'] || depth0['link-to']),stack1 ? stack1.call(depth0, "Auth.login", options) : helperMissing.call(depth0, "link-to", "Auth.login", options));
+  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
+  data.buffer.push("\r\n                    <a href=\"#\" class=\"btn btn-primary\">\r\n                        <span class=\"glyphicon glyphicon glyphicon-chevron-right\"></span>\r\n                        Next\r\n                    </a>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n\r\n\r\n");
+  return buffer;
+  
+});
