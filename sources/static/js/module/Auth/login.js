@@ -1,4 +1,5 @@
 Vaultier.AuthLoginRoute = Ember.Route.extend({
+
     renderTemplate: function (controller, model) {
         this._super(controller, model);
         this.render('AuthLogin');

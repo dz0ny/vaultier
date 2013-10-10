@@ -91,9 +91,12 @@ Vaultier.AuthRegisterBeforeView = Ember.View.extend({
     templateName: 'Auth/RegisterBefore',
 
     didInsertElement: function () {
-        Ember.run.later(this, function () {
-            this.controller.set('value', 'another value')
-        }, 1000);
+        console.log(Vaultier.resolve('route:AuthRegister'));
+        console.log(this.get('this'));
+
+//        Ember.run.later(this, function () {
+//            this.controller.set('value', 'another value')
+//        }, 1000);
     }
 
 });
