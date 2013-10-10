@@ -27,15 +27,19 @@
     {# libs#}
     {####################################################################}
 
+
+    {############# generic #}
     <script src="{% static 'lib/jquery/jquery.js' %}"></script>
     <script src="{% static 'lib/moment/moment.js' %}"></script>
 
+    {############# ppk #}
+    <script src="{% static 'lib/jsencrypt/bin/jsencrypt.js' %}"></script>
+
+    {############# ember #}
     <script src="{% static 'lib/handlebars/handlebars.js' %}"></script>
     <script src="{% static 'lib/ember/ember.js' %}"></script>
     <script src="{% static 'lib/ember/ember-data.js' %}"></script>
     <script src="{% static 'lib/ember/ember-data-django.js' %}"></script>
-
-
 
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -45,8 +49,6 @@
     <![endif]-->
 
     <script src="{% static 'lib/bootstrap/dist/js/bootstrap.min.js' %}"></script>
-
-
 
 
     {####################################################################}
@@ -73,6 +75,10 @@
 
     <script src="{% static 'hbsc/Auth/Login.js' %}"></script>
     <script src="{% static 'hbsc/Auth/Register.js' %}"></script>
+    <script src="{% static 'hbsc/Auth/RegisterBefore.js' %}"></script>
+    <script src="{% static 'hbsc/Auth/RegisterKeys.js' %}"></script>
+    <script src="{% static 'hbsc/Auth/RegisterCreds.js' %}"></script>
+    <script src="{% static 'hbsc/Auth/RegisterSum.js' %}"></script>
 
     {####################################################################}
     {# utils#}
@@ -113,11 +119,11 @@
 <body>
 
 {% verbatim %}
-<script type="text/x-handlebars" id="application">
+<script type="text/x-handlebars">
     {{ outlet }}
 
     <DIV>
-    {{ outlet modal }}
+        {{ outlet modal }}
     </DIV>
 </script>
 {% endverbatim %}

@@ -1,0 +1,16 @@
+{{#if keysReady }}
+    Generated:
+    {{privateKey}}
+
+    {{publicKey}}
+
+{{else}}
+    <div class="vlt-register-keys">
+        <div class="generate">
+            <h3>Please wait while generating your keys</h3>
+
+            <div class="vlt-preloader vlt-preloader-small">
+            </div>
+        </div>
+    </div>
+{{/if}}

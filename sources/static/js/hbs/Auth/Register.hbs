@@ -6,27 +6,30 @@
                 <div class="modal-header">
                     <h2>Login</h2>
 
-                    <ul class="nav nav-pills" id="myTab">
-                        <li class="active">
+                    <ul class="nav nav-pills vlt-register-tabs" id="myTab">
+                        <li class="AuthRegisterBefore">
                             <a>
                                 Before you register
                                 <span class="glyphicon glyphicon glyphicon-chevron-right"></span>
                             </a>
                         </li>
 
-                        <li>
+                        <li class="AuthRegisterKeys">
                             <a>
                                 Generate your keys
                                 <span class="glyphicon glyphicon glyphicon-chevron-right"></span>
                             </a>
                         </li>
-                        <li>
+
+
+                        <li class="AuthRegisterCreds">
                             <a>
                                 Your credentials
                                 <span class="glyphicon glyphicon glyphicon-chevron-right"></span>
                             </a>
                         </li>
-                        <li>
+
+                        <li class="AuthRegisterSum">
                             <a>
                                 Finish registration
                                 <span class="glyphicon glyphicon glyphicon-chevron-right"></span>
@@ -42,28 +45,7 @@
                         <div class="tab-pane active" id="login-latest">
 
                             <div class="row">
-
-                                <div class="col-md-12">
-
-                                    <div class="callout callout-info">
-                                        <h4>How our security works</h4>
-
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus in diam eu
-                                            nisl accumsan condimentum. Duis rhoncus enim a urna aliquet fringilla.
-                                        </p>
-
-                                        <h4>Steps of registration</h4>
-
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus in diam eu
-                                            nisl accumsan condimentum. Duis rhoncus enim a urna aliquet fringilla.
-                                        </p>
-
-                                    </div>
-
-
-                                </div>
+                                {{outlet tab}}
                             </div>
                         </div>
                         <div class="tab-pane" id="login-switch">
@@ -74,12 +56,20 @@
 
                 </div>
                 <div class="modal-footer">
-                    Do you have account already? {{#link-to 'Auth.login' class="btn btn-default btn-sm" }}Login to your
+                    Do you have account already? {{#link-to 'AuthLogin' class="btn btn-default btn-sm" }}Login to your
                     account here{{/link-to}}
-                    <a href="#" class="btn btn-primary">
-                        <span class="glyphicon glyphicon glyphicon-chevron-right"></span>
-                        Next
-                    </a>
+                    {{#if lastTab }}
+                        <a {{action finish}} class="btn btn-primary">
+                            <span class="glyphicon glyphicon glyphicon-chevron-right"></span>
+                            Finish
+                        </a>
+                    {{else}}
+                        <button {{action next}} {{bind-attr disabled=isNextDisabled}} class="btn btn-primary">
+                            <span class="glyphicon glyphicon glyphicon-chevron-right"></span>
+                            Next
+                        </button>
+                    {{/if}}
+
                 </div>
             </div>
         </div>

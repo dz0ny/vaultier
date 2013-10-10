@@ -1,9 +1,6 @@
 Vaultier.Router.map(function () {
-    this.resource('Auth', { path: '/auth' }, function () {
-        this.route('login');
-        this.route('register');
-    });
-
+    this.route('AuthLogin',{ path: '/auth/login' });
+    this.route('AuthRegister',{ path: '/auth/register' });
 
     this.resource('Vault', { path: '/vault' }, function () {
         this.route('index', {queryParams: ['sort']});
@@ -16,42 +13,10 @@ Vaultier.Router.map(function () {
 });
 
 
-//Vaultier.IndexCreateRoute = Ember.Route.extend({
-//    renderTemplate: function (controller, model) {
-//        this.render('Kuba');
-//    }
-//});
-//
-
-
-
-
-
-
-
-
 Vaultier.IndexRoute = Ember.Route.extend({
     redirect: function () {
         return this.transitionTo('Vault.index');
     }
-});
-
-Vaultier.ApplicationRoute = Em.Route.extend({
-  actions: {
-    openModal: function(modal) {
-      this.render(modal, {
-        into: 'application',
-        outlet: 'modal'
-      });
-    },
-
-    closeModal: function() {
-        this.render('empty', {
-          into: 'application',
-          outlet: 'modal'
-        });
-    }
-  }
 });
 
 /**
