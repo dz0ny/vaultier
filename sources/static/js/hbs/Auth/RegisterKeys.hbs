@@ -1,16 +1,32 @@
-{{#if keysReady }}
-    Generated:
-    {{privateKey}}
+<div class="vlt-register-keys">
+    {{#if keysReady }}
+        <div class="generated">
+            <div class="callout callout-info">
+                <h4>Your key has been generated</h4>
 
-    {{publicKey}}
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus in diam eu
+                    nisl accumsan condimentum. Duis rhoncus enim a urna aliquet fringilla.
+                </p>
 
-{{else}}
-    <div class="vlt-register-keys">
+                <br/>
+
+                <div class="alert alert-warning vlt-download">
+                    Before you continue please download your private key
+                    <br/>
+                    <br/>
+                    <a {{ action downloadPublicKey target=view }} class="btn btn-primary ">Download private key</a>
+                    <br/>
+                </div>
+
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    {{else}}
         <div class="generate">
             <h3>Please wait while generating your keys</h3>
-
             <div class="vlt-preloader vlt-preloader-small">
             </div>
         </div>
-    </div>
-{{/if}}
+    {{/if}}
+</div>

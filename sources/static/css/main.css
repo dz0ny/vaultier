@@ -325,6 +325,18 @@
     padding: 100px 0px 100px 0px;
 }
 
+
+.vlt-register-keys .generated {
+    text-align: center;
+    padding: 50px;
+}
+
+.vlt-register-keys .generated .vlt-download {
+    width: 40%;
+    margin: 0px auto;
+}
+
+
 /*************************************************************
 **************************************************************
 * Preloader

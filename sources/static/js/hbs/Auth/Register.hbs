@@ -4,7 +4,7 @@
         <div class="modal-dialog vlt-tabs-modal vlt-register">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2>Login</h2>
+                    <h2>Register to Vaultier</h2>
 
                     <ul class="nav nav-pills vlt-register-tabs" id="myTab">
                         <li class="AuthRegisterBefore">
@@ -58,7 +58,7 @@
                 <div class="modal-footer">
                     Do you have account already? {{#link-to 'AuthLogin' class="btn btn-default btn-sm" }}Login to your
                     account here{{/link-to}}
-                    {{#if lastTab }}
+                    {{#if isLastTab }}
                         <a {{action finish}} class="btn btn-primary">
                             <span class="glyphicon glyphicon glyphicon-chevron-right"></span>
                             Finish
