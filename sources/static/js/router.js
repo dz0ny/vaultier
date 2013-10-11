@@ -3,6 +3,8 @@ Vaultier.Router.map(function () {
     this.route('AuthRegister', { path: '/auth/register' });
     this.route('AuthRegisterBefore', { path: '/auth/register/overview' });
     this.route('AuthRegisterKeys', { path: '/auth/register/generate-keys' });
+    this.route('AuthRegisterCreds', { path: '/auth/register/submit-credentials' });
+    this.route('AuthRegisterSum', { path: '/auth/register/registration-done' });
 
     this.route('AuthLogin', { path: '/auth/login' });
 
@@ -14,6 +16,21 @@ Vaultier.Router.map(function () {
         this.route('create');
         this.route('switch');
     });
+});
+
+Vaultier.ApplicationRoute = Ember.Route.extend({
+    redirect: function () {
+        console.log('a');
+    },
+
+    model: function() {
+        console.log('take a look into router.js')
+        var promise = Ember.RSVP.Promise(function(resolve, reject) {
+            resolve(null);
+        });
+
+        return promise;
+    }
 });
 
 

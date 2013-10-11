@@ -1,0 +1,6 @@
+Registration and login alfa:
+
+1. refactor ember rest adapter, to allow se custom routes and custom methods for models
+2. create api user (autheticated user) with get, put a push
+3. leave auth api as it is
+4. create auth service which will load auth model

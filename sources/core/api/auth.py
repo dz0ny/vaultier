@@ -1,8 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import AnonymousUser
-from django.views.decorators.csrf import csrf_exempt
 from rest_framework.fields import EmailField, CharField
-from rest_framework.renderers import JSONRenderer
+from rest_framework.generics import GenericAPIView
+from rest_framework.mixins import CreateModelMixin, UpdateModelMixin
 from rest_framework.views import APIView
 from core.api import ApiException
 from core.auth.backend import HandshakeCoder
@@ -14,8 +13,13 @@ from core.models import User
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'email', 'nickname', ]
+        fields = ['id', 'email', 'nickname','public_key' ]
 
+class UserView(CreateModelMixin, UpdateModelMixin,  GenericAPIView ):
+    serializer_class = UserSerializer
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
 
 class StatusView(APIView):
     def status(self, request):

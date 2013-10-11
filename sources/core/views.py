@@ -26,7 +26,6 @@ class VaultViewSet(viewsets.ModelViewSet):
 
 
 
-
 class AuthHandshakeView(APIView):
 
     def handshake(self, request):

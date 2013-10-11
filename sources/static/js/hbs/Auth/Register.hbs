@@ -58,9 +58,9 @@
                 <div class="modal-footer">
                     Do you have account already? {{#link-to 'AuthLogin' class="btn btn-default btn-sm" }}Login to your
                     account here{{/link-to}}
-                    <button {{action next}} {{bind-attr disabled=isNextDisabled}} class="btn btn-primary">
+                    <button {{action next}} {{bind-attr disabled=props.isNextDisabled}} class="btn btn-primary">
                         <span class="glyphicon glyphicon glyphicon-chevron-right"></span>
-                        {{#if isLastTab }}
+                        {{#if props.nextAsFinish }}
                             Finish
                         {{else}}
                             Next
