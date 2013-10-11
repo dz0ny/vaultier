@@ -19,18 +19,24 @@ Vaultier.Router.map(function () {
 });
 
 Vaultier.ApplicationRoute = Ember.Route.extend({
-    redirect: function () {
-        console.log('a');
-    },
-
-    model: function() {
-        console.log('take a look into router.js')
-        var promise = Ember.RSVP.Promise(function(resolve, reject) {
-            resolve(null);
-        });
-
-        return promise;
-    }
+//    redirect: function () {
+//        console.log('a');
+//    },
+//
+//    model: function() {
+//        console.log('take a look into router.js')
+//        var promise = Ember.RSVP.Promise(function(resolve, reject) {
+//            Ember.run.later(this, resolve, 3000);
+//        });
+//        promise.then(function() {
+//            console.log('resolved');
+//        })
+//
+//        return
+//
+//
+//        return promise;
+//    }
 });
 
 

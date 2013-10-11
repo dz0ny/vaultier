@@ -87,6 +87,7 @@
     {####################################################################}
 
     <script src="{% static 'js/utils/Pohon.js' %}"></script>
+    <script src="{% static 'js/utils/Singleton.js' %}"></script>
     <script src="{% static 'js/utils/ObjectModalController.js' %}"></script>
     <script src="{% static 'js/utils/CookieStorage.js' %}"></script>
 
@@ -95,6 +96,13 @@
     {####################################################################}
 
     <script src="{% static 'js/application.js' %}"></script>
+
+    {############# services #}
+
+    <script src="{% static 'js/service/Auth/AuthService.js' %}"></script>
+
+    {############# model #}
+    <script src="{% static 'js/model/model.js' %}"></script>
 
     {############# Layout #}
     <script src="{% static 'js/module/Layout/layout.js' %}"></script>
@@ -105,8 +113,6 @@
     {############# Vault #}
     <script src="{% static 'js/module/Vault/index.js' %}"></script>
     <script src="{% static 'js/module/Vault/create.js' %}"></script>
-    <script src="{% static 'js/module/Vault/routes.js' %}"></script>
-    <script src="{% static 'js/module/Vault/model.js' %}"></script>
 
     {############# Auth #}
     <script src="{% static 'js/module/Auth/login.js' %}"></script>

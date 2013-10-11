@@ -4,6 +4,10 @@ Vaultier = Ember.Application.create({
     LOG_TRANSITIONS: true
 });
 
+Ember.RSVP.configure('onerror', function(error) {
+  console.assert(false, error);
+});
+
 Vaultier.ApplicationAdapter = DS.DjangoRESTAdapter.extend({
     urls: {
         'AuthenticatedUser': '/api/auth/user'

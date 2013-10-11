@@ -1,3 +1,12 @@
+Vaultier.User = DS.Model.extend({
+    email: DS.attr('string'),
+    nickname: DS.attr('string')
+})
+
+Vaultier.AuthenticatedUser = Vaultier.User.extend({
+    public_key: DS.attr('string')
+});
+
 Vaultier.Vault = DS.Model.extend({
     name: DS.attr('string'),
     description: DS.attr('string'),

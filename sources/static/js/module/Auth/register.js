@@ -100,25 +100,10 @@ Vaultier.AuthRegisterKeysView = Ember.View.extend({
     templateName: 'Auth/RegisterKeys'
 });
 
-
 /////////////////////////////////////////////////////////////////
 //// STEP3 - Creds
 /////////////////////////////////////////////////////////////////
 
-AuthService = Ember.Object.extend({
-
-    auth: function(username) {
-
-    }
-
-});
-
-
-Vaultier.AuthenticatedUser = DS.Model.extend({
-    email: DS.attr('string'),
-    nickname: DS.attr('string'),
-    public_key: DS.attr('string')
-});
 
 Vaultier.AuthRegisterCredsRoute = BaseRegisterRoute.extend({
     step: 'AuthRegisterCreds',
@@ -143,6 +128,19 @@ Vaultier.AuthRegisterCredsRoute = BaseRegisterRoute.extend({
     },
     actions: {
         next: function () {
+            var auth = Vaultier.Services.Auth.AuthService.current();
+
+            auth.didAuthenticate(function () {
+                console.log(auth.get('isAuthenticated'));
+            });
+            auth.auth({
+                email: 'jan.misek@rclick.cz',
+                privateKey: 'ppk'
+            });
+
+
+            return null;
+
             var ctrl = this.get('controller');
             var user = ctrl.get('content');
 
@@ -150,7 +148,7 @@ Vaultier.AuthRegisterCredsRoute = BaseRegisterRoute.extend({
 
             promise.then(
                 function () {
-                    console.log('a');
+                    console.log('resolved');
                 },
                 function (errors) {
                     ctrl.set('errors', Ember.Object.create(errors.errors));
