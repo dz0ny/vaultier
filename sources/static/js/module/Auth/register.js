@@ -1,63 +1,19 @@
 /////////////////////////////////////////////////////////////////
-//// ROUTE
+//// Shared classes
 /////////////////////////////////////////////////////////////////
 
-Vaultier.AuthRegisterRoute = Ember.Route.extend({
-    tabFlow: ['AuthRegisterBefore', 'AuthRegisterKeys', 'AuthRegisterCreds', 'AuthRegisterSum'],
-    initialTabIdx: 0,
-    activeTabIdx: null,
-    activeTabName: null,
-    isLastTab: null,
-
-    actions: {
-        next: function () {
-            var idx = this.activeTabIdx + 1;
-            this.selectTab(idx);
-            this.renderTab();
-        },
-
-        finish: function () {
-            alert('done')
-        }
-
-    },
-
-    selectTab: function (idx) {
-        this.activeTabIdx = idx;
-        this.activeTabName = this.tabFlow[idx];
-        this.isLastTab = (idx == this.tabFlow.length - 1)
-
-        var controller = this.controllerFor('AuthRegister');
-        controller.set('activeTabName', this.activeTabName);
-        controller.set('isLastTab', this.isLastTab);
-        controller.set('isNextDisabled', false);
-
-    },
-
-    renderTab: function () {
-        this.render(this.activeTabName, {
-            into: 'AuthRegister',
-            outlet: 'tab'
-        });
-    },
-
-    renderTemplate: function (controller, model) {
-        this.selectTab(this.initialTabIdx);
-
-        this.render();
-        this.renderTab();
+var BaseRegisterRoute = Ember.Route.extend({
+    step: null,
+    renderTemplate: function () {
+        var ctrl = this.controllerFor(this.step);
+        ctrl.set('step', this.step);
+        ctrl.set('route', this);
+        this.render('AuthRegister', {controller: this.step});
+        this.render(this.step, { into: 'AuthRegister', outlet: 'tab'})
     }
-
 });
 
-/////////////////////////////////////////////////////////////////
-//// AuthRegister
-/////////////////////////////////////////////////////////////////
-
-Vaultier.AuthRegisterController = Ember.Controller.extend({
-    isLastTab: false,
-    activeTabName: null,
-    isNextDisabled: false,
+var BaseRegisterController = Ember.Controller.extend({
     breadcrumbs: Vaultier.utils.Breadcrumbs.create()
         .addLink('Auth.register', 'Register')
 });
@@ -67,86 +23,86 @@ Vaultier.AuthRegisterView = Ember.View.extend({
     layoutName: 'Layout/LayoutStandard',
 
     didInsertElement: function () {
-        this.controller.addObserver('activeTab', this.renderActiveTab.bind(this));
-        this.renderActiveTab();
-    },
+        var step = this.controller.get('step');
+        var el = this.get('element');
+        $(el).find('.vlt-register-tabs li.active').removeClass('active');
+        $(el).find('.vlt-register-tabs li.' + step).addClass('active');
 
-    renderActiveTab: function () {
-        var ctrl = this.controller;
-        if (ctrl) {
-            var el = this.get('element');
-            $(el).find('.vlt-register-tabs li.active').removeClass('active');
-            $(el).find('.vlt-register-tabs li.' + ctrl.get('activeTabName')).addClass('active');
+    }
+});
 
+/////////////////////////////////////////////////////////////////
+//// STEP1 - Before
+/////////////////////////////////////////////////////////////////
+
+Vaultier.AuthRegisterRoute = Ember.Route.extend({
+    redirect: function () {
+        this.transitionTo('AuthRegisterBefore');
+    }
+});
+
+Vaultier.AuthRegisterBeforeRoute = BaseRegisterRoute.extend({
+    step: 'AuthRegisterBefore',
+    actions: {
+        next: function () {
+            this.transitionTo('AuthRegisterKeys');
         }
     }
 });
 
-
-/////////////////////////////////////////////////////////////////
-//// AuthRegisterBefore
-/////////////////////////////////////////////////////////////////
-
 Vaultier.AuthRegisterBeforeView = Ember.View.extend({
-    templateName: 'Auth/RegisterBefore',
-
-    didInsertElement: function () {
-        console.log(Vaultier.resolve('route:AuthRegister'));
-        console.log(this.get('this'));
-
-//        Ember.run.later(this, function () {
-//            this.controller.set('value', 'another value')
-//        }, 1000);
-    }
-
+    templateName: 'Auth/RegisterBefore'
 });
 
+Vaultier.AuthRegisterBeforeController = BaseRegisterController.extend();
+
 /////////////////////////////////////////////////////////////////
-//// AuthRegisterKeys
+//// STEP2 - keys
 /////////////////////////////////////////////////////////////////
 
-Vaultier.AuthRegisterKeysController = Ember.Controller.extend({
-    needs: ['AuthRegister'],
+Vaultier.AuthRegisterKeysController = BaseRegisterController.extend({
     privateKey: false,
     publicKey: false,
     keysReady: false
 });
 
-Vaultier.AuthRegisterKeysView = Ember.View.extend({
-    templateName: 'Auth/RegisterKeys',
+Vaultier.AuthRegisterKeysRoute = BaseRegisterRoute.extend({
+    step: 'AuthRegisterKeys',
     actions: {
+        next: function () {
+            this.transitionTo('AuthRegisterCreds');
+        },
 
         downloadPublicKey: function () {
-            // native download solution
-            // document.location = 'data:Application/octet-stream,' + encodeURIComponent(this.privateKey);
-
+            var ctrl = this.get('controller');
             // start download
-            var blob = new Blob([this.privateKey], {type: "text/plain;charset=utf-8"});
+            var blob = new Blob([ctrl.get('privateKey')], {type: "text/plain;charset=utf-8"});
             saveAs(blob, "vaultier-private-key.pem");
 
             //enable next button
-            this.get('controller.controllers.AuthRegister')
-                .set('isNextDisabled', false);
+            ctrl.set('isNextDisabled', false);
         }
     },
 
-    willInsertElement: function () {
-
-        this.get('controller.controllers.AuthRegister')
-            .set('isNextDisabled', true);
-
-        this.controller.set('keysReady', false);
-
-        //2048 is required
-        var generator = new JSEncrypt({default_key_size: 256});
-        generator.getKey(function () {
-            this.controller.set('privateKey', generator.getPrivateKey());
-            this.controller.set('publicKey', generator.getPublicKey());
-            this.controller.set('keysReady', true);
-        }.bind(this));
+    setupController: function (ctrl) {
+        if (!ctrl.get('keysReady')) {
+            ctrl.set('isNextDisabled', true);
+            //2048 is required
+            var generator = new JSEncrypt({default_key_size: 256});
+            generator.getKey(function () {
+                ctrl.set('privateKey', generator.getPrivateKey());
+                ctrl.set('publicKey', generator.getPublicKey());
+                ctrl.set('keysReady', true);
+            }.bind(this));
+        }
     }
 
 });
+
+Vaultier.AuthRegisterKeysView = Ember.View.extend({
+    templateName: 'Auth/RegisterKeys',
+});
+
 
 Vaultier.AuthRegisterCredsView = Ember.View.extend({
     templateName: 'Auth/RegisterCreds'

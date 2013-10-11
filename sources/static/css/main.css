@@ -320,15 +320,16 @@
 *************************************************************
 *************************************************************/
 
-.vlt-register-keys .generate {
-    text-align: center;
-    padding: 100px 0px 100px 0px;
+.vlt-register .modal-body {
+    padding: 25px 50px 25px 50px;
 }
 
+.vlt-register-keys .generate {
+    text-align: center;
+}
 
 .vlt-register-keys .generated {
     text-align: center;
-    padding: 50px;
 }
 
 .vlt-register-keys .generated .vlt-download {

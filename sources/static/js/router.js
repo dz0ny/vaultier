@@ -1,6 +1,10 @@
 Vaultier.Router.map(function () {
-    this.route('AuthLogin',{ path: '/auth/login' });
-    this.route('AuthRegister',{ path: '/auth/register' });
+
+    this.route('AuthRegister', { path: '/auth/register' });
+    this.route('AuthRegisterBefore', { path: '/auth/register/overview' });
+    this.route('AuthRegisterKeys', { path: '/auth/register/generate-keys' });
+
+    this.route('AuthLogin', { path: '/auth/login' });
 
     this.resource('Vault', { path: '/vault' }, function () {
         this.route('index', {queryParams: ['sort']});
