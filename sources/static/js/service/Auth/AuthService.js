@@ -48,11 +48,11 @@ Vaultier.Services.Auth.AuthService = Ember.Object.extend({
     status: function () {
         var promise = Ember.RSVP.Promise(function (resolve, reject) {
             Ember.$.ajax({
-                url: '/api/auth/status',
+                url: '/api/auth/user',
                 type: 'get'
             }).then(
                     function (user) {
-                        user = this._afterAuthenticate({
+                        user = this.setAuthenticate({
                             user: user,
                             privateKey: null
                         });
@@ -61,7 +61,7 @@ Vaultier.Services.Auth.AuthService = Ember.Object.extend({
                     }.bind(this),
 
                     function () {
-                        this._afterAuthenticate(null);
+                        this.setAuthenticate(null);
                         resolve(null);
                     }.bind(this)
                 )
@@ -108,7 +108,7 @@ Vaultier.Services.Auth.AuthService = Ember.Object.extend({
         promise.then(
             // when authenticated
             function (user) {
-                this._afterAuthenticate({
+                this.setAuthenticate({
                     user: user,
                     privateKey: props.privateKey
                 })
@@ -116,7 +116,7 @@ Vaultier.Services.Auth.AuthService = Ember.Object.extend({
 
             // when not authenticated
             function (error) {
-                this._afterAuthenticate(null)
+                this.setAuthenticate(null)
             }.bind(this)
         );
 
@@ -132,7 +132,7 @@ Vaultier.Services.Auth.AuthService = Ember.Object.extend({
                 url: '/api/auth/logout',
                 type: 'post'
             }).always(function () {
-                    this._afterAuthenticate(null);
+                    this.setAuthenticate(null);
                     resolve();
                 }.bind(this));
         }.bind(this));
@@ -140,12 +140,12 @@ Vaultier.Services.Auth.AuthService = Ember.Object.extend({
         return promise;
     },
 
-    didAuthenticate: function (callback) {
+    afterAuthenticated: function (callback) {
         this.callbacks.push(callback);
         callback(this.status);
     },
 
-    _afterAuthenticate: function (result) {
+    setAuthenticate: function (result) {
         result = result || {user: null, privateKey: null}
 
         //@todo: clear store for previous users
@@ -162,7 +162,7 @@ Vaultier.Services.Auth.AuthService = Ember.Object.extend({
         this.set('checked', true);
         this.set('privateKey', result.privateKey)
 
-        // run didAuthenticate callbacks
+        // run afterAuthenticated callbacks
         this.callbacks.forEach(function (c) {
             c(this);
         }.bind(this));

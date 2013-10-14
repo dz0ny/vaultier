@@ -56,12 +56,15 @@
 
                 </div>
                 <div class="modal-footer">
-                    Do you have account already? {{#link-to 'AuthLogin' class="btn btn-default btn-sm" }}Login to your
-                    account here{{/link-to}}
-                    <button {{action next}} {{bind-attr disabled=props.isNextDisabled}} class="btn btn-primary">
+                    {{#unless props.loginButtonHidden}}
+                        Do you have account already? {{#link-to 'AuthLogin' class="btn btn-default btn-sm" }}Login to
+                        your
+                        account here{{/link-to}}
+                    {{/unless}}
+                    <button {{action next}} {{bind-attr disabled=props.nextButtonDisabled}} class="btn btn-primary">
                         <span class="glyphicon glyphicon glyphicon-chevron-right"></span>
-                        {{#if props.nextAsFinish }}
-                            Finish
+                        {{#if props.nextButtonTitle }}
+                            {{ props.nextButtonTitle }}
                         {{else}}
                             Next
                         {{/if}}

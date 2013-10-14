@@ -2,6 +2,7 @@ from django.contrib.auth import authenticate, login, logout
 from rest_framework.fields import EmailField, CharField
 from rest_framework.generics import GenericAPIView
 from rest_framework.mixins import CreateModelMixin, UpdateModelMixin
+from rest_framework.status import HTTP_403_FORBIDDEN
 from rest_framework.views import APIView
 from core.api import ApiException
 from core.auth.backend import HandshakeCoder
@@ -11,27 +12,28 @@ from core.models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
+    email = EmailField(required=True)
     class Meta:
         model = User
-        fields = ['id', 'email', 'nickname','public_key' ]
+        fields = ['id', 'email', 'nickname', 'public_key']
 
-class UserView(CreateModelMixin, UpdateModelMixin,  GenericAPIView ):
+
+class UserView(CreateModelMixin, UpdateModelMixin, GenericAPIView):
     serializer_class = UserSerializer
 
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
 
-class StatusView(APIView):
+    def get(self, request):
+        return self.status(request)
+
     def status(self, request):
         user = request.user
         if (user.is_authenticated()):
             serialized = UserSerializer(user).data;
             return Response(serialized)
         else:
-            return Response({'result': False})
-
-    def get(self, request):
-        return self.status(request)
+            return Response({'detail': 'Anonymous user'},  status=HTTP_403_FORBIDDEN)
 
 
 class AuthSerializer(serializers.Serializer):
@@ -67,14 +69,13 @@ class LogoutView(APIView):
         try:
             logout(request)
             response = Response({'result': True})
-            response.delete_cookie('sessionid', '/', '.' )
+            response.delete_cookie('sessionid', '/', '.')
             return response
         except Exception as e:
             raise ApiException(exception=e)
 
     def post(self, request):
         return self.logout(request)
-
 
 
 class HandshakeSerializer(serializers.Serializer):
@@ -85,10 +86,10 @@ class HandshakeView(APIView):
     def handshake(self, request):
         serializer = HandshakeSerializer(data=request.DATA)
         if serializer.is_valid():
-            # try:
-                d = HandshakeCoder()
-                hs = d.handshake(serializer.data.get('email'), request.session)
-                return Response(hs)
+        # try:
+            d = HandshakeCoder()
+            hs = d.handshake(serializer.data.get('email'), request.session)
+            return Response(hs)
             # except Exception as e:
             #     raise ApiException(exception=e)
 
