@@ -53,10 +53,62 @@ Vaultier.AuthLoginRoute = BaseLoginRoute.extend({
 /////////////////////////////////////////////////////////////////
 
 Vaultier.AuthLoginSwitchRoute = BaseLoginRoute.extend({
-    tab: 'AuthLoginSwitch'
+    tab: 'AuthLoginSwitch',
+
+    actions: {
+        login: function () {
+            var ctrl = this.get('controller');
+
+            var auth = Vaultier.Services.Auth.AuthService.current();
+            auth.auth({
+                email: ctrl.get('email'),
+                privateKey: ctrl.privateKey
+            }).then(
+                    function () {
+                        ctrl.set('error', false);
+                    }.bind(this),
+                    function () {
+                        ctrl.set('error', true);
+                    }.bind(this)
+                );
+
+
+        }
+    }
+
 });
 
-Vaultier.AuthLoginSwitchController = BaseLoginController.extend();
+Vaultier.AuthLoginSwitchController = BaseLoginController.extend({
+    privateKey: null,
+    filaneme: null,
+    email: null,
+    error: false,
+
+    validate: function () {
+        var validator = LGTM.validator()
+            .validates('email')
+            .email('email')
+            .required('required')
+            .validates('privateKey')
+            .required('required')
+            .build()
+
+        validator
+            .validate(this)
+            .then(function (result) {
+                this.set('isValid', result.valid)
+                this.set('emailSuccess', result.errors.email.length)
+            }.bind(this));
+
+        return false;
+    }.observes('email', 'privateKey'),
+
+    loginButtonDisabled: function () {
+        return !this.get('isValid')
+    }.property('isValid')
+
+
+});
 
 Vaultier.AuthLoginSwitchView = Ember.View.extend({
     templateName: 'Auth/LoginSwitch',
@@ -65,19 +117,16 @@ Vaultier.AuthLoginSwitchView = Ember.View.extend({
         this._super(arguments);
         var el = $(this.get('element'));
         var input = el.find('.vlt-login-key').get(0);
+        var controller = this.controller;
 
         $(el).on('change', function (e) {
+
             var files = FileAPI.getFiles(e);
             FileAPI.readAsText(files[0], function (evt) {
                 if (evt.type == 'load') {
                     // Success
-                    var text = evt.result;
-                    console.log(text)
-                } else if (evt.type == 'progress') {
-                    var pr = evt.loaded / evt.total * 100;
-                    console.log(pr);
-                } else {
-                    // Error
+                    controller.set('privateKey', evt.result);
+                    controller.set('filename', files[0].name);
                 }
             })
         })

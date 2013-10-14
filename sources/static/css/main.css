@@ -4,6 +4,10 @@
 *************************************************************
 *************************************************************/
 
+/*
+* Bredcrumbs
+*/
+
 .breadcrumb > li:before {
     padding: 0 5px;
     color: #cccccc;
@@ -15,11 +19,38 @@
     content: normal;
 }
 
+
+/*
+* Errors
+*/
+
 .has-error .error {
     color: #C84A48;
 }
 
+/*
+* Boostrap file input
+*/
 
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 999px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    background: red;
+    cursor: inherit;
+    display: block;
+}
 
 /*************************************************************
 **************************************************************
@@ -345,6 +376,21 @@
 .vlt-register-keys .generated .vlt-download {
     width: 40%;
     margin: 0px auto;
+}
+
+/*************************************************************
+**************************************************************
+* login
+*************************************************************
+*************************************************************/
+
+.vlt-login.modal-dialog {
+    width: 700px;
+}
+
+.vlt-login.modal-dialog .alert {
+    margin-left: 15px;
+    margin-right: 15px;
 }
 
 

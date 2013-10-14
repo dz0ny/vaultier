@@ -1,4 +1,7 @@
+LGTM.configure('defer', Ember.RSVP.defer);
+
 Ember.FEATURES["query-params"] = true
+
 
 Vaultier = Ember.Application.create({
     LOG_TRANSITIONS: true

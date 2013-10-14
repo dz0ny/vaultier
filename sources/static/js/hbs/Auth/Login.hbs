@@ -33,7 +33,7 @@
                 <div class="modal-footer">
                     Do not have account yet? {{#link-to 'AuthRegister' class="btn btn-default btn-sm" }}Create new
                     account here{{/link-to}}
-                    <a href="#" class="btn btn-primary">Login</a>
+                    <button {{ action login}} {{bind-attr disabled=loginButtonDisabled }} class="btn btn-primary">Login</button>
                 </div>
             </div>
         </div>

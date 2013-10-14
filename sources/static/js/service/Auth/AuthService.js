@@ -85,22 +85,25 @@ Vaultier.Services.Auth.AuthService = Ember.Object.extend({
                     decoder.setPrivateKey(props.privateKey);
                     var password = decoder.decrypt(handshakeResponse.challenge);
 
-                    // login
-                    Ember.$.ajax({
-                        url: '/api/auth/auth',
-                        type: 'post',
-                        data: {
-                            email: props.email,
-                            password: password
-                        }
-                    }).then(
-                            function (authResponse) {
-                                resolve(authResponse);
-                            }.bind(this),
-                            function () {
-                                reject();
-                            }.bind(this)
-                        )
+                    if (password) {
+                        Ember.$.ajax({
+                            url: '/api/auth/auth',
+                            type: 'post',
+                            data: {
+                                email: props.email,
+                                password: password
+                            }
+                        }).then(
+                                function (authResponse) {
+                                    resolve(authResponse);
+                                }.bind(this),
+                                function () {
+                                    reject();
+                                }.bind(this)
+                            )
+                    } else {
+                        reject();
+                    }
                 }.bind(this))
 
         });
