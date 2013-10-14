@@ -1,20 +1,22 @@
 Ember.TEMPLATES["Auth/LoginSwitch"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  var buffer = '', stack1, hashTypes, hashContexts, options, self=this, escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing;
+  var buffer = '', stack1, hashContexts, hashTypes, options, escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing;
 
-function program1(depth0,data) {
-  
-  
-  data.buffer.push("\r\n        <div class=\"alert alert-danger\">\r\n            <strong>Oh snap!</strong> Change a few things up and try submitting again.\r\n        </div>\r\n    ");
-  }
 
-  data.buffer.push("<div class=\"row\">\r\n\r\n    ");
-  hashTypes = {};
-  hashContexts = {};
-  stack1 = helpers['if'].call(depth0, "error", {hash:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\r\n\r\n    <div class=\"col-md-7\">\r\n\r\n        <form class=\"form-horizontal\" role=\"form\">\r\n            <div class=\"form-group\">\r\n                <label for=\"login-form-email\" class=\"col-lg-4 control-label\">Email</label>\r\n\r\n                <div class=\"col-lg-8\">\r\n                    ");
+  data.buffer.push("<div class=\"row\">\r\n\r\n    <div class=\"col-md-7\">\r\n\r\n        <form class=\"form-horizontal\" role=\"form\">\r\n            <div class=\"form-group ");
+  hashContexts = {'class': depth0};
+  hashTypes = {'class': "STRING"};
+  data.buffer.push(escapeExpression(helpers.bindAttr.call(depth0, {hash:{
+    'class': ("error:has-error")
+  },contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
+  data.buffer.push(" ");
+  hashContexts = {'class': depth0};
+  hashTypes = {'class': "STRING"};
+  data.buffer.push(escapeExpression(helpers.bindAttr.call(depth0, {hash:{
+    'class': ("emailSuccess:has-success")
+  },contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
+  data.buffer.push("\">\r\n                <label for=\"login-form-email\" class=\"col-lg-4 control-label\">Email</label>\r\n\r\n                <div class=\"col-lg-8\">\r\n                    ");
   hashContexts = {'elementId': depth0,'valueBinding': depth0,'class': depth0,'placeholder': depth0};
   hashTypes = {'elementId': "STRING",'valueBinding': "STRING",'class': "STRING",'placeholder': "STRING"};
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "Ember.TextField", {hash:{
@@ -23,7 +25,13 @@ function program1(depth0,data) {
     'class': ("form-control"),
     'placeholder': ("Enter your email")
   },contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
-  data.buffer.push("\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n                <label for=\"login-form-key\" class=\"col-lg-4 control-label\">Key</label>\r\n\r\n                <div class=\"col-lg-8\">\r\n                    <div class=\"input-group\">\r\n                        <input ");
+  data.buffer.push("\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"form-group\" ");
+  hashContexts = {'class': depth0};
+  hashTypes = {'class': "STRING"};
+  data.buffer.push(escapeExpression(helpers.bindAttr.call(depth0, {hash:{
+    'class': ("error:has-error")
+  },contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
+  data.buffer.push(">\r\n                <label for=\"login-form-key\" class=\"col-lg-4 control-label\">Key</label>\r\n\r\n                <div class=\"col-lg-8\">\r\n                    <div class=\"input-group\">\r\n                        <input ");
   hashContexts = {'value': depth0};
   hashTypes = {'value': "ID"};
   options = {hash:{

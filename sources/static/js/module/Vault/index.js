@@ -38,8 +38,9 @@ Vaultier.VaultIndexRoute = Ember.Route.extend({
     },
     model: function () {
         var store = this.get('store');
-        var promise = store.find('vault');
-        return this._super(promise);
+        var promise = store.find('Vault');
+        return promise;
+//        return this._super(promise);
     }
 });
 

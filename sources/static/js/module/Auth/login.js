@@ -65,9 +65,11 @@ Vaultier.AuthLoginSwitchRoute = BaseLoginRoute.extend({
                 privateKey: ctrl.privateKey
             }).then(
                     function () {
+                        $.notify('You have been successfully logged in.', 'success');
                         ctrl.set('error', false);
                     }.bind(this),
                     function () {
+                        $.notify('We are sorry, but your login failed', 'error');
                         ctrl.set('error', true);
                     }.bind(this)
                 );
@@ -83,6 +85,7 @@ Vaultier.AuthLoginSwitchController = BaseLoginController.extend({
     filaneme: null,
     email: null,
     error: false,
+    emailSuccess: false,
 
     validate: function () {
         var validator = LGTM.validator()
@@ -97,11 +100,11 @@ Vaultier.AuthLoginSwitchController = BaseLoginController.extend({
             .validate(this)
             .then(function (result) {
                 this.set('isValid', result.valid)
-                this.set('emailSuccess', result.errors.email.length)
+                this.set('emailSuccess', !result.errors.email.length && !this.get('error') )
             }.bind(this));
 
         return false;
-    }.observes('email', 'privateKey'),
+    }.observes('email', 'privateKey', 'error'),
 
     loginButtonDisabled: function () {
         return !this.get('isValid')

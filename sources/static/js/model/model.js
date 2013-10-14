@@ -7,6 +7,10 @@ Vaultier.AuthenticatedUser = Vaultier.User.extend({
     public_key: DS.attr('string')
 });
 
+Vaultier.Workspace = DS.Model.extend({
+    name: DS.attr('string')
+});
+
 Vaultier.Vault = DS.Model.extend({
     name: DS.attr('string'),
     description: DS.attr('string'),
@@ -15,10 +19,6 @@ Vaultier.Vault = DS.Model.extend({
     updatedAgo: function () {
         var u = this.get('updated_at');
         return moment(u).fromNow();
-    }.property('updatedAgo'),
-});
-
-Vaultier.Workspace = DS.Model.extend({
-    name: DS.attr('string')
+    }.property('updatedAgo')
 });
 
