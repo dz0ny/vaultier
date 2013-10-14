@@ -1,21 +1,43 @@
 Vaultier.Router.map(function () {
 
+    /************************************************************
+     * REGISTRATION
+     ************************************************************/
+
     this.route('AuthRegister', { path: '/auth/register' });
     this.route('AuthRegisterBefore', { path: '/auth/register/overview' });
     this.route('AuthRegisterKeys', { path: '/auth/register/generate-keys' });
     this.route('AuthRegisterCreds', { path: '/auth/register/submit-credentials' });
     this.route('AuthRegisterSum', { path: '/auth/register/registration-done' });
 
-    this.route('AuthLogin', { path: '/auth/login' });
 
-    this.resource('Vault', { path: '/vault' }, function () {
-        this.route('index', {queryParams: ['sort']});
-    });
+    /************************************************************
+     * Login
+     ************************************************************/
+
+    this.route('AuthLogin', { path: '/auth/login' });
+    this.route('AuthLoginSwitch', { path: '/auth/login/switch-user' });
+    this.route('AuthLoginLatest', { path: '/auth/login/latest-user' });
+
+
+    /************************************************************
+     * Workspace
+     ************************************************************/
 
     this.resource('Workspace', { path: '/workspace' }, function () {
         this.route('create');
         this.route('switch');
     });
+
+    /************************************************************
+     * Vault
+     ************************************************************/
+
+
+    this.resource('Vault', { path: '/vault' }, function () {
+        this.route('index', {queryParams: ['sort']});
+    });
+
 });
 
 Vaultier.ApplicationRoute = Ember.Route.extend({

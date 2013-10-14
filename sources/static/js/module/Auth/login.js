@@ -1,23 +1,68 @@
-Vaultier.AuthLoginRoute = Ember.Route.extend({
+/////////////////////////////////////////////////////////////////
+//// Shared classes
+/////////////////////////////////////////////////////////////////
 
-    renderTemplate: function (controller, model) {
-        this._super(controller, model);
-        this.render('AuthLogin');
+var LoginProps = Ember.Object.extend({
+    tab: null,
+    latestUser: null
+});
+LoginProps.reopenClass(Utils.Singleton);
+
+var BaseLoginRoute = Ember.Route.extend({
+    tab: null,
+    renderTemplate: function () {
+        var ctrl = this.controllerFor(this.tab);
+        ctrl.set('props.tab', this.tab);
+        ctrl.set('props.route', this);
+        this.render('AuthLogin', {controller: this.step});
+        this.render(this.tab, { into: 'AuthLogin', outlet: 'tab'})
     }
 });
 
-//will prepare layout mixins which will extend controller to optionalize layout
-Vaultier.AuthLoginController = Ember.ObjectController.extend({
+var BaseLoginController = Ember.Controller.extend({
+    props: LoginProps.current(),
     breadcrumbs: Vaultier.utils.Breadcrumbs.create()
         .addLink('Auth.login', 'Login')
-})
-
+});
 
 Vaultier.AuthLoginView = Ember.View.extend({
     templateName: 'Auth/Login',
     layoutName: 'Layout/LayoutStandard',
 
     didInsertElement: function () {
+        var step = this.controller.get('props.tab');
+        var el = this.get('element');
+        $(el).find('.vlt-login-tabs li.active').removeClass('active');
+        $(el).find('.vlt-login-tabs li.' + step).addClass('active');
+
+    }
+});
+
+Vaultier.AuthLoginRoute = BaseLoginRoute.extend({
+    redirect: function () {
+        if (LoginProps.current().get('latestUser')) {
+            this.transitionTo('AuthLoginLatest')
+        } else {
+            this.transitionTo('AuthLoginSwitch')
+        }
+    }
+});
+
+/////////////////////////////////////////////////////////////////
+//// Switch
+/////////////////////////////////////////////////////////////////
+
+Vaultier.AuthLoginSwitchRoute = BaseLoginRoute.extend({
+    tab: 'AuthLoginSwitch'
+});
+
+Vaultier.AuthLoginSwitchController = BaseLoginController.extend();
+
+Vaultier.AuthLoginSwitchView = Ember.View.extend({
+    templateName: 'Auth/LoginSwitch',
+
+    didInsertElement: function () {
+        this._super(arguments);
         var el = $(this.get('element'));
         var input = el.find('.vlt-login-key').get(0);
 
@@ -36,8 +81,21 @@ Vaultier.AuthLoginView = Ember.View.extend({
                 }
             })
         })
+    }
 
-    },
+});
 
+/////////////////////////////////////////////////////////////////
+//// Latest
+/////////////////////////////////////////////////////////////////
+
+Vaultier.AuthLoginLatestRoute = BaseLoginRoute.extend({
+    tab: 'AuthLoginLatest'
+});
+
+Vaultier.AuthLoginLatestController = BaseLoginController.extend();
+
+Vaultier.AuthLoginLatestView = Ember.View.extend({
+    templateName: 'Auth/LoginLatest',
 });
 
