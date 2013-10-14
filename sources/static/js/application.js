@@ -5,7 +5,8 @@ Vaultier = Ember.Application.create({
 });
 
 Ember.RSVP.configure('onerror', function(error) {
-  console.assert(false, error);
+    console.error(error.message);
+    console.error(error.stack);
 });
 
 Vaultier.ApplicationAdapter = DS.DjangoRESTAdapter.extend({

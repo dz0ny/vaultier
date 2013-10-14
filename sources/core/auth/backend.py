@@ -1,14 +1,13 @@
-from base64 import b64decode
 import random
 import string
 
-from django.contrib.auth.models import check_password
+from base64 import b64decode
 from django.contrib.auth.backends import ModelBackend
-from web.session import Session
 from core.models import User
 
 from Crypto.PublicKey import RSA
-from Crypto.Cipher import PKCS1_OAEP
+from Crypto.Cipher import PKCS1_v1_5
+
 
 class HandshakeCoder:
     """
@@ -25,21 +24,22 @@ class HandshakeCoder:
         user = User.objects.get(email=username)
         session['auth.digest'] = d;
         encoded = self.encode(d, user.public_key)
+
         return {
             'user': username,
-            'challange': encoded,
-            'password-remove-when-client-ppk-ready' : d
+            'challenge': encoded,
+            'password': d
         }
 
     def encode(self, hash, publicKey):
         rsakey = RSA.importKey(publicKey)
-        rsakey = PKCS1_OAEP.new(rsakey)
+        rsakey = PKCS1_v1_5.new(rsakey)
         encrypted = rsakey.encrypt(hash).encode('base64')
         return encrypted
 
-    def decode(self, encoded, privateKey ):
+    def decode(self, encoded, privateKey):
         #use proper private key
-        privateKey = open('/root/.ssh/id_rsa', "r").read()
+        privateKey = open('/root/testrsa/private.pem', "r").read()
         rsakey = RSA.importKey(privateKey)
         rsakey = PKCS1_OAEP.new(rsakey)
         decrypted = rsakey.decrypt(b64decode(encoded))
@@ -56,7 +56,7 @@ class Backend(ModelBackend):
     ADMIN_PASSWORD = 'sha1$4e987$afbcf42e21bd417fb71db8c66b321e9fc33051de'
     """
 
-    def authenticate(self, username=None, challenge=None, session=None):
+    def authenticate(self, username=None, password=None, session=None):
         # login_valid = ('admin' == username)
         # pwd_valid = check_password(password, 'sha1$4e987$afbcf42e21bd417fb71db8c66b321e9fc33051de')
         # pwd_valid = (password == 'admin')
@@ -67,7 +67,7 @@ class Backend(ModelBackend):
             return None
 
         d = session.get('auth.digest', None);
-        if (d==challenge and d is not None):
+        if (d == password and d is not None):
             return user
 
         return None

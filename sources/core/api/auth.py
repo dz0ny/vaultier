@@ -35,22 +35,8 @@ class StatusView(APIView):
 
 
 class AuthSerializer(serializers.Serializer):
-    username = EmailField(required=True)
-    challenge = CharField(required=True, min_length=32, max_length=32)
-
-
-class LogoutView(APIView):
-    def logout(self, request):
-        try:
-            logout(request)
-            response = Response({'result': True})
-            response.delete_cookie('sessionid', '/', '.' )
-            return response
-        except Exception as e:
-            raise ApiException(exception=e)
-
-    def get(self, request):
-        return self.logout(request)
+    email = EmailField(required=True)
+    password = CharField(required=True, min_length=32, max_length=32)
 
 
 class AuthView(APIView):
@@ -58,10 +44,9 @@ class AuthView(APIView):
         serializer = AuthSerializer(data=request.DATA)
         if serializer.is_valid():
             try:
-                user = authenticate(username=serializer.data.get('username'),
-                                    challenge=serializer.data.get('challenge'),
+                user = authenticate(username=serializer.data.get('email'),
+                                    password=serializer.data.get('password'),
                                     session=request.session)
-                print user
                 if user:
                     login(request, user)
                     serialized = UserSerializer(user).data;
@@ -77,20 +62,35 @@ class AuthView(APIView):
         return self.auth(request)
 
 
+class LogoutView(APIView):
+    def logout(self, request):
+        try:
+            logout(request)
+            response = Response({'result': True})
+            response.delete_cookie('sessionid', '/', '.' )
+            return response
+        except Exception as e:
+            raise ApiException(exception=e)
+
+    def post(self, request):
+        return self.logout(request)
+
+
+
 class HandshakeSerializer(serializers.Serializer):
-    username = EmailField(required=True)
+    email = EmailField(required=True)
 
 
 class HandshakeView(APIView):
     def handshake(self, request):
         serializer = HandshakeSerializer(data=request.DATA)
         if serializer.is_valid():
-            try:
+            # try:
                 d = HandshakeCoder()
-                hs = d.handshake(serializer.data.get('username'), request.session)
+                hs = d.handshake(serializer.data.get('email'), request.session)
                 return Response(hs)
-            except Exception as e:
-                raise ApiException(exception=e)
+            # except Exception as e:
+            #     raise ApiException(exception=e)
 
         raise ApiException(detail=serializer.errors)
 

@@ -14,7 +14,13 @@ function program1(depth0,data) {
   hashTypes = {};
   hashContexts = {};
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "auth.user.nickname", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
-  data.buffer.push("\r\n        </a>\r\n\r\n        <ul class=\"dropdown-menu vlt-dropdown\">\r\n            <li><a href=\"#\">Separated link</a></li>\r\n            <li><a href=\"#\">One more separated link</a></li>\r\n        </ul>\r\n    </div>\r\n");
+  data.buffer.push("\r\n        </a>\r\n\r\n        <ul class=\"dropdown-menu vlt-dropdown\">\r\n            <li><a ");
+  hashContexts = {'target': depth0};
+  hashTypes = {'target': "ID"};
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "logout", {hash:{
+    'target': ("view")
+  },contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
+  data.buffer.push("  href=\"#\">Logout</a></li>\r\n        </ul>\r\n    </div>\r\n");
   return buffer;
   }
 

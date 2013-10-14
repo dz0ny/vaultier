@@ -562,6 +562,40 @@ Po.check.Object = function(what) {
 
 /************************************************************************************************
  ************************************************************************************************
+ * Random
+ ************************************************************************************************
+ ***********************************************************************************************/
+
+Po.NS('Po.R');
+
+Po.R.randomFloat = function (min, max) {
+    return Math.random() * (max - min) + min;
+}
+
+Po.R.randomInt = function (min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+Po.R.randomString = function(min, max) {
+    min = Po.F.optional(min, 5);
+    max = Po.F.optional(max, 20);
+    length = Po.R.randomInt(min, max);
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for( var i=0; i < length; i++ )
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
+}
+
+Po.R.randomEmail = function() {
+    return (Po.R.randomString(3,10)+'@'+Po.R.randomString(3,15)+'.'+Po.R.randomString(3,3)).toLowerCase();
+}
+
+
+/************************************************************************************************
+ ************************************************************************************************
  * Debug
  ************************************************************************************************
  ***********************************************************************************************/

@@ -2,14 +2,19 @@ Po.NS('Vaultier.Layout');
 
 Vaultier.LayoutSecurityBoxView = Ember.View.extend({
     tagName: 'span',
-    templateName: 'Layout/SecurityBox'
+    templateName: 'Layout/SecurityBox',
+
+    actions: {
+        logout: function() {
+          var auth = Vaultier.Services.Auth.AuthService.current();
+          auth.logout();
+        }
+    }
 });
 
 Vaultier.LayoutSecurityBoxController = Ember.Controller.extend({
 
     auth: null,
-
-    test: 'test',
 
     init: function() {
         this._super(arguments);

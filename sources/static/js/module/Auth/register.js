@@ -83,12 +83,12 @@ Vaultier.AuthRegisterKeysRoute = BaseRegisterRoute.extend({
 
     setupController: function (ctrl) {
         if (!ctrl.get('props.keysReady')) {
-            ctrl.set('props.isNextDisabled', true);
+//            ctrl.set('props.isNextDisabled', true);
             //2048 is required
-            var generator = new JSEncrypt({default_key_size: 256});
-            generator.getKey(function () {
-                ctrl.set('props.privateKey', generator.getPrivateKey());
-                ctrl.set('props.publicKey', generator.getPublicKey());
+            var auth = Vaultier.Services.Auth.AuthService.current();
+            auth.generateKeys(function (keys) {
+                ctrl.set('props.privateKey', keys.privateKey);
+                ctrl.set('props.publicKey', keys.publicKey);
                 ctrl.set('props.keysReady', true);
             }.bind(this));
         }
@@ -122,33 +122,33 @@ Vaultier.AuthRegisterCredsRoute = BaseRegisterRoute.extend({
         if (!user) {
             var user = this.get('store').createRecord('AuthenticatedUser');
             user.set('public_key', publicKey);
+
             ctrl.set('content', user);
         }
 
     },
     actions: {
         next: function () {
-            var auth = Vaultier.Services.Auth.AuthService.current();
-
-            auth.didAuthenticate(function () {
-                console.log(auth.get('isAuthenticated'));
-            });
-            auth.auth({
-                email: 'jan.misek@rclick.cz',
-                privateKey: 'ppk'
-            });
-
-
-            return null;
-
             var ctrl = this.get('controller');
             var user = ctrl.get('content');
+            var auth = Vaultier.Services.Auth.AuthService.current();
+
+            //test
+            var keys = Vaultier.Services.Auth.AuthService.current().generateKeys();
+            user.set('email', Po.R.randomEmail());
+            user.set('nickname', Po.R.randomString());
+            user.set('public_key', keys.publicKey);
 
             var promise = user.save();
 
             promise.then(
                 function () {
-                    console.log('resolved');
+                    auth.auth({
+                        email: user.get('email'),
+                        privateKey: keys.privateKey,
+                        publicKey: keys.publicKey
+                    });
+
                 },
                 function (errors) {
                     ctrl.set('errors', Ember.Object.create(errors.errors));
