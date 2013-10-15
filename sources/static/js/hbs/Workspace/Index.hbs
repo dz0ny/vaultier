@@ -18,9 +18,12 @@
     <div class="col-md-12">
 
         {{#if length}}
-            {{#each}}
-                {{view Vaultier.WorkspaceIndexItemView}}
-            {{/each}}
+            <div class="col-md-8 col-md-offset-2 list-group">
+                <h4>Please select workspace you want to work with</h4>
+                {{#each}}
+                    {{view Vaultier.WorkspaceIndexItemView}}
+                {{/each}}
+            </div>
         {{else}}
             NO ITEMS. DESIGN WILL BE PROVIDED LATER
         {{/if}}

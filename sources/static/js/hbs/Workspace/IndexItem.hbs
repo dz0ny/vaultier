@@ -1,6 +1,7 @@
 {{#if id}}
-<div>
-    {{name}}
-</div>
+    {{#link-to 'VaultIndex' id class="list-group-item"}}
+        <h4 class="list-group-item-heading">{{name}}</h4>
+        <p class="list-group-item-text">{{description}}</p>
+    {{/link-to}}
 {{/if}}
 

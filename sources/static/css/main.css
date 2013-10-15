@@ -5,6 +5,25 @@
 *************************************************************/
 
 /*
+* Listgroups
+*/
+.list-group .ember-view:first-of-type .list-group-item {
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+}
+
+.list-group .ember-view:last-of-type .list-group-item{
+    margin-bottom: 0;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+.breadcrumb > li::before {
+    padding: 0px;
+    content: normal;
+}
+
+/*
 * Bredcrumbs
 */
 
@@ -47,11 +66,11 @@
 * Boostrap file input
 */
 
-
 .btn-file {
     position: relative;
     overflow: hidden;
 }
+
 .btn-file input[type=file] {
     position: absolute;
     top: 0;
@@ -89,7 +108,6 @@
     margin-bottom: 30px;
 }
 
-
 .top-5 {
     margin-top: 5px;
 }
@@ -105,7 +123,6 @@
 .top-30 {
     margin-top: 30px;
 }
-
 
 /*************************************************************
 **************************************************************
@@ -409,7 +426,6 @@
     margin-bottom: 0;
 }
 
-
 /*************************************************************
 **************************************************************
 * registration - generate keys
@@ -447,7 +463,6 @@
     margin-left: 15px;
     margin-right: 15px;
 }
-
 
 /*************************************************************
 **************************************************************
