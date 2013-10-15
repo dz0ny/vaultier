@@ -18,13 +18,3 @@ class VaultSerializer(serializers.HyperlinkedModelSerializer):
         model = Vault
         fields = ('id', 'name', 'url', 'created_at', 'updated_at', 'description')
 
-
-class WorkspaceSerializer(serializers.HyperlinkedModelSerializer):
-    created_at = serializers.Field()
-    updated_at = serializers.Field()
-
-    class Meta:
-        model = Vault
-        fields = ('id', 'name', 'url', 'created_at', 'updated_at')
-
-

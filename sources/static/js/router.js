@@ -30,10 +30,9 @@ Vaultier.Router.map(function () {
      * Workspace
      ************************************************************/
 
-    this.resource('Workspace', { path: '/workspace' }, function () {
-        this.route('create');
-        this.route('switch');
-    });
+    this.route('WorkspaceIndex', { path: '/workspace'});
+    this.route('WorkspaceCreate', { path: '/workspace/create'});
+
 
     /************************************************************
      * Vault
@@ -55,7 +54,7 @@ Vaultier.IndexRoute = Ember.Route.extend({
     redirect: function () {
         var auth = Vaultier.Services.Auth.AuthService.current();
         if (auth.get('isAuthenticated')) {
-            return this.transitionTo('VaultIndex');
+            return this.transitionTo('WorkspaceIndex');
         } else {
             return this.transitionTo('HomeIndex');
         }

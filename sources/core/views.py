@@ -6,7 +6,7 @@ from rest_framework import viewsets, generics
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
-from core.serializers import VaultSerializer, WorkspaceSerializer
+from core.serializers import VaultSerializer
 from models import Vault, Workspace
 from django.http import *
 from django.shortcuts import render_to_response,redirect
@@ -43,16 +43,6 @@ class AuthHandshakeView(APIView):
 
     def get(self, request):
         return self.handshake(request)
-
-class WorkspaceViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
-    authentication_classes = (SessionAuthentication, BasicAuthentication)
-    permission_classes = (IsAuthenticated,)
-
-    queryset = Workspace.objects.all()
-    serializer_class = WorkspaceSerializer
 
 
 def logout_user(request):

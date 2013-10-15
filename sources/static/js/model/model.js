@@ -8,7 +8,8 @@ Vaultier.AuthenticatedUser = Vaultier.User.extend({
 });
 
 Vaultier.Workspace = DS.Model.extend({
-    name: DS.attr('string')
+    name: DS.attr('string'),
+    description: DS.attr('string')
 });
 
 Vaultier.Vault = DS.Model.extend({
