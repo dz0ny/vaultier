@@ -11,7 +11,7 @@
                 </div>
             </div>
 
-            <div class="form-group" {{bindAttr class='error:has-error'}}>
+            <div class="form-group" {{bind-attr class='error:has-error'}}>
                 <label for="login-form-key" class="col-lg-4 control-label">Key</label>
 
                 <div class="col-lg-8">
@@ -36,15 +36,14 @@
                        class="col-lg-4 control-label">Remember</label>
 
                 <div class="col-lg-8">
-                    <select class="form-control"
-                            id="login-form-remember"
-                            >
-                        <option value="0">Do not remember</option>
-                        <option value="24">Remember for today</option>
-                        <option value="24*7">Remember for week</option>
-                        <option value="24*7*30">Remember for month</option>
-                        <option value="24*7*30*12">Remember for one year</option>
-                    </select>
+                    {{view Ember.Select
+                    class="form-control"
+                    elementId="login-form-remember"
+                    contentBinding="props.rememberOptions"
+                    optionValuePath="content.ttl"
+                    optionLabelPath="content.text"
+                    valueBinding="ttl"
+                    }}
 
                     <span class="help-block">
                         Your credentials will be stored for selected period of time.

@@ -3,6 +3,18 @@
 /////////////////////////////////////////////////////////////////
 
 var LoginProps = Ember.Object.extend({
+    init: function () {
+        this._super(arguments);
+        var session = Vaultier.Services.Auth.SessionService.current();
+        this.set('latestUser', session.getPersistAuth());
+    },
+    rememberOptions: [
+        {ttl: 0, text: 'Do not remember'},
+        {ttl: 1, text: 'Remember for one day'},
+        {ttl: 7, text: 'Remember for one week'},
+        {ttl: 30, text: 'Remember for one month'},
+        {ttl: 365, text: 'Remember for one year'},
+    ],
     tab: null,
     latestUser: null
 });
@@ -61,16 +73,18 @@ Vaultier.AuthLoginSwitchRoute = BaseLoginRoute.extend({
 
             var auth = Vaultier.Services.Auth.AuthService.current();
             auth.auth({
+                persist: true,
+                persistTTL: ctrl.get('ttl'),
                 email: ctrl.get('email'),
                 privateKey: ctrl.privateKey
             }).then(
                     function () {
                         $.notify('You have been successfully logged in.', 'success');
-                        ctrl.set('error', false);
+                        this.transitionTo('index');
                     }.bind(this),
                     function () {
                         $.notify('We are sorry, but your login failed', 'error');
-                        ctrl.set('error', true);
+                        this.set('props.latestUser', null);
                     }.bind(this)
                 );
 
@@ -90,17 +104,17 @@ Vaultier.AuthLoginSwitchController = BaseLoginController.extend({
     validate: function () {
         var validator = LGTM.validator()
             .validates('email')
-            .email('email')
-            .required('required')
+                .email('Not an email')
+                .required('Required field')
             .validates('privateKey')
-            .required('required')
+                .required('Required field')
             .build()
 
         validator
             .validate(this)
             .then(function (result) {
                 this.set('isValid', result.valid)
-                this.set('emailSuccess', !result.errors.email.length && !this.get('error') )
+                this.set('emailSuccess', !result.errors.email.length && !this.get('error'))
             }.bind(this));
 
         return false;
@@ -134,7 +148,6 @@ Vaultier.AuthLoginSwitchView = Ember.View.extend({
             })
         })
     }
-
 });
 
 /////////////////////////////////////////////////////////////////
@@ -142,10 +155,38 @@ Vaultier.AuthLoginSwitchView = Ember.View.extend({
 /////////////////////////////////////////////////////////////////
 
 Vaultier.AuthLoginLatestRoute = BaseLoginRoute.extend({
-    tab: 'AuthLoginLatest'
+    tab: 'AuthLoginLatest',
+    actions: {
+        login: function () {
+            var ctrl = this.get('controller');
+            var latestUser = ctrl.get('props.latestUser');
+
+            var auth = Vaultier.Services.Auth.AuthService.current();
+            auth.auth({
+                persist: true,
+                persistTTL: latestUser.ttl,
+                email: latestUser.user,
+                privateKey: latestUser.key
+            }).then(
+                    function () {
+                        $.notify('You have been successfully logged in.', 'success');
+                           this.transitionTo('index');
+                    }.bind(this),
+                    function () {
+                        $.notify('We are sorry, but your login failed', 'error');
+                        ctrl.set('error', true);
+                    }.bind(this)
+                );
+
+
+        }
+    }
+
+
 });
 
-Vaultier.AuthLoginLatestController = BaseLoginController.extend();
+Vaultier.AuthLoginLatestController = BaseLoginController.extend({
+});
 
 Vaultier.AuthLoginLatestView = Ember.View.extend({
     templateName: 'Auth/LoginLatest',

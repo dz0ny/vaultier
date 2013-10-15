@@ -30,6 +30,8 @@
     {############# jquery #}
     <script src="{% static 'lib/jquery/jquery.js' %}"></script>
     <script src="{% static 'lib/jquery.notify/jquery.notify.js' %}"></script>
+    <script src="{% static 'lib/jquery.jstorage/jstorage.js' %}"></script>
+    <script src="{% static 'lib/jquery.cookie/jquery.cookie.js' %}"></script>
 
     {############# generic #}
     <script src="{% static 'lib/moment/moment.js' %}"></script>
@@ -78,6 +80,9 @@
     <script src="{% static 'hbsc/Layout/LayoutStandard.js' %}"></script>
     <script src="{% static 'hbsc/Layout/LayoutWindow.js' %}"></script>
 
+    {############# home #}
+    <script src="{% static 'hbsc/Home/Index.js' %}"></script>
+
     {############# vault #}
 
     <script src="{% static 'hbsc/Vault/Index.js' %}"></script>
@@ -102,7 +107,6 @@
     <script src="{% static 'js/utils/Pohon.js' %}"></script>
     <script src="{% static 'js/utils/Singleton.js' %}"></script>
     <script src="{% static 'js/utils/ObjectModalController.js' %}"></script>
-    <script src="{% static 'js/utils/CookieStorage.js' %}"></script>
 
     {####################################################################}
     {# application#}
@@ -112,6 +116,7 @@
 
     {############# services #}
 
+    <script src="{% static 'js/service/Auth/SessionService.js' %}"></script>
     <script src="{% static 'js/service/Auth/AuthService.js' %}"></script>
 
     {############# model #}
@@ -122,6 +127,9 @@
     <script src="{% static 'js/module/Layout/SecurityBox.js' %}"></script>
     <script src="{% static 'js/module/Layout/breadcrumbs.js' %}"></script>
     <script src="{% static 'js/module/Layout/WorkspaceBox.js' %}"></script>
+
+    {############# Home #}
+    <script src="{% static 'js/module/Home/index.js' %}"></script>
 
     {############# Vault #}
     <script src="{% static 'js/module/Vault/index.js' %}"></script>

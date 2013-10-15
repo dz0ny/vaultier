@@ -4,10 +4,13 @@ Vaultier.Services.Auth.AuthService = Ember.Object.extend({
 
     init: function () {
         this._super(arguments);
-        this.store = Vaultier.__container__.lookup('store:main')
+        this.store = Vaultier.__container__.lookup('store:main');
+        this.session = Vaultier.Services.Auth.SessionService.current();
     },
 
     store: null,
+
+    session: null,
 
     callbacks: [],
 
@@ -53,8 +56,7 @@ Vaultier.Services.Auth.AuthService = Ember.Object.extend({
             }).then(
                     function (user) {
                         user = this.setAuthenticate({
-                            user: user,
-                            privateKey: null
+                            user: user
                         });
                         resolve(user);
 
@@ -113,13 +115,15 @@ Vaultier.Services.Auth.AuthService = Ember.Object.extend({
             function (user) {
                 this.setAuthenticate({
                     user: user,
-                    privateKey: props.privateKey
+                    privateKey: props.privateKey,
+                    persist: props.persist,
+                    persistTTL: props.persistTTL
                 })
             }.bind(this),
 
             // when not authenticated
             function (error) {
-                this.setAuthenticate(null)
+                this.logout();
             }.bind(this)
         );
 
@@ -148,22 +152,47 @@ Vaultier.Services.Auth.AuthService = Ember.Object.extend({
         callback(this.status);
     },
 
+
+    /**
+     * accepts:
+     *  {
+     *      privateKey: 'privateKey string',
+     *      email: 'user email'
+     *      persistTTL: 'time to live in ms - integer'
+     *  }
+     *
+     * @param {object|null} result
+     * @returns {*}
+     */
     setAuthenticate: function (result) {
-        result = result || {user: null, privateKey: null}
+        result = result || {};
 
-        //@todo: clear store for previous users
+        var persist = result.persist || null;
+        var ttl = result.persistTTL;
 
-        // is user, creates AutheticatedUser record
-        if (result.user) {
-            user = this.store.push('AuthenticatedUser', result.user);
-        } else {
-            user = null
-        }
+        var user = result.user || null;
+        var email = user ? user.email : null;
+        var privateKey = result.privateKey || this.session.getKeyOfUser(email);
 
-        // set status
+        // create user object
+        user = user && privateKey ? Ember.Object.create(user) : null;
+
+        // associate authenticated user
         this.set('user', user);
         this.set('checked', true);
-        this.set('privateKey', result.privateKey)
+        this.set('privateKey', result.privateKey);
+
+        // save to session for browser inter-tab-window operability
+        this.session.setAuth(email, privateKey);
+
+        // persist login
+        if (persist) {
+            if (ttl == 0 || !user) {
+                this.session.clearPersistAuth();
+            } else {
+                this.session.setPersistAuth(email, privateKey, ttl);
+            }
+        }
 
         // run afterAuthenticated callbacks
         this.callbacks.forEach(function (c) {

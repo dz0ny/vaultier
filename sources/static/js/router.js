@@ -1,6 +1,12 @@
 Vaultier.Router.map(function () {
 
     /************************************************************
+     * Home
+     ************************************************************/
+    this.route('HomeIndex', { path: '/home' });
+
+
+    /************************************************************
      * REGISTRATION
      ************************************************************/
 
@@ -33,10 +39,7 @@ Vaultier.Router.map(function () {
      * Vault
      ************************************************************/
 
-
-    this.resource('Vault', { path: '/vault' }, function () {
-        this.route('index', {queryParams: ['sort']});
-    });
+    this.route('VaultIndex', { path: '/vault', queryParams: ['sort']});
 
 });
 
@@ -48,10 +51,14 @@ Vaultier.ApplicationRoute = Ember.Route.extend({
     }
 });
 
-
 Vaultier.IndexRoute = Ember.Route.extend({
     redirect: function () {
-        return this.transitionTo('Vault.index');
+        var auth = Vaultier.Services.Auth.AuthService.current();
+        if (auth.get('isAuthenticated')) {
+            return this.transitionTo('VaultIndex');
+        } else {
+            return this.transitionTo('HomeIndex');
+        }
     }
 });
 

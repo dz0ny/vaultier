@@ -6,6 +6,8 @@
                 <div class="modal-header">
                     <h2>Login</h2>
 
+                    {{#if props.latestUser }}
+
                         <ul class="nav nav-tabs vlt-login-tabs">
                             <li class="AuthLoginLatest">
                                 {{#link-to 'AuthLoginLatest'}}
@@ -18,6 +20,8 @@
                                 {{/link-to}}
                             </li>
                         </ul>
+
+                    {{/if}}
 
                 </div>
                 <div class="modal-body">
@@ -33,7 +37,9 @@
                 <div class="modal-footer">
                     Do not have account yet? {{#link-to 'AuthRegister' class="btn btn-default btn-sm" }}Create new
                     account here{{/link-to}}
-                    <button {{ action login}} {{bind-attr disabled=loginButtonDisabled }} class="btn btn-primary">Login</button>
+                    <button {{ action login}} {{bind-attr disabled=loginButtonDisabled }} class="btn btn-primary">
+                        Login
+                    </button>
                 </div>
             </div>
         </div>
