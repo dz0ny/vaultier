@@ -40,6 +40,10 @@ Vaultier.Router.map(function () {
 
     this.route('VaultIndex', { path: '/workspace/:workspace/index', queryParams: ['sort']});
 
+    /************************************************************
+     * System and error routes
+     ************************************************************/
+    this.route("HomeFourZeroFour", { path: "*path"});
 });
 
 Vaultier.ApplicationRoute = Ember.Route.extend({

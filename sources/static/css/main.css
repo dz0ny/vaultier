@@ -108,6 +108,11 @@
     margin-bottom: 30px;
 }
 
+.bottom-150 {
+    margin-bottom: 150px;
+}
+
+
 .top-5 {
     margin-top: 5px;
 }
@@ -122,6 +127,10 @@
 
 .top-30 {
     margin-top: 30px;
+}
+
+.top-150 {
+    margin-top: 150px;
 }
 
 /*************************************************************
