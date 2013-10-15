@@ -25,23 +25,23 @@ Ember.RSVP.configure('onerror', function(error) {
 });
 
 Vaultier.ApplicationAdapter = DS.DjangoRESTAdapter.extend({
-//    urls: {
-//        'AuthenticatedUser': '/api/auth/user'
-//    },
-//    buildURL: function (type, id) {
-//        if (this.urls[type]) {
-//            url = this.urls[type];
-//            if (id) {
-//                if (url.charAt(url.length - 1) !== '/') {
-//                    url += '/';
-//                }
-//                url = url + id;
-//            }
-//            return url;
-//        } else {
-//            return this._super(arguments)
-//        }
-//    },
+    urls: {
+        AuthenticatedUser: '/api/auth/user'
+    },
+    buildURL: function (type, id) {
+        if (this.urls[type]) {
+            url = this.urls[type];
+            if (id) {
+                if (url.charAt(url.length - 1) !== '/') {
+                    url += '/';
+                }
+                url = url + id;
+            }
+            return url;
+        } else {
+            return this._super(type, id)
+        }
+    },
     namespace: 'api'
 });
 

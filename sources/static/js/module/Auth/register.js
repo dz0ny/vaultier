@@ -81,7 +81,7 @@ Vaultier.AuthRegisterKeysRoute = BaseRegisterRoute.extend({
             this.transitionTo('AuthRegisterCreds');
         },
 
-        downloadPublicKey: function () {
+        downloadKey: function () {
 
             var ctrl = this.get('controller');
 
@@ -213,17 +213,26 @@ Vaultier.AuthRegisterSumRoute = BaseRegisterRoute.extend({
         ctrl.set('props.loginButtonHidden', true);
         ctrl.set('props.nextButtonDisabled', false);
         ctrl.set('props.nextButtonTitle', 'Start using vaultier')
+        ctrl.set('auth', Vaultier.Services.Auth.AuthService.current());
     },
 
     actions: {
+
+        downloadKey: function () {
+            // start download
+            var blob = new Blob([Vaultier.Services.Auth.AuthService.current().get('privateKey')], {type: "text/plain;charset=utf-8"});
+            saveAs(blob, "vaultier.key");
+      },
+
         next: function () {
-            alert('a');
+            this.transitionTo('index');
         }
     }
 });
 
 
 Vaultier.AuthRegisterSumController = BaseRegisterController.extend({
+    auth: null,
 });
 
 

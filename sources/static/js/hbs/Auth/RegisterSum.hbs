@@ -1,1 +1,64 @@
-SUM
+<div class="vlt-register-sum">
+
+
+    <div class="row bottom-15">
+        <div class="col-md-8 col-md-offset-2">
+            <h4>Your key account has been created and you have been logged in</h4>
+
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus in diam eu.
+                nisl accumsan condimentum. Duis rhoncus enim a urna aliquet fringilla.
+            </p>
+        </div>
+    </div>
+
+    <div class="col-md-8 col-md-offset-2 alert alert-warning">
+
+        <div class="row bottom-5">
+            <div class="row">
+                <div class="col-md-5 col-md-offset-1">
+                    <b>
+                        Your email and username:
+                    </b>
+                </div>
+                <div class="col-md-4">
+                    {{ auth.user.email }}
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="row bottom-15">
+            <div class="row">
+                <div class="col-md-5 col-md-offset-1">
+                    <b>
+                        Your nickname:
+                    </b>
+                </div>
+                <div class="col-md-4">
+                    {{ auth.user.nickname }}
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row top-15">
+            <div class="row">
+                <div class="col-md-5 col-md-offset-1">
+                    <b>
+                        Your private key
+                    </b>
+                    <br/>
+                    <span class="help-block">
+                        Used instead of password. Please download if you did not yet.
+                    </span>
+                </div>
+                <div class="col-md-4">
+                    <a class="btn btn-default btn-sm" {{ action downloadKey }}>Download your key</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
