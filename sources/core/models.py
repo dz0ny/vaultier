@@ -3,7 +3,8 @@ from django.contrib.auth.tests.custom_user import CustomUserManager
 from django.db import models
 
 class Workspace(models.Model):
-    name = models.CharField(max_length=255, blank=True)
+    name = models.CharField(max_length=255)
+    description = models.CharField(max_length=1024, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     class Meta:

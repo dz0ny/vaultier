@@ -2,23 +2,24 @@ Vaultier.WorkspaceCreateRoute = Ember.Route.extend({
     actions: {
         save: function () {
             var record = this.get('controller.content');
-            record.save().then(function() {
-                this.transitionTo('WorkspaceIndex');
-            }.bind(this))
+            record.save().then(
+                function () {
+                    $.notify('You workspace has been successfully created.', 'success');
+                    this.transitionTo('VaultIndex', record.get('id'));
+                }.bind(this),
+                function () {
+                    $.notify('Oooups! Something went wrong.', 'error');
+                }
+            )
         }
     },
 
     model: function (params) {
-        var record = this.get('store').createRecord('Workspace');
+        var store = this.get('store');
+        var record = store.createRecord('Workspace');
         return record;
     },
 
-    deactivate: function () {
-        var record = this.get('controller.content');
-        if (!record.get('id')) {
-            record.delete();
-        }
-    }
 });
 
 Vaultier.WorkspaceCreateController = Ember.ObjectController.extend({

@@ -30,8 +30,8 @@ Vaultier.Router.map(function () {
      * Workspace
      ************************************************************/
 
-    this.route('WorkspaceIndex', { path: '/workspaces'});
     this.route('WorkspaceCreate', { path: '/workspaces/create'});
+    this.route('WorkspaceIndex', { path: '/workspaces'});
 
 
     /************************************************************
