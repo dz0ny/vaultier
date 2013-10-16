@@ -18,7 +18,7 @@ Vaultier.WorkspaceCreateRoute = Ember.Route.extend({
         var store = this.get('store');
         var record = store.createRecord('Workspace');
         return record;
-    },
+    }
 
 });
 

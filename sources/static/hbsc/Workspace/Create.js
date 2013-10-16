@@ -27,12 +27,13 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   hashContexts = {};
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "errors.description", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
   data.buffer.push("\r\n                                ");
-  hashContexts = {'elementId': depth0,'valueBinding': depth0,'class': depth0};
-  hashTypes = {'elementId': "STRING",'valueBinding': "STRING",'class': "STRING"};
+  hashContexts = {'elementId': depth0,'valueBinding': depth0,'class': depth0,'rows': depth0};
+  hashTypes = {'elementId': "STRING",'valueBinding': "STRING",'class': "STRING",'rows': "INTEGER"};
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "Em.TextArea", {hash:{
     'elementId': ("workspace-description"),
     'valueBinding': ("content.description"),
-    'class': ("form-control")
+    'class': ("form-control"),
+    'rows': (5)
   },contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
   data.buffer.push("\r\n                            </div>\r\n                        </form>\r\n                    </div>\r\n\r\n                    <div class=\"clearfix\"></div>\r\n\r\n                </div>\r\n                <div class=\"modal-footer\">\r\n                    <a href=\"javascript:window.history.go(-1)\" class=\"btn btn-default btn-sm\">\r\n                        Back\r\n                    </a>\r\n                    <button ");
   hashTypes = {};

@@ -5,17 +5,10 @@ from rest_framework.mixins import CreateModelMixin, UpdateModelMixin
 from rest_framework.status import HTTP_403_FORBIDDEN
 from rest_framework.views import APIView
 from core.api import ApiException
+from core.api.user import UserSerializer
 from core.auth.backend import HandshakeCoder
 from rest_framework.response import Response
 from rest_framework import serializers
-from core.models import User
-
-
-class UserSerializer(serializers.ModelSerializer):
-    email = EmailField(required=True)
-    class Meta:
-        model = User
-        fields = ['id', 'email', 'nickname', 'public_key']
 
 
 class UserView(CreateModelMixin, UpdateModelMixin, GenericAPIView):

@@ -1,34 +1,38 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
-from django.contrib.auth.tests.custom_user import CustomUserManager
 from django.db import models
+from django.db.models.deletion import SET_NULL, PROTECT, CASCADE
+
 
 class Workspace(models.Model):
     name = models.CharField(max_length=255)
     description = models.CharField(max_length=1024, blank=True, null=True)
+    created_by = models.ForeignKey('core.User', on_delete=PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     class Meta:
-        db_table = u'workspace'
-
+        db_table = u'vaultier_workspace'
 
 class Vault(models.Model):
     name = models.CharField(max_length=255)
     description = models.CharField(max_length=1024, blank=True, null=True)
-    # workspace = models.ForeignKey(Workspace)
+    workspace = models.ForeignKey('core.Workspace', on_delete=CASCADE)
+    created_by = models.ForeignKey('core.User', on_delete=PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     class Meta:
-        db_table = u'vault'
+        db_table = u'vaultier_vault'
 
-# class Card(models.Model):
-#     id = models.IntegerField(primary_key=True)
-#     name = models.CharField(max_length=255, blank=True)
-#     description = models.CharField(max_length=1024, blank=True)
-#     vault = models.ForeignKey(Vault)
-#     class Meta:
-#         db_table = u'card'
-#
-#
+class Card(models.Model):
+    id = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=255)
+    description = models.CharField(max_length=1024, blank=True, null=True)
+    vault = models.ForeignKey('core.Vault',  on_delete=CASCADE)
+    created_by = models.ForeignKey('core.User', on_delete=PROTECT)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    class Meta:
+        db_table = u'vaultier_card'
+
 
 class UserManager(BaseUserManager):
     def create_user(self, username, email=None, password=None, **extra_fields):
@@ -78,7 +82,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     class Meta:
-        db_table = u'user'
+        db_table = u'vaultier_user'
 
 
 
