@@ -65,6 +65,9 @@ Vaultier.IndexRoute = Ember.Route.extend({
     }
 });
 
+
+
+
 /**
  * This is our parent route for whole application
  * - preloads or use preloaded all shared resources - like user and workspace

@@ -18,11 +18,14 @@
         <div class="col-md-12">
 
             {{#if length}}
-                <div class="col-md-8 col-md-offset-2 list-group">
+                <div class="col-md-8 col-md-offset-2">
                     <h4>Please select workspace you want to work with</h4>
-                    {{#each}}
-                        {{view Vaultier.WorkspaceIndexItemView}}
-                    {{/each}}
+
+                    <div class="list-group">
+                        {{#each}}
+                            {{view Vaultier.WorkspaceIndexItemView}}
+                        {{/each}}
+                    </div>
                 </div>
             {{else}}
                 <div class="jumbotron">

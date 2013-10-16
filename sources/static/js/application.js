@@ -22,9 +22,28 @@ Po.NS('Vaultier.config');
 Vaultier.config.authPersistTTL = 0; // one day
 
 
-Ember.RSVP.configure('onerror', function(error) {
+Ember.RSVP.configure('onerror', function (error) {
     console.error(error.message);
     console.error(error.stack);
+});
+
+
+Vaultier.Store = DS.Store.extend({
+
+    loadMore: function (type, query) {
+        query = typeof query == 'object' ? query : {};
+        return this._super(type, query);
+    },
+
+    loadOne: function (type, id) {
+        type = this.modelFor(type);
+        var record = this.recordForId(type, id);
+        if (record.currentState.stateName != 'root.empty' && reload) {
+            return record.reload()
+        } else {
+            return this.findById(type, id);
+        }
+    }
 });
 
 Vaultier.ApplicationAdapter = DS.DjangoRESTAdapter.extend({

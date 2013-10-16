@@ -26,22 +26,22 @@ function program2(depth0,data) {
 function program4(depth0,data) {
   
   var buffer = '', stack1, hashTypes, hashContexts;
-  data.buffer.push("\r\n                <div class=\"col-md-8 col-md-offset-2 list-group\">\r\n                    <h4>Please select workspace you want to work with</h4>\r\n                    ");
+  data.buffer.push("\r\n                <div class=\"col-md-8 col-md-offset-2\">\r\n                    <h4>Please select workspace you want to work with</h4>\r\n\r\n                    <div class=\"list-group\">\r\n                        ");
   hashTypes = {};
   hashContexts = {};
   stack1 = helpers.each.call(depth0, {hash:{},inverse:self.noop,fn:self.program(5, program5, data),contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\r\n                </div>\r\n            ");
+  data.buffer.push("\r\n                    </div>\r\n                </div>\r\n            ");
   return buffer;
   }
 function program5(depth0,data) {
   
   var buffer = '', hashTypes, hashContexts;
-  data.buffer.push("\r\n                        ");
+  data.buffer.push("\r\n                            ");
   hashTypes = {};
   hashContexts = {};
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "Vaultier.WorkspaceIndexItemView", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
-  data.buffer.push("\r\n                    ");
+  data.buffer.push("\r\n                        ");
   return buffer;
   }
 

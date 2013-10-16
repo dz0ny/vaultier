@@ -1,4 +1,7 @@
 Vaultier.VaultIndexRoute = Ember.Route.extend({
+
+
+
     actions: {
         create: function () {
             var record = this.get('store').createRecord('vault');
@@ -10,37 +13,19 @@ Vaultier.VaultIndexRoute = Ember.Route.extend({
             })
         }
     },
-
-    renderTemplate: function (controller, model) {
-        this._super(controller, model);
-        this.render('VaultIndex');
+    setupController: function (ctrl) {
+        ctrl.set('breadcrumbs',
+            Vaultier.utils.Breadcrumbs.create()
+                .addCurrentWorkspace()
+                .addLink('VaultIndex', 'List of vaults')
+        )
     },
 
-    setupController: function (controller, model, queryParams) {
-        var c = controller;
-        console.log(controller.constructor);
-        c.set('tstval', 'RCL');
-
-        Ember.run.later(this, function () {
-            console.log('set');
-            c.set('tstval', 'RCL3');
-        }, 2000)
-
-        Ember.run.later(this, function () {
-//            this.transitionTo('VaultList.new');
-        }, 4000)
-
-
-        //   queryParams.sort = queryParams.sort || 'recent';
-        //   controller.set('sortProperties', [queryParams.sort]);
-
-        return this._super(controller, model);
-    },
-    model: function () {
-        var store = this.get('store');
-        var promise = store.find('Vault');
-        return promise;
-//        return this._super(promise);
+    model: function (params, queryParams) {
+        return Vaultier.Services.Context.ContextService.current().executeRoute(this, params, queryParams).then(function () {
+            var store = this.get('store');
+            return store.find('Vault');
+        }.bind(this));
     }
 });
 

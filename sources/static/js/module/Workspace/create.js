@@ -18,8 +18,15 @@ Vaultier.WorkspaceCreateRoute = Ember.Route.extend({
         var store = this.get('store');
         var record = store.createRecord('Workspace');
         return record;
-    }
+    },
 
+    deactivate: function () {
+        var record = this.get('controller.content');
+        if (!record.get('id')) {
+            var store = this.get('store');
+            store.deleteRecord(record);
+        }
+    }
 });
 
 Vaultier.WorkspaceCreateController = Ember.ObjectController.extend({

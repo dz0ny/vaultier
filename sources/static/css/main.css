@@ -7,12 +7,21 @@
 /*
 * Listgroups
 */
+.list-group-item:last-child {
+    margin: 0px;
+}
+
+.list-group-item:first-child {
+    border-radius: 0px;
+}
+
 .list-group .ember-view:first-of-type .list-group-item {
     border-top-right-radius: 4px;
     border-top-left-radius: 4px;
 }
 
-.list-group .ember-view:last-of-type .list-group-item{
+.list-group .ember-view:last-of-type .list-group-item {
+    border-top: 0px;
     margin-bottom: 0;
     border-bottom-right-radius: 4px;
     border-bottom-left-radius: 4px;
@@ -269,8 +278,11 @@
 *************************************************************/
 
 .vlt-footer {
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
     text-align: right;
-    padding: 20px 0px 20px 0px;
+    padding: 5px 0px 0px 0px;
     background-color: #F5F5F5;
 }
 
