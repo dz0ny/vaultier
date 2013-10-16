@@ -28,13 +28,20 @@ var BaseLoginRoute = Ember.Route.extend({
         ctrl.set('props.route', this);
         this.render('AuthLogin', {controller: this.step});
         this.render(this.tab, { into: 'AuthLogin', outlet: 'tab'})
+
+        ctrl.set('breadcrumbs',
+            Vaultier.utils.Breadcrumbs.create({router: this.get('router')})
+                .addHome()
+                .addLink('AuthLogin', 'Login')
+        );
+
     }
 });
 
 var BaseLoginController = Ember.Controller.extend({
     props: LoginProps.current(),
     breadcrumbs: Vaultier.utils.Breadcrumbs.create()
-        .addLink('Auth.login', 'Login')
+
 });
 
 Vaultier.AuthLoginView = Ember.View.extend({
@@ -104,10 +111,10 @@ Vaultier.AuthLoginSwitchController = BaseLoginController.extend({
     validate: function () {
         var validator = LGTM.validator()
             .validates('email')
-                .email('Not an email')
-                .required('Required field')
+            .email('Not an email')
+            .required('Required field')
             .validates('privateKey')
-                .required('Required field')
+            .required('Required field')
             .build()
 
         validator
@@ -170,7 +177,7 @@ Vaultier.AuthLoginLatestRoute = BaseLoginRoute.extend({
             }).then(
                     function () {
                         $.notify('You have been successfully logged in.', 'success');
-                           this.transitionTo('index');
+                        this.transitionTo('index');
                     }.bind(this),
                     function () {
                         $.notify('We are sorry, but your login failed', 'error');

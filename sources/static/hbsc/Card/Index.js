@@ -1,4 +1,4 @@
-Ember.TEMPLATES["Vault/Index"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["Card/Index"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, hashTypes, hashContexts, self=this, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
@@ -17,8 +17,8 @@ function program3(depth0,data) {
   hashTypes = {'class': "STRING"};
   options = {hash:{
     'class': ("btn btn-primary")
-  },inverse:self.noop,fn:self.program(4, program4, data),contexts:[depth0,depth0],types:["STRING","ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
-  stack2 = ((stack1 = helpers['link-to'] || depth0['link-to']),stack1 ? stack1.call(depth0, "VaultCreate", "env.workspace.id", options) : helperMissing.call(depth0, "link-to", "VaultCreate", "env.workspace.id", options));
+  },inverse:self.noop,fn:self.program(4, program4, data),contexts:[depth0,depth0,depth0],types:["STRING","ID","ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
+  stack2 = ((stack1 = helpers['link-to'] || depth0['link-to']),stack1 ? stack1.call(depth0, "CardCreate", "env.workspace.id", "env.vault.id", options) : helperMissing.call(depth0, "link-to", "CardCreate", "env.workspace.id", "env.vault.id", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
   data.buffer.push("\r\n\r\n            </div>\r\n        </div>\r\n    ");
   return buffer;
@@ -26,7 +26,7 @@ function program3(depth0,data) {
 function program4(depth0,data) {
   
   
-  data.buffer.push("\r\n                    <span class=\"glyphicon glyphicon-plus\"></span>\r\n                    Create new vault\r\n                ");
+  data.buffer.push("\r\n                    <span class=\"glyphicon glyphicon-plus\"></span>\r\n                    Create new card\r\n                ");
   }
 
 function program6(depth0,data) {
@@ -54,13 +54,13 @@ function program7(depth0,data) {
 function program9(depth0,data) {
   
   var buffer = '', stack1, stack2, hashContexts, hashTypes, options;
-  data.buffer.push("\r\n                <div class=\"jumbotron col-md-8 col-md-offset-2\">\r\n                    <h1>You do not have any vault yet</h1>\r\n\r\n                    <p>\r\n                        What are vaults for? This example is a quick exercise to illustrate how the default, static\r\n                        includes the responsive CSS and HTML, so it also adapts to your viewport and device.\r\n                    </p>\r\n\r\n                    <p class=\"top-30\">\r\n                        ");
+  data.buffer.push("\r\n                <div class=\"jumbotron col-md-8 col-md-offset-2\">\r\n                    <h1>You do not have any card yet</h1>\r\n\r\n                    <p>\r\n                        What are cards for? This example is a quick exercise to illustrate how the default, static\r\n                        includes the responsive CSS and HTML, so it also adapts to your viewport and device.\r\n                    </p>\r\n\r\n                    <p class=\"top-30\">\r\n                        ");
   hashContexts = {'class': depth0};
   hashTypes = {'class': "STRING"};
   options = {hash:{
     'class': ("btn btn-lg btn-primary")
-  },inverse:self.noop,fn:self.program(10, program10, data),contexts:[depth0,depth0],types:["STRING","ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
-  stack2 = ((stack1 = helpers['link-to'] || depth0['link-to']),stack1 ? stack1.call(depth0, "VaultCreate", "env.workspace.id", options) : helperMissing.call(depth0, "link-to", "VaultCreate", "env.workspace.id", options));
+  },inverse:self.noop,fn:self.program(10, program10, data),contexts:[depth0,depth0,depth0],types:["STRING","ID","ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
+  stack2 = ((stack1 = helpers['link-to'] || depth0['link-to']),stack1 ? stack1.call(depth0, "CardCreate", "env.workspace.id", "env.vault.id", options) : helperMissing.call(depth0, "link-to", "CardCreate", "env.workspace.id", "env.vault.id", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
   data.buffer.push("\r\n                    </p>\r\n                </div>\r\n        ");
   return buffer;
@@ -68,7 +68,7 @@ function program9(depth0,data) {
 function program10(depth0,data) {
   
   
-  data.buffer.push("\r\n                            <span class=\"glyphicon glyphicon-plus\"></span>\r\n                            Create new vault\r\n                        ");
+  data.buffer.push("\r\n                            <span class=\"glyphicon glyphicon-plus\"></span>\r\n                            Create new card\r\n                        ");
   }
 
   data.buffer.push("<div class=\"vlt-page-nav\">\r\n\r\n    ");

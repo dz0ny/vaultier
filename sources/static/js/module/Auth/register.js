@@ -20,13 +20,18 @@ var BaseRegisterRoute = Ember.Route.extend({
         ctrl.set('props.route', this);
         this.render('AuthRegister', {controller: this.step});
         this.render(this.step, { into: 'AuthRegister', outlet: 'tab'})
+
+
+        ctrl.set('breadcrumbs',
+            Vaultier.utils.Breadcrumbs.create({router: this.get('router')})
+                .addHome()
+                .addLink('AuthRegister', 'Register')
+        );
     }
 });
 
 var BaseRegisterController = Ember.Controller.extend({
     props: RegisterProps.current(),
-    breadcrumbs: Vaultier.utils.Breadcrumbs.create()
-        .addLink('Auth.register', 'Register')
 });
 
 Vaultier.AuthRegisterView = Ember.View.extend({

@@ -4,12 +4,24 @@ var CreatedUpdatedMixin = Ember.Mixin.create({
 
     updated_ago: function () {
         var u = this.get('updated_at');
-        return moment(u).fromNow();
+        var t;
+        try {
+            t = moment(u).fromNow();
+        } catch (e) {
+            console.error(e.stack)
+        }
+        return t;
     }.property('updated_at'),
 
     created_ago: function () {
-        var u = this.get('updated_at');
-        return moment(u).fromNow();
+        var u = this.get('created_at');
+        var t;
+        try {
+            t = moment(u).fromNow();
+        } catch (e) {
+            console.error(e.stack)
+        }
+        return t;
     }.property('created_at')
 });
 
@@ -25,12 +37,14 @@ Vaultier.AuthenticatedUser = Vaultier.User.extend({
 
 Vaultier.Workspace = DS.Model.extend(CreatedUpdatedMixin, {
     name: DS.attr('string'),
+    vaults: DS.attr('number'),
     description: DS.attr('string'),
     created_by: DS.attr()
 });
 
 Vaultier.Vault = DS.Model.extend(CreatedUpdatedMixin, {
     name: DS.attr('string'),
+    workspace: DS.attr('number'),
     description: DS.attr('string'),
     created_by: DS.attr()
 });

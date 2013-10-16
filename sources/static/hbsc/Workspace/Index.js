@@ -48,7 +48,7 @@ function program5(depth0,data) {
 function program7(depth0,data) {
   
   var buffer = '', stack1, stack2, hashContexts, hashTypes, options;
-  data.buffer.push("\r\n                <div class=\"jumbotron\">\r\n                    <h1>You do not have any workspace yet</h1>\r\n\r\n                    <p>\r\n                        What are workspaces for? This example is a quick exercise to illustrate how the default, static\r\n                        includes the responsive CSS and HTML, so it also adapts to your viewport and device.\r\n                    </p>\r\n\r\n                    <p class=\"top-30\">\r\n                        ");
+  data.buffer.push("\r\n                <div class=\"jumbotron col-md-8 col-md-offset-2\">\r\n                    <h1>You do not have any workspace yet</h1>\r\n\r\n                    <p>\r\n                        What are workspaces for? This example is a quick exercise to illustrate how the default, static\r\n                        includes the responsive CSS and HTML, so it also adapts to your viewport and device.\r\n                    </p>\r\n\r\n                    <p class=\"top-30\">\r\n                        ");
   hashContexts = {'class': depth0};
   hashTypes = {'class': "STRING"};
   options = {hash:{

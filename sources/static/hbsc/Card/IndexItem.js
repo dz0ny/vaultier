@@ -1,4 +1,4 @@
-Ember.TEMPLATES["Vault/IndexItem"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["Card/IndexItem"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, hashTypes, hashContexts, escapeExpression=this.escapeExpression, self=this;
@@ -6,7 +6,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   var buffer = '', hashTypes, hashContexts;
-  data.buffer.push("\r\n    <a href=\"#\" class=\"panel panel-primary pull-left vlt-item vlt-vault-item\">\r\n        <div class=\"panel-icon\">\r\n            <img src=\"/static/images/icon-vault.png\">\r\n        </div>\r\n        <div class=\"panel-header\">\r\n            <h3>");
+  data.buffer.push("\r\n    <a href=\"#\" class=\"panel panel-primary pull-left vlt-item vlt-card-item\">\r\n        <div class=\"panel-icon\">\r\n            <img src=\"/static/images/icon-vault.png\">\r\n        </div>\r\n        <div class=\"panel-header\">\r\n            <h3>");
   hashTypes = {};
   hashContexts = {};
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "name", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));

@@ -14,6 +14,17 @@ Vaultier.WorkspaceCreateRoute = Ember.Route.extend({
         }
     },
 
+    setupController: function (ctrl, model) {
+        this._super(ctrl, model);
+
+        ctrl.set('breadcrumbs',
+            Vaultier.utils.Breadcrumbs.create({router: this.get('router')})
+                .addHome()
+                .addLink('WorkspaceIndex', 'Workspaces')
+                .addLink('WorkspaceCreate', 'Create')
+        )
+    },
+
     model: function (params) {
         var store = this.get('store');
         var record = store.createRecord('Workspace');
@@ -30,10 +41,7 @@ Vaultier.WorkspaceCreateRoute = Ember.Route.extend({
 });
 
 Vaultier.WorkspaceCreateController = Ember.ObjectController.extend({
-    breadcrumbs: Vaultier.utils.Breadcrumbs.create()
-        .addLink('WorkspaceIndex', 'Workspaces')
-        .addLink('WorkspaceCreate', 'Create'),
-
+    breadcrumbs: null
 });
 
 Vaultier.WorkspaceCreateView = Ember.View.extend({

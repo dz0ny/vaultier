@@ -12,9 +12,9 @@
         <div class="vlt-page-toolbar pull-right">
             <div class="btn-group">
 
-                {{#link-to "VaultCreate" env.workspace.id class="btn btn-primary"}}
+                {{#link-to "CardCreate" env.workspace.id env.vault.id class="btn btn-primary"}}
                     <span class="glyphicon glyphicon-plus"></span>
-                    Create new vault
+                    Create new card
                 {{/link-to}}
 
             </div>
@@ -34,17 +34,17 @@
             {{/each}}
         {{else}}
                 <div class="jumbotron col-md-8 col-md-offset-2">
-                    <h1>You do not have any vault yet</h1>
+                    <h1>You do not have any card yet</h1>
 
                     <p>
-                        What are vaults for? This example is a quick exercise to illustrate how the default, static
+                        What are cards for? This example is a quick exercise to illustrate how the default, static
                         includes the responsive CSS and HTML, so it also adapts to your viewport and device.
                     </p>
 
                     <p class="top-30">
-                        {{#link-to "VaultCreate" env.workspace.id class="btn btn-lg btn-primary" }}
+                        {{#link-to "CardCreate" env.workspace.id env.vault.id class="btn btn-lg btn-primary" }}
                             <span class="glyphicon glyphicon-plus"></span>
-                            Create new vault
+                            Create new card
                         {{/link-to}}
                     </p>
                 </div>

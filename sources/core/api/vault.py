@@ -1,34 +1,36 @@
+from rest_framework.fields import IntegerField
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.serializers import ModelSerializer
 from rest_framework.viewsets import ModelViewSet
 from core.api.user import CreatedByUserSerializer
-from core.models import Workspace
+from core.models import Vault
 
 
-class WorkspaceSerializer(ModelSerializer):
+class VaultSerializer(ModelSerializer):
     created_by = CreatedByUserSerializer(required=False)
 
     class Meta:
-        model = Workspace
-        fields = ('id', 'name', 'description', 'created_at', 'updated_at', 'created_by')
+        model = Vault
+        fields = ('id', 'name', 'description','workspace', 'created_at', 'updated_at', 'created_by')
 
-class WorkspaceViewSet(ModelViewSet):
+
+class VaultViewSet(ModelViewSet):
     """
     API endpoint that allows workspaces to be viewed or edited.
     """
-    model = Workspace
+    model = Vault
     permission_classes = (IsAuthenticated,)
-    serializer_class = WorkspaceSerializer
+    serializer_class = VaultSerializer
 
     def pre_save(self, object):
         if object.pk is None:
             object.created_by = self.request.user;
-        return super(WorkspaceViewSet, self).pre_save(object)
+        return super(VaultViewSet, self).pre_save(object)
 
     def get_queryset(self):
         """
         Optionally restricts the returned purchases to a given user,
         by filtering against a `username` query parameter in the URL.
         """
-        queryset = Workspace.objects.filter(created_by=self.request.user)
+        queryset = Vault.objects.filter(created_by=self.request.user)
         return queryset

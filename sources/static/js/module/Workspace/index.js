@@ -3,14 +3,22 @@ Vaultier.WorkspaceIndexRoute = Ember.Route.extend({
         var store = this.get('store');
         var promise = store.find('Workspace');
         return promise;
+    },
+
+    setupController: function (ctrl, model) {
+        this._super(ctrl, model);
+
+        ctrl.set('breadcrumbs',
+            Vaultier.utils.Breadcrumbs.create({router: this.get('router')})
+                .addHome()
+                .addLink('WorkspaceIndex', 'Workspaces')
+        );
     }
+
 });
 
 
 Vaultier.WorkspaceIndexController = Ember.ArrayController.extend({
-    breadcrumbs: Vaultier.utils.Breadcrumbs.create()
-        .addLink('WorkspaceIndex', 'Workspaces'),
-
     actions: {
         createWorkspace: function () {
             this.set('sortAscending', !this.get('sortAscending'));

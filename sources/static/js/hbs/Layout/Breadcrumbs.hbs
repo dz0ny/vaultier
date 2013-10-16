@@ -11,9 +11,9 @@
                         </li>
                     {{else}}
                         <li>
-                            {{#link-to link}}
+                            <a {{bind-attr href=link}}>
                                 {{ title }}
-                            {{/link-to}}
+                            </a>
                         </li>
                     {{/if}}
                 {{/each}}

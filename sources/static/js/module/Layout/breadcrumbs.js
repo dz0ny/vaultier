@@ -1,24 +1,44 @@
 Po.NS('Vaultier.utils');
 
 Vaultier.utils.Breadcrumbs = Ember.Object.extend({
-    init: function () {
-        this._super();
-        this.items = [];
-        this.addLink('index', 'Home')
-    },
 
     items: null,
 
+    normalize: function (params) {
+        var environment = Vaultier.Services.Context.ContextService.current();
+        if (params.workspace == '_env') {
+            params.workspace = environment.workspace.id;
+        }
+        return params;
+    },
+
     addLink: function (link, title, params) {
+        this.items = this.items || [];
         this.items.forEach(function (item) {
             delete item.last
         });
+        try {
+            if (params) {
+                params = this.normalize(params);
+                link = this.router.generate(link, params)
+            } else {
+                link = this.router.generate(link)
+            }
+        } catch (e) {
+            console.error(e.message);
+            console.error('Breadcrumbs error during generate route ('+route+')');
+        }
+
         this.items.push({
             link: link,
-            params: params || {},
             title: title,
             last: true
         })
+        return this;
+    },
+
+    addHome: function () {
+//        this.addLink('index', 'Home');
         return this;
     },
 
@@ -31,3 +51,4 @@ Vaultier.utils.Breadcrumbs = Ember.Object.extend({
     }
 
 })
+

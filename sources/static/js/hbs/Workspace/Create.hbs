@@ -1,16 +1,16 @@
 <div class="row">
     <div class="col-md-12">
 
-        <div class="modal-dialog vlt-tabs-modal vlt-login">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2>Create new workspace</h2>
-                </div>
-                <div class="modal-body">
+        <div class="modal-dialog vlt-tabs-modal">
+            <form>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Create new workspace</h2>
+                    </div>
+                    <div class="modal-body">
 
-                    <div class="col-md-8 col-md-offset-2">
+                        <div class="col-md-8 col-md-offset-2">
 
-                        <form>
                             <div class="form-group" {{bindAttr class='errors.name:has-error'}}>
                                 <label for="workspace-name">Name</label>
                                 {{errors.name}}
@@ -22,21 +22,22 @@
                                 {{errors.description}}
                                 {{view Em.TextArea elementId='workspace-description' valueBinding='content.description' class="form-control" rows=5}}
                             </div>
-                        </form>
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <a href="javascript:window.history.go(-1)" class="btn btn-default btn-sm">
+                            Back
+                        </a>
+                        <button {{ action save}} {{bind-attr disabled=saveDisabled }} class="btn btn-primary">
+                            Create new workspace
+                        </button>
                     </div>
 
-                    <div class="clearfix"></div>
-
                 </div>
-                <div class="modal-footer">
-                    <a href="javascript:window.history.go(-1)" class="btn btn-default btn-sm">
-                        Back
-                    </a>
-                    <button {{ action save}} {{bind-attr disabled=saveDisabled }} class="btn btn-primary">
-                        Create new workspace
-                    </button>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>

@@ -1,8 +1,8 @@
-Vaultier.VaultIndexRoute = Ember.Route.extend({
+Vaultier.CardIndexRoute = Ember.Route.extend({
     actions: {
         create: function () {
             var record = this.get('store').createRecord('vault');
-            var controller = this.controllerFor('VaultCreate');
+            var controller = this.controllerFor('CardCreate');
 
             controller.openModal({
                 record: record,
@@ -19,37 +19,37 @@ Vaultier.VaultIndexRoute = Ember.Route.extend({
             Vaultier.utils.Breadcrumbs.create({router: this.get('router')})
                 .addHome()
                 .addCurrentWorkspace()
-                .addLink('VaultIndex', 'List of vaults', {workspace: '_env'})
+                .addLink('CardIndex', 'List of vaults', {workspace: '_env'})
         )
     },
 
     model: function (params, queryParams) {
         return Vaultier.Services.Context.ContextService.current().executeRoute(this, params, queryParams).then(function () {
             var store = this.get('store');
-            return store.find('Vault');
+            return store.find('Card');
         }.bind(this));
     }
 });
 
 
-Vaultier.VaultIndexController = Ember.ArrayController.extend({
+Vaultier.CardIndexController = Ember.ArrayController.extend({
     sortProperties: ['name'],
     sortAscending: true,
     actions: {
-        createVault: function () {
+        createCard: function () {
             this.set('sortAscending', !this.get('sortAscending'));
         }
     }
 });
 
 
-Vaultier.VaultIndexView = Ember.View.extend({
-    templateName: 'Vault/Index',
+Vaultier.CardIndexView = Ember.View.extend({
+    templateName: 'Card/Index',
     layoutName: 'Layout/LayoutStandard'
-//    controller: Vaultier.VaultListController
+//    controller: Vaultier.CardListController
 });
 
 
-Vaultier.VaultIndexItemView = Ember.View.extend({
-    templateName: 'Vault/IndexItem'
+Vaultier.CardIndexItemView = Ember.View.extend({
+    templateName: 'Card/IndexItem'
 });

@@ -1,4 +1,4 @@
-Vaultier.VaultCreateRoute = Ember.Route.extend({
+Vaultier.CardCreateRoute = Ember.Route.extend({
     actions: {
         save: function () {
             var workspace =  Vaultier.Services.Context.ContextService.current().workspace;
@@ -8,7 +8,7 @@ Vaultier.VaultCreateRoute = Ember.Route.extend({
             record.save().then(
                 function () {
                     $.notify('Your vault has been successfully created.', 'success');
-                    this.transitionTo('VaultIndex', workspace.id);
+                    this.transitionTo('CardIndex', workspace.id);
                 }.bind(this),
                 function () {
                     $.notify('Oooups! Something went wrong.', 'error');
@@ -25,14 +25,14 @@ Vaultier.VaultCreateRoute = Ember.Route.extend({
             Vaultier.utils.Breadcrumbs.create({router: this.get('router')})
                 .addHome()
                 .addCurrentWorkspace()
-                .addLink('VaultCreate', 'Create new vault', { workspace: '_env'})
+                .addLink('CardCreate', 'Create new vault', { workspace: '_env'})
         )
     },
 
     model: function (params, queryParams) {
         return Vaultier.Services.Context.ContextService.current().executeRoute(this, params, queryParams).then(function () {
             var store = this.get('store');
-            var record = store.createRecord('Vault');
+            var record = store.createRecord('Card');
             return record;
         }.bind(this));
     },
@@ -46,12 +46,12 @@ Vaultier.VaultCreateRoute = Ember.Route.extend({
     }
 });
 
-Vaultier.VaultCreateController = Ember.ObjectController.extend({
+Vaultier.CardCreateController = Ember.ObjectController.extend({
     breadcrumbs: null,
     env: null
 });
 
-Vaultier.VaultCreateView = Ember.View.extend({
-    templateName: 'Vault/Create',
+Vaultier.CardCreateView = Ember.View.extend({
+    templateName: 'Card/Create',
     layoutName: 'Layout/LayoutStandard'
 });

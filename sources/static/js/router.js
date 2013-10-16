@@ -5,7 +5,6 @@ Vaultier.Router.map(function () {
      ************************************************************/
     this.route('HomeIndex', { path: '/home' });
 
-
     /************************************************************
      * REGISTRATION
      ************************************************************/
@@ -30,15 +29,23 @@ Vaultier.Router.map(function () {
      * Workspace
      ************************************************************/
 
-    this.route('WorkspaceCreate', { path: '/workspaces/create'});
-    this.route('WorkspaceIndex', { path: '/workspaces'});
+    this.route('WorkspaceCreate', { path: '/workspaces/create-workspace'});
+    this.route('WorkspaceIndex', { path: '/workspaces/select-workspace'});
 
 
     /************************************************************
      * Vault
      ************************************************************/
 
-    this.route('VaultIndex', { path: '/workspace/:workspace/index', queryParams: ['sort']});
+    this.route('VaultIndex', { path: '/w/:workspace/list-of-vaults', queryParams: ['sort']});
+    this.route('VaultCreate', { path: '/w/:workspace/create-vault'});
+
+    /************************************************************
+     * Card
+     ************************************************************/
+
+    this.route('CardIndex', { path: '/w/:workspace/v/:vault/list-of-cards', queryParams: ['sort']});
+    this.route('CardCreate', { path: '/w/:workspace/v/:vault/create-card'});
 
     /************************************************************
      * System and error routes
@@ -46,13 +53,6 @@ Vaultier.Router.map(function () {
     this.route("HomeFourZeroFour", { path: "*path"});
 });
 
-Vaultier.ApplicationRoute = Ember.Route.extend({
-    model: function () {
-        var auth = Vaultier.Services.Auth.AuthService.current();
-        var status = auth.status()
-        return status;
-    }
-});
 
 Vaultier.IndexRoute = Ember.Route.extend({
     redirect: function () {
@@ -65,7 +65,13 @@ Vaultier.IndexRoute = Ember.Route.extend({
     }
 });
 
-
+Vaultier.ApplicationRoute = Ember.Route.extend({
+    model: function () {
+        var auth = Vaultier.Services.Auth.AuthService.current();
+        var status = auth.status()
+        return status;
+    }
+});
 
 
 /**
