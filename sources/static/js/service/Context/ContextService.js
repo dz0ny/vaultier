@@ -24,7 +24,11 @@ Vaultier.Services.Context.ContextService = Ember.Object.extend({
     },
 
     reloadVault: function () {
-        // todo same as workspace
+        if (this.params.vault) {
+            return this.route.get('store').find('Vault', this.params.vault).then(function(vault) {
+                this.set('vault', vault)
+            }.bind(this))
+        }
     },
 
     reloadWorkspace: function () {

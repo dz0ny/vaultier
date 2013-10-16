@@ -32,5 +32,6 @@ class VaultViewSet(ModelViewSet):
         Optionally restricts the returned purchases to a given user,
         by filtering against a `username` query parameter in the URL.
         """
-        queryset = Vault.objects.filter(created_by=self.request.user)
+        # queryset = Vault.objects.filter(created_by=self.request.user)
+        queryset = Vault.objects.all()
         return queryset

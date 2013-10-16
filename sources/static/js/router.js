@@ -43,14 +43,71 @@ Vaultier.Router.map(function () {
     /************************************************************
      * Card
      ************************************************************/
+//    this.route('CardIndex',  { path: '/w/:workspace/v/:vault/list-of-cards', queryParams: ['sort']});
+//    this.route('CardCreate', { path: '/w/:workspace/v/:vault/create-card'});
 
-    this.route('CardIndex', { path: '/w/:workspace/v/:vault/list-of-cards', queryParams: ['sort']});
-    this.route('CardCreate', { path: '/w/:workspace/v/:vault/create-card'});
+    this.resource('Test', {path: '/test'}, function () {
+        this.resource('Workspace', {path: '/:workspace'}, function () {
+            this.resource('Vault', {path: '/:vault'}, function () {
+                this.route('list', { path: '/list-cards'});
+                this.route('Create', { path: '/create-card'});
+            })
+        })
+    });
 
     /************************************************************
      * System and error routes
      ************************************************************/
     this.route("HomeFourZeroFour", { path: "*path"});
+});
+
+
+Vaultier.TestRoute = Ember.Route.extend({
+
+    model: function(params) {
+        return {
+            test: true
+        }
+    },
+
+    setupController : function(ctrl) {
+        ctrl.set('data.value', 'c:test');
+    }
+
+});
+
+Vaultier.TestController = Ember.Controller.extend({
+    data: {}
+});
+
+Vaultier.TestView = Ember.View.extend({
+    templateName: 'Test/Test'
+});
+
+
+Vaultier.WorkspaceRoute = Ember.Route.extend({
+
+    renderTemplate : function() {
+        this.render('Workspace', {outlet: 'test'})
+    },
+
+    setupController : function(ctrl) {
+        ctrl.set('data.value', 'c:workspace');
+    },
+    model: function(params) {
+        return {
+            workspace: true
+        }
+    }
+
+});
+
+Vaultier.WorkspaceController = Ember.Controller.extend({
+    data: {},
+})
+
+Vaultier.WorkspaceView = Ember.View.extend({
+    templateName: 'Test/Workspace'
 });
 
 

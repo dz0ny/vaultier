@@ -1,9 +1,9 @@
 Vaultier.CardCreateRoute = Ember.Route.extend({
     actions: {
         save: function () {
-            var workspace =  Vaultier.Services.Context.ContextService.current().workspace;
+            var vault =  Vaultier.Services.Context.ContextService.current().vault;
             var record = this.get('controller.content');
-            record.set('workspace', workspace.id);
+            record.set('vault', vault.id);
 
             record.save().then(
                 function () {
@@ -14,6 +14,13 @@ Vaultier.CardCreateRoute = Ember.Route.extend({
                     $.notify('Oooups! Something went wrong.', 'error');
                 }
             )
+        }
+    },
+
+    serialize : function(vault) {
+        return {
+            workspace: Vaultier.Services.Context.ContextService.current().workspace.id,
+            vault: vault.id
         }
     },
 
@@ -33,6 +40,7 @@ Vaultier.CardCreateRoute = Ember.Route.extend({
         return Vaultier.Services.Context.ContextService.current().executeRoute(this, params, queryParams).then(function () {
             var store = this.get('store');
             var record = store.createRecord('Card');
+            console.log(record);
             return record;
         }.bind(this));
     },

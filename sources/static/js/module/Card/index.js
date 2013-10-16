@@ -1,26 +1,53 @@
 Vaultier.CardIndexRoute = Ember.Route.extend({
-    actions: {
-        create: function () {
-            var record = this.get('store').createRecord('vault');
-            var controller = this.controllerFor('CardCreate');
+//    actions: {
+//        create: function () {
+//            var record = this.get('store').createRecord('vault');
+//            var controller = this.controllerFor('CardCreate');
+//
+//            controller.openModal({
+//                record: record,
+//                route: this
+//            })
+//        }
+//    },
+//    setupController: function (ctrl, model) {
+//        this._super(ctrl, model);
+//
+//        ctrl.set('env', Vaultier.Services.Context.ContextService.current());
+//
+//        ctrl.set('breadcrumbs',
+//            Vaultier.utils.Breadcrumbs.create({router: this.get('router')})
+//                .addHome()
+//                .addCurrentWorkspace()
+//                .addLink('CardIndex', 'List of vaults', {workspace: '_env'})
+//        )
+//    },
 
-            controller.openModal({
-                record: record,
-                route: this
-            })
+    setupController: function() {
+
+        return Ember.RSVP.Promise(function(resolve) {
+  //          resolve();
+        });
+
+    },
+
+    serialize : function(vault) {
+        return {
+            workspace: Vaultier.Services.Context.ContextService.current().workspace.id,
+            vault: vault.id
         }
     },
-    setupController: function (ctrl, model) {
-        this._super(ctrl, model);
 
-        ctrl.set('env', Vaultier.Services.Context.ContextService.current());
+    beforeModel: function(queryParams, transition) {
+        console.log(transition);
+    },
 
-        ctrl.set('breadcrumbs',
-            Vaultier.utils.Breadcrumbs.create({router: this.get('router')})
-                .addHome()
-                .addCurrentWorkspace()
-                .addLink('CardIndex', 'List of vaults', {workspace: '_env'})
-        )
+    afterModel: function(a,b,transition) {
+        console.log(transition);
+
+        return Ember.RSVP.Promise(function(resolve) {
+            resolve();
+        });
     },
 
     model: function (params, queryParams) {
@@ -45,7 +72,7 @@ Vaultier.CardIndexController = Ember.ArrayController.extend({
 
 Vaultier.CardIndexView = Ember.View.extend({
     templateName: 'Card/Index',
-    layoutName: 'Layout/LayoutStandard'
+//    layoutName: 'Layout/LayoutStandard'
 //    controller: Vaultier.CardListController
 });
 
