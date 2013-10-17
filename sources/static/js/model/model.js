@@ -52,8 +52,8 @@ Vaultier.Vault = DS.Model.extend(CreatedUpdatedMixin, {
 
 Vaultier.Card = DS.Model.extend(CreatedUpdatedMixin, {
     name: DS.attr('string'),
-    vault: DS.attr('number'),
     description: DS.attr('string'),
+    vault: DS.attr('number'),
     created_by: DS.attr()
 });
 

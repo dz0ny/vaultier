@@ -23,7 +23,6 @@ class Vault(models.Model):
         db_table = u'vaultier_vault'
 
 class Card(models.Model):
-    id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=255)
     description = models.CharField(max_length=1024, blank=True, null=True)
     vault = models.ForeignKey('core.Vault',  on_delete=CASCADE)

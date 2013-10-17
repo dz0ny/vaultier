@@ -24,7 +24,7 @@ class CardViewSet(ModelViewSet):
     def pre_save(self, object):
         if object.pk is None:
             object.created_by = self.request.user;
-        return super(VaultViewSet, self).pre_save(object)
+        return super(CardViewSet, self).pre_save(object)
 
     def get_queryset(self):
         """
