@@ -1,126 +1,66 @@
 Vaultier.Router.map(function () {
 
+
     /************************************************************
-     * Home
+     * System and error routes
      ************************************************************/
-    this.route('HomeIndex', { path: '/home' });
+
+    this.resource('Home', {path: '/home'}, function () {
+        //this.route('about', { path: '/about'});
+    })
+
+    this.route("HomeFourZeroFour", { path: "*path"});
 
     /************************************************************
      * REGISTRATION
      ************************************************************/
 
-    this.route('AuthRegister', { path: '/auth/register' });
-    this.route('AuthRegisterBefore', { path: '/auth/register/overview' });
-    this.route('AuthRegisterKeys', { path: '/auth/register/generate-keys' });
-    this.route('AuthRegisterCreds', { path: '/auth/register/submit-credentials' });
-    this.route('AuthRegisterSum', { path: '/auth/register/registration-done' });
+    this.resource('AuthRegister', {path: '/auth/register'}, function () {
+        this.route('before', { path: 'overview' });
+        this.route('keys', { path: 'generate-keys' });
+        this.route('creds', { path: 'submit-credentials' });
+        this.route('sum', { path: '/registration-done' });
+    })
 
 
     /************************************************************
      * Login
      ************************************************************/
 
-    this.route('AuthLogin', { path: '/auth/login' });
-    this.route('AuthLoginSwitch', { path: '/auth/login/switch-user' });
-    this.route('AuthLoginLatest', { path: '/auth/login/latest-user' });
+    this.resource('AuthLogin', {path: '/auth/login'}, function () {
+        this.route('switch', { path: '/switch-user' });
+        this.route('latest', { path: '/latest-user' });
+    })
 
 
     /************************************************************
-     * Workspace
+     * Workspaces
      ************************************************************/
+    this.resource('Workspace', {path: '/manage'}, function () {
+        // automatic Workspace.index
+        this.route('create', { path: '/action/create-workspace'});
 
-    this.route('WorkspaceCreate', { path: '/workspaces/create-workspace'});
-    this.route('WorkspaceIndex', { path: '/workspaces/select-workspace'});
+        /************************************************************
+         * Vaults
+         ************************************************************/
+        this.resource('Vault', {path: '/workspace/:workspace'}, function () {
+            // automatic Vault.index
+            this.route('create', { path: '/action/create-vault'});
 
+            /************************************************************
+             * Cards
+             ************************************************************/
+            this.resource('Card', {path: '/vault/:vault'}, function () {
+                // automatic Card.index
+                this.route('create', { path: '/create-card'});
+            });
 
-    /************************************************************
-     * Vault
-     ************************************************************/
-
-    this.route('VaultIndex', { path: '/w/:workspace/list-of-vaults', queryParams: ['sort']});
-    this.route('VaultCreate', { path: '/w/:workspace/create-vault'});
-
-    /************************************************************
-     * Card
-     ************************************************************/
-//    this.route('CardIndex',  { path: '/w/:workspace/v/:vault/list-of-cards', queryParams: ['sort']});
-//    this.route('CardCreate', { path: '/w/:workspace/v/:vault/create-card'});
-
-    this.resource('Test', {path: '/test'}, function () {
-        this.resource('Workspace', {path: '/:workspace'}, function () {
-            this.resource('Vault', {path: '/:vault'}, function () {
-                this.route('list', { path: '/list-cards'});
-                this.route('Create', { path: '/create-card'});
-            })
         })
+
     });
 
-    /************************************************************
-     * System and error routes
-     ************************************************************/
-    this.route("HomeFourZeroFour", { path: "*path"});
-});
-
-
-Vaultier.TestRoute = Ember.Route.extend({
-
-    model: function(params) {
-        return {
-            test: true
-        }
-    },
-
-    setupController : function(ctrl) {
-        ctrl.set('data.value', 'c:test');
-    }
-
-});
-
-Vaultier.TestController = Ember.Controller.extend({
-    data: {}
-});
-
-Vaultier.TestView = Ember.View.extend({
-    templateName: 'Test/Test'
-});
-
-
-Vaultier.WorkspaceRoute = Ember.Route.extend({
-
-    renderTemplate : function() {
-        this.render('Workspace', {outlet: 'test'})
-    },
-
-    setupController : function(ctrl) {
-        ctrl.set('data.value', 'c:workspace');
-    },
-    model: function(params) {
-        return {
-            workspace: true
-        }
-    }
-
-});
-
-Vaultier.WorkspaceController = Ember.Controller.extend({
-    data: {},
 })
-
-Vaultier.WorkspaceView = Ember.View.extend({
-    templateName: 'Test/Workspace'
-});
-
-
-Vaultier.IndexRoute = Ember.Route.extend({
-    redirect: function () {
-        var auth = Vaultier.Services.Auth.AuthService.current();
-        if (auth.get('isAuthenticated')) {
-            return this.transitionTo('WorkspaceIndex');
-        } else {
-            return this.transitionTo('HomeIndex');
-        }
-    }
-});
+;
 
 Vaultier.ApplicationRoute = Ember.Route.extend({
     model: function () {
@@ -130,39 +70,14 @@ Vaultier.ApplicationRoute = Ember.Route.extend({
     }
 });
 
+Vaultier.IndexRoute = Ember.Route.extend({
+    redirect: function () {
+        var auth = Vaultier.Services.Auth.AuthService.current();
+        if (auth.get('isAuthenticated')) {
+            return this.transitionTo('Workspace.index');
+        } else {
+            return this.transitionTo('Home.index');
+        }
+    }
+});
 
-/**
- * This is our parent route for whole application
- * - preloads or use preloaded all shared resources - like user and workspace
- */
-//Ember.Route = Ember.Route.extend({
-//    model: function (childPromise) {
-//
-//        var store = this.get('store');
-//
-//        if (!Vaultier.currentUser) {
-//            Vaultier.currentUser = store.find('workspace');
-//        }
-//        if (!Vaultier.currentWorkspace) {
-//            Vaultier.currentWorkspace = store.find('workspace');
-//        }
-//
-//        var promise = Ember.RSVP.Promise(function (resolve, reject) {
-//
-//            Ember.RSVP.hash({
-//                user: Vaultier.currentUser,
-//                workspace: Vaultier.currentWorkspace,
-//                child: childPromise
-//            }).then(function (promise) {
-//                    //@todo: when everything went well, we have currentUser and currentWorkspace
-//                    resolve(promise.child);
-//                }, function (error) {
-//                    console.error('Error during initialization of currentWorkspace and currentUser');
-//                    //@todo: shit happened
-//                    reject(error);
-//                })
-//        });
-//
-//        return promise;
-//    }
-//})

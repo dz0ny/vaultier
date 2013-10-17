@@ -1,0 +1,18 @@
+{{#if auth.isAuthenticated}}
+    <div class="panel panel-default vlt-security-box dropdown pull-right">
+        <img class="vlt-avatar" src="http://www.gravatar.com/avatar/{{ avatar }}">
+
+        <a href="#" class="vlt-username dropdown-toggle" data-toggle="dropdown">
+            {{auth.user.nickname}}
+        </a>
+
+        <ul class="dropdown-menu caret-right vlt-dropdown">
+            <li><a {{ action logout target=view }}  href="#">Logout</a></li>
+        </ul>
+    </div>
+{{else}}
+    <div class=" vlt-security-box pull-right">
+       {{#link-to 'AuthLogin' class="btn btn-primary btn-sm" }}Login{{/link-to}}
+       {{#link-to 'AuthRegister' class="btn btn-default btn-sm" }}Create an account{{/link-to}}
+    </div>
+{{/if}}

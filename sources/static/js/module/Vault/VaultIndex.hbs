@@ -1,0 +1,55 @@
+<div class="vlt-page-nav">
+
+    {{#if aaa}}
+        <ul class="vlt-page-tabs nav nav-tabs">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#">Profile</a></li>
+            <li><a href="#">Messages</a></li>
+        </ul>
+    {{/if}}
+
+    {{#if length}}
+        <div class="vlt-page-toolbar pull-right">
+            <div class="btn-group">
+
+                {{#link-to "Vault.create" workspace class="btn btn-primary"}}
+                    <span class="glyphicon glyphicon-plus"></span>
+                    Create new vault
+                {{/link-to}}
+
+            </div>
+        </div>
+    {{/if}}
+
+    <div class="clearfix"></div>
+
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+
+        {{#if length}}
+            {{#each}}
+                {{view Vaultier.VaultIndexItemView}}
+            {{/each}}
+        {{else}}
+                <div class="jumbotron col-md-8 col-md-offset-2">
+                    <h1>You do not have any vault yet</h1>
+
+                    <p>
+                        What are vaults for? This example is a quick exercise to illustrate how the default, static
+                        includes the responsive CSS and HTML, so it also adapts to your viewport and device.
+                    </p>
+
+                    <p class="top-30">
+                        {{#link-to "Vault.create" workspace class="btn btn-lg btn-primary" }}
+                            <span class="glyphicon glyphicon-plus"></span>
+                            Create new vault
+                        {{/link-to}}
+                    </p>
+                </div>
+        {{/if}}
+
+    </div>
+</div>
+

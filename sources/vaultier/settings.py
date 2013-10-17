@@ -124,9 +124,9 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
 )
 
-EMBER_TPL_DIR = os.path.join(PROJECT_ROOT, 'static/js/hbs');
+EMBER_TPL_DIR = os.path.join(PROJECT_ROOT, 'static/js/module');
 
-EMBER_TPL_CMPDIR = os.path.join(PROJECT_ROOT, 'static/hbsc');
+EMBER_TPL_CMPDIR = os.path.join(PROJECT_ROOT, 'static/tpl');
 
 EMBER_TPL_MASK = "\w+.hbs$"
 

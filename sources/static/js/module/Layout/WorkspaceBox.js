@@ -1,7 +1,14 @@
 Po.NS('Vaultier.Layout');
 
-Vaultier.LayoutWorkspaceBoxController = Ember.ObjectController.extend({
-    data: Vaultier.Services.Context.ContextService.current()
+Vaultier.LayoutWorkspaceBoxController = Ember.Controller.extend({
+
+    env: null,
+
+    init: function () {
+        this._super();
+        this.env = Service.Environment.current();
+    }
+
 })
 
 Vaultier.LayoutWorkspaceBoxView = Ember.View.extend({

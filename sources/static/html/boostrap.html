@@ -74,49 +74,48 @@
 
     {############# layouts #}
 
-    <script src="{% static 'hbsc/Layout/SecurityBox.js' %}"></script>
-    <script src="{% static 'hbsc/Layout/WorkspaceBox.js' %}"></script>
-    <script src="{% static 'hbsc/Layout/Breadcrumbs.js' %}"></script>
-    <script src="{% static 'hbsc/Layout/LayoutStandard.js' %}"></script>
-    <script src="{% static 'hbsc/Layout/LayoutWindow.js' %}"></script>
+    <script src="{% static 'tpl/Layout/SecurityBox.js' %}"></script>
+    <script src="{% static 'tpl/Layout/WorkspaceBox.js' %}"></script>
+    <script src="{% static 'tpl/Layout/Breadcrumbs.js' %}"></script>
+    <script src="{% static 'tpl/Layout/LayoutStandard.js' %}"></script>
 
     {############# home and system #}
-    <script src="{% static 'hbsc/Home/Index.js' %}"></script>
-    <script src="{% static 'hbsc/Home/FourZeroFour.js' %}"></script>
+    <script src="{% static 'tpl/Home/HomeIndex.js' %}"></script>
+    <script src="{% static 'tpl/Home/HomeFourZeroFour.js' %}"></script>
 
-    {############# workspace #}
-    <script src="{% static 'hbsc/Workspace/Index.js' %}"></script>
-    <script src="{% static 'hbsc/Workspace/IndexItem.js' %}"></script>
-    <script src="{% static 'hbsc/Workspace/Create.js' %}"></script>
+    {############ auth #}
+    <script src="{% static 'tpl/Auth/AuthLogin.js' %}"></script>
+    <script src="{% static 'tpl/Auth/AuthLoginLatest.js' %}"></script>
+    <script src="{% static 'tpl/Auth/AuthLoginSwitch.js' %}"></script>
+    <script src="{% static 'tpl/Auth/AuthRegister.js' %}"></script>
+    <script src="{% static 'tpl/Auth/AuthRegisterBefore.js' %}"></script>
+    <script src="{% static 'tpl/Auth/AuthRegisterKeys.js' %}"></script>
+    <script src="{% static 'tpl/Auth/AuthRegisterCreds.js' %}"></script>
+    <script src="{% static 'tpl/Auth/AuthRegisterSum.js' %}"></script>
+
+   {############ workspace #}
+    <script src="{% static 'tpl/Workspace/WorkspaceIndex.js' %}"></script>
+    <script src="{% static 'tpl/Workspace/WorkspaceIndexItem.js' %}"></script>
+    <script src="{% static 'tpl/Workspace/WorkspaceCreate.js' %}"></script>
 
     {############# vault #}
 
-    <script src="{% static 'hbsc/Vault/Index.js' %}"></script>
-    <script src="{% static 'hbsc/Vault/IndexItem.js' %}"></script>
-    <script src="{% static 'hbsc/Vault/Create.js' %}"></script>
+    <script src="{% static 'tpl/Vault/VaultIndex.js' %}"></script>
+    <script src="{% static 'tpl/Vault/VaultIndexItem.js' %}"></script>
+    <script src="{% static 'tpl/Vault/VaultCreate.js' %}"></script>
 
     {############# card #}
 
-    <script src="{% static 'hbsc/Card/Index.js' %}"></script>
-    <script src="{% static 'hbsc/Card/IndexItem.js' %}"></script>
-    <script src="{% static 'hbsc/Card/Create.js' %}"></script>
+    <script src="{% static 'tpl/Card/CardIndex.js' %}"></script>
+    <script src="{% static 'tpl/Card/CardIndexItem.js' %}"></script>
+    <script src="{% static 'tpl/Card/CardCreate.js' %}"></script>
 
-
-    {############# auth #}
-    <script src="{% static 'hbsc/Auth/Login.js' %}"></script>
-    <script src="{% static 'hbsc/Auth/LoginLatest.js' %}"></script>
-    <script src="{% static 'hbsc/Auth/LoginSwitch.js' %}"></script>
-    <script src="{% static 'hbsc/Auth/Register.js' %}"></script>
-    <script src="{% static 'hbsc/Auth/RegisterBefore.js' %}"></script>
-    <script src="{% static 'hbsc/Auth/RegisterKeys.js' %}"></script>
-    <script src="{% static 'hbsc/Auth/RegisterCreds.js' %}"></script>
-    <script src="{% static 'hbsc/Auth/RegisterSum.js' %}"></script>
 
     {############# test #}
-    <script src="{% static 'hbsc/Test/Test.js' %}"></script>
-    <script src="{% static 'hbsc/Test/Workspace.js' %}"></script>
-    <script src="{% static 'hbsc/Test/Vault.js' %}"></script>
-    <script src="{% static 'hbsc/Test/List.js' %}"></script>
+{#    <script src="{% static 'tpl/Test/Test.js' %}"></script>#}
+{#    <script src="{% static 'tpl/Test/Workspace.js' %}"></script>#}
+{#    <script src="{% static 'tpl/Test/Vault.js' %}"></script>#}
+{#    <script src="{% static 'tpl/Test/List.js' %}"></script>#}
 
 
     {####################################################################}
@@ -126,7 +125,6 @@
     <script src="{% static 'js/utils/Pohon.js' %}"></script>
     <script src="{% static 'js/utils/Singleton.js' %}"></script>
     <script src="{% static 'js/utils/HandlebarsHelpers.js' %}"></script>
-    <script src="{% static 'js/utils/ObjectModalController.js' %}"></script>
 
     {####################################################################}
     {# application#}
@@ -136,7 +134,7 @@
 
     {############# services #}
 
-    <script src="{% static 'js/service/Context/ContextService.js' %}"></script>
+    <script src="{% static 'js/service/Environment.js' %}"></script>
     <script src="{% static 'js/service/Auth/SessionService.js' %}"></script>
     <script src="{% static 'js/service/Auth/AuthService.js' %}"></script>
 
@@ -144,31 +142,30 @@
     <script src="{% static 'js/model/model.js' %}"></script>
 
     {############# Layout #}
-    <script src="{% static 'js/module/Layout/layout.js' %}"></script>
+    <script src="{% static 'js/module/Layout/LayoutStandard.js' %}"></script>
     <script src="{% static 'js/module/Layout/SecurityBox.js' %}"></script>
     <script src="{% static 'js/module/Layout/breadcrumbs.js' %}"></script>
     <script src="{% static 'js/module/Layout/WorkspaceBox.js' %}"></script>
 
     {############# Home and system#}
-    <script src="{% static 'js/module/Home/index.js' %}"></script>
-    <script src="{% static 'js/module/Home/system.js' %}"></script>
-
-    {############# Workspace #}
-    <script src="{% static 'js/module/Workspace/index.js' %}"></script>
-    <script src="{% static 'js/module/Workspace/create.js' %}"></script>
-
-    {############# Vault #}
-    <script src="{% static 'js/module/Vault/index.js' %}"></script>
-    <script src="{% static 'js/module/Vault/create.js' %}"></script>
-
-    {############# Card #}
-    <script src="{% static 'js/module/Card/index.js' %}"></script>
-    <script src="{% static 'js/module/Card/create.js' %}"></script>
-
+    <script src="{% static 'js/module/Home/HomeIndex.js' %}"></script>
+    <script src="{% static 'js/module/Home/HomeFourZeroFour.js' %}"></script>
 
     {############# Auth #}
-    <script src="{% static 'js/module/Auth/login.js' %}"></script>
-    <script src="{% static 'js/module/Auth/register.js' %}"></script>
+    <script src="{% static 'js/module/Auth/AuthLogin.js' %}"></script>
+    <script src="{% static 'js/module/Auth/AuthRegister.js' %}"></script>
+
+    {############# Workspace #}
+    <script src="{% static 'js/module/Workspace/WorkspaceIndex.js' %}"></script>
+    <script src="{% static 'js/module/Workspace/WorkspaceCreate.js' %}"></script>
+
+    {############# Vault #}
+    <script src="{% static 'js/module/Vault/VaultIndex.js' %}"></script>
+    <script src="{% static 'js/module/Vault/VaultCreate.js' %}"></script>
+
+    {############# Card #}
+    <script src="{% static 'js/module/Card/CardIndex.js' %}"></script>
+    <script src="{% static 'js/module/Card/CardCreate.js' %}"></script>
 
     {############# Router #}
     <script src="{% static 'js/router.js' %}"></script>
