@@ -9,21 +9,31 @@
 
         <ul class="dropdown-menu caret-right">
             <li>
+                {{#linkTo 'Vault.index' env.workspace.id }}
+                    Go to workspace dashboard
+                {{/linkTo}}
+            </li>
+
+            <li>
                 {{#linkTo 'Home.index'}}
                     Setup workspace
                 {{/linkTo}}
             </li>
+
             <li class="divider"></li>
-            <li>
-                {{#linkTo 'Workspace.create'}}
-                    Create new workspace
-                {{/linkTo}}
-            </li>
+
             <li>
                 {{#linkTo 'Workspace.index'}}
                     Switch to another workspace
                 {{/linkTo}}
+            </li>
 
+            <li class="divider"></li>
+
+            <li>
+                {{#linkTo 'Workspace.create'}}
+                    Create new workspace
+                {{/linkTo}}
             </li>
         </ul>
     </div>

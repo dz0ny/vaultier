@@ -28,14 +28,14 @@ Vaultier.VaultCreateRoute = Ember.Route.extend({
         this.set('workspace', workspace);
         this.get('controller').set('workspace', workspace);
 
-//
-//        ctrl.set('env', Vaultier.Services.Context.ContextService.current());
-//        ctrl.set('breadcrumbs',
-//            Vaultier.utils.Breadcrumbs.create({router: this.get('router')})
-//                .addHome()
-//                .addCurrentWorkspace()
-//                .addLink('VaultCreate', 'Create new vault', { workspace: '_env'})
-//        )
+        // set breadcrumbs
+        ctrl.set('breadcrumbs',
+            Vaultier.Breadcrumbs.create({router: this.get('router')})
+                .addHome()
+                .addWorkspace()
+                .addText('Create new vault')
+        )
+
     },
 
     model: function (params, queryParams) {

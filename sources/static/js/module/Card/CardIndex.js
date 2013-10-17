@@ -19,16 +19,27 @@ Vaultier.CardRoute = Ember.Route.extend({
 Vaultier.CardIndexRoute = Ember.Route.extend({
 
     setupController: function (ctrl, model) {
-        this._super(ctrl, model);
-//
-//        ctrl.set('env', Vaultier.Services.Context.ContextService.current());
-//
-//        ctrl.set('breadcrumbs',
-//            Vaultier.utils.Breadcrumbs.create({router: this.get('router')})
-//                .addHome()
-//                .addCurrentWorkspace()
-//                .addLink('CardIndex', 'List of cards', {workspace: '_env'})
-//        )
+        ctrl.set('content', model);
+
+
+        // retrieve workspace
+        var workspace = this.modelFor('Vault');
+        this.set('workspace', workspace);
+        ctrl.set('workspace', workspace);
+
+        // retrieve vault
+        var vault = this.modelFor('Card');
+        this.set('vault', vault);
+        ctrl.set('vault', vault);
+
+        // set breadcrumbs
+        ctrl.set('breadcrumbs',
+            Vaultier.Breadcrumbs.create({router: this.get('router')})
+                .addHome()
+                .addWorkspace()
+                .addVault()
+                .addText('List of cards')
+        )
     },
 
     model: function (params, queryParams) {
@@ -39,6 +50,8 @@ Vaultier.CardIndexRoute = Ember.Route.extend({
 
 
 Vaultier.CardIndexController = Ember.ArrayController.extend({
+    workspace: null,
+    vault: null,
     sortProperties: ['name'],
     sortAscending: true,
     actions: {

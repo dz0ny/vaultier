@@ -37,7 +37,17 @@ Vaultier.VaultIndexRoute = Ember.Route.extend({
         var workspace = this.modelFor('Vault');
         this.set('workspace', workspace);
         ctrl.set('workspace', workspace);
-    },
+
+        // set breadcrumbs
+        ctrl.set('breadcrumbs',
+            Vaultier.Breadcrumbs.create({router: this.get('router')})
+                .addHome()
+                .addWorkspace()
+                .addText('List of vaults')
+        )
+
+
+    }
 
 });
 
@@ -45,6 +55,7 @@ Vaultier.VaultIndexRoute = Ember.Route.extend({
 Vaultier.VaultIndexController = Ember.ArrayController.extend({
     sortProperties: ['name'],
     sortAscending: true,
+    breadcrumbs: null,
     actions: {
         createVault: function () {
             this.set('sortAscending', !this.get('sortAscending'));
