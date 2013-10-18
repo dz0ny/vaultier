@@ -62,7 +62,7 @@ Vaultier.Services.Auth.AuthService = Ember.Object.extend({
 
                     }.bind(this),
 
-                    function () {
+                    function (error) {
                         this.setAuthenticate(null);
                         resolve(null);
                     }.bind(this)

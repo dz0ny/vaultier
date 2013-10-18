@@ -1,16 +1,5 @@
 Vaultier.Router.map(function () {
 
-
-    /************************************************************
-     * System and error routes
-     ************************************************************/
-
-    this.resource('Home', {path: '/home'}, function () {
-        //this.route('about', { path: '/about'});
-    })
-
-    this.route("HomeFourZeroFour", { path: "*path"});
-
     /************************************************************
      * REGISTRATION
      ************************************************************/
@@ -59,25 +48,37 @@ Vaultier.Router.map(function () {
 
     });
 
+    /************************************************************
+     * System and error routes
+     ************************************************************/
+
+    this.resource('Home', {path: '/home'}, function () {
+        //this.route('about', { path: '/about'});
+    })
+
+    this.route("Error404", { path: "*path"});
+
 })
 ;
 
 Vaultier.ApplicationRoute = Ember.Route.extend({
-    model: function () {
+    model: function (params, transition) {
         var auth = Vaultier.Services.Auth.AuthService.current();
         var status = auth.status()
         return status;
     }
 });
 
-Vaultier.IndexRoute = Ember.Route.extend({
-    redirect: function () {
-        var auth = Vaultier.Services.Auth.AuthService.current();
-        if (auth.get('isAuthenticated')) {
-            return this.transitionTo('Workspace.index');
-        } else {
-            return this.transitionTo('Home.index');
+Vaultier.IndexRoute = Ember.Route.extend(
+    Utils.ErrorAwareRouteMixin,
+    {
+        redirect: function () {
+            var auth = Vaultier.Services.Auth.AuthService.current();
+            if (auth.get('isAuthenticated')) {
+                return this.transitionTo('Workspace.index');
+            } else {
+                return this.transitionTo('Home.index');
+            }
         }
-    }
-});
+    });
 

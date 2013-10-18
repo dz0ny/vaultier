@@ -187,7 +187,6 @@
                 var jsonErrors = Ember.$.parseJSON(jqXHR.responseText);
                 return new DS.InvalidError(jsonErrors);
             } catch (error){
-                console.error(error);
                 return error;
             }
         },

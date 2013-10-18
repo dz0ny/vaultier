@@ -81,7 +81,10 @@
 
     {############# home and system #}
     <script src="{% static 'tpl/Home/HomeIndex.js' %}"></script>
-    <script src="{% static 'tpl/Home/HomeFourZeroFour.js' %}"></script>
+
+    <script src="{% static 'tpl/Error/Error400.js' %}"></script>
+    <script src="{% static 'tpl/Error/Error403.js' %}"></script>
+    <script src="{% static 'tpl/Error/Error404.js' %}"></script>
 
     {############ auth #}
     <script src="{% static 'tpl/Auth/AuthLogin.js' %}"></script>
@@ -125,6 +128,7 @@
     <script src="{% static 'js/utils/Pohon.js' %}"></script>
     <script src="{% static 'js/utils/Singleton.js' %}"></script>
     <script src="{% static 'js/utils/HandlebarsHelpers.js' %}"></script>
+    <script src="{% static 'js/utils/ErrorAwareRouteMixin.js' %}"></script>
 
     {####################################################################}
     {# application#}
@@ -149,7 +153,8 @@
 
     {############# Home and system#}
     <script src="{% static 'js/module/Home/HomeIndex.js' %}"></script>
-    <script src="{% static 'js/module/Home/HomeFourZeroFour.js' %}"></script>
+
+    <script src="{% static 'js/module/Error/Error.js' %}"></script>
 
     {############# Auth #}
     <script src="{% static 'js/module/Auth/AuthLogin.js' %}"></script>

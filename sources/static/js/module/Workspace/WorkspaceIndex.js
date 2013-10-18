@@ -1,21 +1,24 @@
-Vaultier.WorkspaceIndexRoute = Ember.Route.extend({
-    model: function (params) {
-        var store = this.get('store');
-        var promise = store.find('Workspace');
-        return promise;
-    },
+Vaultier.WorkspaceIndexRoute = Ember.Route.extend(
+    Utils.ErrorAwareRouteMixin,
+    {
+        model: function (params, transition) {
+            var store = this.get('store');
+            var promise = store.find('Workspace');
+            promise.then(null, this.handleErrors(transition))
+            return promise;
+        },
 
-    setupController: function (ctrl, model) {
-        this._super(ctrl, model);
+        setupController: function (ctrl, model) {
+            this._super(ctrl, model);
 //
 //        ctrl.set('breadcrumbs',
 //            Vaultier.utils.Breadcrumbs.create({router: this.get('router')})
 //                .addHome()
 //                .addLink('WorkspaceIndex', 'Workspaces')
 //        );
-    }
+        }
 
-});
+    });
 
 
 Vaultier.WorkspaceIndexController = Ember.ArrayController.extend({

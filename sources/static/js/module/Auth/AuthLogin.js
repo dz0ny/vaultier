@@ -26,7 +26,7 @@ var selectTab = function () {
     $(el).find('.vlt-login-tabs li.' + step).addClass('active');
 }
 
-Vaultier.AuthLoginController = Ember.Controller.extend({
+Vaultier.AuthLoginIndexController = Ember.Controller.extend({
     props: LoginProps.current()
 });
 
@@ -50,7 +50,8 @@ Vaultier.AuthLoginIndexRoute = Ember.Route.extend({
 //// Switch
 /////////////////////////////////////////////////////////////////
 
-Vaultier.AuthLoginSwitchRoute = Ember.Route.extend({
+Vaultier.AuthLoginSwitchRoute = Ember.Route.extend(
+    {
     renderTemplate: function () {
         this.render('AuthLoginSwitch', {outlet: 'AuthLogin'})
     },
