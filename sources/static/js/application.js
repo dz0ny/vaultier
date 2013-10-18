@@ -3,7 +3,7 @@ LGTM.configure('defer', Ember.RSVP.defer);
 $.notify.defaults({
     className: 'success',
     style: 'bootstrap',
-    position: 'top center',
+    position: 'top center'
 })
 
 Ember.FEATURES["query-params"] = true

@@ -28,6 +28,7 @@ Vaultier.Router.map(function () {
     this.resource('Workspace', {path: '/manage'}, function () {
         // automatic Workspace.index
         this.route('create', { path: '/action/create-workspace'});
+        this.route('edit', { path: '/action/edit-workspace/:workspace'});
 
         /************************************************************
          * Vaults
@@ -35,6 +36,7 @@ Vaultier.Router.map(function () {
         this.resource('Vault', {path: '/workspace/:workspace'}, function () {
             // automatic Vault.index
             this.route('create', { path: '/action/create-vault'});
+            this.route('edit', { path: '/action/edit-vault/:vault'});
 
             /************************************************************
              * Cards

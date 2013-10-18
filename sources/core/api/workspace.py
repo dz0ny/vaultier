@@ -22,9 +22,9 @@ class WorkspaceViewSet(ModelViewSet):
     permission_classes = (IsAuthenticated,)
     serializer_class = WorkspaceSerializer
 
-
-    def list(self, request, *args, **kwargs):
-        return Response(status=HTTP_403_FORBIDDEN)
+    #
+    # def list(self, request, *args, **kwargs):
+    #     return Response(status=HTTP_403_FORBIDDEN)
 
     def pre_save(self, object):
         if object.pk is None:

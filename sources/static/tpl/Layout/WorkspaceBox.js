@@ -19,8 +19,8 @@ function program1(depth0,data) {
   data.buffer.push("\r\n            </li>\r\n\r\n            <li>\r\n                ");
   hashTypes = {};
   hashContexts = {};
-  options = {hash:{},inverse:self.noop,fn:self.program(4, program4, data),contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
-  stack2 = ((stack1 = helpers.linkTo || depth0.linkTo),stack1 ? stack1.call(depth0, "Home.index", options) : helperMissing.call(depth0, "linkTo", "Home.index", options));
+  options = {hash:{},inverse:self.noop,fn:self.program(4, program4, data),contexts:[depth0,depth0],types:["STRING","ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
+  stack2 = ((stack1 = helpers.linkTo || depth0.linkTo),stack1 ? stack1.call(depth0, "Workspace.edit", "env.workspace.id", options) : helperMissing.call(depth0, "linkTo", "Workspace.edit", "env.workspace.id", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
   data.buffer.push("\r\n            </li>\r\n\r\n            <li class=\"divider\"></li>\r\n\r\n            <li>\r\n                ");
   hashTypes = {};

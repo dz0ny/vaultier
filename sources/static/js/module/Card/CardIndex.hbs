@@ -1,32 +1,46 @@
 <div class="vlt-page-nav">
 
-    {{#if aaa}}
-        <ul class="vlt-page-tabs nav nav-tabs">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#">Profile</a></li>
-            <li><a href="#">Messages</a></li>
-        </ul>
-    {{/if}}
+    <div class="vlt-page-toolbar pull-right">
+        <div>
 
-    {{#if length}}
-        <div class="vlt-page-toolbar pull-right">
+
             <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown">
+                    <span class="glyphicon glyphicon-cog"></span>
+                </button>
+                <ul class="dropdown-menu caret-left">
+
+                    <li>
+                        {{#link-to "Vault.edit" workspace vault}}
+                            Edit vault
+                        {{/link-to}}
+                    </li>
+                    <li><a href="#">Delete vault</a></li>
+                </ul>
+            </div>
+
+            <a href="#" class="btn btn-default">
+                <span class="glyphicon glyphicon-user"></span>
+                Collaborate
+            </a>
+
+            {{#if length}}
 
                 {{#link-to "Card.create" class="btn btn-primary"}}
                     <span class="glyphicon glyphicon-plus"></span>
                     Create new Card
                 {{/link-to}}
+            {{/if}}
 
-            </div>
         </div>
-    {{/if}}
+    </div>
 
     <div class="clearfix"></div>
 
 </div>
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-9">
 
         {{#if length}}
             {{#each}}

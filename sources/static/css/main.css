@@ -9,8 +9,7 @@
 */
 
 .dropdown-menu.caret-left,
-.dropdown-menu.caret-right
-{
+.dropdown-menu.caret-right {
     margin-top: 8px;
 }
 
@@ -27,14 +26,14 @@
 }
 
 .dropdown-menu.caret-left::after {
-  position: absolute;
-  top: -6px;
-  left: 10px;
-  display: inline-block;
-  border-right: 6px solid transparent;
-  border-bottom: 6px solid white;
-  border-left: 6px solid transparent;
-  content: '';
+    position: absolute;
+    top: -6px;
+    left: 10px;
+    display: inline-block;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid white;
+    border-left: 6px solid transparent;
+    content: '';
 }
 
 .dropdown-menu.caret-right::before {
@@ -50,16 +49,15 @@
 }
 
 .dropdown-menu.caret-right::after {
-  position: absolute;
-  top: -6px;
-  right: 10px;
-  display: inline-block;
-  border-right: 6px solid transparent;
-  border-bottom: 6px solid white;
-  border-left: 6px solid transparent;
-  content: '';
+    position: absolute;
+    top: -6px;
+    right: 10px;
+    display: inline-block;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid white;
+    border-left: 6px solid transparent;
+    content: '';
 }
-
 
 /*
 * Listgroups
@@ -562,3 +560,4 @@
     background-image: url('../images/preloader_110x110.gif');
 
 }
+
