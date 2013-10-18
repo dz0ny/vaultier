@@ -44,6 +44,16 @@ Vaultier.Router.map(function () {
             this.resource('Card', {path: '/vault/:vault'}, function () {
                 // automatic Card.index
                 this.route('create', { path: '/create-card'});
+                this.route('edit', { path: '/action/edit-card/:card'});
+
+                /************************************************************
+                 * Card detail
+                 ************************************************************/
+                this.resource('Secret', {path: '/card/:card'}, function () {
+                    // automatic Vault.index
+                    this.route('create', { path: '/action/create-secret/:type'});
+                    this.route('edit', { path: '/action/edit-vault/:secret'});
+                });
             });
 
         })

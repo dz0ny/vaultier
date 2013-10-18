@@ -1,4 +1,4 @@
-Vaultier.CardRoute = Ember.Route.extend({
+Vaultier.SecretRoute = Ember.Route.extend({
 
     model: function (params) {
         return this.get('store').find('Vault', params.vault)
@@ -16,7 +16,7 @@ Vaultier.CardRoute = Ember.Route.extend({
 
 });
 
-Vaultier.CardIndexRoute = Ember.Route.extend({
+Vaultier.SecretIndexRoute = Ember.Route.extend({
 
     setupController: function (ctrl, model) {
         ctrl.set('content', model);
@@ -28,7 +28,7 @@ Vaultier.CardIndexRoute = Ember.Route.extend({
         ctrl.set('workspace', workspace);
 
         // retrieve vault
-        var vault = this.modelFor('Card');
+        var vault = this.modelFor('Secret');
         this.set('vault', vault);
         ctrl.set('vault', vault);
 
@@ -38,37 +38,37 @@ Vaultier.CardIndexRoute = Ember.Route.extend({
                 .addHome()
                 .addWorkspace()
                 .addVault()
-                .addText('List of cards')
+                .addText('List of secrets')
         )
     },
 
     model: function (params, queryParams) {
         var store = this.get('store');
-        return store.find('Card');
+        return store.find('Secret');
     }
 });
 
 
-Vaultier.CardIndexController = Ember.ArrayController.extend({
+Vaultier.SecretIndexController = Ember.ArrayController.extend({
     workspace: null,
     vault: null,
     sortProperties: ['name'],
     sortAscending: true,
     actions: {
-        createCard: function () {
+        createSecret: function () {
             this.set('sortAscending', !this.get('sortAscending'));
         }
     }
 });
 
 
-Vaultier.CardIndexView = Ember.View.extend({
-    templateName: 'Card/CardIndex',
+Vaultier.SecretIndexView = Ember.View.extend({
+    templateName: 'Secret/SecretIndex',
     layoutName: 'Layout/LayoutStandard'
-//    controller: Vaultier.CardListController
+//    controller: Vaultier.SecretListController
 });
 
 
-Vaultier.CardIndexItemView = Ember.View.extend({
-    templateName: 'Card/CardIndexItem'
+Vaultier.SecretIndexItemView = Ember.View.extend({
+    templateName: 'Secret/SecretIndexItem'
 });

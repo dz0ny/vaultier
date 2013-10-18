@@ -1,4 +1,4 @@
-Vaultier.CardCreateRoute = Ember.Route.extend({
+Vaultier.SecretPasswordCreateRoute = Ember.Route.extend({
 
     workspace: null,
 
@@ -12,8 +12,8 @@ Vaultier.CardCreateRoute = Ember.Route.extend({
 
             record.save().then(
                 function () {
-                    $.notify('Your card has been successfully created.', 'success');
-                    this.transitionTo('Card.index', workspace.id, vault.id);
+                    $.notify('Your secretPassword has been successfully created.', 'success');
+                    this.transitionTo('SecretPassword.index', workspace.id, vault.id);
                 }.bind(this),
                 function () {
                     $.notify('Oooups! Something went wrong.', 'error');
@@ -31,7 +31,7 @@ Vaultier.CardCreateRoute = Ember.Route.extend({
         ctrl.set('workspace', workspace);
 
         // retrieve vault
-        var vault = this.modelFor('Card');
+        var vault = this.modelFor('SecretPassword');
         this.set('vault', vault);
         ctrl.set('vault', vault);
 
@@ -41,7 +41,7 @@ Vaultier.CardCreateRoute = Ember.Route.extend({
                 .addHome()
                 .addWorkspace()
                 .addVault()
-                .addText('Create new card')
+                .addText('Create new secretPassword')
         )
 
 
@@ -49,7 +49,7 @@ Vaultier.CardCreateRoute = Ember.Route.extend({
 
     model: function (params, queryParams) {
         var store = this.get('store');
-        var record = store.createRecord('Card');
+        var record = store.createRecord('SecretPassword');
         return record;
     },
 
@@ -62,13 +62,13 @@ Vaultier.CardCreateRoute = Ember.Route.extend({
     }
 });
 
-Vaultier.CardCreateController = Ember.ObjectController.extend({
+Vaultier.SecretPasswordCreateController = Ember.ObjectController.extend({
     breadcrumbs: null,
     workspace: null,
     vault: null
 });
 
-Vaultier.CardCreateView = Ember.View.extend({
-    templateName: 'Card/CardCreate',
+Vaultier.SecretPasswordCreateView = Ember.View.extend({
+    templateName: 'SecretPassword/SecretPasswordCreate',
     layoutName: 'Layout/LayoutStandard'
 });

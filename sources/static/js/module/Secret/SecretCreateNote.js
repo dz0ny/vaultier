@@ -1,4 +1,4 @@
-Vaultier.CardCreateRoute = Ember.Route.extend({
+Vaultier.SecretNoteCreateRoute = Ember.Route.extend({
 
     workspace: null,
 
@@ -12,8 +12,8 @@ Vaultier.CardCreateRoute = Ember.Route.extend({
 
             record.save().then(
                 function () {
-                    $.notify('Your card has been successfully created.', 'success');
-                    this.transitionTo('Card.index', workspace.id, vault.id);
+                    $.notify('Your secretNote has been successfully created.', 'success');
+                    this.transitionTo('SecretNote.index', workspace.id, vault.id);
                 }.bind(this),
                 function () {
                     $.notify('Oooups! Something went wrong.', 'error');
@@ -31,7 +31,7 @@ Vaultier.CardCreateRoute = Ember.Route.extend({
         ctrl.set('workspace', workspace);
 
         // retrieve vault
-        var vault = this.modelFor('Card');
+        var vault = this.modelFor('SecretNote');
         this.set('vault', vault);
         ctrl.set('vault', vault);
 
@@ -41,7 +41,7 @@ Vaultier.CardCreateRoute = Ember.Route.extend({
                 .addHome()
                 .addWorkspace()
                 .addVault()
-                .addText('Create new card')
+                .addText('Create new secretNote')
         )
 
 
@@ -49,7 +49,7 @@ Vaultier.CardCreateRoute = Ember.Route.extend({
 
     model: function (params, queryParams) {
         var store = this.get('store');
-        var record = store.createRecord('Card');
+        var record = store.createRecord('SecretNote');
         return record;
     },
 
@@ -62,13 +62,13 @@ Vaultier.CardCreateRoute = Ember.Route.extend({
     }
 });
 
-Vaultier.CardCreateController = Ember.ObjectController.extend({
+Vaultier.SecretNoteCreateController = Ember.ObjectController.extend({
     breadcrumbs: null,
     workspace: null,
     vault: null
 });
 
-Vaultier.CardCreateView = Ember.View.extend({
-    templateName: 'Card/CardCreate',
+Vaultier.SecretNoteCreateView = Ember.View.extend({
+    templateName: 'SecretNote/SecretNoteCreate',
     layoutName: 'Layout/LayoutStandard'
 });
