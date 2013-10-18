@@ -32,6 +32,17 @@ class Card(models.Model):
     class Meta:
         db_table = u'vaultier_card'
 
+class Secret(models.Model):
+    name = models.CharField(max_length=255)
+    data = models.TextField(null=True)
+    card = models.ForeignKey('core.Card',  on_delete=CASCADE)
+    created_by = models.ForeignKey('core.User', on_delete=PROTECT)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    class Meta:
+        db_table = u'vaultier_secret'
+
+
 
 class UserManager(BaseUserManager):
     def create_user(self, username, email=None, password=None, **extra_fields):

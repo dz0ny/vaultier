@@ -4,35 +4,34 @@ from rest_framework.serializers import ModelSerializer
 from rest_framework.status import HTTP_403_FORBIDDEN, HTTP_401_UNAUTHORIZED, HTTP_402_PAYMENT_REQUIRED, HTTP_400_BAD_REQUEST
 from rest_framework.viewsets import ModelViewSet
 from core.api.user import CreatedByUserSerializer
-from core.models import Card
+from core.models import Secret
 
 
-class CardSerializer(ModelSerializer):
+class SecretSerializer(ModelSerializer):
     created_by = CreatedByUserSerializer(required=False)
 
     class Meta:
-        model = Card
-        fields = ('id', 'name', 'description','vault', 'created_at', 'updated_at', 'created_by')
+        model = Secret
+        fields = ('id', 'name', 'data' ,'card', 'created_at', 'updated_at', 'created_by')
 
 
-class CardViewSet(ModelViewSet):
+class SecretViewSet(ModelViewSet):
     """
     API endpoint that allows workspaces to be viewed or edited.
     """
-    model = Card
+    model = Secret
     # permission_classes = (IsAuthenticated,)
-    serializer_class = CardSerializer
+    serializer_class = SecretSerializer
 
     def pre_save(self, object):
         if object.pk is None:
             object.created_by = self.request.user;
-        return super(CardViewSet, self).pre_save(object)
+        return super(SecretViewSet, self).pre_save(object)
 
     def get_queryset(self):
         """
         Optionally restricts the returned purchases to a given user,
         by filtering against a `username` query parameter in the URL.
         """
-        queryset = Card.objects.filter(created_by=self.request.user)
+        queryset = Secret.objects.filter(created_by=self.request.user)
         return queryset
-    

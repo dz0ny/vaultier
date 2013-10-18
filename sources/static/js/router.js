@@ -51,8 +51,8 @@ Vaultier.Router.map(function () {
                  ************************************************************/
                 this.resource('Secret', {path: '/card/:card'}, function () {
                     // automatic Vault.index
-                    this.route('create', { path: '/action/create-secret/:type'});
-                    this.route('edit', { path: '/action/edit-vault/:secret'});
+                    this.route('create', { path: '/action/create-secret'});
+ //                   this.route('edit', { path: '/action/edit-vault/:secret'});
                 });
             });
 
@@ -73,7 +73,9 @@ Vaultier.Router.map(function () {
 })
 ;
 
-Vaultier.ApplicationRoute = Ember.Route.extend({
+Vaultier.ApplicationRoute = Ember.Route.extend(
+    Utils.ErrorAwareRouteMixin,
+    {
     model: function (params, transition) {
         var auth = Vaultier.Services.Auth.AuthService.current();
         var status = auth.status()

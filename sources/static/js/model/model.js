@@ -57,3 +57,10 @@ Vaultier.Card = DS.Model.extend(CreatedUpdatedMixin, {
     created_by: DS.attr()
 });
 
+Vaultier.Secret = DS.Model.extend(CreatedUpdatedMixin, {
+    name: DS.attr('string'),
+    card: DS.attr('number'),
+    created_by: DS.attr()
+});
+
+

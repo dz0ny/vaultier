@@ -12,23 +12,6 @@ var RegisterProps = Ember.Object.extend({
 });
 RegisterProps.reopenClass(Utils.Singleton);
 
-var BaseRegisterRoute = Ember.Route.extend({
-    step: null,
-    renderTemplate: function () {
-        var ctrl = this.controllerFor(this.step);
-        ctrl.set('props.step', this.step);
-        ctrl.set('props.route', this);
-        this.render('AuthRegister', {controller: this.step});
-        this.render(this.step, { into: 'AuthRegister', outlet: 'tab'})
-
-
-        ctrl.set('breadcrumbs',
-            Vaultier.utils.Breadcrumbs.create({router: this.get('router')})
-                .addHome()
-                .addLink('AuthRegister', 'Register')
-        );
-    }
-});
 
 var BaseRegisterController = Ember.Controller.extend({
     props: RegisterProps.current()

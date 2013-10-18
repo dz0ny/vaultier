@@ -1,16 +1,16 @@
 Vaultier.SecretRoute = Ember.Route.extend({
 
     model: function (params) {
-        return this.get('store').find('Vault', params.vault)
+        return this.get('store').find('Card', params.card)
     },
 
-    afterModel: function (vault) {
-        Service.Environment.current().set('vault', vault);
+    afterModel: function (card) {
+        Service.Environment.current().set('card', card);
     },
 
-    serialize: function (vault) {
+    serialize: function (card) {
         return {
-            vault: vault.get('id')
+            card: card.get('id')
         }
     }
 
@@ -32,13 +32,18 @@ Vaultier.SecretIndexRoute = Ember.Route.extend({
         this.set('vault', vault);
         ctrl.set('vault', vault);
 
+        // retrieve card
+        var card = this.modelFor('card');
+        this.set('card', card);
+        ctrl.set('card', card);
         // set breadcrumbs
         ctrl.set('breadcrumbs',
             Vaultier.Breadcrumbs.create({router: this.get('router')})
                 .addHome()
                 .addWorkspace()
                 .addVault()
-                .addText('List of secrets')
+                .addCard()
+                .addText('Detail')
         )
     },
 
@@ -52,20 +57,14 @@ Vaultier.SecretIndexRoute = Ember.Route.extend({
 Vaultier.SecretIndexController = Ember.ArrayController.extend({
     workspace: null,
     vault: null,
-    sortProperties: ['name'],
-    sortAscending: true,
-    actions: {
-        createSecret: function () {
-            this.set('sortAscending', !this.get('sortAscending'));
-        }
-    }
+    card: null,
+
 });
 
 
 Vaultier.SecretIndexView = Ember.View.extend({
     templateName: 'Secret/SecretIndex',
     layoutName: 'Layout/LayoutStandard'
-//    controller: Vaultier.SecretListController
 });
 
 
