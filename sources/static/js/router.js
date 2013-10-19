@@ -51,8 +51,9 @@ Vaultier.Router.map(function () {
                  ************************************************************/
                 this.resource('Secret', {path: '/card/:card'}, function () {
                     // automatic Vault.index
-                    this.route('create', { path: '/action/create-secret'});
- //                   this.route('edit', { path: '/action/edit-vault/:secret'});
+                    this.route('createSelect', { path: '/action/create-secret/select'});
+                    this.route('createSubmit', { path: '/action/create-secret/submit/:type'});
+//                    this.route('edit', { path: '/action/edit-vault/:secret'});
                 });
             });
 

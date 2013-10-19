@@ -432,6 +432,21 @@
 
 /*************************************************************
 **************************************************************
+* Wizard
+*************************************************************
+*************************************************************/
+
+.vlt-wizard-steps li {
+    background-color: #EEEEEE;
+    border-radius: 6px;
+}
+
+.vlt-wizard-steps li a:hover {
+    color: #2FA4E7;
+}
+
+/*************************************************************
+**************************************************************
 * tabbable modal
 *************************************************************
 *************************************************************/
@@ -561,3 +576,58 @@
 
 }
 
+/*************************************************************
+**************************************************************
+* Secret items
+*************************************************************
+*************************************************************/
+
+.vlt-select-secret-item {
+    margin-top: 10px;
+    cursor: pointer;
+    position: relative;
+    border: 2px solid #EEEEEE;
+    border-radius: 6px;
+    background-color: #EEEEEE;
+}
+
+
+
+.vlt-select-secret-item:hover {
+    background-color: #2FA4E7;
+    border-color: #2FA4E7;
+}
+
+.vlt-select-secret-item .vlt-visual .vlt-icon {
+    top: 0px;
+    left: 0px;
+    position: absolute;
+    padding: 10px;
+}
+
+.vlt-select-secret-item .vlt-desc {
+    min-height: 100px;
+    background-color: #ffffff;
+    margin-left: 100px;
+    padding: 10px;
+}
+
+.vlt-select-secret-item .vlt-icon {
+    background-size: 100% 100%;
+    height: 100px;
+    width: 100px;
+}
+
+.vlt-select-secret-item .vlt-icon.note {
+    background-image: url('../images/icon-note-white.png');
+}
+
+.vlt-select-secret-item .vlt-icon.password {
+    background-image: url('../images/icon-password-white.png');
+}
+
+
+.vlt-select-secret-item .vlt-icon.file {
+    background-size: 100% 100%;
+    background-image: url('../images/icon-file-white.png');
+}

@@ -26,41 +26,62 @@ var CreatedUpdatedMixin = Ember.Mixin.create({
 });
 
 
-Vaultier.User = DS.Model.extend(CreatedUpdatedMixin, {
-    email: DS.attr('string'),
-    nickname: DS.attr('string')
-})
+Vaultier.User = DS.Model.extend(
+    CreatedUpdatedMixin, {
+        email: DS.attr('string'),
+        nickname: DS.attr('string')
+    })
 
 Vaultier.AuthenticatedUser = Vaultier.User.extend({
     public_key: DS.attr('string')
 });
 
-Vaultier.Workspace = DS.Model.extend(CreatedUpdatedMixin, {
-    name: DS.attr('string'),
-    vaults: DS.attr('number'),
-    description: DS.attr('string'),
-    created_by: DS.attr()
-});
+Vaultier.Workspace = DS.Model.extend(
+    CreatedUpdatedMixin, {
+        name: DS.attr('string'),
+        vaults: DS.attr('number'),
+        description: DS.attr('string'),
+        created_by: DS.attr()
+    });
 
-Vaultier.Vault = DS.Model.extend(CreatedUpdatedMixin, {
-    name: DS.attr('string'),
-    workspace: DS.attr('number'),
-    description: DS.attr('string'),
-    created_by: DS.attr()
-});
+Vaultier.Vault = DS.Model.extend(
+    CreatedUpdatedMixin, {
+        name: DS.attr('string'),
+        workspace: DS.attr('number'),
+        description: DS.attr('string'),
+        created_by: DS.attr()
+    });
 
 
-Vaultier.Card = DS.Model.extend(CreatedUpdatedMixin, {
-    name: DS.attr('string'),
-    description: DS.attr('string'),
-    vault: DS.attr('number'),
-    created_by: DS.attr()
-});
+Vaultier.Card = DS.Model.extend(
+    CreatedUpdatedMixin, {
+        name: DS.attr('string'),
+        description: DS.attr('string'),
+        vault: DS.attr('number'),
+        created_by: DS.attr()
+    });
 
-Vaultier.Secret = DS.Model.extend(CreatedUpdatedMixin, {
-    name: DS.attr('string'),
-    card: DS.attr('number'),
-    created_by: DS.attr()
-});
+Vaultier.Secret = DS.Model.extend(
+    CreatedUpdatedMixin, {
+        name: DS.attr('string'),
+        type: DS.attr('string'),
+        data: DS.attr('string'),
+        card: DS.attr('number'),
+        created_by: DS.attr(),
+
+        password: null,
+        username: null,
+        url: null,
+        note: null,
+
+        decode: function() {
+
+        },
+
+        encode: function () {
+
+
+        }
+    });
 
 
