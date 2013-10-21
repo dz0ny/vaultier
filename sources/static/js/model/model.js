@@ -82,7 +82,9 @@ Vaultier.Secret = DS.Model.extend(
         file: null,
 
         decode: function () {
-
+            var data = this.get('data');
+            var data = JSON.parse(data);
+            this.setProperties(data);
         },
 
         encode: function () {
@@ -116,11 +118,13 @@ Vaultier.Secret = DS.Model.extend(
         },
 
         didLoad: function () {
-            console.log('load');
+            this.decode();
+            return this._super(arguments);
         },
 
         didReload: function () {
-            console.log('reload');
+            this.decode();
+            return this._super(arguments);
         },
 
         save: function () {

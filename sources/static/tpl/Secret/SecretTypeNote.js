@@ -13,7 +13,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   hashTypes = {'elementId': "STRING",'valueBinding': "STRING",'class': "STRING",'rows': "INTEGER"};
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "Em.TextArea", {hash:{
     'elementId': ("card-description"),
-    'valueBinding': ("content.description"),
+    'valueBinding': ("content.note"),
     'class': ("form-control"),
     'rows': (8)
   },contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));

@@ -97,3 +97,7 @@ Vaultier.SecretIndexItemPasswordView = Ember.View.extend({
 Vaultier.SecretIndexItemFileView = Ember.View.extend({
     templateName: 'Secret/SecretIndexItemFile'
 });
+
+Vaultier.SecretIndexItemControlsView = Ember.View.extend({
+    templateName: 'Secret/SecretIndexItemControls'
+});

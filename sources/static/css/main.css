@@ -233,6 +233,7 @@
     border-top-right-radius: 0px;
     background-color: #f0f7fd;
     padding: 0px 30px 30px 30px;
+    margin-bottom: 200px;
 }
 
 .vlt-page > .vlt-page-nav {
@@ -710,10 +711,19 @@
     min-height: 150px;
 }
 
+.vlt-secret .vlt-inner .vlt-attr-name {
+    background-color: #F5F5F5;
+}
+
+
 .vlt-secret .vlt-inner .vlt-controls {
-    padding: 5px;
+    padding: 15px;
+    padding-right: 20px;
     position: absolute;
     right: 0px;
     bottom: 0px;
 }
 
+.vlt-secret .vlt-inner .vlt-attr-name:after {
+    content: ':'
+}
