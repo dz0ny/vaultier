@@ -65,7 +65,7 @@ function program8(depth0,data) {
   data.buffer.push("\r\n                        <span class=\"glyphicon glyphicon-plus\"></span>\r\n                        Create new vault\r\n                    ");
   }
 
-  data.buffer.push("<div class=\"vlt-page-nav\">\r\n\r\n    <ul class=\"vlt-page-tabs nav nav-tabs\">\r\n        <li class=\"active\"><a href=\"#\">Home</a></li>\r\n        <li><a href=\"#\">Profile</a></li>\r\n        <li><a href=\"#\">Messages</a></li>\r\n    </ul>\r\n\r\n    ");
+  data.buffer.push("<div class=\"vlt-page-nav\">\r\n\r\n    ");
   hashTypes = {};
   hashContexts = {};
   stack1 = helpers['if'].call(depth0, "length", {hash:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});

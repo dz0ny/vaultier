@@ -202,10 +202,12 @@
 *************************************************************/
 
 .vlt-breads {
+    border-bottom: 1px solid #E0DBDB;
     background-color: #F5F5F5;
 }
 
 .vlt-breads .breadcrumb {
+    background-color: #F5F5F5;
     margin-bottom: 0px;
     padding-left: 0px;
 }
@@ -223,6 +225,16 @@
 *************************************************************
 *************************************************************/
 
+.vlt-page {
+    border-radius: 6px;
+    border: 1px solid #dbedfc;
+    border-top: 0px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    background-color: #f0f7fd;
+    padding: 0px 30px 30px 30px;
+}
+
 .vlt-page > .vlt-page-nav {
     margin-bottom: 20px;
 }
@@ -232,9 +244,12 @@
 }
 
 .vlt-page > .vlt-page-nav .vlt-page-toolbar {
+    margin-top: -1px;
     padding: 10px;
     background-color: #F5F5F5;
     border-radius: 0px 0px 8px 8px;
+    border: 1px solid #E0DBDB;
+    border-top-width: 0px;
 }
 
 .vlt-section {
@@ -578,7 +593,7 @@
 
 /*************************************************************
 **************************************************************
-* Secret items
+* Secret items - create
 *************************************************************
 *************************************************************/
 
@@ -590,8 +605,6 @@
     border-radius: 6px;
     background-color: #EEEEEE;
 }
-
-
 
 .vlt-select-secret-item:hover {
     background-color: #2FA4E7;
@@ -626,8 +639,81 @@
     background-image: url('../images/icon-password-white.png');
 }
 
-
 .vlt-select-secret-item .vlt-icon.file {
     background-size: 100% 100%;
     background-image: url('../images/icon-file-white.png');
 }
+
+/*************************************************************
+**************************************************************
+* Secret items - detail
+*************************************************************
+*************************************************************/
+
+.vlt-secret {
+    position: relative;
+    border: 1px solid #e0dbdb;
+    border-top-width: 0px;
+    background-color: #EEEEEE;
+}
+
+.vlt-secret:first-of-type {
+    border-top-width: 1px;
+    border-radius: 6px 6px 0px 0px;
+}
+
+.vlt-secret:last-of-type {
+    border-radius: 0px 0px 6px 6px;
+
+}
+
+.vlt-secret .vlt-visual {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    padding: 10px;
+}
+
+.vlt-secret .vlt-visual .vlt-icon {
+    background-size: 100% 100%;
+    height: 100px;
+    width: 100px;
+}
+
+.vlt-secret.vlt-password .vlt-visual .vlt-icon {
+    background-image: url('../images/icon-password-white.png');
+}
+
+.vlt-secret.vlt-note .vlt-visual .vlt-icon {
+    background-image: url('../images/icon-note-white.png');
+}
+
+
+.vlt-secret.vlt-file .vlt-visual .vlt-icon {
+    background-image: url('../images/icon-file-white.png');
+}
+
+
+.vlt-secret .vlt-visual .vlt-type {
+    color: #ffffff;
+    font-size: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.vlt-secret .vlt-inner {
+    position: relative;
+    padding: 20px;
+    padding-bottom: 40px;
+    background-color: #ffffff;
+    margin-left: 120px;
+    min-height: 150px;
+}
+
+.vlt-secret .vlt-inner .vlt-controls {
+    padding: 5px;
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+}
+

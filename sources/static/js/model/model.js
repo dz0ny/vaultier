@@ -63,8 +63,14 @@ Vaultier.Card = DS.Model.extend(
 
 Vaultier.Secret = DS.Model.extend(
     CreatedUpdatedMixin, {
+        types: {
+            note: 1,
+            password: 2,
+            file: 3
+        },
+
         name: DS.attr('string'),
-        type: DS.attr('string'),
+        type: DS.attr('number'),
         data: DS.attr('string'),
         card: DS.attr('number'),
         created_by: DS.attr(),
@@ -73,15 +79,55 @@ Vaultier.Secret = DS.Model.extend(
         username: null,
         url: null,
         note: null,
+        file: null,
 
-        decode: function() {
+        decode: function () {
 
         },
 
         encode: function () {
+            var data;
+            switch (this.get('type')) {
 
+                case this.types.note:
+                {
+                    data = this.getProperties('note');
+                    break;
+                }
+                case this.types.password:
+                {
+                    data = this.getProperties('password', 'url', 'note', 'username');
+                    break;
+                }
+                case this.types.file:
+                {
+                    data = this.getProperties('file', 'url', 'note', 'username');
+                    break;
+                }
+                default:
+                {
+                    throw 'Unspecified secret type cannot be encoded';
+                }
 
+            }
+
+            this.set('data', JSON.stringify(data));
+
+        },
+
+        didLoad: function () {
+            console.log('load');
+        },
+
+        didReload: function () {
+            console.log('reload');
+        },
+
+        save: function () {
+            this.encode();
+            return this._super(arguments);
         }
+
     });
 
 

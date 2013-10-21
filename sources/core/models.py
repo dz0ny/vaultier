@@ -33,7 +33,7 @@ class Card(models.Model):
         db_table = u'vaultier_card'
 
 class Secret(models.Model):
-    name = models.CharField(max_length=255)
+    type = models.IntegerField(null=False)
     data = models.TextField(null=True)
     card = models.ForeignKey('core.Card',  on_delete=CASCADE)
     created_by = models.ForeignKey('core.User', on_delete=PROTECT)

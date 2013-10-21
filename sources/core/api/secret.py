@@ -12,7 +12,7 @@ class SecretSerializer(ModelSerializer):
 
     class Meta:
         model = Secret
-        fields = ('id', 'name', 'data' ,'card', 'created_at', 'updated_at', 'created_by')
+        fields = ('id', 'type', 'data' ,'card', 'created_at', 'updated_at', 'created_by')
 
 
 class SecretViewSet(ModelViewSet):
