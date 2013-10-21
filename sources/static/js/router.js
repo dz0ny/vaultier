@@ -53,7 +53,7 @@ Vaultier.Router.map(function () {
                     // automatic Vault.index
                     this.route('createSelect', { path: '/action/create-secret/select'});
                     this.route('createSubmit', { path: '/action/create-secret/submit/:type'});
-//                    this.route('edit', { path: '/action/edit-vault/:secret'});
+                    this.route('edit', { path: '/action/edit-secret/:secret'});
                 });
             });
 

@@ -58,7 +58,7 @@ Vaultier.Breadcrumbs = Ember.Object.extend({
     addCard: function () {
         var card = Service.Environment.current().card;
         if (card) {
-            this.addLink('Card.index', card.get('name'), [card.get('id')])
+            this.addLink('Secret.index', card.get('name'), [card.get('id')])
         }
         return this;
     },

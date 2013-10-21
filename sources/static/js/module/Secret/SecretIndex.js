@@ -1,20 +1,25 @@
-Vaultier.SecretRoute = Ember.Route.extend({
+Vaultier.SecretRoute = Ember.Route.extend(
+    Utils.ErrorAwareRouteMixin,
+    {
 
-    model: function (params) {
-        return this.get('store').find('Card', params.card)
-    },
+        model: function (params, transition) {
+            var model = this.get('store').find('Card', params.card);
 
-    afterModel: function (card) {
-        Service.Environment.current().set('card', card);
-    },
+            model.then(null, this.handleErrors(this, transition));
+            return model;
+        },
 
-    serialize: function (card) {
-        return {
-            card: card.get('id')
+        afterModel: function (card) {
+            Service.Environment.current().set('card', card);
+        },
+
+        serialize: function (card) {
+            return {
+                card: card.get('id')
+            }
         }
-    }
 
-});
+    });
 
 Vaultier.SecretIndexRoute = Ember.Route.extend({
 
@@ -50,6 +55,23 @@ Vaultier.SecretIndexRoute = Ember.Route.extend({
     model: function (params, queryParams) {
         var store = this.get('store');
         return store.find('Secret');
+    },
+
+    actions: {
+        deleteCard: function (card) {
+            card.deleteRecord();
+
+            card.save().then(
+                function () {
+                    console.log('deleted');
+                },
+                function (error) {
+                    card.rollback();
+                    alert("An error occured - Please try again");
+                }
+            );
+        }
+
     }
 });
 
@@ -62,17 +84,17 @@ Vaultier.SecretIndexController = Ember.ArrayController.extend({
 });
 
 Vaultier.SecretIndexItemController = Ember.ObjectController.extend({
-    isNote : function() {
+    isNote: function () {
         var secret = this.get('content');
         return secret.get('type') == secret.types.note;
     }.property('type'),
 
-    isPassword : function() {
+    isPassword: function () {
         var secret = this.get('content');
         return secret.get('type') == secret.types.password;
     }.property('type'),
 
-    isFile : function() {
+    isFile: function () {
         var secret = this.get('content');
         return secret.get('type') == secret.types.file;
     }.property('type')

@@ -12,6 +12,8 @@ Po.NS('Utils');
  *        },
  */
 Utils.ErrorAwareRouteMixin = Ember.Mixin.create({
+    hasError: null,
+
     authenticatedRoute: function () {
         // todo: develop this method, this will use authentication to check if user is authenticated, othervise it will transitionToLogin
         return Ember.RSVP.Promise(function (resolve) {
@@ -30,20 +32,20 @@ Utils.ErrorAwareRouteMixin = Ember.Mixin.create({
         return function (error) {
             console.error(error.message + '(' + error.status + ')');
             transition.abort();
-            switch (error.status) {
-                case 403 :
-                {
-                    this.render('Error403');
-                    break;
-                }
-                case 401 :
-                {
-                    this.transitionToLogin(transition);
-                    break;
-                }
-                default:
-                    this.render('Error400');
-            }
+//            switch (error.status) {
+//                case 403 :
+//                {
+//                    this.render('Error403');
+//                    break;
+//                }
+//                case 401 :
+//                {
+//                    this.transitionToLogin(transition);
+//                    break;
+//                }
+//                default:
+//                    this.render('Error400');
+//            }
         }.bind(this);
     }
 

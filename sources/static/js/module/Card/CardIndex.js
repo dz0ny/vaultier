@@ -1,20 +1,29 @@
-Vaultier.CardRoute = Ember.Route.extend({
+Vaultier.CardRoute = Ember.Route.extend(
+    Utils.ErrorAwareRouteMixin,
+    {
 
-    model: function (params) {
-        return this.get('store').find('Vault', params.vault)
-    },
+        model: function (params, transition) {
+            var model = this.get('store').find('Vault', params.vault)
+            model.then(null, this.handleErrors(transition));
+            return model;
+        },
 
-    afterModel: function (vault) {
-        Service.Environment.current().set('vault', vault);
-    },
+        afterModel: function (vault) {
+            Service.Environment.current().set('vault', vault);
+        },
 
-    serialize: function (vault) {
-        return {
-            vault: vault.get('id')
+        serialize: function (vault) {
+            return {
+                vault: vault.get('id')
+            }
+        },
+
+        renderTemplate: function() {
+            console.log('a');
+            this.render('error404');
         }
-    }
 
-});
+    });
 
 Vaultier.CardIndexRoute = Ember.Route.extend({
 
@@ -42,9 +51,27 @@ Vaultier.CardIndexRoute = Ember.Route.extend({
         )
     },
 
-    model: function (params, queryParams) {
+    model: function (params, transition, queryParams) {
         var store = this.get('store');
         return store.find('Card');
+    },
+
+    actions: {
+        deleteVault: function (vault) {
+            vault.deleteRecord();
+
+            vault.save().then(
+                function () {
+                    $.notify('Your vault has been successfully deleted.', 'success');
+                    this.transitionTo('Vault.index', this.get('workspace').get('id'));
+                }.bind(this),
+                function (error) {
+                    card.rollback();
+                    $.notify('Oooups! Something went wrong.', 'error');
+                }.bind(this)
+            );
+        }
+
     }
 });
 

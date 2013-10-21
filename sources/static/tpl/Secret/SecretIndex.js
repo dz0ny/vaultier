@@ -6,7 +6,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   
-  data.buffer.push("\r\n                            Edit card (link-to todo)\r\n                        ");
+  data.buffer.push("\r\n                            Edit card\r\n                        ");
   }
 
 function program3(depth0,data) {
@@ -126,7 +126,11 @@ function program15(depth0,data) {
   options = {hash:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0,depth0],types:["STRING","ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
   stack2 = ((stack1 = helpers['link-to'] || depth0['link-to']),stack1 ? stack1.call(depth0, "Card.edit", "card", options) : helperMissing.call(depth0, "link-to", "Card.edit", "card", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("\r\n                    </li>\r\n                    <li><a href=\"#\">Delete card</a></li>\r\n                </ul>\r\n            </div>\r\n\r\n            <a href=\"#\" class=\"btn btn-default\">\r\n                <span class=\"glyphicon glyphicon-user\"></span>\r\n                Collaborate\r\n            </a>\r\n\r\n            ");
+  data.buffer.push("\r\n                    </li>\r\n                    <li><a href=\"#\" ");
+  hashTypes = {};
+  hashContexts = {};
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "deleteCard", "card", {hash:{},contexts:[depth0,depth0],types:["ID","ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
+  data.buffer.push(" >Delete card</a></li>\r\n                </ul>\r\n            </div>\r\n\r\n            <a href=\"#\" class=\"btn btn-default\">\r\n                <span class=\"glyphicon glyphicon-user\"></span>\r\n                Collaborate\r\n            </a>\r\n\r\n            ");
   hashTypes = {};
   hashContexts = {};
   stack2 = helpers['if'].call(depth0, "length", {hash:{},inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
