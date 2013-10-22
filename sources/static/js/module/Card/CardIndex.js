@@ -1,10 +1,9 @@
 Vaultier.CardRoute = Ember.Route.extend(
     Utils.ErrorAwareRouteMixin,
     {
-
         model: function (params, transition) {
             var model = this.get('store').find('Vault', params.vault)
-            model.then(null, this.handleErrors(transition));
+                .then(null, this.handleErrors(transition))
             return model;
         },
 
@@ -16,11 +15,6 @@ Vaultier.CardRoute = Ember.Route.extend(
             return {
                 vault: vault.get('id')
             }
-        },
-
-        renderTemplate: function() {
-            console.log('a');
-            this.render('error404');
         }
 
     });

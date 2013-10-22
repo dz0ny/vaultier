@@ -69,7 +69,9 @@ Vaultier.Router.map(function () {
         //this.route('about', { path: '/about'});
     })
 
-    this.route("Error404", { path: "*path"});
+    this.route("Error400", { path: "/errors/error-400"});
+    this.route("Error403", { path: "/errors/error-403"});
+    this.route("Error404", { path: "*path"}); //also referred as /errors/error-404
 
 })
 ;

@@ -32732,6 +32732,7 @@ function appendView(route, view, options) {
     route.teardownTopLevelView = generateTopLevelTeardown(view);
     view.appendTo(rootElement);
   }
+
 }
 
 function generateTopLevelTeardown(view) {

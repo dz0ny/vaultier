@@ -1,6 +1,8 @@
 from rest_framework.fields import IntegerField
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 from rest_framework.serializers import ModelSerializer
+from rest_framework.status import HTTP_403_FORBIDDEN
 from rest_framework.viewsets import ModelViewSet
 from core.api.user import CreatedByUserSerializer
 from core.models import Vault
@@ -21,6 +23,9 @@ class VaultViewSet(ModelViewSet):
     model = Vault
     permission_classes = (IsAuthenticated,)
     serializer_class = VaultSerializer
+
+    # def retrieve(self, request, *args, **kwargs):
+    #     return Response(status=HTTP_403_FORBIDDEN)
 
     def pre_save(self, object):
         if object.pk is None:
