@@ -4,8 +4,7 @@ Vaultier.SecretRoute = Ember.Route.extend(
 
         model: function (params, transition) {
             var model = this.get('store').find('Card', params.card);
-
-            model.then(null, this.handleErrors(this, transition));
+            model.then(null, this.handleErrors(transition));
             return model;
         },
 
@@ -32,12 +31,12 @@ Vaultier.SecretIndexRoute = Ember.Route.extend({
         ctrl.set('workspace', workspace);
 
         // retrieve vault
-        var vault = this.modelFor('Secret');
+        var vault = this.modelFor('Card');
         this.set('vault', vault);
         ctrl.set('vault', vault);
 
         // retrieve card
-        var card = this.modelFor('Card');
+        var card = this.modelFor('Secret');
         this.set('card', card);
         ctrl.set('card', card);
 
@@ -59,17 +58,20 @@ Vaultier.SecretIndexRoute = Ember.Route.extend({
 
     actions: {
         deleteCard: function (card) {
-            card.deleteRecord();
+            Utils.Confirm(this, 'Are you sure?', function () {
+                card.deleteRecord();
 
-            card.save().then(
-                function () {
-                    console.log('deleted');
-                },
-                function (error) {
-                    card.rollback();
-                    alert("An error occured - Please try again");
-                }
-            );
+                card.save().then(
+                    function () {
+                        $.notify('Your card has been successfully deleted.', 'success');
+                        this.transitionTo('Card.index', this.get('workspace').id, this.get('vault').id );
+                    }.bind(this),
+                    function (error) {
+                        card.rollback();
+                        alert("An error occured - Please try again");
+                    }.bind(this)
+                );
+            }.bind(this));
         }
 
     }
