@@ -79,12 +79,12 @@ Vaultier.Router.map(function () {
 Vaultier.ApplicationRoute = Ember.Route.extend(
     Utils.ErrorAwareRouteMixin,
     {
-    model: function (params, transition) {
-        var auth = Vaultier.Services.Auth.AuthService.current();
-        var status = auth.status()
-        return status;
-    }
-});
+        model: function (params, transition) {
+            var auth = Vaultier.Services.Auth.AuthService.current();
+            var status = auth.status()
+            return status;
+        }
+    });
 
 Vaultier.IndexRoute = Ember.Route.extend(
     Utils.ErrorAwareRouteMixin,

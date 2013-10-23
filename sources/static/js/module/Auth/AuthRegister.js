@@ -21,13 +21,14 @@ Vaultier.AuthRegisterView = Ember.View.extend({
     templateName: 'Auth/AuthRegister',
     layoutName: 'Layout/LayoutStandard',
 
-//    didInsertElement: function () {
-//        var step = this.controller.get('props.step');
-//        var el = this.get('element');
-//        $(el).find('.vlt-register-tabs li.active').removeClass('active');
-//        $(el).find('.vlt-register-tabs li.' + step).addClass('active');
-//
-//    }
+    TabView: Ember.View.extend({
+        classNameBindings: 'isActive:active'.w(),
+        tagName: 'li',
+        isActive: function () {
+            var tab = this.get('tab');
+            return tab == this.get('parentView.controller.controllers.application.currentPath');
+        }.property('parentView.controller.controllers.application.currentPath')
+    });
 });
 
 
@@ -39,6 +40,11 @@ Vaultier.AuthRegisterRoute = Ember.Route.extend({
             this.transitionTo('AuthRegister.before');
         }
     }
+});
+
+
+Vaultier.AuthRegisterController = Ember.Controller.extend({
+    needs: ['application']
 });
 
 /////////////////////////////////////////////////////////////////
@@ -243,7 +249,7 @@ Vaultier.AuthRegisterSumRoute = Ember.Route.extend({
 
 
 Vaultier.AuthRegisterSumController = BaseRegisterController.extend({
-    auth: null,
+    auth: null
 });
 
 

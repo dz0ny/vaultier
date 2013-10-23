@@ -6,36 +6,35 @@
                 <div class="modal-header">
                     <h2>Register to Vaultier</h2>
 
-                    <ul class="nav nav-pills vlt-register-tabs" id="myTab">
-                        <li class="AuthRegisterBefore">
+                    <ul class="nav nav-pills nav-justified vlt-wizard-steps">
+                        {{#view view.TabView tab="AuthRegister.before" }}
                             <a>
                                 Before you register
                                 <span class="glyphicon glyphicon glyphicon-chevron-right"></span>
                             </a>
-                        </li>
+                        {{/view}}
 
-                        <li class="AuthRegisterKeys">
+                        {{#view view.TabView tab="AuthRegister.keys" }}
                             <a>
                                 Generate your keys
                                 <span class="glyphicon glyphicon glyphicon-chevron-right"></span>
                             </a>
-                        </li>
+                        {{/view}}
 
 
-                        <li class="AuthRegisterCreds">
+                        {{#view view.TabView tab="AuthRegister.creds" }}
                             <a>
                                 Your credentials
                                 <span class="glyphicon glyphicon glyphicon-chevron-right"></span>
                             </a>
-                        </li>
+                        {{/view}}
 
-                        <li class="AuthRegisterSum">
+                        {{#view view.TabView tab="AuthRegister.sum" }}
                             <a>
                                 Finish registration
                                 <span class="glyphicon glyphicon glyphicon-chevron-right"></span>
                             </a>
-                        </li>
-
+                        {{/view}}
 
                     </ul>
                 </div>
