@@ -26,7 +26,7 @@ function program5(depth0,data) {
   return buffer;
   }
 
-  data.buffer.push("<div class=\"row\">\r\n    <div class=\"col-md-12\">\r\n\r\n        <div class=\"modal-dialog vlt-tabs-modal vlt-login\">\r\n            <div class=\"modal-content\">\r\n                <div class=\"modal-header\">\r\n                    <h2>Create new secret wizard</h2>\r\n\r\n                    <ul class=\"nav nav-pills nav-justified vlt-wizard-steps\">\r\n                        ");
+  data.buffer.push("<div class=\"row\">\r\n    <div class=\"col-md-12\">\r\n\r\n        <div class=\"vlt-dialog\">\r\n            <div class=\"vlt-dialog-content\">\r\n                <div class=\"vlt-dialog-header\">\r\n                    <h2>Create new secret wizard</h2>\r\n\r\n                    <ul class=\"nav nav-pills nav-justified vlt-wizard-steps\">\r\n                        ");
   hashContexts = {'tab': depth0};
   hashTypes = {'tab': "STRING"};
   stack1 = helpers.view.call(depth0, "view.TabView", {hash:{
@@ -40,12 +40,12 @@ function program5(depth0,data) {
     'tab': ("createSubmit")
   },inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\r\n\r\n                    </ul>\r\n                </div>\r\n                <div class=\"modal-body\">\r\n                    ");
+  data.buffer.push("\r\n\r\n                    </ul>\r\n                </div>\r\n                <div class=\"vlt-dialog-body\">\r\n                    ");
   hashTypes = {};
   hashContexts = {};
   options = {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
   data.buffer.push(escapeExpression(((stack1 = helpers.outlet || depth0.outlet),stack1 ? stack1.call(depth0, "tab", options) : helperMissing.call(depth0, "outlet", "tab", options))));
-  data.buffer.push("\r\n                </div>\r\n                <div class=\"modal-footer\">\r\n                    <a href=\"javascript:history.go(-1)\" class=\"btn btn-default btn-sm\">Back</a>\r\n                    ");
+  data.buffer.push("\r\n                </div>\r\n                <div class=\"vlt-dialog-footer\">\r\n                    <a href=\"javascript:history.go(-1)\" class=\"btn btn-default btn-sm\">Back</a>\r\n                    ");
   hashTypes = {};
   hashContexts = {};
   stack2 = helpers.unless.call(depth0, "submitButtonHidden", {hash:{},inverse:self.noop,fn:self.program(5, program5, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
