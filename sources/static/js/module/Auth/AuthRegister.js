@@ -26,11 +26,16 @@ Vaultier.AuthRegisterView = Ember.View.extend({
         tagName: 'li',
         isActive: function () {
             var tab = this.get('tab');
-            return tab == this.get('parentView.controller.controllers.application.currentPath');
+            var path = this.get('parentView.controller.controllers.application.currentPath');
+            var route = path.split('.')[path.split('.').length-1];
+            return tab == route;
         }.property('parentView.controller.controllers.application.currentPath')
-    });
+    })
 });
 
+Vaultier.AuthRegisterController = Ember.Controller.extend({
+    needs: ['application']
+});
 
 Vaultier.AuthRegisterRoute = Ember.Route.extend({
     redirect: function () {
@@ -43,9 +48,6 @@ Vaultier.AuthRegisterRoute = Ember.Route.extend({
 });
 
 
-Vaultier.AuthRegisterController = Ember.Controller.extend({
-    needs: ['application']
-});
 
 /////////////////////////////////////////////////////////////////
 //// STEP1 - Before

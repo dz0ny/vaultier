@@ -2,7 +2,6 @@ Vaultier.SecretCreateSelectRoute = Ember.Route.extend({
 
     setupController: function (ctrl, model) {
         ctrl.set('content', {});
-        ctrl.set('tab', 'select');
         ctrl.set('submitButtonHidden', true);
 
         // set breadcrumbs
@@ -50,7 +49,6 @@ Vaultier.SecretCreateSubmitRoute = Ember.Route.extend({
 
     setupController: function (ctrl, model) {
         ctrl.set('content', model);
-        ctrl.set('tab', 'submit');
 
         // retrieve workspace
         var workspace = this.modelFor('Vault');
@@ -107,6 +105,10 @@ Vaultier.SecretCreateSubmitRoute = Ember.Route.extend({
 
 });
 
+Vaultier.SecretCreateController = Ember.Controller.extend({
+    needs: ['application']
+})
+
 Vaultier.SecretCreateView = Ember.View.extend({
     templateName: 'Secret/SecretCreate',
     layoutName: 'Layout/LayoutStandard',
@@ -116,12 +118,10 @@ Vaultier.SecretCreateView = Ember.View.extend({
         tagName: 'li',
         isActive: function () {
             var tab = this.get('tab');
-//            var target = this.get('parentView.controller.target');
-//            var route = target.router.currentHandlerInfos[target.router.currentHandlerInfos.length - 1].name;
-            route = this.get('controller').get('tab');
-
-            return tab === route;
-        }.property('item').cacheable()
+            var path = this.get('parentView.controller.controllers.application.currentPath');
+            var route = path.split('.')[path.split('.').length-1];
+            return tab == route;
+        }.property('parentView.controller.controllers.application.currentPath')
     })
 
 });

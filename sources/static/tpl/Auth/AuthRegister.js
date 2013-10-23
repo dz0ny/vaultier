@@ -68,28 +68,28 @@ function program14(depth0,data) {
   hashContexts = {'tab': depth0};
   hashTypes = {'tab': "STRING"};
   stack1 = helpers.view.call(depth0, "view.TabView", {hash:{
-    'tab': ("AuthRegister.before")
+    'tab': ("before")
   },inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n\r\n                        ");
   hashContexts = {'tab': depth0};
   hashTypes = {'tab': "STRING"};
   stack1 = helpers.view.call(depth0, "view.TabView", {hash:{
-    'tab': ("AuthRegister.keys")
+    'tab': ("keys")
   },inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n\r\n\r\n                        ");
   hashContexts = {'tab': depth0};
   hashTypes = {'tab': "STRING"};
   stack1 = helpers.view.call(depth0, "view.TabView", {hash:{
-    'tab': ("AuthRegister.creds")
+    'tab': ("creds")
   },inverse:self.noop,fn:self.program(5, program5, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n\r\n                        ");
   hashContexts = {'tab': depth0};
   hashTypes = {'tab': "STRING"};
   stack1 = helpers.view.call(depth0, "view.TabView", {hash:{
-    'tab': ("AuthRegister.sum")
+    'tab': ("sum")
   },inverse:self.noop,fn:self.program(7, program7, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n\r\n                    </ul>\r\n                </div>\r\n                <div class=\"modal-body\">\r\n\r\n                    <div class=\"tab-content\">\r\n                        <div class=\"tab-pane active\">\r\n\r\n                            <div class=\"row\">\r\n                                ");
