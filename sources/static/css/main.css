@@ -451,13 +451,25 @@
 * Wizard
 *************************************************************
 *************************************************************/
-
-.vlt-wizard-steps li {
+.vlt-wizard-steps {
+    margin-top: 15px;
     background-color: #EEEEEE;
     border-radius: 6px;
 }
 
-.vlt-wizard-steps li a:hover {
+.vlt-wizard-steps li:first-of-type > a{
+    border-radius: 6px 0px 0px 6px;
+}
+
+.vlt-wizard-steps li:last-of-type > a{
+    border-radius: 0px 6px 6px 0px !important;
+}
+
+.vlt-wizard-steps > li.active > a {
+    border-radius: 6px 30px 30px 6px;
+}
+
+.vlt-wizard-steps li > a:hover {
     color: #2FA4E7;
 }
 
@@ -502,8 +514,12 @@
 *************************************************************
 *************************************************************/
 
-.vlt-register.modal-dialog {
+.vlt-register.vlt-dialog {
     width: 900px;
+}
+
+.vlt-register.vlt-dialog .vlt-dialog-body {
+    min-height: 300px;
 }
 
 /*************************************************************
@@ -578,7 +594,7 @@
 .vlt-preloader {
     margin: 0px auto;
     background-size: 100% 100%;
-    background-image: url('../images/preloader_220x220.gif');
+    background-image: url('../images/preloader_250x250.gif');
     background-attachment: scroll;
     background-repeat: no-repeat;
     width: 220px;
@@ -588,7 +604,7 @@
 .vlt-preloader-small {
     width: 110px;
     height: 110px;
-    background-image: url('../images/preloader_110x110.gif');
+    background-image: url('../images/preloader_100x100.gif');
 
 }
 

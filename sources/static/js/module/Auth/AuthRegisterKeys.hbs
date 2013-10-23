@@ -1,32 +1,48 @@
 <div class="vlt-register-keys">
-    {{#if props.keysReady }}
-        <div class="generated">
-            <div class="callout callout-info">
-                <h4>Your key has been generated</h4>
+{{#if props.keysReady }}
+
+        <div class="row bottom-15">
+            <div class="col-md-8 col-md-offset-2">
+                <h4>Your keys has been generated</h4>
 
                 <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus in diam eu
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus in diam eu.
                     nisl accumsan condimentum. Duis rhoncus enim a urna aliquet fringilla.
                 </p>
+            </div>
+        </div>
 
-                <br/>
+        <div class="col-md-8 col-md-offset-2 alert alert-warning">
 
-                <div class="alert alert-warning vlt-download">
-                    Before you continue please download your private key
-                    <br/>
-                    <br/>
-                    <a {{ action downloadKey }} class="btn btn-primary ">Download private key</a>
-                    <br/>
+            <div class="row top-15">
+                <div class="row">
+                    <div class="col-md-5 col-md-offset-1">
+                        <b>
+                            Your private key
+                        </b>
+                        <br/>
+                    <span class="help-block">
+                        Used instead of password. Please download the key.
+                    </span>
+                    </div>
+                    <div class="col-md-4">
+                        <a class="btn btn-default btn-primary" {{ action downloadKey }}>Download your key</a>
+                    </div>
                 </div>
+            </div>
+        </div>
 
-                <div class="clearfix"></div>
-            </div>
+        <div class="clearfix"></div>
+
+    </div>
+
+
+{{else}}
+    <div class="generate">
+        <h3>Please wait while generating your keys</h3>
+
+        <div class="vlt-preloader vlt-preloader-small">
         </div>
-    {{else}}
-        <div class="generate">
-            <h3>Please wait while generating your keys</h3>
-            <div class="vlt-preloader vlt-preloader-small">
-            </div>
-        </div>
-    {{/if}}
+    </div>
+{{/if}}
 </div>

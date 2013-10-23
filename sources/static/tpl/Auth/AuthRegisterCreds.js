@@ -4,7 +4,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', hashContexts, hashTypes, escapeExpression=this.escapeExpression;
 
 
-  data.buffer.push("<div class=\"vlt-register-creds\">\r\n    <div class=\"callout callout-info\">\r\n        <p>\r\n            Enter your credentials. What does it mean.\r\n            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus in diam eu\r\n            nisl accumsan condimentum. Duis rhoncus enim a urna aliquet fringilla.\r\n        </p>\r\n    </div>\r\n\r\n    <div class=\"vlt-section\">\r\n        <form class=\"form-horizontal\" role=\"form\">\r\n            <div class=\"form-group\" ");
+  data.buffer.push("<div class=\"vlt-register-creds\">\r\n\r\n    <div class=\"row bottom-15\">\r\n        <div class=\"col-md-8 col-md-offset-2\">\r\n            <h4>Please submit yout credentials</h4>\r\n\r\n            <p>\r\n                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus in diam eu.\r\n                nisl accumsan condimentum. Duis rhoncus enim a urna aliquet fringilla.\r\n            </p>\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"vlt-section\">\r\n        <form class=\"form-horizontal\" role=\"form\">\r\n            <div class=\"form-group\" ");
   hashContexts = {'class': depth0};
   hashTypes = {'class': "STRING"};
   data.buffer.push(escapeExpression(helpers.bindAttr.call(depth0, {hash:{

@@ -1,9 +1,9 @@
 <div class="row">
     <div class="col-md-12">
 
-        <div class="modal-dialog vlt-tabs-modal vlt-register">
-            <div class="modal-content">
-                <div class="modal-header">
+        <div class="vlt-dialog vlt-tabs-modal vlt-register">
+            <div class="vlt-dialog-content">
+                <div class="vlt-dialog-header">
                     <h2>Register to Vaultier</h2>
 
                     <ul class="nav nav-pills nav-justified vlt-wizard-steps">
@@ -38,20 +38,12 @@
 
                     </ul>
                 </div>
-                <div class="modal-body">
 
-                    <div class="tab-content">
-                        <div class="tab-pane active">
-
-                            <div class="row">
-                                {{outlet AuthRegister}}
-                            </div>
-                        </div>
-                    </div>
-
-
+                <div class="vlt-dialog-body">
+                    {{outlet AuthRegister}}
                 </div>
-                <div class="modal-footer">
+
+                <div class="vlt-dialog-footer">
                     {{#unless props.loginButtonHidden}}
                         Do you have account already? {{#link-to 'AuthLogin' class="btn btn-default btn-sm" }}Login to
                         your

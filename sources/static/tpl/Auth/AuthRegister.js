@@ -64,7 +64,7 @@ function program14(depth0,data) {
   data.buffer.push("\r\n                            Next\r\n                        ");
   }
 
-  data.buffer.push("<div class=\"row\">\r\n    <div class=\"col-md-12\">\r\n\r\n        <div class=\"modal-dialog vlt-tabs-modal vlt-register\">\r\n            <div class=\"modal-content\">\r\n                <div class=\"modal-header\">\r\n                    <h2>Register to Vaultier</h2>\r\n\r\n                    <ul class=\"nav nav-pills nav-justified vlt-wizard-steps\">\r\n                        ");
+  data.buffer.push("<div class=\"row\">\r\n    <div class=\"col-md-12\">\r\n\r\n        <div class=\"vlt-dialog vlt-tabs-modal vlt-register\">\r\n            <div class=\"vlt-dialog-content\">\r\n                <div class=\"vlt-dialog-header\">\r\n                    <h2>Register to Vaultier</h2>\r\n\r\n                    <ul class=\"nav nav-pills nav-justified vlt-wizard-steps\">\r\n                        ");
   hashContexts = {'tab': depth0};
   hashTypes = {'tab': "STRING"};
   stack1 = helpers.view.call(depth0, "view.TabView", {hash:{
@@ -92,12 +92,12 @@ function program14(depth0,data) {
     'tab': ("sum")
   },inverse:self.noop,fn:self.program(7, program7, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\r\n\r\n                    </ul>\r\n                </div>\r\n                <div class=\"modal-body\">\r\n\r\n                    <div class=\"tab-content\">\r\n                        <div class=\"tab-pane active\">\r\n\r\n                            <div class=\"row\">\r\n                                ");
+  data.buffer.push("\r\n\r\n                    </ul>\r\n                </div>\r\n\r\n                <div class=\"vlt-dialog-body\">\r\n                    ");
   hashTypes = {};
   hashContexts = {};
   options = {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
   data.buffer.push(escapeExpression(((stack1 = helpers.outlet || depth0.outlet),stack1 ? stack1.call(depth0, "AuthRegister", options) : helperMissing.call(depth0, "outlet", "AuthRegister", options))));
-  data.buffer.push("\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n\r\n\r\n                </div>\r\n                <div class=\"modal-footer\">\r\n                    ");
+  data.buffer.push("\r\n                </div>\r\n\r\n                <div class=\"vlt-dialog-footer\">\r\n                    ");
   hashTypes = {};
   hashContexts = {};
   stack2 = helpers.unless.call(depth0, "props.loginButtonHidden", {hash:{},inverse:self.noop,fn:self.program(9, program9, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
