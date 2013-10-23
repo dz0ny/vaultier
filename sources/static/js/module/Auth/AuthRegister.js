@@ -2,7 +2,6 @@
 //// Shared classes
 /////////////////////////////////////////////////////////////////
 
-
 var RegisterProps = Ember.Object.extend({
     nextButtonTitle: false,
     nextButtonDisable: false,
@@ -11,7 +10,6 @@ var RegisterProps = Ember.Object.extend({
     loginButtonHidden: false
 });
 RegisterProps.reopenClass(Utils.Singleton);
-
 
 var BaseRegisterController = Ember.Controller.extend({
     props: RegisterProps.current()
@@ -27,35 +25,44 @@ Vaultier.AuthRegisterView = Ember.View.extend({
         isActive: function () {
             var tab = this.get('tab');
             var path = this.get('parentView.controller.controllers.application.currentPath');
-            var route = path.split('.')[path.split('.').length-1];
+            var route = path.split('.')[path.split('.').length - 1];
             return tab == route;
         }.property('parentView.controller.controllers.application.currentPath')
     })
 });
 
-Vaultier.AuthRegisterController = Ember.Controller.extend({
+Vaultier.AuthRegisterController = BaseRegisterController.extend({
     needs: ['application']
 });
 
 Vaultier.AuthRegisterRoute = Ember.Route.extend({
-    redirect: function () {
+    beforeModel: function (transition) {
         if (Vaultier.Services.Auth.AuthService.current().get('isAuthenticated')) {
-            this.transitionTo('AuthRegister.sum');
+            transition.router.replaceWith('AuthRegister.sum');
         } else {
-            this.transitionTo('AuthRegister.before');
+            transition.router.replaceWith('AuthRegister.before');
         }
     }
 });
-
-
 
 /////////////////////////////////////////////////////////////////
 //// STEP1 - Before
 /////////////////////////////////////////////////////////////////
 
-
 Vaultier.AuthRegisterBeforeRoute = Ember.Route.extend({
     step: 'AuthRegisterBefore',
+
+    beforeModel: function (transition) {
+        if (Vaultier.Services.Auth.AuthService.current().get('isAuthenticated')) {
+            transition.router.replaceWith('AuthRegister.sum');
+        }
+    },
+
+    setupController: function (ctrl) {
+        ctrl.set('props.loginButtonHidden', false);
+        ctrl.set('props.nextButtonDisabled', false);
+        ctrl.set('props.nextButtonTitle', null)
+    },
 
     renderTemplate: function () {
         this.render(this.step, { outlet: 'AuthRegister'})
@@ -83,6 +90,12 @@ Vaultier.AuthRegisterKeysController = BaseRegisterController.extend();
 Vaultier.AuthRegisterKeysRoute = Ember.Route.extend({
     step: 'AuthRegisterKeys',
 
+    beforeModel: function (transition) {
+        if (Vaultier.Services.Auth.AuthService.current().get('isAuthenticated')) {
+            transition.router.replaceWith('AuthRegister.sum');
+        }
+    },
+
     renderTemplate: function () {
         this.render(this.step, { outlet: 'AuthRegister'})
     },
@@ -106,9 +119,12 @@ Vaultier.AuthRegisterKeysRoute = Ember.Route.extend({
     },
 
     setupController: function (ctrl) {
+        ctrl.set('props.loginButtonHidden', false);
+        ctrl.set('props.nextButtonTitle', null)
+
         if (!ctrl.get('props.keysReady')) {
             ctrl.set('props.nextButtonDisabled', true);
-            //2048 is required
+
             var auth = Vaultier.Services.Auth.AuthService.current();
             auth.generateKeys(function (keys) {
                 ctrl.set('props.keys', keys);
@@ -131,6 +147,12 @@ Vaultier.AuthRegisterKeysView = Ember.View.extend({
 Vaultier.AuthRegisterCredsRoute = Ember.Route.extend({
     step: 'AuthRegisterCreds',
 
+    beforeModel: function (transition) {
+        if (Vaultier.Services.Auth.AuthService.current().get('isAuthenticated')) {
+            transition.router.replaceWith('AuthRegister.sum');
+        }
+    },
+
     renderTemplate: function () {
         this.render(this.step, { outlet: 'AuthRegister'})
     },
@@ -138,21 +160,16 @@ Vaultier.AuthRegisterCredsRoute = Ember.Route.extend({
     setupController: function (ctrl) {
         this._super(arguments);
 
+        ctrl.set('props.loginButtonHidden', false);
+        ctrl.set('props.nextButtonDisabled', false);
+        ctrl.set('props.nextButtonTitle', 'Sumit your credentials');
+
         // prepare user model
         var user = ctrl.get('content');
         if (!user) {
             var user = this.get('store').createRecord('AuthenticatedUser');
             ctrl.set('content', user);
         }
-
-        //test
-//        var keys = Vaultier.Services.Auth.AuthService.current().generateKeys();
-//        ctrl.set('props.keys', keys);
-//        ctrl.set('props.keysReady', true);
-//        user.set('email', 'jan');
-//        user.set('nickname', 'jan');
-//        user.set('public_key', keys.publicKey);
-
 
         // check if keys, otherwise go to step 1
         if (!ctrl.get('props.keysReady')) {
