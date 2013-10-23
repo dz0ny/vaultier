@@ -264,70 +264,69 @@
 *************************************************************/
 
 .vlt-item {
-    border-color: #F5F5F5;
-    border-radius: 0px 8px 8px 8px;
-    border-width: 2px;
+    width: 315px;
+    float: left;
+    display: block;
+    overflow: hidden;
+    border: 1px solid #E0DBDB;
+    transition: border-color 500ms;
+    border-radius: 6px;
     position: relative;
-    width: 280px;
-    margin-left: 65px;
-    margin-bottom: 30px;
-    margin-right: 30px;
+    margin: 30px 0px 0px 30px;
 }
 
 .vlt-item:hover {
-    _transition: border-color 500ms;
-    border-color: #4AEA84;
+    border-color: #317EB2;
+    transition: border-color 500ms;
     text-decoration: none;
 }
 
-.vlt-item:hover .panel-footer {
-    _transition: background-color 500ms;
-    _transition: color 250ms;
-    background-color: #4AEA84;
-    color: #ffffff;
+.vlt-item .vlt-header {
+    padding: 10px;
+    height: 90px;
+    position: relative;
+    background-color: #F5F5F5;
 }
 
-.vlt-item:hover .panel-icon {
-    _transition: background-color 500ms;
-    background-color: #4AEA84;
-}
-
-.vlt-item .panel-icon {
+.vlt-item .vlt-header .vlt-icon {
     position: absolute;
-    border-radius: 14px;
-    width: 80px;
-    padding: 10px 0px 10px 10px;
-    left: -68px;
-    top: -2px;
-    background-color: #F5F5F5;
-    z-index: -1;
-}
-
-.vlt-item .panel-icon img {
-    width: 48px;
-    height: 48px;
-}
-
-.vlt-item .panel-header h3 {
+    left: 10px;
+    top: 10px;
+    width: 50px;
     height: 50px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    padding: 0px;
-    margin: 15px 15px 0px 15px;
 }
 
-.vlt-item .panel-body {
-    color: #1971A3;
-    height: 100px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.vlt-item .panel-footer {
-    border-top: 0px;
-    color: #317EAC;
+.vlt-item .vlt-header .vlt-icon img {
     width: 100%;
+    height: 100%;
+}
+
+.vlt-item .vlt-header .vlt-title {
+    margin-left: 60px;
+}
+
+.vlt-item .vlt-header .vlt-title h3 {
+    margin: 0px;
+    padding: 0px;
+    word-wrap: break-word;
+}
+
+.vlt-item .vlt-body {
+    word-wrap: break-word;
+    color: #1971A3;
+    padding: 10px;
+    height: 200px;
+    background-color: #ffffff;
+}
+
+.vlt-item .vlt-footer {
     background-color: #F5F5F5;
+}
+
+.vlt-item .vlt-footer > .vlt-footer-item {
+    min-height: 20px ;
+    padding: 5px 10px 5px 10px;
+    float: right;
 }
 
 /*************************************************************
@@ -346,7 +345,8 @@
 *************************************************************
 *************************************************************/
 
-.vlt-footer {
+#vlt-footer {
+    border-top: 1px solid #E0DBDB;
     position: fixed;
     bottom: 0px;
     width: 100%;
@@ -689,11 +689,9 @@
     background-image: url('../images/icon-note-white.png');
 }
 
-
 .vlt-secret.vlt-file .vlt-visual .vlt-icon {
     background-image: url('../images/icon-file-white.png');
 }
-
 
 .vlt-secret .vlt-visual .vlt-type {
     color: #ffffff;
@@ -715,7 +713,6 @@
     background-color: #F5F5F5;
 }
 
-
 .vlt-secret .vlt-inner .vlt-controls {
     padding: 15px;
     padding-right: 20px;
@@ -727,3 +724,65 @@
 .vlt-secret .vlt-inner .vlt-attr-name:after {
     content: ':'
 }
+
+/*************************************************************
+**************************************************************
+* Dialog
+*************************************************************
+*************************************************************/
+
+.vlt-dialog {
+    margin: 50px auto 50px auto;
+    width: 600px;
+    background-color: #ffffff;
+    border: 1px solid #E0DBDB;
+    border-radius: 6px;
+}
+
+.vlt-dialog .vlt-dialog-header,
+.vlt-dialog .vlt-dialog-body,
+.vlt-dialog .vlt-dialog-footer {
+    padding: 15px;
+}
+
+.vlt-dialog .vlt-dialog-header h2 {
+    text-align: center;
+    margin: 0px;
+}
+
+.vlt-dialog .vlt-dialog-footer {
+    border-top: 1px solid #E0DBDB;
+    background-color: #F5F5F5;
+    text-align: right;
+}
+
+/*************************************************************
+**************************************************************
+* empty jumbotrons
+*************************************************************
+*************************************************************/
+.vlt-empty.jumbotron .vlt-header {
+    position: relative;
+    padding-bottom: 20px;
+}
+
+.vlt-empty.jumbotron .vlt-header .vlt-icon {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100px;
+    height: 100px;
+    background-size: 100% 100%;
+}
+
+.vlt-empty.jumbotron .vlt-header .vlt-title {
+    margin-left: 120px;
+    min-height: 100px;
+}
+
+.vlt-empty.jumbotron.vlt-vault .vlt-header .vlt-icon {
+    margin-top: 5px;
+    opacity: 0.6;
+    background-image: url('../images/icon-vault-black.png')
+}
+

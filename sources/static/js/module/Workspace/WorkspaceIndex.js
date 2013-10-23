@@ -37,11 +37,6 @@ Vaultier.WorkspaceIndexRoute = Ember.Route.extend(
 
 
 Vaultier.WorkspaceIndexController = Ember.ArrayController.extend({
-    actions: {
-        createWorkspace: function () {
-            this.set('sortAscending', !this.get('sortAscending'));
-        }
-    }
 });
 
 Vaultier.WorkspaceIndexView = Ember.View.extend({

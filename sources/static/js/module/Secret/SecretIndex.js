@@ -58,7 +58,7 @@ Vaultier.SecretIndexRoute = Ember.Route.extend({
 
     actions: {
         deleteCard: function (card) {
-            Utils.Confirm(this, 'Are you sure?', function () {
+            Vaultier.confirmModal(this, 'Are you sure?', function () {
                 card.deleteRecord();
 
                 card.save().then(

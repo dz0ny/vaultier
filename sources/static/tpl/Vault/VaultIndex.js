@@ -48,7 +48,7 @@ function program5(depth0,data) {
 function program7(depth0,data) {
   
   var buffer = '', stack1, stack2, hashContexts, hashTypes, options;
-  data.buffer.push("\r\n            <div class=\"jumbotron col-md-8 col-md-offset-2\">\r\n                <h1>You do not have any vault yet</h1>\r\n\r\n                <p>\r\n                    What are vaults for? This example is a quick exercise to illustrate how the default, static\r\n                    includes the responsive CSS and HTML, so it also adapts to your viewport and device.\r\n                </p>\r\n\r\n                <p class=\"top-30\">\r\n                    ");
+  data.buffer.push("\r\n            <div class=\"jumbotron vlt-empty vlt-vault col-md-8 col-md-offset-2\">\r\n                <div class=\"vlt-header\">\r\n                    <div class=\"vlt-icon\">\r\n\r\n                    </div>\r\n                    <div class=\"vlt-title\">\r\n                        <h1>You do not have any vault yet</h1>\r\n                    </div>\r\n                </div>\r\n\r\n                <p>\r\n                    What are vaults for? This example is a quick exercise to illustrate how the default, static\r\n                    includes the responsive CSS and HTML, so it also adapts to your viewport and device.\r\n                </p>\r\n\r\n                <p class=\"top-30\">\r\n                    ");
   hashContexts = {'class': depth0};
   hashTypes = {'class': "STRING"};
   options = {hash:{
@@ -70,7 +70,7 @@ function program8(depth0,data) {
   hashContexts = {};
   stack1 = helpers['if'].call(depth0, "length", {hash:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\r\n\r\n    <div class=\"clearfix\"></div>\r\n\r\n</div>\r\n\r\n<div class=\"row\">\r\n    <div class=\"col-md-12\">\r\n\r\n        ");
+  data.buffer.push("\r\n    <div class=\"pull-left\">\r\n        <h2>List of vaults</h2>\r\n    </div>\r\n\r\n    <div class=\"clearfix\"></div>\r\n\r\n</div>\r\n\r\n<div class=\"row\">\r\n    <div class=\"col-md-12\">\r\n\r\n        ");
   hashTypes = {};
   hashContexts = {};
   stack1 = helpers['if'].call(depth0, "length", {hash:{},inverse:self.program(7, program7, data),fn:self.program(4, program4, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});

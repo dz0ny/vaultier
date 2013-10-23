@@ -44,13 +44,13 @@ Vaultier.VaultCreateRoute = Ember.Route.extend({
         return record;
     },
 
-//    deactivate: function () {
-//        var record = this.get('controller.content');
-//        if (!record.get('id')) {
-//            var store = this.get('store');
-//            store.deleteRecord(record);
-//        }
-//    }
+    deactivate: function () {
+        var record = this.get('controller.content');
+        if (!record.get('id')) {
+            var store = this.get('store');
+            store.deleteRecord(record);
+        }
+    }
 });
 
 Vaultier.VaultCreateController = Ember.ObjectController.extend({

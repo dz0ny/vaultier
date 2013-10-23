@@ -59,7 +59,8 @@ Vaultier.CardCreateRoute = Ember.Route.extend({
             var store = this.get('store');
             store.deleteRecord(record);
         }
-    }
+    },
+
 });
 
 Vaultier.CardCreateController = Ember.ObjectController.extend({

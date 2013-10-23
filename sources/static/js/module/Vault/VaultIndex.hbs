@@ -12,6 +12,9 @@
             </div>
         </div>
     {{/if}}
+    <div class="pull-left">
+        <h2>List of vaults</h2>
+    </div>
 
     <div class="clearfix"></div>
 
@@ -25,8 +28,15 @@
                 {{view Vaultier.VaultIndexItemView}}
             {{/each}}
         {{else}}
-            <div class="jumbotron col-md-8 col-md-offset-2">
-                <h1>You do not have any vault yet</h1>
+            <div class="jumbotron vlt-empty vlt-vault col-md-8 col-md-offset-2">
+                <div class="vlt-header">
+                    <div class="vlt-icon">
+
+                    </div>
+                    <div class="vlt-title">
+                        <h1>You do not have any vault yet</h1>
+                    </div>
+                </div>
 
                 <p>
                     What are vaults for? This example is a quick exercise to illustrate how the default, static

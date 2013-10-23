@@ -1,24 +1,29 @@
-Vaultier.VaultRoute = Ember.Route.extend({
+Vaultier.VaultRoute = Ember.Route.extend(
+    Utils.ErrorAwareRouteMixin,
+    {
 
-    model: function (params) {
-        return this.get('store').find('Workspace', params.workspace)
-    },
+        model: function (params, transition) {
+            var promise = this.get('store').find('Workspace', params.workspace);
+            promise.then(null, this.handleErrors(transition))
 
-    afterModel: function (workspace) {
-        Service.Environment.current().set('workspace', workspace);
-    },
+            return promise;
+        },
 
-    deactivate: function () {
-        Service.Environment.current().set('workspace', null);
-    },
+        afterModel: function (workspace) {
+            Service.Environment.current().set('workspace', workspace);
+        },
 
-    serialize: function (model) {
-        return {
-            workspace: model.get('id')
+        deactivate: function () {
+            Service.Environment.current().set('workspace', null);
+        },
+
+        serialize: function (model) {
+            return {
+                workspace: model.get('id')
+            }
         }
-    }
 
-});
+    });
 
 Vaultier.VaultIndexRoute = Ember.Route.extend({
 

@@ -23,7 +23,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   hashTypes = {};
   hashContexts = {};
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "yield", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
-  data.buffer.push("\r\n</div>\r\n\r\n\r\n<div class=\"vlt-footer\">\r\n    <div class=\"container\">\r\n        <p>&copy; Company 2013</p>\r\n    </div>\r\n</div>\r\n");
+  data.buffer.push("\r\n</div>\r\n\r\n\r\n<div id=\"vlt-footer\">\r\n    <div class=\"container\">\r\n        <p>&copy; RightClick 2013</p>\r\n    </div>\r\n</div>\r\n");
   return buffer;
   
 });

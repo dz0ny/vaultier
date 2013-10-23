@@ -1,6 +1,6 @@
 {{#if auth.isAuthenticated}}
     <div class="panel panel-default vlt-security-box dropdown pull-right">
-        <img class="vlt-avatar" src="http://www.gravatar.com/avatar/{{ avatar }}">
+        {{gravatarImg auth.user.email size=32 class="vlt-avatar"}}
 
         <a href="#" class="vlt-username dropdown-toggle" data-toggle="dropdown">
             {{auth.user.nickname}}

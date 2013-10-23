@@ -1,7 +1,7 @@
 Ember.TEMPLATES["Vault/VaultIndexItem"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  var buffer = '', stack1, hashTypes, hashContexts, escapeExpression=this.escapeExpression, self=this, helperMissing=helpers.helperMissing;
+  var buffer = '', stack1, hashTypes, hashContexts, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, self=this;
 
 function program1(depth0,data) {
   
@@ -10,7 +10,7 @@ function program1(depth0,data) {
   hashContexts = {'class': depth0};
   hashTypes = {'class': "STRING"};
   options = {hash:{
-    'class': ("panel panel-primary pull-left vlt-item vlt-vault-item")
+    'class': ("vlt-item vlt-vault-item")
   },inverse:self.noop,fn:self.program(2, program2, data),contexts:[depth0,depth0],types:["STRING","ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
   stack2 = ((stack1 = helpers['link-to'] || depth0['link-to']),stack1 ? stack1.call(depth0, "Card.index", "", options) : helperMissing.call(depth0, "link-to", "Card.index", "", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
@@ -19,24 +19,27 @@ function program1(depth0,data) {
   }
 function program2(depth0,data) {
   
-  var buffer = '', hashTypes, hashContexts;
-  data.buffer.push("\r\n        <div class=\"panel-icon\">\r\n            <img src=\"/static/images/icon-vault.png\">\r\n        </div>\r\n        <div class=\"panel-header\">\r\n            <h3>");
+  var buffer = '', stack1, hashTypes, hashContexts, options;
+  data.buffer.push("\r\n        <div class=\"vlt-header\">\r\n            <div class=\"vlt-icon\">\r\n                <img src=\"/static/images/icon-vault-dark-blue.png\">\r\n            </div>\r\n            <div class=\"vlt-title\">\r\n                <h3>\r\n                    ");
   hashTypes = {};
   hashContexts = {};
-  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "name", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
-  data.buffer.push("</h3>\r\n        </div>\r\n        <div class=\"panel-body\">\r\n            ");
+  options = {hash:{},contexts:[depth0,depth0],types:["ID","INTEGER"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
+  data.buffer.push(escapeExpression(((stack1 = helpers.ellipsis || depth0.ellipsis),stack1 ? stack1.call(depth0, "name", 35, options) : helperMissing.call(depth0, "ellipsis", "name", 35, options))));
+  data.buffer.push("\r\n                </h3>\r\n\r\n            </div>\r\n        </div>\r\n        <div class=\"vlt-body\">\r\n            ");
   hashTypes = {};
   hashContexts = {};
-  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "description", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
-  data.buffer.push("\r\n        </div>\r\n        <div class=\"panel-footer\">\r\n            <div class=\"row\">\r\n                <small>\r\n                    <div class=\"col-md-4 vlt-cards\">\r\n                        Cards: 22\r\n                    </div>\r\n                    <div class=\"col-md-8 vlt-updated\">\r\n                        ");
-  hashTypes = {};
-  hashContexts = {};
-  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "view.test", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
-  data.buffer.push("\r\n                        Updated: ");
+  options = {hash:{},contexts:[depth0,depth0],types:["ID","INTEGER"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
+  data.buffer.push(escapeExpression(((stack1 = helpers.ellipsis || depth0.ellipsis),stack1 ? stack1.call(depth0, "description", 250, options) : helperMissing.call(depth0, "ellipsis", "description", 250, options))));
+  data.buffer.push("\r\n        </div>\r\n        <div class=\"vlt-footer\">\r\n            <div class=\"vlt-footer-item help-block\">\r\n                Updated: ");
   hashTypes = {};
   hashContexts = {};
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "updated_ago", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
-  data.buffer.push("\r\n                    </div>\r\n                </small>\r\n            </div>\r\n        </div>\r\n    ");
+  data.buffer.push("\r\n            </div>\r\n            <div class=\"vlt-footer-item help-block\">\r\n                Created by ");
+  hashTypes = {};
+  hashContexts = {};
+  options = {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
+  data.buffer.push(escapeExpression(((stack1 = helpers.ucfirst || depth0.ucfirst),stack1 ? stack1.call(depth0, "created_by.nickname", options) : helperMissing.call(depth0, "ucfirst", "created_by.nickname", options))));
+  data.buffer.push("\r\n            </div>\r\n            <div class=\"clearfix\"></div>\r\n        </div>\r\n    ");
   return buffer;
   }
 
