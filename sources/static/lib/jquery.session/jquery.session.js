@@ -22,7 +22,7 @@
     try {
       hasSessionStorage = ('sessionStorage' in window) && window['sessionStorage'] !== null;
     } catch (ex) {
-      // do nothing
+      throw 'Session storage not supported'
     }
 
     $.fn[pluginName] = function(options) {

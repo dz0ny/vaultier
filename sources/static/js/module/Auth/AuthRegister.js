@@ -186,7 +186,6 @@ Vaultier.AuthRegisterCredsRoute = Ember.Route.extend({
             var user = ctrl.get('content');
             var keys = ctrl.get('props.keys');
 
-
             // saves user
             if (user.get('currentState').stateName != 'root.loaded.created.invalid') {
 
