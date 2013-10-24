@@ -1,27 +1,21 @@
 Po.NS('Service');
 
-Service.AuthService = Ember.Object.extend({
+Service.Auth = Ember.Object.extend({
 
     init: function () {
         this._super(arguments);
         this.store = Vaultier.__container__.lookup('store:main');
-        this.session = Vaultier.Services.Auth.SessionService.current();
+        this.session = Service.Session.current();
+        this.promises = Service.AuthPromises.create()
     },
 
     store: null,
-
     session: null,
-
     storage: null,
-
     callbacks: [],
-
     token: null,
-
     user: null,
-
     checked: false,
-
     privateKey: null,
 
     isAuthenticated: function () {
@@ -32,119 +26,59 @@ Service.AuthService = Ember.Object.extend({
         return this.get('checked') == true
     }.property('user', 'checked'),
 
-    generateKeys: function (callback) {
-        var build = function () {
-            return  {
-                privateKey: generator.getPrivateKey(),
-                publicKey: generator.getPublicKey()
-            }
-        }
+    login: function (email, privateKey) {
+        return this.promises.login(email, privateKey)
+            .then(
+                // successfull login
+                function (user) {
+                    this.setAuthenticatedUser(user, privateKey, this.promises.getToken())
+                }.bind(this),
 
-        var generator = new JSEncrypt({default_key_size: 1024});
-        if (callback) {
-            generator.getKey(function () {
-                callback(build())
-            });
-        } else {
-            generator.getKey()
-            return build();
-        }
+                // unsuccessfull login
+                function () {
+                    this.setAuthenticatedUser(null)
+                }.bind(this))
     },
 
-    status: function () {
-        var promise = Ember.RSVP.Promise(function (resolve, reject) {
-            Ember.$.ajax({
-                url: '/api/auth/user',
-                type: 'get'
-            }).then(
-                    function (user) {
-                        user = this.setAuthenticate({
-                            user: user
-                        });
-                        resolve(user);
 
+    status: function () {
+        var sessionUrl = this.loadFromSession() || {};
+        var sessionEmail = this.session.email || null;
+        var sessionPrivateKey = this.session.privateKey || null;
+        var sessionToken = this.session.token || null;
+
+        var promise = Ember.RSVP.Promise(function (resolve, reject) {
+            this.promises.user()
+                .then(
+                    // user retrieved, token still valid
+                    function (user) {
+                        if (user.email == sessionEmail) {
+                            this.setAuthenticated(user, sessionPrivateKey, sessionToken)
+                        } else {
+                            this.setAuthenticated(null);
+                        }
+                        resolve(user);
                     }.bind(this),
 
+                    // user not retrieved, error occured
                     function (error) {
                         this.setAuthenticate(null);
                         resolve(null);
                     }.bind(this)
-                )
+
+                );
         }.bind(this));
 
-        return promise;
-    },
-
-    auth: function (props) {
-
-        var promise = Ember.RSVP.Promise(function (resolve, reject) {
-            // handshake
-            Ember.$.ajax({
-                url: '/api/auth/handshake',
-                type: 'post',
-                data: {
-                    email: props.email
-                }
-            }).then(function (handshakeResponse) {
-                    var decoder = new JSEncrypt();
-                    decoder.setPrivateKey(props.privateKey);
-                    var password = decoder.decrypt(handshakeResponse.challenge);
-
-                    if (password) {
-                        Ember.$.ajax({
-                            url: '/api/auth/auth',
-                            type: 'post',
-                            data: {
-                                email: props.email,
-                                password: password
-                            }
-                        }).then(
-                                function (authResponse) {
-                                    resolve(authResponse);
-                                }.bind(this),
-                                function () {
-                                    reject();
-                                }.bind(this)
-                            )
-                    } else {
-                        reject();
-                    }
-                }.bind(this))
-        });
-
-        promise.then(
-            // when authenticated
-            function (user) {
-                this.setAuthenticate({
-                    user: user,
-                    privateKey: props.privateKey,
-                })
-            }.bind(this),
-
-            // when not authenticated
-            function (error) {
-                this.logout();
-            }.bind(this)
-        );
-
 
         return promise;
     },
+
 
     logout: function () {
-
-        var promise = Ember.RSVP.Promise(function (resolve, reject) {
-
-            Ember.$.ajax({
-                url: '/api/auth/logout',
-                type: 'post'
-            }).always(function () {
-                    this.setAuthenticate(null);
-                    resolve();
-                }.bind(this));
-        }.bind(this));
-
-        return promise;
+        return this.promises.logout()
+            .then(function () {
+                this.setAuthenticate(null);
+            }.bind(this))
     },
 
     afterAuthenticated: function (callback) {
@@ -152,57 +86,79 @@ Service.AuthService = Ember.Object.extend({
         callback(this.status);
     },
 
-    /**
-     * accepts:
-     *  {
-     *      privateKey: 'privateKey string',
-     *      email: 'user email'
-     *  }
-     *
-     * @param {object|null} result
-     * @returns {*}
-     */
-    setAuthenticate: function (result) {
-        result = result || {};
+    setAuthenticated: function (user, privateKey, token) {
+        var result;
 
-        var user = result.user || null;
-        var email = user ? user.email : null;
-        var privateKey = result.privateKey || this.session.getKeyOfUser(email);
-        var token = result.token || null
+//        if (user) {
+        if (user && privateKey) {
+//        if (user && privateKey && token) {
 
-        // create user object
-        user = user && privateKey ? Ember.Object.create(user) : null;
+            result = true;
+            this.setProperties({
+                checked: true,
+                isAuthenticated: true,
+                user: user,
+                privateKey: privateKey,
+                token: token
+            })
 
-        // associate authenticated user
-        this.set('user', user);
-        this.set('checked', true);
-        this.set('privateKey', result.privateKey);
-        this.set('token', token);
+        } else {
 
-        // save to session
-        this.session.set('auth', {
-            email: email,
-            privateKey: privateKey
-        });
+            result = false;
+
+            this.setProperties({
+                checked: true,
+                isAuthenticated: false,
+                user: null,
+                privateKey: null,
+                token: null
+            })
+
+
+        }
+        // saves to session
+        this.saveToSession();
 
         // run afterAuthenticated callbacks
         this.callbacks.forEach(function (c) {
             c(this);
         }.bind(this));
 
-        return user;
+        return result;
     },
 
-    persistAuth: function (ttl) {
+    saveToSession: function () {
+        var email = this.get('user') ? this.get('user').email : null;
+        this.session.set('auth', {
+            token: this.get('token'),
+            email: email,
+            privateKey: this.get('privateKey')
+        });
+    },
+
+    loadFromSession: function () {
+        return this.session.get('auth');
+    },
+
+    deleteFromSession: function () {
+        this.session.remove('auth');
+    },
+
+    saveToStorage: function (ttl) {
         this.storage.set('auth', {
             email: this.get('user').get('email'),
             privateKey: this.get('privateKey')
         }, ttl);
     },
 
-    unpersistAuth: function () {
-        this.storage.set('auth', {});
+    loadFromStorage: function () {
+        return this.storage.get('auth');
+    },
+
+    deleteFromStorage: function () {
+        this.storage.remove('auth');
     }
 
-});
-Service.AuthService.reopenClass(Utils.Singleton);
+})
+;
+Service.Auth.reopenClass(Utils.Singleton);

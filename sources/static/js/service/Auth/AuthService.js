@@ -1,6 +1,6 @@
 Po.NS('Vaultier.Services.Auth');
 
-Vaultier.Services.Auth.AuthService = Ember.Object.extend({
+Service.Auth = Ember.Object.extend({
 
     init: function () {
         this._super(arguments);
@@ -203,4 +203,4 @@ Vaultier.Services.Auth.AuthService = Ember.Object.extend({
     }
 
 });
-Vaultier.Services.Auth.AuthService.reopenClass(Utils.Singleton);
+Service.Auth.reopenClass(Utils.Singleton);

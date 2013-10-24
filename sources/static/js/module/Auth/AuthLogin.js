@@ -5,8 +5,8 @@
 var LoginProps = Ember.Object.extend({
     init: function () {
         this._super(arguments);
-        var session = Vaultier.Services.Auth.SessionService.current();
-        this.set('latestUser', session.getPersistAuth());
+        var session = Service.Session.current();
+        //this.set('latestUser', session.getPersistAuth());
     },
     rememberOptions: [
         {ttl: 0, text: 'Do not remember'},
@@ -52,20 +52,34 @@ Vaultier.AuthLoginIndexRoute = Ember.Route.extend({
 
 Vaultier.AuthLoginSwitchRoute = Ember.Route.extend(
     {
-    renderTemplate: function () {
-        this.render('AuthLoginSwitch', {outlet: 'AuthLogin'})
-    },
+        renderTemplate: function () {
+            this.render('AuthLoginSwitch', {outlet: 'AuthLogin'})
+        },
 
-    actions: {
-        login: function () {
-            var ctrl = this.get('controller');
-            var auth = Vaultier.Services.Auth.AuthService.current();
-            auth.auth({
-                persist: true,
-                persistTTL: ctrl.get('ttl'),
-                email: ctrl.get('email'),
-                privateKey: ctrl.privateKey
-            }).then(
+        setupController: function(ctrl) {
+            ctrl.set('email', 'j@j.cz');
+            ctrl.set('privateKey', '-----BEGIN RSA PRIVATE KEY-----'
++'MIICWgIBAAKBgGcpfqrh++lSMRIaqhveIcDMwMklT+y2w6iIO5aJitEPXkT/XkwH'
++'bmfNOTA982ndTh7bEntnAKV0hAJYn8iLjLOGbBLA+lJKSZB8g0CEh2Rqkaf1aAyj'
++'Iqt7huYcGdjSCOdQb2FICYB15FF6IFxBU5rwqcq3nIjDnitQRujzod6NAgMBAAEC'
++'gYAZbS/MPIDThC+WD75nuftFwvGtYiXt6SoWauWM9/+gAZKxnOOIB7jdmsaCrnJF'
++'YId1sXc/tSaCoVI8Jc3UJxkZgXuXn6gu9xdpywtB7J+i3Lp+XengQM0Sy2C75S65'
++'rDaaMqirFYTtSvyIauaqhIgRujAVTvXh3z/HPs4/R5eK/QJBAL0VGj//kYh7oCdl'
++'3AvMIxHNCHs2o03FiP5iwtKjbCuT7wuI2E3HGexCVndk1O9q8eGPYrk1l8KMzEDd'
++'Xg6M/a8CQQCLq/73Tpzzd61x3PQDTSoLMzpPagkLG9BW07v888m2miTMlMr3sRbO'
++'MiW/P55oc63LKfIYsRE41AetrtSj5lKDAkAQrczb+lpHFMii0QxhCgfJ6TEnVUGA'
++'eb1E20deN0YybeE3PkH+UmLKAWwJKh7SY7ekcvZ9aenSIoNd8Wj7lZpHAkB2jLRK'
++'oNUi6a+z94C91J8dBow1n6CxZxg8ulbTavEJJmiZpKlp90uOFI5pd8wyiA05Zg7w'
++'2knt3DnwN3aQ7wuVAkAFtkrckXd/O2RK9L4Ksp7oBE4vULB8lvnXcx8N4E3OyPRP'
++'MkHV8DG6BLWpz7vlPR3DkTWrCSp7lURhkqIztiau'
++'-----END RSA PRIVATE KEY-----')
+        },
+
+        actions: {
+            login: function () {
+                var ctrl = this.get('controller');
+                var auth = Service.Auth.current();
+                auth.login(ctrl.get('email'), ctrl.get('privateKey')).then(
                     function () {
                         $.notify('You have been successfully logged in.', 'success');
                         this.transitionTo('index');
@@ -75,10 +89,10 @@ Vaultier.AuthLoginSwitchRoute = Ember.Route.extend(
                         this.get('controller').set('props.latestUser', null);
                     }.bind(this)
                 );
+            }
         }
-    }
 
-});
+    });
 
 Vaultier.AuthLoginSwitchController = Ember.Controller.extend({
     tab: 'AuthLoginSwitch',
@@ -158,7 +172,7 @@ Vaultier.AuthLoginLatestRoute = Ember.Route.extend({
             var ctrl = this.get('controller');
             var latestUser = ctrl.get('props.latestUser');
 
-            var auth = Vaultier.Services.Auth.AuthService.current();
+            var auth = Service.Auth.current();
             auth.auth({
                 persist: true,
                 persistTTL: latestUser.ttl,

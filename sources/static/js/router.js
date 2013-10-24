@@ -80,7 +80,7 @@ Vaultier.ApplicationRoute = Ember.Route.extend(
     Utils.ErrorAwareRouteMixin,
     {
         model: function (params, transition) {
-            var auth = Vaultier.Services.Auth.AuthService.current();
+            var auth = Service.Auth.current();
             var status = auth.status()
             return status;
         }
@@ -90,7 +90,7 @@ Vaultier.IndexRoute = Ember.Route.extend(
     Utils.ErrorAwareRouteMixin,
     {
         redirect: function () {
-            var auth = Vaultier.Services.Auth.AuthService.current();
+            var auth = Service.Auth.current();
             if (auth.get('isAuthenticated')) {
                 return this.transitionTo('Workspace.index');
             } else {

@@ -32,12 +32,14 @@
     <script src="{% static 'lib/jquery.notify/jquery.notify.js' %}"></script>
     <script src="{% static 'lib/jquery.jstorage/jstorage.js' %}"></script>
     <script src="{% static 'lib/jquery.cookie/jquery.cookie.js' %}"></script>
+    <script src="{% static 'lib/jquery.session/jquery.session.js' %}"></script>
 
     {############# generic #}
     <script src="{% static 'lib/moment/moment.js' %}"></script>
 
     {############# ppk #}
     <script src="{% static 'lib/cryptojs/rollups/md5.js' %}"></script>
+    <script src="{% static 'lib/cryptojs/rollups/sha1.js' %}"></script>
     <script src="{% static 'lib/cryptojs/components/core.js' %}"></script>
     <script src="{% static 'lib/cryptojs/components/enc-base64.js' %}"></script>
 
@@ -159,8 +161,11 @@
     {############# services #}
 
     <script src="{% static 'js/service/Environment.js' %}"></script>
-    <script src="{% static 'js/service/Auth/SessionService.js' %}"></script>
-    <script src="{% static 'js/service/Auth/AuthService.js' %}"></script>
+    <script src="{% static 'js/service/Auth.js' %}"></script>
+    <script src="{% static 'js/service/AuthPromises.js' %}"></script>
+    <script src="{% static 'js/service/Session.js' %}"></script>
+{#    <script src="{% static 'js/service/Auth/SessionService.js' %}"></script>#}
+{#    <script src="{% static 'js/service/Auth/AuthService.js' %}"></script>#}
 
     {############# model #}
     <script src="{% static 'js/model/model.js' %}"></script>

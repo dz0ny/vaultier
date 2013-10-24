@@ -37,7 +37,7 @@ Vaultier.AuthRegisterController = BaseRegisterController.extend({
 
 Vaultier.AuthRegisterRoute = Ember.Route.extend({
     beforeModel: function (transition) {
-        if (Vaultier.Services.Auth.AuthService.current().get('isAuthenticated')) {
+        if (Service.Auth.current().get('isAuthenticated')) {
             transition.router.replaceWith('AuthRegister.sum');
         } else {
             transition.router.replaceWith('AuthRegister.before');
@@ -53,7 +53,7 @@ Vaultier.AuthRegisterBeforeRoute = Ember.Route.extend({
     step: 'AuthRegisterBefore',
 
     beforeModel: function (transition) {
-        if (Vaultier.Services.Auth.AuthService.current().get('isAuthenticated')) {
+        if (Service.Auth.current().get('isAuthenticated')) {
             transition.router.replaceWith('AuthRegister.sum');
         }
     },
@@ -91,7 +91,7 @@ Vaultier.AuthRegisterKeysRoute = Ember.Route.extend({
     step: 'AuthRegisterKeys',
 
     beforeModel: function (transition) {
-        if (Vaultier.Services.Auth.AuthService.current().get('isAuthenticated')) {
+        if (Service.Auth.current().get('isAuthenticated')) {
             transition.router.replaceWith('AuthRegister.sum');
         }
     },
@@ -125,7 +125,7 @@ Vaultier.AuthRegisterKeysRoute = Ember.Route.extend({
         if (!ctrl.get('props.keysReady')) {
             ctrl.set('props.nextButtonDisabled', true);
 
-            var auth = Vaultier.Services.Auth.AuthService.current();
+            var auth = Service.Auth.current();
             auth.generateKeys(function (keys) {
                 ctrl.set('props.keys', keys);
                 ctrl.set('props.keysReady', true);
@@ -148,7 +148,7 @@ Vaultier.AuthRegisterCredsRoute = Ember.Route.extend({
     step: 'AuthRegisterCreds',
 
     beforeModel: function (transition) {
-        if (Vaultier.Services.Auth.AuthService.current().get('isAuthenticated')) {
+        if (Service.Auth.current().get('isAuthenticated')) {
             transition.router.replaceWith('AuthRegister.sum');
         }
     },
@@ -181,7 +181,7 @@ Vaultier.AuthRegisterCredsRoute = Ember.Route.extend({
         next: function () {
 
             // prepare data
-            var auth = Vaultier.Services.Auth.AuthService.current();
+            var auth = Service.Auth.current();
             var ctrl = this.get('controller');
             var user = ctrl.get('content');
             var keys = ctrl.get('props.keys');
@@ -195,9 +195,10 @@ Vaultier.AuthRegisterCredsRoute = Ember.Route.extend({
                 // preapre controller
                 ctrl.set('props.nextButtonDisabled', true);
 
+                // register promise
                 var promise = user.save();
 
-                // try to register and authenticate
+                // authenticate promise
                 promise.then(
                     function () {
                         auth.auth({
@@ -214,7 +215,6 @@ Vaultier.AuthRegisterCredsRoute = Ember.Route.extend({
                         ctrl.set('props.nextButtonDisabled', false);
                     }.bind(this));
             }
-
 
         }
     }
@@ -248,14 +248,14 @@ Vaultier.AuthRegisterSumRoute = Ember.Route.extend({
         ctrl.set('props.loginButtonHidden', true);
         ctrl.set('props.nextButtonDisabled', false);
         ctrl.set('props.nextButtonTitle', 'Start using vaultier')
-        ctrl.set('auth', Vaultier.Services.Auth.AuthService.current());
+        ctrl.set('auth', Service.Auth.current());
     },
 
     actions: {
 
         downloadKey: function () {
             // start download
-            var blob = new Blob([Vaultier.Services.Auth.AuthService.current().get('privateKey')], {type: "text/plain;charset=utf-8"});
+            var blob = new Blob([Service.Auth.current().get('privateKey')], {type: "text/plain;charset=utf-8"});
             saveAs(blob, "vaultier.key");
         },
 
