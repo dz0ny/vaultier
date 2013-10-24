@@ -1,11 +1,15 @@
-{{#link-to 'Vault.index' this class="list-group-item"}}
-    <h4 class="list-group-item-heading">{{name}}</h4>
-
-    <p class="list-group-item-text">{{description}}</p>
-
-    <div class="help-block top-15">
-        Created by {{ucfirst created_by.nickname}} {{created_ago}}
+{{#link-to 'Vault.index' this class="list-group-item vlt-workspace-item"}}
+    <div class="vlt-icon">
+        <img src="/static/images/icon-workspace-grey.png"/>
     </div>
+    <div class="vlt-text">
+        <h4 class="list-group-item-heading">{{name}}</h4>
 
+        <p class="list-group-item-text">{{description}}</p>
+
+        <div class="help-block top-15">
+            Created by {{ucfirst created_by.nickname}} {{created_ago}}
+        </div>
+    </div>
 {{/link-to}}
 

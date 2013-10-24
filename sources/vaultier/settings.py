@@ -142,7 +142,7 @@ REST_FRAMEWORK = {
 # SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 
 
-COMPRESS_ENABLED = 1
+COMPRESS_ENABLED = 0
 
 INSTALLED_APPS = (
     'django.contrib.auth',

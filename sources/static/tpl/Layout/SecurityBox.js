@@ -24,7 +24,13 @@ function program1(depth0,data) {
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "logout", {hash:{
     'target': ("view")
   },contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
-  data.buffer.push("  href=\"#\">Logout</a></li>\r\n        </ul>\r\n    </div>\r\n");
+  data.buffer.push(" href=\"\" >Personal settings</a></li>\r\n            <li><a ");
+  hashContexts = {'target': depth0};
+  hashTypes = {'target': "ID"};
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "logout", {hash:{
+    'target': ("view")
+  },contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
+  data.buffer.push(" href=\"\" >Logout</a></li>\r\n        </ul>\r\n    </div>\r\n");
   return buffer;
   }
 

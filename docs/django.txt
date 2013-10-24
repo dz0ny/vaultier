@@ -1,8 +1,17 @@
-Custom login page:
-http://solutoire.com/2009/02/26/django-series-1-a-custom-login-page/
+from django.contrib.auth.models import User, Permission
+from django.db.models import Q
 
-Custom authentication backend
-http://www.djangorocks.com/tutorials/creating-a-custom-authentication-backend/creating-the-imap-authentication-backend.html
+perm = Permission.objects.get(codename='blogger')  
+users = User.objects.filter(Q(groups__permissions=perm) | Q(user_permissions=perm) ).distinct()
 
-Custom serializers
-http://stackoverflow.com/questions/14824807/adding-root-element-to-json-response-django-rest-framework
+
+Vault.objects.get(
+  Q(workspace__memberships__user=authenticated, )
+   | Q(country__contains="U.S.A"))
+   
+
+https://code.osuosl.org/projects/object-permissions/wiki/Related_Models
+   
+   
+   http://stackoverflow.com/questions/4663694/how-can-i-get-all-objects-a-user-has-specific-permissions-to-in-django-guardian
+   http://stackoverflow.com/questions/4778685/how-do-i-use-django-groups-and-permissions

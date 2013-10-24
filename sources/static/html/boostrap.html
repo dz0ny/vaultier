@@ -23,6 +23,8 @@
     <link href="{% static 'css/main.css' %}" rel="stylesheet">
 
 
+    {% compress js %}
+
     {####################################################################}
     {# libs#}
     {####################################################################}
@@ -153,6 +155,7 @@
     <script src="{% static 'tpl/Secret/SecretIndexItemControls.js' %}"></script>
 
 
+
     {############# test #}
 {#    <script src="{% static 'tpl/Test/Test.js' %}"></script>#}
 {#    <script src="{% static 'tpl/Test/Workspace.js' %}"></script>#}
@@ -224,6 +227,8 @@
     <script src="{% static 'js/module/Secret/SecretCreate.js' %}"></script>
     <script src="{% static 'js/module/Secret/SecretType.js' %}"></script>
     <script src="{% static 'js/module/Secret/SecretIndex.js' %}"></script>
+
+    {% endcompress %}
 
 
 </head>
