@@ -1,174 +1,250 @@
 <div class="vlt-page-nav">
 
-    <div class="vlt-page-toolbar pull-right">
-        <div>
+<div class="vlt-page-toolbar pull-right">
+    <div>
 
-            <a href="#" class="btn btn-primary" data-toggle="tooltip" title="first tooltip">
-                <span class="glyphicon glyphicon-user"></span>
-                Invite collaborator
-            </a>
+        <a href="#" class="btn btn-primary" data-toggle="tooltip" title="first tooltip">
+            <span class="glyphicon glyphicon-user"></span>
+            Invite collaborator
+        </a>
 
+    </div>
+</div>
+
+<div class="pull-left">
+    <h2>Collaborators</h2>
+</div>
+
+<div class="clearfix"></div>
+
+<div class="panel panel-default vlt-panel-permissions top-30">
+    <div class="panel-heading">
+        <div class="col-md-8">
+            <h4>
+                Collaborators of <b>secret name</b> (3)
+            </h4>
         </div>
+        <div class="clearfix"></div>
     </div>
+    <table class="table vlt-table">
+        <tbody>
+        <tr>
+            <td class="col-md-4 vlt-user">
+                {{gravatarImg 'jan.misek@rclick.cz' size=50 class="vlt-avatar"}}
+                <b>Jan Míšek</b><br/>
+                    <span class="help-block">
+                        jan.misek@rclick.cz
+                    </span>
+            </td>
+            <td class="col-md-4">
+            </td>
+            <td class="col-md-4 vlt-actions">
+                <div class="input-group">
+                    <select class="form-control vlt-perms">
+                        <option>Read</option>
+                        <option>Read and create</option>
+                        <option>Manage</option>
+                    </select>
 
-    <div class="pull-left">
-        <h2>Collaborators</h2>
-    </div>
+                    <a class="btn btn-default btn-sm input-group-btn">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </a>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="col-md-4 vlt-user">
+                {{gravatarImg 'tomas.plesek@rclick.cz' size=50 class="vlt-avatar"}}
+                <b>Jan Míšek</b><br/>
+                    <span class="help-block">
+                        jan.misek@rclick.cz
+                    </span>
+            </td>
+            <td class="col-md-4">
+            </td>
+            <td class="col-md-4 vlt-actions">
+                <div class="input-group">
+                    <select class="form-control vlt-perms">
+                        <option>Read</option>
+                        <option>Read and create</option>
+                        <option>Manage</option>
+                    </select>
 
-    <div class="clearfix"></div>
+                    <a class="btn btn-default btn-sm input-group-btn">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </a>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="col-md-4 vlt-user">
+                {{gravatarImg 'jakub.bokoc@rclick.cz' size=50 class="vlt-avatar"}}
+                <b>Jan Míšek</b><br/>
+                    <span class="help-block">
+                        jan.misek@rclick.cz
+                    </span>
+            </td>
+            <td class="col-md-4">
+            </td>
+            <td class="col-md-4 vlt-actions">
+                <div class="input-group">
+                    <select class="form-control vlt-perms">
+                        <option>Read</option>
+                        <option>Read and create</option>
+                        <option>Manage</option>
+                    </select>
+
+                    <a class="btn btn-default btn-sm input-group-btn">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </a>
+                </div>
+            </td>
+        </tr>
+
+        <tr class="warning">
+            <td class="col-md-4 vlt-user">
+                {{gravatarImg 'jakub.bokoc@rclick.cz' size=50 class="vlt-avatar"}}
+                <b>jan.misek@rclick.cz</b><br/>
+
+            </td>
+            <td class="col-md-4">
+                <div class="label label-warning">
+                    Invited only. Did not show up yet!
+                </div>
+            </td>
+            <td class="col-md-4 vlt-actions">
+                <div class="input-group">
+                    <select class="form-control vlt-perms">
+                        <option>Read</option>
+                        <option>Read and create</option>
+                        <option>Manage</option>
+                    </select>
+
+                    <a class="btn btn-default btn-sm input-group-btn">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </a>
+                </div>
+            </td>
+        </tr>
+
+        <tr class="warning">
+            <td class="col-md-4 vlt-user">
+                {{gravatarImg 'jakub.bokoc@rclick.cz' size=50 class="vlt-avatar"}}
+                <b>Jan Míšek</b><br/>
+                <span class="help-block">
+                    jan.misek@rclick.cz
+                </span>
+            </td>
+            <td class="col-md-4 vlt-labels">
+                <div class="label label-default">
+                    <div class="col-md-6">
+                        Accepted invitation. Please approve his access.
+                    </div>
+                    <div class="col-md-6">
+                        <a class="btn btn-success">
+                            <span class="glyphicon glyphicon-ok"></span>
+                            Approve access
+                        </a>
+                    </div>
+                </div>
+            </td>
+            <td class="col-md-4 vlt-actions">
+                <div class="input-group">
+                    <select class="form-control vlt-perms">
+                        <option>Read</option>
+                        <option>Read and create</option>
+                        <option>Manage</option>
+                    </select>
+
+                    <a class="btn btn-default btn-sm input-group-btn">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </a>
+                </div>
+            </td>
+        </tr>
+
+
+        </tbody>
+    </table>
+</div>
+
+<h2>Inherited collaborators</h2>
+
+    {{#times 3}}
 
     <div class="panel panel-default vlt-panel-permissions top-30">
         <div class="panel-heading">
             <div class="col-md-8">
                 <h4>
-                    Collaborators of <b>secret name</b> (3)
+                    collaborators of <b>Vault name</b> (3)
                 </h4>
             </div>
+            <div class="col-md-4 vlt-controls">
+                <a class="btn btn-default btn-sm">
+                    <span class="glyphicon glyphicon-edit"></span>
+                </a>
+            </div>
+
             <div class="clearfix"></div>
         </div>
         <table class="table vlt-table">
             <tbody>
             <tr>
-                <td class="vlt-user">
+                <td class="col-md-4 vlt-user">
                     {{gravatarImg 'jan.misek@rclick.cz' size=50 class="vlt-avatar"}}
                     <b>Jan Míšek</b><br/>
-                    <span class="help-block">
-                        jan.misek@rclick.cz
-                    </span>
+                        <span class="help-block">
+                            jan.misek@rclick.cz
+                        </span>
                 </td>
-                <td class="vlt-actions">
-                    <div class="input-group">
-                        <select class="form-control vlt-perms">
-                            <option>Read</option>
-                            <option>Read and create</option>
-                            <option>Manage</option>
-                        </select>
-
-                        <a class="btn btn-default btn-sm input-group-btn">
-                            <span class="glyphicon glyphicon-remove"></span>
-                        </a>
-                    </div>
+                <td class="col-md-4">
+                </td>
+                <td class="col-md-4 vlt-actions">
+                    <span class="label label-default">
+                        Read
+                    </span>
                 </td>
             </tr>
             <tr>
-                <td class="vlt-user">
+                <td class="col-md-4 vlt-user">
                     {{gravatarImg 'tomas.plesek@rclick.cz' size=50 class="vlt-avatar"}}
                     <b>Jan Míšek</b><br/>
                     <span class="help-block">
                         jan.misek@rclick.cz
                     </span>
                 </td>
+                <td class="col-md-4">
+                </td>
                 <td class="vlt-actions">
-                    <div class="input-group">
-                        <select class="form-control vlt-perms">
-                            <option>Read</option>
-                            <option>Read and create</option>
-                            <option>Manage</option>
-                        </select>
-
-                        <a class="btn btn-default btn-sm input-group-btn">
-                            <span class="glyphicon glyphicon-remove"></span>
-                        </a>
-                    </div>
+                    <span class="label label-default">
+                        Read and create
+                    </span>
                 </td>
             </tr>
             <tr>
-                <td class="vlt-user">
+                <td class="col-md-4 vlt-user">
                     {{gravatarImg 'jakub.bokoc@rclick.cz' size=50 class="vlt-avatar"}}
                     <b>Jan Míšek</b><br/>
                     <span class="help-block">
                         jan.misek@rclick.cz
                     </span>
                 </td>
-                <td class="vlt-actions">
-                    <div class="input-group">
-                        <select class="form-control vlt-perms">
-                            <option>Read</option>
-                            <option>Read and create</option>
-                            <option>Manage</option>
-                        </select>
-
-                        <a class="btn btn-default btn-sm input-group-btn">
-                            <span class="glyphicon glyphicon-remove"></span>
-                        </a>
-                    </div>
+                <td class="col-md-4">
+                </td>
+                <td class="col-md-4 vlt-actions">
+                    <span class="label label-default">
+                        Manage
+                    </span>
                 </td>
             </tr>
             </tbody>
         </table>
+
+
     </div>
 
-    <h2>Inherited collaborators</h2>
 
-    {{#times 3}}
-
-        <div class="panel panel-default vlt-panel-permissions top-30">
-            <div class="panel-heading">
-                <div class="col-md-8">
-                    <h4>
-                        collaborators of <b>Vault name</b> (3)
-                    </h4>
-                </div>
-                <div class="col-md-4 vlt-controls">
-                    <a class="btn btn-default btn-sm">
-                        <span class="glyphicon glyphicon-edit"></span>
-                    </a>
-                </div>
-
-                <div class="clearfix"></div>
-            </div>
-            <table class="table vlt-table">
-                <tbody>
-                <tr>
-                    <td class="vlt-user">
-                        {{gravatarImg 'jan.misek@rclick.cz' size=50 class="vlt-avatar"}}
-                        <b>Jan Míšek</b><br/>
-                    <span class="help-block">
-                        jan.misek@rclick.cz
-                    </span>
-                    </td>
-                    <td class="vlt-actions">
-                    <span class="badge">
-                        Read
-                    </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="vlt-user">
-                        {{gravatarImg 'tomas.plesek@rclick.cz' size=50 class="vlt-avatar"}}
-                        <b>Jan Míšek</b><br/>
-                    <span class="help-block">
-                        jan.misek@rclick.cz
-                    </span>
-                    </td>
-                    <td class="vlt-actions">
-                    <span class="badge">
-                        Read and create
-                    </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="vlt-user">
-                        {{gravatarImg 'jakub.bokoc@rclick.cz' size=50 class="vlt-avatar"}}
-                        <b>Jan Míšek</b><br/>
-                    <span class="help-block">
-                        jan.misek@rclick.cz
-                    </span>
-                    </td>
-                    <td class="vlt-actions">
-                    <span class="badge">
-                        Manage
-                    </span>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-
-
-        </div>
-
-
-        <div class="clearfix"></div>
+    <div class="clearfix"></div>
 
     {{/times}}
 </div>

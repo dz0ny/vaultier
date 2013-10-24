@@ -856,7 +856,6 @@ img.vlt-avatar {
 *************************************************************/
 
 .vlt-panel-permissions .vlt-table .vlt-user {
-    width: 50%;
     vertical-align: middle;
 }
 
@@ -875,8 +874,10 @@ img.vlt-avatar {
     margin-top: 10px;
 }
 
-.vlt-panel-permissions .vlt-table .vlt-actions .badge {
+.vlt-panel-permissions .vlt-table td .label {
     margin-top: 15px;
+    display: inline-block;
+    padding: 10px;
 }
 
 .vlt-panel-permissions .vlt-table .vlt-actions .vlt-perms {
@@ -890,4 +891,11 @@ img.vlt-avatar {
 
 .vlt-panel-permissions .panel-heading .vlt-controls {
     text-align: right;
+}
+
+.vlt-panel-permissions .vlt-table .vlt-labels .label {
+    margin-top: 8px;
+
+    word-wrap: normal;
+    white-space: normal;
 }
