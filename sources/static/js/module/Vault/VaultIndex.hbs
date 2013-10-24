@@ -1,19 +1,25 @@
 <div class="vlt-page-nav">
 
-    {{#if length}}
-        <div class="vlt-page-toolbar pull-right">
-            <div class="btn-group">
+     <div class="vlt-page-toolbar pull-right">
+        <div>
 
+            <a href="#" class="btn btn-default">
+                <span class="glyphicon glyphicon-user"></span>
+                Collaborate
+            </a>
+
+            {{#if length}}
                 {{#link-to "Vault.create" workspace class="btn btn-primary"}}
                     <span class="glyphicon glyphicon-plus"></span>
                     Create new vault
                 {{/link-to}}
+            {{/if}}
 
-            </div>
         </div>
-    {{/if}}
+    </div>
+
     <div class="pull-left">
-        <h2>List of vaults</h2>
+        <h2>Dashboard - list of vaults</h2>
     </div>
 
     <div class="clearfix"></div>

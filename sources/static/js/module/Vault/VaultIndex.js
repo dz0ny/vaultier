@@ -48,7 +48,7 @@ Vaultier.VaultIndexRoute = Ember.Route.extend({
             Vaultier.Breadcrumbs.create({router: this.get('router')})
                 .addHome()
                 .addWorkspace()
-                .addText('List of vaults')
+                .addText('Dashboard - list of vaults')
         )
 
 
