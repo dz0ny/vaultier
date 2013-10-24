@@ -1,0 +1,40 @@
+
+var handshake = function () {
+    return function () {
+        return Ember.RSVP.Promise(function (resolve, reject) {
+            resolve(1);
+        });
+    }
+}
+
+var error = function () {
+    return function () {
+        return Ember.RSVP.Promise(function (resolve, reject) {
+            reject('error');
+        });
+    }
+}
+
+
+var auth = function () {
+    return function (value) {
+        return Ember.RSVP.Promise(function (resolve, reject) {
+            console.log(value);
+            resolve(value + 1);
+        });
+    }
+}
+
+Ember.RSVP.resolve()
+    .then(handshake())
+    .then(auth())
+    .then(auth())
+    .then(function (value) {
+        console.log(value);
+    });
+    .then(error())
+    .then(auth())
+    .then(auth())
+    .then(null, function (value) {
+        console.log(value);
+    });
