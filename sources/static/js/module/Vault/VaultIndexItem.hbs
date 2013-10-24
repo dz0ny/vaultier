@@ -12,7 +12,11 @@
             </div>
         </div>
         <div class="vlt-body">
-            {{ellipsis description 250  }}
+            {{#if description}}
+                {{ellipsis description 250  }}
+            {{else}}
+                No description given
+            {{/if}}
         </div>
         <div class="vlt-footer">
             <div class="vlt-footer-item help-block">
