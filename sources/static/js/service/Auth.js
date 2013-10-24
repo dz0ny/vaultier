@@ -31,12 +31,13 @@ Service.Auth = Ember.Object.extend({
             .then(
                 // successfull login
                 function (user) {
-                     this.setAuthenticatedUser(user, privateKey, this.promises.getToken())
+                    this.setAuthenticatedUser(user, privateKey, this.promises.getToken())
                 }.bind(this),
 
                 // unsuccessfull login
                 function () {
                     this.setAuthenticatedUser(null)
+                    return Ember.RSVP.reject()
                 }.bind(this))
     },
 
