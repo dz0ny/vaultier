@@ -12,7 +12,7 @@ class TokenAuthentication(BaseAuthentication):
     def authenticate(self, request):
         token = request.META.get('HTTP_X_VAULTIER_TOKEN')
 
-        if token == None or token == '':
+        if token == None or token == '' or token=='null':
             return (None)
 
         try:

@@ -6,24 +6,24 @@
 <head>
 
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
 
-    <link rel="shortcut icon" href="../../assets/ico/favicon.png">
+<link rel="shortcut icon" href="../../assets/ico/favicon.png">
 
-    <title>template</title>
+<title>template</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="{% static 'lib/bootstrap/dist/css/bootstrap.css' %}" rel="stylesheet">
-    <link href="{% static 'lib/bootstrap/assets/css/bootwatch.min.css' %}" rel="stylesheet">
+<!-- Bootstrap core CSS -->
+<link href="{% static 'lib/bootstrap/dist/css/bootstrap.css' %}" rel="stylesheet">
+<link href="{% static 'lib/bootstrap/assets/css/bootwatch.min.css' %}" rel="stylesheet">
 
-    <!-- Bootstrap core CSS -->
-    <link href="{% static 'css/main.css' %}" rel="stylesheet">
+<!-- Bootstrap core CSS -->
+<link href="{% static 'css/main.css' %}" rel="stylesheet">
 
 
-    {% compress js %}
+{% compress js %}
 
     {####################################################################}
     {# libs#}
@@ -86,7 +86,7 @@
     <script src="{% static 'lib/bootstrap/assets/js/respond.min.js' %}"></script>
     <![endif]-->
 
-    <script src="{% static 'lib/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'lib/bootstrap/dist/js/bootstrap.js' %}"></script>
 
 
     {####################################################################}
@@ -119,7 +119,7 @@
     <script src="{% static 'tpl/Auth/AuthRegisterCreds.js' %}"></script>
     <script src="{% static 'tpl/Auth/AuthRegisterSum.js' %}"></script>
 
-   {############ workspace #}
+    {############ workspace #}
     <script src="{% static 'tpl/Workspace/WorkspaceIndex.js' %}"></script>
     <script src="{% static 'tpl/Workspace/WorkspaceIndexItem.js' %}"></script>
     <script src="{% static 'tpl/Workspace/WorkspaceCreate.js' %}"></script>
@@ -154,14 +154,9 @@
     <script src="{% static 'tpl/Secret/SecretIndexItemFile.js' %}"></script>
     <script src="{% static 'tpl/Secret/SecretIndexItemControls.js' %}"></script>
 
+    {############# member #}
 
-
-    {############# test #}
-{#    <script src="{% static 'tpl/Test/Test.js' %}"></script>#}
-{#    <script src="{% static 'tpl/Test/Workspace.js' %}"></script>#}
-{#    <script src="{% static 'tpl/Test/Vault.js' %}"></script>#}
-{#    <script src="{% static 'tpl/Test/List.js' %}"></script>#}
-
+    <script src="{% static 'tpl/Member/MemberIndex.js' %}"></script>
 
     {####################################################################}
     {# utils#}
@@ -220,15 +215,18 @@
     <script src="{% static 'js/module/Card/CardCreate.js' %}"></script>
     <script src="{% static 'js/module/Card/CardEdit.js' %}"></script>
 
-    {############# Router #}
-    <script src="{% static 'js/router.js' %}"></script>
-
-    {############# secret #}
+    {############# Secret #}
     <script src="{% static 'js/module/Secret/SecretCreate.js' %}"></script>
     <script src="{% static 'js/module/Secret/SecretType.js' %}"></script>
     <script src="{% static 'js/module/Secret/SecretIndex.js' %}"></script>
 
-    {% endcompress %}
+    {############# member #}
+    <script src="{% static 'js/module/Member/MemberIndex.js' %}"></script>
+
+    {############# Router #}
+    <script src="{% static 'js/router.js' %}"></script>
+
+{% endcompress %}
 
 
 </head>

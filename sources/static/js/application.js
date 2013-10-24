@@ -51,7 +51,7 @@ Vaultier.ApplicationAdapter = DS.DjangoRESTAdapter.extend({
         AuthenticatedUser: '/api/auth/user'
     },
 
-    ajaxError: function(error) {
+    ajaxError: function (error) {
         var superError = this._super(error);
         superError.status = error.status;
         return superError;

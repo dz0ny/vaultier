@@ -39,6 +39,14 @@ Vaultier.Router.map(function () {
             this.route('edit', { path: '/action/edit-vault/:vault'});
 
             /************************************************************
+             * Members
+             ************************************************************/
+            this.resource('Member', {path: '/members'}, function () {
+                // automatic Member.index
+                this.route('invite', { path: '/action/invite/:type/:id'});
+            });
+
+            /************************************************************
              * Cards
              ************************************************************/
             this.resource('Card', {path: '/vault/:vault'}, function () {
