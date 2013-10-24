@@ -89,7 +89,7 @@ Service.AuthPromises = Ember.Object.extend({
         }
     },
 
-    user: function (token) {
+    user: function () {
         return Ember.RSVP.resolve()
             .then(this._retrieveUser(token))
     },
