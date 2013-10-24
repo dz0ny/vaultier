@@ -414,6 +414,20 @@
     text-align: right;
 }
 
+
+/*************************************************************
+**************************************************************
+* Avatar
+*************************************************************
+*************************************************************/
+
+img.vlt-avatar {
+    border: 1px solid #E0DBDB;
+    border-radius: 4px;
+    width: 25px;
+    height: 25px;
+}
+
 /*************************************************************
 **************************************************************
 * security box in navbar
@@ -425,11 +439,6 @@
     padding: 5px 10px 5px 5px;
 }
 
-.vlt-security-box img.vlt-avatar {
-    border-radius: 4px;
-    width: 25px;
-    height: 25px;
-}
 
 .vlt-security-box a.vlt-username {
     vertical-align: middle;
@@ -812,11 +821,14 @@
     background-image: url('../images/icon-secret-grey.png')
 }
 
+
+
 /*************************************************************
 **************************************************************
 * Workspace item
 *************************************************************
 *************************************************************/
+
 .vlt-workspace-item {
     position: relative;
 }
@@ -835,4 +847,47 @@
 
 .vlt-workspace-item .vlt-text {
     margin-left: 90px;
+}
+
+/*************************************************************
+**************************************************************
+* Permissions panel
+*************************************************************
+*************************************************************/
+
+.vlt-panel-permissions .vlt-table .vlt-user {
+    width: 50%;
+    vertical-align: middle;
+}
+
+.vlt-panel-permissions .vlt-table .vlt-user img {
+    vertical-align: middle;
+    margin-right: 15px;
+    float: left;
+    width: 50px;
+    height: 50px;
+}
+.vlt-panel-permissions .vlt-table .vlt-actions {
+    text-align: right;
+}
+
+.vlt-panel-permissions .vlt-table .vlt-actions .input-group {
+    margin-top: 10px;
+}
+
+.vlt-panel-permissions .vlt-table .vlt-actions .badge {
+    margin-top: 15px;
+}
+
+.vlt-panel-permissions .vlt-table .vlt-actions .vlt-perms {
+    max-width: 200px;
+}
+
+.vlt-panel-permissions .panel-heading {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.vlt-panel-permissions .panel-heading .vlt-controls {
+    text-align: right;
 }

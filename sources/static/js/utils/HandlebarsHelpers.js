@@ -21,10 +21,15 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
 
 
         Ember.Handlebars.registerBoundHelper('gravatarImg', function (email, options) {
+            var server = window.location.protocol + '//' + window.location.host;
+            var img = 'identicon';
+            if (server.indexOf(':') === -1) {
+                img = encodeURIComponent(server + '/static/images/icon-avatar-grey.png');
+            }
 
             var size = ( typeof(options.hash.size) === "undefined") ? 32 : options.hash.size;
 
-            var result = '<img class="'+options.hash.class+'" src="http://www.gravatar.com/avatar/' + CryptoJS.MD5(email) + '?s=' + size+'" />';
+            var result = '<img class="' + options.hash.class + '" src="http://www.gravatar.com/avatar/' + CryptoJS.MD5(email) + '?s=' + size + '&d=' + img + '" />';
             return new Ember.Handlebars.SafeString(result);
 
         });
@@ -56,8 +61,14 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
         });
 
 
-        // block helpers not supported by ember
-        Ember.Handlebars.registerBoundHelper("ifCond", function (v1, operator, v2, options) {
+        Ember.Handlebars.registerHelper('times', function (n, block) {
+            var accum = '';
+            for (var i = 0; i < n; ++i)
+                accum += block.fn(i);
+            return accum;
+        });
+
+        Ember.Handlebars.registerHelper("ifCond", function (v1, operator, v2, options) {
             switch (operator) {
                 case "==":
                     return (v1 == v2) ? options.fn(this) : options.inverse(this);
