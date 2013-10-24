@@ -806,6 +806,12 @@
     margin-top: 5px;
     background-image: url('../images/icon-card-grey.png')
 }
+
+.vlt-empty.jumbotron.vlt-secret .vlt-header .vlt-icon {
+    margin-top: 5px;
+    background-image: url('../images/icon-secret-grey.png')
+}
+
 /*************************************************************
 **************************************************************
 * Workspace item

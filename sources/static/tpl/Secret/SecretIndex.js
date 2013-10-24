@@ -103,7 +103,7 @@ function program12(depth0,data) {
 function program14(depth0,data) {
   
   var buffer = '', stack1, stack2, hashContexts, hashTypes, options;
-  data.buffer.push("\r\n                <div class=\"jumbotron col-md-8 col-md-offset-2\">\r\n                    <h1>You do not have any secrets yet</h1>\r\n\r\n                    <p>\r\n                        What are secrets for? This example is a quick exercise to illustrate how the default, static\r\n                        includes the responsive CSS and HTML, so it also adapts to your viewport and device.\r\n                    </p>\r\n\r\n                    <p class=\"top-30\">\r\n                        ");
+  data.buffer.push("\r\n\r\n\r\n                <div class=\"jumbotron vlt-empty vlt-secret col-md-8 col-md-offset-2\">\r\n                    <div class=\"vlt-header\">\r\n                        <div class=\"vlt-icon\">\r\n\r\n                        </div>\r\n                        <div class=\"vlt-title\">\r\n                            <h1>You do not have any secret yet</h1>\r\n                        </div>\r\n                    </div>\r\n\r\n                    <p>\r\n                        What are secrets for? Lorem ipsum dolor sit amet, consectetur adipiscing elit.\r\n                    </p>\r\n\r\n                    <p class=\"top-30\">\r\n                        ");
   hashContexts = {'class': depth0};
   hashTypes = {'class': "STRING"};
   options = {hash:{

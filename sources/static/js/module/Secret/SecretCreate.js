@@ -1,8 +1,31 @@
+Vaultier.SecretCreateController = Ember.Controller.extend({
+    submitButtonShown: false,
+    needs: ['application']
+})
+
+Vaultier.SecretCreateView = Ember.View.extend({
+    templateName: 'Secret/SecretCreate',
+    layoutName: 'Layout/LayoutStandard',
+
+    TabView: Ember.View.extend({
+        classNameBindings: 'isActive:active'.w(),
+        tagName: 'li',
+        isActive: function () {
+            var tab = this.get('tab');
+            var path = this.get('parentView.controller.controllers.application.currentPath');
+            var route = path.split('.')[path.split('.').length-1];
+            return tab == route;
+        }.property('parentView.controller.controllers.application.currentPath')
+    })
+
+});
+
 Vaultier.SecretCreateSelectRoute = Ember.Route.extend({
 
     setupController: function (ctrl, model) {
         ctrl.set('content', {});
-        ctrl.set('submitButtonHidden', true);
+
+        ctrl.set('controllers.SecretCreate.submitButtonShown', false);
 
         // set breadcrumbs
         ctrl.set('breadcrumbs',
@@ -20,6 +43,15 @@ Vaultier.SecretCreateSelectRoute = Ember.Route.extend({
         this.render('SecretTypeSelect', {outlet: 'tab', into: 'SecretCreate'});
     }
 });
+
+Vaultier.SecretCreateSelectController = Ember.Controller.extend({
+    needs: ['SecretCreate']
+})
+
+Vaultier.SecretCreateSubmitController = Ember.Controller.extend({
+    needs: ['SecretCreate']
+})
+
 
 Vaultier.SecretCreateSubmitRoute = Ember.Route.extend({
 
@@ -49,6 +81,8 @@ Vaultier.SecretCreateSubmitRoute = Ember.Route.extend({
 
     setupController: function (ctrl, model) {
         ctrl.set('content', model);
+
+        ctrl.set('controllers.SecretCreate.submitButtonShown', true);
 
         // retrieve workspace
         var workspace = this.modelFor('Vault');
@@ -102,27 +136,6 @@ Vaultier.SecretCreateSubmitRoute = Ember.Route.extend({
             )
         }
     }
-
-});
-
-Vaultier.SecretCreateController = Ember.Controller.extend({
-    needs: ['application']
-})
-
-Vaultier.SecretCreateView = Ember.View.extend({
-    templateName: 'Secret/SecretCreate',
-    layoutName: 'Layout/LayoutStandard',
-
-    TabView: Ember.View.extend({
-        classNameBindings: 'isActive:active'.w(),
-        tagName: 'li',
-        isActive: function () {
-            var tab = this.get('tab');
-            var path = this.get('parentView.controller.controllers.application.currentPath');
-            var route = path.split('.')[path.split('.').length-1];
-            return tab == route;
-        }.property('parentView.controller.controllers.application.currentPath')
-    })
 
 });
 
