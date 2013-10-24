@@ -4,23 +4,25 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
 
     register: function () {
 
-        Ember.Handlebars.registerBoundHelper('ucfirst', function (value) {
+        /////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////
+
+        var ucfirst = function (value) {
             if (value) {
                 value = value.charAt(0).toUpperCase() + value.slice(1);
             }
             return value;
-        });
+        };
+        Ember.Handlebars.registerBoundHelper('ucfirst', ucfirst);
 
-        Ember.Handlebars.registerBoundHelper('gravatar', function (email, options) {
+        /////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////
 
-            var email = context;
-            var size = ( typeof(options.hash.size) === "undefined") ? 32 : options.hash.size;
-
-            return "http://www.gravatar.com/avatar/" + CryptoJS.MD5(email) + "?s=" + size;
-        });
-
-
-        Ember.Handlebars.registerBoundHelper('gravatarImg', function (email, options) {
+        var gravatarImg = function (email, options) {
             var server = window.location.protocol + '//' + window.location.host;
             var img = 'identicon';
             if (server.indexOf(':') === -1) {
@@ -30,10 +32,35 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
             var size = ( typeof(options.hash.size) === "undefined") ? 32 : options.hash.size;
 
             var result = '<img class="' + options.hash.class + '" src="http://www.gravatar.com/avatar/' + CryptoJS.MD5(email) + '?s=' + size + '&d=' + img + '" />';
-            return new Ember.Handlebars.SafeString(result);
+            return result;
 
+        };
+        Ember.Handlebars.registerBoundHelper('gravatarImg', function(email, options) {
+            return new Ember.Handlebars.SafeString(gravatarImg(email, options));
         });
 
+        /////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////
+
+        var printUser = function (user, options) {
+            var email = user.email;
+            var nickname = user.nickname;
+            var size = options.hash.size || 20 ;
+
+            var avatar = gravatarImg(email, {hash: {size: size}});
+
+            return '<span class="vlt-user">'+ avatar + ucfirst(nickname)+'</span>';
+        }
+        Ember.Handlebars.registerBoundHelper('printUser', function(user, options) {
+            return new Ember.Handlebars.SafeString(printUser(user, options));
+        });
+
+        /////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////
 
         /**
          * {{ellipsis}}
@@ -44,7 +71,7 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
          * @param  {String} append   The string to append if charaters are omitted.
          * @return {String}          The truncated string.
          */
-        Ember.Handlebars.registerBoundHelper('ellipsis', function (str, limit, append) {
+        var ellipsis = function (str, limit, append) {
             if (typeof append !== 'string') {
                 append = '...';
             }
@@ -58,17 +85,28 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
             } else {
                 return sanitized;
             }
-        });
+        }
+        Ember.Handlebars.registerBoundHelper('ellipsis', ellipsis);
 
+        /////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////
 
-        Ember.Handlebars.registerHelper('times', function (n, block) {
+        var times = function (n, block) {
             var accum = '';
             for (var i = 0; i < n; ++i)
                 accum += block.fn(i);
             return accum;
-        });
+        }
+        Ember.Handlebars.registerHelper('times', times);
 
-        Ember.Handlebars.registerHelper("ifCond", function (v1, operator, v2, options) {
+        /////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////
+
+        var ifCond = function (v1, operator, v2, options) {
             switch (operator) {
                 case "==":
                     return (v1 == v2) ? options.fn(this) : options.inverse(this);
@@ -103,7 +141,8 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
                 default:
                     return eval("" + v1 + operator + v2) ? options.fn(this) : options.inverse(this);
             }
-        });
+        }
+        Ember.Handlebars.registerHelper("ifCond", ifCond);
 
     }
 

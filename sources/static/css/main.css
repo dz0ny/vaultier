@@ -428,6 +428,12 @@ img.vlt-avatar {
     height: 25px;
 }
 
+span.vlt-user img {
+    border: 1px solid #E0DBDB;
+    border-radius: 4px;
+    margin-right: 5px;
+}
+
 /*************************************************************
 **************************************************************
 * security box in navbar

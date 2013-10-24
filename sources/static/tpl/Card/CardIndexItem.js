@@ -34,11 +34,11 @@ function program2(depth0,data) {
   hashTypes = {};
   hashContexts = {};
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "updated_ago", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
-  data.buffer.push("\r\n            </div>\r\n            <div class=\"vlt-footer-item help-block\">\r\n                Created by ");
+  data.buffer.push("\r\n            </div>\r\n            <div class=\"vlt-footer-item help-block\">\r\n                By ");
   hashTypes = {};
   hashContexts = {};
   options = {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
-  data.buffer.push(escapeExpression(((stack1 = helpers.ucfirst || depth0.ucfirst),stack1 ? stack1.call(depth0, "created_by.nickname", options) : helperMissing.call(depth0, "ucfirst", "created_by.nickname", options))));
+  data.buffer.push(escapeExpression(((stack1 = helpers.printUser || depth0.printUser),stack1 ? stack1.call(depth0, "created_by", options) : helperMissing.call(depth0, "printUser", "created_by", options))));
   data.buffer.push("\r\n            </div>\r\n            <div class=\"clearfix\"></div>\r\n        </div>\r\n    ");
   return buffer;
   }
