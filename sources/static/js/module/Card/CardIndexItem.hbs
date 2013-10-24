@@ -1,26 +1,32 @@
 {{#if id}}
-    {{#link-to 'Secret.index' this class="panel panel-primary pull-left vlt-item vlt-card-item" }}
-        <div class="panel-icon">
-            <img src="/static/images/icon-vault.png">
-        </div>
-        <div class="panel-header">
-            <h3>{{name}}</h3>
-        </div>
-        <div class="panel-body">
-            {{ description }}
-        </div>
-        <div class="panel-footer">
-            <div class="row">
-                <small>
-                    <div class="col-md-4 vlt-cards">
-                        Cards: 22
-                    </div>
-                    <div class="col-md-8 vlt-updated">
-                        {{ view.test }}
-                        Updated: {{ updated_ago }}
-                    </div>
-                </small>
+    {{#link-to 'Secret.index' this class="vlt-item vlt-card-item" }}
+        <div class="vlt-header">
+            <div class="vlt-icon">
+                <img src="/static/images/icon-card-dark-blue.png">
             </div>
+            <div class="vlt-title">
+                <h3>
+                    {{ellipsis name 35}}
+                </h3>
+
+            </div>
+        </div>
+        <div class="vlt-body">
+            {{#if description}}
+                {{ellipsis description 250  }}
+            {{else}}
+                No description given
+            {{/if}}
+        </div>
+        <div class="vlt-footer">
+            <div class="vlt-footer-item help-block">
+                Updated: {{ updated_ago }}
+            </div>
+            <div class="vlt-footer-item help-block">
+                Created by {{ucfirst created_by.nickname}}
+            </div>
+            <div class="clearfix"></div>
         </div>
     {{/link-to}}
 {{/if}}
+

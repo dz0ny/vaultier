@@ -3,7 +3,6 @@
     <div class="vlt-page-toolbar pull-right">
         <div>
 
-
             <div class="btn-group">
                 <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown">
                     <span class="glyphicon glyphicon-cog"></span>
@@ -35,6 +34,10 @@
         </div>
     </div>
 
+    <div class="pull-left">
+        <h2>List of cards</h2>
+    </div>
+
     <div class="clearfix"></div>
 
 </div>
@@ -47,12 +50,20 @@
                 {{view Vaultier.CardIndexItemView}}
             {{/each}}
         {{else}}
-            <div class="jumbotron col-md-8 col-md-offset-2">
-                <h1>You do not have any Card yet</h1>
+
+            <div class="jumbotron vlt-empty vlt-card col-md-8 col-md-offset-2">
+
+                <div class="vlt-header">
+                    <div class="vlt-icon">
+
+                    </div>
+                    <div class="vlt-title">
+                        <h1>You do not have any Card yet</h1>
+                    </div>
+                </div>
 
                 <p>
-                    What are Cards for? This example is a quick exercise to illustrate how the default, static
-                    includes the responsive CSS and HTML, so it also adapts to your viewport and device.
+                    What are cards for? Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                 </p>
 
                 <p class="top-30">

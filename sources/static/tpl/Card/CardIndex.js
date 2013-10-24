@@ -54,7 +54,7 @@ function program7(depth0,data) {
 function program9(depth0,data) {
   
   var buffer = '', stack1, stack2, hashContexts, hashTypes, options;
-  data.buffer.push("\r\n            <div class=\"jumbotron col-md-8 col-md-offset-2\">\r\n                <h1>You do not have any Card yet</h1>\r\n\r\n                <p>\r\n                    What are Cards for? This example is a quick exercise to illustrate how the default, static\r\n                    includes the responsive CSS and HTML, so it also adapts to your viewport and device.\r\n                </p>\r\n\r\n                <p class=\"top-30\">\r\n                    ");
+  data.buffer.push("\r\n\r\n            <div class=\"jumbotron vlt-empty vlt-card col-md-8 col-md-offset-2\">\r\n\r\n                <div class=\"vlt-header\">\r\n                    <div class=\"vlt-icon\">\r\n\r\n                    </div>\r\n                    <div class=\"vlt-title\">\r\n                        <h1>You do not have any Card yet</h1>\r\n                    </div>\r\n                </div>\r\n\r\n                <p>\r\n                    What are cards for? Lorem ipsum dolor sit amet, consectetur adipiscing elit.\r\n                </p>\r\n\r\n                <p class=\"top-30\">\r\n                    ");
   hashContexts = {'class': depth0};
   hashTypes = {'class': "STRING"};
   options = {hash:{
@@ -71,7 +71,7 @@ function program10(depth0,data) {
   data.buffer.push("\r\n                        <span class=\"glyphicon glyphicon-plus\"></span>\r\n                        Create new Card\r\n                    ");
   }
 
-  data.buffer.push("<div class=\"vlt-page-nav\">\r\n\r\n    <div class=\"vlt-page-toolbar pull-right\">\r\n        <div>\r\n\r\n\r\n            <div class=\"btn-group\">\r\n                <button type=\"button\" class=\"btn btn-default dropdown-toggle btn-sm\" data-toggle=\"dropdown\">\r\n                    <span class=\"glyphicon glyphicon-cog\"></span>\r\n                </button>\r\n                <ul class=\"dropdown-menu caret-left\">\r\n\r\n                    <li>\r\n                        ");
+  data.buffer.push("<div class=\"vlt-page-nav\">\r\n\r\n    <div class=\"vlt-page-toolbar pull-right\">\r\n        <div>\r\n\r\n            <div class=\"btn-group\">\r\n                <button type=\"button\" class=\"btn btn-default dropdown-toggle btn-sm\" data-toggle=\"dropdown\">\r\n                    <span class=\"glyphicon glyphicon-cog\"></span>\r\n                </button>\r\n                <ul class=\"dropdown-menu caret-left\">\r\n\r\n                    <li>\r\n                        ");
   hashTypes = {};
   hashContexts = {};
   options = {hash:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0,depth0,depth0],types:["STRING","ID","ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
@@ -86,7 +86,7 @@ function program10(depth0,data) {
   hashContexts = {};
   stack2 = helpers['if'].call(depth0, "length", {hash:{},inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("\r\n\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"clearfix\"></div>\r\n\r\n</div>\r\n\r\n<div class=\"row\">\r\n    <div class=\"col-md-12\">\r\n\r\n        ");
+  data.buffer.push("\r\n\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"pull-left\">\r\n        <h2>List of cards</h2>\r\n    </div>\r\n\r\n    <div class=\"clearfix\"></div>\r\n\r\n</div>\r\n\r\n<div class=\"row\">\r\n    <div class=\"col-md-12\">\r\n\r\n        ");
   hashTypes = {};
   hashContexts = {};
   stack2 = helpers['if'].call(depth0, "length", {hash:{},inverse:self.program(9, program9, data),fn:self.program(6, program6, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});

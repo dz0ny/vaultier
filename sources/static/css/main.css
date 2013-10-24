@@ -335,10 +335,6 @@
 *************************************************************
 *************************************************************/
 
-.vlt-item.vlt-vault-item .panel-footer .vlt-updated {
-    text-align: right;
-}
-
 /*************************************************************
 **************************************************************
 * Footer
@@ -806,6 +802,10 @@
     background-image: url('../images/icon-workspace-grey.png')
 }
 
+.vlt-empty.jumbotron.vlt-card .vlt-header .vlt-icon {
+    margin-top: 5px;
+    background-image: url('../images/icon-card-grey.png')
+}
 /*************************************************************
 **************************************************************
 * Workspace item
@@ -817,8 +817,8 @@
 
 .vlt-workspace-item .vlt-icon {
     position: absolute;
-    left:0px;
-    top:0px;
+    left:15px;
+    top:15px;
 }
 
 .vlt-workspace-item .vlt-icon img {
