@@ -5,6 +5,7 @@ from rest_framework.serializers import ModelSerializer
 from rest_framework.status import HTTP_403_FORBIDDEN
 from rest_framework.viewsets import ModelViewSet
 from core.api.user import CreatedByUserSerializer
+from core.auth import TokenAuthentication
 from core.models import Vault
 
 
@@ -21,7 +22,7 @@ class VaultViewSet(ModelViewSet):
     API endpoint that allows workspaces to be viewed or edited.
     """
     model = Vault
-    permission_classes = (IsAuthenticated,)
+    authentication_classes = (TokenAuthentication,)
     serializer_class = VaultSerializer
 
     # def retrieve(self, request, *args, **kwargs):

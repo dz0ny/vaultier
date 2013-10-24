@@ -1,17 +1,21 @@
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, logout
 from rest_framework.fields import EmailField, CharField
 from rest_framework.generics import GenericAPIView
 from rest_framework.mixins import CreateModelMixin, UpdateModelMixin
+from rest_framework.serializers import ModelSerializer
 from rest_framework.status import HTTP_403_FORBIDDEN
 from rest_framework.views import APIView
 from core.api import ApiException
 from core.api.user import UserSerializer
 from rest_framework.response import Response
 from rest_framework import serializers
+from core.auth import TokenAuthentication
+from core.models import Token
 
 
 class UserView(CreateModelMixin, UpdateModelMixin, GenericAPIView):
     serializer_class = UserSerializer
+    authentication_classes = (TokenAuthentication,)
 
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
@@ -32,20 +36,22 @@ class AuthSerializer(serializers.Serializer):
     email = EmailField(required=True)
     signature = CharField(required=True)
 
+class TokenSerializer(ModelSerializer):
+    class Meta:
+        model = Token
+        fields = ('token',)
 
 class AuthView(APIView):
     def auth(self, request):
         serializer = AuthSerializer(data=request.DATA)
         if serializer.is_valid():
             try:
-                user = authenticate(email=serializer.data.get('email'),
+                token = authenticate(email=serializer.data.get('email'),
                                     signature=serializer.data.get('signature'))
-                if user:
-                    login(request, user)
-                    serialized = UserSerializer(user).data;
-                    return Response(serialized)
+                if token:
+                    return Response(TokenSerializer(token).data)
                 else:
-                    return Response({'result': False})
+                    return Response({'result': False}, status=HTTP_403_FORBIDDEN)
             except Exception as e:
                 raise ApiException(exception=e)
 
@@ -56,6 +62,8 @@ class AuthView(APIView):
 
 
 class LogoutView(APIView):
+    authentication_classes = (TokenAuthentication,)
+
     def logout(self, request):
         try:
             logout(request)

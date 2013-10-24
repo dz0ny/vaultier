@@ -4,6 +4,7 @@ from rest_framework.serializers import ModelSerializer
 from rest_framework.status import HTTP_403_FORBIDDEN, HTTP_401_UNAUTHORIZED, HTTP_402_PAYMENT_REQUIRED, HTTP_400_BAD_REQUEST
 from rest_framework.viewsets import ModelViewSet
 from core.api.user import CreatedByUserSerializer
+from core.auth import TokenAuthentication
 from core.models import Secret
 
 
@@ -22,6 +23,7 @@ class SecretViewSet(ModelViewSet):
     model = Secret
     # permission_classes = (IsAuthenticated,)
     serializer_class = SecretSerializer
+    authentication_classes = (TokenAuthentication,)
 
     def pre_save(self, object):
         if object.pk is None:

@@ -4,6 +4,7 @@ from rest_framework.serializers import ModelSerializer
 from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_403_FORBIDDEN
 from rest_framework.viewsets import ModelViewSet
 from core.api.user import CreatedByUserSerializer
+from core.auth import TokenAuthentication
 from core.models import Workspace
 
 
@@ -19,7 +20,7 @@ class WorkspaceViewSet(ModelViewSet):
     API endpoint that allows workspaces to be viewed or edited.
     """
     model = Workspace
-    permission_classes = (IsAuthenticated,)
+    authentication_classes = (TokenAuthentication,)
     serializer_class = WorkspaceSerializer
 
     #

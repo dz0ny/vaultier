@@ -1,5 +1,7 @@
 Service.AuthPromises = Ember.Object.extend({
 
+    token: null,
+
     _auth: function (email, privateKey) {
         return function (password) {
             return Ember.RSVP.Promise(function (resolve, reject) {
@@ -50,14 +52,28 @@ Service.AuthPromises = Ember.Object.extend({
 
     _useToken: function () {
         return function (token) {
-            //todo
-        }
+            Ember.$.ajaxSetup({
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('X-Vaultier-Token',token);
+                }
+            });
+            this.set('token', token);
+
+            return Ember.RSVP.resolve();
+        }.bind(this);
     },
 
     _resetToken: function () {
         return function () {
-            //todo
-        }
+            Ember.$.ajaxSetup({
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('X-Vaultier-Token', '');
+                }
+            });
+            this.set('token', null)
+
+            return Ember.RSVP.resolve();
+        }.bind(this);
     },
 
     _unauth: function () {
@@ -73,16 +89,12 @@ Service.AuthPromises = Ember.Object.extend({
         }
     },
 
-    getToken: function () {
-        //todo
-    },
-
-    user: function() {
+    user: function (token) {
         return Ember.RSVP.resolve()
-            .then(this._retrieveUser())
+            .then(this._retrieveUser(token))
     },
 
-    logout: function() {
+    logout: function () {
         return Ember.RSVP.resolve()
             .then(this._unauth())
             .then(this._resetToken())

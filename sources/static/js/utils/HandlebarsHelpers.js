@@ -25,7 +25,6 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
             var size = ( typeof(options.hash.size) === "undefined") ? 32 : options.hash.size;
 
             var result = '<img class="'+options.hash.class+'" src="http://www.gravatar.com/avatar/' + CryptoJS.MD5(email) + '?s=' + size+'" />';
-            console.log(result);
             return new Ember.Handlebars.SafeString(result);
 
         });

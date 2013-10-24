@@ -31,46 +31,27 @@ Service.Auth = Ember.Object.extend({
             .then(
                 // successfull login
                 function (user) {
-                     this.setAuthenticatedUser(user, privateKey, this.promises.getToken())
+                    this.setAuthenticatedUser(user, privateKey, this.promises.get('token'))
                 }.bind(this),
 
                 // unsuccessfull login
                 function () {
                     this.setAuthenticatedUser(null)
+                    return Ember.RSVP.reject()
                 }.bind(this))
     },
 
 
-    status: function () {
-        var sessionUrl = this.loadFromSession() || {};
-        var sessionEmail = this.session.email || null;
-        var sessionPrivateKey = this.session.privateKey || null;
-        var sessionToken = this.session.token || null;
+    reload: function () {
+        var session = this.loadFromSession() || {};
+        var sessionUser = session.user || null;
+        var sessionPrivateKey = session.privateKey || null;
+        var sessionToken = session.token || null;
 
-        var promise = Ember.RSVP.Promise(function (resolve, reject) {
-            this.promises.user()
-                .then(
-                    // user retrieved, token still valid
-                    function (user) {
-                        if (user.email == sessionEmail) {
-                            this.setAuthenticatedUser(user, sessionPrivateKey, sessionToken)
-                        } else {
-                            this.setAuthenticatedUser(null);
-                        }
-                        resolve(user);
-                    }.bind(this),
+        this.promises._useToken()(sessionToken);
+        this.setAuthenticatedUser(sessionUser, sessionPrivateKey, sessionToken)
 
-                    // user not retrieved, error occured
-                    function (error) {
-                        this.setAuthenticatedUser(null);
-                        resolve(null);
-                    }.bind(this)
-
-                );
-        }.bind(this));
-
-
-        return promise;
+        return Ember.RSVP.resolve();
     },
 
 
@@ -89,9 +70,7 @@ Service.Auth = Ember.Object.extend({
     setAuthenticatedUser: function (user, privateKey, token) {
         var result;
 
-//        if (user) {
-        if (user && privateKey) {
-//        if (user && privateKey && token) {
+        if (user && privateKey && token) {
 
             result = true;
             this.setProperties({
@@ -132,6 +111,7 @@ Service.Auth = Ember.Object.extend({
         this.session.set('auth', {
             token: this.get('token'),
             email: email,
+            user: this.get('user'),
             privateKey: this.get('privateKey')
         });
     },
