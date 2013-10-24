@@ -125,8 +125,8 @@ Vaultier.AuthRegisterKeysRoute = Ember.Route.extend({
         if (!ctrl.get('props.keysReady')) {
             ctrl.set('props.nextButtonDisabled', true);
 
-            var auth = Service.Auth.current();
-            auth.generateKeys(function (keys) {
+            var coder = Service.Coder.create();
+            coder.generateKeys(function (keys) {
                 ctrl.set('props.keys', keys);
                 ctrl.set('props.keysReady', true);
             }.bind(this));
@@ -200,16 +200,15 @@ Vaultier.AuthRegisterCredsRoute = Ember.Route.extend({
 
                 // authenticate promise
                 promise.then(
+                    // success create
                     function () {
-                        auth.auth({
-                            email: user.get('email'),
-                            privateKey: keys.privateKey,
-                            publicKey: keys.publicKey
-                        }).then(function () {
+                        return auth.login(user.get('email'), keys.privateKey)
+                            .then(function () {
                                 this.transitionTo('AuthRegister.sum');
                             }.bind(this));
-
                     }.bind(this),
+
+                    // unsuccess create
                     function (errors) {
                         ctrl.set('errors', Ember.Object.create(errors.errors));
                         ctrl.set('props.nextButtonDisabled', false);

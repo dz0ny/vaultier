@@ -6,7 +6,6 @@ from rest_framework.status import HTTP_403_FORBIDDEN
 from rest_framework.views import APIView
 from core.api import ApiException
 from core.api.user import UserSerializer
-from core.auth.backend import HandshakeCoder
 from rest_framework.response import Response
 from rest_framework import serializers
 
@@ -26,12 +25,12 @@ class UserView(CreateModelMixin, UpdateModelMixin, GenericAPIView):
             serialized = UserSerializer(user).data;
             return Response(serialized)
         else:
-            return Response({'detail': 'Anonymous user'},  status=HTTP_403_FORBIDDEN)
+            return Response({'detail': 'Anonymous user'}, status=HTTP_403_FORBIDDEN)
 
 
 class AuthSerializer(serializers.Serializer):
     email = EmailField(required=True)
-    password = CharField(required=True, min_length=32, max_length=32)
+    signature = CharField(required=True)
 
 
 class AuthView(APIView):
@@ -39,9 +38,8 @@ class AuthView(APIView):
         serializer = AuthSerializer(data=request.DATA)
         if serializer.is_valid():
             try:
-                user = authenticate(username=serializer.data.get('email'),
-                                    password=serializer.data.get('password'),
-                                    session=request.session)
+                user = authenticate(email=serializer.data.get('email'),
+                                    signature=serializer.data.get('signature'))
                 if user:
                     login(request, user)
                     serialized = UserSerializer(user).data;
@@ -69,25 +67,4 @@ class LogoutView(APIView):
 
     def post(self, request):
         return self.logout(request)
-
-
-class HandshakeSerializer(serializers.Serializer):
-    email = EmailField(required=True)
-
-
-class HandshakeView(APIView):
-    def handshake(self, request):
-        serializer = HandshakeSerializer(data=request.DATA)
-        if serializer.is_valid():
-        # try:
-            d = HandshakeCoder()
-            hs = d.handshake(serializer.data.get('email'), request.session)
-            return Response(hs)
-            # except Exception as e:
-            #     raise ApiException(exception=e)
-
-        raise ApiException(detail=serializer.errors)
-
-    def post(self, request):
-        return self.handshake(request)
 

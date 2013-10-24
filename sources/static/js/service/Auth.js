@@ -31,7 +31,7 @@ Service.Auth = Ember.Object.extend({
             .then(
                 // successfull login
                 function (user) {
-                    this.setAuthenticatedUser(user, privateKey, this.promises.getToken())
+                     this.setAuthenticatedUser(user, privateKey, this.promises.getToken())
                 }.bind(this),
 
                 // unsuccessfull login
@@ -53,16 +53,16 @@ Service.Auth = Ember.Object.extend({
                     // user retrieved, token still valid
                     function (user) {
                         if (user.email == sessionEmail) {
-                            this.setAuthenticated(user, sessionPrivateKey, sessionToken)
+                            this.setAuthenticatedUser(user, sessionPrivateKey, sessionToken)
                         } else {
-                            this.setAuthenticated(null);
+                            this.setAuthenticatedUser(null);
                         }
                         resolve(user);
                     }.bind(this),
 
                     // user not retrieved, error occured
                     function (error) {
-                        this.setAuthenticate(null);
+                        this.setAuthenticatedUser(null);
                         resolve(null);
                     }.bind(this)
 
@@ -77,7 +77,7 @@ Service.Auth = Ember.Object.extend({
     logout: function () {
         return this.promises.logout()
             .then(function () {
-                this.setAuthenticate(null);
+                this.setAuthenticatedUser(null);
             }.bind(this))
     },
 
@@ -86,7 +86,7 @@ Service.Auth = Ember.Object.extend({
         callback(this.status);
     },
 
-    setAuthenticated: function (user, privateKey, token) {
+    setAuthenticatedUser: function (user, privateKey, token) {
         var result;
 
 //        if (user) {

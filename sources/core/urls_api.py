@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, url
 
 from rest_framework import routers
-from core.api.auth import HandshakeView, AuthView, LogoutView, UserView
+from core.api.auth import AuthView, LogoutView, UserView
 from core.api.card import CardViewSet
 from core.api.secret import SecretViewSet
 from core.api.vault import VaultViewSet
@@ -16,7 +16,6 @@ router.register(r'secrets', SecretViewSet)
 urlpatterns = router.urls
 
 urlpatterns += patterns('',
-                        url(r'^auth/handshake$', HandshakeView.as_view()),
                         url(r'^auth/auth$', AuthView.as_view()),
                         url(r'^auth/user$', UserView.as_view()),
                         url(r'^auth/logout$', LogoutView.as_view()),
