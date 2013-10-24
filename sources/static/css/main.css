@@ -324,7 +324,7 @@
 }
 
 .vlt-item .vlt-footer > .vlt-footer-item {
-    min-height: 20px ;
+    min-height: 20px;
     padding: 5px 10px 5px 10px;
     float: right;
 }
@@ -414,7 +414,6 @@
     text-align: right;
 }
 
-
 /*************************************************************
 **************************************************************
 * Avatar
@@ -445,7 +444,6 @@ span.vlt-user img {
     padding: 5px 10px 5px 5px;
 }
 
-
 .vlt-security-box a.vlt-username {
     vertical-align: middle;
     font-size: 14px;
@@ -468,11 +466,11 @@ span.vlt-user img {
     border-radius: 6px;
 }
 
-.vlt-wizard-steps li:first-of-type > a{
+.vlt-wizard-steps li:first-of-type > a {
     border-radius: 6px 0px 0px 6px;
 }
 
-.vlt-wizard-steps li:last-of-type > a{
+.vlt-wizard-steps li:last-of-type > a {
     border-radius: 0px 6px 6px 0px !important;
 }
 
@@ -739,18 +737,30 @@ span.vlt-user img {
 .vlt-secret .vlt-inner .vlt-attr-name {
     background-color: #F5F5F5;
 }
+.vlt-secret .vlt-inner .vlt-attrs {
+    min-height: 100px;
+}
 
-.vlt-secret .vlt-inner .vlt-controls {
-    padding: 15px;
-    padding-right: 20px;
-    position: absolute;
-    right: 0px;
-    bottom: 0px;
+.vlt-secret .vlt-inner .vlt-controls .vlt-buttons {
+    padding: 0px;
+}
+
+.vlt-secret .vlt-inner .vlt-controls .vlt-author {
+    padding: 0px;
+}
+.vlt-secret .vlt-inner .vlt-controls .vlt-buttons .btn-group {
+    float: right;
 }
 
 .vlt-secret .vlt-inner .vlt-attr-name:after {
     content: ':'
 }
+
+.vlt-secret {
+    border-top-width: 4px;
+}
+
+
 
 /*************************************************************
 **************************************************************
@@ -827,8 +837,6 @@ span.vlt-user img {
     background-image: url('../images/icon-secret-grey.png')
 }
 
-
-
 /*************************************************************
 **************************************************************
 * Workspace item
@@ -841,15 +849,14 @@ span.vlt-user img {
 
 .vlt-workspace-item .vlt-icon {
     position: absolute;
-    left:15px;
-    top:15px;
+    left: 15px;
+    top: 15px;
 }
 
 .vlt-workspace-item .vlt-icon img {
     width: 70px;
     height: 70px;
 }
-
 
 .vlt-workspace-item .vlt-text {
     margin-left: 90px;
@@ -872,6 +879,7 @@ span.vlt-user img {
     width: 50px;
     height: 50px;
 }
+
 .vlt-panel-permissions .vlt-table .vlt-actions {
     text-align: right;
 }
