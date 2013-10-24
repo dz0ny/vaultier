@@ -12,8 +12,49 @@ class Workspace(models.Model):
     created_by = models.ForeignKey('core.User', on_delete=PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
     class Meta:
         db_table = u'vaultier_workspace'
+
+
+class Member(models.Model):
+    workspace = models.ForeignKey('core.Workspace', on_delete=CASCADE)
+    user = models.ForeignKey('core.User', on_delete=CASCADE, null=True)
+    invitation_hash = models.CharField(max_length=64)
+    invitation_email = models.CharField(max_length=1024),
+    status = models.CharField(
+        max_length=1,
+        choices=(
+            (u'i', u'INVITED'),
+            (u'm', u'USER'),
+        ))
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = u'vaultier_member'
+
+
+class Role(models.Model):
+    member = models.ForeignKey('core.Member', on_delete=CASCADE)
+    to_workspace = models.ForeignKey('core.Workspace', on_delete=CASCADE)
+    to_vault = models.ForeignKey('core.Vault', on_delete=CASCADE),
+    to_card = models.ForeignKey('core.Card', on_delete=CASCADE),
+    level = models.CharField(
+        max_length=1,
+        choices=(
+            (u'0', u'DENIED'),
+            (u'r', u'READ'),
+            (u'c', u'READ+CREATE'),
+            (u'w', u'WRITE'),
+            (u'a', u'ADMIN'),
+        ))
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = u'vaultier_role'
+
 
 class Vault(models.Model):
     name = models.CharField(max_length=255)
@@ -22,28 +63,34 @@ class Vault(models.Model):
     created_by = models.ForeignKey('core.User', on_delete=PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
     class Meta:
         db_table = u'vaultier_vault'
+
 
 class Card(models.Model):
     name = models.CharField(max_length=255)
     description = models.CharField(max_length=1024, blank=True, null=True)
-    vault = models.ForeignKey('core.Vault',  on_delete=CASCADE)
+    vault = models.ForeignKey('core.Vault', on_delete=CASCADE)
     created_by = models.ForeignKey('core.User', on_delete=PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
     class Meta:
         db_table = u'vaultier_card'
+
 
 class Secret(models.Model):
     type = models.IntegerField(null=False)
     data = models.TextField(null=True)
-    card = models.ForeignKey('core.Card',  on_delete=CASCADE)
+    card = models.ForeignKey('core.Card', on_delete=CASCADE)
     created_by = models.ForeignKey('core.User', on_delete=PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
     class Meta:
         db_table = u'vaultier_secret'
+
 
 class Token(models.Model):
     token = models.CharField(max_length=64)
@@ -89,6 +136,7 @@ class UserManager(BaseUserManager):
         u.save(using=self._db)
         return u
 
+
 class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
 
@@ -116,11 +164,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     class Meta:
         db_table = u'vaultier_user'
-
-
-
-
-
 
 
 #
