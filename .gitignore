@@ -16,3 +16,5 @@ sources/CACHE
 .settings
 nbproject/
 .idea/
+
+sources/vaultier/settings.py
