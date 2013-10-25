@@ -1,21 +1,18 @@
-from rest_framework.relations import PrimaryKeyRelatedField, RelatedField
 from rest_framework.serializers import ModelSerializer
 from rest_framework.viewsets import ModelViewSet
+from core.api.fields.relations import RelatedNestedField
 from core.api.member import MemberSerializer
 from core.api.user import RelatedUserSerializer
 from core.api.workspace import RelatedWorkspaceSerializer
 from core.auth import TokenAuthentication
+from core.models.member import Member
 from core.models.role import Role
-
-class RelatedMemberSerializer(MemberSerializer):
-    def from_native(self, data, files):
-        return
 
 
 class RoleSerializer(ModelSerializer):
     created_by = RelatedUserSerializer(required=False, read_only=True)
     to_workspace = RelatedWorkspaceSerializer(required=False)
-    member = RelatedMemberSerializer(required=True)
+    member = RelatedNestedField(required=True, serializer=MemberSerializer, queryset=Member.objects.all())
 
     def get_email(self, obj):
         if obj:
