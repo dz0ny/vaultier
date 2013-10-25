@@ -19,7 +19,7 @@ Vaultier.MemberIndexRoute = Ember.Route.extend({
         if (workspace) {
             queries.workspace = workspace
             queries.workspaceRoles = store.find('Role', {
-                workspace: workspace.get('id')
+                to_workspace: workspace.get('id')
             })
 
         }

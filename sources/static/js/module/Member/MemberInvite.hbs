@@ -13,11 +13,18 @@
 
                             <div class="form-group">
                                 <label for="card-name">Select users</label>
-                                <input type="text" id="card-name" class="form-control"/>
+
+                                {{view Vaultier.MemberInviteInput
+                                store=store
+                                class="form-control"
+                                elementId="invite-form-invited"
+                                valueBinding="invited"
+                                }}
+                                <span class="help-block"><b>Select existing users or invite new by email</b>. You can invite more users at once. Seperate them with space, comma or semicolon</span>
                             </div>
 
                             <div class="form-group">
-                                <label for="card-description">Description</label>
+                                <label for="card-description">Permissions</label>
                                 {{errors.description}}
 
                                 {{view Ember.Select
@@ -40,7 +47,8 @@
                             <span class="glyphicon glyphicon-chevron-left"></span>
                             Back
                         </a>
-                        <button {{bind-attr disabled=isButtonNextEnabled }} {{ action save invited role}} class="btn btn-primary">
+                        <button {{bind-attr disabled=isButtonNextEnabled }} {{ action save invited role}}
+                                class="btn btn-primary">
                             <span class="glyphicon glyphicon-ok"></span>
                             Create new card
                         </button>

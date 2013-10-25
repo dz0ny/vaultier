@@ -50,7 +50,8 @@ class Member(models.Model):
         default='u',
         choices=(
             (u'i', u'INVITED'),
-            (u'u', u'USER'),
+            (u'n', u'NON_APPROVED_MEMBER'),
+            (u'm', u'MEMBER'),
         ))
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

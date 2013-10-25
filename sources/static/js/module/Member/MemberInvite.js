@@ -1,39 +1,52 @@
 Vaultier.MemberInviteRoute = Ember.Route.extend({
 
-    workspace: null,
+    inviteObject: null,
 
     model: function (params, queryParams) {
-        this.workspace = this.modelFor('Vault');
+        return this.setupInviteObject();
+    },
+
+    /**
+     * override this to setup invite workspace and invite to object
+     */
+    setupInviteObject: function () {
+        this.inviteObject = this.modelFor('Vault');
+        this.inviteWorkspace = this.inviteObject;
+    },
+
+    /**
+     * override this to setup invite breadcrumbs
+     */
+    setupBreadcrumbs: function () {
+        return Vaultier.Breadcrumbs.create({router: this.get('router')})
+            .addHome()
+            .addWorkspace()
+            .addText('Invite collaborators');
     },
 
     actions: {
         save: function (invited, role) {
             var invitations = Service.Invitations.current();
             var promise = Ember.RSVP.resolve();
-            var workspace = this.workspace;
+            var workspace = this.inviteWorkspace;
 
             invited.forEach(function (email) {
                 promise.then(invitations.invite(workspace, email, role, true, false));
             });
 
             promise.then(function () {
-                console.log('success');
-            })
+                $.notify('Your invitations has been saved', 'success');
+                window.history.go(-1);
+            }.bind(this))
 
             return promise;
-
         }
     },
 
     setupController: function (ctrl, model) {
-
-
+        ctrl.set('breadcrumbs', this.setupBreadcrumbs());
         ctrl.set('content', {});
         ctrl.set('roles', Vaultier.Role.proto().roles);
-    },
-
-
-    deactivate: function () {
     }
 
 });
@@ -44,76 +57,11 @@ Vaultier.MemberInviteController = Ember.ObjectController.extend({
     isButtonNextEnabled: function () {
         return this.invited.length < 1;
     }.property('invited'),
-    breadcrumbs: null,
+    breadcrumbs: null
 });
 
 Vaultier.MemberInviteView = Ember.View.extend({
     templateName: 'Member/MemberInvite',
-    layoutName: 'Layout/LayoutStandard',
-
-    didInsertElement: function () {
-        var el = Ember.$(this.get('element')).find('#card-name');
-
-        var ajaxQueryContext = {};
-
-        var ajaxQuery = function () {
-            var members = this.store.find('Member', {search: this.query.term})
-                .then(function (members) {
-                    var results = [];
-                    members.forEach(function (member) {
-                        results.push({
-                            text: member.get('email'),
-                            id: member.get('email'),
-                            nickname: member.get('nickname'),
-                            email: member.get('email')
-                        });
-                    });
-                    this.query.callback({results: results});
-                }.bind(this))
-        };
-
-
-        el.select2({
-            tokenSeparators: [",", " "],
-            createSearchChoice: function (term, data) {
-                var add = true;
-                data.forEach(function (member) {
-                    if (term == member.id) {
-                        add = false;
-                        return false;
-                    }
-                });
-                //@todo: validate email, else show invalid email notification
-
-                if (add) {
-                    return {
-                        text: term,
-                        nickname: term,
-                        email: term,
-                        id: term
-                    }
-                }
-            },
-            multiple: true,
-            query: function (query) {
-                ajaxQueryContext.store = this.get('controller.store')
-                ajaxQueryContext.query = query;
-                Ember.run.debounce(ajaxQueryContext, ajaxQuery, 1000);
-
-            }.bind(this),
-            formatResult: function (member) {
-                return Utils.HandlebarsHelpers.current().printUser(member, {hash: {}})
-            },
-            formatSelection: function (member) {
-                return Utils.HandlebarsHelpers.current().printUser(member, {hash: {}})
-            }
-
-        });
-
-        el.on('change', function (e) {
-            this.get('controller').set('invited', e.val);
-        }.bind(this));
-
-    }
+    layoutName: 'Layout/LayoutStandard'
 
 });
