@@ -15,12 +15,23 @@
 
 <title>template</title>
 
-<!-- Bootstrap core CSS -->
-<link href="{% static 'lib/bootstrap/dist/css/bootstrap.css' %}" rel="stylesheet">
-<link href="{% static 'lib/bootstrap/assets/css/bootwatch.min.css' %}" rel="stylesheet">
 
-<!-- Bootstrap core CSS -->
-<link href="{% static 'css/main.css' %}" rel="stylesheet">
+    {####################################################################}
+    {# libs#}
+    {####################################################################}
+
+    {############# boostrap #}
+
+    <link href="{% static 'lib/bootstrap/dist/css/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/bootstrap/assets/css/bootwatch.min.css' %}" rel="stylesheet">
+
+    {############# ui components #}
+    <link href="{% static 'lib/select2/select2.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/select2/select2-bootstrap.css' %}" rel="stylesheet">
+
+
+    {############# main css #}
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
 
 
 {% compress js %}
@@ -76,6 +87,9 @@
     <script src="{% static 'lib/ember/ember.js' %}"></script>
     <script src="{% static 'lib/ember/ember-data.js' %}"></script>
     <script src="{% static 'lib/ember/ember-data-django.js' %}"></script>
+
+    {############# ui-tools #}
+    <script src="{% static 'lib/select2/select2.js' %}"></script>
 
     {############# handlebars helpers #}
 
@@ -157,6 +171,7 @@
     {############# member #}
 
     <script src="{% static 'tpl/Member/MemberIndex.js' %}"></script>
+    <script src="{% static 'tpl/Member/MemberInvite.js' %}"></script>
 
     {####################################################################}
     {# utils#}
@@ -182,7 +197,14 @@
     <script src="{% static 'js/service/Coder.js' %}"></script>
 
     {############# model #}
-    <script src="{% static 'js/model/model.js' %}"></script>
+    <script src="{% static 'js/model/Shared.js' %}"></script>
+    <script src="{% static 'js/model/User.js' %}"></script>
+    <script src="{% static 'js/model/Workspace.js' %}"></script>
+    <script src="{% static 'js/model/Member.js' %}"></script>
+    <script src="{% static 'js/model/Role.js' %}"></script>
+    <script src="{% static 'js/model/Vault.js' %}"></script>
+    <script src="{% static 'js/model/Card.js' %}"></script>
+    <script src="{% static 'js/model/Secret.js' %}"></script>
 
     {############# Layout #}
     <script src="{% static 'js/module/Layout/LayoutStandard.js' %}"></script>
@@ -222,6 +244,7 @@
 
     {############# member #}
     <script src="{% static 'js/module/Member/MemberIndex.js' %}"></script>
+    <script src="{% static 'js/module/Member/MemberInvite.js' %}"></script>
 
     {############# Router #}
     <script src="{% static 'js/router.js' %}"></script>

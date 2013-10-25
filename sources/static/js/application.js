@@ -12,7 +12,7 @@ Vaultier = Ember.Application.create({
     LOG_TRANSITIONS: true
 });
 
-Utils.HandlebarsHelpers.create().register();
+Utils.HandlebarsHelpers.current().register();
 
 
 $.cookie.json = true;

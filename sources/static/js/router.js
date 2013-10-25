@@ -43,7 +43,7 @@ Vaultier.Router.map(function () {
              ************************************************************/
             this.resource('Member', {path: '/members'}, function () {
                 // automatic Member.index
-                this.route('invite', { path: '/action/invite/:type/:id'});
+                this.route('invite', { path: '/invite'});
             });
 
             /************************************************************

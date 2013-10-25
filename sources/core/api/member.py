@@ -1,33 +1,34 @@
 from rest_framework.fields import SerializerMethodField
 from rest_framework.serializers import ModelSerializer
 from rest_framework.viewsets import ModelViewSet
-from core.api.user import CreatedByUserSerializer
-from core.api.workspace import WorkspaceSerializer
-from core.auth import TokenAuthentication
+from core.api.user import RelatedUserSerializer
+from core.api.workspace import RelatedWorkspaceSerializer
 from core.models.member import Member
 
 class MemberSerializer(ModelSerializer):
-    created_by = CreatedByUserSerializer(required=False)
+    created_by = RelatedUserSerializer(required=False)
     email = SerializerMethodField('get_email')
     nickname = SerializerMethodField('get_nickname')
-    user = CreatedByUserSerializer(required=False)
-    workspace = WorkspaceSerializer()
+    user = RelatedUserSerializer(required=False)
+    workspace = RelatedWorkspaceSerializer()
 
     def get_email(self, obj):
-        if (obj.status == 'i'):
-            return obj.invitation_email
-        else:
-            return obj.user.email
+        if obj :
+            if (obj.status == 'i'):
+                return obj.invitation_email
+            else:
+                return obj.user.email
 
     def get_nickname(self, obj):
-        if (obj.status == 'i'):
-            return obj.invitation_email
-        else:
-            return obj.user.nickname
+        if obj:
+            if (obj.status == 'i'):
+                return obj.invitation_email
+            else:
+                return obj.user.nickname
 
     class Meta:
         model = Member
-        fields = ('status', 'email', 'nickname', 'workspace', 'user', 'created_by', 'created_at', 'updated_at')
+        fields = ('id', 'status', 'email', 'nickname', 'workspace', 'user', 'created_by', 'created_at', 'updated_at')
 
 class MemberViewSet(ModelViewSet):
     model = Member

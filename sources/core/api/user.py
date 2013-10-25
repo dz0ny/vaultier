@@ -8,6 +8,6 @@ class UserSerializer(ModelSerializer):
         model = User
         fields = ['id', 'email', 'nickname', 'public_key']
 
-class CreatedByUserSerializer(UserSerializer):
+class RelatedUserSerializer(UserSerializer):
     class Meta(UserSerializer.Meta):
         fields = ['id', 'nickname', 'email']

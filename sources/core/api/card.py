@@ -3,13 +3,13 @@ from rest_framework.response import Response
 from rest_framework.serializers import ModelSerializer
 from rest_framework.status import HTTP_403_FORBIDDEN, HTTP_401_UNAUTHORIZED, HTTP_402_PAYMENT_REQUIRED, HTTP_400_BAD_REQUEST
 from rest_framework.viewsets import ModelViewSet
-from core.api.user import CreatedByUserSerializer
+from core.api.user import RelatedUserSerializer
 from core.auth import TokenAuthentication
 from core.models import Card
 
 
 class CardSerializer(ModelSerializer):
-    created_by = CreatedByUserSerializer(required=False)
+    created_by = RelatedUserSerializer(required=False)
 
     class Meta:
         model = Card
