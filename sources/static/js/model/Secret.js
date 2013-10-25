@@ -10,7 +10,6 @@ Vaultier.Secret = DS.Model.extend(
         type: DS.attr('number'),
         data: DS.attr('string'),
         card: DS.attr('number'),
-        created_by: DS.attr(),
 
         password: null,
         username: null,

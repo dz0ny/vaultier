@@ -3,12 +3,12 @@
 <div class="vlt-page-toolbar pull-right">
     <div>
 
-        <a href="#" class="btn btn-default btn-sm" data-toggle="tooltip" title="first tooltip">
+       <a href="#" class="btn btn-default btn-sm" data-toggle="tooltip" title="first tooltip">
             <span class="glyphicon glyphicon-chevron-left"></span>
             Back
         </a>
 
-        <a href="#" class="btn btn-default" data-toggle="tooltip" title="first tooltip">
+       <a href="#" class="btn btn-default" data-toggle="tooltip" title="first tooltip">
             <span class="glyphicon glyphicon-question-sign"></span>
             Permissions
         </a>
@@ -27,64 +27,11 @@
 
 <div class="clearfix"></div>
 
-    {{#each block in blocks }}
-
-
-
-        {{#ifIndex is=2}}
-        Inherited memberships
-        {{/ifIndex}}
-
-    <div class="panel panel-default vlt-panel-permissions top-30">
-        <div class="panel-heading">
-            <div class="col-md-8">
-                <h4>
-                    {{block.roles.length}} collaborators at {{block.type}} <b>{{block.object.name}}</b>
-                </h4>
-            </div>
-            <div class="clearfix"></div>
-        </div>
-        <table class="table vlt-table">
-            {{#each role in block.roles }}
-                <tr>
-                    <td class="col-md-4 vlt-user">
-                        {{gravatarImg 'jan.misek@rclick.cz' size=50 class="vlt-avatar"}}
-                        <b>Jan Míšek</b><br/>
-                    <span class="help-block">
-                        jan.misek@rclick.cz
-                    </span>
-                    </td>
-                    <td class="col-md-4">
-                    </td>
-                    <td class="col-md-4 vlt-actions">
-                        <div class="input-group">
-                            <select class="form-control vlt-perms">
-                                <option>Read</option>
-                                <option>Read and create</option>
-                                <option>Manage</option>
-                            </select>
-
-                            <a class="btn btn-default btn-sm input-group-btn">
-                                <span class="glyphicon glyphicon-trash"></span>
-                            </a>
-                        </div>
-                    </td>
-                </tr>
-            {{/each}}
-        </table>
-
-
-    </div>
-
-    {{/each}}
-
-
-
 <div class="panel panel-default vlt-panel-permissions top-30">
     <div class="panel-heading">
         <div class="col-md-8">
             <h4>
-                {{workspaces.length}} collaborators of secret <b>name</b>
+                3 collaborators of secret <b>name</b>
             </h4>
         </div>
         <div class="clearfix"></div>

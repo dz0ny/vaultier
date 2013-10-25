@@ -3,9 +3,9 @@ from django.db.models.deletion import PROTECT, CASCADE
 
 class Role(models.Model):
     member = models.ForeignKey('core.Member', on_delete=CASCADE)
-    to_workspace = models.ForeignKey('core.Workspace', on_delete=CASCADE)
-    to_vault = models.ForeignKey('core.Vault', on_delete=CASCADE),
-    to_card = models.ForeignKey('core.Card', on_delete=CASCADE),
+    to_workspace = models.ForeignKey('core.Workspace', on_delete=CASCADE, null=True)
+    to_vault = models.ForeignKey('core.Vault', on_delete=CASCADE, null=True)
+    to_card = models.ForeignKey('core.Card', on_delete=CASCADE, null=True)
     level = models.CharField(
         max_length=1,
         choices=(

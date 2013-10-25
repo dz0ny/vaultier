@@ -25,7 +25,7 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
 
         var size = ( typeof(options.hash.size) === "undefined") ? 32 : options.hash.size;
 
-        var result = '<img style="width:'+size+'px; height:'+size+'px;" class="' + cls + '" src="http://www.gravatar.com/avatar/' + CryptoJS.MD5(email) + '?s=' + size + '&d=' + img + '" />';
+        var result = '<img style="width:' + size + 'px; height:' + size + 'px;" class="' + cls + '" src="http://www.gravatar.com/avatar/' + CryptoJS.MD5(email) + '?s=' + size + '&d=' + img + '" />';
         return result;
 
     },
@@ -72,6 +72,14 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
         }
     },
 
+    ifIndex: function (options) {
+        var index = options.data.view.contentIndex + 1,
+            nth = options.hash.is;
+
+        if (index % nth === 0) {
+            return options.fn(this);
+        }
+    },
 
     times: function (n, block) {
         var accum = '';
@@ -167,6 +175,14 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
 
         var ifCond = this.ifCond.bind(this);
         Ember.Handlebars.registerHelper("ifCond", ifCond);
+
+        /////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////
+
+        var ifIndex = this.ifIndex;
+        Ember.Handlebars.registerHelper('ifIndex', ifIndex);
 
     }
 

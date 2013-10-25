@@ -56,6 +56,7 @@ class MemberViewSet(ModelViewSet):
     model = Member
     serializer_class = MemberSerializer
     authentication_classes = (TokenAuthentication,)
+    filter_fields = ('workspace', 'user',)
 
     def create(self, request, *args, **kwargs):
         serializer = MemberInviteSerializer(data=request.DATA)

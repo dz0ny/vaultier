@@ -4,6 +4,7 @@ from rest_framework import routers
 from core.api.auth import AuthView, LogoutView, UserView
 from core.api.card import CardViewSet
 from core.api.member import MemberViewSet
+from core.api.role import RoleViewSet
 from core.api.secret import SecretViewSet
 from core.api.vault import VaultViewSet
 from core.api.workspace import WorkspaceViewSet
@@ -15,6 +16,7 @@ router.register(r'vaults', VaultViewSet)
 router.register(r'cards', CardViewSet)
 router.register(r'secrets', SecretViewSet)
 router.register(r'members', MemberViewSet)
+router.register(r'roles', RoleViewSet)
 urlpatterns = router.urls
 
 urlpatterns += patterns('',

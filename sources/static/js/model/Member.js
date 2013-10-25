@@ -5,6 +5,5 @@ Vaultier.Member = DS.Model.extend(
         nickname: DS.attr('string'),
         user: DS.attr(),
         workspace: DS.attr(),
-        created_by: DS.attr()
     });
 
