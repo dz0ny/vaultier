@@ -1,11 +1,10 @@
-from rest_framework.fields import SerializerMethodField, EmailField, BooleanField, IntegerField
+from rest_framework.fields import SerializerMethodField, EmailField, BooleanField
+from rest_framework.mixins import CreateModelMixin, ListModelMixin, RetrieveModelMixin
 from rest_framework.relations import PrimaryKeyRelatedField
 from rest_framework.response import Response
 from rest_framework.serializers import ModelSerializer, Serializer
 from rest_framework.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST
-from rest_framework.viewsets import ModelViewSet
-from core.api.user import RelatedUserSerializer
-from core.api.workspace import RelatedWorkspaceSerializer
+from rest_framework.viewsets import GenericViewSet
 from core.auth import TokenAuthentication
 from core.models.member import Member
 from core.models.workspace import Workspace
@@ -33,8 +32,10 @@ class MemberSerializer(ModelSerializer):
         model = Member
         fields = ('id', 'status', 'email', 'nickname', 'workspace', 'user', 'created_at', 'updated_at')
 
+
 class RelatedMemberSerializer(MemberSerializer):
     pass
+
 
 class MemberInviteSerializer(Serializer):
     email = EmailField(required=True)
@@ -43,7 +44,10 @@ class MemberInviteSerializer(Serializer):
     resend = BooleanField(required=False, default=True)
 
 
-class MemberViewSet(ModelViewSet):
+class MemberViewSet(CreateModelMixin,
+                    ListModelMixin,
+                    RetrieveModelMixin,
+                    GenericViewSet):
     model = Member
     serializer_class = MemberSerializer
     authentication_classes = (TokenAuthentication,)
