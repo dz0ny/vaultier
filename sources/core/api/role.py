@@ -1,9 +1,9 @@
+from rest_framework.relations import PrimaryKeyRelatedField
 from rest_framework.serializers import ModelSerializer
 from rest_framework.viewsets import ModelViewSet
 from core.api.fields.relations import RelatedNestedField
-from core.api.member import MemberSerializer
+from core.api.member import RelatedMemberSerializer
 from core.api.user import RelatedUserSerializer
-from core.api.workspace import RelatedWorkspaceSerializer
 from core.auth import TokenAuthentication
 from core.models.member import Member
 from core.models.role import Role
@@ -11,8 +11,19 @@ from core.models.role import Role
 
 class RoleSerializer(ModelSerializer):
     created_by = RelatedUserSerializer(required=False, read_only=True)
-    to_workspace = RelatedWorkspaceSerializer(required=False)
-    member = RelatedNestedField(required=True, serializer=MemberSerializer, queryset=Member.objects.all())
+    member = RelatedNestedField(required=True, serializer=RelatedMemberSerializer, queryset=Member.objects.all())
+    to_workspace = PrimaryKeyRelatedField(required=False)
+
+    def save_object(self, obj, **kwargs):
+        existing = Role.objects.filter(member=obj.member)[0]
+        if not existing:
+            return super(RoleSerializer, self).save_object(obj, **kwargs)
+        else:
+            kwargs['force_insert'] = False
+            existing.level = obj.level
+            self.object = existing
+            return super(RoleSerializer, self).save_object(existing, **kwargs)
+
 
     def get_email(self, obj):
         if obj:
@@ -40,7 +51,7 @@ class RoleViewSet(ModelViewSet):
     filter_fields = ('to_workspace', 'level',)
 
     def pre_save(self, object):
-        if object.pk is None:
+        if not object.pk:
             object.created_by = self.request.user;
         return super(RoleViewSet, self).pre_save(object)
 

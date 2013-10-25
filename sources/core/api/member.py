@@ -12,11 +12,8 @@ from core.models.workspace import Workspace
 
 
 class MemberSerializer(ModelSerializer):
-    created_by = RelatedUserSerializer(required=False)
     email = SerializerMethodField('get_email')
     nickname = SerializerMethodField('get_nickname')
-    user = RelatedUserSerializer(required=False)
-    workspace = RelatedWorkspaceSerializer()
 
     def get_email(self, obj):
         if obj:
@@ -34,8 +31,10 @@ class MemberSerializer(ModelSerializer):
 
     class Meta:
         model = Member
-        fields = ('id', 'status', 'email', 'nickname', 'workspace', 'user', 'created_by', 'created_at', 'updated_at')
+        fields = ('id', 'status', 'email', 'nickname', 'workspace', 'user', 'created_at', 'updated_at')
 
+class RelatedMemberSerializer(MemberSerializer):
+    pass
 
 class MemberInviteSerializer(Serializer):
     email = EmailField(required=True)
