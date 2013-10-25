@@ -5,11 +5,18 @@ from django.db.models.manager import Manager
 
 class RoleManager(Manager):
     def createRole(self, role):
-        existing = Role.objects.filter(member=role.member)[0]
+        existing = None
+        try:
+            existing = Role.objects.filter(member=role.member)[0]
+        except:
+            pass
+
         if not existing:
-            return role.save()
+            role.save(standard=True)
+            return role
         else:
             existing.level = role.level
+            existing.save(standard=True)
             return existing
 
 
@@ -37,7 +44,10 @@ class Role(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey('core.User', on_delete=PROTECT, related_name='roles_created')
 
-    def save(self, force_insert=False, force_update=False, using=None,
-             update_fields=None):
-        return Role.objects.createRole(self)
+    def save(self, *args, **kwargs):
+        standard = kwargs.pop('standard', None)
+        if standard:
+            return super(Role, self).save(*args, **kwargs)
+        else:
+            return Role.objects.createRole(self)
 

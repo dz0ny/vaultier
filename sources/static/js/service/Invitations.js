@@ -16,7 +16,6 @@ Service.Invitations = Ember.Object.extend({
     },
 
     _invitePromise: function (member, role) {
-        console.log(member);
         return  Ember.$.ajax({
             url: '/api/roles/',
             type: 'post',

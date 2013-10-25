@@ -1,4 +1,5 @@
 from rest_framework.fields import SerializerMethodField, EmailField, BooleanField
+from rest_framework.filters import SearchFilter, DjangoFilterBackend
 from rest_framework.mixins import CreateModelMixin, ListModelMixin, RetrieveModelMixin
 from rest_framework.relations import PrimaryKeyRelatedField
 from rest_framework.response import Response
@@ -51,7 +52,9 @@ class MemberViewSet(CreateModelMixin,
     model = Member
     serializer_class = MemberSerializer
     authentication_classes = (TokenAuthentication,)
-    filter_fields = ('workspace', 'user',)
+    filter_backends = (SearchFilter, DjangoFilterBackend)
+    search_fields = ('invitation_email', 'user__email', 'user__nickname',)
+    filter_fields = ('workspace',)
 
     def create(self, request, *args, **kwargs):
         serializer = MemberInviteSerializer(data=request.DATA)

@@ -12,26 +12,20 @@ Vaultier.MemberInviteRoute = Ember.Route.extend({
             var promise = Ember.RSVP.resolve();
             var workspace = this.workspace;
 
-            invited.forEach(function(email) {
+            invited.forEach(function (email) {
                 promise.then(invitations.invite(workspace, email, role, true, false));
-           });
+            });
 
-            promise.then(function() {
+            promise.then(function () {
                 console.log('success');
             })
 
             return promise;
-            //invitations.invite()
-//
-//            console.log(this.workspace);
-//            console.log(invited);
-//            console.log(role);
 
         }
     },
 
     setupController: function (ctrl, model) {
-
 
 
         ctrl.set('content', {});
@@ -47,7 +41,7 @@ Vaultier.MemberInviteRoute = Ember.Route.extend({
 Vaultier.MemberInviteController = Ember.ObjectController.extend({
     invited: [],
     role: null,
-    isButtonNextEnabled: function() {
+    isButtonNextEnabled: function () {
         return this.invited.length < 1;
     }.property('invited'),
     breadcrumbs: null,
@@ -63,7 +57,7 @@ Vaultier.MemberInviteView = Ember.View.extend({
         var ajaxQueryContext = {};
 
         var ajaxQuery = function () {
-            var members = this.store.find('Member')
+            var members = this.store.find('Member', {search: this.query.term})
                 .then(function (members) {
                     var results = [];
                     members.forEach(function (member) {
@@ -104,9 +98,7 @@ Vaultier.MemberInviteView = Ember.View.extend({
             query: function (query) {
                 ajaxQueryContext.store = this.get('controller.store')
                 ajaxQueryContext.query = query;
-
-                //Ember.run.debounce(ajaxQueryContext, ajaxQuery, 1000 );
-                ajaxQuery.call(ajaxQueryContext);
+                Ember.run.debounce(ajaxQueryContext, ajaxQuery, 1000);
 
             }.bind(this),
             formatResult: function (member) {
@@ -118,7 +110,7 @@ Vaultier.MemberInviteView = Ember.View.extend({
 
         });
 
-        el.on('change', function(e) {
+        el.on('change', function (e) {
             this.get('controller').set('invited', e.val);
         }.bind(this));
 
