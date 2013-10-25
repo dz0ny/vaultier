@@ -48,11 +48,7 @@
             {{#each role in block.roles }}
                 <tr>
                     <td class="col-md-4 vlt-user">
-                        {{gravatarImg 'jan.misek@rclick.cz' size=50 class="vlt-avatar"}}
-                        <b>Jan Míšek</b><br/>
-                    <span class="help-block">
-                        jan.misek@rclick.cz
-                    </span>
+                        {{printUser role.member size=50}}
                     </td>
                     <td class="col-md-4">
                     </td>

@@ -37,17 +37,9 @@ class MemberSerializer(ModelSerializer):
         fields = ('id', 'status', 'email', 'nickname', 'workspace', 'user', 'created_by', 'created_at', 'updated_at')
 
 
-class Related(PrimaryKeyRelatedField):
-    def from_native(self, data):
-        result = super(Related, self).from_native(data)
-        print result
-        return result
-
-
-
 class MemberInviteSerializer(Serializer):
     email = EmailField(required=True)
-    workspace = Related(required=True, queryset=Workspace.objects.all())
+    workspace = PrimaryKeyRelatedField(required=True, queryset=Workspace.objects.all())
     send = BooleanField(required=False, default=True)
     resend = BooleanField(required=False, default=True)
 

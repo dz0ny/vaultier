@@ -2,19 +2,42 @@ Vaultier.MemberInviteRoute = Ember.Route.extend({
 
     workspace: null,
 
+    model: function (params, queryParams) {
+        this.workspace = this.modelFor('Vault');
+    },
+
     actions: {
-        save: function () {
+        save: function (invited, role) {
+            var invitations = Service.Invitations.current();
+            var promise = Ember.RSVP.resolve();
+            var workspace = this.workspace;
+
+            invited.forEach(function(email) {
+                promise.then(invitations.invite(workspace, email, role, true, false));
+           });
+
+            promise.then(function() {
+                console.log('success');
+            })
+
+            return promise;
+            //invitations.invite()
+//
+//            console.log(this.workspace);
+//            console.log(invited);
+//            console.log(role);
+
         }
     },
 
     setupController: function (ctrl, model) {
+
+
+
         ctrl.set('content', {});
         ctrl.set('roles', Vaultier.Role.proto().roles);
     },
 
-    model: function (params, queryParams) {
-
-    },
 
     deactivate: function () {
     }
@@ -22,8 +45,12 @@ Vaultier.MemberInviteRoute = Ember.Route.extend({
 });
 
 Vaultier.MemberInviteController = Ember.ObjectController.extend({
+    invited: [],
+    role: null,
+    isButtonNextEnabled: function() {
+        return this.invited.length < 1;
+    }.property('invited'),
     breadcrumbs: null,
-    roles: null
 });
 
 Vaultier.MemberInviteView = Ember.View.extend({
@@ -31,7 +58,7 @@ Vaultier.MemberInviteView = Ember.View.extend({
     layoutName: 'Layout/LayoutStandard',
 
     didInsertElement: function () {
-        var el = Ember.$(this.get('element'));
+        var el = Ember.$(this.get('element')).find('#card-name');
 
         var ajaxQueryContext = {};
 
@@ -42,7 +69,7 @@ Vaultier.MemberInviteView = Ember.View.extend({
                     members.forEach(function (member) {
                         results.push({
                             text: member.get('email'),
-                            id: member.get('id'),
+                            id: member.get('email'),
                             nickname: member.get('nickname'),
                             email: member.get('email')
                         });
@@ -52,22 +79,24 @@ Vaultier.MemberInviteView = Ember.View.extend({
         };
 
 
-        el.find('#card-name').select2({
+        el.select2({
             tokenSeparators: [",", " "],
             createSearchChoice: function (term, data) {
                 var add = true;
                 data.forEach(function (member) {
-                    if ('i:' + term == member.id || term == member.email) {
+                    if (term == member.id) {
                         add = false;
                         return false;
                     }
                 });
+                //@todo: validate email, else show invalid email notification
+
                 if (add) {
                     return {
                         text: term,
                         nickname: term,
                         email: term,
-                        id: 'i:' + term
+                        id: term
                     }
                 }
             },
@@ -75,7 +104,10 @@ Vaultier.MemberInviteView = Ember.View.extend({
             query: function (query) {
                 ajaxQueryContext.store = this.get('controller.store')
                 ajaxQueryContext.query = query;
-                Ember.run.debounce(ajaxQueryContext, ajaxQuery, 1000 );
+
+                //Ember.run.debounce(ajaxQueryContext, ajaxQuery, 1000 );
+                ajaxQuery.call(ajaxQueryContext);
+
             }.bind(this),
             formatResult: function (member) {
                 return Utils.HandlebarsHelpers.current().printUser(member, {hash: {}})
@@ -85,6 +117,10 @@ Vaultier.MemberInviteView = Ember.View.extend({
             }
 
         });
+
+        el.on('change', function(e) {
+            this.get('controller').set('invited', e.val);
+        }.bind(this));
 
     }
 

@@ -44,14 +44,13 @@ function program4(depth0,data) {
   
   var buffer = '', stack1, hashContexts, hashTypes, options;
   data.buffer.push("\r\n                <tr>\r\n                    <td class=\"col-md-4 vlt-user\">\r\n                        ");
-  hashContexts = {'size': depth0,'class': depth0};
-  hashTypes = {'size': "INTEGER",'class': "STRING"};
+  hashContexts = {'size': depth0};
+  hashTypes = {'size': "INTEGER"};
   options = {hash:{
-    'size': (50),
-    'class': ("vlt-avatar")
-  },contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
-  data.buffer.push(escapeExpression(((stack1 = helpers.gravatarImg || depth0.gravatarImg),stack1 ? stack1.call(depth0, "jan.misek@rclick.cz", options) : helperMissing.call(depth0, "gravatarImg", "jan.misek@rclick.cz", options))));
-  data.buffer.push("\r\n                        <b>Jan Míšek</b><br/>\r\n                    <span class=\"help-block\">\r\n                        jan.misek@rclick.cz\r\n                    </span>\r\n                    </td>\r\n                    <td class=\"col-md-4\">\r\n                    </td>\r\n                    <td class=\"col-md-4 vlt-actions\">\r\n                        <div class=\"input-group\">\r\n                            <select class=\"form-control vlt-perms\">\r\n                                <option>Read</option>\r\n                                <option>Read and create</option>\r\n                                <option>Manage</option>\r\n                            </select>\r\n\r\n                            <a class=\"btn btn-default btn-sm input-group-btn\">\r\n                                <span class=\"glyphicon glyphicon-trash\"></span>\r\n                            </a>\r\n                        </div>\r\n                    </td>\r\n                </tr>\r\n            ");
+    'size': (50)
+  },contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
+  data.buffer.push(escapeExpression(((stack1 = helpers.printUser || depth0.printUser),stack1 ? stack1.call(depth0, "role.member", options) : helperMissing.call(depth0, "printUser", "role.member", options))));
+  data.buffer.push("\r\n                    </td>\r\n                    <td class=\"col-md-4\">\r\n                    </td>\r\n                    <td class=\"col-md-4 vlt-actions\">\r\n                        <div class=\"input-group\">\r\n                            <select class=\"form-control vlt-perms\">\r\n                                <option>Read</option>\r\n                                <option>Read and create</option>\r\n                                <option>Manage</option>\r\n                            </select>\r\n\r\n                            <a class=\"btn btn-default btn-sm input-group-btn\">\r\n                                <span class=\"glyphicon glyphicon-trash\"></span>\r\n                            </a>\r\n                        </div>\r\n                    </td>\r\n                </tr>\r\n            ");
   return buffer;
   }
 
