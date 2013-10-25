@@ -30,7 +30,14 @@ function program1(depth0,data) {
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "logout", {hash:{
     'target': ("view")
   },contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
-  data.buffer.push(" href=\"\" >Logout</a></li>\r\n        </ul>\r\n    </div>\r\n");
+  data.buffer.push(" href=\"\" >Logout</a></li>\r\n\r\n            <li><a ");
+  hashContexts = {'href': depth0};
+  hashTypes = {'href': "ID"};
+  options = {hash:{
+    'href': ("auth.token")
+  },contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
+  data.buffer.push(escapeExpression(((stack1 = helpers['bind-attr'] || depth0['bind-attr']),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "bind-attr", options))));
+  data.buffer.push(" class=\"copy-token\" >Copy token to clipboard</a></li>\r\n        </ul>\r\n    </div>\r\n");
   return buffer;
   }
 

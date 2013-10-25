@@ -13,7 +13,17 @@ Vaultier.LayoutSecurityBoxView = Ember.View.extend({
                 ctrl.transitionToRoute('index');
             }.bind(this));
         }
+    },
+
+    didInsertElement: function () {
+        var el = Ember.$(this.get('element')).find('.copy-token');
+        el.click(function(e) {
+            e.preventDefault();
+            window.prompt("token",el.attr('href'));
+        })
+
     }
+
 });
 
 Vaultier.LayoutSecurityBoxController = Ember.Controller.extend({
