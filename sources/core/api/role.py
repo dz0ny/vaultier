@@ -1,6 +1,9 @@
+from rest_framework.mixins import CreateModelMixin, ListModelMixin, DestroyModelMixin, RetrieveModelMixin
 from rest_framework.relations import PrimaryKeyRelatedField
+from rest_framework.response import Response
 from rest_framework.serializers import ModelSerializer
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.status import HTTP_404_NOT_FOUND
+from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from core.api.fields.relations import RelatedNestedField
 from core.api.member import RelatedMemberSerializer
 from core.api.user import RelatedUserSerializer
@@ -15,14 +18,7 @@ class RoleSerializer(ModelSerializer):
     to_workspace = PrimaryKeyRelatedField(required=False)
 
     def save_object(self, obj, **kwargs):
-        existing = Role.objects.filter(member=obj.member)[0]
-        if not existing:
-            return super(RoleSerializer, self).save_object(obj, **kwargs)
-        else:
-            kwargs['force_insert'] = False
-            existing.level = obj.level
-            self.object = existing
-            return super(RoleSerializer, self).save_object(existing, **kwargs)
+        self.object = obj.save()
 
 
     def get_email(self, obj):
@@ -44,7 +40,11 @@ class RoleSerializer(ModelSerializer):
         fields = ('id', 'level', 'member', 'to_workspace', 'created_by', 'created_at', 'updated_at',)
 
 
-class RoleViewSet(ModelViewSet):
+class RoleViewSet(CreateModelMixin,
+                  RetrieveModelMixin,
+                  ListModelMixin,
+                  DestroyModelMixin,
+                  GenericViewSet):
     model = Role
     serializer_class = RoleSerializer
     authentication_classes = (TokenAuthentication,)
