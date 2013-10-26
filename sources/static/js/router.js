@@ -41,10 +41,8 @@ Vaultier.Router.map(function () {
             /************************************************************
              * Members
              ************************************************************/
-            this.resource('Member', {path: '/members'}, function () {
-                // automatic Member.index
-                this.route('invite', { path: '/invite'});
-            });
+            this.route('memberIndex', { path: '/team'});
+            this.route('memberInvite', { path: '/team/invite'});
 
             /************************************************************
              * Cards

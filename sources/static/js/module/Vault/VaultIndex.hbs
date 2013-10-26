@@ -1,12 +1,12 @@
 <div class="vlt-page-nav">
 
-     <div class="vlt-page-toolbar pull-right">
+    <div class="vlt-page-toolbar pull-right">
         <div>
 
-            <a href="#" class="btn btn-default">
+            {{#link-to "Vault.memberIndex" workspace class="btn btn-default"}}
                 <span class="glyphicon glyphicon-user"></span>
                 Collaborate
-            </a>
+            {{/link-to}}
 
             {{#if length}}
                 {{#link-to "Vault.create" workspace class="btn btn-primary"}}

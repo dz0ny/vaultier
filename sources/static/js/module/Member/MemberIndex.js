@@ -30,6 +30,19 @@ Vaultier.MemberIndexRoute = Ember.Route.extend({
         return models;
     },
 
+    /**
+     * override this to setup invite breadcrumbs
+     */
+    setupInviteRoute: function (models) {
+        throw 'Please override this in your route'
+    },
+
+    /**
+     * override this to setup invite breadcrumbs
+     */
+    setupBreadcrumbs: function () {
+        throw 'Please override this in your route'
+    },
 
     setupController: function (ctrl, models) {
         var blocks = [];
@@ -44,13 +57,16 @@ Vaultier.MemberIndexRoute = Ember.Route.extend({
             ctrl.set('blocks', blocks)
         }
 
+        // set invite route
+        ctrl.setProperties(this.setupInviteRoute(models));
+
         // set breadcrumbs
-        ctrl.set('breadcrumbs',
-            Vaultier.Breadcrumbs.create({router: this.get('router')})
-                .addHome()
-                .addWorkspace()
-                .addText('Collaborators')
-        )
+        ctrl.set('breadcrumbs', this.setupBreadcrumbs(models))
+    },
+
+    renderTemplate: function () {
+        // this is important if you want to inherite this route https://github.com/emberjs/ember.js/issues/1872 to use proper controller
+        this.render('MemberIndex', {controller: this.get('controller')})
     }
 });
 

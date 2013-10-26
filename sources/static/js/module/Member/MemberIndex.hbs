@@ -3,7 +3,7 @@
 <div class="vlt-page-toolbar pull-right">
     <div>
 
-        <a href="#" class="btn btn-default btn-sm" data-toggle="tooltip" title="first tooltip">
+        <a href="javascript:window.history.go(-1)" class="btn btn-default">
             <span class="glyphicon glyphicon-chevron-left"></span>
             Back
         </a>
@@ -13,10 +13,11 @@
             Permissions
         </a>
 
-        <a href="#" class="btn btn-primary" data-toggle="tooltip" title="first tooltip">
+        {{#link-to inviteRouteName class="btn btn-primary"}}
             <span class="glyphicon glyphicon-user"></span>
             Invite
-        </a>
+        {{/link-to}}
+
 
     </div>
 </div>
@@ -28,8 +29,6 @@
 <div class="clearfix"></div>
 
     {{#each block in blocks }}
-
-
 
         {{#ifIndex is=2}}
         Inherited memberships
