@@ -2,7 +2,12 @@ Vaultier.InvitationUseRoute = Ember.Route.extend(
     Utils.ErrorAwareRouteMixin,
     {
         model: function (params, transition) {
-            return Service.Invitations.current().useInvitation(transition, params.id, params.hash);
+            transition.abort();
+            return Service.Invitations.current().useInvitation(params.invitation, params.hash, params.data)
+                .then(function() {
+                    transition
+                })
+                .fail(this.handleErrors(transition))
         }
     });
 

@@ -1,10 +1,13 @@
 from django.db import models
 from django.db.models.deletion import PROTECT, CASCADE
+from django.db.models.fields import IntegerField
 from django.db.models.manager import Manager
+from core.models.acl import AclLevelField
 
 
 class RoleManager(Manager):
-    def createRole(self, role):
+
+    def create_or_merge(self, role):
         existing = None
         try:
             existing = Role.objects.filter(
@@ -18,11 +21,13 @@ class RoleManager(Manager):
             pass
 
         if not existing:
-            role.save(standard=True)
+            role.save(disable_merge=True)
             return role
         else:
+            #todo: after level will be migrated to numbers, level would be changed only in case role.level > existing.level
             existing.level = role.level
-            existing.save(standard=True)
+            existing.member = role.member
+            existing.save(disable_merge=True)
             return existing
 
 
@@ -37,23 +42,16 @@ class Role(models.Model):
     to_workspace = models.ForeignKey('core.Workspace', on_delete=CASCADE, null=True, blank=True)
     to_vault = models.ForeignKey('core.Vault', on_delete=CASCADE, null=True, blank=True)
     to_card = models.ForeignKey('core.Card', on_delete=CASCADE, null=True, blank=True)
-    level = models.CharField(
-        max_length=1,
-        choices=(
-            (u'0', u'DENIED'),
-            (u'r', u'READ'),
-            (u'c', u'READ+CREATE'),
-            (u'w', u'WRITE'),
-            (u'a', u'ADMIN'),
-        ))
+    level = AclLevelField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey('core.User', on_delete=PROTECT, related_name='roles_created')
 
+    # Save is overriden to ensure always only one role is related to member
     def save(self, *args, **kwargs):
-        standard = kwargs.pop('standard', None)
-        if standard:
+        disable_merge = kwargs.pop('disable_merge', None)
+        if disable_merge:
             return super(Role, self).save(*args, **kwargs)
         else:
-            return Role.objects.createRole(self)
+            return Role.objects.create_or_merge(self)
 

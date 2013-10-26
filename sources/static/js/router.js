@@ -1,4 +1,4 @@
-Vaultier.Router.map(function () {
+var router = Vaultier.Router.map(function () {
 
     /************************************************************
      * REGISTRATION
@@ -88,8 +88,10 @@ Vaultier.Router.map(function () {
     this.route("Error403", { path: "/errors/error-403"});
     this.route("Error404", { path: "*path"}); //also referred as /errors/error-404
 
-})
-;
+});
+
+Service.Environment.current().set('router', router);
+
 
 Vaultier.ApplicationRoute = Ember.Route.extend(
     Utils.ErrorAwareRouteMixin,

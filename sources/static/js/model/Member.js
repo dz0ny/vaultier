@@ -1,6 +1,6 @@
 Vaultier.Member = DS.Model.extend(
     CreatedUpdatedMixin, {
-        status: DS.attr('string'),
+        status: DS.attr('number'),
         email: DS.attr('string'),
         nickname: DS.attr('string'),
         user: DS.attr(),
@@ -8,16 +8,16 @@ Vaultier.Member = DS.Model.extend(
 
         statuses: new Utils.ConstantList({
             'INVITED': {
-                value: 'i',
-                text: 'Invited user'
+                value: 100,
+                text: 'INVITED'
             },
             'NON_APPROVED_MEMBER': {
-                value: 'a',
-                text: 'Non approved member'
+                value: 200,
+                text: 'NON_APPROVED_MEMBER'
             },
             'MEMBER': {
-                value: 'm',
-                text: 'Member'
+                value: 300,
+                text: 'MEMBER'
             }
         })
 

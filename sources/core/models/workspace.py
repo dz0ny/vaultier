@@ -2,33 +2,35 @@ from django.db import models
 from django.db.models.deletion import PROTECT
 from django.db.models.manager import Manager
 from django.db.models.signals import post_save
-from core.models.member import Member
+from core.models.acl import AclLevelField
+from core.models.member import Member, MemberStatusField
 from core.models.role import Role
 
-class WorkspaceManager(Manager):
 
+class WorkspaceManager(Manager):
     def create_member_with_workspace(self, sender, instance, created, **kwargs):
         if created:
+
             attrs_needed = ['_user', ]
-            if all(hasattr(instance, attr) for attr in attrs_needed):
-                m = Member(
-                    workspace=instance,
-                    user=instance._user,
-                    status='u',
-                    created_by=instance._user
-                )
-                m.save()
-
-                r = Role(
-                    member=m,
-                    to_workspace=instance,
-                    created_by=instance._user,
-                    level='a'
-                )
-                r.save()
-
-            else:
+            if not all(hasattr(instance, attr) for attr in attrs_needed):
                 raise AttributeError('_user attribute is required to create related membership')
+
+            m = Member(
+                workspace=instance,
+                user=instance._user,
+                status=MemberStatusField.STATUS_MEMBER,
+                created_by=instance._user
+            )
+            m.save()
+
+            r = Role(
+                member=m,
+                to_workspace=instance,
+                created_by=instance._user,
+                level=AclLevelField.LEVEL_WRITE
+            )
+            r.save()
+
 
 class Workspace(models.Model):
     class Meta:

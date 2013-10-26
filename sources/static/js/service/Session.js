@@ -14,8 +14,12 @@ Service.Session = Ember.CoreObject.extend({
         Ember.$(document).sessionStorage(this.prefix + key, value);
     },
 
-    get: function (key) {
-        return Ember.$(document).sessionStorage(this.prefix + key);
+    get: function (key, def) {
+        var val = Ember.$(document).sessionStorage(this.prefix + key);
+        if ( (typeof val=='undefined' || val===null) && typeof def!='undefined') {
+            return def;
+        }
+        return val;
     },
 
     remove: function (key) {

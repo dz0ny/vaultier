@@ -1,19 +1,30 @@
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
+from rest_framework.fields import WritableField, SerializerMethodField
 from rest_framework.serializers import ModelSerializer
-from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_403_FORBIDDEN
 from rest_framework.viewsets import ModelViewSet
+from core.api.member import RelatedMemberSerializer
 from core.api.user import RelatedUserSerializer
 from core.auth import TokenAuthentication
 from core.models import Workspace
+from core.models.member import Member
 
+class WorkspaceMembershipSerializer(RelatedMemberSerializer):
+    class Meta(RelatedMemberSerializer.Meta):
+        fields = ('status', 'id')
 
 class WorkspaceSerializer(ModelSerializer):
     created_by = RelatedUserSerializer(required=False)
+    membership = SerializerMethodField('get_membership')
+
+    def get_membership(self, obj):
+        member = Member.objects.get_member_to_workspace(obj, self.user)
+        if (member):
+            return WorkspaceMembershipSerializer(member).data
+        else:
+            return None
 
     class Meta:
         model = Workspace
-        fields = ('id', 'name', 'description', 'created_at', 'updated_at', 'created_by')
+        fields = ('id', 'name', 'description', 'membership', 'created_at', 'updated_at', 'created_by')
 
 class RelatedWorkspaceSerializer(WorkspaceSerializer):
     class Meta(WorkspaceSerializer.Meta):
@@ -28,9 +39,10 @@ class WorkspaceViewSet(ModelViewSet):
     authentication_classes = (TokenAuthentication,)
     serializer_class = WorkspaceSerializer
 
-    #
-    # def list(self, request, *args, **kwargs):
-    #     return Response(status=HTTP_403_FORBIDDEN)
+    def get_serializer(self, *args, **kwargs):
+        serializer = super(WorkspaceViewSet, self).get_serializer(*args, **kwargs)
+        serializer.user = self.request.user
+        return serializer
 
     def pre_save(self, object):
         if object.pk is None:
@@ -39,10 +51,5 @@ class WorkspaceViewSet(ModelViewSet):
         return super(WorkspaceViewSet, self).pre_save(object)
 
     def get_queryset(self):
-        """
-        Optionally restricts the returned purchases to a given user,
-        by filtering against a `username` query parameter in the URL.
-        """
         queryset = Workspace.objects.all()
-        #queryset = Workspace.objects.filter(created_by=self.request.user)
         return queryset
