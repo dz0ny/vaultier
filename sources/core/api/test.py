@@ -2,7 +2,7 @@ from rest_framework.status import HTTP_200_OK
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from core.models.acl import Acl
-from core.models.acl_materializer import MaterializerSaver, OnRoleCreateMaterializer
+from core.models.acl_materialization import OnObjectCreateMaterializer, MaterializationSaver
 from core.models.role import Role
 
 
@@ -11,7 +11,7 @@ class TestAcl(APIView):
         role = Role.objects.get(pk=2)
         object = role.get_object()
 
-        materializer = OnRoleCreateMaterializer(role, object)
+        materializer = OnObjectCreateMaterializer(role, object)
         acls = materializer.materialize()
 
         for acl in acls:
@@ -19,7 +19,7 @@ class TestAcl(APIView):
 
         #Acl.objects.bulk_create(acls)
 
-        saver = MaterializerSaver()
+        saver = MaterializationSaver()
         saver.save_materialized(acls)
 
         return Response(status=HTTP_200_OK)

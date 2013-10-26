@@ -1,5 +1,83 @@
+from django.db.models.signals import post_save
 from core.models import Acl
 from core.models.acl_fields import AclLevelField, AclDirectionField
+
+
+def _on_role_post_save(sender, instance, created, **kwargs):
+    if created:
+        materializer = OnRoleCreateMaterializer(instance, instance.get_object())
+        acls = materializer.materialize()
+
+        saver = MaterializationSaver()
+        saver.save_materialized(acls)
+    if not created:
+        materializer = OnRoleCreateMaterializer(instance)
+        materializer.materialize()
+
+def _on_object_post_save(sender, instance, created, **kwargs):
+    if created:
+        materializer = OnObjectCreateMaterializer(instance)
+        acls = materializer.materialize()
+
+        saver = MaterializationSaver()
+        saver.save_materialized(acls)
+
+def register_materializers():
+
+    from core.models.role import Role
+    post_save.connect(_on_role_post_save, sender=Role)
+
+    from core.models.workspace import Workspace
+    post_save.connect(_on_object_post_save, sender=Workspace)
+
+    from core.models.vault import Vault
+    post_save.connect(_on_object_post_save, sender=Vault)
+
+    from core.models.card import Card
+    post_save.connect(_on_object_post_save, sender=Card)
+
+
+
+class onRoleUpdateMaterializer(object):
+    def __init__(self, role):
+        self.role = role
+
+    def materialize(self):
+        Acl.objects.filter(role=self.role, direction=AclDirectionField.DIR_DOWN).update(level=self.role.level)
+
+class OnObjectCreateMaterializer(object):
+    def __init__(self, object):
+        self.object = object
+
+    def get_parent(self):
+        object = self.object
+        if object.__class__.__name__ == 'Vault':
+            return object.workspace
+        if object.__class__.__name__ == 'Card':
+            return object.vault
+        return None
+
+    def materialize(self):
+        acls = []
+        roles = self.find_roles();
+        for role in roles:
+            materializer = OnRoleCreateMaterializer(role, self.object)
+            acls.extend(materializer.materialize())
+
+        return acls
+
+
+    def find_roles(self):
+        roles = []
+        roles.extend(self.object.role_set.all())
+
+        parent = self.get_parent()
+        if parent:
+            materializer = OnObjectCreateMaterializer(parent)
+            roles.extend(materializer.find_roles())
+
+        return roles
+
 
 class OnRoleCreateMaterializer(object):
     role = None
@@ -70,11 +148,11 @@ class OnRoleCreateMaterializer(object):
             parent = self.get_parent();
             if parent:
                 materializer = OnRoleCreateMaterializer(self.role, parent)
-                acls.append(materializer.materialize(AclDirectionField.DIR_UP))
+                acls.extend(materializer.materialize(AclDirectionField.DIR_UP))
 
         return acls
 
-class MaterializerSaver(object):
+class MaterializationSaver(object):
 
     def save_materialized(self, acls):
         saved = []
@@ -112,3 +190,4 @@ class MaterializerSaver(object):
                 acl.save()
                 saved.append(acl)
 
+register_materializers()
