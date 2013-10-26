@@ -18,4 +18,6 @@ class TestAcl(APIView):
 
         #Acl.objects.bulk_create(acls)
 
+        materializer.save_materialized(acls)
+
         return Response(status=HTTP_200_OK)
