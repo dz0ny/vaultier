@@ -12,6 +12,11 @@ class AclRoleMaterializer(object):
         self.object = object
 
     def acl_for_object(self, direction=None):
+        if not self.role.member.user:
+            raise RuntimeError(''
+                               'Acl could be materialized upon conrete '
+                               'member not invited one without user')
+
         acl = Acl()
         acl.role = self.role
         acl.direction = direction
