@@ -99,7 +99,15 @@ Vaultier.MemberIndexRoute = Ember.Route.extend({
         },
 
         changeRole: function (role, block) {
-            console.log('ch');
+            role.save().then(
+                function () {
+                    $.notify('User \'s permission has been updated.', 'success');
+                },
+                function () {
+                    role.rollback();
+                    $.notify('Oooups! Something went wrong.', 'error');
+                }
+            )
         }
     }
 
@@ -120,7 +128,6 @@ Vaultier.MemberIndexView = Ember.View.extend({
 
     Item: Ember.View.extend({
         tagName: 'tr',
-
         Select: Ember.Select.extend({
 
             didInsertElement: function () {

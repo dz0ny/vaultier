@@ -48,8 +48,8 @@ Vaultier.MemberInviteRoute = Ember.Route.extend({
 
             var bulk = Ember.RSVP.all(invitedPromises)
                 .then(function () {
-                $.notify('Your invitations has been saved', 'success');
-                window.history.go(-1);
+                    $.notify('Your invitations has been saved', 'success');
+                    window.history.go(-1);
                 });
 
             return bulk;

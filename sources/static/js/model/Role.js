@@ -28,7 +28,20 @@ Vaultier.Role = DS.Model.extend(
                 value: 'a',
                 text: 'Admin'
             }
-        })
+        }),
+
+        isMember : function() {
+            return this.get('member.status') == Vaultier.Member.proto().statuses['MEMBER'].value;
+        }.property('member.status'),
+
+        isInvited : function() {
+            return this.get('member.status') == Vaultier.Member.proto().statuses['INVITED'].value;
+        }.property('member.status'),
+
+        isNonApprovedMember : function() {
+            return this.get('member.status') == Vaultier.Member.proto().statuses['NON_APPROVED_MEMBER'].value;
+        }.property('member.status')
+
 
     });
 

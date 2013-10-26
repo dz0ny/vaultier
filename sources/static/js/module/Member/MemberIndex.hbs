@@ -53,11 +53,30 @@
 
             {{#each role in block.roles }}
 
-                {{#view view.Item role=role block=block}}
+                {{#view view.Item role=role block=block classNameBindings='role.isMember:normal:warning' }}
                     <td class="col-md-4 vlt-user">
                         {{printUser role.member size=50}}
                     </td>
-                    <td class="col-md-4">
+                    <td class="col-md-4 vlt-labels">
+                        {{#if role.isNonApprovedMember}}
+                            <div class="label label-default">
+                                <div class="col-md-6">
+                                    Accepted invitation. Please approve his access.
+                                </div>
+                                <div class="col-md-6">
+                                    <a class="btn btn-success">
+                                        <span class="glyphicon glyphicon-ok"></span>
+                                        Approve access
+                                    </a>
+                                </div>
+                            </div>
+                        {{/if}}
+
+                        {{#if role.isInvited}}
+                            <div class="label label-warning">
+                                Invited only. Did not show up yet!
+                            </div>
+                        {{/if}}
                     </td>
                     <td class="col-md-4 vlt-actions">
                         <div class="input-group">

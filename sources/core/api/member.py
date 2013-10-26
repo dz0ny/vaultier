@@ -17,17 +17,17 @@ class MemberSerializer(ModelSerializer):
 
     def get_email(self, obj):
         if obj:
-            if (obj.status == 'i'):
-                return obj.invitation_email
-            else:
+            if (obj.user):
                 return obj.user.email
+            else:
+                return obj.invitation_email
 
     def get_nickname(self, obj):
         if obj:
-            if (obj.status == 'i'):
-                return obj.invitation_email
-            else:
+            if (obj.user):
                 return obj.user.nickname
+            else:
+                return obj.invitation_email
 
     class Meta:
         model = Member

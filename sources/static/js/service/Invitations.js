@@ -35,22 +35,16 @@ Service.Invitations = Ember.Object.extend({
         send = Po.F.optional(send, false);
         resend = Po.F.optional(resend, false);
 
-        return Ember.RSVP.Promise(function (resolve, reject) {
-            Ember.RSVP.resolve()
-                .then(
-                    function () {
-                        return this._memberPromise(workspace, email, send, resend)
-                    }.bind(this))
+        return Ember.RSVP.resolve()
+            .then(
+                function () {
+                    return this._memberPromise(workspace, email, send, resend)
+                }.bind(this))
 
-                .then(
-                    function (member) {
-                        return this._invitePromise(member, role, params);
-                    }.bind(this))
-                .then(function () {
-                    resolve()
-                })
-
-        }.bind(this))
+            .then(
+                function (member) {
+                    return this._invitePromise(member, role, params);
+                }.bind(this))
     }
 
 

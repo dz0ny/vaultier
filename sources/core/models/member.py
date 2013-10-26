@@ -47,10 +47,10 @@ class Member(models.Model):
     invitation_email = models.CharField(max_length=1024, null=True)
     status = models.CharField(
         max_length=1,
-        default='u',
+        default='m',
         choices=(
             (u'i', u'INVITED'),
-            (u'n', u'NON_APPROVED_MEMBER'),
+            (u'a', u'NON_APPROVED_MEMBER'),
             (u'm', u'MEMBER'),
         ))
     created_at = models.DateTimeField(auto_now_add=True)
