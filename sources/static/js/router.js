@@ -21,6 +21,15 @@ Vaultier.Router.map(function () {
         this.route('latest', { path: '/latest-user' });
     })
 
+    /************************************************************
+     * invitations
+     ************************************************************/
+
+    this.resource('Invitation', {path: '/invitations'}, function () {
+        this.route('use', { path: '/use/:invitation/:hash' });
+        this.route('anonymous', { path: '/anonymous' });
+        this.route('accepted', { path: '/accepted' });
+    })
 
     /************************************************************
      * Workspaces

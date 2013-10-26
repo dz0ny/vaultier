@@ -4,6 +4,6 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   
 
 
-  data.buffer.push("<div>\r\n    inv\r\n</div>");
+  data.buffer.push("<div>\r\n    accepted\r\n</div>");
   
 });

@@ -19,6 +19,7 @@ Service.Invitations = Ember.Object.extend({
         var data = {
             member: member.id,
             level: role,
+            //@todo: override this to some conversion function "model2id" - instanceof ds.model -> model.get(id)
             to_workspace: (params.to_workspace instanceof Vaultier.Workspace) ? params.to_workspace.get('id') : params.to_workspace,
             to_vault: (params.to_vault instanceof Vaultier.Workspace ) ? params.to_vault.get('id') : params.to_vault,
             to_card: (params.to_card instanceof Vaultier.Workspace ) ? params.to_card.get('id') : params.to_card
@@ -45,6 +46,22 @@ Service.Invitations = Ember.Object.extend({
                 function (member) {
                     return this._invitePromise(member, role, params);
                 }.bind(this))
+    },
+
+    useInvitation: function(transition, id, hash) {
+        transition.abort();
+        // store invitation
+        // aborts transaction
+
+        // if authenticatated executes acceptance of stored invitations
+        // if authenticated redirects to accepted
+
+        // if not authenticated, redirects to anonymous
+        // if not authenticated - auth service executes acceptance of stored invitations
+
+//        console.log(transition);
+//        transition.router.replaceWith('Invitation.anonymous')
+
     }
 
 
