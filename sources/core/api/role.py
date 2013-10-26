@@ -1,9 +1,7 @@
 from rest_framework.mixins import CreateModelMixin, ListModelMixin, DestroyModelMixin, RetrieveModelMixin
 from rest_framework.relations import PrimaryKeyRelatedField
-from rest_framework.response import Response
 from rest_framework.serializers import ModelSerializer
-from rest_framework.status import HTTP_404_NOT_FOUND
-from rest_framework.viewsets import ModelViewSet, GenericViewSet
+from rest_framework.viewsets import GenericViewSet
 from core.api.fields.relations import RelatedNestedField
 from core.api.member import RelatedMemberSerializer
 from core.api.user import RelatedUserSerializer

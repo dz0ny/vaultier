@@ -30,27 +30,29 @@ Vaultier.MemberInviteRoute = Ember.Route.extend({
     actions: {
         save: function (invited, role) {
             var invitations = Service.Invitations.current();
-            var promise = Ember.RSVP.resolve();
             var inviteWorkspace = this.get('inviteWorkspace');
             var inviteParams = this.get('inviteParams');
+            var invitedPromises = [];
 
             invited.forEach(function (email) {
-                promise.then(invitations.invite(
-                    inviteWorkspace,
-                    email,
-                    role,
-                    inviteParams,
-                    true,
-                    false
-                ));
-            }.bind(this));
+                invitedPromises.push(
+                    invitations.invite(
+                        inviteWorkspace,
+                        email,
+                        role,
+                        inviteParams,
+                        true,
+                        false
+                    ));
+            });
 
-            promise.then(function () {
+            var bulk = Ember.RSVP.all(invitedPromises)
+                .then(function () {
                 $.notify('Your invitations has been saved', 'success');
-                //window.history.go(-1);
-            }.bind(this))
+                window.history.go(-1);
+                });
 
-            return promise;
+            return bulk;
         }
     },
 
@@ -71,6 +73,8 @@ Vaultier.MemberInviteController = Ember.ObjectController.extend({
     invited: [],
     role: null,
     isButtonNextEnabled: function () {
+        return false;
+
         return this.invited.length < 1;
     }.property('invited'),
     breadcrumbs: null

@@ -59,7 +59,6 @@ class MemberViewSet(CreateModelMixin,
     def create(self, request, *args, **kwargs):
         serializer = MemberInviteSerializer(data=request.DATA)
         if serializer.is_valid():
-            print serializer.data.get('email')
             #todo: validate workspace id agaist object level permissions
             member = Member.objects.invite(
                 user=request.user,

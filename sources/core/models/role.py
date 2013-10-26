@@ -7,7 +7,13 @@ class RoleManager(Manager):
     def createRole(self, role):
         existing = None
         try:
-            existing = Role.objects.filter(member=role.member)[0]
+            existing = Role.objects.filter(
+                member=role.member,
+                to_workspace=role.to_workspace,
+                to_vault=role.to_vault,
+                to_card=role.to_card
+            )[0]
+
         except:
             pass
 

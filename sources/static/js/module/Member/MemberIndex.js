@@ -83,9 +83,16 @@ Vaultier.MemberIndexRoute = Ember.Route.extend({
     actions: {
         deleteRole: function (role, block) {
             Vaultier.confirmModal(this, 'Are you sure?', function () {
-                block.roles.popObject(role);
-                //todo: delete
-                $.notify('User \' permission has been removed.', 'success');
+                role.deleteRecord();
+                role.save().then(
+                    function () {
+                        block.roles.removeObject(role);
+                        $.notify('User \'s permission has been removed.', 'success');
+                    },
+                    function () {
+                        $.notify('Oooups! Something went wrong.', 'error');
+                    }
+                )
             });
 
 

@@ -44,7 +44,15 @@
             <div class="clearfix"></div>
         </div>
         <table class="table vlt-table">
+
+            {{#unless block.roles.length}}
+                <div>
+                    TODO: DESIGN EMPTY
+                </div>
+            {{/unless}}
+
             {{#each role in block.roles }}
+
                 {{#view view.Item role=role block=block}}
                     <td class="col-md-4 vlt-user">
                         {{printUser role.member size=50}}
@@ -69,9 +77,9 @@
                     </td>
 
                 {{/view}}
+
             {{/each}}
         </table>
-
 
     </div>
 
