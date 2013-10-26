@@ -1,51 +1,78 @@
 from django.db import models
 from django.db.models.deletion import PROTECT, CASCADE
-from django.db.models.fields import IntegerField
 from django.db.models.manager import Manager
-from core.models.card import Card
-from core.models.vault import Vault
-from core.models.workspace import Workspace
 
-class AclRolesCollection(object):
-    roles = []
-
-    def add(self, role_to_add):
-        for idx in self.roles:
-            role = self.roles[idx]
 
 
 class AclRoleMaterializer(object):
 
     role = None
-    user = None
+    object = None
 
-    def __init__(self, role, user):
+    def __init__(self, role, object):
         self.role = role
-        self.user = user
+        self.object = object
 
-    def materialize(self, direction):
-        pass
-
-    def acl_for_object(self, object, direction):
+    def acl_for_object(self, direction=None):
         acl = Acl()
         acl.role = self.role
         acl.direction = direction
-        acl.user = self.user
+        acl.user = self.role.member.user
         if direction == AclDirectionField.DIR_UP:
             acl.level = AclLevelField.LEVEL_READ
         else:
             acl.level = self.role.level
 
-        if isinstance(object, Workspace):
+        object = self.object
+        if object.__class__.__name__  == 'Workspace':
           acl.to_workspace = object
-        elif isinstance(object, Vault):
+        elif object.__class__.__name__  == 'Vault':
           acl.to_vault = object
-        elif isinstance(object, Card):
+        elif object.__class__.__name__  == 'Card':
           acl.to_card = object
         else:
-            raise RuntimeError('Usupported ACL object')
+            raise RuntimeError('Usupported ACL object: '+object.__class__.__name__)
 
         return acl
+
+    def get_parent(self):
+        object = self.object
+        if object.__class__.__name__  == 'Vault':
+            return object.workspace
+        if object.__class__.__name__  == 'Card':
+            return object.vault
+        return None
+
+    def get_childs(self):
+        object = self.object
+        if object.__class__.__name__  == 'Workspace':
+            return object.vault_set.all()
+        if object.__class__.__name__  == 'Vault':
+            return object.card_set.all()
+        return []
+
+    def materialize(self, direction=None):
+        acls = []
+
+        # materialize current
+        acls.append(self.acl_for_object(AclDirectionField.DIR_UP))
+
+        # materialize down
+        if direction==None or direction==AclDirectionField.DIR_DOWN:
+            childs = self.get_childs();
+            for child in childs:
+              materializer = AclRoleMaterializer(self.role, child)
+              acls.extend(materializer.materialize(AclDirectionField.DIR_DOWN))
+
+        # materialize up
+        if direction==None or direction==AclDirectionField.DIR_UP:
+            parent = self.get_parent();
+            if parent:
+              materializer = AclRoleMaterializer(self.role, parent)
+              acls.append(materializer.materialize(AclDirectionField.DIR_UP))
+
+        return acls
+
 
 class AclLevelField(models.IntegerField):
 

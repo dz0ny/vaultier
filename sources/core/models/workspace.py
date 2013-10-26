@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models.deletion import PROTECT
 from django.db.models.manager import Manager
+from django.db.models.query_utils import Q
 from django.db.models.signals import post_save
 from core.models.acl import AclLevelField
 from core.models.member import Member, MemberStatusField
@@ -8,6 +9,11 @@ from core.models.role import Role
 
 
 class WorkspaceManager(Manager):
+    def all_acls(self, user):
+        return self.filter(
+            Q(acl__level=AclLevelField.LEVEL_READ) | Q(acl__level=AclLevelField.LEVEL_WRITE),
+        )
+
     def create_member_with_workspace(self, sender, instance, created, **kwargs):
         if created:
 

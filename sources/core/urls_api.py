@@ -6,6 +6,7 @@ from core.api.card import CardViewSet
 from core.api.member import MemberViewSet
 from core.api.role import RoleViewSet
 from core.api.secret import SecretViewSet
+from core.api.test import TestAcl
 from core.api.vault import VaultViewSet
 from core.api.workspace import WorkspaceViewSet
 
@@ -20,6 +21,7 @@ router.register(r'roles', RoleViewSet)
 urlpatterns = router.urls
 
 urlpatterns += patterns('',
+                        url(r'^test/acl$', TestAcl.as_view()),
                         url(r'^auth/auth$', AuthView.as_view()),
                         url(r'^auth/user$', UserView.as_view()),
                         url(r'^auth/logout$', LogoutView.as_view()),

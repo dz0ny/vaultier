@@ -47,6 +47,17 @@ class Role(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey('core.User', on_delete=PROTECT, related_name='roles_created')
 
+    def get_object(self):
+        if self.to_workspace:
+            return self.to_workspace
+        if self.to_vault:
+            return self.to_vault
+        if self.to_card:
+            return self.to_card
+
+        raise RuntimeError('Role has no associated object')
+
+
     # Save is overriden to ensure always only one role is related to member
     def save(self, *args, **kwargs):
         disable_merge = kwargs.pop('disable_merge', None)
