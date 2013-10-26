@@ -40,6 +40,13 @@ Vaultier.MemberIndexRoute = Ember.Route.extend({
     /**
      * override this to setup invite breadcrumbs
      */
+    setupRoleLevels: function () {
+        return Vaultier.Role.proto().roles.toArray();
+    },
+
+    /**
+     * override this to setup invite breadcrumbs
+     */
     setupBreadcrumbs: function () {
         throw 'Please override this in your route'
     },
@@ -57,6 +64,9 @@ Vaultier.MemberIndexRoute = Ember.Route.extend({
             ctrl.set('blocks', blocks)
         }
 
+        // setup roles
+        ctrl.set('roleLevels', this.setupRoleLevels());
+
         // set invite route
         ctrl.setProperties(this.setupInviteRoute(models));
 
@@ -67,7 +77,27 @@ Vaultier.MemberIndexRoute = Ember.Route.extend({
     renderTemplate: function () {
         // this is important if you want to inherite this route https://github.com/emberjs/ember.js/issues/1872 to use proper controller
         this.render('MemberIndex', {controller: this.get('controller')})
+    },
+
+
+    actions: {
+        deleteRole: function (role, block) {
+            Vaultier.confirmModal(this, 'Are you sure?', function () {
+                block.roles.popObject(role);
+                //todo: delete
+                $.notify('User \' permission has been removed.', 'success');
+            });
+
+
+        },
+
+        changeRole: function (role, block) {
+            console.log('ch');
+        }
     }
+
+
+
 });
 
 Vaultier.MemberIndexController = Ember.Controller.extend({
@@ -81,10 +111,23 @@ Vaultier.MemberIndexView = Ember.View.extend({
     templateName: 'Member/MemberIndex',
     layoutName: 'Layout/LayoutStandard',
 
+    Item: Ember.View.extend({
+        tagName: 'tr',
+
+        Select: Ember.Select.extend({
+
+            didInsertElement: function () {
+                this.addObserver('value', this, function () {
+                    this.get('controller').send('changeRole', this.get('role'), this.get('block'));
+                })
+            }
+        })
+
+    }),
+
     didInsertElement: function () {
         $(document).ready(function () {
             $('body [data-toggle=tooltip]').tooltip();
         })
     }
 });
-

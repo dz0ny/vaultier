@@ -23,7 +23,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "Ember.Select", {hash:{
     'class': ("form-control"),
     'elementId': ("invite-form-role"),
-    'contentBinding': ("roles"),
+    'contentBinding': ("roleLevels"),
     'optionValuePath': ("content.value"),
     'optionLabelPath': ("content.text"),
     'valueBinding': ("role")

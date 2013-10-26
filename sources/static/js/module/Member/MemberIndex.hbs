@@ -45,7 +45,7 @@
         </div>
         <table class="table vlt-table">
             {{#each role in block.roles }}
-                <tr>
+                {{#view view.Item role=role block=block}}
                     <td class="col-md-4 vlt-user">
                         {{printUser role.member size=50}}
                     </td>
@@ -53,18 +53,22 @@
                     </td>
                     <td class="col-md-4 vlt-actions">
                         <div class="input-group">
-                            <select class="form-control vlt-perms">
-                                <option>Read</option>
-                                <option>Read and create</option>
-                                <option>Manage</option>
-                            </select>
+                            {{view view.Select
+                            role=role
+                            class="form-control vlt-perms"
+                            contentBinding="roleLevels"
+                            optionValuePath="content.value"
+                            optionLabelPath="content.text"
+                            valueBinding="role.level"
+                            }}
 
-                            <a class="btn btn-default btn-sm input-group-btn">
+                            <a class="vlt-delete btn btn-default btn-sm input-group-btn" {{action deleteRole role block}}>
                                 <span class="glyphicon glyphicon-trash"></span>
                             </a>
                         </div>
                     </td>
-                </tr>
+
+                {{/view}}
             {{/each}}
         </table>
 

@@ -23,8 +23,8 @@ Vaultier.MemberInviteRoute = Ember.Route.extend({
     /**
      * override this to setup invite breadcrumbs
      */
-    setupRoles: function () {
-        return Vaultier.Role.proto().roles;
+    setupRoleLevels: function () {
+        return Vaultier.Role.proto().roles.toArray();
     },
 
     actions: {
@@ -57,7 +57,7 @@ Vaultier.MemberInviteRoute = Ember.Route.extend({
     setupController: function (ctrl, model) {
         ctrl.set('breadcrumbs', this.setupBreadcrumbs());
         ctrl.set('content', {});
-        ctrl.set('roles', this.setupRoles());
+        ctrl.set('roleLevels', this.setupRoleLevels());
     },
 
     renderTemplate: function () {
