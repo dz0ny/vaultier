@@ -2,7 +2,7 @@ from django.db import models
 from django.db.models.deletion import PROTECT, CASCADE
 from django.db.models.fields import IntegerField
 from django.db.models.manager import Manager
-from core.models.acl import AclLevelField
+from core.models.acl_fields import AclLevelField
 
 
 class RoleManager(Manager):
