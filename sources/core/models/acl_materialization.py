@@ -59,22 +59,29 @@ class OnObjectCreateMaterializer(object):
 
     def materialize(self):
         acls = []
-        roles = self.find_roles();
+
+        # materialize parent acls, only in direction up to assure path to object will be available to users
+        roles = self.find_parent_roles();
+        for role in roles:
+            materializer = OnRoleCreateMaterializer(role, role.get_object())
+            acls.extend(materializer.materialize(AclDirectionField.DIR_UP))
+
+        # materialize roles to object and its children
         for role in roles:
             materializer = OnRoleCreateMaterializer(role, self.object)
-            acls.extend(materializer.materialize())
+            acls.extend(materializer.materialize(AclDirectionField.DIR_DOWN))
 
         return acls
 
 
-    def find_roles(self):
+    def find_parent_roles(self):
         roles = []
         roles.extend(self.object.role_set.all())
 
         parent = self.get_parent()
         if parent:
             materializer = OnObjectCreateMaterializer(parent)
-            roles.extend(materializer.find_roles())
+            roles.extend(materializer.find_parent_roles())
 
         return roles
 
@@ -134,7 +141,10 @@ class OnRoleCreateMaterializer(object):
         acls = []
 
         # materialize current
-        acls.append(self.acl_for_object(direction or AclDirectionField.DIR_UP))
+        if self.role.get_object() == self.object:
+            acls.append(self.acl_for_object(AclDirectionField.DIR_DOWN))
+        else:
+            acls.append(self.acl_for_object(direction or AclDirectionField.DIR_DOWN))
 
         # materialize down
         if direction == None or direction == AclDirectionField.DIR_DOWN:
@@ -167,11 +177,11 @@ class MaterializationSaver(object):
                     to_card=acl.to_card
                 )
 
-                # same acl found, so update existing, ignore new
-                existing.level = acl.level
-                existing.direction = acl.direction
-                existing.save()
-                saved.append(existing)
+                # same acl found, so update existing, ignore same
+                if existing.level < acl.level:
+                    existing.level = acl.level
+                    existing.save()
+                    saved.append(existing)
 
             except Acl.DoesNotExist:
                 # standard behaviour acl not found, so create new
