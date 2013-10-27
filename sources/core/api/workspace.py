@@ -1,4 +1,5 @@
 from rest_framework.fields import WritableField, SerializerMethodField
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.serializers import ModelSerializer
 from rest_framework.viewsets import ModelViewSet
 from core.api.member import RelatedMemberSerializer
@@ -37,6 +38,7 @@ class WorkspaceViewSet(ModelViewSet):
     """
     model = Workspace
     authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
     serializer_class = WorkspaceSerializer
 
     def get_serializer(self, *args, **kwargs):

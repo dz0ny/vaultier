@@ -27,17 +27,30 @@ class TokenAuthentication(BaseAuthentication):
 
 
 class Backend(ModelBackend):
+
+    @classmethod
+    def verify(self, public_key, content, signature):
+        signature = b64decode(signature)
+        key = RSA.importKey(public_key)
+        h = SHA.new(content)
+        verifier = PKCS1_v1_5.new(key)
+        return verifier.verify(h, signature)
+
+    @classmethod
+    def sign(self, private_key, content):
+        key = RSA.importKey(private_key)
+        h = SHA.new()
+        h.update(content)
+        signer = PKCS1_v1_5.new(key)
+        sig = signer.sign(h)
+        return sig.encode('base64')
+
     def authenticate(self, email=None, signature=None):
         try:
             user = User.objects.get(email=email)
         except User.DoesNotExist:
             return None
-
-        signature = b64decode(signature)
-        key = RSA.importKey(user.public_key)
-        h = SHA.new(user.email)
-        verifier = PKCS1_v1_5.new(key)
-        if (verifier.verify(h, signature)):
+        if (self.verify(user.public_key, user.email, signature)):
             token = Token(user=user);
             token.save();
             return token
