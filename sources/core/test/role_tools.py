@@ -1,9 +1,6 @@
 from django.core.urlresolvers import reverse
 from core.test.tools import VaultierAPIClient
 
-__author__ = 'jan'
-
-
 def create_role_api_call(token, member=None, to_workspace=None, to_vault=None, to_card=None, level=None):
     url = reverse('role-list')
     client = VaultierAPIClient()

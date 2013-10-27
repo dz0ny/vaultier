@@ -3,8 +3,6 @@ from rest_framework.test import APIClient
 from core.auth import Backend
 from vaultier.settings import PROJECT_ROOT
 
-__author__ = 'jan'
-
 
 def auth_api_call(email=None, signature=None):
     url = reverse('auth-auth')

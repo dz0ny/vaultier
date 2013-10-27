@@ -1,8 +1,6 @@
 from django.core.urlresolvers import reverse
 from core.test.tools import VaultierAPIClient
 
-__author__ = 'jan'
-
 
 def invite_member_api_call(token, email=None, workspace=None):
     url = reverse('member-list')
