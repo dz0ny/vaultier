@@ -1,18 +1,32 @@
 from django.db.models.signals import post_save
 from core.models import Acl
 from core.models.acl_fields import AclLevelField, AclDirectionField
+from core.models.member_fields import MemberStatusField
 
 
 def _on_role_post_save(sender, instance, created, **kwargs):
-    if created:
+    if created and not instance.member.is_invitation():
         materializer = OnRoleCreateMaterializer(instance, instance.get_object())
         acls = materializer.materialize()
 
         saver = MaterializationSaver()
         saver.save_materialized(acls)
     if not created:
-        materializer = OnRoleCreateMaterializer(instance)
+        materializer = onRoleUpdateMaterializer(instance)
         materializer.materialize()
+
+def _on_member_post_save(sender, instance, created, **kwargs):
+    if kwargs.get('update_fields', None):
+        member = instance
+        fields = kwargs.get('update_fields', [])
+        if fields.count('status') and not member.is_invitation():
+            acls = []
+            for role in member.role_set.all():
+                materializer = OnRoleCreateMaterializer(member, member.get_object())
+                acls.extend(materializer.materialize())
+            saver = MaterializationSaver()
+            saver.save_materialized(acls)
+
 
 def _on_object_post_save(sender, instance, created, **kwargs):
     if created:
@@ -36,7 +50,8 @@ def register_materializers():
     from core.models.card import Card
     post_save.connect(_on_object_post_save, sender=Card)
 
-
+    from core.models.member import Member
+    post_save.connect(_on_object_post_save, sender=Member)
 
 class onRoleUpdateMaterializer(object):
     def __init__(self, role):
@@ -60,13 +75,13 @@ class OnObjectCreateMaterializer(object):
     def materialize(self):
         acls = []
 
-        # materialize parent acls, only in direction up to assure path to object will be available to users
+        # materialize parent roles, only in direction up to assure path to object will be available to users
         roles = self.find_parent_roles();
         for role in roles:
             materializer = OnRoleCreateMaterializer(role, role.get_object())
             acls.extend(materializer.materialize(AclDirectionField.DIR_UP))
 
-        # materialize roles to object and its children
+        # materialize parent roles to current object and its children
         for role in roles:
             materializer = OnRoleCreateMaterializer(role, self.object)
             acls.extend(materializer.materialize(AclDirectionField.DIR_DOWN))
@@ -98,7 +113,7 @@ class OnRoleCreateMaterializer(object):
         if not self.role.member.user:
             raise RuntimeError(''
                                'Acl could be materialized upon conrete '
-                               'member not invited one without user')
+                               'member. Not the invited one without user set')
 
         acl = Acl()
         acl.role = self.role

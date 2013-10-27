@@ -93,7 +93,7 @@ Service.Invitations = Ember.Object.extend({
         for (id in invitations) {
             var invitation = invitations[id];
             promises.push(Utils.RSVPAjax({
-               url: '/api/member/'+id+'/accept/',
+               url: '/api/members/'+id+'/accept/',
                type: 'post',
                data: {
                    hash: invitation.hash

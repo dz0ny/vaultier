@@ -39,8 +39,8 @@ class MemberManager(Manager):
         # user membership does not exists, or it is only invite
         if not existing_member:
             member.user = user
-            member.status = Member.STATUS_NON_APPROVED_MEMBER
-            member.save()
+            member.status = MemberStatusField.STATUS_NON_APPROVED_MEMBER
+            member.save(update_fields=['status', 'user'])
 
         # membership exists, we need to joind current membership to existing
         # todo: this case is not tested
@@ -48,6 +48,7 @@ class MemberManager(Manager):
             self.join_member(member, existing_member)
             member.delete()
             member = existing_member
+            member.save(update_fields=['status'])
 
         # reload member
         member = Member.objects.get(id=member.id)
@@ -67,7 +68,7 @@ class MemberManager(Manager):
             member.workspace = workspace
             member.user = None
             member.invitation_email = email
-            member.status = u'i'
+            member.status = MemberStatusField.STATUS_INVITED
             member.created_by = user
             member.save()
             if resend:
@@ -91,6 +92,11 @@ class Member(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey('core.User', on_delete=PROTECT, related_name='members_created')
+
+    def is_invitation(self):
+        if self.status == MemberStatusField.STATUS_INVITED:
+            return True
+        return False
 
     def save(self, *args, **kwargs):
         if not self.invitation_hash:

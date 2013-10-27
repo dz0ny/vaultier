@@ -18,7 +18,7 @@ class CardSerializer(ModelSerializer):
 
 class CardViewSet(ModelViewSet):
     """
-    API endpoint that allows workspaces to be viewed or edited.
+    API endpoint that allows cars to be viewed or edited.
     """
     model = Card
     # permission_classes = (IsAuthenticated,)
@@ -31,10 +31,6 @@ class CardViewSet(ModelViewSet):
         return super(CardViewSet, self).pre_save(object)
 
     def get_queryset(self):
-        """
-        Optionally restricts the returned purchases to a given user,
-        by filtering against a `username` query parameter in the URL.
-        """
-        queryset = Card.objects.filter(created_by=self.request.user)
+        queryset = Card.objects.all_acls(self.request.user)
         return queryset
     

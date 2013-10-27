@@ -63,7 +63,7 @@ class MemberAcceptSerializer(Serializer):
             raise ValidationError("Invalid hash")
 
         # only invited members could accept invitation
-        if not self.object.status == Member.STATUS_INVITED:
+        if not self.object.is_invitation():
             raise ValidationError('Invitation already accepted')
 
         return attrs
@@ -82,7 +82,6 @@ class MemberViewSet(CreateModelMixin,
 
     @action(methods=['POST'])
     def accept(self, request, pk=None):
-
         member = self.get_object()
         serializer = MemberAcceptSerializer(instance=member, data=request.DATA, files=request.FILES)
         if serializer.is_valid():
@@ -119,13 +118,13 @@ class MemberViewSet(CreateModelMixin,
         return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
 
 
-def pre_save(self, object):
-    if object.pk is None:
-        object.created_by = self.request.user;
-    return super(MemberViewSet, self).pre_save(object)
+    def pre_save(self, object):
+        if object.pk is None:
+            object.created_by = self.request.user;
+        return super(MemberViewSet, self).pre_save(object)
 
 
-def get_queryset(self):
-    queryset = Member.objects.all()
-    return queryset
+    def get_queryset(self):
+        queryset = Member.objects.all()
+        return queryset
 

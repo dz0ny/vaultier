@@ -19,14 +19,11 @@ class VaultSerializer(ModelSerializer):
 
 class VaultViewSet(ModelViewSet):
     """
-    API endpoint that allows workspaces to be viewed or edited.
+    API endpoint that allows vaults to be viewed or edited.
     """
     model = Vault
     authentication_classes = (TokenAuthentication,)
     serializer_class = VaultSerializer
-
-    # def retrieve(self, request, *args, **kwargs):
-    #     return Response(status=HTTP_403_FORBIDDEN)
 
     def pre_save(self, object):
         if object.pk is None:
@@ -34,10 +31,5 @@ class VaultViewSet(ModelViewSet):
         return super(VaultViewSet, self).pre_save(object)
 
     def get_queryset(self):
-        """
-        Optionally restricts the returned purchases to a given user,
-        by filtering against a `username` query parameter in the URL.
-        """
-        # queryset = Vault.objects.filter(created_by=self.request.user)
-        queryset = Vault.objects.all()
+        queryset = Vault.objects.all_acls(self.request.user)
         return queryset
