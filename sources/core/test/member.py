@@ -1,38 +1,13 @@
-import json
-from django.core.urlresolvers import reverse
-from django.test.testcases import TestCase, TransactionTestCase
+from django.test.testcases import TransactionTestCase
 from django.utils import unittest
 from django.utils.unittest.suite import TestSuite
-from rest_framework.status import HTTP_201_CREATED, HTTP_200_OK, HTTP_403_FORBIDDEN, HTTP_400_BAD_REQUEST
+from rest_framework.status import HTTP_200_OK, HTTP_403_FORBIDDEN
 from core.models.member import Member
 from core.models.member_fields import MemberStatusField
-from core.models.role import Role
-from core.models.workspace import Workspace
-from core.test.auth import register_api_call, auth_api_call
-from core.test.tools import VaultierAPIClient, format_response
-from core.test.workspace import create_workspace_api_call
-
-
-def invite_member_api_call(token, email=None, workspace=None):
-    url = reverse('member-list')
-    client = VaultierAPIClient()
-    client.token(token)
-    response = client.post(url, {'email':email, 'workspace':workspace})
-    return response
-
-def accept_invitation_api_call(token, id=None, hash=None):
-    url = reverse('member-accept', args=(id,))
-    client = VaultierAPIClient()
-    client.token(token)
-    response = client.post(url, {'hash':hash })
-    return response
-
-def list_members_api_call(token, workspace=None):
-    url = reverse('member-list')
-    client = VaultierAPIClient()
-    client.token(token)
-    response = client.get(url, {'workspace': workspace} if workspace is not None else None)
-    return response
+from core.test.auth_tools import auth_api_call, register_api_call
+from core.test.member_tools import invite_member_api_call, accept_invitation_api_call, list_members_api_call
+from core.test.tools import format_response
+from core.test.workspace_tools import create_workspace_api_call
 
 
 class ApiInviteTest(TransactionTestCase):

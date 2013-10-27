@@ -24,7 +24,6 @@ class RoleManager(Manager):
             role.save(disable_merge=True)
             return role
         else:
-            #todo: after level will be migrated to numbers, level would be changed only in case role.level > existing.level
             existing.level = role.level
             existing.member = role.member
             existing.save(disable_merge=True)

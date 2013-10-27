@@ -1,33 +1,12 @@
-from tools import format_response
-from django.core.urlresolvers import reverse
 from django.test.testcases import TestCase, TransactionTestCase
 from django.utils import unittest
 from django.utils.unittest.suite import TestSuite
 from rest_framework.status import HTTP_201_CREATED, HTTP_200_OK, HTTP_403_FORBIDDEN, HTTP_400_BAD_REQUEST
-from rest_framework.test import APIClient
+
+from core.test.auth_tools import auth_api_call, register_api_call
+from tools import format_response
 from core.auth import Backend
 from vaultier.settings import PROJECT_ROOT
-
-
-def auth_api_call(email=None, signature=None):
-    url = reverse('auth-auth')
-    client = APIClient()
-
-    if not signature:
-        privkey = open(PROJECT_ROOT+'/core/test/fixtures/vaultier.key').read()
-        signature = Backend.sign(privkey, email)
-
-    response = client.post(url, {'email': email, 'signature':signature})
-    return response
-
-def register_api_call(*args, **kwargs):
-    pubkey = open(PROJECT_ROOT+'/core/test/fixtures/vaultier.pub', 'r').read()
-    kwargs['public_key'] = pubkey
-
-    url = reverse('auth-user')
-    client = APIClient()
-    response = client.post(url, kwargs)
-    return response
 
 class SignaturesTest(TestCase):
     def test_rsa(self):
