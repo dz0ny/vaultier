@@ -29,7 +29,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
 
     nickname = models.CharField(max_length=255, blank=False, null=False)
-    public_key = models.CharField(max_length=1024, blank=True, null=True)
+    public_key = models.CharField(max_length=1024)
     email = models.CharField(max_length=255, unique=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField('staff status',

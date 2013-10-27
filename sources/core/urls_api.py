@@ -22,7 +22,7 @@ urlpatterns = router.urls
 
 urlpatterns += patterns('',
                         url(r'^test/acl$', TestAcl.as_view()),
-                        url(r'^auth/auth$', AuthView.as_view()),
-                        url(r'^auth/user$', UserView.as_view()),
-                        url(r'^auth/logout$', LogoutView.as_view()),
+                        url(r'^auth/auth$', AuthView.as_view(), name='auth-auth'),
+                        url(r'^auth/user$', UserView.as_view(), name='auth-user'),
+                        url(r'^auth/logout$', LogoutView.as_view(), name='auth-logout'),
 )
