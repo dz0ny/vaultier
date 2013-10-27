@@ -9,6 +9,7 @@
 
 # Ignored folders
 sources/CACHE 
+sources/venv
 
 # Can also ignore all directories and files in a directory.
 .buildpath
