@@ -1,4 +1,3 @@
-from rest_framework.fields import CharField
 from rest_framework.relations import PrimaryKeyRelatedField
 from rest_framework.serializers import ModelSerializer
 from rest_framework.viewsets import ModelViewSet

@@ -11,6 +11,27 @@ class AclManager(Manager):
     def materialize_role(self, role):
         pass
 
+    def has_acl(self, user, level, object):
+        kwargs = {
+            'to_workspace': None,
+            'to_vault':None,
+            'to_card':None,
+            'user':user,
+            'level__gte': level
+        }
+
+        name = type(object).__name__
+        if name=='Workspace':
+            kwargs['to_workspace'] = object
+        elif name=='Vault':
+            kwargs['to_vault'] = object
+        elif name=='Card':
+            kwargs['to_card'] = object
+        else:
+            raise RuntimeError('Usupported ACL object: ' + object.__class__.__name__)
+
+        return self.filter(**kwargs).count() > 0
+
 
 class Acl(models.Model):
     objects = AclManager()

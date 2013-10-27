@@ -17,28 +17,26 @@ class WorkspaceManager(Manager):
             Q(acl__to_workspace=F('id'))
         )
 
-    def create_member_with_workspace(self, sender, instance, created, **kwargs):
-        if created:
+    def create_member_with_workspace(self, workspace):
+        attrs_needed = ['_user', ]
+        if not all(hasattr(workspace, attr) for attr in attrs_needed):
+            raise AttributeError('_user attribute is required to create related membership')
 
-            attrs_needed = ['_user', ]
-            if not all(hasattr(instance, attr) for attr in attrs_needed):
-                raise AttributeError('_user attribute is required to create related membership')
+        m = Member(
+            workspace=workspace,
+            user=workspace._user,
+            status=MemberStatusField.STATUS_MEMBER,
+            created_by=workspace._user
+        )
+        m.save()
 
-            m = Member(
-                workspace=instance,
-                user=instance._user,
-                status=MemberStatusField.STATUS_MEMBER,
-                created_by=instance._user
-            )
-            m.save()
-
-            r = Role(
-                member=m,
-                to_workspace=instance,
-                created_by=instance._user,
-                level=AclLevelField.LEVEL_WRITE
-            )
-            r.save()
+        r = Role(
+            member=m,
+            to_workspace=workspace,
+            created_by=workspace._user,
+            level=AclLevelField.LEVEL_WRITE
+        )
+        r.save()
 
 
 class Workspace(models.Model):
@@ -53,6 +51,8 @@ class Workspace(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-
-post_save.connect(Workspace.objects.create_member_with_workspace, sender=Workspace)
-
+    def save(self, *args, **kwargs):
+        created = self.id == None
+        super(Workspace, self).save(*args, **kwargs)
+        if created:
+            Workspace.objects.create_member_with_workspace(self)

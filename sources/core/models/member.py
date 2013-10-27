@@ -9,6 +9,14 @@ from core.models.member_fields import MemberStatusField
 
 class MemberManager(Manager):
 
+    #from members where member.workspace in (select
+
+    def all_acls(self, user):
+        from core.models.workspace import Workspace
+        workspaces = Workspace.objects.all_acls(user)
+        result = Member.objects.filter(workspace__in=workspaces)
+        return result
+
     def generate_invitation_hash(self):
         #todo: ensure invitation hash is unique
         unique = uuid.uuid4()
@@ -43,7 +51,6 @@ class MemberManager(Manager):
             member.save(update_fields=['status', 'user'])
 
         # membership exists, we need to joind current membership to existing
-        # todo: this case is not tested
         else:
             self.join_member(member, existing_member)
             member.delete()
@@ -56,24 +63,22 @@ class MemberManager(Manager):
         return member
 
 
-    def invite(self, user=None, workspace=None, email=None, send=True, resend=True):
+    def invite(self, member, send=True, resend=True):
         try:
-            member = Member.objects.get(invitation_email=email, workspace=workspace)
+            member = Member.objects.get(invitation_email=member.invitation_email, workspace=member.workspace)
             if send:
                 pass
                 # send invitation here
 
         except Member.DoesNotExist:
-            member = Member()
-            member.workspace = workspace
-            member.user = None
-            member.invitation_email = email
             member.status = MemberStatusField.STATUS_INVITED
-            member.created_by = user
             member.save()
             if resend:
                 pass
                 # send invitation here
+
+        #todo: Member.MultipleObjectsFound
+
         return member
 
 

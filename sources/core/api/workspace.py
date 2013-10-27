@@ -1,4 +1,4 @@
-from rest_framework.fields import WritableField, SerializerMethodField
+from rest_framework.fields import SerializerMethodField
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.serializers import ModelSerializer
 from rest_framework.viewsets import ModelViewSet
