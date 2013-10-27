@@ -58,9 +58,6 @@ class ApiWorkspaceTest(TransactionTestCase):
         #assert no workspace exists
         self.assertEqual(Member.objects.count(), 0)
 
-        #assert no membership exists
-        self.assertEqual(Role.objects.count(), 0)
-
         #assets no role exists
         self.assertEqual(Workspace.objects.count(),0)
 

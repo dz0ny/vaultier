@@ -1,15 +1,19 @@
 from django.core.exceptions import ValidationError
 from rest_framework.decorators import action
+from rest_framework.exceptions import PermissionDenied
 from rest_framework.fields import SerializerMethodField, EmailField, BooleanField, CharField
 from rest_framework.filters import SearchFilter, DjangoFilterBackend
 from rest_framework.mixins import CreateModelMixin, ListModelMixin, RetrieveModelMixin
+from rest_framework.permissions import IsAuthenticated, BasePermission
 from rest_framework.relations import PrimaryKeyRelatedField
 from rest_framework.response import Response
 from rest_framework.serializers import ModelSerializer, Serializer
 from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_200_OK
 from rest_framework.viewsets import GenericViewSet
 from core.auth import TokenAuthentication
+from core.models.acl_fields import AclLevelField
 from core.models.member import Member
+from core.models.role import Role
 from core.models.workspace import Workspace
 
 
@@ -68,6 +72,12 @@ class MemberAcceptSerializer(Serializer):
 
         return attrs
 
+class CanInviteMember(BasePermission):
+    def has_object_permission(self, request, view, obj):
+        raise PermissionDenied(detail="You cannot invite in given workspace")
+        print obj
+        #return Role.objects.has_role(request.user,   AclLevelField.LEVEL_WRITE)
+
 
 class MemberViewSet(CreateModelMixin,
                     ListModelMixin,
@@ -76,6 +86,7 @@ class MemberViewSet(CreateModelMixin,
     model = Member
     serializer_class = MemberSerializer
     authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated, CanInviteMember)
     filter_backends = (SearchFilter, DjangoFilterBackend)
     search_fields = ('invitation_email', 'user__email', 'user__nickname',)
     filter_fields = ('workspace',)
@@ -99,7 +110,7 @@ class MemberViewSet(CreateModelMixin,
 
     def create(self, request, *args, **kwargs):
         serializer = MemberInviteSerializer(data=request.DATA)
-        if serializer.is_valid():
+        if serializer.is_valid() and self.check_object_permissions(self, serializer.object):
             #todo: validate workspace id agaist object level permissions
             #todo: should be in try catch block
             member = Member.objects.invite(
