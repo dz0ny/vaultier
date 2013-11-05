@@ -7,6 +7,9 @@ from core.models.role_fields import RoleLevelField, RoleTypeField
 
 class RoleManager(Manager):
 
+    def has_role_to_object(self, object, user, level):
+        return True
+
     def all_for_user(self, user):
         from core.models.workspace import Workspace
 

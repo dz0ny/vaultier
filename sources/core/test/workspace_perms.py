@@ -12,6 +12,8 @@ from core.test.workspace_tools import create_workspace_api_call, list_workspaces
 
 class ApiWorkspacePermsTest(TransactionTestCase):
 
+    #todo: workspace delete, edit
+
     def test_workspace_anonymous_access(self):
 
         # user has to be authenticated
