@@ -9,33 +9,16 @@ class RoleManager(Manager):
 
     def all_for_user(self, user):
         from core.models.workspace import Workspace
-        from core.models.vault import Vault
-        from core.models.card import Card
 
         # all workspaces user has permission write
         workspaces = Workspace.objects.filter(
             role__member__user=user,
             role__level=RoleLevelField.LEVEL_WRITE
         ).distinct()
-        # roles to workspaces
-        all_roles_to_workspaces = Q(to_workspace__in=workspaces, type=RoleTypeField.TYPE_WORKSPACE)
 
-        #all vaults, where workspace is writable by user
-        vaults = Vault.objects.filter(
-            workspace__in=workspaces
-        )
-        # all roles to vaults
-        all_roles_to_vaults = Q(to_vault__in=vaults, type=RoleTypeField.TYPE_VAULT)
-
-        #all cards of vaults
-        cards = Card.objects.filter(
-            vault__in=vaults
-        )
-        # all roles to vaults
-        all_roles_to_cards = Q(to_card__in=cards, type=RoleTypeField.TYPE_CARD)
-
-        roles = Role.objects.filter(
-            Q(all_roles_to_workspaces | all_roles_to_vaults | all_roles_to_cards)
+        # all roles related to workspaces user has permission to write
+        roles = self.filter(
+            member__workspace__in=workspaces
         )
 
         return roles
