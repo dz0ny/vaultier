@@ -51,8 +51,6 @@ class ApiInviteTest(TransactionTestCase):
         response = invite_member_api_call(user1token, email='jakub@rclick.cz', workspace=workspace2.get('id'))
         self.assertEqual(response.status_code, HTTP_403_FORBIDDEN, format_response(response))
 
-    #todo: def test_listing_of_members_permission
-
     def test_acceptations_membership_merging(self):
 
         # create first user

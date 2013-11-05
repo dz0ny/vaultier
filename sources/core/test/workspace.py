@@ -12,11 +12,7 @@ from core.test.workspace_tools import create_workspace_api_call, delete_workspac
 
 class ApiWorkspaceTest(TransactionTestCase):
 
-    def test(self):
-
-        # user has to be authenticated
-        response = create_workspace_api_call(None, name='Workspace')
-        self.assertEqual(response.status_code,HTTP_403_FORBIDDEN, format_response(response))
+    def test_create_workspace(self):
 
         # create user
         email = 'jan.misek@rclick.cz'
