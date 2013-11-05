@@ -13,7 +13,7 @@ class MemberManager(Manager):
 
     def all_acls(self, user):
         from core.models.workspace import Workspace
-        workspaces = Workspace.objects.all_acls(user)
+        workspaces = Workspace.objects.all_for_user(user)
         result = Member.objects.filter(workspace__in=workspaces)
         return result
 

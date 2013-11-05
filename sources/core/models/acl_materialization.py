@@ -1,7 +1,8 @@
 from django.db.models.signals import post_save
 from core.models import Acl
-from core.models.acl_fields import AclLevelField, AclDirectionField
+from core.models.acl_fields import AclDirectionField
 from core.models.member_fields import MemberStatusField
+from core.models.role_fields import RoleLevelField
 
 
 def _on_role_post_save(sender, instance, created, **kwargs):
@@ -120,7 +121,7 @@ class OnRoleCreateMaterializer(object):
         acl.direction = direction
         acl.user = self.role.member.user
         if direction == AclDirectionField.DIR_UP:
-            acl.level = AclLevelField.LEVEL_READ
+            acl.level = RoleLevelField.LEVEL_READ
         else:
             acl.level = self.role.level
 

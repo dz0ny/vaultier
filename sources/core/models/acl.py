@@ -1,7 +1,8 @@
 from django.db import models
 from django.db.models.deletion import CASCADE
 from django.db.models.manager import Manager
-from core.models.acl_fields import AclLevelField, AclDirectionField
+from core.models.acl_fields import AclDirectionField
+from core.models.role_fields import RoleLevelField
 
 
 class AclManager(Manager):
@@ -40,7 +41,7 @@ class Acl(models.Model):
         db_table = u'vaultier_acl'
         app_label = 'core'
 
-    level = AclLevelField()
+    level = RoleLevelField()
     direction = AclDirectionField()
     role = models.ForeignKey('core.Role', on_delete=CASCADE)
     user = models.ForeignKey('core.User', on_delete=CASCADE)

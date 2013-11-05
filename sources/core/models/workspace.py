@@ -1,21 +1,27 @@
 from django.db import models
 from django.db.models.deletion import PROTECT
 from django.db.models.manager import Manager
-from django.db.models.signals import post_save
-from core.models.acl_fields import AclLevelField
+from django.db.models import F, Q
+
 from core.models.member import Member
 from core.models.member_fields import MemberStatusField
 from core.models.role import Role
-from django.db.models import F, Q
+from core.models.role_fields import RoleLevelField
+from core.tools.tree import TreeItemMixin
 
 
 class WorkspaceManager(Manager):
-    def all_acls(self, user):
-        return self.filter(
-            Q(acl__level=AclLevelField.LEVEL_READ) | Q(acl__level=AclLevelField.LEVEL_WRITE),
-            Q(acl__user=user),
-            Q(acl__to_workspace=F('id'))
-        )
+
+    def all_for_user(self, user):
+        workspaces = self.filter(
+            Q(
+                Q(role__member__user=user) |
+                Q(vault__role__member__user=user) |
+                Q(vault__card__role__member__user=user)
+            )
+        ).distinct()
+
+        return workspaces
 
     def create_member_with_workspace(self, workspace):
         attrs_needed = ['_user', ]
@@ -34,12 +40,12 @@ class WorkspaceManager(Manager):
             member=m,
             to_workspace=workspace,
             created_by=workspace._user,
-            level=AclLevelField.LEVEL_WRITE
+            level=RoleLevelField.LEVEL_WRITE
         )
         r.save()
 
 
-class Workspace(models.Model):
+class Workspace(models.Model, TreeItemMixin):
     class Meta:
         db_table = u'vaultier_workspace'
         app_label = 'core'
@@ -50,6 +56,9 @@ class Workspace(models.Model):
     created_by = models.ForeignKey('core.User', on_delete=PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def get_parent_object(self):
+        return None
 
     def save(self, *args, **kwargs):
         created = self.id == None

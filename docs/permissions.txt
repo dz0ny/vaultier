@@ -1,0 +1,3 @@
+workspace
+- all where user has role read or write
+- all where workspace.vault user has role read or write

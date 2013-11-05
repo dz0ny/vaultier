@@ -3,7 +3,7 @@ from django.db.models.deletion import PROTECT, CASCADE
 from django.db.models.expressions import F
 from django.db.models.manager import Manager
 from django.db.models.query_utils import Q
-from core.models.acl_fields import AclLevelField
+from core.models.role_fields import RoleLevelField
 
 
 class CardManager(Manager):

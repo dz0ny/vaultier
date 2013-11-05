@@ -53,5 +53,5 @@ class WorkspaceViewSet(ModelViewSet):
         return super(WorkspaceViewSet, self).pre_save(object)
 
     def get_queryset(self):
-        queryset = Workspace.objects.all_acls(self.request.user)
+        queryset = Workspace.objects.all_for_user(self.request.user)
         return queryset
