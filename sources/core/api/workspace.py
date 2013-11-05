@@ -1,5 +1,5 @@
 from rest_framework.fields import SerializerMethodField
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, BasePermission
 from rest_framework.serializers import ModelSerializer
 from rest_framework.viewsets import ModelViewSet
 from core.api.member import RelatedMemberSerializer
@@ -7,6 +7,26 @@ from core.api.user import RelatedUserSerializer
 from core.auth import TokenAuthentication
 from core.models import Workspace
 from core.models.member import Member
+from core.models.role import Role
+from core.models.role_fields import RoleLevelField
+
+
+class CanManageWorkspace(BasePermission):
+    def has_object_permission(self, request, view, obj):
+        #due to some bug in rest framework request is ModelViewSet
+        request = view.request
+
+        if not view.action == 'retrieve':
+            level = RoleLevelField.LEVEL_READ
+        else:
+            level = RoleLevelField.LEVEL_WRITE
+
+        if not obj.pk:
+            return True
+        else:
+            role = Role.objects.get_summarized_role_to_object(obj, request.user)
+            result = (role and role.level >= level)
+            return result
 
 class WorkspaceMembershipSerializer(RelatedMemberSerializer):
     class Meta(RelatedMemberSerializer.Meta):
@@ -38,7 +58,7 @@ class WorkspaceViewSet(ModelViewSet):
     """
     model = Workspace
     authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, CanManageWorkspace)
     serializer_class = WorkspaceSerializer
 
     def get_serializer(self, *args, **kwargs):

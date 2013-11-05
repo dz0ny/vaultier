@@ -21,9 +21,6 @@ class Card(models.Model, TreeItemMixin):
         app_label = 'core'
         db_table = u'vaultier_card'
 
-    def get_parent_object(self):
-        return self.vault
-
     objects = CardManager()
 
     name = models.CharField(max_length=255)
@@ -32,3 +29,13 @@ class Card(models.Model, TreeItemMixin):
     created_by = models.ForeignKey('core.User', on_delete=PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def get_parent_object_class(self):
+        from core.models.vault import Vault
+        return Vault
+
+    def get_parent_object_id(self):
+        return self.vault_id
+
+    def get_parent_object(self):
+        return self.vault

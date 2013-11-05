@@ -14,10 +14,10 @@ class CanManageVaultPermission(BasePermission):
     def has_object_permission(self, request, view, obj):
         #update/delete action
         if obj.pk:
-            return Role.objects.has_role_to_object(obj, request.user, RoleLevelField.LEVEL_WRITE )
+            return Role.objects.get_roles_to_object(obj, request.user, RoleLevelField.LEVEL_WRITE )
         #create action
         else:
-           return Role.objects.has_role_to_object(obj.workspace, request.user, RoleLevelField.LEVEL_WRITE )
+           return Role.objects.get_roles_to_object(obj.workspace, request.user, RoleLevelField.LEVEL_WRITE )
 
 class VaultSerializer(ModelSerializer):
     created_by = RelatedUserSerializer(required=False)

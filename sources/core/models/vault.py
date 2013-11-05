@@ -28,5 +28,12 @@ class Vault(models.Model, TreeItemMixin):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def get_parent_object_class(self):
+        from core.models.workspace import Workspace
+        return Workspace
+
+    def get_parent_object_id(self):
+        return self.workspace_id
+
     def get_parent_object(self):
         return self.workspace

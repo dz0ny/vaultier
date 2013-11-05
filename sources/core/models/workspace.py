@@ -57,10 +57,20 @@ class Workspace(models.Model, TreeItemMixin):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def get_parent_object_class(self):
+        return None
+
+    def get_parent_object_id(self):
+        return None
+
     def get_parent_object(self):
         return None
 
     def save(self, *args, **kwargs):
+       #
+       #if not self.slug:
+       #          self.slug = unique_slugify(self, self.name)
+
         created = self.id == None
         super(Workspace, self).save(*args, **kwargs)
         if created:

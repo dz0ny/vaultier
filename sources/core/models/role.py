@@ -3,12 +3,19 @@ from django.db.models.deletion import PROTECT, CASCADE
 from django.db.models.manager import Manager
 from django.db.models.query_utils import Q
 from core.models.role_fields import RoleLevelField, RoleTypeField
+from core.tools.roletools import RoleChecker, RoleSummarizer
 
 
 class RoleManager(Manager):
 
-    def has_role_to_object(self, object, user, level):
-        return True
+    def get_roles_to_object(self, object, user):
+        checker = RoleChecker()
+        return checker.get_roles_and_parent_roles(object, user)
+
+    def get_summarized_role_to_object(self, object, user):
+        roles = self.get_roles_to_object(object, user)
+        summarizer = RoleSummarizer()
+        return summarizer.summarize_roles(roles)
 
     def all_for_user(self, user):
         from core.models.workspace import Workspace
@@ -19,7 +26,7 @@ class RoleManager(Manager):
             role__level=RoleLevelField.LEVEL_WRITE
         ).distinct()
 
-        # all roles related to workspaces user has permission to write
+        # all roles (to_workspace, to_vault, to_card) related to workspaces in which user has permission to write
         roles = self.filter(
             member__workspace__in=workspaces
         )
