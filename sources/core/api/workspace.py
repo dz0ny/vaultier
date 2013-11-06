@@ -16,16 +16,16 @@ class CanManageWorkspace(BasePermission):
         #due to some bug in rest framework request is ModelViewSet
         request = view.request
 
-        if not view.action == 'retrieve':
-            level = RoleLevelField.LEVEL_READ
+        if view.action == 'retrieve' or view.action == 'list' :
+            required_level = RoleLevelField.LEVEL_READ
         else:
-            level = RoleLevelField.LEVEL_WRITE
+            required_level = RoleLevelField.LEVEL_WRITE
 
         if not obj.pk:
             return True
         else:
             role = Role.objects.get_summarized_role_to_object(obj, request.user)
-            result = (role and role.level >= level)
+            result = (role and role.level >= required_level)
             return result
 
 class WorkspaceMembershipSerializer(RelatedMemberSerializer):

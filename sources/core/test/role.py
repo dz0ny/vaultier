@@ -14,6 +14,8 @@ from core.test.workspace_tools import create_workspace_api_call
 
 class ApiRoleTest(TransactionTestCase):
 
+    #todo test edit should not be allowed
+
     def test_permissions_to_manage_roles(self):
         # create first user
         email = 'jan@rclick.cz'

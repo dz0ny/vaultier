@@ -2,14 +2,24 @@ from core.tools.singleton import Singleton
 
 _CACHE = {}
 
+def cache_key(user, cls, id):
+    return str(user.id)+'.'+cls.__name__+'.'+str(id)
+
 def to_cache(user, cls, id, roles):
-    _CACHE[user.id][cls][id] = roles
+    if user and cls and id:
+        key = cache_key(user,cls, id)
+        _CACHE[key] = roles
+    return None
 
 def from_cache(user, cls, id):
-    try:
-        return _CACHE[user.id][cls][id]
-    except:
-        return None
+    if user and cls and id:
+        key = cache_key(user,cls, id)
+        try:
+            return _CACHE[key]
+        except:
+            pass
+
+    return None
 
 class RoleChecker(object):
 
@@ -21,7 +31,7 @@ class RoleChecker(object):
 
         if not cached_roles:
             roles = []
-            for role in object.role_set:
+            for role in object.role_set.all():
                 if (role.member.user == user):
                     roles.append(role)
             return roles
@@ -33,7 +43,7 @@ class RoleChecker(object):
         if (object):
             roles = self.get_roles(object, user)
 
-            cached_roles = from_cache(user, object.get_parent_class(), object.get_parent_id())
+            cached_roles = from_cache(user, object.get_parent_object_class(), object.get_parent_object_id())
             if not cached_roles:
                 parent_object = self.get_parent_object(object, user)
                 parent_roles = self.get_roles_and_parent_roles(parent_object, user)
