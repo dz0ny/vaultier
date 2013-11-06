@@ -1,6 +1,6 @@
 from django.core.urlresolvers import reverse
 from rest_framework.test import APIClient
-from core.auth import Backend
+from core.auth.authentication import Backend
 from vaultier.settings import PROJECT_ROOT
 
 

@@ -57,6 +57,9 @@ class Workspace(models.Model, TreeItemMixin):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __unicode__(self):
+        return 'Workspace('+str(self.id)+'):'+self.name
+
     def get_parent_object_class(self):
         return None
 

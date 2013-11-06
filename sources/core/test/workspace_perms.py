@@ -46,7 +46,7 @@ class ApiWorkspacePermsTest(TransactionTestCase):
         response = delete_workspace_api_call(user2token, workspace1.get('id'))
         self.assertEqual(
             response.status_code,
-            HTTP_404_NOT_FOUND,
+            HTTP_403_FORBIDDEN,
             format_response(response)
         )
 

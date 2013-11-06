@@ -10,7 +10,7 @@ from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_200_OK
 from rest_framework.viewsets import GenericViewSet
 from core.api.perms.member import CanInviteMember
 from core.api.perms.shared import IsAuthenticated
-from core.auth import TokenAuthentication
+from core.auth.authentication import TokenAuthentication
 from core.models.member import Member
 from core.models.workspace import Workspace
 

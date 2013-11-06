@@ -4,7 +4,7 @@ from rest_framework.serializers import ModelSerializer
 from rest_framework.viewsets import ModelViewSet
 from core.api.member import RelatedMemberSerializer
 from core.api.user import RelatedUserSerializer
-from core.auth import TokenAuthentication
+from core.auth.authentication import TokenAuthentication
 from core.models import Workspace
 from core.models.member import Member
 from core.models.role import Role
@@ -73,5 +73,8 @@ class WorkspaceViewSet(ModelViewSet):
         return super(WorkspaceViewSet, self).pre_save(object)
 
     def get_queryset(self):
-        queryset = Workspace.objects.all_for_user(self.request.user)
+        if self.action == 'list':
+            queryset = Workspace.objects.all_for_user(self.request.user)
+        else:
+            queryset = Workspace.objects.all()
         return queryset

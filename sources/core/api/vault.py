@@ -5,7 +5,7 @@ from rest_framework.serializers import ModelSerializer
 from rest_framework.status import HTTP_403_FORBIDDEN
 from rest_framework.viewsets import ModelViewSet
 from core.api.user import RelatedUserSerializer
-from core.auth import TokenAuthentication
+from core.auth.authentication import TokenAuthentication
 from core.models import Vault
 from core.models.role import Role
 from core.models.role_fields import RoleLevelField

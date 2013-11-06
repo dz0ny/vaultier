@@ -2,10 +2,10 @@ from django.test.testcases import TestCase, TransactionTestCase
 from django.utils import unittest
 from django.utils.unittest.suite import TestSuite
 from rest_framework.status import HTTP_201_CREATED, HTTP_200_OK, HTTP_403_FORBIDDEN, HTTP_400_BAD_REQUEST
+from core.auth.authentication import Backend
 
 from core.test.auth_tools import auth_api_call, register_api_call
 from tools import format_response
-from core.auth import Backend
 from vaultier.settings import PROJECT_ROOT
 
 class SignaturesTest(TestCase):

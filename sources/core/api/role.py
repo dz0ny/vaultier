@@ -6,7 +6,7 @@ from core.api.member import RelatedMemberSerializer
 from core.api.perms.role import CanManageRole
 from core.api.perms.shared import IsAuthenticated
 from core.api.user import RelatedUserSerializer
-from core.auth import TokenAuthentication
+from core.auth.authentication import TokenAuthentication
 from core.models.member import Member
 from core.models.role import Role
 

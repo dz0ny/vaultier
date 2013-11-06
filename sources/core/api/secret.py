@@ -4,7 +4,7 @@ from rest_framework.serializers import ModelSerializer
 from rest_framework.status import HTTP_403_FORBIDDEN, HTTP_401_UNAUTHORIZED, HTTP_402_PAYMENT_REQUIRED, HTTP_400_BAD_REQUEST
 from rest_framework.viewsets import ModelViewSet
 from core.api.user import RelatedUserSerializer
-from core.auth import TokenAuthentication
+from core.auth.authentication import TokenAuthentication
 from core.models import Secret
 
 

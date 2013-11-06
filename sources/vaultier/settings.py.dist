@@ -201,4 +201,4 @@ LOGGING = {
 
 AUTH_USER_MODEL = 'core.User'
 
-AUTHENTICATION_BACKENDS = ( 'core.auth.Backend', )
+AUTHENTICATION_BACKENDS = ( 'core.auth.authentication.Backend', )

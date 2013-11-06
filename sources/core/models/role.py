@@ -2,8 +2,9 @@ from django.db import models
 from django.db.models.deletion import PROTECT, CASCADE
 from django.db.models.manager import Manager
 from django.db.models.query_utils import Q
+from core.auth.rolechecker import RoleChecker
+from core.auth.rolesumarizer import RoleSummarizer
 from core.models.role_fields import RoleLevelField, RoleTypeField
-from core.tools.roletools import RoleChecker, RoleSummarizer
 
 
 class RoleManager(Manager):

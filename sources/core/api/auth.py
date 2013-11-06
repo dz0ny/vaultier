@@ -9,7 +9,7 @@ from core.api import ApiException
 from core.api.user import UserSerializer
 from rest_framework.response import Response
 from rest_framework import serializers
-from core.auth import TokenAuthentication
+from core.auth.authentication import TokenAuthentication
 from core.models import Token
 
 
