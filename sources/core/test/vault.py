@@ -7,13 +7,13 @@ from core.models.role import Role
 from core.models.workspace import Workspace
 from core.test.auth_tools import auth_api_call, register_api_call
 from core.test.tools import format_response
-from core.test.vault_tools import create_vault_api_call, delete_vault_api_call
+from core.test.vault_tools import create_vault_api_call, delete_vault_api_call, list_vaults_api_call, retrieve_vault_api_call
 from core.test.workspace_tools import create_workspace_api_call, delete_workspace_api_call
 
 
 class ApiVaultTest(TransactionTestCase):
 
-    def test_create_vault(self):
+    def test_010_create_vault(self):
 
         # create user
         email = 'jan.misek@rclick.cz'
@@ -31,8 +31,7 @@ class ApiVaultTest(TransactionTestCase):
             format_response(response)
         )
 
-
-    def test_delete_vault(self):
+    def test_020_delete_vault(self):
 
         # create user
         email = 'jan.misek@rclick.cz'
@@ -50,6 +49,48 @@ class ApiVaultTest(TransactionTestCase):
         self.assertEqual(
             response.status_code,
             HTTP_204_NO_CONTENT,
+            format_response(response)
+        )
+
+    def test_030_list_vault(self):
+
+        # create user
+        email = 'jan.misek@rclick.cz'
+        register_api_call(email=email, nickname='Misan').data
+        user1token = auth_api_call(email=email).data.get('token')
+
+        # create workspace
+        workspace = create_workspace_api_call(user1token, name='Workspace').data
+
+        #create vault
+        response = create_vault_api_call(user1token, name="vault_in_workspace", workspace=workspace.get('id'))
+
+        #list vaults
+        response = list_vaults_api_call(user1token, workspace=workspace.get('id'))
+        self.assertEqual(
+            response.status_code,
+            HTTP_200_OK,
+            format_response(response)
+        )
+
+    def test_040_retrieve_vault(self):
+
+        # create user
+        email = 'jan.misek@rclick.cz'
+        register_api_call(email=email, nickname='Misan').data
+        user1token = auth_api_call(email=email).data.get('token')
+
+        # create workspace
+        workspace = create_workspace_api_call(user1token, name='Workspace').data
+
+        #create vault
+        vault = create_vault_api_call(user1token, name="vault_in_workspace", workspace=workspace.get('id')).data
+
+        #list vaults
+        response = retrieve_vault_api_call(user1token, vault.get('id'))
+        self.assertEqual(
+            response.status_code,
+            HTTP_200_OK,
             format_response(response)
         )
 

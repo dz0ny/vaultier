@@ -75,6 +75,9 @@ class Role(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey('core.User', on_delete=PROTECT, related_name='roles_created')
 
+    def __unicode__(self):
+        return 'Role('+str(self.id)+'): to:'+str(self.type)+' level:'+str(self.level)
+
     def compute_type(self, force=None):
         if not self.type or force:
             type_set = False
@@ -97,14 +100,16 @@ class Role(models.Model):
                 self.type = RoleTypeField.TYPE_CARD
                 type_set = True
 
+        if not self.type:
+            raise RuntimeError('Role has no associated object')
 
     def get_object(self):
         self.compute_type()
         if self.type == RoleTypeField.TYPE_WORKSPACE:
             return self.to_workspace
-        if self == RoleTypeField.TYPE_VAULT:
+        if self.type == RoleTypeField.TYPE_VAULT:
             return self.to_vault
-        if self == RoleTypeField.TYPE_CARD:
+        if self.type == RoleTypeField.TYPE_CARD:
             return self.to_card
 
         raise RuntimeError('Role has no associated object')

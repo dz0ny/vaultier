@@ -12,6 +12,8 @@ from core.test.workspace_tools import create_workspace_api_call, delete_workspac
 
 class ApiWorkspaceTest(TransactionTestCase):
 
+    #todo: create, edit
+
     def test_create_workspace(self):
 
         # create user

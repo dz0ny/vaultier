@@ -11,13 +11,31 @@ from core.models.role import Role
 from core.models.role_fields import RoleLevelField
 
 class CanManageVaultPermission(BasePermission):
+
     def has_object_permission(self, request, view, obj):
-        #update/delete action
-        if obj.pk:
-            return Role.objects.get_roles_to_object(obj, request.user, RoleLevelField.LEVEL_WRITE )
-        #create action
+        #due to some bug in rest framework request is ModelViewSet
+        request = view.request
+
+        if view.action == 'retrieve' or view.action == 'list' :
+            result = True
+
+            role = Role.objects.get_summarized_role_to_object(obj, request.user)
+            result = result and (role and role.level >= RoleLevelField.LEVEL_READ)
+
+            return result
         else:
-           return Role.objects.get_roles_to_object(obj.workspace, request.user, RoleLevelField.LEVEL_WRITE )
+            result = True
+
+            # check permission to vault
+            role = Role.objects.get_summarized_role_to_object(obj, request.user)
+            result = result and (role and role.level >= RoleLevelField.LEVEL_WRITE)
+
+            # check permission to workspace
+            role = Role.objects.get_summarized_role_to_object(obj.workspace, request.user)
+            result = result and (role and role.level >= RoleLevelField.LEVEL_WRITE)
+
+            return result
+
 
 class VaultSerializer(ModelSerializer):
     created_by = RelatedUserSerializer(required=False)
@@ -43,5 +61,8 @@ class VaultViewSet(ModelViewSet):
         return super(VaultViewSet, self).pre_save(object)
 
     def get_queryset(self):
-        queryset = Vault.objects.all_acls(self.request.user)
+        if self.action == 'list':
+            queryset = Vault.objects.all_acls(self.request.user)
+        else:
+            queryset = Vault.objects.all()
         return queryset
