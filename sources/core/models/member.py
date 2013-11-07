@@ -3,9 +3,8 @@ from django.db.models.deletion import PROTECT, CASCADE
 from django.db.models.manager import Manager
 import hmac
 import uuid
-from web.session import sha1
 from core.models.member_fields import MemberStatusField
-
+from hashlib import sha1
 
 class MemberManager(Manager):
 
@@ -19,6 +18,7 @@ class MemberManager(Manager):
 
     def generate_invitation_hash(self):
         #todo: ensure invitation hash is unique
+
         unique = uuid.uuid4()
         return hmac.new(unique.bytes, digestmod=sha1).hexdigest()
 
