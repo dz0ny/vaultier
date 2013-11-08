@@ -1,5 +1,9 @@
+# for production
 sudo apt-get install postgresql postgresql-contrib
-sudo apt-get install mysql-server
-sudo apt-get install libmysqlclient-dev
 sudo apt-get install python
 sudo apt-get install python-dev
+
+# for development and testing
+sudo apt-get install mysql-server
+sudo apt-get install libmysqlclient-dev
+apt-get install sqlite3 libsqlite3-dev

@@ -12,7 +12,7 @@ from core.models.member import Member
 from core.models.role import Role
 
 class RoleSerializer(ModelSerializer):
-    created_by = RelatedUserSerializer(required=False, read_only=True)
+    created_by = RelatedNestedField(serializer=RelatedUserSerializer,required=False, read_only=True)
     member = RelatedNestedField(required=True, serializer=RelatedMemberSerializer, queryset=Member.objects.all())
     to_workspace = PrimaryKeyRelatedField(required=False)
     to_vault = PrimaryKeyRelatedField(required=False)

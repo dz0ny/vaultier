@@ -5,6 +5,7 @@ from django.db.models.query_utils import Q
 from core.auth.rolechecker import RoleChecker
 from core.auth.rolesumarizer import RoleSummarizer
 from core.models.role_fields import RoleLevelField, RoleTypeField
+from core.tools.changes import ChangesMixin
 
 
 class RoleManager(Manager):
@@ -58,7 +59,7 @@ class RoleManager(Manager):
             return existing
 
 
-class Role(models.Model):
+class Role(ChangesMixin,  models.Model):
     class Meta:
         db_table = u'vaultier_role'
         app_label = 'core'
