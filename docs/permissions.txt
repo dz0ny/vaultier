@@ -1,3 +1,12 @@
-workspace
-- all where user has role read or write
-- all where workspace.vault user has role read or write
+role created:
+    materialize role acls
+
+role updated and (level changed or member changed):
+    update acls user
+    update acls level
+
+role deleted:
+    handled by cascade
+
+object created:
+    clone all parent acls

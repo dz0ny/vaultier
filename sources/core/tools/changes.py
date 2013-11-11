@@ -9,8 +9,10 @@ and changes have been recorded.
 
 from django.db.models import signals
 
-SAVE = 0
-DELETE = 1
+CREATE = 0
+INSERT = 1
+UPDATE = 2
+DELETE = 3
 
 
 class ChangesMixin(object):
@@ -72,7 +74,7 @@ class ChangesMixin(object):
         super(ChangesMixin, self).__init__(*args, **kwargs)
 
         self._states = []
-        self._save_state(new_instance=True)
+        self._save_state(new_instance=True, event_type=CREATE)
 
         signals.post_save.connect(
             _post_save, sender=self.__class__,
@@ -83,7 +85,7 @@ class ChangesMixin(object):
             dispatch_uid='django-changes-%s' % self.__class__.__name__
         )
 
-    def _save_state(self, new_instance=False, event_type='save'):
+    def _save_state(self, new_instance=False, event_type=INSERT):
         # Pipe the pk on deletes so that a correct snapshot of the current
         # state can be taken.
         if event_type == DELETE:
@@ -100,7 +102,7 @@ class ChangesMixin(object):
 
         # Send post_change signal unless this is a new instance
         if not new_instance:
-            post_change.send(sender=self.__class__, instance=self)
+            post_change.send(sender=self.__class__, instance=self, event_type=event_type)
 
     def current_state(self):
         """
@@ -215,7 +217,11 @@ class ChangesMixin(object):
 
 
 def _post_save(sender, instance, **kwargs):
-    instance._save_state(new_instance=False, event_type=SAVE)
+    if kwargs.get('created'):
+        event_type = INSERT
+    else:
+        event_type = UPDATE
+    instance._save_state(new_instance=False, event_type=event_type)
 
 
 def _post_delete(sender, instance, **kwargs):

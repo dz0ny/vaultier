@@ -4,14 +4,17 @@ from django.utils.unittest.suite import TestSuite
 from rest_framework.status import HTTP_201_CREATED, HTTP_403_FORBIDDEN, HTTP_200_OK, HTTP_204_NO_CONTENT
 from core.models.member import Member
 from core.models.role import Role
+from core.models.role_fields import RoleLevelField
 from core.models.workspace import Workspace
 from core.test.auth_tools import auth_api_call, register_api_call
 from core.test.tools import format_response
 from core.test.vault_tools import create_vault_api_call, delete_vault_api_call, list_vaults_api_call, retrieve_vault_api_call
 from core.test.workspace_tools import create_workspace_api_call, delete_workspace_api_call
+from core.tools.changes import post_change
 
 
 class ApiVaultTest(TransactionTestCase):
+
 
     def test_010_create_vault(self):
 
