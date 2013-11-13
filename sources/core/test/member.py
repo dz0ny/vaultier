@@ -12,7 +12,7 @@ from core.test.workspace_tools import create_workspace_api_call
 
 class ApiInviteTest(TransactionTestCase):
 
-    def test_invitations_permissions_to_workspace(self):
+    def test_010_invitations_permissions_to_workspace(self):
 
         # create first user
         email = 'jan@rclick.cz'
@@ -51,7 +51,7 @@ class ApiInviteTest(TransactionTestCase):
         response = invite_member_api_call(user1token, email='jakub@rclick.cz', workspace=workspace2.get('id'))
         self.assertEqual(response.status_code, HTTP_403_FORBIDDEN, format_response(response))
 
-    def test_acceptations_membership_merging(self):
+    def test_020_acceptations_membership_merging(self):
 
         # create first user
         email = 'jan@rclick.cz'

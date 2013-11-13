@@ -17,7 +17,7 @@ from core.models.workspace import Workspace
 class AclTest(TransactionTestCase):
 
 
-    def test_01_create_role(self):
+    def test_010_create_role(self):
         u = User()
         u.email = 'misan'
         u.save()
@@ -78,7 +78,7 @@ class AclTest(TransactionTestCase):
         self.assertEquals(v.acl_set.all().count(), 1)
         self.assertEquals(v.acl_set.all()[0].level,RoleLevelField.LEVEL_WRITE)
 
-    def test_02_invited_member(self):
+    def test_020_invited_member(self):
         u = User()
         u.email = 'misan'
         u.save()
@@ -107,7 +107,7 @@ class AclTest(TransactionTestCase):
         # 0 acls should be in db, because no materialization should happen on invited member
         self.assertEquals(Acl.objects.all().count(),0)
 
-    def test_03_invited_member_become_regular(self):
+    def test_030_invited_member_become_regular(self):
         u = User()
         u.email = 'misan'
         u.save()
@@ -139,7 +139,7 @@ class AclTest(TransactionTestCase):
         # 1 acls should be in db, because materialization should happen on regular member
         self.assertEquals(Acl.objects.all().count(),1)
 
-    def test_04_members_are_joined(self):
+    def test_040_members_are_joined(self):
         u1 = User()
         u1.email = 'u1'
         u1.save()
@@ -185,7 +185,7 @@ class AclTest(TransactionTestCase):
         self.assertEquals(Acl.objects.all()[0].user, m2.user )
 
 
-    def test_05_update_role(self):
+    def test_050_update_role(self):
         u = User()
         u.email = 'misan'
         u.save()
@@ -249,7 +249,7 @@ class AclTest(TransactionTestCase):
         self.assertEquals(v.acl_set.all().count(), 1)
         self.assertEquals(v.acl_set.all()[0].level,RoleLevelField.LEVEL_WRITE)
 
-    def test_06_create_object(self):
+    def test_060_create_object(self):
         u = User()
         u.email = 'misan'
         u.save()
@@ -279,6 +279,41 @@ class AclTest(TransactionTestCase):
 
         acl = Acl.objects.exclude(id=workspace_acl.id)[0]
         self.assertEquals(acl.level, RoleLevelField.LEVEL_WRITE)
+
+    def test_070_delete_object_or_role(self):
+        u = User()
+        u.email = 'misan'
+        u.save()
+
+        w = Workspace()
+        w._user = u
+        w.name = 'workspace'
+        w.created_by = u
+        w.save()
+
+        v = Vault()
+        v._user = u
+        v.name = 'vault'
+        v.workspace = w
+        v.created_by = u
+        v.save()
+
+        # there should be two acls
+        self.assertEquals(Acl.objects.count(), 2);
+
+        v.delete()
+
+        # there should be one acls
+        self.assertEquals(Acl.objects.count(), 1);
+
+        # there should be one role
+        self.assertEquals(Role.objects.count(), 1);
+
+        Role.objects.all().delete()
+
+        # there should be no acls
+        self.assertEquals(Acl.objects.count(), 0);
+
 
 
 def acl_suite():

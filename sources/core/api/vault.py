@@ -9,6 +9,8 @@ from core.auth.authentication import TokenAuthentication
 from core.models import Vault
 from core.models.role import Role
 from core.models.role_fields import RoleLevelField
+from core.perms.check import has_object_acl
+
 
 class CanManageVaultPermission(BasePermission):
 
@@ -17,22 +19,18 @@ class CanManageVaultPermission(BasePermission):
         request = view.request
 
         if view.action == 'retrieve' or view.action == 'list' :
-            result = True
 
-            role = Role.objects.get_summarized_role_to_object(obj, request.user)
-            result = result and (role and role.level >= RoleLevelField.LEVEL_READ)
+            result = has_object_acl(request.user, obj, RoleLevelField.LEVEL_READ)
 
             return result
         else:
             result = True
 
             # check permission to vault
-            role = Role.objects.get_summarized_role_to_object(obj, request.user)
-            result = result and (role and role.level >= RoleLevelField.LEVEL_WRITE)
+            result = result and has_object_acl(request.user, obj, RoleLevelField.LEVEL_WRITE)
 
             # check permission to workspace
-            role = Role.objects.get_summarized_role_to_object(obj.workspace, request.user)
-            result = result and (role and role.level >= RoleLevelField.LEVEL_WRITE)
+            result = result and has_object_acl(request.user, obj.workspace, RoleLevelField.LEVEL_WRITE)
 
             return result
 

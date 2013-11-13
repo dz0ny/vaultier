@@ -9,12 +9,11 @@ from core.models import Workspace
 from core.models.member import Member
 from core.models.role import Role
 from core.models.role_fields import RoleLevelField
+from core.perms.check import has_object_acl
 
 
 class CanManageWorkspace(BasePermission):
     def has_object_permission(self, request, view, obj):
-        #due to some bug in rest framework request is ModelViewSet
-        request = view.request
 
         if view.action == 'retrieve' or view.action == 'list' :
             required_level = RoleLevelField.LEVEL_READ
@@ -24,9 +23,7 @@ class CanManageWorkspace(BasePermission):
         if not obj.pk:
             return True
         else:
-            role = Role.objects.get_summarized_role_to_object(obj, request.user)
-            result = (role and role.level >= required_level)
-            return result
+            return has_object_acl(request.user, obj, required_level)
 
 class WorkspaceMembershipSerializer(RelatedMemberSerializer):
     class Meta(RelatedMemberSerializer.Meta):

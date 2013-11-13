@@ -21,7 +21,7 @@ class SignaturesTest(TestCase):
 
 class ApiRegisterTest(TransactionTestCase):
 
-    def test_register(self):
+    def test_010_register(self):
 
         # register user
         email = email='jan.misek@rclick.cz'
@@ -35,6 +35,13 @@ class ApiRegisterTest(TransactionTestCase):
         self.assertEqual(response.status_code, HTTP_400_BAD_REQUEST, msg=format_response(response))
 
 
+    def test_020_auth(self):
+         # register user
+        email = email='jan.misek@rclick.cz'
+        response = register_api_call(email=email, nickname='Misan')
+        self.id = response.data.get('id')
+        self.assertEqual(response.status_code, HTTP_201_CREATED, msg=format_response(response))
+
         # try to login, check proper signature
         response = auth_api_call(email=email)
         self.assertEqual(response.status_code, HTTP_200_OK, msg=format_response(response))
@@ -42,7 +49,6 @@ class ApiRegisterTest(TransactionTestCase):
         # try to login, check wrong signature
         response = auth_api_call(email=email, signature='WrongSignature')
         self.assertEqual(response.status_code, HTTP_403_FORBIDDEN, msg=format_response(response))
-
 
 def auth_suite():
     suite = TestSuite()

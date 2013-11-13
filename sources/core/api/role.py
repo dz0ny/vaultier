@@ -1,15 +1,26 @@
-from django.core.exceptions import ValidationError
+from rest_framework.permissions import BasePermission
 from rest_framework.relations import PrimaryKeyRelatedField
 from rest_framework.serializers import ModelSerializer, NestedValidationError,ValidationError
 from rest_framework.viewsets import ModelViewSet
 from core.api.fields.relations import RelatedNestedField
 from core.api.member import RelatedMemberSerializer
-from core.api.perms.role import CanManageRole
 from core.api.perms.shared import IsAuthenticated
 from core.api.user import RelatedUserSerializer
 from core.auth.authentication import TokenAuthentication
+from core.models import Role
 from core.models.member import Member
 from core.models.role import Role
+from core.models.role_fields import RoleLevelField
+from core.perms.check import has_object_acl
+
+
+class CanManageRolePermission(BasePermission):
+    def has_object_permission(self, request, view, role):
+
+        workspace = role.get_object().get_root_object()
+        result = has_object_acl(request.user, workspace, RoleLevelField.LEVEL_WRITE)
+
+        return result
 
 class RoleSerializer(ModelSerializer):
     created_by = RelatedNestedField(serializer=RelatedUserSerializer,required=False, read_only=True)
@@ -60,7 +71,7 @@ class RoleUpdateSerializer(RoleSerializer):
 class RoleViewSet(ModelViewSet):
     model = Role
     authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated, CanManageRole )
+    permission_classes = (IsAuthenticated, CanManageRolePermission )
     filter_fields = ('to_workspace', 'to_vault', 'to_card', 'level',)
     serializer_class = RoleSerializer
 
@@ -79,4 +90,3 @@ class RoleViewSet(ModelViewSet):
     def get_queryset(self):
         queryset = Role.objects.all_for_user(self.request.user)
         return queryset
-

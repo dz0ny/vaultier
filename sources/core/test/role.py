@@ -2,6 +2,7 @@ from django.test.testcases import TransactionTestCase
 from django.utils import unittest
 from django.utils.unittest.suite import TestSuite
 from rest_framework.status import HTTP_200_OK, HTTP_403_FORBIDDEN, HTTP_201_CREATED, HTTP_400_BAD_REQUEST
+from core.models.acl import Acl
 from core.models.member import Member
 from core.models.role import Role
 from core.models.role_fields import RoleLevelField

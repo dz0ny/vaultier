@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models.deletion import PROTECT
 from django.db.models.manager import Manager
 from django.db.models import F, Q
+from core.models.acl import Acl
 
 from core.models.member import Member
 from core.models.member_fields import MemberStatusField
@@ -15,12 +16,10 @@ class WorkspaceManager(Manager):
 
     def all_for_user(self, user):
         workspaces = self.filter(
-            Q(
-                Q(role__member__user=user) |
-                Q(vault__role__member__user=user) |
-                Q(vault__card__role__member__user=user)
-            )
+            acl__user=user
         ).distinct()
+
+        acl = list(Acl.objects.all())
 
         return workspaces
 

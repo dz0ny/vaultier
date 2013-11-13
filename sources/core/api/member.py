@@ -3,17 +3,27 @@ from rest_framework.decorators import action
 from rest_framework.fields import SerializerMethodField, EmailField, BooleanField, CharField
 from rest_framework.filters import SearchFilter, DjangoFilterBackend
 from rest_framework.mixins import CreateModelMixin, ListModelMixin, RetrieveModelMixin
+from rest_framework.permissions import BasePermission
 from rest_framework.relations import PrimaryKeyRelatedField
 from rest_framework.response import Response
 from rest_framework.serializers import ModelSerializer, Serializer
 from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_200_OK
 from rest_framework.viewsets import GenericViewSet
-from core.api.perms.member import CanInviteMember
 from core.api.perms.shared import IsAuthenticated
 from core.auth.authentication import TokenAuthentication
 from core.models.member import Member
+from core.models.role_fields import RoleLevelField
 from core.models.workspace import Workspace
+from core.perms.check import has_object_acl
 
+
+class CanManageMemberPermission(BasePermission):
+    def has_object_permission(self, request, view, obj):
+
+        workspace = obj.workspace
+        result = has_object_acl(request.user, workspace, RoleLevelField.LEVEL_WRITE)
+
+        return result
 
 class MemberSerializer(ModelSerializer):
     email = SerializerMethodField('get_email')
@@ -77,14 +87,10 @@ class MemberViewSet(CreateModelMixin,
     model = Member
     serializer_class = MemberSerializer
     authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, )
     filter_backends = (SearchFilter, DjangoFilterBackend)
     search_fields = ('invitation_email', 'user__email', 'user__nickname',)
     filter_fields = ('workspace',)
-
-    @action(methods=['GET'])
-    def test(self, request):
-        return Response(status=200)
 
     @action(methods=['POST'])
     def accept(self, request, pk=None):
@@ -103,7 +109,7 @@ class MemberViewSet(CreateModelMixin,
             )
 
     def invite(self, request, *args, **kwargs):
-        self.permission_classes = self.permission_classes + (CanInviteMember,)
+        self.permission_classes = self.permission_classes + (CanManageMemberPermission,)
         serializer = MemberInviteSerializer(data=request.DATA)
         if serializer.is_valid():
             member = Member(
@@ -112,7 +118,7 @@ class MemberViewSet(CreateModelMixin,
                 created_by=request.user
             )
 
-            self.check_object_permissions(self, member)
+            self.check_object_permissions(request, member)
 
             member = Member.objects.invite(
                 member,

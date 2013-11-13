@@ -21,126 +21,85 @@ from core.tools.changes import post_change
 class ApiVaultPermsTest(TransactionTestCase):
 
 
-    def test_changed(self):
+    def test_000_vault_anonymous_access(self):
+        response = create_vault_api_call(None, name="vault_in_workspace", workspace=None)
+        self.assertEqual(
+           response.status_code,
+           HTTP_403_FORBIDDEN,
+           format_response(response)
+        )
 
-        def on_change(*args, **kwargs):
-            role = kwargs.get('instance')
-            print kwargs.get('event_type')
-            print role.previous_changes()
+    def test_010_create_vault_in_workspace_without_acl_to_workspace(self):
 
-        post_change.connect(on_change, sender=Role);
+        # create user1
+        email = 'jan@rclick.cz'
+        register_api_call(email=email, nickname='Jan').data
+        user1token = auth_api_call(email=email).data.get('token')
 
-        #post_save.connect(on_change, sender=Role)
+        # create user2
+        email = 'marcel@rclick.cz'
+        register_api_call(email=email, nickname='Marcel').data
+        user2token = auth_api_call(email=email).data.get('token')
 
+        # create workspace for user1
+        workspace1 = create_workspace_api_call(user1token, name='Workspace').data
 
-        u = User()
-        u.email = 'misan'
-        u.save()
+        # user2 tries to create vault in workspace of user 2 which he has no access to
+        response = create_vault_api_call(user2token, name="vault_in_workspace", workspace=workspace1.get('id'))
+        self.assertEqual(
+           response.status_code,
+           HTTP_403_FORBIDDEN,
+           format_response(response)
+        )
 
+    def test_020_create_vault_and_and_check_permissions(self):
+        # create user1
+        email = 'jan@rclick.cz'
+        user1 = register_api_call(email=email, nickname='Jan').data
+        user1token = auth_api_call(email=email).data.get('token')
 
-        w = Workspace()
-        w._user = u
-        w.name = 'workspace'
-        w.created_by = u
-        w.save()
+        # create user2
+        email = 'marcel@rclick.cz'
+        user2 = register_api_call(email=email, nickname='Marcel').data
+        user2token = auth_api_call(email=email).data.get('token')
 
+        # create workspace for user1
+        workspace1 = create_workspace_api_call(user1token, name='Workspace').data
 
-        m = Member()
-        m.user = u
-        m.workspace = w
-        m.created_by = u
-        m.save()
+        # create vault
+        vault1 = create_vault_api_call(user1token, name="vault_in_workspace", workspace=workspace1.get('id')).data
 
-        role = Role()
-        role.level = RoleLevelField.LEVEL_WRITE
-        role.created_by = u
-        role.to_workspace = w
-        role.member = m
-        role.save()
+        #user1 invites user and grant to user role READ to vault1
+        user2member = invite_member_api_call(user1token, email=user2.get('email'), workspace=workspace1.get('id')).data
+        user2hash = Member.objects.get(pk=user2member.get('id')).invitation_hash
+        user2accepted = accept_invitation_api_call(user2token, id=user2member.get('id'), hash=user2hash)
+        user2role = create_role_api_call(user1token, member=user2member.get('id'), to_vault=vault1.get('id'), level=RoleLevelField.LEVEL_READ)
 
-        role = Role.objects.get(pk=1)
-        role.level = 600
-        role.save()
+        #user2 tries to read vault, should be allowed
+        response = retrieve_vault_api_call(user2token, vault1.get('id'))
+        self.assertEqual(
+           response.status_code,
+           HTTP_200_OK,
+           format_response(response)
+        )
 
-        role.level = RoleLevelField.LEVEL_READ
-        role.save()
+        #user2 tries to edit vault, should be forbidden
 
-        role.delete()
+        #user2 tries to list workspace of vault1, should be allowed
+        response =  list_workspaces_api_call(user2token)
+        self.assertEqual(
+           len(response.data),
+           1,
+           format_response(response)
+        )
 
-
-    #def test_000_workspace_anonymous_access(self):
-    #    response = create_vault_api_call(None, name="vault_in_workspace", workspace=None)
-    #    self.assertEqual(
-    #       response.status_code,
-    #       HTTP_403_FORBIDDEN,
-    #       format_response(response)
-    #    )
-    #
-    #def test_010_create_vault_in_workspace_without_role(self):
-    #
-    #    # create user1
-    #    email = 'jan@rclick.cz'
-    #    register_api_call(email=email, nickname='Jan').data
-    #    user1token = auth_api_call(email=email).data.get('token')
-    #
-    #    # create user2
-    #    email = 'marcel@rclick.cz'
-    #    register_api_call(email=email, nickname='Marcel').data
-    #    user2token = auth_api_call(email=email).data.get('token')
-    #
-    #    # create workspace for user1
-    #    workspace1 = create_workspace_api_call(user1token, name='Workspace').data
-    #
-    #    # user2 tries to create vault in workspace of user 2 which he has no access to
-    #    response = create_vault_api_call(user2token, name="vault_in_workspace", workspace=workspace1.get('id'))
-    #    self.assertEqual(
-    #       response.status_code,
-    #       HTTP_403_FORBIDDEN,
-    #       format_response(response)
-    #    )
-
-    #def test_020_create_vault_and_and_check_permissions(self):
-    #    # create user1
-    #    email = 'jan@rclick.cz'
-    #    user1 = register_api_call(email=email, nickname='Jan').data
-    #    user1token = auth_api_call(email=email).data.get('token')
-    #
-    #    # create user2
-    #    email = 'marcel@rclick.cz'
-    #    user2 = register_api_call(email=email, nickname='Marcel').data
-    #    user2token = auth_api_call(email=email).data.get('token')
-    #
-    #    # create workspace for user1
-    #    workspace1 = create_workspace_api_call(user1token, name='Workspace').data
-    #
-    #    # create vault
-    #    vault1 = create_vault_api_call(user1token, name="vault_in_workspace", workspace=workspace1.get('id')).data
-    #
-    #    #user1 invites user and grant to user role READ to vault1
-    #    user2member = invite_member_api_call(user1token, email=user2.get('email'), workspace=workspace1.get('id')).data
-    #    user2hash = Member.objects.get(pk=user2member.get('id')).invitation_hash
-    #    user2accepted = accept_invitation_api_call(user2token, id=user2member.get('id'), hash=user2hash)
-    #    user2role = create_role_api_call(user1token, member=user2member.get('id'), to_vault=vault1.get('id'), level=RoleLevelField.LEVEL_READ)
-    #
-    #    #user2 tries to read vault, should be allowed
-    #    response = retrieve_vault_api_call(user2token, vault1.get('id'))
-    #    self.assertEqual(
-    #       response.status_code,
-    #       HTTP_200_OK,
-    #       format_response(response)
-    #    )
-    #
-    #    #user2 tries to list workspace of vault1, should be allowed
-    #    response =  list_workspaces_api_call(user2token)
-    #    self.assertEqual(
-    #       len(response.data),
-    #       1,
-    #       format_response(response)
-    #    )
-    #
-    #    #user2 tries to delete workspace of vault1, should be forbidden
-
-
+        #user2 tries to delete workspace of vault1, should be forbidden
+        response = delete_workspace_api_call(user2token, vault1.get('workspace'))
+        self.assertEqual(
+           response.status_code,
+           HTTP_403_FORBIDDEN,
+           format_response(response)
+        )
 
 
 

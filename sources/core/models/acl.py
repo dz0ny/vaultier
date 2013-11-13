@@ -7,32 +7,33 @@ from core.models.object_reference import ObjectReference, ObjectReferenceTypeFie
 
 
 class AclManager(Manager):
-    def materialize_user(self, user):
-        pass
+    pass
+    #def materialize_user(self, user):
+    #    pass
+    #
+    #def materialize_role(self, role):
+    #    pass
 
-    def materialize_role(self, role):
-        pass
-
-    def has_acl(self, user, level, object):
-        kwargs = {
-            'to_workspace': None,
-            'to_vault': None,
-            'to_card': None,
-            'user': user,
-            'level__gte': level
-        }
-
-        name = type(object).__name__
-        if name == 'Workspace':
-            kwargs['to_workspace'] = object
-        elif name == 'Vault':
-            kwargs['to_vault'] = object
-        elif name == 'Card':
-            kwargs['to_card'] = object
-        else:
-            raise RuntimeError('Usupported ACL object: ' + object.__class__.__name__)
-
-        return self.filter(**kwargs).count() > 0
+    #def has_acl(self, user, level, object):
+    #    kwargs = {
+    #        'to_workspace': None,
+    #        'to_vault': None,
+    #        'to_card': None,
+    #        'user': user,
+    #        'level__gte': level
+    #    }
+    #
+    #    name = type(object).__name__
+    #    if name == 'Workspace':
+    #        kwargs['to_workspace'] = object
+    #    elif name == 'Vault':
+    #        kwargs['to_vault'] = object
+    #    elif name == 'Card':
+    #        kwargs['to_card'] = object
+    #    else:
+    #        raise RuntimeError('Usupported ACL object: ' + object.__class__.__name__)
+    #
+    #    return self.filter(**kwargs).count() > 0
 
 
 class Acl(ObjectReference,models.Model):
@@ -52,3 +53,5 @@ class Acl(ObjectReference,models.Model):
     role = models.ForeignKey('core.Role', on_delete=CASCADE)
     user = models.ForeignKey('core.User', on_delete=CASCADE)
 
+    def __unicode__(self):
+        return 'Acl(' + str(self.id) + '): to:' + str(self.type) + ' level:' + str(self.level) + ' user: '+str(self.user)

@@ -3,6 +3,7 @@ from django.db.models.deletion import PROTECT, CASCADE
 from django.db.models.manager import Manager
 from core.auth.rolechecker import RoleChecker
 from core.auth.rolesumarizer import RoleSummarizer
+from core.models.acl import Acl
 from core.models.role_fields import RoleLevelField
 from core.models.object_reference import ObjectReference, ObjectReferenceTypeField
 from core.tools.changes import ChangesMixin
@@ -21,10 +22,11 @@ class RoleManager(Manager):
     def all_for_user(self, user):
         from core.models.workspace import Workspace
 
+
         # all workspaces user has permission write
         workspaces = Workspace.objects.filter(
-            role__member__user=user,
-            role__level=RoleLevelField.LEVEL_WRITE
+            acl__level = RoleLevelField.LEVEL_WRITE,
+            acl__user = user
         ).distinct()
 
         # all roles (to_workspace, to_vault, to_card) related to workspaces in which user has permission to write

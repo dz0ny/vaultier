@@ -15,7 +15,19 @@ class ApiWorkspacePermsTest(TransactionTestCase):
 
     #todo: workspace edit
 
-    def test_workspace_delete_permissions(self):
+
+
+    def test_000_workspace_anonymous_access(self):
+
+        # user has to be authenticated
+        response = create_workspace_api_call(None, name='Workspace')
+        self.assertEqual(response.status_code,HTTP_403_FORBIDDEN, format_response(response))
+
+        # user has to be authenticated
+        response = list_workspaces_api_call (None)
+        self.assertEqual(response.status_code,HTTP_403_FORBIDDEN, format_response(response))
+
+    def test_010_workspace_delete_permissions(self):
         # create first user
         email = 'jan@rclick.cz'
         user1 = register_api_call(email=email, nickname='jan').data
@@ -74,18 +86,7 @@ class ApiWorkspacePermsTest(TransactionTestCase):
         )
 
 
-
-    def test_workspace_anonymous_access(self):
-
-        # user has to be authenticated
-        response = create_workspace_api_call(None, name='Workspace')
-        self.assertEqual(response.status_code,HTTP_403_FORBIDDEN, format_response(response))
-
-        # user has to be authenticated
-        response = list_workspaces_api_call (None)
-        self.assertEqual(response.status_code,HTTP_403_FORBIDDEN, format_response(response))
-
-    def test_workspace_permission_list(self):
+    def test_020_workspace_permission_list(self):
 
         # create first user
         email = 'jan@rclick.cz'
