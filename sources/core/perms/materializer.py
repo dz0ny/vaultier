@@ -57,9 +57,9 @@ class CreateRoleMaterializer(object):
 
         # save materialized
         saver = MaterializationSaver()
-        alcs = saver.save_materialized(acls)
+        saver.save_materialized(acls)
 
-        return acls
+
 
 class MaterializationSaver(object):
 
@@ -110,3 +110,51 @@ class UpdateRoleLevelMaterializer(object):
             role=self.role,
             direction=AclDirectionField.DIR_DOWN
         ).update(level=self.role.level)
+
+class UpdateRoleMemberMaterializer(object):
+
+    def __init__(self, role):
+        self.role = role
+
+    def materialize(self):
+        Acl.objects.filter(
+            role=self.role,
+        ).update(user=self.role.member.user)
+
+class UpdateMemberUserMaterializer(object):
+
+    def __init__(self, member):
+        self.member = member
+
+
+    def materialize(self):
+        member = self.member
+        for role in member.role_set.all():
+            # first delete old acls
+            Acl.objects.filter(
+                role=role,
+            ).delete()
+
+            # materialize
+            materializer = CreateRoleMaterializer(role)
+            materializer.materialize(role.get_object())
+
+class InsertedObjectMaterializer(object):
+
+    def __init__(self, object):
+        self.object = object
+
+    def materialize(self):
+        parent = self.object.get_parent_object()
+        acls = []
+        if parent:
+            for acl in parent.acl_set.all():
+                acl.id = None
+                acl.set_object(self.object)
+                acls.append(acl);
+
+            # save materialized
+            saver = MaterializationSaver()
+            saver.save_materialized(acls)
+
+

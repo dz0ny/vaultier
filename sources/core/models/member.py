@@ -50,14 +50,14 @@ class MemberManager(Manager):
         if not existing_member:
             member.user = user
             member.status = MemberStatusField.STATUS_NON_APPROVED_MEMBER
-            member.save(update_fields=['status', 'user'])
+            member.save()
 
         # membership exists, we need to joind current membership to existing
         else:
             self.join_member(member, existing_member)
             member.delete()
             member = existing_member
-            member.save(update_fields=['status'])
+            member.save()
 
         # reload member
         member = Member.objects.get(id=member.id)
@@ -68,14 +68,14 @@ class MemberManager(Manager):
     def invite(self, member, send=True, resend=True):
         try:
             member = Member.objects.get(invitation_email=member.invitation_email, workspace=member.workspace)
-            if send:
+            if resend:
                 pass
                 # send invitation here
 
         except Member.DoesNotExist:
             member.status = MemberStatusField.STATUS_INVITED
             member.save()
-            if resend:
+            if send:
                 pass
                 # send invitation here
 
