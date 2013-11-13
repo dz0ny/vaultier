@@ -5,6 +5,8 @@ import hmac
 import uuid
 from core.models.member_fields import MemberStatusField
 from hashlib import sha1
+from core.tools.changes import ChangesMixin
+
 
 class MemberManager(Manager):
 
@@ -82,7 +84,7 @@ class MemberManager(Manager):
         return member
 
 
-class Member(models.Model):
+class Member(ChangesMixin, models.Model):
     objects = MemberManager()
 
     class Meta:

@@ -1,6 +1,8 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
 from time import timezone
+from core.tools.changes import ChangesMixin
+
 
 class UserManager(BaseUserManager):
     def create_user(self, username, email=None, password=None, **extra_fields):
@@ -25,7 +27,7 @@ class UserManager(BaseUserManager):
         return u
 
 
-class User(AbstractBaseUser, PermissionsMixin):
+class User(ChangesMixin, AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
 
     nickname = models.CharField(max_length=255, blank=False, null=False)

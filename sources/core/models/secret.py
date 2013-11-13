@@ -4,6 +4,7 @@ from django.db.models.expressions import F
 from django.db.models.manager import Manager
 from django.db.models.query_utils import Q
 from core.models.role_fields import RoleLevelField
+from core.tools.changes import ChangesMixin
 
 
 class CardManager(Manager):
@@ -11,7 +12,7 @@ class CardManager(Manager):
         #todo: todo acl for secrets
         pass
 
-class Secret(models.Model):
+class Secret(ChangesMixin, models.Model):
     type = models.IntegerField(null=False)
     data = models.TextField(null=True)
     card = models.ForeignKey('core.Card', on_delete=CASCADE)

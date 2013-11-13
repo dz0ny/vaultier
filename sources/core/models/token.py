@@ -3,8 +3,10 @@ from django.db.models.deletion import PROTECT, CASCADE
 import uuid
 import hmac
 from hashlib import sha1
+from core.tools.changes import ChangesMixin
 
-class Token(models.Model):
+
+class Token(ChangesMixin, models.Model):
     token = models.CharField(max_length=64)
     user = models.ForeignKey('core.User', on_delete=CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)

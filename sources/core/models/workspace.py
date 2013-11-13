@@ -7,6 +7,7 @@ from core.models.member import Member
 from core.models.member_fields import MemberStatusField
 from core.models.role import Role
 from core.models.role_fields import RoleLevelField
+from core.tools.changes import ChangesMixin
 from core.tools.tree import TreeItemMixin
 
 
@@ -45,7 +46,7 @@ class WorkspaceManager(Manager):
         r.save()
 
 
-class Workspace(models.Model, TreeItemMixin):
+class Workspace(ChangesMixin, models.Model, TreeItemMixin):
     class Meta:
         db_table = u'vaultier_workspace'
         app_label = 'core'
@@ -60,11 +61,8 @@ class Workspace(models.Model, TreeItemMixin):
     def __unicode__(self):
         return 'Workspace('+str(self.id)+'):'+self.name
 
-    def get_parent_object_class(self):
-        return None
-
-    def get_parent_object_id(self):
-        return None
+    def get_child_objects(self):
+        return self.vault_set.all()
 
     def get_parent_object(self):
         return None

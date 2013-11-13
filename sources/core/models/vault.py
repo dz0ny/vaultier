@@ -3,6 +3,7 @@ from django.db.models.deletion import PROTECT, CASCADE
 from django.db.models.manager import Manager
 from django.db.models import F, Q
 from core.models.role_fields import RoleLevelField
+from core.tools.changes import ChangesMixin
 from core.tools.tree import TreeItemMixin
 
 
@@ -14,7 +15,7 @@ class VaultManager(Manager):
             Q(acl__to_vault=F('id'))
         )
 
-class Vault(models.Model, TreeItemMixin):
+class Vault(ChangesMixin, models.Model, TreeItemMixin):
     class Meta:
         db_table = u'vaultier_vault'
         app_label = 'core'
@@ -28,12 +29,9 @@ class Vault(models.Model, TreeItemMixin):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def get_parent_object_class(self):
-        from core.models.workspace import Workspace
-        return Workspace
+    def get_child_objects(self):
+        return self.card_set.all()
 
-    def get_parent_object_id(self):
-        return self.workspace_id
 
     def get_parent_object(self):
         return self.workspace

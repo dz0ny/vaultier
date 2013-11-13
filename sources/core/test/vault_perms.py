@@ -58,6 +58,10 @@ class ApiVaultPermsTest(TransactionTestCase):
         role.member = m
         role.save()
 
+        role = Role.objects.get(pk=1)
+        role.level = 600
+        role.save()
+
         role.level = RoleLevelField.LEVEL_READ
         role.save()
 

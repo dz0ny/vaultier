@@ -4,6 +4,7 @@ from django.db.models.manager import Manager
 from django.db.models import F, Q
 
 from core.models.role_fields import RoleLevelField
+from core.tools.changes import ChangesMixin
 from core.tools.tree import TreeItemMixin
 
 
@@ -16,7 +17,7 @@ class CardManager(Manager):
         )
 
 
-class Card(models.Model, TreeItemMixin):
+class Card(ChangesMixin,models.Model, TreeItemMixin):
     class Meta:
         app_label = 'core'
         db_table = u'vaultier_card'
@@ -30,12 +31,8 @@ class Card(models.Model, TreeItemMixin):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def get_parent_object_class(self):
-        from core.models.vault import Vault
-        return Vault
-
-    def get_parent_object_id(self):
-        return self.vault_id
+    def get_child_objects(self):
+        return []
 
     def get_parent_object(self):
         return self.vault

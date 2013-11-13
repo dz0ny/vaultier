@@ -7,3 +7,6 @@ from member import Member
 from vault import Vault
 from card import Card
 from acl import Acl
+
+from core.perms.signals import register_signals
+register_signals()

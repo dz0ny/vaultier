@@ -2,6 +2,9 @@
 class TreeItemMixin(object):
     object = None
 
+    def get_child_objects(self):
+        raise RuntimeError('Please implement this method')
+
     def get_parent_object(self):
         raise RuntimeError('Please implement this method')
 

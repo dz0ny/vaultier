@@ -1,15 +1,14 @@
 from django.db import models
 from django.db.models.deletion import PROTECT, CASCADE
 from django.db.models.manager import Manager
-from django.db.models.query_utils import Q
 from core.auth.rolechecker import RoleChecker
 from core.auth.rolesumarizer import RoleSummarizer
-from core.models.role_fields import RoleLevelField, RoleTypeField
+from core.models.role_fields import RoleLevelField
+from core.models.object_reference import ObjectReference, ObjectReferenceTypeField
 from core.tools.changes import ChangesMixin
 
 
 class RoleManager(Manager):
-
     def get_roles_to_object(self, object, user):
         checker = RoleChecker()
         return checker.get_roles_and_parent_roles(object, user)
@@ -59,61 +58,27 @@ class RoleManager(Manager):
             return existing
 
 
-class Role(ChangesMixin,  models.Model):
+class Role(ChangesMixin,ObjectReference,models.Model):
+
     class Meta:
         db_table = u'vaultier_role'
         app_label = 'core'
 
     objects = RoleManager()
 
-    member = models.ForeignKey('core.Member', on_delete=CASCADE)
-    type = RoleTypeField()
+    type = ObjectReferenceTypeField()
     to_workspace = models.ForeignKey('core.Workspace', on_delete=CASCADE, null=True, blank=True)
     to_vault = models.ForeignKey('core.Vault', on_delete=CASCADE, null=True, blank=True)
     to_card = models.ForeignKey('core.Card', on_delete=CASCADE, null=True, blank=True)
+
+    member = models.ForeignKey('core.Member', on_delete=CASCADE)
     level = RoleLevelField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey('core.User', on_delete=PROTECT, related_name='roles_created')
 
     def __unicode__(self):
-        return 'Role('+str(self.id)+'): to:'+str(self.type)+' level:'+str(self.level)
-
-    def compute_type(self, force=None):
-        if not self.type or force:
-            type_set = False
-
-            if self.to_workspace:
-                if type_set:
-                    raise RuntimeError('Role can reference only one object')
-                self.type = RoleTypeField.TYPE_WORKSPACE
-                type_set = True
-
-            if self.to_vault:
-                if type_set:
-                    raise RuntimeError('Role can reference only one object')
-                self.type = RoleTypeField.TYPE_VAULT
-                type_set = True
-
-            if self.to_card:
-                if type_set:
-                    raise RuntimeError('Role can reference only one object')
-                self.type = RoleTypeField.TYPE_CARD
-                type_set = True
-
-        if not self.type:
-            raise RuntimeError('Role has no associated object')
-
-    def get_object(self):
-        self.compute_type()
-        if self.type == RoleTypeField.TYPE_WORKSPACE:
-            return self.to_workspace
-        if self.type == RoleTypeField.TYPE_VAULT:
-            return self.to_vault
-        if self.type == RoleTypeField.TYPE_CARD:
-            return self.to_card
-
-        raise RuntimeError('Role has no associated object')
+        return 'Role(' + str(self.id) + '): to:' + str(self.type) + ' level:' + str(self.level)
 
     def save(self, *args, **kwargs):
         self.compute_type()
