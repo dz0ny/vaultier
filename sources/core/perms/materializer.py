@@ -2,12 +2,11 @@ from core.models import Acl
 from core.models.acl_fields import AclDirectionField
 from core.models.role_fields import RoleLevelField
 
-class RoleMaterializer(object):
+class CreateRoleMaterializer(object):
     role = None
 
     def __init__(self, role):
         self.role = role
-        self.object = object
 
     def acl_for_object(self, object, direction=None):
         if not self.role.member.user:
@@ -56,6 +55,10 @@ class RoleMaterializer(object):
         # materialize parent objects
         acls.extend(self.materialize_parents(object))
 
+        # save materialized
+        saver = MaterializationSaver()
+        alcs = saver.save_materialized(acls)
+
         return acls
 
 class MaterializationSaver(object):
@@ -96,3 +99,14 @@ class MaterializationSaver(object):
                 acl.save()
                 saved.append(acl)
 
+
+class UpdateRoleLevelMaterializer(object):
+
+    def __init__(self, role):
+        self.role = role
+
+    def materialize(self):
+        Acl.objects.filter(
+            role=self.role,
+            direction=AclDirectionField.DIR_DOWN
+        ).update(level=self.role.level)
