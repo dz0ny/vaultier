@@ -2,7 +2,8 @@ Vaultier.CardRoute = Ember.Route.extend(
     Utils.ErrorAwareRouteMixin,
     {
         model: function (params, transition) {
-            var model = this.get('store').find('Vault', params.vault)
+
+            var model = this.get('store').find('Vault', params.vault )
                 .then(null, this.handleErrors(transition))
             return model;
         },
@@ -20,6 +21,12 @@ Vaultier.CardRoute = Ember.Route.extend(
     });
 
 Vaultier.CardIndexRoute = Ember.Route.extend({
+
+    model: function (params, transition, queryParams) {
+        var vault = this.modelFor('Card');
+        var store = this.get('store');
+        return store.find('Card', {vault: vault.get('id')});
+    },
 
     setupController: function (ctrl, model) {
         ctrl.set('content', model);
@@ -43,11 +50,6 @@ Vaultier.CardIndexRoute = Ember.Route.extend({
                 .addVault()
                 .addText('List of cards')
         )
-    },
-
-    model: function (params, transition, queryParams) {
-        var store = this.get('store');
-        return store.find('Card');
     },
 
     actions: {

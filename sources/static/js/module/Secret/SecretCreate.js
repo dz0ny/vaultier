@@ -62,19 +62,24 @@ Vaultier.SecretCreateSubmitRoute = Ember.Route.extend({
     },
 
     afterModel: function (secret, transition) {
+
         secret.set('card', this.modelFor('Secret').get('id'));
 
-        switch (transition.params.type) {
-            case 'file' :
+        var SecretClass = Vaultier.Secret.proto();
+        switch (transition.params.type.toUpperCase()) {
+
+            case SecretClass.types['FILE'].text :
                 this.template = 'SecretTypeFile';
-                secret.set('type', secret.types.file);
+                secret.set('type',SecretClass.types['FILE'].value);
                 break;
-            case 'password' :
+
+            case SecretClass.types['PASSWORD'].text :
                 this.template = 'SecretTypePassword';
-                secret.set('type', secret.types.password);
+                secret.set('type', SecretClass.types['PASSWORD'].value);
                 break;
+
             default:
-                secret.set('type', secret.types.note);
+                secret.set('type',  SecretClass.types['NOTE'].value);
                 this.template = 'SecretTypeNote';
         }
     },

@@ -22,6 +22,12 @@ Vaultier.SecretRoute = Ember.Route.extend(
 
 Vaultier.SecretIndexRoute = Ember.Route.extend({
 
+    model: function (params, queryParams) {
+        var card = this.modelFor('Secret');
+        var store = this.get('store');
+        return store.find('Secret', {card: card.get('id')});
+    },
+
     setupController: function (ctrl, model) {
         ctrl.set('content', model);
 
@@ -51,10 +57,6 @@ Vaultier.SecretIndexRoute = Ember.Route.extend({
         )
     },
 
-    model: function (params, queryParams) {
-        var store = this.get('store');
-        return store.find('Secret');
-    },
 
     actions: {
         deleteCard: function (card) {
@@ -88,17 +90,17 @@ Vaultier.SecretIndexController = Ember.ArrayController.extend({
 Vaultier.SecretIndexItemController = Ember.ObjectController.extend({
     isNote: function () {
         var secret = this.get('content');
-        return secret.get('type') == secret.types.note;
+        return secret.get('type') == secret.types['NOTE'].value;
     }.property('type'),
 
     isPassword: function () {
         var secret = this.get('content');
-        return secret.get('type') == secret.types.password;
+        return secret.get('type') == secret.types['PASSWORD'].value;
     }.property('type'),
 
     isFile: function () {
         var secret = this.get('content');
-        return secret.get('type') == secret.types.file;
+        return secret.get('type') == secret.types['FILE'].value;
     }.property('type')
 
 });

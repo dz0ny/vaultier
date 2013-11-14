@@ -1,10 +1,20 @@
 Vaultier.Secret = DS.Model.extend(
     CreatedUpdatedMixin, {
-        types: {
-            note: 1,
-            password: 2,
-            file: 3
-        },
+
+        types: new Utils.ConstantList({
+            'NOTE': {
+                value: 100,
+                text: 'NOTE'
+            },
+            'PASSWORD': {
+                value: 200,
+                text: 'PASSWORD'
+            },
+            'FILE': {
+                value: 300,
+                text: 'FILE'
+            }
+        }),
 
         name: DS.attr('string'),
         type: DS.attr('number'),
@@ -27,17 +37,17 @@ Vaultier.Secret = DS.Model.extend(
             var data;
             switch (this.get('type')) {
 
-                case this.types.note:
+                case this.types['NOTE'].value:
                 {
                     data = this.getProperties('note');
                     break;
                 }
-                case this.types.password:
+                case this.types['PASSWORD'].value:
                 {
                     data = this.getProperties('password', 'url', 'note', 'username');
                     break;
                 }
-                case this.types.file:
+                case this.types['FILE'].value:
                 {
                     data = this.getProperties('file', 'url', 'note', 'username');
                     break;
