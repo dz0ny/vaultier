@@ -60,7 +60,7 @@ class VaultViewSet(ModelViewSet):
 
     def get_queryset(self):
         if self.action == 'list':
-            queryset = Vault.objects.all_acls(self.request.user)
+            queryset = Vault.objects.all_for_user(self.request.user)
         else:
             queryset = Vault.objects.all()
         return queryset

@@ -8,12 +8,12 @@ from core.tools.tree import TreeItemMixin
 
 
 class VaultManager(Manager):
-    def all_acls(self, user):
-        return self.filter(
-            Q(acl__level=RoleLevelField.LEVEL_READ) | Q(acl__level=RoleLevelField.LEVEL_WRITE),
-            Q(acl__user=user),
-            Q(acl__to_vault=F('id'))
-        )
+    def all_for_user(self, user):
+        vaults = self.filter(
+            acl__user=user
+        ).distinct()
+
+        return vaults
 
 class Vault(ChangesMixin, models.Model, TreeItemMixin):
     class Meta:

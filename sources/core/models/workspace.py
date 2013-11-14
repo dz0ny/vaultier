@@ -19,8 +19,6 @@ class WorkspaceManager(Manager):
             acl__user=user
         ).distinct()
 
-        acl = list(Acl.objects.all())
-
         return workspaces
 
     def create_member_with_workspace(self, workspace):

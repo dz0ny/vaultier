@@ -143,7 +143,7 @@ class ApiVaultPermsTest(TransactionTestCase):
             level=RoleLevelField.LEVEL_WRITE
         )
 
-        #user2 tries to delete vault, should be forbidden
+        #user2 tries to delete vault, should be allowed
         response = delete_vault_api_call(user2token, vault1.get('id'))
         self.assertEqual(
             response.status_code,
@@ -151,6 +151,30 @@ class ApiVaultPermsTest(TransactionTestCase):
             format_response(response)
         )
 
+    def test_030_retrieve_forbidden(self):
+        # create user1
+        email = 'jan@rclick.cz'
+        register_api_call(email=email, nickname='Jan').data
+        user1token = auth_api_call(email=email).data.get('token')
+
+        # create user2
+        email = 'marcel@rclick.cz'
+        register_api_call(email=email, nickname='Marcel').data
+        user2token = auth_api_call(email=email).data.get('token')
+
+        # create workspace for user1
+        workspace1 = create_workspace_api_call(user1token, name='workspace').data
+
+        # create vault for user1
+        vault1 = create_vault_api_call(user1token, name='vault_in_workspace', workspace=workspace1.get('id')).data
+
+        # user 2 tries to retrieve card1 should be forbidden
+        response = retrieve_vault_api_call(user2token, vault1.get('id'))
+        self.assertEqual(
+            response.status_code,
+            HTTP_403_FORBIDDEN,
+            format_response(response)
+        )
 
 def vault_perms_suite():
     suite = TestSuite()

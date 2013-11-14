@@ -9,12 +9,13 @@ from core.tools.tree import TreeItemMixin
 
 
 class CardManager(Manager):
-    def all_acls(self, user):
-        return self.filter(
-            Q(acl__level=RoleLevelField.LEVEL_READ) | Q(acl__level=RoleLevelField.LEVEL_WRITE),
-            Q(acl__user=user),
-            Q(acl__to_card=F('id'))
-        )
+
+    def all_for_user(self, user):
+        cards = self.filter(
+            acl__user=user
+        ).distinct()
+
+        return cards
 
 
 class Card(ChangesMixin,models.Model, TreeItemMixin):
