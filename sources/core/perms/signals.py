@@ -18,7 +18,7 @@ def on_role_level_updated(signal=None, sender=None, instance=None, event_type=No
         materializer = UpdateRoleLevelMaterializer(instance)
         materializer.materialize()
 
-# when role member is updated
+# when member of role is updated
 def on_role_member_updated(signal=None, sender=None, instance=None, event_type=None, **kwargs):
     if event_type == UPDATE and instance.old_changes().get('member') and instance.member.user:
         materializer = UpdateRoleMemberMaterializer(instance)

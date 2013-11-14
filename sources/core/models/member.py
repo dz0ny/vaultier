@@ -24,13 +24,13 @@ class MemberManager(Manager):
         unique = uuid.uuid4()
         return hmac.new(unique.bytes, digestmod=sha1).hexdigest()
 
-    def get_member_to_workspace(self, workspace, user):
+    def get_conrete_member_to_workspace(self, workspace, user):
         member = None
         try:
             member = self.filter(
                 workspace=workspace,
                 user=user,
-                status__gt=0
+                status__gt=MemberStatusField.STATUS_INVITED
             )[0]
         except:
             pass
@@ -44,7 +44,7 @@ class MemberManager(Manager):
 
     def accept_invitation(self, member, user):
         workspace = member.workspace
-        existing_member = self.get_member_to_workspace(workspace, user)
+        existing_member = self.get_conrete_member_to_workspace(workspace, user)
 
         # user membership does not exists, or it is only invite
         if not existing_member:
@@ -52,7 +52,7 @@ class MemberManager(Manager):
             member.status = MemberStatusField.STATUS_NON_APPROVED_MEMBER
             member.save()
 
-        # membership exists, we need to joind current membership to existing
+        # membership exists, we need to join current membership to existing
         else:
             self.join_member(member, existing_member)
             member.delete()

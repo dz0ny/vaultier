@@ -57,6 +57,7 @@ Vaultier.MemberInviteRoute = Ember.Route.extend({
     },
 
     setupController: function (ctrl, model) {
+        ctrl.set('workspace', this.modelFor('Vault'))
         ctrl.set('breadcrumbs', this.setupBreadcrumbs());
         ctrl.set('content', {});
         ctrl.set('roleLevels', this.setupRoleLevels());
@@ -71,6 +72,7 @@ Vaultier.MemberInviteRoute = Ember.Route.extend({
 
 Vaultier.MemberInviteController = Ember.ObjectController.extend({
     invited: [],
+    workspace:null,
     role: null,
     isButtonNextEnabled: function () {
         return false;

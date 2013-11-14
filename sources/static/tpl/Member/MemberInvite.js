@@ -5,10 +5,11 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 
 
   data.buffer.push("<div class=\"row\">\r\n    <div class=\"col-md-12\">\r\n\r\n        <div class=\"vlt-dialog vlt-tabs-modal\">\r\n            <form>\r\n                <div class=\"vlt-dialog-content\">\r\n                    <div class=\"vlt-dialog-header\">\r\n                        <h2>Invite collaborators</h2>\r\n                    </div>\r\n                    <div class=\"vlt-dialog-body\">\r\n\r\n                        <div class=\"col-md-10 col-md-offset-1\">\r\n\r\n                            <div class=\"form-group\">\r\n                                <label for=\"card-name\">Select users</label>\r\n\r\n                                ");
-  hashContexts = {'store': depth0,'class': depth0,'elementId': depth0,'valueBinding': depth0};
-  hashTypes = {'store': "ID",'class': "STRING",'elementId': "STRING",'valueBinding': "STRING"};
+  hashContexts = {'store': depth0,'workspace': depth0,'class': depth0,'elementId': depth0,'valueBinding': depth0};
+  hashTypes = {'store': "ID",'workspace': "ID",'class': "STRING",'elementId': "STRING",'valueBinding': "STRING"};
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "Vaultier.MemberInviteInput", {hash:{
     'store': ("store"),
+    'workspace': ("workspace"),
     'class': ("form-control"),
     'elementId': ("invite-form-invited"),
     'valueBinding': ("invited")

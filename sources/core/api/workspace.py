@@ -35,7 +35,7 @@ class WorkspaceSerializer(ModelSerializer):
     membership = SerializerMethodField('get_membership')
 
     def get_membership(self, obj):
-        member = Member.objects.get_member_to_workspace(obj, self.user)
+        member = Member.objects.get_conrete_member_to_workspace(obj, self.user)
         if (member):
             return WorkspaceMembershipSerializer(member).data
         else:

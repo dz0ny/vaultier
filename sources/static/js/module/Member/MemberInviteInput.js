@@ -5,6 +5,8 @@ Vaultier.MemberInviteInput = Ember.Component.extend({
 
     store: null,
 
+    workspace: null,
+
     tagName: "input",
 
     didInsertElement: function () {
@@ -18,7 +20,10 @@ Vaultier.MemberInviteInput = Ember.Component.extend({
         var ajaxQueryContext = {};
 
         var ajaxQuery = function () {
-            var members = this.store.find('Member', {search: this.query.term})
+            var members = this.store.find('Member', {
+                workspace: this.workspace.get('id'),
+                search: this.query.term
+            })
                 .then(function (members) {
                     var results = [];
                     members.forEach(function (member) {
@@ -59,6 +64,7 @@ Vaultier.MemberInviteInput = Ember.Component.extend({
             query: function (query) {
                 ajaxQueryContext.store = this.get('controller.store')
                 ajaxQueryContext.query = query;
+                ajaxQueryContext.workspace = this.get('workspace')
                 Ember.run.debounce(ajaxQueryContext, ajaxQuery, 500);
 
             }.bind(this),
