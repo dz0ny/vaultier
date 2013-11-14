@@ -7,10 +7,10 @@ from threading import Lock
 
 def cant_compile():
     blockers = []
-    try:
-        import spidermonkey
-    except ImportError:
-        blockers.append('Missing "python-spidermonkey" module')
+    #try:
+    #    import spidermonkey
+    #except ImportError:
+    #    blockers.append('Missing "python-spidermonkey" module')
     return blockers
     
     
