@@ -24,7 +24,7 @@ class ApiCardPermsTest(TransactionTestCase):
             format_response(response)
         )
 
-    def test_001_create_delete_vault_as_anonymous(self):
+    def test_001_create_delete_card_as_anonymous(self):
 
     # create user
         email = 'jan@rclick.cz'
@@ -74,7 +74,7 @@ class ApiCardPermsTest(TransactionTestCase):
         )
 
 
-    def test_020_create_vault_and_and_check_permissions(self):
+    def test_020_create_card_and_and_check_permissions(self):
         # create user1
         email = 'jan@rclick.cz'
         user1 = register_api_call(email=email, nickname='Jan').data
