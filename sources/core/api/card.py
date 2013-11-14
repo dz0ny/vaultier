@@ -11,8 +11,6 @@ from core.perms.check import has_object_acl
 class CanManageCardPermission(BasePermission):
 
     def has_object_permission(self, request, view, obj):
-        #due to some bug in rest framework request is ModelViewSet
-        request = view.request
 
         if view.action == 'retrieve' or view.action == 'list' :
 
@@ -22,10 +20,10 @@ class CanManageCardPermission(BasePermission):
         else:
             result = True
 
-            # check permission to vault
+            # check permission to card
             result = result and has_object_acl(request.user, obj, RoleLevelField.LEVEL_WRITE)
 
-            # check permission to workspace
+            # check permission to vault
             result = result and has_object_acl(request.user, obj.vault, RoleLevelField.LEVEL_WRITE)
 
             return result
@@ -47,6 +45,7 @@ class CardViewSet(ModelViewSet):
     serializer_class = CardSerializer
     authentication_classes = (TokenAuthentication, )
     permission_classes = (IsAuthenticated, CanManageCardPermission)
+    filter_fields = ('vault',)
 
     def pre_save(self, object):
         if object.pk is None:

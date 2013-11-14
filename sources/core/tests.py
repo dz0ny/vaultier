@@ -7,6 +7,7 @@ from core.test.card import card_suite
 from core.test.card_perms import card_perms_suite
 from core.test.member import member_suite
 from core.test.role import role_suite
+from core.test.secret import secret_suite
 from core.test.vault import vault_suite
 from core.test.vault_perms import vault_perms_suite
 from core.test.workspace import workspace_suite
@@ -24,9 +25,11 @@ def suite():
     #suite.addTest(workspace_suite())
     #suite.addTest(workspace_perms_suite())
 
-    suite.addTest(vault_suite())
-    suite.addTest(vault_perms_suite())
+    #suite.addTest(vault_suite())
+    #suite.addTest(vault_perms_suite())
+    #
+    #suite.addTest(card_suite())
+    #suite.addTest(card_perms_suite())
 
-    suite.addTest(card_suite())
-    suite.addTest(card_perms_suite())
+    suite.addTest(secret_suite())
     return suite

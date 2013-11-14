@@ -29,6 +29,7 @@ class WorkspaceMembershipSerializer(RelatedMemberSerializer):
     class Meta(RelatedMemberSerializer.Meta):
         fields = ('status', 'id')
 
+
 class WorkspaceSerializer(ModelSerializer):
     created_by = RelatedUserSerializer(required=False)
     membership = SerializerMethodField('get_membership')
@@ -43,6 +44,7 @@ class WorkspaceSerializer(ModelSerializer):
     class Meta:
         model = Workspace
         fields = ('id', 'name', 'description', 'membership', 'created_at', 'updated_at', 'created_by')
+
 
 class RelatedWorkspaceSerializer(WorkspaceSerializer):
     class Meta(WorkspaceSerializer.Meta):

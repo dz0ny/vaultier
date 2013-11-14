@@ -15,8 +15,6 @@ from core.perms.check import has_object_acl
 class CanManageVaultPermission(BasePermission):
 
     def has_object_permission(self, request, view, obj):
-        #due to some bug in rest framework request is ModelViewSet
-        request = view.request
 
         if view.action == 'retrieve' or view.action == 'list' :
 
@@ -51,6 +49,7 @@ class VaultViewSet(ModelViewSet):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated, CanManageVaultPermission)
     serializer_class = VaultSerializer
+    filter_fields = ('workspace',)
 
     def pre_save(self, object):
         if object.pk is None:
