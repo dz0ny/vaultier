@@ -14,17 +14,30 @@ Service.Invitations = Ember.Object.extend({
     },
 
 
-    _memberPromise: function (workspace, email, send, resend) {
-        return Utils.RSVPAjax({
-            url: '/api/members/',
-            type: 'post',
-            data: {
-                workspace: workspace.id,
-                email: email,
-                send: send,
-                resend: resend
-            }
-        })
+    _memberPromise: function (workspace, emailOrId, send, resend) {
+        var id = parseInt(emailOrId)
+
+        if (id) {
+            // do get retrieve
+            return Utils.RSVPAjax({
+                url: '/api/members/' + id + '/',
+                type: 'get'
+            });
+        } else {
+            // do post - invite
+            return Utils.RSVPAjax({
+                url: '/api/members/',
+                type: 'post',
+                data: {
+                    workspace: workspace.id,
+                    email: emailOrId,
+                    send: send,
+                    resend: resend
+                }
+            })
+        }
+
+
     },
 
     _invitePromise: function (member, role, params) {
@@ -44,14 +57,14 @@ Service.Invitations = Ember.Object.extend({
     },
 
 
-    invite: function (workspace, email, role, params, send, resend) {
+    invite: function (workspace, emailOrId, role, params, send, resend) {
         send = Po.F.optional(send, false);
         resend = Po.F.optional(resend, false);
 
         return Ember.RSVP.resolve()
             .then(
                 function () {
-                    return this._memberPromise(workspace, email, send, resend)
+                    return this._memberPromise(workspace, emailOrId, send, resend)
                 }.bind(this))
 
             .then(
@@ -93,11 +106,11 @@ Service.Invitations = Ember.Object.extend({
         for (id in invitations) {
             var invitation = invitations[id];
             promises.push(Utils.RSVPAjax({
-               url: '/api/members/'+id+'/accept/',
-               type: 'post',
-               data: {
-                   hash: invitation.hash
-               }
+                url: '/api/members/' + id + '/accept/',
+                type: 'post',
+                data: {
+                    hash: invitation.hash
+                }
             }))
         }
 
@@ -105,7 +118,7 @@ Service.Invitations = Ember.Object.extend({
 
     },
 
-    _validateInvitation: function(id, hash,data) {
+    _validateInvitation: function (id, hash, data) {
         return Ember.RSVP.resolve();
     },
 

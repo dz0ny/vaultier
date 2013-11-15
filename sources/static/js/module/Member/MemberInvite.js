@@ -34,11 +34,11 @@ Vaultier.MemberInviteRoute = Ember.Route.extend({
             var inviteParams = this.get('inviteParams');
             var invitedPromises = [];
 
-            invited.forEach(function (email) {
+            invited.forEach(function (emailOrId) {
                 invitedPromises.push(
                     invitations.invite(
                         inviteWorkspace,
-                        email,
+                        emailOrId,
                         role,
                         inviteParams,
                         true,

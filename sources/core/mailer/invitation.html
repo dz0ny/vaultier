@@ -1,0 +1,14 @@
+{% extends 'mailer/layout.html' %}
+
+{% block content %}
+  <h1>Hi</h1>
+
+  <p>You just signed up for my website, using:
+      <dl>
+        <dt>username</dt><dd>{{username}}</dd>
+        <dt>join date</dt><dd>{{signup_date}}</dd>
+      </dl>
+  </p>
+
+  <p>Thanks, you rock!</p>
+{% endblock %}

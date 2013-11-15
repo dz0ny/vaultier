@@ -3,6 +3,7 @@ from django.db.models.deletion import PROTECT, CASCADE
 from django.db.models.manager import Manager
 import hmac
 import uuid
+from core.mailer.invitation import resend_invitation
 from core.models.member_fields import MemberStatusField
 from hashlib import sha1
 from core.tools.changes import ChangesMixin
@@ -67,17 +68,22 @@ class MemberManager(Manager):
 
     def invite(self, member, send=True, resend=True):
         try:
-            member = Member.objects.get(invitation_email=member.invitation_email, workspace=member.workspace)
+            # find invitation
+            member = Member.objects.get(
+                status=MemberStatusField.STATUS_INVITED,
+                invitation_email=member.invitation_email,
+                workspace=member.workspace
+            )
             if resend:
-                pass
-                # send invitation here
+                resend_invitation(member)
 
+        # invitation not found so create new
         except Member.DoesNotExist:
+            member.id = None
             member.status = MemberStatusField.STATUS_INVITED
             member.save()
             if send:
-                pass
-                # send invitation here
+                resend_invitation(member)
 
         #todo: Member.MultipleObjectsFound
 

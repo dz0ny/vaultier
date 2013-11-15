@@ -2,11 +2,16 @@ from django.core.urlresolvers import reverse
 from core.test.tools import VaultierAPIClient
 
 
-def invite_member_api_call(token, email=None, workspace=None):
+def invite_member_api_call(token, email=None, workspace=None, send=True, resend=True):
     url = reverse('member-list')
     client = VaultierAPIClient()
     client.token(token)
-    response = client.post(url, {'email':email, 'workspace':workspace})
+    response = client.post(url, {
+        'email': email,
+        'workspace': workspace,
+        'send': send,
+        'resend': resend
+    })
     return response
 
 
@@ -14,7 +19,7 @@ def accept_invitation_api_call(token, id=None, hash=None):
     url = reverse('member-accept', args=(id,))
     client = VaultierAPIClient()
     client.token(token)
-    response = client.post(url, {'hash':hash })
+    response = client.post(url, {'hash': hash})
     return response
 
 

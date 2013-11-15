@@ -25,12 +25,12 @@ class CanManageRolePermission(BasePermission):
 class RoleSerializer(ModelSerializer):
     created_by = RelatedNestedField(serializer=RelatedUserSerializer,required=False, read_only=True)
     member = RelatedNestedField(required=True, serializer=RelatedMemberSerializer, queryset=Member.objects.all())
-    to_workspace = PrimaryKeyRelatedField(required=False)
-    to_vault = PrimaryKeyRelatedField(required=False)
-    to_card = PrimaryKeyRelatedField(required=False)
+    to_workspace = PrimaryKeyRelatedField(required=False, read_only=False)
+    to_vault = PrimaryKeyRelatedField(required=False, read_only=False)
+    to_card = PrimaryKeyRelatedField(required=False, read_only=False)
 
     def validate(self, attrs):
-        if not (attrs['to_workspace'] or attrs['to_vault'] or attrs['to_card']):
+        if not (attrs.get('to_workspace') or attrs.get('to_vault') or attrs.get('to_card')):
             raise ValidationError('At least one of to_workspace, to_vault, to_card has to be set')
 
         return attrs
@@ -42,25 +42,14 @@ class RoleSerializer(ModelSerializer):
             raise NestedValidationError('Role has to be related to_workspace or to_vault or to_card')
         self.object = Role.objects.create_or_update_role(obj)
 
-    def get_email(self, obj):
-        if obj:
-            if (obj.status == 'i'):
-                return obj.invitation_email
-            else:
-                return obj.user.email
-
-    def get_nickname(self, obj):
-        if obj:
-            if (obj.status == 'i'):
-                return obj.invitation_email
-            else:
-                return obj.user.nickname
-
     class Meta:
         model = Role
         fields = ('id', 'level', 'member', 'to_workspace', 'to_vault', 'to_card', 'created_by', 'created_at', 'updated_at',)
 
 class RoleUpdateSerializer(RoleSerializer):
+    def validate(self, attrs):
+        return attrs
+
     def get_fields(self):
         fields = super(RoleUpdateSerializer,self).get_fields();
         for field in fields:

@@ -1,7 +1,7 @@
 from django.core.exceptions import ValidationError
 from rest_framework.decorators import action
 from rest_framework.fields import SerializerMethodField, EmailField, BooleanField, CharField
-from rest_framework.filters import SearchFilter, DjangoFilterBackend
+from rest_framework.filters import SearchFilter, DjangoFilterBackend, OrderingFilter
 from rest_framework.mixins import CreateModelMixin, ListModelMixin, RetrieveModelMixin
 from rest_framework.permissions import BasePermission
 from rest_framework.relations import PrimaryKeyRelatedField
@@ -88,9 +88,10 @@ class MemberViewSet(CreateModelMixin,
     serializer_class = MemberSerializer
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated, )
-    filter_backends = (SearchFilter, DjangoFilterBackend)
+    filter_backends = (SearchFilter, DjangoFilterBackend, OrderingFilter )
     search_fields = ('invitation_email', 'user__email', 'user__nickname',)
     filter_fields = ('workspace',)
+    ordering = ('status')
 
     @action(methods=['POST'])
     def accept(self, request, pk=None):
