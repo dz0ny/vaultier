@@ -28,6 +28,7 @@ var router = Vaultier.Router.map(function () {
     this.resource('Invitation', {path: '/invitations'}, function () {
         this.route('use', { path: '/use/:invitation/:hash' });
         this.route('anonymous', { path: '/anonymous' });
+        this.route('list', { path: '/list' });
         this.route('accepted', { path: '/accepted' });
     })
 

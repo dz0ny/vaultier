@@ -23,3 +23,26 @@ Vaultier.Member = DS.Model.extend(
 
     });
 
+Vaultier.MemberRole = DS.Model.extend({
+    created_by: DS.attr(),
+    to_name: DS.attr('string'),
+    to_type: DS.attr('number'),
+
+    name: function() {
+        var Role =  Vaultier.Role.proto();
+        if  (this.to_type == Role.types['TO_WORKSPACE'].value) {
+            return 'Invited to workspace "{to_name}"'.replace('{to_name}', this.to_name)
+        }
+
+        if  (this.to_type == Role.types['TO_VAULT'].value) {
+            return 'Invited to vault "{to_name}"'.replace('{to_name}', this.to_name)
+        }
+
+        if  (this.to_type == Role.types['TO_CARD'].value) {
+            return 'Invited to card "{to_name}"'.replace('{to_name}', this.to_name)
+        }
+
+    }.property('to_name', 'to_type')
+
+
+})

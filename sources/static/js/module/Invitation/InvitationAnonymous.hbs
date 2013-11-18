@@ -9,19 +9,19 @@
                     </div>
                     <div class="vlt-dialog-body">
 
-                        you have been invited to workspace:
-
-                        <div class="alert alert-warning top-30 bottom-30">
-                            todo: add data to inviation, which will be decoded here and shown
+                        <div class="col-md-8 col-md-offset-2 top-30 bottom-30">
+                            <b>
+                                Before further procceeding we need you to have account. Please login or create new
+                                account.
+                            </b>
                         </div>
-
-                        Before further procceeding we need you to have account. Please login or create new account.
 
                         <div class="clearfix"></div>
 
                     </div>
                     <div class="vlt-dialog-footer">
-
+                        {{#link-to 'AuthLogin' class="btn btn-primary btn-sm" }}Login{{/link-to}}
+                        {{#link-to 'AuthRegister' class="btn btn-default btn-sm" }}Create an account{{/link-to}}
                     </div>
                 </div>
             </form>

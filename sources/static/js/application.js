@@ -51,6 +51,11 @@ Vaultier.ApplicationAdapter = DS.DjangoRESTAdapter.extend({
         AuthenticatedUser: '/api/auth/user'
     },
 
+    ajax: function(url, type, hash) {
+        console.log(arguments);
+        return this._super(url, type, hash)
+    },
+
     ajaxError: function (error) {
         var superError = this._super(error);
         superError.status = error.status;
@@ -58,6 +63,7 @@ Vaultier.ApplicationAdapter = DS.DjangoRESTAdapter.extend({
     },
 
     buildURL: function (type, id) {
+        console.log(id);
         if (this.urls[type]) {
             url = this.urls[type];
             if (id) {

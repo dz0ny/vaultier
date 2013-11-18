@@ -31508,7 +31508,6 @@ Ember.Router.reopenClass({
   },
 
   _defaultErrorHandler: function(error, transition) {
-      console.error(error.stack);
     Ember.Logger.assert(false, 'Error while loading route: ' + Ember.inspect(error));
   },
 

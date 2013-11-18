@@ -73,14 +73,6 @@ Service.Invitations = Ember.Object.extend({
                 }.bind(this))
     },
 
-    decodeInvitationData: function (data) {
-        return data
-    },
-
-    encodeInvitationData: function (data) {
-        return data
-    },
-
     _storeInvitationToSession: function (id, hash, data) {
         return Ember.RSVP.Promise(function (resolve, reject) {
             var invitation = {
@@ -118,42 +110,89 @@ Service.Invitations = Ember.Object.extend({
 
     },
 
-    _validateInvitation: function (id, hash, data) {
+    _validateInvitation: function (id, hash) {
         return Ember.RSVP.resolve();
+    },
+
+
+    /**
+     * List all roles related to invitation in session
+     */
+    listRolesInSession: function () {
+        var invitations = this.session.get('invitations', {});
+        var promises = []
+
+        for (id in invitations) {
+            if (invitations.hasOwnProperty(id)) {
+                var invitation = invitations[id]
+                promises.push(this._listRoles(invitation.id, invitation.hash))
+            }
+        }
+
+        var promise = Ember.RSVP.Promise(function (resolve, reject) {
+
+            if (promises.length) {
+                Ember.RSVP.all(promises).then(
+                    function (all) {
+                        var result = []
+                        all.forEach(function (item) {
+                            result = result.concat(item)
+                        });
+                        resolve(result)
+                    }
+                )
+            } else {
+                resolve([]);
+            }
+
+        });
+
+        return promise
+    },
+
+
+    /**
+     * List roles related to invitation
+     * @param id
+     * @param hash
+     */
+    _listRoles: function (id, hash) {
+        return Utils.RSVPAjax({
+            url: '/api/members/{id}/roles/?hash={hash}'
+                .replace('{id}', id)
+                .replace('{hash}', hash),
+            type: 'get'
+        });
     },
 
     /**
      *   Function encapsulates using of url invitation
      *
      *   transition has to be aborted before use
+     *
      *   Workflow provided
      *
      *   - store invitation to session
-     *
-     *   - if authenticatated executes acceptance of stored invitations
-     *   - if authenticated redirects to accepted
-     *
-     *   - if not authenticated, redirects to anonymous
-     *   - if not authenticated - auth service executes acceptance of stored invitations
+     *   - if authenticated redirects to list of invitations to accept
+     *   - if not authenticated, redirects to page, where user is required to login before use of invitation
      *
      * @param id
      * @param hash
-     * @param data
-     * @returns {*|then}
+     * @returns {Ember.RSVP.Promise}
      */
-    useInvitation: function (id, hash, data) {
+    useInvitation: function (id, hash) {
         return Ember.RSVP.resolve()
             .then(function () {
-                return this._validateInvitation(id, hash, data);
+                return this._validateInvitation(id, hash);
             }.bind(this))
 
             .then(function () {
-                return this._storeInvitationToSession(id, hash, data);
+                return this._storeInvitationToSession(id, hash);
             }.bind(this))
 
             .then(function () {
                 if (this.get('auth').get('isAuthenticated')) {
-                    return this.acceptInvitationsInSession()
+                    return this.get('env.router').transitionTo('Invitation.list')
                 } else {
                     return this.get('env.router').transitionTo('Invitation.anonymous')
                 }

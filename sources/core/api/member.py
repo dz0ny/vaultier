@@ -10,8 +10,10 @@ from rest_framework.serializers import ModelSerializer, Serializer
 from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_200_OK
 from rest_framework.viewsets import GenericViewSet
 from core.api.perms.shared import IsAuthenticated
+from core.api.user import RelatedUserSerializer
 from core.auth.authentication import TokenAuthentication
 from core.models.member import Member
+from core.models.role import Role
 from core.models.role_fields import RoleLevelField
 from core.models.workspace import Workspace
 from core.perms.check import has_object_acl
@@ -79,6 +81,22 @@ class MemberAcceptSerializer(Serializer):
 
         return attrs
 
+class MemberRoleSerializer(Serializer):
+    created_by = SerializerMethodField('get_created_by')
+    to_type = SerializerMethodField('get_to_type')
+    to_name = SerializerMethodField('get_to_name')
+
+    def get_created_by(self, obj):
+        return RelatedUserSerializer(instance=obj.created_by).data
+
+    def get_to_type(self, obj):
+        return obj.type
+
+    def get_to_name(self, obj):
+        return obj.get_object().name
+
+    class Meta:
+        fields = ('created_by', 'to_type', 'to_name')
 
 class MemberViewSet(CreateModelMixin,
                     ListModelMixin,
@@ -92,6 +110,27 @@ class MemberViewSet(CreateModelMixin,
     search_fields = ('invitation_email', 'user__email', 'user__nickname',)
     filter_fields = ('workspace',)
     ordering = ('status')
+
+    @action(methods=['GET'])
+    def roles(self, request, pk=None):
+        member = self.get_object(queryset=Member.objects.all())
+        serializer = MemberAcceptSerializer(instance=member, data=request.QUERY_PARAMS, files=request.FILES)
+        if serializer.is_valid():
+            roles = Role.objects.filter(member=member)
+            data = []
+            for role in roles:
+                data.append(MemberRoleSerializer(instance=role).data)
+
+            return Response(
+                data,
+                status=HTTP_200_OK,
+            )
+        else:
+            return Response(
+                serializer.errors,
+                status=HTTP_400_BAD_REQUEST,
+            )
+
 
     @action(methods=['POST'])
     def accept(self, request, pk=None):

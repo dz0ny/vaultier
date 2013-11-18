@@ -1,0 +1,36 @@
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="vlt-dialog vlt-tabs-modal">
+            <form>
+                <div class="vlt-dialog-content">
+                    <div class="vlt-dialog-header">
+                        <h2>You have been invited to Vaultier</h2>
+                    </div>
+                    <div class="vlt-dialog-body">
+
+                        <div class="col-md-8 col-md-offset-2 top-30 bottom-30">
+                            <b>
+                                <table class="table vlt-table table-bordered">
+                                    {{#each role in content}}
+
+                                    <tr>
+                                        <td>{{role.name}}</td>
+                                    </tr>
+
+                                    {{/each}}
+                                </table>
+                            </b>
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                    </div>
+                    <div class="vlt-dialog-footer">
+                        {{#link-to 'AuthLogin' class="btn btn-primary btn-sm" }}Accept invitations{{/link-to}}
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

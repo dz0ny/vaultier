@@ -1,14 +1,15 @@
 {% extends 'mailer/layout.html' %}
 
 {% block content %}
-  <h1>Hi</h1>
+  <h1>You have been invited to Vaultier</h1>
 
-  <p>You just signed up for my website, using:
-      <dl>
-        <dt>username</dt><dd>{{username}}</dd>
-        <dt>join date</dt><dd>{{signup_date}}</dd>
-      </dl>
+  <p>
+      Please use following url to accept invitation:
   </p>
+
+    <p>
+       <a href="{{ url }}">{{ url }}</a>
+    </p>
 
   <p>Thanks, you rock!</p>
 {% endblock %}
