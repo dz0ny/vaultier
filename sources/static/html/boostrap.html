@@ -188,6 +188,7 @@
     <script src="{% static 'js/utils/HandlebarsHelpers.js' %}"></script>
     <script src="{% static 'js/utils/ErrorAwareRouteMixin.js' %}"></script>
     <script src="{% static 'js/utils/RSVPAjax.js' %}"></script>
+    <script src="{% static 'js/utils/MutableAdapterMixin.js' %}"></script>
 
     {####################################################################}
     {# application#}
@@ -205,7 +206,8 @@
     <script src="{% static 'js/service/Invitations.js' %}"></script>
 
     {############# model #}
-    <script src="{% static 'js/model/Shared.js' %}"></script>
+    <script src="{% static 'js/model/shared/Shared.js' %}"></script>
+    <script src="{% static 'js/model/shared/Adapter.js' %}"></script>
     <script src="{% static 'js/model/User.js' %}"></script>
     <script src="{% static 'js/model/Workspace.js' %}"></script>
     <script src="{% static 'js/model/Member.js' %}"></script>

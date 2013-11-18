@@ -30,16 +30,18 @@ Vaultier.MemberRole = DS.Model.extend({
 
     name: function() {
         var Role =  Vaultier.Role.proto();
-        if  (this.to_type == Role.types['TO_WORKSPACE'].value) {
-            return 'Invited to workspace "{to_name}"'.replace('{to_name}', this.to_name)
+        var type = this.get('to_type');
+        var to_name  = this.get('to_name');
+        if  (type == Role.types['TO_WORKSPACE'].value) {
+            return 'Invited to workspace "{to_name}"'.replace('{to_name}', to_name)
         }
 
-        if  (this.to_type == Role.types['TO_VAULT'].value) {
-            return 'Invited to vault "{to_name}"'.replace('{to_name}', this.to_name)
+        if  (type == Role.types['TO_VAULT'].value) {
+            return 'Invited to vault "{to_name}"'.replace('{to_name}', to_name)
         }
 
-        if  (this.to_type == Role.types['TO_CARD'].value) {
-            return 'Invited to card "{to_name}"'.replace('{to_name}', this.to_name)
+        if  (type == Role.types['TO_CARD'].value) {
+            return 'Invited to card "{to_name}"'.replace('{to_name}', to_name)
         }
 
     }.property('to_name', 'to_type')

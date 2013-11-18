@@ -21,12 +21,6 @@ Vaultier.InvitationListRoute = Ember.Route.extend(
         },
 
         setupController: function (ctrl, model) {
-//            var store = this.get('store');
-//            mutated = []
-//            model.forEach(function (data) {
-//                mutated.push(store.)
-//            });
-
             ctrl.set('content', model)
             ctrl.set('breadcrumbs',
                 Vaultier.Breadcrumbs.create({router: this.get('router')})

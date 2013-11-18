@@ -5,12 +5,14 @@ Service.Invitations = Ember.Object.extend({
     session: null,
     auth: null,
     env: null,
+    store: null,
 
     init: function () {
         this._super();
         this.session = Service.Session.current();
         this.auth = Service.Auth.current();
         this.env = Service.Environment.current()
+        this.store = Vaultier.__container__.lookup('store:main');
     },
 
 
@@ -77,8 +79,7 @@ Service.Invitations = Ember.Object.extend({
         return Ember.RSVP.Promise(function (resolve, reject) {
             var invitation = {
                 id: id,
-                hash: hash,
-                data: this.decodeInvitationData(data)
+                hash: hash
             };
 
             //todo: validate invitation here, on error reject with appropriet status error
@@ -123,20 +124,17 @@ Service.Invitations = Ember.Object.extend({
         var promises = []
 
         for (id in invitations) {
-            if (invitations.hasOwnProperty(id)) {
-                var invitation = invitations[id]
-                promises.push(this._listRoles(invitation.id, invitation.hash))
-            }
+            promises.push(this.store.find('MemberRole', invitations[id]))
         }
 
         var promise = Ember.RSVP.Promise(function (resolve, reject) {
 
             if (promises.length) {
+                result = [];
                 Ember.RSVP.all(promises).then(
                     function (all) {
-                        var result = []
-                        all.forEach(function (item) {
-                            result = result.concat(item)
+                        all.forEach(function (populatedDataStore) {
+                            result = result.concat(populatedDataStore.toArray())
                         });
                         resolve(result)
                     }
@@ -150,20 +148,6 @@ Service.Invitations = Ember.Object.extend({
         return promise
     },
 
-
-    /**
-     * List roles related to invitation
-     * @param id
-     * @param hash
-     */
-    _listRoles: function (id, hash) {
-        return Utils.RSVPAjax({
-            url: '/api/members/{id}/roles/?hash={hash}'
-                .replace('{id}', id)
-                .replace('{hash}', hash),
-            type: 'get'
-        });
-    },
 
     /**
      *   Function encapsulates using of url invitation

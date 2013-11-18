@@ -81,7 +81,7 @@ class MemberAcceptSerializer(Serializer):
 
         return attrs
 
-class MemberRoleSerializer(Serializer):
+class MemberRoleSerializer(ModelSerializer):
     created_by = SerializerMethodField('get_created_by')
     to_type = SerializerMethodField('get_to_type')
     to_name = SerializerMethodField('get_to_name')
@@ -96,7 +96,8 @@ class MemberRoleSerializer(Serializer):
         return obj.get_object().name
 
     class Meta:
-        fields = ('created_by', 'to_type', 'to_name')
+        model = Role
+        fields = ('id', 'created_by', 'to_type', 'to_name')
 
 class MemberViewSet(CreateModelMixin,
                     ListModelMixin,
