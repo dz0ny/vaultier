@@ -2,6 +2,8 @@ Po.NS('Service');
 
 Service.Invitations = Ember.Object.extend({
 
+    SESSION_KEY : 'invitations',
+
     session: null,
     auth: null,
     env: null,
@@ -84,16 +86,21 @@ Service.Invitations = Ember.Object.extend({
 
             //todo: validate invitation here, on error reject with appropriet status error
 
-            var invitations = this.get('session').get('invitations', {});
+            var invitations = this.get('session').get(this.SESSION_KEY, {});
             invitations[id] = invitation;
-            this.session.set('invitations', invitations);
+            this.session.set(this.SESSION_KEY, invitations);
 
             resolve(invitation);
         }.bind(this));
     },
 
+    hasInvitationsInSession: function() {
+       var invitations = this.session.get(this.SESSION_KEY, null);
+        return invitations !== null;
+    },
+
     acceptInvitationsInSession: function () {
-        var invitations = this.session.get('invitations', {});
+        var invitations = this.session.get(this.SESSION_KEY, {});
 
         var promises = [];
         for (id in invitations) {
@@ -111,6 +118,11 @@ Service.Invitations = Ember.Object.extend({
 
     },
 
+    clearInvitationsInSession: function() {
+        this.session.set(this.SESSION_KEY, null);
+    },
+
+
     _validateInvitation: function (id, hash) {
         return Ember.RSVP.resolve();
     },
@@ -120,7 +132,7 @@ Service.Invitations = Ember.Object.extend({
      * List all roles related to invitation in session
      */
     listRolesInSession: function () {
-        var invitations = this.session.get('invitations', {});
+        var invitations = this.session.get(this.SESSION_KEY, {});
         var promises = []
 
         for (id in invitations) {
@@ -138,7 +150,7 @@ Service.Invitations = Ember.Object.extend({
                         });
                         resolve(result)
                     }
-                )
+                ).fail(reject)
             } else {
                 resolve([]);
             }
@@ -176,7 +188,7 @@ Service.Invitations = Ember.Object.extend({
 
             .then(function () {
                 if (this.get('auth').get('isAuthenticated')) {
-                    return this.get('env.router').transitionTo('Invitation.list')
+                    return this.get('env.router').transitionTo('Invitation.accept')
                 } else {
                     return this.get('env.router').transitionTo('Invitation.anonymous')
                 }

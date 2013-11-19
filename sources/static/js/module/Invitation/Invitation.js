@@ -11,12 +11,22 @@ Vaultier.InvitationUseRoute = Ember.Route.extend(
         }
     });
 
-Vaultier.InvitationListRoute = Ember.Route.extend(
-//    Utils.ErrorAwareRouteMixin,
+
+Vaultier.InvitationAcceptRoute = Ember.Route.extend(
+    Utils.ErrorAwareRouteMixin,
     {
 
-        model: function () {
-            var promise = Service.Invitations.current().listRolesInSession();
+        model: function (params, transition) {
+            var invitations = Service.Invitations.current();
+            var promise = invitations.listRolesInSession();
+
+            promise.fail(function() {
+                transition.abort();
+                invitations.clearInvitationsInSession()
+                $.notify('There are no pending invitations', 'warning');
+                this.transitionTo('index')
+            }.bind(this))
+
             return promise;
         },
 
@@ -27,13 +37,26 @@ Vaultier.InvitationListRoute = Ember.Route.extend(
                     .addHome()
                     .addText('List of invitations')
             );
+        },
+
+        actions: {
+            acceptInvitations: function () {
+                var invitations =  Service.Invitations.current()
+                invitations.acceptInvitationsInSession().
+                    then(function () {
+                        invitations.clearInvitationsInSession()
+                        $.notify('You have accepted your invitations', 'success');
+                        this.transitionTo('index')
+                    }.bind(this))
+            },
+
+            rejectInvitations: function () {
+                var invitations = Service.Invitations.current();
+                invitations.clearInvitationsInSession();
+                $.notify('You have rejected your pending invitations', 'warning');
+                this.transitionTo('index')
+            }
         }
-    });
-
-
-Vaultier.InvitationAcceptedRoute = Ember.Route.extend(
-//    Utils.ErrorAwareRouteMixin,
-    {
     });
 
 Vaultier.InvitationAnonymousRoute = Ember.Route.extend(
@@ -42,8 +65,8 @@ Vaultier.InvitationAnonymousRoute = Ember.Route.extend(
     });
 
 
-Vaultier.InvitationAcceptedView = Ember.View.extend({
-    templateName: 'Invitation/InvitationAccepted',
+Vaultier.InvitationAcceptView = Ember.View.extend({
+    templateName: 'Invitation/InvitationAccept',
     layoutName: 'Layout/LayoutStandard'
 });
 

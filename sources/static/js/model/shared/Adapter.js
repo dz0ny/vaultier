@@ -1,9 +1,12 @@
 Vaultier.ApplicationAdapter = DS.DjangoRESTAdapter.extend(
-    Utils.MutableAdapterMixin,
+    Utils.MutableMethodsAdapterMixin,
+    Utils.MutableUrlsAdapterMixin,
     {
 
+        namespace: 'api',
+
         overrides: {
-            'Vaultier.MemberRole': {
+            'MemberRole': {
                 findQuery: function (store, type, query) {
                     var url = '/api/members/{id}/roles/?hash={hash}'
                         .replace('{id}', query.id)
@@ -13,37 +16,19 @@ Vaultier.ApplicationAdapter = DS.DjangoRESTAdapter.extend(
             }
         },
 
+        urls: {
+            AuthenticatedUser: '/api/auth/user'
+        },
 
-//        urls: {
-//            AuthenticatedUser: '/api/auth/user'
-//        },
+        /**
+         * Custom error wrapper adds status code to error for use in UI
+         */
+        ajaxError: function (error) {
+            var superError = this._super(error);
+            superError.status = error.status;
+            return superError;
+        }
 
-//        ajax: function (url, type, hash) {
-//            console.log(arguments);
-//            return this._super(url, type, hash)
-//        },
-
-//        ajaxError: function (error) {
-//            var superError = this._super(error);
-//            superError.status = error.status;
-//            return superError;
-//        },
-//
-//        buildURL: function (type, id) {
-//            if (this.urls[type]) {
-//                url = this.urls[type];
-//                if (id) {
-//                    if (url.charAt(url.length - 1) !== '/') {
-//                        url += '/';
-//                    }
-//                    url = url + id;
-//                }
-//                return url;
-//            } else {
-//                return this._super(type, id)
-//            }
-//        },
-        namespace: 'api'
     });
 
 

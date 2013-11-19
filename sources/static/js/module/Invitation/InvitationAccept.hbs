@@ -5,13 +5,14 @@
             <form>
                 <div class="vlt-dialog-content">
                     <div class="vlt-dialog-header">
-                        <h2>You have been invited to Vaultier</h2>
+                        <h2>You have pending invitations</h2>
                     </div>
                     <div class="vlt-dialog-body">
 
                         <div class="col-md-8 col-md-offset-2 top-15 bottom-30">
                             <div class="bottom-15">
-                                <b>List of invitations to accept:</b>
+                                You have been invited to Vaultier.
+                                <b>Please see invitations to accept:</b>
                             </div>
                             <table class="table vlt-table table-bordered">
                                 {{#each role in content}}
@@ -28,7 +29,14 @@
 
                     </div>
                     <div class="vlt-dialog-footer">
-                        {{#link-to 'AuthLogin' class="btn btn-primary btn-sm" }}Accept invitations{{/link-to}}
+                        <a href="#" class="btn btn-default btn-sm" {{ action rejectInvitations }}>
+                            <span class="glyphicon glyphicon-remove"></span>
+                            Reject invitations
+                        </a>
+                        <a href="#" class="btn btn-primary btn" {{ action acceptInvitations }}>
+                            <span class="glyphicon glyphicon-ok"></span>
+                            Accept invitations
+                        </a>
                     </div>
                 </div>
             </form>
