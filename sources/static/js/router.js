@@ -62,6 +62,12 @@ var router = Vaultier.Router.map(function () {
                 this.route('edit', { path: '/action/edit-card/:card'});
 
                 /************************************************************
+                 * Members
+                 ************************************************************/
+                this.route('memberIndex', { path: '/team'});
+                this.route('memberInvite', { path: '/team/invite'});
+
+                /************************************************************
                  * Card detail
                  ************************************************************/
                 this.resource('Secret', {path: '/card/:card'}, function () {
@@ -69,6 +75,12 @@ var router = Vaultier.Router.map(function () {
                     this.route('createSelect', { path: '/action/create-secret/select'});
                     this.route('createSubmit', { path: '/action/create-secret/submit/:type'});
                     this.route('edit', { path: '/action/edit-secret/:secret'});
+
+                    /************************************************************
+                     * Members
+                     ************************************************************/
+                    this.route('memberIndex', { path: '/team'});
+                    this.route('memberInvite', { path: '/team/invite'});
                 });
             });
 

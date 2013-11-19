@@ -3,6 +3,10 @@
  */
 Vaultier.VaultMemberIndexRoute = Vaultier.MemberIndexRoute.extend({
 
+    setupBlocks: function() {
+        return {workspace: true}
+    },
+
     setupBreadcrumbs: function () {
         return Vaultier.Breadcrumbs.create({router: this.get('router')})
             .addHome()

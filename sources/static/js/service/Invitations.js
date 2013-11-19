@@ -48,10 +48,9 @@ Service.Invitations = Ember.Object.extend({
         var data = {
             member: member.id,
             level: role,
-            //@todo: override this to some conversion function "model2id" - instanceof ds.model -> model.get(id)
-            to_workspace: (params.to_workspace instanceof Vaultier.Workspace) ? params.to_workspace.get('id') : params.to_workspace,
-            to_vault: (params.to_vault instanceof Vaultier.Workspace ) ? params.to_vault.get('id') : params.to_vault,
-            to_card: (params.to_card instanceof Vaultier.Workspace ) ? params.to_card.get('id') : params.to_card
+            to_workspace: Utils.E.recordId(params.to_workspace) ,
+            to_vault: Utils.E.recordId(params.to_vault),
+            to_card: Utils.E.recordId(params.to_card)
         };
         return  Utils.RSVPAjax({
             url: '/api/roles/',

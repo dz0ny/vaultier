@@ -10,11 +10,11 @@ Vaultier.Role = DS.Model.extend(
         roles: new Utils.ConstantList({
             'READ': {
                 value: 100,
-                text: 'READ'
+                text: 'Read'
             },
             'WRITE': {
                 value: 200,
-                text: 'WRITE'
+                text: 'Write'
             }
         }),
 
@@ -33,6 +33,11 @@ Vaultier.Role = DS.Model.extend(
             }
         }),
 
+        isCurrentUser: function() {
+            var id = Service.Auth.current().get('user.id')
+            return this.get('member.user') == id;
+        }.property('member.user'),
+
         isMember : function() {
             return this.get('member.status') == Vaultier.Member.proto().statuses['MEMBER'].value;
         }.property('member.status'),
@@ -43,8 +48,16 @@ Vaultier.Role = DS.Model.extend(
 
         isNonApprovedMember : function() {
             return this.get('member.status') == Vaultier.Member.proto().statuses['NON_APPROVED_MEMBER'].value;
-        }.property('member.status')
+        }.property('member.status'),
 
+        printableName: function() {
+            var val = this.roles.getByValue(this.get('level'));
+            if (val) {
+                return val.text
+            } else {
+                return 'Unknown role level'
+            }
+        }.property('level')
 
     });
 

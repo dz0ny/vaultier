@@ -37,13 +37,14 @@ Vaultier.Breadcrumbs = Ember.Object.extend({
         return this;
     },
 
-    addText : function(text) {
+    addText: function (text) {
         this.addLink(null, text);
         return this;
     },
 
     addHome: function () {
-        this.addLink('index', 'Home');
+        // disabled for better user experience
+        // this.addLink('index', 'Home');
         return this;
     },
 

@@ -1,9 +1,11 @@
 Vaultier.MemberIndexRoute = Ember.Route.extend({
 
     model: function (params, transition) {
+        var blocks = this.setupBlocks();
+
         var workspace = this.modelFor('Vault');
-        var card = null;
-        var vault = null;
+        var vault = this.modelFor('Card');
+        var card = this.modelFor('Secret');
 
         var store = this.get('store')
 
@@ -16,18 +18,37 @@ Vaultier.MemberIndexRoute = Ember.Route.extend({
             cardRoles: null
         };
 
-        if (workspace) {
+        if (blocks.workspace) {
             queries.workspace = workspace
             queries.workspaceRoles = store.find('Role', {
                 to_workspace: workspace.get('id')
             })
-
         }
-        // add more queries
+
+        if (blocks.vault) {
+            queries.vault = vault
+            queries.vaultRoles = store.find('Role', {
+                to_vault: vault.get('id')
+            })
+        }
+
+        if (blocks.card) {
+            queries.card = card
+            queries.cardRoles = store.find('Role', {
+                to_card: card.get('id')
+            })
+        }
 
         var models = Ember.RSVP.hash(queries);
 
         return models;
+    },
+
+    /**
+     * override this to setup invite breadcrumbs
+     */
+    setupBlocks: function () {
+        throw 'Please override this in your route'
     },
 
     /**
@@ -54,15 +75,42 @@ Vaultier.MemberIndexRoute = Ember.Route.extend({
     setupController: function (ctrl, models) {
         var blocks = [];
 
+
+        if (models.card) {
+            blocks.push(Ember.Object.create({
+                url: null,
+                type: 'card',
+                object: models.card,
+                roles: models.cardRoles
+            }));
+        }
+
+        if (models.vault) {
+            blocks.push(Ember.Object.create({
+                type: 'vault',
+                url: this.get('router').generate('Card.memberIndex', models.workspace, models.vault),
+                object: models.vault,
+                roles: models.vaultRoles
+            }));
+        }
+
         if (models.workspace) {
             blocks.push(Ember.Object.create({
                 type: 'workspace',
+                url: this.get('router').generate('Vault.memberIndex', models.workspace),
                 object: models.workspace,
                 roles: models.workspaceRoles
             }));
-
-            ctrl.set('blocks', blocks)
         }
+
+        // mark readonly blocks
+        if (blocks.length > 1) {
+            for (var i = 1; i < blocks.length; i++) {
+                blocks[i].readOnly = true;
+            }
+        }
+
+        ctrl.set('blocks', blocks)
 
         // setup roles
         ctrl.set('roleLevels', this.setupRoleLevels());

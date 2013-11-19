@@ -17,3 +17,13 @@ Utils.ConstantList.prototype.toArray = function() {
     }
     return result
 }
+
+Utils.ConstantList.prototype.getByValue = function(value) {
+    for (prop in this) {
+        if (this.hasOwnProperty(prop)) {
+            if (this[prop].value == value) {
+                return this[prop]
+            }
+        }
+    }
+}

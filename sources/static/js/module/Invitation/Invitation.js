@@ -4,9 +4,6 @@ Vaultier.InvitationUseRoute = Ember.Route.extend(
         model: function (params, transition) {
             transition.abort();
             return Service.Invitations.current().useInvitation(params.invitation, params.hash, params.data)
-                .then(function () {
-                    transition
-                })
                 .fail(this.handleErrors(transition))
         }
     });
@@ -35,7 +32,7 @@ Vaultier.InvitationAcceptRoute = Ember.Route.extend(
             ctrl.set('breadcrumbs',
                 Vaultier.Breadcrumbs.create({router: this.get('router')})
                     .addHome()
-                    .addText('List of invitations')
+                    .addText('List of invitations to accept')
             );
         },
 
