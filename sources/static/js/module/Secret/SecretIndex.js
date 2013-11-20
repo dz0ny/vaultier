@@ -107,21 +107,6 @@ Vaultier.SecretIndexController = Ember.ArrayController.extend({
 });
 
 Vaultier.SecretIndexItemController = Ember.ObjectController.extend({
-    isNote: function () {
-        var secret = this.get('content');
-        return secret.get('type') == secret.types['NOTE'].value;
-    }.property('type'),
-
-    isPassword: function () {
-        var secret = this.get('content');
-        return secret.get('type') == secret.types['PASSWORD'].value;
-    }.property('type'),
-
-    isFile: function () {
-        var secret = this.get('content');
-        return secret.get('type') == secret.types['FILE'].value;
-    }.property('type')
-
 });
 
 Vaultier.SecretIndexView = Ember.View.extend({

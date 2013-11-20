@@ -16,6 +16,7 @@ Vaultier.Secret = DS.Model.extend(
             }
         }),
 
+
         name: DS.attr('string'),
         type: DS.attr('number'),
         data: DS.attr('string'),
@@ -26,6 +27,18 @@ Vaultier.Secret = DS.Model.extend(
         url: null,
         note: null,
         file: null,
+
+        isNote: function () {
+            return this.get('type') == this.types['NOTE'].value;
+        }.property('type'),
+
+        isPassword: function () {
+            return this.get('type') == this.types['PASSWORD'].value;
+        }.property('type'),
+
+        isFile: function () {
+            return this.get('type') == this.types['FILE'].value;
+        }.property('type'),
 
         decode: function () {
             var data = this.get('data');

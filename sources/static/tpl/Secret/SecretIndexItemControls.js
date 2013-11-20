@@ -17,7 +17,8 @@ function program1(depth0,data) {
   data.buffer.push(" Updated: ");
   hashTypes = {};
   hashContexts = {};
-  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "updated_ago", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
+  options = {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
+  data.buffer.push(escapeExpression(((stack1 = helpers.printAgo || depth0.printAgo),stack1 ? stack1.call(depth0, "updated_at", options) : helperMissing.call(depth0, "printAgo", "updated_at", options))));
   data.buffer.push("\r\n    </div>\r\n\r\n    <div class=\"vlt-buttons col-md-6\">\r\n        <div class=\"btn-group\">\r\n            <a type=\"button\"\r\n               class=\"btn btn-default dropdown-toggle btn-sm\"\r\n               data-toggle=\"dropdown\">\r\n                <span class=\"glyphicon glyphicon-cog\"></span>\r\n            </a>\r\n            <ul class=\"dropdown-menu caret-left\">\r\n                <li>");
   hashTypes = {};
   hashContexts = {};
