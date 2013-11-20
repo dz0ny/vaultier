@@ -145,5 +145,5 @@ Vaultier.SecretCreateSubmitRoute = Ember.Route.extend({
 });
 
 Vaultier.SecretCreateSelectView = Ember.View.extend({
-    templateName: 'Secret/SecretCreateSelect',
+    templateName: 'Secret/SecretCreateSelect'
 });

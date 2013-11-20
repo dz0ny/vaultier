@@ -8,7 +8,7 @@
                 Back
             </a>
 
-            <a href="#" class="btn btn-default" data-toggle="tooltip" title="first tooltip">
+            <a href="#" class="btn btn-default">
                 <span class="glyphicon glyphicon-question-sign"></span>
                 Permissions
             </a>
@@ -33,115 +33,122 @@
 
     {{#each block in blocks }}
 
-        {{#ifIndex is=2}}
+
+        {{#if block.isSecond}}
             <div class="top-30">
                 <h3>Inherited memberships</h3>
             </div>
-        {{/ifIndex}}
+        {{/if}}
 
-        <div class="panel panel-default vlt-panel-permissions top-30">
-            <div class="panel-heading">
-                <div class="col-md-8">
-                    <h4>
-                        {{block.roles.length}} collaborators at {{block.type}} <b>{{block.object.name}}</b>
-                    </h4>
-                </div>
-                <div class="col-md-4 vlt-controls">
-                    {{#if block.readOnly }}
-                        <a class="btn btn-default btn-sm" {{bind-attr href=block.url}}>
-                            <span class="glyphicon glyphicon-edit"></span>
-                        </a>
-                    {{/if}}
+        {{#unless block.isHidden}}
 
-                </div>
-
-                <div class="clearfix"></div>
-            </div>
-            <table class="table vlt-table">
-
-                {{#unless block.roles.length}}
-                    <div class="padding-15">
-                        There are no permission to this object.
-
-                        {{#link-to inviteRouteName class="btn btn-default btn-sm"}}
-                            <span class="glyphicon glyphicon-user"></span>
-                            Invite
-                        {{/link-to}}
+            <div class="panel panel-default vlt-panel-permissions top-30">
+                <div class="panel-heading">
+                    <div class="col-md-8">
+                        <h4>
+                            {{block.roles.length}} collaborators at {{block.type}} <b>{{block.object.name}}</b>
+                        </h4>
+                    </div>
+                    <div class="col-md-4 vlt-controls">
+                        {{#if block.readOnly }}
+                            <a class="btn btn-default btn-sm"
+                                {{bind-attr href=block.url}}
+                               data-toggle="tooltip"
+                               title="Edit roles"
+                               >
+                                <span class="glyphicon glyphicon-edit"></span>
+                            </a>
+                        {{/if}}
 
                     </div>
-                {{/unless}}
 
-                {{#each role in block.roles }}
+                    <div class="clearfix"></div>
+                </div>
+                <table class="table vlt-table">
 
-                    {{#view view.Item role=role block=block classNameBindings='role.isMember:normal:warning' }}
-                        <td class="col-md-4 vlt-user">
-                            {{printUser role.member size=50}}
-                        </td>
-                        <td class="col-md-4 vlt-labels">
-                            {{#if role.isNonApprovedMember}}
-                                <div class="label label-default">
-                                    <div class="col-md-6">
-                                        Accepted invitation. Please approve his access.
+                    {{#unless block.roles.length}}
+                        <div class="padding-15">
+                            There are no permission to this object.
+
+                            {{#link-to inviteRouteName class="btn btn-default btn-sm"}}
+                                <span class="glyphicon glyphicon-user"></span>
+                                Invite
+                            {{/link-to}}
+
+                        </div>
+                    {{/unless}}
+
+                    {{#each role in block.roles }}
+
+                        {{#view view.Item role=role block=block classNameBindings='role.isMember:normal:warning' }}
+                            <td class="col-md-4 vlt-user">
+                                {{printUser role.member size=50}}
+                            </td>
+                            <td class="col-md-4 vlt-labels">
+                                {{#if role.isNonApprovedMember}}
+                                    <div class="label label-default">
+                                        <div class="col-md-6">
+                                            Accepted invitation. Please approve his access.
+                                        </div>
+                                        <div class="col-md-6">
+                                            <a class="btn btn-success">
+                                                <span class="glyphicon glyphicon-ok"></span>
+                                                Approve
+                                            </a>
+                                        </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <a class="btn btn-success">
-                                            <span class="glyphicon glyphicon-ok"></span>
-                                            Approve
-                                        </a>
+                                {{/if}}
+
+                                {{#if role.isInvited}}
+                                    <div class="label label-warning">
+                                        Invited only. Did not show up yet!
                                     </div>
-                                </div>
-                            {{/if}}
+                                {{/if}}
+                            </td>
+                            <td class="col-md-4 vlt-actions">
+                                {{#unless block.readOnly}}
 
-                            {{#if role.isInvited}}
-                                <div class="label label-warning">
-                                    Invited only. Did not show up yet!
-                                </div>
-                            {{/if}}
-                        </td>
-                        <td class="col-md-4 vlt-actions">
-                            {{#unless block.readOnly}}
-
-                                {{#if role.isCurrentUser}}
-                                    <span class="label label-warning">
+                                    {{#if role.isCurrentUser}}
+                                        <span class="label label-warning">
                                 It's you
                                 </span>
+                                    {{else}}
+                                        <div class="input-group">
+                                            {{view view.Select
+                                            role=role
+                                            class="form-control vlt-perms"
+                                            contentBinding="roleLevels"
+                                            optionValuePath="content.value"
+                                            optionLabelPath="content.text"
+                                            valueBinding="role.level"
+                                            }}
+                                            <a class="vlt-delete btn btn-default btn-sm input-group-btn" {{action deleteRole role block}}>
+                                                <span class="glyphicon glyphicon-trash"></span>
+                                            </a>
+                                        </div>
+                                    {{/if}}
                                 {{else}}
-                                    <div class="input-group">
-                                        {{view view.Select
-                                        role=role
-                                        class="form-control vlt-perms"
-                                        contentBinding="roleLevels"
-                                        optionValuePath="content.value"
-                                        optionLabelPath="content.text"
-                                        valueBinding="role.level"
-                                        }}
-                                        <a class="vlt-delete btn btn-default btn-sm input-group-btn" {{action deleteRole role block}}>
-                                            <span class="glyphicon glyphicon-trash"></span>
-                                        </a>
-                                    </div>
-                                {{/if}}
-                            {{else}}
 
-                                {{#if role.isCurrentUser}}
-                                    <span class="label label-warning">
+                                    {{#if role.isCurrentUser}}
+                                        <span class="label label-warning">
                                 It's you
                                 </span>
-                                {{/if}}
+                                    {{/if}}
 
-                                <span class="label label-default">
-                                    {{role.printableName}}
-                                </span>
+                                    <span class="label label-default">
+                                        {{role.printableName}}
+                                    </span>
 
-                            {{/unless}}
-                        </td>
+                                {{/unless}}
+                            </td>
 
-                    {{/view}}
+                        {{/view}}
 
-                {{/each}}
-            </table>
+                    {{/each}}
+                </table>
 
-        </div>
-
+            </div>
+        {{/unless}}
     {{/each}}
 
 

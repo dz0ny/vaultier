@@ -81,7 +81,7 @@ Vaultier.MemberIndexRoute = Ember.Route.extend({
                 url: null,
                 type: 'card',
                 object: models.card,
-                roles: models.cardRoles
+                roles: models.cardRoles,
             }));
         }
 
@@ -90,7 +90,7 @@ Vaultier.MemberIndexRoute = Ember.Route.extend({
                 type: 'vault',
                 url: this.get('router').generate('Card.memberIndex', models.workspace, models.vault),
                 object: models.vault,
-                roles: models.vaultRoles
+                roles: models.vaultRoles,
             }));
         }
 
@@ -99,18 +99,12 @@ Vaultier.MemberIndexRoute = Ember.Route.extend({
                 type: 'workspace',
                 url: this.get('router').generate('Vault.memberIndex', models.workspace),
                 object: models.workspace,
-                roles: models.workspaceRoles
+                roles: models.workspaceRoles,
             }));
         }
 
-        // mark readonly blocks
-        if (blocks.length > 1) {
-            for (var i = 1; i < blocks.length; i++) {
-                blocks[i].readOnly = true;
-            }
-        }
 
-        ctrl.set('blocks', blocks)
+        ctrl.set('content', blocks)
 
         // setup roles
         ctrl.set('roleLevels', this.setupRoleLevels());
@@ -164,15 +158,24 @@ Vaultier.MemberIndexRoute = Ember.Route.extend({
 });
 
 Vaultier.MemberIndexController = Ember.Controller.extend({
-    workspaces: null,
-    vaults: null,
-    cards: null
-});
+    blocks: function () {
+        return this.get('content').map(function (item, index) {
+            item.setProperties({
+                index: index,
+                isSecond: index == 1,
+                isHidden: item.roles.get('length') == 0 && index > 0,
+                readOnly: index > 1
+            })
 
+            return item
+        });
+    }.property('content.@each')
+});
 
 Vaultier.MemberIndexView = Ember.View.extend({
     templateName: 'Member/MemberIndex',
     layoutName: 'Layout/LayoutStandard',
+
 
     Item: Ember.View.extend({
         tagName: 'tr',
@@ -184,12 +187,7 @@ Vaultier.MemberIndexView = Ember.View.extend({
                 })
             }
         })
-
     }),
 
-    didInsertElement: function () {
-        $(document).ready(function () {
-            $('body [data-toggle=tooltip]').tooltip();
-        })
-    }
 });
+

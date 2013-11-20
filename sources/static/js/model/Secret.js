@@ -74,7 +74,9 @@ Vaultier.Secret = DS.Model.extend(
         },
 
         save: function () {
-            this.encode();
+            if (this.get('currentState.stateName') != 'root.deleted.uncommitted') {
+                this.encode();
+            }
             return this._super(arguments);
         }
 

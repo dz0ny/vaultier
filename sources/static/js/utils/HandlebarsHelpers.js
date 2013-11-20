@@ -47,6 +47,16 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
         return '<span class="vlt-user">' + avatar + name + '</span>';
     },
 
+    printAgo: function(t) {
+        var a;
+        try {
+            a = moment(t).fromNow();
+        } catch (e) {
+            console.error(e.stack)
+        }
+        return '<span data-toggle=tooltip title="'+t+'">' + a + '</span>';
+    },
+
     /**
      * {{ellipsis}}
      * @author: Jon Schlinkert <http://github.com/jonschlinkert>
@@ -126,6 +136,17 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
     },
 
     register: function () {
+
+        var printAgo = this.printAgo.bind(this)
+        Ember.Handlebars.registerBoundHelper('printAgo', function (t) {
+            return new Ember.Handlebars.SafeString(printAgo(t));
+        });
+
+        /////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////
+
 
         var ucfirst = this.ucfirst.bind(this);
         Ember.Handlebars.registerBoundHelper('ucfirst', ucfirst);
