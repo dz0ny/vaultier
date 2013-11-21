@@ -1,6 +1,6 @@
 <div class="vlt-page-nav">
 
-    {{#exp  "( workspace.perms.invite && workspace.perms.create)"  workspace='workspace'}}
+    {{#exp  "( workspace.perms.invite || workspace.perms.create)" }}
 
         <div class="vlt-page-toolbar pull-right">
             <div>

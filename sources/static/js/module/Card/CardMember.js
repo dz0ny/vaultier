@@ -1,7 +1,14 @@
 /**
- * Vault memberships, because of nested routing in namespace of vault
+ * Vault memberships, because of nested routing in namespace of Card
  */
 Vaultier.CardMemberIndexRoute = Vaultier.MemberIndexRoute.extend({
+
+    setupInviteData: function(params) {
+        var vault = this.modelFor('Card');
+        return {
+            inviteObject: vault
+        }
+    },
 
     setupBlocks: function () {
         return {workspace: true, vault: true}
@@ -36,6 +43,7 @@ Vaultier.CardMemberInviteRoute = Vaultier.MemberInviteRoute.extend({
         var vault = this.modelFor('Card');
         var workspace = this.modelFor('Vault');
         return {
+            inviteObject: vault,
             inviteParams: { to_vault: vault},
             inviteWorkspace: workspace
         }

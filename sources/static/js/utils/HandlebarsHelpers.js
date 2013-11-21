@@ -212,12 +212,8 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
 
         Ember.Handlebars.registerHelper('exp', function (exp, options) {
 
-            var obj = options.hashContexts;
-
-            var property = function (path) {
-                var paths = path.split('.');
-                var context = obj[paths[0]]
-                return context.get(path);
+            var get = function (path) {
+                return options.data.view.get('controller.'+path);
             }
 
             var parseVariable = function (node, name) {
@@ -254,7 +250,7 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
 
                 var mutated = exp;
                 for (var i = 0; i < vars.length; i++) {
-                    mutated = mutated.replace(vars[i], "property('" + vars[i] + "')");
+                    mutated = mutated.replace(vars[i], "get('" + vars[i] + "')");
                 }
 
                 result = false;

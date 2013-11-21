@@ -1,38 +1,53 @@
 <div class="vlt-page-nav">
 
-    <div class="vlt-page-toolbar pull-right">
-        <div>
+    {{#exp  "( vault.perms.invite || vault.perms.create || vault.perms.update || vault.perms.delete)"}}
+        <div class="vlt-page-toolbar pull-right">
+            <div>
 
-            <div class="btn-group">
-                <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown">
-                    <span class="glyphicon glyphicon-cog"></span>
-                </button>
-                <ul class="dropdown-menu caret-left">
+                {{#exp  "( vault.perms.update || vault.perms.delete)"}}
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown">
+                            <span class="glyphicon glyphicon-cog"></span>
+                        </button>
+                        <ul class="dropdown-menu caret-left">
 
-                    <li>
-                        {{#link-to "Vault.edit" workspace vault}}
-                            Edit vault
+                            {{#if vault.perms.update}}
+                                <li>
+                                    {{#link-to "Vault.edit" workspace vault}}
+                                        Edit vault
+                                    {{/link-to}}
+                                </li>
+                            {{/if}}
+
+                            {{#if vault.perms.delete}}
+                                <li>
+                                    <a href="#" {{action deleteVault vault}}>Delete vault</a>
+                                </li>
+                            {{/if}}
+
+                        </ul>
+                    </div>
+                {{/exp}}
+
+                {{#if vault.perms.invite}}
+                    {{#link-to "Card.memberIndex" class="btn btn-default"}}
+                        <span class="glyphicon glyphicon-user"></span>
+                        Collaborate
+                    {{/link-to}}
+                {{/if}}
+
+                {{#if vault.perms.create}}
+                    {{#if length}}
+                        {{#link-to "Card.create" class="btn btn-primary"}}
+                            <span class="glyphicon glyphicon-plus"></span>
+                            Create new Card
                         {{/link-to}}
-                    </li>
-                    <li><a href="#" {{action deleteVault vault}}>Delete vault</a></li>
-                </ul>
+                    {{/if}}
+                {{/if}}
+
             </div>
-
-            {{#link-to "Card.memberIndex" class="btn btn-default"}}
-                <span class="glyphicon glyphicon-user"></span>
-                Collaborate
-            {{/link-to}}
-
-            {{#if length}}
-
-                {{#link-to "Card.create" class="btn btn-primary"}}
-                    <span class="glyphicon glyphicon-plus"></span>
-                    Create new Card
-                {{/link-to}}
-            {{/if}}
-
         </div>
-    </div>
+    {{/exp}}
 
     <div class="pull-left">
         <h2>List of cards</h2>

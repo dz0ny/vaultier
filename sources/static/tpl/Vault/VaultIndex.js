@@ -1,7 +1,7 @@
 Ember.TEMPLATES["Vault/VaultIndex"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  var buffer = '', stack1, stack2, hashContexts, hashTypes, options, self=this, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
+  var buffer = '', stack1, stack2, hashTypes, hashContexts, options, self=this, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
 
 function program1(depth0,data) {
   
@@ -119,12 +119,10 @@ function program13(depth0,data) {
   }
 
   data.buffer.push("<div class=\"vlt-page-nav\">\r\n\r\n    ");
-  hashContexts = {'workspace': depth0};
-  hashTypes = {'workspace': "STRING"};
-  options = {hash:{
-    'workspace': ("workspace")
-  },inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
-  stack2 = ((stack1 = helpers.exp || depth0.exp),stack1 ? stack1.call(depth0, "( workspace.perms.invite && workspace.perms.create)", options) : helperMissing.call(depth0, "exp", "( workspace.perms.invite && workspace.perms.create)", options));
+  hashTypes = {};
+  hashContexts = {};
+  options = {hash:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
+  stack2 = ((stack1 = helpers.exp || depth0.exp),stack1 ? stack1.call(depth0, "( workspace.perms.invite || workspace.perms.create)", options) : helperMissing.call(depth0, "exp", "( workspace.perms.invite || workspace.perms.create)", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
   data.buffer.push("\r\n\r\n    <div class=\"pull-left\">\r\n        <h2>Dashboard - list of vaults</h2>\r\n    </div>\r\n\r\n    <div class=\"clearfix\"></div>\r\n\r\n</div>\r\n\r\n<div class=\"row\">\r\n    <div class=\"col-md-12\">\r\n\r\n        ");
   hashTypes = {};

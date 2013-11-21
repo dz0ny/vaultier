@@ -4,10 +4,11 @@ Vaultier.CardCreateRoute = Ember.Route.extend(
 
         model: function (params, transition) {
 
-            var vault = this.modelFor('Card')
-            this.checkPermissions(transition, function () {
-                return vault.get('perms.create')
-            }, true)
+            if (!this.checkPermissions(transition, function () {
+                return this.modelFor('Card').get('perms.create')
+            }.bind(this), true)) {
+                return;
+            }
 
             var store = this.get('store');
             var record = store.createRecord('Card');
