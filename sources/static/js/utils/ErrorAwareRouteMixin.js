@@ -20,6 +20,31 @@ Utils.ErrorAwareRouteMixin = Ember.Mixin.create({
         this.transitionTo('AuthLogin');
     },
 
+    checkPermissions: function (transition, check, noPromise) {
+        var fn = function (model) {
+            var result = false;
+            try {
+                result = check(model)
+            } catch(e) {
+                console.error(e.stack)
+            }
+
+            if (!result) {
+                return this.handleErrors(transition)({
+                    status: 403,
+                    message: 'Missing client permission'
+                })
+            }
+        }.bind(this)
+
+        if (noPromise) {
+            return fn()
+        } else {
+            return fn
+        }
+
+    },
+
     handleErrors: function (transition) {
         return function (error) {
             transition.abort();
