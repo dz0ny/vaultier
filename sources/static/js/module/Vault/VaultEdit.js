@@ -1,23 +1,16 @@
 Vaultier.VaultEditRoute = Ember.Route.extend(
     Utils.ErrorAwareRouteMixin,
     {
-
-        serialize: function (vault) {
-            return {
-                vault: vault.id
-            }
-        },
-
         model: function (params, transition) {
-            var store = this.get('store');
-            var promise = store.find('Vault', params.vault);
-            promise
-                .then(null, this.handleErrors(transition))
-                .then(this.checkPermissions(transition, function(model) {
-                    perms = model.get('perms.update');
-                    return perms
-                }))
-            return promise;
+            var vault = this.modelFor('Vault');
+
+            if (!this.checkPermissions(transition, function() {
+                return vault.get('perms.update')
+            }.bind(this), true)) {
+                return;
+            }
+
+            return vault
         },
 
         setupController: function (ctrl, model) {

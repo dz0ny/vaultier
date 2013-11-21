@@ -1,0 +1,96 @@
+<div class="vlt-page-nav">
+
+    {{#exp  "( vault.perms.invite || vault.perms.create || vault.perms.update || vault.perms.delete)"}}
+        <div class="vlt-page-toolbar pull-right">
+            <div>
+
+                {{#exp  "( vault.perms.update || vault.perms.delete)"}}
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown">
+                            <span class="glyphicon glyphicon-cog"></span>
+                        </button>
+                        <ul class="dropdown-menu caret-left">
+
+                            {{#if vault.perms.update}}
+                                <li>
+                                    {{#link-to "Vault.edit" vault}}
+                                        Edit vault
+                                    {{/link-to}}
+                                </li>
+                            {{/if}}
+
+                            {{#if vault.perms.delete}}
+                                <li>
+                                    <a href="#" {{action deleteVault vault}}>Delete vault</a>
+                                </li>
+                            {{/if}}
+
+                        </ul>
+                    </div>
+                {{/exp}}
+
+                {{#if vault.perms.invite}}
+                    {{#link-to "Card.memberIndex" class="btn btn-default"}}
+                        <span class="glyphicon glyphicon-user"></span>
+                        Collaborate
+                    {{/link-to}}
+                {{/if}}
+
+                {{#if vault.perms.create}}
+                    {{#if length}}
+                        {{#link-to "Cards.create" class="btn btn-primary"}}
+                            <span class="glyphicon glyphicon-plus"></span>
+                            Create new Card
+                        {{/link-to}}
+                    {{/if}}
+                {{/if}}
+
+            </div>
+        </div>
+    {{/exp}}
+
+    <div class="pull-left">
+        <h2>List of cards</h2>
+    </div>
+
+    <div class="clearfix"></div>
+
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+
+        {{#if length}}
+            {{#each}}
+                {{view Vaultier.CardsIndexItemView}}
+            {{/each}}
+        {{else}}
+
+            <div class="jumbotron vlt-empty vlt-card col-md-8 col-md-offset-2">
+
+                <div class="vlt-header">
+                    <div class="vlt-icon">
+
+                    </div>
+                    <div class="vlt-title">
+                        <h1>You do not have any Card yet</h1>
+                    </div>
+                </div>
+
+                {{#if vault.perms.create }}
+                    <p>
+                        What are cards for? Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    </p>
+
+                    <p class="top-30">
+                        {{#link-to "Cards.create" class="btn btn-lg btn-primary" }}
+                            <span class="glyphicon glyphicon-plus"></span>
+                            Create new Card
+                        {{/link-to}}
+                    </p>
+                {{/if}}
+            </div>
+        {{/if}}
+
+    </div>
+</div>

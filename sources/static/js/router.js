@@ -35,13 +35,15 @@ var router = Vaultier.Router.map(function () {
      * Workspaces
      ************************************************************/
     this.resource('Workspaces', {path: '/workspaces'}, function () {
-        // automatic Workspace.index
+        // automatic Workspaces.index
         this.route('create', { path: '/create'});
 
         /************************************************************
          * Workspace
          ************************************************************/
         this.resource('Workspace', {path: '/w/:workspace'}, function () {
+            // automatic Workspace.index
+
             // edit
             this.route('edit', { path: '/edit'});
 
@@ -53,52 +55,61 @@ var router = Vaultier.Router.map(function () {
              * Vaults
              ************************************************************/
             this.resource('Vaults', {path: '/vaults'}, function () {
-                // automatic Vault.index
-                this.route('create', { path: '/action/create-vault'});
+                // automatic Vaults.index
+                this.route('create', { path: '/create'});
 
                 /************************************************************
                  * Vault
                  ************************************************************/
-                this.resource('Vault', {path: '/w/:workspace'}, function () {
+                this.resource('Vault', {path: '/v/:vault'}, function () {
+                    // automatic Vault.index
+
                     // edit
                     this.route('edit', { path: '/edit'});
 
                     // members
                     this.route('memberIndex', { path: '/team'});
                     this.route('memberInvite', { path: '/team/invite'});
-                });
-
-                /************************************************************
-                 * Cards
-                 ************************************************************/
-                this.resource('Card', {path: '/vault/:vault'}, function () {
-                    // automatic Card.index
-                    this.route('create', { path: '/create-card'});
-                    this.route('edit', { path: '/action/edit-card/:card'});
 
 
                     /************************************************************
-                     * Card detail
+                     * Cards
                      ************************************************************/
-                    this.resource('Secret', {path: '/card/:card'}, function () {
-                        // automatic Vault.index
-                        this.route('createSelect', { path: '/action/create-secret/select'});
-                        this.route('createSubmit', { path: '/action/create-secret/submit/:type'});
-                        this.route('edit', { path: '/action/edit-secret/:secret'});
+                    this.resource('Cards', {path: '/cards'}, function () {
+                        // automatic Cards.index
+                        this.route('create', { path: '/create'});
 
                         /************************************************************
-                         * Members
+                         * Card
                          ************************************************************/
-                        this.route('memberIndex', { path: '/team'});
-                        this.route('memberInvite', { path: '/team/invite'});
+                        this.resource('Card', '/c/:card', function () {
+                            // automatic Card.index
+
+                            // edit
+                            this.route('edit', { path: '/edit'});
+
+                            // members
+                            this.route('memberIndex', { path: '/team'});
+                            this.route('memberInvite', { path: '/team/invite'});
+
+                            this.resource('Secrets', {path: '/secrets'}, function () {
+                                // automatic Secrets.index
+
+                                // secrets manipulation
+                                this.route('createSelect', { path: '/create/select'});
+                                this.route('createSubmit', { path: '/create/submit/:type'});
+                                this.route('edit', { path: '/edit/:secret'});
+                            })
+                        })
+
+
                     });
-                });
+
+                })
 
             })
 
-
         })
-
 
     });
 
