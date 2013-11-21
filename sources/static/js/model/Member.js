@@ -23,6 +23,13 @@ Vaultier.Member = DS.Model.extend(
 
     });
 
+Vaultier.MemberWorkspaceKey = DS.Model.extend({
+    public_key: DS.attr('string'),
+    workspace_key: DS.attr('string'),
+    status: DS.attr('string')
+})
+
+
 Vaultier.MemberRole = DS.Model.extend({
     created_by: DS.attr(),
     to_name: DS.attr('string'),

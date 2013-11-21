@@ -54,7 +54,7 @@ function program7(depth0,data) {
   options = {hash:{
     'class': ("btn btn-lg btn-primary")
   },inverse:self.noop,fn:self.program(8, program8, data),contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
-  stack2 = ((stack1 = helpers['link-to'] || depth0['link-to']),stack1 ? stack1.call(depth0, "Workspace.create", options) : helperMissing.call(depth0, "link-to", "Workspace.create", options));
+  stack2 = ((stack1 = helpers['link-to'] || depth0['link-to']),stack1 ? stack1.call(depth0, "Workspaces.create", options) : helperMissing.call(depth0, "link-to", "Workspaces.create", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
   data.buffer.push("\r\n                </p>\r\n            </div>\r\n        ");
   return buffer;

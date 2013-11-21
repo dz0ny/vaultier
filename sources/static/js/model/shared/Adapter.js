@@ -13,7 +13,23 @@ Vaultier.ApplicationAdapter = DS.DjangoRESTAdapter.extend(
                         .replace('{hash}', query.hash);
                     return this.ajax(url, 'GET', { data: query });
                 }
+            },
+
+            'MemberWorkspaceKey': {
+                updateRecord: function (store, type, record) {
+                    var url = '/api/members/{id}/approve/'
+                        .replace('{id}', record.get('member'))
+                    var data = store.serializerFor(type.typeKey).serialize(record);
+                    return this.ajax(url, "PUT", { data: data });
+                },
+
+                find: function (store, type, id) {
+                    var url = '/api/members/{id}/approve/'
+                        .replace('{id}', id)
+                    return this.ajax(url, "GET")
+                }
             }
+
         },
 
         urls: {

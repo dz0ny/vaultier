@@ -93,10 +93,10 @@
                                             Accepted invitation. Please approve his access.
                                         </div>
                                         <div class="col-md-6">
-                                            <a class="btn btn-success">
-                                                <span class="glyphicon glyphicon-ok"></span>
-                                                Approve
-                                            </a>
+                                            {{#link-to 'Workspace.memberApprove' class="btn btn-success" href="#"}}
+                                                    <span class="glyphicon glyphicon-ok"></span>
+                                                    Approve
+                                            {{/link-to}}
                                         </div>
                                     </div>
                                 {{/if}}

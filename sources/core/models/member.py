@@ -101,6 +101,7 @@ class Member(ChangesMixin, models.Model):
     user = models.ForeignKey('core.User', on_delete=CASCADE, null=True)
     invitation_hash = models.CharField(max_length=64, null=True, unique=True)
     invitation_email = models.CharField(max_length=1024, null=True)
+    workspace_key = models.CharField(max_length=4096)
     status = MemberStatusField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

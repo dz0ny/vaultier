@@ -131,46 +131,61 @@ function program13(depth0,data) {
   data.buffer.push("\r\n\r\n                                ");
   hashTypes = {};
   hashContexts = {};
-  stack2 = helpers['if'].call(depth0, "role.isInvited", {hash:{},inverse:self.noop,fn:self.program(16, program16, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
+  stack2 = helpers['if'].call(depth0, "role.isInvited", {hash:{},inverse:self.noop,fn:self.program(17, program17, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
   data.buffer.push("\r\n                            </td>\r\n                            <td class=\"col-md-4 vlt-actions\">\r\n                                ");
   hashTypes = {};
   hashContexts = {};
-  stack2 = helpers.unless.call(depth0, "block.readOnly", {hash:{},inverse:self.program(23, program23, data),fn:self.program(18, program18, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
+  stack2 = helpers.unless.call(depth0, "block.readOnly", {hash:{},inverse:self.program(24, program24, data),fn:self.program(19, program19, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
   data.buffer.push("\r\n                            </td>\r\n\r\n                        ");
   return buffer;
   }
 function program14(depth0,data) {
   
+  var buffer = '', stack1, stack2, hashContexts, hashTypes, options;
+  data.buffer.push("\r\n                                    <div class=\"label label-default\">\r\n                                        <div class=\"col-md-6\">\r\n                                            Accepted invitation. Please approve his access.\r\n                                        </div>\r\n                                        <div class=\"col-md-6\">\r\n                                            ");
+  hashContexts = {'class': depth0,'href': depth0};
+  hashTypes = {'class': "STRING",'href': "STRING"};
+  options = {hash:{
+    'class': ("btn btn-success"),
+    'href': ("#")
+  },inverse:self.noop,fn:self.program(15, program15, data),contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
+  stack2 = ((stack1 = helpers['link-to'] || depth0['link-to']),stack1 ? stack1.call(depth0, "Workspace.memberApprove", options) : helperMissing.call(depth0, "link-to", "Workspace.memberApprove", options));
+  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
+  data.buffer.push("\r\n                                        </div>\r\n                                    </div>\r\n                                ");
+  return buffer;
+  }
+function program15(depth0,data) {
   
-  data.buffer.push("\r\n                                    <div class=\"label label-default\">\r\n                                        <div class=\"col-md-6\">\r\n                                            Accepted invitation. Please approve his access.\r\n                                        </div>\r\n                                        <div class=\"col-md-6\">\r\n                                            <a class=\"btn btn-success\">\r\n                                                <span class=\"glyphicon glyphicon-ok\"></span>\r\n                                                Approve\r\n                                            </a>\r\n                                        </div>\r\n                                    </div>\r\n                                ");
+  
+  data.buffer.push("\r\n                                                    <span class=\"glyphicon glyphicon-ok\"></span>\r\n                                                    Approve\r\n                                            ");
   }
 
-function program16(depth0,data) {
+function program17(depth0,data) {
   
   
   data.buffer.push("\r\n                                    <div class=\"label label-warning\">\r\n                                        Invited only. Did not show up yet!\r\n                                    </div>\r\n                                ");
   }
 
-function program18(depth0,data) {
+function program19(depth0,data) {
   
   var buffer = '', stack1, hashTypes, hashContexts;
   data.buffer.push("\r\n\r\n                                    ");
   hashTypes = {};
   hashContexts = {};
-  stack1 = helpers['if'].call(depth0, "role.isCurrentUser", {hash:{},inverse:self.program(21, program21, data),fn:self.program(19, program19, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
+  stack1 = helpers['if'].call(depth0, "role.isCurrentUser", {hash:{},inverse:self.program(22, program22, data),fn:self.program(20, program20, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n                                ");
   return buffer;
   }
-function program19(depth0,data) {
+function program20(depth0,data) {
   
   
   data.buffer.push("\r\n                                        <span class=\"label label-warning\">\r\n                                It's you\r\n                                </span>\r\n                                    ");
   }
 
-function program21(depth0,data) {
+function program22(depth0,data) {
   
   var buffer = '', hashContexts, hashTypes;
   data.buffer.push("\r\n                                        <div class=\"input-group\">\r\n                                            ");
@@ -192,13 +207,13 @@ function program21(depth0,data) {
   return buffer;
   }
 
-function program23(depth0,data) {
+function program24(depth0,data) {
   
   var buffer = '', stack1, hashTypes, hashContexts;
   data.buffer.push("\r\n\r\n                                    ");
   hashTypes = {};
   hashContexts = {};
-  stack1 = helpers['if'].call(depth0, "role.isCurrentUser", {hash:{},inverse:self.noop,fn:self.program(19, program19, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
+  stack1 = helpers['if'].call(depth0, "role.isCurrentUser", {hash:{},inverse:self.noop,fn:self.program(20, program20, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n\r\n                                    <span class=\"label label-default\">\r\n                                        ");
   hashTypes = {};

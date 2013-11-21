@@ -24,7 +24,7 @@ Vaultier.VaultsCreateRoute = Ember.Route.extend(
                 record.save().then(
                     function () {
                         $.notify('Your vault has been successfully created.', 'success');
-                        this.transitionTo('Cards.index', workspace.id, record.id);
+                        this.transitionTo('Vault.index', record);
                     }.bind(this),
                     function () {
                         $.notify('Oooups! Something went wrong.', 'error');

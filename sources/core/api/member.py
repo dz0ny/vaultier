@@ -1,6 +1,6 @@
 from django.core.exceptions import ValidationError
 from rest_framework.decorators import action
-from rest_framework.fields import SerializerMethodField, EmailField, BooleanField, CharField
+from rest_framework.fields import SerializerMethodField, EmailField, BooleanField, CharField, Field, ModelField, IntegerField
 from rest_framework.filters import SearchFilter, DjangoFilterBackend, OrderingFilter
 from rest_framework.mixins import CreateModelMixin, ListModelMixin, RetrieveModelMixin
 from rest_framework.permissions import BasePermission
@@ -99,6 +99,19 @@ class MemberRoleSerializer(ModelSerializer):
         model = Role
         fields = ('id', 'created_by', 'to_type', 'to_name')
 
+
+class MemberWorkspaceKeySerializer(ModelSerializer):
+    public_key = SerializerMethodField('get_public_key')
+    status = IntegerField(read_only=True)
+
+    def get_public_key(self, obj):
+        return obj.user.public_key
+
+    class Meta:
+        model = Member
+        fields = ('id', 'public_key', 'workspace_key', 'status')
+
+
 class MemberViewSet(CreateModelMixin,
                     ListModelMixin,
                     RetrieveModelMixin,
@@ -109,7 +122,7 @@ class MemberViewSet(CreateModelMixin,
     permission_classes = (IsAuthenticated, )
     filter_backends = (SearchFilter, DjangoFilterBackend, OrderingFilter )
     search_fields = ('invitation_email', 'user__email', 'user__nickname',)
-    filter_fields = ('workspace',)
+    filter_fields = ('workspace', 'status')
     ordering = ('status')
 
     @action(methods=['GET'])
@@ -148,6 +161,32 @@ class MemberViewSet(CreateModelMixin,
                 serializer.errors,
                 status=HTTP_400_BAD_REQUEST,
             )
+
+    @action(methods=['PUT', 'GET'])
+    def workspace_key(self, request, pk=None):
+        if request.method == 'GET':
+            member = self.get_object(queryset=Member.objects.all())
+            serializer = MemberWorkspaceKeySerializer(instance=member, data=request.DATA, files=request.FILES)
+            return Response(
+                serializer.data,
+                status=HTTP_200_OK,
+            )
+
+        if request.method == 'PUT':
+            member = self.get_object(queryset=Member.objects.all())
+            serializer = MemberWorkspaceKeySerializer(instance=member, data=request.DATA, files=request.FILES)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(
+                    serializer.data,
+                    status=HTTP_200_OK,
+                )
+            else:
+                return Response(
+                    serializer.errors,
+                    status=HTTP_400_BAD_REQUEST,
+                )
+
 
     def invite(self, request, *args, **kwargs):
         self.permission_classes = self.permission_classes + (CanManageMemberPermission,)

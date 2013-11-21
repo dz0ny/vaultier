@@ -12,7 +12,6 @@ Po.NS('Utils');
  *        }
  *     },
  *
- *     @todo: add more methods by need
  *
  */
 Utils.MutableMethodsAdapterMixin = Ember.Mixin.create({
@@ -40,6 +39,10 @@ Utils.MutableMethodsAdapterMixin = Ember.Mixin.create({
 
     find: function (store, type, id) {
         return this.doOverride('find', type, arguments)
+    },
+
+    updateRecord: function (store, type, record) {
+        return this.doOverride('updateRecord',  type, arguments)
     }
 
 })

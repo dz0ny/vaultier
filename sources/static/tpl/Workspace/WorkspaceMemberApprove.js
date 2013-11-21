@@ -6,11 +6,11 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   var buffer = '', stack1, hashTypes, hashContexts, options;
-  data.buffer.push("\n\n                                    <tr>\n                                        <td>\n                                            member here ");
+  data.buffer.push("\n\n                                    <tr>\n                                        <td>\n                                           ");
   hashTypes = {};
   hashContexts = {};
   options = {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
-  data.buffer.push(escapeExpression(((stack1 = helpers.printUser || depth0.printUser),stack1 ? stack1.call(depth0, "role.created_by", options) : helperMissing.call(depth0, "printUser", "role.created_by", options))));
+  data.buffer.push(escapeExpression(((stack1 = helpers.printUser || depth0.printUser),stack1 ? stack1.call(depth0, "member", options) : helperMissing.call(depth0, "printUser", "member", options))));
   data.buffer.push("\n                                        </td>\n                                    </tr>\n\n                                ");
   return buffer;
   }

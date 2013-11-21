@@ -34,20 +34,18 @@ class WorkspaceMembershipSerializer(RelatedMemberSerializer):
 class WorkspaceSerializer(ModelSerializer):
     created_by = RelatedUserSerializer(required=False)
     perms = PermsField()
+    membership = SerializerMethodField('get_membership')
 
-    #@deprecated
-    #membership = SerializerMethodField('get_membership')
-    #
-    #def get_membership(self, obj):
-    #    member = Member.objects.get_conrete_member_to_workspace(obj, self.user)
-    #    if (member):
-    #        return WorkspaceMembershipSerializer(member).data
-    #    else:
-    #        return None
+    def get_membership(self, obj):
+        member = Member.objects.get_conrete_member_to_workspace(obj, self.user)
+        if (member):
+            return WorkspaceMembershipSerializer(member).data
+        else:
+            return None
 
     class Meta:
         model = Workspace
-        fields = ('id', 'name', 'description', 'perms', 'created_at', 'updated_at', 'created_by')
+        fields = ('id', 'name', 'description', 'membership', 'perms', 'created_at', 'updated_at', 'created_by')
 
 
 class RelatedWorkspaceSerializer(WorkspaceSerializer):

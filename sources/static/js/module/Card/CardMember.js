@@ -50,6 +50,7 @@ Vaultier.CardMemberInviteRoute = Vaultier.MemberInviteRoute.extend({
             .addHome()
             .addWorkspace()
             .addVault()
+            .addCard()
             .addLink('Card.memberIndex', 'Collaborators')
             .addText('Invite');
     }
