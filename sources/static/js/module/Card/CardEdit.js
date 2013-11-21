@@ -9,16 +9,15 @@ Vaultier.CardEditRoute = Ember.Route.extend(
         },
 
         model: function (params, transition) {
-            var store = this.get('store');
-            var promise = store.find('Card', params.card);
-            promise
-                .then(null, this.handleErrors(transition))
-                .then(this.checkPermissions(transition, function(model) {
-                    perms = model.get('perms.update');
-                    return perms
-                }))
+            var card = this.modelFor('Card');
 
-            return promise;
+            if (!this.checkPermissions(transition, function() {
+                return card.get('perms.update')
+            }.bind(this), true)) {
+                return;
+            }
+
+            return card
         },
 
         setupController: function (ctrl, model) {

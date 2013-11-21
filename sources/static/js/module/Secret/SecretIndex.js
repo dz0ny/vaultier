@@ -1,29 +1,7 @@
-Vaultier.SecretRoute = Ember.Route.extend(
-    Utils.ErrorAwareRouteMixin,
-    {
-
-        model: function (params, transition) {
-            var model = this.get('store').find('Card', params.card);
-            model.then(null, this.handleErrors(transition));
-            return model;
-        },
-
-        afterModel: function (card) {
-            Service.Environment.current().set('card', card);
-        },
-
-        serialize: function (card) {
-            return {
-                card: card.get('id')
-            }
-        }
-
-    });
-
 Vaultier.SecretIndexRoute = Ember.Route.extend({
 
     model: function (params, queryParams) {
-        var card = this.modelFor('Secret');
+        var card = this.modelFor('Card');
         var store = this.get('store');
         return store.find('Secret', {card: card.get('id')});
     },
@@ -32,17 +10,17 @@ Vaultier.SecretIndexRoute = Ember.Route.extend({
         ctrl.set('content', model);
 
         // retrieve workspace
-        var workspace = this.modelFor('Vault');
+        var workspace = this.modelFor('Workspace');
         this.set('workspace', workspace);
         ctrl.set('workspace', workspace);
 
         // retrieve vault
-        var vault = this.modelFor('Card');
+        var vault = this.modelFor('Vault');
         this.set('vault', vault);
         ctrl.set('vault', vault);
 
         // retrieve card
-        var card = this.modelFor('Secret');
+        var card = this.modelFor('Card');
         this.set('card', card);
         ctrl.set('card', card);
 
@@ -66,7 +44,7 @@ Vaultier.SecretIndexRoute = Ember.Route.extend({
                 card.save().then(
                     function () {
                         $.notify('Your card has been successfully deleted.', 'success');
-                        this.transitionTo('Card.index', this.get('workspace').id, this.get('vault').id);
+                        this.transitionTo('Cards.index', this.get('vault'));
                     }.bind(this),
                     function (error) {
                         card.rollback();
@@ -86,6 +64,7 @@ Vaultier.SecretIndexRoute = Ember.Route.extend({
                     function () {
                         $.notify('Your secret has been successfully deleted.', 'success');
                     }.bind(this),
+
                     function (error) {
                         secret.rollback();
                         $.notify('Oooups! Something went wrong.', 'error');

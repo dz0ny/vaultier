@@ -28,7 +28,7 @@ Vaultier.SecretCreateSelectRoute = Ember.Route.extend(
 
             // check permissions
             if (!this.checkPermissions(transition, function () {
-                return this.modelFor('Secret').get('perms.create')
+                return this.modelFor('Card').get('perms.create')
             }.bind(this), true)) {
                 return;
             }
@@ -73,7 +73,7 @@ Vaultier.SecretCreateSubmitRoute = Ember.Route.extend(
 
             // check permissions
             if (!this.checkPermissions(transition, function () {
-                return this.modelFor('Secret').get('perms.create')
+                return this.modelFor('Card').get('perms.create')
             }.bind(this), true)) {
                 return;
             }
@@ -86,7 +86,7 @@ Vaultier.SecretCreateSubmitRoute = Ember.Route.extend(
 
         afterModel: function (secret, transition) {
 
-            secret.set('card', this.modelFor('Secret').get('id'));
+            secret.set('card', this.modelFor('Card').get('id'));
 
             var SecretClass = Vaultier.Secret.proto();
             switch (transition.params.type.toUpperCase()) {
@@ -113,15 +113,15 @@ Vaultier.SecretCreateSubmitRoute = Ember.Route.extend(
             ctrl.set('controllers.SecretCreate.submitButtonShown', true);
 
             // retrieve workspace
-            var workspace = this.modelFor('Vault');
+            var workspace = this.modelFor('Workspace');
             this.set('workspace', workspace);
 
             // retrieve vault
-            var vault = this.modelFor('Card');
+            var vault = this.modelFor('Vault');
             this.set('vault', vault);
 
             // retrieve vault
-            var card = this.modelFor('Secret');
+            var card = this.modelFor('Card');
             this.set('card', card);
 
             // set breadcrumbs
@@ -156,7 +156,7 @@ Vaultier.SecretCreateSubmitRoute = Ember.Route.extend(
                 record.save().then(
                     function () {
                         $.notify('Your secret has been successfully created.', 'success');
-                        this.transitionTo('Secret.index', this.get('workspace').id, this.get('vault').id, this.get('card').id);
+                        this.transitionTo('Secret.index', this.get('Card'));
                     }.bind(this),
                     function () {
                         $.notify('Oooups! Something went wrong.', 'error');

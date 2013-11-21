@@ -27,7 +27,7 @@ Vaultier.CardsCreateRoute = Ember.Route.extend(
                 record.save().then(
                     function () {
                         $.notify('Your card has been successfully created.', 'success');
-                        this.transitionTo('Secret.index', workspace.id, vault.id, record.id);
+                        this.transitionTo('Card.index', record);
                     }.bind(this),
                     function () {
                         $.notify('Oooups! Something went wrong.', 'error');
@@ -40,7 +40,7 @@ Vaultier.CardsCreateRoute = Ember.Route.extend(
             ctrl.set('content', model);
 
             // retrieve workspace
-            var workspace = this.modelFor('Vault');
+            var workspace = this.modelFor('Workspace');
             this.set('workspace', workspace);
             ctrl.set('workspace', workspace);
 

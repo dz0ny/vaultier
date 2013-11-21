@@ -82,7 +82,7 @@ var router = Vaultier.Router.map(function () {
                         /************************************************************
                          * Card
                          ************************************************************/
-                        this.resource('Card', '/c/:card', function () {
+                        this.resource('Card', {path: '/c/:card'}, function () {
                             // automatic Card.index
 
                             // edit
@@ -92,7 +92,7 @@ var router = Vaultier.Router.map(function () {
                             this.route('memberIndex', { path: '/team'});
                             this.route('memberInvite', { path: '/team/invite'});
 
-                            this.resource('Secrets', {path: '/secrets'}, function () {
+                            this.resource('Secret', {path: '/secrets'}, function () {
                                 // automatic Secrets.index
 
                                 // secrets manipulation
