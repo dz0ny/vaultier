@@ -1,13 +1,10 @@
-from rest_framework.fields import IntegerField
 from rest_framework.permissions import IsAuthenticated, BasePermission
-from rest_framework.response import Response
 from rest_framework.serializers import ModelSerializer
-from rest_framework.status import HTTP_403_FORBIDDEN
 from rest_framework.viewsets import ModelViewSet
+from core.api.fields.perms import PermsField
 from core.api.user import RelatedUserSerializer
 from core.auth.authentication import TokenAuthentication
 from core.models import Vault
-from core.models.role import Role
 from core.models.role_fields import RoleLevelField
 from core.perms.check import has_object_acl
 
@@ -35,10 +32,11 @@ class CanManageVaultPermission(BasePermission):
 
 class VaultSerializer(ModelSerializer):
     created_by = RelatedUserSerializer(required=False)
+    perms = PermsField()
 
     class Meta:
         model = Vault
-        fields = ('id', 'name', 'description','workspace', 'created_at', 'updated_at', 'created_by')
+        fields = ('id', 'name', 'description','workspace', 'perms', 'created_at', 'updated_at', 'created_by')
 
 
 class VaultViewSet(ModelViewSet):

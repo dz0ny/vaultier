@@ -74,7 +74,7 @@ function program7(depth0,data) {
     'href': ("block.url")
   },contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
   data.buffer.push(escapeExpression(((stack1 = helpers['bind-attr'] || depth0['bind-attr']),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "bind-attr", options))));
-  data.buffer.push("\r\n                               data-toggle=\"tooltip\"\r\n                               title=\"Edit roles\"\r\n                               >\r\n                                <span class=\"glyphicon glyphicon-edit\"></span>\r\n                            </a>\r\n                        ");
+  data.buffer.push("\r\n                               data-toggle=\"tooltip\"\r\n                               title=\"Edit roles\"\r\n                                    >\r\n                                <span class=\"glyphicon glyphicon-edit\"></span>\r\n                            </a>\r\n                        ");
   return buffer;
   }
 
@@ -208,7 +208,7 @@ function program23(depth0,data) {
   return buffer;
   }
 
-  data.buffer.push("<div class=\"vlt-page-nav\">\r\n\r\n    <div class=\"vlt-page-toolbar pull-right\">\r\n        <div>\r\n\r\n            <a href=\"javascript:window.history.go(-1)\" class=\"btn btn-default\">\r\n                <span class=\"glyphicon glyphicon-chevron-left\"></span>\r\n                Back\r\n            </a>\r\n\r\n            <a href=\"#\" class=\"btn btn-default\">\r\n                <span class=\"glyphicon glyphicon-question-sign\"></span>\r\n                Permissions\r\n            </a>\r\n\r\n            ");
+  data.buffer.push("<div class=\"vlt-page-nav\">\r\n\r\n    <div class=\"vlt-page-toolbar pull-right\">\r\n        <div>\r\n\r\n            <a href=\"javascript:window.history.go(-1)\" class=\"btn btn-default\">\r\n                <span class=\"glyphicon glyphicon-chevron-left\"></span>\r\n                Back\r\n            </a>\r\n\r\n            <div style=\"display: none\">\r\n                <a href=\"#\" class=\"btn btn-default\">\r\n                    <span class=\"glyphicon glyphicon-question-sign\"></span>\r\n                    Permissions\r\n                </a>\r\n            </div>\r\n\r\n            ");
   hashContexts = {'class': depth0};
   hashTypes = {'class': "STRING"};
   options = {hash:{

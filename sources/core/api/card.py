@@ -1,6 +1,7 @@
 from rest_framework.permissions import IsAuthenticated, BasePermission
 from rest_framework.serializers import ModelSerializer
 from rest_framework.viewsets import ModelViewSet
+from core.api.fields.perms import PermsField
 from core.api.user import RelatedUserSerializer
 from core.auth.authentication import TokenAuthentication
 from core.models import Card
@@ -31,10 +32,11 @@ class CanManageCardPermission(BasePermission):
 
 class CardSerializer(ModelSerializer):
     created_by = RelatedUserSerializer(required=False)
+    perms = PermsField()
 
     class Meta:
         model = Card
-        fields = ('id', 'name', 'description','vault', 'created_at', 'updated_at', 'created_by')
+        fields = ('id', 'name', 'description','vault', 'perms', 'created_at', 'updated_at', 'created_by')
 
 
 class CardViewSet(ModelViewSet):

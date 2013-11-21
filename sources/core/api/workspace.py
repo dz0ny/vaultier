@@ -2,6 +2,7 @@ from rest_framework.fields import SerializerMethodField
 from rest_framework.permissions import IsAuthenticated, BasePermission
 from rest_framework.serializers import ModelSerializer
 from rest_framework.viewsets import ModelViewSet
+from core.api.fields.perms import PermsField
 from core.api.member import RelatedMemberSerializer
 from core.api.user import RelatedUserSerializer
 from core.auth.authentication import TokenAuthentication
@@ -32,18 +33,21 @@ class WorkspaceMembershipSerializer(RelatedMemberSerializer):
 
 class WorkspaceSerializer(ModelSerializer):
     created_by = RelatedUserSerializer(required=False)
-    membership = SerializerMethodField('get_membership')
+    perms = PermsField()
 
-    def get_membership(self, obj):
-        member = Member.objects.get_conrete_member_to_workspace(obj, self.user)
-        if (member):
-            return WorkspaceMembershipSerializer(member).data
-        else:
-            return None
+    #@deprecated
+    #membership = SerializerMethodField('get_membership')
+    #
+    #def get_membership(self, obj):
+    #    member = Member.objects.get_conrete_member_to_workspace(obj, self.user)
+    #    if (member):
+    #        return WorkspaceMembershipSerializer(member).data
+    #    else:
+    #        return None
 
     class Meta:
         model = Workspace
-        fields = ('id', 'name', 'description', 'membership', 'created_at', 'updated_at', 'created_by')
+        fields = ('id', 'name', 'description', 'perms', 'created_at', 'updated_at', 'created_by')
 
 
 class RelatedWorkspaceSerializer(WorkspaceSerializer):

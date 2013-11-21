@@ -14,11 +14,13 @@
                 {{/linkTo}}
             </li>
 
+            {{#if env.workspace.perms.update }}
             <li>
                 {{#linkTo 'Workspace.edit' env.workspace.id}}
                     Setup workspace
                 {{/linkTo}}
             </li>
+            {{/if}}
 
             <li class="divider"></li>
 

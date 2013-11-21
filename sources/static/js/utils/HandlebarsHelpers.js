@@ -47,14 +47,14 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
         return '<span class="vlt-user">' + avatar + name + '</span>';
     },
 
-    printAgo: function(t) {
+    printAgo: function (t) {
         var a;
         try {
             a = moment(t).fromNow();
         } catch (e) {
             console.error(e.stack)
         }
-        return '<span data-toggle=tooltip title="'+t+'">' + a + '</span>';
+        return '<span data-toggle=tooltip title="' + t + '">' + a + '</span>';
     },
 
     /**
@@ -204,6 +204,79 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
 
         var ifIndex = this.ifIndex;
         Ember.Handlebars.registerHelper('ifIndex', ifIndex);
+
+        /////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////
+
+        Ember.Handlebars.registerHelper('exp', function (exp, options) {
+
+            var obj = options.hashContexts;
+
+            var property = function (path) {
+                var paths = path.split('.');
+                var context = obj[paths[0]]
+                return context.get(path);
+            }
+
+            var parseVariable = function (node, name) {
+                if (node.object) {
+                    return  parseVariable(node.object) + '.' + node.property.name
+                } else {
+                    return node.name
+                }
+            }
+
+            var variables = function (node, vars) {
+                if (!vars) {
+                    vars = []
+                }
+
+                if (node) {
+
+                    if (node.type == 'MemberExpression' || node.type == 'Identifier') {
+                        vars.push(parseVariable(node, ''))
+                    } else {
+                        variables(node.left, vars)
+                        variables(node.right, vars)
+                    }
+                }
+
+                return vars
+            }
+
+            var result;
+            try {
+
+                var parsed = jsep(exp);
+                var vars = variables(parsed);
+
+                var mutated = exp;
+                for (var i = 0; i < vars.length; i++) {
+                    mutated = mutated.replace(vars[i], "property('" + vars[i] + "')");
+                }
+
+                result = false;
+                eval('result = (' + mutated + ')');
+
+            } catch (e) {
+                console.error(e.stack)
+                throw Error(
+                    'Cannot parse expression: {exp}, parsed as {mutated}'
+                        .replace('{exp}', exp)
+                        .replace('{mutated}', mutated)
+                )
+            }
+
+            if (result) {
+                return options.fn(this)
+            } else {
+                return options.inverse(this)
+            }
+
+        });
+
 
     }
 

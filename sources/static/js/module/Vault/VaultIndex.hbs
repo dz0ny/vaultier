@@ -1,22 +1,30 @@
 <div class="vlt-page-nav">
 
-    <div class="vlt-page-toolbar pull-right">
-        <div>
+    {{#exp  "( workspace.perms.invite && workspace.perms.create)"  workspace='workspace'}}
 
-            {{#link-to "Vault.memberIndex" workspace class="btn btn-default"}}
-                <span class="glyphicon glyphicon-user"></span>
-                Collaborate
-            {{/link-to}}
+        <div class="vlt-page-toolbar pull-right">
+            <div>
 
-            {{#if length}}
-                {{#link-to "Vault.create" workspace class="btn btn-primary"}}
-                    <span class="glyphicon glyphicon-plus"></span>
-                    Create new vault
-                {{/link-to}}
-            {{/if}}
+                {{#if workspace.perms.invite }}
+                    {{#link-to "Vault.memberIndex" workspace class="btn btn-default"}}
+                        <span class="glyphicon glyphicon-user"></span>
+                        Collaborate
+                    {{/link-to}}
+                {{/if}}
 
+                {{#if workspace.perms.create }}
+                    {{#if length}}
+                        {{#link-to "Vault.create" workspace class="btn btn-primary"}}
+                            <span class="glyphicon glyphicon-plus"></span>
+                            Create new vault
+                        {{/link-to}}
+                    {{/if}}
+                {{/if}}
+
+            </div>
         </div>
-    </div>
+
+    {{/exp}}
 
     <div class="pull-left">
         <h2>Dashboard - list of vaults</h2>
