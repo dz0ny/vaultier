@@ -4,7 +4,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, hashContexts, hashTypes, options, escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing;
 
 
-  data.buffer.push("<div class=\"row\">\r\n\r\n    <div class=\"col-md-7\">\r\n\r\n        <form class=\"form-horizontal\" role=\"form\">\r\n            <div class=\"form-group ");
+  data.buffer.push("<div class=\"row\">\r\n\r\n    <div class=\"col-md-7\">\r\n\r\n            <div class=\"form-group ");
   hashContexts = {'class': depth0};
   hashTypes = {'class': "STRING"};
   data.buffer.push(escapeExpression(helpers.bindAttr.call(depth0, {hash:{
@@ -50,7 +50,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
     'optionLabelPath': ("content.text"),
     'valueBinding': ("ttl")
   },contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
-  data.buffer.push("\r\n\r\n                    <span class=\"help-block\">\r\n                        Your credentials will be stored for selected period of time.\r\n                        Remebering crednentials is not so secure by it easy your login\r\n                    </span>\r\n\r\n                </div>\r\n            </div>\r\n\r\n\r\n        </form>\r\n\r\n    </div>\r\n\r\n    <div class=\"col-md-5\">\r\n\r\n        <div class=\"callout callout-info\">\r\n            <h4>How our security works</h4>\r\n\r\n            <p>\r\n                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus in diam eu\r\n                nisl accumsan condimentum. Duis rhoncus enim a urna aliquet fringilla.\r\n            </p>\r\n        </div>\r\n    </div>\r\n\r\n</div>\r\n\r\n");
+  data.buffer.push("\r\n\r\n                    <span class=\"help-block\">\r\n                        Your credentials will be stored for selected period of time.\r\n                        Remebering crednentials is not so secure by it easy your login\r\n                    </span>\r\n\r\n                </div>\r\n            </div>\r\n\r\n\r\n    </div>\r\n\r\n    <div class=\"col-md-5\">\r\n\r\n        <div class=\"callout callout-info\">\r\n            <h4>How our security works</h4>\r\n\r\n            <p>\r\n                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus in diam eu\r\n                nisl accumsan condimentum. Duis rhoncus enim a urna aliquet fringilla.\r\n            </p>\r\n        </div>\r\n    </div>\r\n\r\n</div>\r\n\r\n");
   return buffer;
   
 });

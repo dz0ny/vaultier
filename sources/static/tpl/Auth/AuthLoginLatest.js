@@ -4,7 +4,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, hashContexts, hashTypes, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
 
 
-  data.buffer.push("<div class=\"row\">\r\n\r\n    <div class=\"col-md-7\">\r\n        <form class=\"form-horizontal\" role=\"form\">\r\n            <div class=\"form-group\">\r\n                <label for=\"login-form-email\" class=\"col-lg-4 control-label\">Email</label>\r\n\r\n                <div class=\"col-lg-8\">\r\n                    <input ");
+  data.buffer.push("<div class=\"row\">\r\n\r\n    <div class=\"col-md-7\">\r\n            <div class=\"form-group\">\r\n                <label for=\"login-form-email\" class=\"col-lg-4 control-label\">Email</label>\r\n\r\n                <div class=\"col-lg-8\">\r\n                    <input ");
   hashContexts = {'value': depth0};
   hashTypes = {'value': "ID"};
   options = {hash:{
@@ -22,7 +22,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
     'optionLabelPath': ("content.text"),
     'valueBinding': ("props.latestUser.ttl")
   },contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
-  data.buffer.push("\r\n\r\n                    <span class=\"help-block\">\r\n                        Your credentials will be stored for selected period of time.\r\n                        Remebering crednentials is not so secure by it easy your login\r\n                    </span>\r\n\r\n                </div>\r\n            </div>\r\n\r\n\r\n        </form>\r\n\r\n    </div>\r\n\r\n    <div class=\"col-md-5\">\r\n\r\n        <div class=\"callout callout-info\">\r\n            <h4>How our security works</h4>\r\n\r\n            <p>\r\n                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus in diam eu\r\n                nisl accumsan condimentum. Duis rhoncus enim a urna aliquet fringilla.\r\n            </p>\r\n        </div>\r\n    </div>\r\n\r\n</div>\r\n");
+  data.buffer.push("\r\n\r\n                    <span class=\"help-block\">\r\n                        Your credentials will be stored for selected period of time.\r\n                        Remebering crednentials is not so secure by it easy your login\r\n                    </span>\r\n\r\n                </div>\r\n            </div>\r\n\r\n\r\n    </div>\r\n\r\n    <div class=\"col-md-5\">\r\n\r\n        <div class=\"callout callout-info\">\r\n            <h4>How our security works</h4>\r\n\r\n            <p>\r\n                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus in diam eu\r\n                nisl accumsan condimentum. Duis rhoncus enim a urna aliquet fringilla.\r\n            </p>\r\n        </div>\r\n    </div>\r\n\r\n</div>\r\n");
   return buffer;
   
 });

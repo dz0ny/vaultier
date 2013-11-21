@@ -1,9 +1,11 @@
 <div class="row">
     <div class="col-md-12">
 
-        <div class="modal-dialog vlt-tabs-modal vlt-login">
-            <div class="modal-content">
-                <div class="modal-header">
+        <div class="vlt-dialog vlt-tabs-modal vlt-login">
+            <div class="vlt-dialog-content">
+        <form class="form-horizontal" role="form">
+
+                <div class="vlt-dialog-header">
                     <h2>Login</h2>
 
                     {{#if props.latestUser }}
@@ -24,7 +26,7 @@
                     {{/if}}
 
                 </div>
-                <div class="modal-body">
+                <div class="vlt-dialog-body">
 
                     <div class="tab-content">
                         <div class="tab-pane active">
@@ -34,13 +36,14 @@
 
 
                 </div>
-                <div class="modal-footer">
+                <div class="vlt-dialog-footer">
                     Do not have account yet? {{#link-to 'AuthRegister' class="btn btn-default btn-sm" }}Create new
                     account here{{/link-to}}
-                    <button {{ action login}} {{bind-attr disabled=loginButtonDisabled }} class="btn btn-primary">
+                    <button type="submit" {{ action login}} {{bind-attr disabled=loginButtonDisabled }} class="btn btn-primary">
                         Login
                     </button>
                 </div>
+                </form>
             </div>
         </div>
     </div>
