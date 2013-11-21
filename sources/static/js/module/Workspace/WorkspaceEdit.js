@@ -15,6 +15,7 @@ Vaultier.WorkspaceEditRoute = Ember.Route.extend(
             ctrl.set('breadcrumbs',
                 Vaultier.Breadcrumbs.create({router: this.get('router')})
                     .addHome()
+                    .addWorkspace()
                     .addText('Edit workspace')
             )
         },

@@ -29,6 +29,7 @@ Vaultier.CardEditRoute = Ember.Route.extend(
                     .addHome()
                     .addWorkspace()
                     .addVault()
+                    .addCard()
                     .addText('Edit card')
             )
         },

@@ -51,7 +51,7 @@ Vaultier.Breadcrumbs = Ember.Object.extend({
     addVault: function () {
         var vault = Service.Environment.current().vault;
         if (vault) {
-            this.addLink('Card.index', vault.get('name'), [vault.get('id')])
+            this.addLink('Vault.index', vault.get('name'), [vault.get('id')])
         }
         return this;
     },
@@ -59,7 +59,7 @@ Vaultier.Breadcrumbs = Ember.Object.extend({
     addCard: function () {
         var card = Service.Environment.current().card;
         if (card) {
-            this.addLink('Secret.index', card.get('name'), [card.get('id')])
+            this.addLink('Card.index', card.get('name'), [card.get('id')])
         }
         return this;
     },
@@ -68,7 +68,7 @@ Vaultier.Breadcrumbs = Ember.Object.extend({
     addWorkspace: function () {
         var workspace = Service.Environment.current().workspace;
         if (workspace) {
-            this.addLink('Vault.index', workspace.get('name'), [workspace.get('id')])
+            this.addLink('Workspace.index', workspace.get('name'), [workspace.get('id')])
         }
         return this;
     }

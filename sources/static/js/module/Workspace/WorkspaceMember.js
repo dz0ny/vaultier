@@ -1,10 +1,10 @@
 /**
  * Workspace memberships, because of nested routing in namespace of vault
  */
-Vaultier.VaultMemberIndexRoute = Vaultier.MemberIndexRoute.extend({
+Vaultier.WorkspaceMemberIndexRoute = Vaultier.MemberIndexRoute.extend({
 
     setupInviteData: function(params) {
-        var workspace = this.modelFor('Vault');
+        var workspace = this.modelFor('Workspace');
         return {
             inviteObject: workspace
         }
@@ -22,22 +22,21 @@ Vaultier.VaultMemberIndexRoute = Vaultier.MemberIndexRoute.extend({
     },
 
     setupInviteRoute: function (models) {
-        var workspace = this.modelFor('Vault');
         return {
-            inviteRouteName: 'Vault.memberInvite'
+            inviteRouteName: 'Workspace.memberInvite'
         }
     }
 });
 
 
-Vaultier.VaultMemberIndexController = Vaultier.MemberIndexController.extend({
+Vaultier.WorkspaceMemberIndexController = Vaultier.MemberIndexController.extend({
 });
 
 
-Vaultier.VaultMemberInviteRoute = Vaultier.MemberInviteRoute.extend({
+Vaultier.WorkspaceMemberInviteRoute = Vaultier.MemberInviteRoute.extend({
 
     setupInviteData: function (params) {
-        var workspace = this.modelFor('Vault');
+        var workspace = this.modelFor('Workspace');
         return {
             inviteObject: workspace,
             inviteParams: { to_workspace: workspace},
@@ -49,11 +48,11 @@ Vaultier.VaultMemberInviteRoute = Vaultier.MemberInviteRoute.extend({
         return Vaultier.Breadcrumbs.create({router: this.get('router')})
             .addHome()
             .addWorkspace()
-            .addLink('Vault.memberIndex', 'Collaborators')
+            .addLink('Workspace.memberIndex', 'Collaborators')
             .addText('Invite');
     }
 
 });
 
-Vaultier.VaultMemberInviteController = Vaultier.MemberInviteController.extend({
+Vaultier.WorkspaceMemberInviteController = Vaultier.MemberInviteController.extend({
 });

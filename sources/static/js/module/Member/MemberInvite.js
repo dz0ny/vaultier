@@ -14,6 +14,7 @@ Vaultier.MemberInviteRoute = Ember.Route.extend(
                 return;
             }
 
+            console.log('a');
         },
 
         /**
@@ -70,7 +71,7 @@ Vaultier.MemberInviteRoute = Ember.Route.extend(
         },
 
         setupController: function (ctrl, model) {
-            ctrl.set('workspace', this.modelFor('Vault'))
+            ctrl.set('workspace', this.modelFor('Workspace'))
             ctrl.set('breadcrumbs', this.setupBreadcrumbs());
             ctrl.set('content', {});
             ctrl.set('roleLevels', this.setupRoleLevels());

@@ -1,14 +1,14 @@
-Vaultier.CardMemberIndexRoute = Vaultier.MemberIndexRoute.extend({
+Vaultier.VaultMemberIndexRoute = Vaultier.MemberIndexRoute.extend({
 
-    setupInviteData: function (params) {
-        var card = this.modelFor('Card');
+    setupInviteData: function(params) {
+        var vault = this.modelFor('Vault');
         return {
-            inviteObject: card
+            inviteObject: vault
         }
     },
 
     setupBlocks: function () {
-        return {workspace: true, vault: true, card: true}
+        return {workspace: true, vault: true}
     },
 
     setupBreadcrumbs: function () {
@@ -16,31 +16,32 @@ Vaultier.CardMemberIndexRoute = Vaultier.MemberIndexRoute.extend({
             .addHome()
             .addWorkspace()
             .addVault()
-            .addCard()
             .addText('Collaborators');
     },
 
     setupInviteRoute: function (models) {
         return {
-            inviteRouteName: 'Card.memberInvite'
+            inviteRouteName: 'Vault.memberInvite'
         }
     }
 });
 
 
-Vaultier.CardMemberIndexController = Vaultier.MemberIndexController.extend({
+Vaultier.VaultMemberIndexController = Vaultier.MemberIndexController.extend({
 });
 
 
-Vaultier.CardMemberInviteRoute = Vaultier.MemberInviteRoute.extend({
+Vaultier.VaultMemberInviteRoute = Vaultier.MemberInviteRoute.extend({
 
-
+    /**
+     * override this to setup invite workspace and invite to object
+     */
     setupInviteData: function (params) {
-        var card = this.modelFor('Card');
+        var vault = this.modelFor('Vault');
         var workspace = this.modelFor('Workspace');
         return {
-            inviteObject: card,
-            inviteParams: { to_card: card},
+            inviteObject: vault,
+            inviteParams: { to_vault: vault},
             inviteWorkspace: workspace
         }
     },
@@ -56,5 +57,5 @@ Vaultier.CardMemberInviteRoute = Vaultier.MemberInviteRoute.extend({
 
 });
 
-Vaultier.CardMemberInviteController = Vaultier.MemberInviteController.extend({
+Vaultier.VaultMemberInviteController = Vaultier.MemberInviteController.extend({
 });

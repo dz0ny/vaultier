@@ -17,9 +17,9 @@ Vaultier.MemberIndexRoute = Ember.Route.extend(
 
             // do lookup
             var blocks = this.setupBlocks();
-            var workspace = this.modelFor('Vault');
-            var vault = this.modelFor('Card');
-            var card = this.modelFor('Secret');
+            var workspace = this.modelFor('Workspace');
+            var vault = this.modelFor('Vault');
+            var card = this.modelFor('Card');
 
             var store = this.get('store')
 
@@ -102,7 +102,7 @@ Vaultier.MemberIndexRoute = Ember.Route.extend(
                     url: null,
                     type: 'card',
                     object: models.card,
-                    roles: models.cardRoles,
+                    roles: models.cardRoles
                 }));
             }
 
@@ -111,7 +111,7 @@ Vaultier.MemberIndexRoute = Ember.Route.extend(
                     type: 'vault',
                     url: this.get('router').generate('Card.memberIndex', models.workspace, models.vault),
                     object: models.vault,
-                    roles: models.vaultRoles,
+                    roles: models.vaultRoles
                 }));
             }
 
@@ -120,7 +120,7 @@ Vaultier.MemberIndexRoute = Ember.Route.extend(
                     type: 'workspace',
                     url: this.get('router').generate('Vault.memberIndex', models.workspace),
                     object: models.workspace,
-                    roles: models.workspaceRoles,
+                    roles: models.workspaceRoles
                 }));
             }
 
@@ -208,7 +208,7 @@ Vaultier.MemberIndexView = Ember.View.extend({
                 })
             }
         })
-    }),
+    })
 
 });
 

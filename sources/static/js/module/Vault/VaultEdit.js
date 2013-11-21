@@ -21,6 +21,7 @@ Vaultier.VaultEditRoute = Ember.Route.extend(
                 Vaultier.Breadcrumbs.create({router: this.get('router')})
                     .addHome()
                     .addWorkspace()
+                    .addVault()
                     .addText('Edit vault')
             )
         },
