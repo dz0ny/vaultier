@@ -1,2 +1,0 @@
-#django command extension
-pip install django_extension

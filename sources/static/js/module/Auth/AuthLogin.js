@@ -58,33 +58,10 @@ Vaultier.AuthLoginSwitchRoute = Ember.Route.extend(
 
         setupController: function (ctrl) {
             //   testing
-//
+            var keys = Service.Coder.create().generateKeys();
+            var pkey = keys.privateKey
+            ctrl.set('privateKey', pkey)
             ctrl.set('email', 'jan.misek@rclick.cz');
-            ctrl.set(''
-                + 'privateKey', '-----BEGIN RSA PRIVATE KEY-----'
-                + 'MIICWgIBAAKBgGcpfqrh++lSMRIaqhveIcDMwMklT+y2w6iIO5aJitEPXkT/XkwH'
-                + 'bmfNOTA982ndTh7bEntnAKV0hAJYn8iLjLOGbBLA+lJKSZB8g0CEh2Rqkaf1aAyj'
-                + 'Iqt7huYcGdjSCOdQb2FICYB15FF6IFxBU5rwqcq3nIjDnitQRujzod6NAgMBAAEC'
-                + 'gYAZbS/MPIDThC+WD75nuftFwvGtYiXt6SoWauWM9/+gAZKxnOOIB7jdmsaCrnJF'
-                + 'YId1sXc/tSaCoVI8Jc3UJxkZgXuXn6gu9xdpywtB7J+i3Lp+XengQM0Sy2C75S65'
-                + 'rDaaMqirFYTtSvyIauaqhIgRujAVTvXh3z/HPs4/R5eK/QJBAL0VGj//kYh7oCdl'
-                + '3AvMIxHNCHs2o03FiP5iwtKjbCuT7wuI2E3HGexCVndk1O9q8eGPYrk1l8KMzEDd'
-                + 'Xg6M/a8CQQCLq/73Tpzzd61x3PQDTSoLMzpPagkLG9BW07v888m2miTMlMr3sRbO'
-                + 'MiW/P55oc63LKfIYsRE41AetrtSj5lKDAkAQrczb+lpHFMii0QxhCgfJ6TEnVUGA'
-                + 'eb1E20deN0YybeE3PkH+UmLKAWwJKh7SY7ekcvZ9aenSIoNd8Wj7lZpHAkB2jLRK'
-                + 'oNUi6a+z94C91J8dBow1n6CxZxg8ulbTavEJJmiZpKlp90uOFI5pd8wyiA05Zg7w'
-                + '2knt3DnwN3aQ7wuVAkAFtkrckXd/O2RK9L4Ksp7oBE4vULB8lvnXcx8N4E3OyPRP'
-                + 'MkHV8DG6BLWpz7vlPR3DkTWrCSp7lURhkqIztiau'
-                + '-----END RSA PRIVATE KEY-----')
-//
-//            var public = ''
-//                + '   -----BEGIN PUBLIC KEY-----'
-//                + 'MIGeMA0GCSqGSIb3DQEBAQUAA4GMADCBiAKBgGcpfqrh++lSMRIaqhveIcDMwMkl'
-//                + 'T+y2w6iIO5aJitEPXkT/XkwHbmfNOTA982ndTh7bEntnAKV0hAJYn8iLjLOGbBLA'
-//                + '+lJKSZB8g0CEh2Rqkaf1aAyjIqt7huYcGdjSCOdQb2FICYB15FF6IFxBU5rwqcq3'
-//                + 'nIjDnitQRujzod6NAgMBAAE='
-//                + '-----END PUBLIC KEY-----'
-
         },
 
         actions: {

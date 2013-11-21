@@ -1,0 +1,3 @@
+Server API  Invitation email always to jan.misek@rclick.cz
+Vaultier.AuthLoginSwitchRoute - prefiled testing credentials
+Service.Coder - generateKeys using TestingCoder

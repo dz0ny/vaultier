@@ -2,7 +2,33 @@ Po.NS('Service');
 
 Service.Coder = Ember.Object.extend({
 
+    TestingGenerator: Ember.Object.extend({
+
+        getPrivateKey: function () {
+            return this.private
+        },
+
+        getPublicKey: function () {
+            return this.public
+        },
+
+        getKey: function (callback) {
+            this.private = $('div.vlt-test-private-key').text().trim()
+            this.public = $('div.vlt-test-public-key').text().trim()
+
+            if (callback) {
+                return callback(this)
+            } else {
+                return this
+            }
+        }
+
+    }),
+
     generateKeys: function (callback) {
+//        var generator = new JSEncrypt({default_key_size: 1024});
+        var generator = this.TestingGenerator.create();
+
         var build = function () {
             return  {
                 privateKey: generator.getPrivateKey(),
@@ -10,7 +36,6 @@ Service.Coder = Ember.Object.extend({
             }
         }
 
-        var generator = new JSEncrypt({default_key_size: 1024});
         if (callback) {
             generator.getKey(function () {
                 callback(build())

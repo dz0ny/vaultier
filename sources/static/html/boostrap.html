@@ -16,22 +16,22 @@
 <title>Vaultier</title>
 
 
-    {####################################################################}
-    {# libs#}
-    {####################################################################}
+{####################################################################}
+{# libs#}
+{####################################################################}
 
-    {############# boostrap #}
+{############# boostrap #}
 
-    <link href="{% static 'lib/bootstrap/dist/css/bootstrap.css' %}" rel="stylesheet">
-    <link href="{% static 'lib/bootstrap/assets/css/bootwatch.min.css' %}" rel="stylesheet">
+<link href="{% static 'lib/bootstrap/dist/css/bootstrap.css' %}" rel="stylesheet">
+<link href="{% static 'lib/bootstrap/assets/css/bootwatch.min.css' %}" rel="stylesheet">
 
-    {############# ui components #}
-    <link href="{% static 'lib/select2/select2.css' %}" rel="stylesheet">
-    <link href="{% static 'lib/select2/select2-bootstrap.css' %}" rel="stylesheet">
+{############# ui components #}
+<link href="{% static 'lib/select2/select2.css' %}" rel="stylesheet">
+<link href="{% static 'lib/select2/select2-bootstrap.css' %}" rel="stylesheet">
 
 
-    {############# main css #}
-    <link href="{% static 'css/main.css' %}" rel="stylesheet">
+{############# main css #}
+<link href="{% static 'css/main.css' %}" rel="stylesheet">
 
 
 {% compress js %}
@@ -282,11 +282,13 @@
 <script type="text/x-handlebars">
     {{ outlet }}
 
-    <DIV>
+    <div>
         {{ outlet modal }}
-    </DIV>
+    </div>
 </script>
 {% endverbatim %}
+
+{% include 'keys.html' %}
 
 </body>
 </html>

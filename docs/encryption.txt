@@ -1,2 +1,0 @@
-RSA:
-http://wwwtyro.github.io/cryptico/
