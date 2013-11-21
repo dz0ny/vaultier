@@ -11,15 +11,16 @@ Vaultier.LayoutSecurityBoxView = Ember.View.extend({
                 $.notify('You have been successfully logged out.', 'success');
                 var ctrl = this.get('controller');
                 ctrl.transitionToRoute('index');
+//                window.location.href = "/";
             }.bind(this));
         }
     },
 
     didInsertElement: function () {
         var el = Ember.$(this.get('element')).find('.copy-token');
-        el.click(function(e) {
+        el.click(function (e) {
             e.preventDefault();
-            window.prompt("token",el.attr('href'));
+            window.prompt("token", el.attr('href'));
         })
 
     }

@@ -40,7 +40,7 @@ Vaultier.SecretCreateSelectRoute = Ember.Route.extend(
             ctrl.set('controllers.SecretCreate.submitButtonShown', false);
 
             // set breadcrumbs
-            ctrl.set('breadcrumbs',
+            this.controllerFor('SecretCreate').set('breadcrumbs',
                 Vaultier.Breadcrumbs.create({router: this.get('router')})
                     .addHome()
                     .addWorkspace()
