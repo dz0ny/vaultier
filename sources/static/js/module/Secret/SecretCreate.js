@@ -13,36 +13,48 @@ Vaultier.SecretCreateView = Ember.View.extend({
         isActive: function () {
             var tab = this.get('tab');
             var path = this.get('parentView.controller.controllers.application.currentPath');
-            var route = path.split('.')[path.split('.').length-1];
+            var route = path.split('.')[path.split('.').length - 1];
             return tab == route;
         }.property('parentView.controller.controllers.application.currentPath')
     })
 
 });
 
-Vaultier.SecretCreateSelectRoute = Ember.Route.extend({
+Vaultier.SecretCreateSelectRoute = Ember.Route.extend(
+    Utils.ErrorAwareRouteMixin,
+    {
 
-    setupController: function (ctrl, model) {
-        ctrl.set('content', {});
+        model: function(params, transition) {
 
-        ctrl.set('controllers.SecretCreate.submitButtonShown', false);
+            // check permissions
+            if (!this.checkPermissions(transition, function () {
+                return this.modelFor('Secret').get('perms.create')
+            }.bind(this), true)) {
+                return;
+            }
+        },
 
-        // set breadcrumbs
-        ctrl.set('breadcrumbs',
-            Vaultier.Breadcrumbs.create({router: this.get('router')})
-                .addHome()
-                .addWorkspace()
-                .addVault()
-                .addCard()
-                .addText('Create new secret')
-        );
-    },
+        setupController: function (ctrl, model) {
+            ctrl.set('content', {});
 
-    renderTemplate: function () {
-        this.render('SecretCreate');
-        this.render('SecretTypeSelect', {outlet: 'tab', into: 'SecretCreate'});
-    }
-});
+            ctrl.set('controllers.SecretCreate.submitButtonShown', false);
+
+            // set breadcrumbs
+            ctrl.set('breadcrumbs',
+                Vaultier.Breadcrumbs.create({router: this.get('router')})
+                    .addHome()
+                    .addWorkspace()
+                    .addVault()
+                    .addCard()
+                    .addText('Create new secret')
+            );
+        },
+
+        renderTemplate: function () {
+            this.render('SecretCreate');
+            this.render('SecretTypeSelect', {outlet: 'tab', into: 'SecretCreate'});
+        }
+    });
 
 Vaultier.SecretCreateSelectController = Ember.Controller.extend({
     needs: ['SecretCreate']
@@ -53,96 +65,107 @@ Vaultier.SecretCreateSubmitController = Ember.Controller.extend({
 })
 
 
-Vaultier.SecretCreateSubmitRoute = Ember.Route.extend({
+Vaultier.SecretCreateSubmitRoute = Ember.Route.extend(
+    Utils.ErrorAwareRouteMixin,
+    {
 
-    model: function () {
-        var store = this.get('store');
-        var record = store.createRecord('Secret');
-        return record;
-    },
+        model: function (params, transition) {
 
-    afterModel: function (secret, transition) {
+            // check permissions
+            if (!this.checkPermissions(transition, function () {
+                return this.modelFor('Secret').get('perms.create')
+            }.bind(this), true)) {
+                return;
+            }
 
-        secret.set('card', this.modelFor('Secret').get('id'));
+            // retrieve model
+            var store = this.get('store');
+            var record = store.createRecord('Secret');
+            return record;
+        },
 
-        var SecretClass = Vaultier.Secret.proto();
-        switch (transition.params.type.toUpperCase()) {
+        afterModel: function (secret, transition) {
 
-            case SecretClass.types['FILE'].text :
-                this.template = 'SecretTypeFile';
-                secret.set('type',SecretClass.types['FILE'].value);
-                break;
+            secret.set('card', this.modelFor('Secret').get('id'));
 
-            case SecretClass.types['PASSWORD'].text :
-                this.template = 'SecretTypePassword';
-                secret.set('type', SecretClass.types['PASSWORD'].value);
-                break;
+            var SecretClass = Vaultier.Secret.proto();
+            switch (transition.params.type.toUpperCase()) {
 
-            default:
-                secret.set('type',  SecretClass.types['NOTE'].value);
-                this.template = 'SecretTypeNote';
-        }
-    },
+                case SecretClass.types['FILE'].text :
+                    this.template = 'SecretTypeFile';
+                    secret.set('type', SecretClass.types['FILE'].value);
+                    break;
 
-    setupController: function (ctrl, model) {
-        ctrl.set('content', model);
+                case SecretClass.types['PASSWORD'].text :
+                    this.template = 'SecretTypePassword';
+                    secret.set('type', SecretClass.types['PASSWORD'].value);
+                    break;
 
-        ctrl.set('controllers.SecretCreate.submitButtonShown', true);
+                default:
+                    secret.set('type', SecretClass.types['NOTE'].value);
+                    this.template = 'SecretTypeNote';
+            }
+        },
 
-        // retrieve workspace
-        var workspace = this.modelFor('Vault');
-        this.set('workspace', workspace);
+        setupController: function (ctrl, model) {
+            ctrl.set('content', model);
 
-        // retrieve vault
-        var vault = this.modelFor('Card');
-        this.set('vault', vault);
+            ctrl.set('controllers.SecretCreate.submitButtonShown', true);
 
-        // retrieve vault
-        var card = this.modelFor('Secret');
-        this.set('card', card);
+            // retrieve workspace
+            var workspace = this.modelFor('Vault');
+            this.set('workspace', workspace);
 
-        // set breadcrumbs
-        ctrl.set('breadcrumbs',
-            Vaultier.Breadcrumbs.create({router: this.get('router')})
-                .addHome()
-                .addWorkspace()
-                .addVault()
-                .addCard()
-                .addText('Create new secret')
-        )
-    },
+            // retrieve vault
+            var vault = this.modelFor('Card');
+            this.set('vault', vault);
 
-    renderTemplate: function () {
-        this.render('SecretCreate');
-        this.render(this.template, {outlet: 'tab', into: 'SecretCreate'});
-    },
+            // retrieve vault
+            var card = this.modelFor('Secret');
+            this.set('card', card);
 
-    deactivate: function () {
-        var record = this.get('controller.content');
-        var store = this.get('store');
-        if (!record.get('id')) {
-            //record.rollback();
-            store.deleteRecord(record);
-        }
-    },
-
-    actions: {
-        submit: function () {
-            var record = this.get('controller.content');
-
-            record.save().then(
-                function () {
-                    $.notify('Your secret has been successfully created.', 'success');
-                    this.transitionTo('Secret.index', this.get('workspace').id, this.get('vault').id, this.get('card').id);
-                }.bind(this),
-                function () {
-                    $.notify('Oooups! Something went wrong.', 'error');
-                }
+            // set breadcrumbs
+            ctrl.set('breadcrumbs',
+                Vaultier.Breadcrumbs.create({router: this.get('router')})
+                    .addHome()
+                    .addWorkspace()
+                    .addVault()
+                    .addCard()
+                    .addText('Create new secret')
             )
-        }
-    }
+        },
 
-});
+        renderTemplate: function () {
+            this.render('SecretCreate');
+            this.render(this.template, {outlet: 'tab', into: 'SecretCreate'});
+        },
+
+        deactivate: function () {
+            var record = this.get('controller.content');
+            var store = this.get('store');
+            if (!record.get('id')) {
+                //record.rollback();
+                store.deleteRecord(record);
+            }
+        },
+
+        actions: {
+            submit: function () {
+                var record = this.get('controller.content');
+
+                record.save().then(
+                    function () {
+                        $.notify('Your secret has been successfully created.', 'success');
+                        this.transitionTo('Secret.index', this.get('workspace').id, this.get('vault').id, this.get('card').id);
+                    }.bind(this),
+                    function () {
+                        $.notify('Oooups! Something went wrong.', 'error');
+                    }
+                )
+            }
+        }
+
+    });
 
 Vaultier.SecretCreateSelectView = Ember.View.extend({
     templateName: 'Secret/SecretCreateSelect'

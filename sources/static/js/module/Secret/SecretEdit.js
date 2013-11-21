@@ -11,7 +11,13 @@ Vaultier.SecretEditRoute = Ember.Route.extend(
         model: function (params, transition) {
             var store = this.get('store');
             var promise = store.find('Secret', params.secret);
-            promise.then(null, this.handleErrors(transition))
+            promise
+                .then(null, this.handleErrors(transition))
+                .then(this.checkPermissions(transition, function (model) {
+                    perms = model.get('perms.update');
+                    return perms
+                }))
+
             return promise;
         },
 

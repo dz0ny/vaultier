@@ -77,16 +77,18 @@
                     </div>
                 </div>
 
-                <p>
-                    What are cards for? Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                </p>
+                {{#if vault.perms.create }}
+                    <p>
+                        What are cards for? Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    </p>
 
-                <p class="top-30">
-                    {{#link-to "Card.create" class="btn btn-lg btn-primary" }}
-                        <span class="glyphicon glyphicon-plus"></span>
-                        Create new Card
-                    {{/link-to}}
-                </p>
+                    <p class="top-30">
+                        {{#link-to "Card.create" class="btn btn-lg btn-primary" }}
+                            <span class="glyphicon glyphicon-plus"></span>
+                            Create new Card
+                        {{/link-to}}
+                    </p>
+                {{/if}}
             </div>
         {{/if}}
 

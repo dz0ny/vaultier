@@ -1,7 +1,14 @@
 /**
- * Card memberships, because of nested routing in namespace of card
+ * Card memberships, because of nested routing in namespace of secret
  */
 Vaultier.SecretMemberIndexRoute = Vaultier.MemberIndexRoute.extend({
+
+    setupInviteData: function (params) {
+        var card = this.modelFor('Secret');
+        return {
+            inviteObject: card
+        }
+    },
 
     setupBlocks: function () {
         return {workspace: true, vault: true, card: true}
@@ -30,13 +37,12 @@ Vaultier.SecretMemberIndexController = Vaultier.MemberIndexController.extend({
 
 Vaultier.SecretMemberInviteRoute = Vaultier.MemberInviteRoute.extend({
 
-    /**
-     * override this to setup invite workspace and invite to object
-     */
+
     setupInviteData: function (params) {
         var card = this.modelFor('Secret');
         var workspace = this.modelFor('Vault');
         return {
+            inviteObject: card,
             inviteParams: { to_card: card},
             inviteWorkspace: workspace
         }

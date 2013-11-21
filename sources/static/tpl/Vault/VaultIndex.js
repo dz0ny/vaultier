@@ -106,7 +106,7 @@ function program12(depth0,data) {
 function program13(depth0,data) {
   
   var buffer = '', stack1, stack2, hashContexts, hashTypes, options;
-  data.buffer.push("\r\n\r\n                    <p class=\"top-30\">\r\n                        ");
+  data.buffer.push("\r\n\r\n                    <p>\r\n                        What are vaults for? Lorem ipsum dolor sit amet, consectetur adipiscing elit.\r\n                    </p>\r\n\r\n                    <p class=\"top-30\">\r\n                        ");
   hashContexts = {'class': depth0};
   hashTypes = {'class': "STRING"};
   options = {hash:{
