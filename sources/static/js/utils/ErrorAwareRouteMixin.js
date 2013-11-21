@@ -30,11 +30,12 @@ Utils.ErrorAwareRouteMixin = Ember.Mixin.create({
             }
 
             if (!result) {
-                return this.handleErrors(transition)({
+                this.handleErrors(transition)({
                     status: 403,
                     message: 'Missing client permission'
                 })
             }
+            return result
         }.bind(this)
 
         if (noPromise) {

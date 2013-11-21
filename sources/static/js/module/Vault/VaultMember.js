@@ -3,6 +3,13 @@
  */
 Vaultier.VaultMemberIndexRoute = Vaultier.MemberIndexRoute.extend({
 
+    setupInviteData: function(params) {
+        var workspace = this.modelFor('Vault');
+        return {
+            inviteObject: workspace
+        }
+    },
+
     setupBlocks: function() {
         return {workspace: true}
     },
@@ -29,12 +36,10 @@ Vaultier.VaultMemberIndexController = Vaultier.MemberIndexController.extend({
 
 Vaultier.VaultMemberInviteRoute = Vaultier.MemberInviteRoute.extend({
 
-    /**
-     * override this to setup invite workspace and invite to object
-     */
     setupInviteData: function (params) {
         var workspace = this.modelFor('Vault');
         return {
+            inviteObject: workspace,
             inviteParams: { to_workspace: workspace},
             inviteWorkspace: workspace
         }

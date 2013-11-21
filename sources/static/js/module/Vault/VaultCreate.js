@@ -4,10 +4,11 @@ Vaultier.VaultCreateRoute = Ember.Route.extend(
 
         model: function (params, transition) {
 
-            var workspace = this.modelFor('Vault')
-            this.checkPermissions(transition, function() {
-                return workspace.get('perms.create')
-            }, true)
+            if (!this.checkPermissions(transition, function() {
+                return this.modelFor('Vault').get('perms.create')
+            }.bind(this), true)) {
+                return;
+            }
 
             store = this.get('store');
             var record = store.createRecord('Vault');

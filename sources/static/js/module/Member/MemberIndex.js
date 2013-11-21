@@ -1,161 +1,182 @@
-Vaultier.MemberIndexRoute = Ember.Route.extend({
+Vaultier.MemberIndexRoute = Ember.Route.extend(
+    Utils.ErrorAwareRouteMixin,
+    {
 
-    model: function (params, transition) {
-        var blocks = this.setupBlocks();
+        inviteObject: null,
 
-        var workspace = this.modelFor('Vault');
-        var vault = this.modelFor('Card');
-        var card = this.modelFor('Secret');
+        model: function (params, transition) {
+            // setup invite data
+            this.setProperties(this.setupInviteData(params))
 
-        var store = this.get('store')
+            // check permissions
+            if (!this.checkPermissions(transition, function () {
+                return this.get('inviteObject.perms.invite')
+            }.bind(this), true)) {
+                return;
+            }
 
-        var queries = {
-            workspace: null,
-            workspaceRoles: null,
-            vault: null,
-            vaultRoles: null,
-            card: null,
-            cardRoles: null
-        };
+            // do lookup
+            var blocks = this.setupBlocks();
+            var workspace = this.modelFor('Vault');
+            var vault = this.modelFor('Card');
+            var card = this.modelFor('Secret');
 
-        if (blocks.workspace) {
-            queries.workspace = workspace
-            queries.workspaceRoles = store.find('Role', {
-                to_workspace: workspace.get('id')
-            })
-        }
+            var store = this.get('store')
 
-        if (blocks.vault) {
-            queries.vault = vault
-            queries.vaultRoles = store.find('Role', {
-                to_vault: vault.get('id')
-            })
-        }
+            var queries = {
+                workspace: null,
+                workspaceRoles: null,
+                vault: null,
+                vaultRoles: null,
+                card: null,
+                cardRoles: null
+            };
 
-        if (blocks.card) {
-            queries.card = card
-            queries.cardRoles = store.find('Role', {
-                to_card: card.get('id')
-            })
-        }
+            if (blocks.workspace) {
+                queries.workspace = workspace
+                queries.workspaceRoles = store.find('Role', {
+                    to_workspace: workspace.get('id')
+                })
+            }
 
-        var models = Ember.RSVP.hash(queries);
+            if (blocks.vault) {
+                queries.vault = vault
+                queries.vaultRoles = store.find('Role', {
+                    to_vault: vault.get('id')
+                })
+            }
 
-        return models;
-    },
+            if (blocks.card) {
+                queries.card = card
+                queries.cardRoles = store.find('Role', {
+                    to_card: card.get('id')
+                })
+            }
 
-    /**
-     * override this to setup invite breadcrumbs
-     */
-    setupBlocks: function () {
-        throw 'Please override this in your route'
-    },
+            var models = Ember.RSVP.hash(queries);
 
-    /**
-     * override this to setup invite breadcrumbs
-     */
-    setupInviteRoute: function (models) {
-        throw 'Please override this in your route'
-    },
+            return models;
+        },
 
-    /**
-     * override this to setup invite breadcrumbs
-     */
-    setupRoleLevels: function () {
-        return Vaultier.Role.proto().roles.toArray();
-    },
+        /**
+         * override this to setup invite breadcrumbs
+         */
+        setupBlocks: function () {
+            throw 'Please override this in your route'
+        },
 
-    /**
-     * override this to setup invite breadcrumbs
-     */
-    setupBreadcrumbs: function () {
-        throw 'Please override this in your route'
-    },
+        /**
+         * override this to setup invite breadcrumbs
+         */
+        setupInviteRoute: function (models) {
+            throw 'Please override this in your route'
+        },
 
-    setupController: function (ctrl, models) {
-        var blocks = [];
+        /**
+         * override this to setup invite breadcrumbs
+         */
+        setupInviteData: function (params) {
+            throw 'Please override this in your route'
+        },
 
+        /**
+         * override this to setup invite breadcrumbs
+         */
+        setupRoleLevels: function () {
+            return Vaultier.Role.proto().roles.toArray();
+        },
 
-        if (models.card) {
-            blocks.push(Ember.Object.create({
-                url: null,
-                type: 'card',
-                object: models.card,
-                roles: models.cardRoles,
-            }));
-        }
+        /**
+         * override this to setup invite breadcrumbs
+         */
+        setupBreadcrumbs: function () {
+            throw 'Please override this in your route'
+        },
 
-        if (models.vault) {
-            blocks.push(Ember.Object.create({
-                type: 'vault',
-                url: this.get('router').generate('Card.memberIndex', models.workspace, models.vault),
-                object: models.vault,
-                roles: models.vaultRoles,
-            }));
-        }
-
-        if (models.workspace) {
-            blocks.push(Ember.Object.create({
-                type: 'workspace',
-                url: this.get('router').generate('Vault.memberIndex', models.workspace),
-                object: models.workspace,
-                roles: models.workspaceRoles,
-            }));
-        }
+        setupController: function (ctrl, models) {
+            var blocks = [];
 
 
-        ctrl.set('content', blocks)
+            if (models.card) {
+                blocks.push(Ember.Object.create({
+                    url: null,
+                    type: 'card',
+                    object: models.card,
+                    roles: models.cardRoles,
+                }));
+            }
 
-        // setup roles
-        ctrl.set('roleLevels', this.setupRoleLevels());
+            if (models.vault) {
+                blocks.push(Ember.Object.create({
+                    type: 'vault',
+                    url: this.get('router').generate('Card.memberIndex', models.workspace, models.vault),
+                    object: models.vault,
+                    roles: models.vaultRoles,
+                }));
+            }
 
-        // set invite route
-        ctrl.setProperties(this.setupInviteRoute(models));
-
-        // set breadcrumbs
-        ctrl.set('breadcrumbs', this.setupBreadcrumbs(models))
-    },
-
-    renderTemplate: function () {
-        // this is important if you want to inherite this route https://github.com/emberjs/ember.js/issues/1872 to use proper controller
-        this.render('MemberIndex', {controller: this.get('controller')})
-    },
+            if (models.workspace) {
+                blocks.push(Ember.Object.create({
+                    type: 'workspace',
+                    url: this.get('router').generate('Vault.memberIndex', models.workspace),
+                    object: models.workspace,
+                    roles: models.workspaceRoles,
+                }));
+            }
 
 
-    actions: {
-        deleteRole: function (role, block) {
-            Vaultier.confirmModal(this, 'Are you sure?', function () {
-                role.deleteRecord();
+            ctrl.set('content', blocks)
+
+            // setup roles
+            ctrl.set('roleLevels', this.setupRoleLevels());
+
+            // set invite route
+            ctrl.setProperties(this.setupInviteRoute(models));
+
+            // set breadcrumbs
+            ctrl.set('breadcrumbs', this.setupBreadcrumbs(models))
+        },
+
+        renderTemplate: function () {
+            // this is important if you want to inherite this route https://github.com/emberjs/ember.js/issues/1872 to use proper controller
+            this.render('MemberIndex', {controller: this.get('controller')})
+        },
+
+
+        actions: {
+            deleteRole: function (role, block) {
+                Vaultier.confirmModal(this, 'Are you sure?', function () {
+                    role.deleteRecord();
+                    role.save().then(
+                        function () {
+                            block.roles.removeObject(role);
+                            $.notify('User \'s permission has been removed.', 'success');
+                        },
+                        function () {
+                            $.notify('Oooups! Something went wrong.', 'error');
+                        }
+                    )
+                });
+
+
+            },
+
+            changeRole: function (role, block) {
                 role.save().then(
                     function () {
-                        block.roles.removeObject(role);
-                        $.notify('User \'s permission has been removed.', 'success');
+                        $.notify('User \'s permission has been updated.', 'success');
                     },
                     function () {
+                        role.rollback();
                         $.notify('Oooups! Something went wrong.', 'error');
                     }
                 )
-            });
-
-
-        },
-
-        changeRole: function (role, block) {
-            role.save().then(
-                function () {
-                    $.notify('User \'s permission has been updated.', 'success');
-                },
-                function () {
-                    role.rollback();
-                    $.notify('Oooups! Something went wrong.', 'error');
-                }
-            )
+            }
         }
-    }
 
 
 
-});
+    });
 
 Vaultier.MemberIndexController = Ember.Controller.extend({
     blocks: function () {
