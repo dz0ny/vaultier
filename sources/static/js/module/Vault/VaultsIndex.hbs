@@ -1,0 +1,75 @@
+<div class="vlt-page-nav">
+
+    {{#exp  "( workspace.perms.invite || workspace.perms.create)" }}
+
+        <div class="vlt-page-toolbar pull-right">
+            <div>
+
+                {{#if workspace.perms.invite }}
+                    {{#link-to "Workspace.memberIndex" workspace class="btn btn-default"}}
+                        <span class="glyphicon glyphicon-user"></span>
+                        Collaborate
+                    {{/link-to}}
+                {{/if}}
+
+                {{#if workspace.perms.create }}
+                    {{#if length}}
+                        {{#link-to "Vaults.create" workspace class="btn btn-primary"}}
+                            <span class="glyphicon glyphicon-plus"></span>
+                            Create new vault
+                        {{/link-to}}
+                    {{/if}}
+                {{/if}}
+
+            </div>
+        </div>
+
+    {{/exp}}
+
+    <div class="pull-left">
+        <h2>Dashboard - list of vaults</h2>
+    </div>
+
+    <div class="clearfix"></div>
+
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+
+        {{#if length}}
+            {{#each}}
+                {{view Vaultier.VaultIndexItemView}}
+            {{/each}}
+        {{else}}
+            <div class="jumbotron vlt-empty vlt-vault col-md-8 col-md-offset-2">
+                <div class="vlt-header">
+                    <div class="vlt-icon">
+
+                    </div>
+                    <div class="vlt-title">
+                        <h1>You do not have any vault yet</h1>
+                    </div>
+                </div>
+
+
+                {{#if workspace.perms.create }}
+
+                    <p>
+                        What are vaults for? Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    </p>
+
+                    <p class="top-30">
+                        {{#link-to "Vaults.create" workspace class="btn btn-lg btn-primary" }}
+                            <span class="glyphicon glyphicon-plus"></span>
+                            Create new vault
+                        {{/link-to}}
+                    </p>
+                {{/if}}
+
+            </div>
+        {{/if}}
+
+    </div>
+</div>
+

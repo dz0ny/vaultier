@@ -9,14 +9,14 @@
 
         <ul class="dropdown-menu caret-right">
             <li>
-                {{#linkTo 'Vault.index' env.workspace.id }}
+                {{#linkTo 'Vaults.index' workspace }}
                     Go to workspace dashboard
                 {{/linkTo}}
             </li>
 
             {{#if env.workspace.perms.update }}
             <li>
-                {{#linkTo 'Workspace.edit' env.workspace.id}}
+                {{#linkTo 'Workspace.edit' workspace }}
                     Setup workspace
                 {{/linkTo}}
             </li>
@@ -25,7 +25,7 @@
             <li class="divider"></li>
 
             <li>
-                {{#linkTo 'Workspace.index'}}
+                {{#linkTo 'Workspaces.index'}}
                     Switch to another workspace
                 {{/linkTo}}
             </li>

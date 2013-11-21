@@ -1,0 +1,32 @@
+{{#if id}}
+    {{#link-to 'Card.index' this class="vlt-item vlt-vault-item" }}
+        <div class="vlt-header">
+            <div class="vlt-icon">
+                <img src="/static/images/icon-vault-dark-blue.png">
+            </div>
+            <div class="vlt-title">
+                <h3>
+                    {{ellipsis name 35}}
+                </h3>
+
+            </div>
+        </div>
+        <div class="vlt-body">
+            {{#if description}}
+                {{ellipsis description 250  }}
+            {{else}}
+                No description given
+            {{/if}}
+        </div>
+        <div class="vlt-footer">
+            <div class="vlt-footer-item help-block">
+                Updated: {{printAgo updated_at }}
+            </div>
+            <div class="vlt-footer-item help-block">
+                By {{printUser created_by}}
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    {{/link-to}}
+{{/if}}
+

@@ -34,57 +34,71 @@ var router = Vaultier.Router.map(function () {
     /************************************************************
      * Workspaces
      ************************************************************/
-    this.resource('Workspace', {path: '/manage'}, function () {
+    this.resource('Workspaces', {path: '/workspaces'}, function () {
         // automatic Workspace.index
-        this.route('create', { path: '/action/create-workspace'});
-        this.route('edit', { path: '/action/edit-workspace/:workspace'});
+        this.route('create', { path: '/create'});
 
         /************************************************************
-         * Vaults
+         * Workspace
          ************************************************************/
-        this.resource('Vault', {path: '/workspace/:workspace'}, function () {
-            // automatic Vault.index
-            this.route('create', { path: '/action/create-vault'});
-            this.route('edit', { path: '/action/edit-vault/:vault'});
+        this.resource('Workspace', {path: '/w/:workspace'}, function () {
+            // edit
+            this.route('edit', { path: '/edit'});
 
-            /************************************************************
-             * Members
-             ************************************************************/
+            // member
             this.route('memberIndex', { path: '/team'});
             this.route('memberInvite', { path: '/team/invite'});
 
             /************************************************************
-             * Cards
+             * Vaults
              ************************************************************/
-            this.resource('Card', {path: '/vault/:vault'}, function () {
-                // automatic Card.index
-                this.route('create', { path: '/create-card'});
-                this.route('edit', { path: '/action/edit-card/:card'});
+            this.resource('Vaults', {path: '/vaults'}, function () {
+                // automatic Vault.index
+                this.route('create', { path: '/action/create-vault'});
 
                 /************************************************************
-                 * Members
+                 * Vault
                  ************************************************************/
-                this.route('memberIndex', { path: '/team'});
-                this.route('memberInvite', { path: '/team/invite'});
+                this.resource('Vault', {path: '/w/:workspace'}, function () {
+                    // edit
+                    this.route('edit', { path: '/edit'});
 
-                /************************************************************
-                 * Card detail
-                 ************************************************************/
-                this.resource('Secret', {path: '/card/:card'}, function () {
-                    // automatic Vault.index
-                    this.route('createSelect', { path: '/action/create-secret/select'});
-                    this.route('createSubmit', { path: '/action/create-secret/submit/:type'});
-                    this.route('edit', { path: '/action/edit-secret/:secret'});
-
-                    /************************************************************
-                     * Members
-                     ************************************************************/
+                    // members
                     this.route('memberIndex', { path: '/team'});
                     this.route('memberInvite', { path: '/team/invite'});
                 });
-            });
+
+                /************************************************************
+                 * Cards
+                 ************************************************************/
+                this.resource('Card', {path: '/vault/:vault'}, function () {
+                    // automatic Card.index
+                    this.route('create', { path: '/create-card'});
+                    this.route('edit', { path: '/action/edit-card/:card'});
+
+
+                    /************************************************************
+                     * Card detail
+                     ************************************************************/
+                    this.resource('Secret', {path: '/card/:card'}, function () {
+                        // automatic Vault.index
+                        this.route('createSelect', { path: '/action/create-secret/select'});
+                        this.route('createSubmit', { path: '/action/create-secret/submit/:type'});
+                        this.route('edit', { path: '/action/edit-secret/:secret'});
+
+                        /************************************************************
+                         * Members
+                         ************************************************************/
+                        this.route('memberIndex', { path: '/team'});
+                        this.route('memberInvite', { path: '/team/invite'});
+                    });
+                });
+
+            })
+
 
         })
+
 
     });
 
