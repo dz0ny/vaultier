@@ -5,6 +5,9 @@ Service.Invitations = Ember.Object.extend({
     SESSION_KEY : 'invitations',
 
     session: null,
+    /**
+     * @DI Service.Auth
+     */
     auth: null,
     env: null,
     store: null,
@@ -12,7 +15,6 @@ Service.Invitations = Ember.Object.extend({
     init: function () {
         this._super();
         this.session = Service.Session.current();
-        this.auth = Service.Auth.current();
         this.env = Service.Environment.current()
         this.store = Vaultier.__container__.lookup('store:main');
     },

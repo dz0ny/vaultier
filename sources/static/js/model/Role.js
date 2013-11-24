@@ -34,7 +34,8 @@ Vaultier.Role = DS.Model.extend(
         }),
 
         isCurrentUser: function() {
-            var id = Service.Auth.current().get('user.id')
+            var auth = this.get('auth');
+            var id = auth.get('user.id')
             return this.get('member.user') == id;
         }.property('member.user'),
 

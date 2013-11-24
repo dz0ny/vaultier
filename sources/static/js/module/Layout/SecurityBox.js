@@ -6,7 +6,7 @@ Vaultier.LayoutSecurityBoxView = Ember.View.extend({
 
     actions: {
         logout: function () {
-            var auth = Service.Auth.current();
+            var auth = this.get('auth');
             auth.logout().then(function () {
                 $.notify('You have been successfully logged out.', 'success');
                 var ctrl = this.get('controller');
@@ -29,11 +29,5 @@ Vaultier.LayoutSecurityBoxView = Ember.View.extend({
 
 Vaultier.LayoutSecurityBoxController = Ember.Controller.extend({
 
-    auth: null,
-
-    init: function () {
-        this._super(arguments);
-        this.auth = Service.Auth.current();
-    }
 
 });

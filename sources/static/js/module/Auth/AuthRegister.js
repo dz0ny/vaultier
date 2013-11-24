@@ -37,7 +37,7 @@ Vaultier.AuthRegisterController = BaseRegisterController.extend({
 
 Vaultier.AuthRegisterRoute = Ember.Route.extend({
     beforeModel: function (transition) {
-        if (Service.Auth.current().get('isAuthenticated')) {
+        if (this.get('auth').get('isAuthenticated')) {
             transition.router.replaceWith('AuthRegister.sum');
         } else {
             transition.router.replaceWith('AuthRegister.before');
@@ -53,7 +53,7 @@ Vaultier.AuthRegisterBeforeRoute = Ember.Route.extend({
     step: 'AuthRegisterBefore',
 
     beforeModel: function (transition) {
-        if (Service.Auth.current().get('isAuthenticated')) {
+        if (this.get('auth').get('isAuthenticated')) {
             transition.router.replaceWith('AuthRegister.sum');
         }
     },
@@ -91,7 +91,7 @@ Vaultier.AuthRegisterKeysRoute = Ember.Route.extend({
     step: 'AuthRegisterKeys',
 
     beforeModel: function (transition) {
-        if (Service.Auth.current().get('isAuthenticated')) {
+        if (this.get('auth').get('isAuthenticated')) {
             transition.router.replaceWith('AuthRegister.sum');
         }
     },
@@ -147,7 +147,7 @@ Vaultier.AuthRegisterCredsRoute = Ember.Route.extend({
     step: 'AuthRegisterCreds',
 
     beforeModel: function (transition) {
-        if (Service.Auth.current().get('isAuthenticated')) {
+        if (this.get('auth').get('isAuthenticated')) {
             transition.router.replaceWith('AuthRegister.sum');
         }
     },
@@ -246,7 +246,6 @@ Vaultier.AuthRegisterSumRoute = Ember.Route.extend({
         ctrl.set('props.loginButtonHidden', true);
         ctrl.set('props.nextButtonDisabled', false);
         ctrl.set('props.nextButtonTitle', 'Start using vaultier')
-        ctrl.set('auth', Service.Auth.current());
     },
 
     actions: {

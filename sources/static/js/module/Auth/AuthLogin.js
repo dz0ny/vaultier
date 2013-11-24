@@ -70,7 +70,7 @@ Vaultier.AuthLoginSwitchRoute = Ember.Route.extend(
                 var email = ctrl.get('email');
                 var privateKey = ctrl.get('privateKey');
 
-                var auth = Service.Auth.current();
+                var auth = this.get('auth');
                 auth.login(email, privateKey).then(
                     function () {
                         $.notify('You have been successfully logged in.', 'success');
@@ -164,7 +164,7 @@ Vaultier.AuthLoginLatestRoute = Ember.Route.extend({
             var ctrl = this.get('controller');
             var latestUser = ctrl.get('props.latestUser');
 
-            var auth = Service.Auth.current();
+            var auth = this.get('auth');
             auth.auth({
                 persist: true,
                 persistTTL: latestUser.ttl,
