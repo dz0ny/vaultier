@@ -20,10 +20,15 @@ class MemberManager(Manager):
         return result
 
     def generate_invitation_hash(self):
-        #todo: ensure invitation hash is unique
+        def get_unique():
+            unique = uuid.uuid4()
+            return hmac.new(unique.bytes, digestmod=sha1).hexdigest()
 
-        unique = uuid.uuid4()
-        return hmac.new(unique.bytes, digestmod=sha1).hexdigest()
+        hash = get_unique()
+        while self.filter(invitation_hash=hash):
+            hash = get_unique()
+
+        return hash
 
     def get_conrete_member_to_workspace(self, workspace, user):
         member = None
