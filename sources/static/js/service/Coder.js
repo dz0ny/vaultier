@@ -54,13 +54,46 @@ Service.Coder = Ember.Object.extend({
         return signature;
     },
 
-    decrypt: function (value, privateKey) {
+    encryptRSA: function (value, publicKey) {
+        var decoder = new JSEncrypt();
+        decoder.setPublicKey(publicKey)
+        var result = decoder.encrypt(value);
+
+        return result;
+    },
+
+
+    decryptRSA: function (value, privateKey) {
         var decoder = new JSEncrypt();
         decoder.setPrivateKey(privateKey);
         var result = decoder.decrypt(value);
 
         return result;
+    },
+
+    generateWorkspaceKey: function () {
+        var min = 10;
+        var max = 20;
+        var length = Math.floor(Math.random() * (max - min + 1)) + min;
+        var text = "";
+        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+        for (var i = 0; i < length; i++)
+            text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+        return text;
+    },
+
+    decryptAES: function (value, passPhrase) {
+        return CryptoJS.AES.decrypt(value, passPhrase);
+    },
+
+    encryptAES: function (value, passPhrase) {
+        return CryptoJS.AES.encrypt(value, passPhrase);
     }
 
 
+
 });
+
+Service.Auth.reopenClass(Utils.Singleton);

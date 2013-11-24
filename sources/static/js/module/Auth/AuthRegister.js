@@ -124,7 +124,7 @@ Vaultier.AuthRegisterKeysRoute = Ember.Route.extend({
 
         if (!ctrl.get('props.keysReady')) {
             ctrl.set('props.nextButtonDisabled', true);
-            var coder = Service.Coder.create();
+            var coder = Service.Coder.create.current();
             coder.generateKeys(function (keys) {
                 ctrl.set('props.keys', keys);
                 ctrl.set('props.keysReady', true);

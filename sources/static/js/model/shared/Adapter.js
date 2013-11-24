@@ -17,14 +17,14 @@ Vaultier.ApplicationAdapter = DS.DjangoRESTAdapter.extend(
 
             'MemberWorkspaceKey': {
                 updateRecord: function (store, type, record) {
-                    var url = '/api/members/{id}/approve/'
-                        .replace('{id}', record.get('member'))
+                    var url = '/api/members/{id}/workspace_key/'
+                        .replace('{id}', record.get('id'))
                     var data = store.serializerFor(type.typeKey).serialize(record);
                     return this.ajax(url, "PUT", { data: data });
                 },
 
                 find: function (store, type, id) {
-                    var url = '/api/members/{id}/approve/'
+                    var url = '/api/members/{id}/workspace_key/'
                         .replace('{id}', id)
                     return this.ajax(url, "GET")
                 }

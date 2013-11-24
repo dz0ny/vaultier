@@ -3,19 +3,17 @@ Vaultier.WorkspaceMemberApproveRoute = Ember.Route.extend(
     {
 
         model: function (params, transition) {
+
             // check permissions
             var workspace = this.modelFor('Workspace');
-            if (!this.checkPermissions(transition, function() {
+            if (!this.checkPermissions(transition, function () {
                 return workspace.get('perms.invite')
             }.bind(this), true)) {
                 return;
             }
 
             // load members
-            var promise = this.get('store').find('Member', {
-                workspace: Utils.E.recordId(workspace),
-                status: Vaultier.Member.proto().statuses['NON_APPROVED_MEMBER'].value
-            })
+            var promise = this.get('members').loadMembersToApprove(workspace)
 
             return promise
         },
@@ -34,7 +32,18 @@ Vaultier.WorkspaceMemberApproveRoute = Ember.Route.extend(
 
         actions: {
             acceptMembers: function () {
-                alert('accept')
+                var promise = this.get('members').approveMembers();
+
+                promise.then(
+                    function () {
+                        $.notify('Members were successfully approved.', 'success');
+                        //history.go(-1)
+                    },
+                    function () {
+                        $.notify('Oooups! Something went wrong.', 'error');
+                    }
+                )
+
             },
 
             rejectMembers: function () {

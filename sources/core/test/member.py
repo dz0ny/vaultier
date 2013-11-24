@@ -76,7 +76,7 @@ class ApiInviteTest(TransactionTestCase):
         user4invitation = Member.objects.get(pk=user4member.get('id')).invitation_hash
 
         # 3 invitations in db, one approved member
-        self.assertEqual(Member.objects.filter(status=MemberStatusField.STATUS_MEMBER) .count(),1)
+        self.assertEqual(Member.objects.filter(status=MemberStatusField.STATUS_NON_APPROVED_MEMBER) .count(),1)
         self.assertEqual(Member.objects.filter(status=MemberStatusField.STATUS_INVITED) .count(),3)
 
         #user2 will accept all invitations, only one member should exists
@@ -101,9 +101,8 @@ class ApiInviteTest(TransactionTestCase):
         )
 
 
-        # 1 approved member, 1 non approved member
-        self.assertEqual(Member.objects.filter(status=MemberStatusField.STATUS_MEMBER) .count(),1)
-        self.assertEqual(Member.objects.filter(status=MemberStatusField.STATUS_NON_APPROVED_MEMBER) .count(),1)
+        # 0 approved member, 1 non approved member
+        self.assertEqual(Member.objects.filter(status=MemberStatusField.STATUS_NON_APPROVED_MEMBER) .count(),2)
 
 
         # user2 accepted all 3 invitations, but he has no roles in any workspace, he should see no memebers

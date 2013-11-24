@@ -1,8 +1,12 @@
 Vaultier.Workspace = DS.Model.extend(
-    CreatedUpdatedMixin, {
+    CreatedUpdatedMixin,
+    {
         name: DS.attr('string'),
         vaults: DS.attr('number'),
         description: DS.attr('string'),
-        perms: DS.attr()
-    });
+        perms: DS.attr(),
+        membership: DS.attr()
+    }
+
+);
 

@@ -578,7 +578,7 @@ Po.R.randomInt = function (min, max) {
 Po.R.randomString = function (min, max) {
     min = Po.F.optional(min, 5);
     max = Po.F.optional(max, 20);
-    length = Po.R.randomInt(min, max);
+    var length = Po.R.randomInt(min, max);
     var text = "";
     var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 

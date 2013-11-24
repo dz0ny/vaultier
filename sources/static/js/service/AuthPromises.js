@@ -6,7 +6,7 @@ Service.AuthPromises = Ember.Object.extend({
         return function (password) {
             return Ember.RSVP.Promise(function (resolve, reject) {
 
-                var coder = Service.Coder.create();
+                var coder = Service.Coder.current();
                 var signature = coder.sign(email, privateKey);
 
                 Ember.$.ajax({

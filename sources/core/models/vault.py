@@ -3,6 +3,7 @@ from django.db.models.deletion import PROTECT, CASCADE
 from django.db.models.manager import Manager
 from django.db.models import F, Q
 from core.models.role_fields import RoleLevelField
+from core.models.workspace import Workspace
 from core.tools.changes import ChangesMixin
 from core.tools.tree import TreeItemMixin
 

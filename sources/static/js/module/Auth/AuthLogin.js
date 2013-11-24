@@ -58,7 +58,7 @@ Vaultier.AuthLoginSwitchRoute = Ember.Route.extend(
 
         setupController: function (ctrl) {
             //   testing
-            var keys = Service.Coder.create().generateKeys();
+            var keys = Service.Coder.current().generateKeys();
             var pkey = keys.privateKey
             ctrl.set('privateKey', pkey)
 //            ctrl.set('email', 'jan.misek@rclick.cz');

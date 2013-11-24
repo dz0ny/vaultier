@@ -28,7 +28,7 @@ class CanManageWorkspace(BasePermission):
 
 class WorkspaceMembershipSerializer(RelatedMemberSerializer):
     class Meta(RelatedMemberSerializer.Meta):
-        fields = ('status', 'id')
+        fields = ('status', 'id', 'workspace_key')
 
 
 class WorkspaceSerializer(ModelSerializer):

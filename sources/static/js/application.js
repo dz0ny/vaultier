@@ -9,7 +9,21 @@ $.notify.defaults({
 Ember.FEATURES["query-params"] = true
 
 Vaultier = Ember.Application.create({
-    LOG_TRANSITIONS: true
+    LOG_TRANSITIONS: true,
+
+    ready: function() {
+        // Coder service
+        this.register('service:coder', Service.Coder)
+
+        // Members service
+        this.register('service:members', Service.Members)
+        this.inject('service:members', 'store', 'store:main');
+        this.inject('service:members', 'coder', 'service:coder')
+        this.inject('route:Workspace',  'members', 'service:members' )
+        this.inject('route:WorkspaceMemberApprove',  'members', 'service:members' )
+
+    }
+
 });
 
 Utils.HandlebarsHelpers.current().register();

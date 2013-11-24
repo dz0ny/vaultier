@@ -2,9 +2,21 @@ Vaultier.WorkspaceRoute = Ember.Route.extend(
     Utils.ErrorAwareRouteMixin,
     {
 
+        /**
+         * @DI Service.Members
+         */
+        member: null,
+
         model: function (params, transition) {
             var promise = this.get('store').find('Workspace', params.workspace);
+
+            // handle errors
             promise.then(null, this.handleErrors(transition))
+
+            // select working workspace
+            promise.then(function (workspace) {
+                this.get('members').selectWorkspace(workspace)
+            }.bind(this));
 
             return promise;
         },
@@ -26,7 +38,7 @@ Vaultier.WorkspaceRoute = Ember.Route.extend(
     });
 
 Vaultier.WorkspaceIndexRoute = Ember.Route.extend({
-    redirect: function() {
+    redirect: function () {
         this.transitionTo('Vaults.index')
     }
 })
