@@ -1,18 +1,17 @@
+from django.test.testcases import TransactionTestCase
 from django.utils import unittest
-from django.utils.unittest.case import TestCase
 from django.utils.unittest.suite import TestSuite
 from rest_framework.status import HTTP_200_OK
 from core.test.auth_tools import register_api_call, auth_api_call
-from core.test.member_tools import invite_member_api_call
+from core.test.member_tools import invite_member_api_call, accept_invitation_api_call
 from core.test.tools import format_response
 from core.test.workspace_tools import create_workspace_api_call
 
 
-class ApiInviteTest(TestCase):
+class ApiInviteTest(TransactionTestCase):
 
-    def test_invitation(self):
-
-        # create second user
+    def test_000_invitation(self):
+        # create first user
         email = 'tomas@rclick.cz'
         register_api_call(email=email, nickname='tomas').data
         user1token = auth_api_call(email=email).data.get('token')
@@ -31,7 +30,6 @@ class ApiInviteTest(TestCase):
             response.status_code,
             HTTP_200_OK,
             format_response(response))
-
 
 
 def invitation_suite():

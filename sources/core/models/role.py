@@ -3,7 +3,6 @@ from django.db.models.deletion import PROTECT, CASCADE
 from django.db.models.manager import Manager
 from core.auth.rolechecker import RoleChecker
 from core.auth.rolesumarizer import RoleSummarizer
-from core.models.acl import Acl
 from core.models.role_fields import RoleLevelField
 from core.models.object_reference import ObjectReference, ObjectReferenceTypeField
 from core.tools.changes import ChangesMixin
@@ -80,7 +79,7 @@ class Role(ChangesMixin,ObjectReference,models.Model):
     created_by = models.ForeignKey('core.User', on_delete=PROTECT, related_name='roles_created')
 
     def __unicode__(self):
-        return 'Role(' + str(self.id) + '): to:' + str(self.type) + ' level:' + str(self.level)
+        return 'Role(' + str(self.id) + ') to:' + str(self.get_object()) + ' level:' + str(self.level)
 
     def save(self, *args, **kwargs):
         self.compute_type()

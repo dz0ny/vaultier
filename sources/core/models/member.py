@@ -10,11 +10,11 @@ from core.tools.changes import ChangesMixin
 
 
 class MemberManager(Manager):
-
     #from members where member.workspace in (select
 
     def all_acls(self, user):
         from core.models.workspace import Workspace
+
         workspaces = Workspace.objects.all_for_user(user)
         result = Member.objects.filter(workspace__in=workspaces)
         return result
@@ -42,6 +42,20 @@ class MemberManager(Manager):
         for role in source.role_set.all():
             role.member = target
             role.save()
+        source.delete()
+        self.remove_role_duplicatates(target)
+
+    def remove_role_duplicatates(self, member):
+        # @todo: optimize this, many queries done
+        for role in member.role_set.all():
+            delete = member.role_set.filter(
+                to_workspace=role.to_workspace,
+                to_vault=role.to_vault,
+                to_card=role.to_card,
+                level__gte=role.level
+            ).exclude(id=role.id).count() >=1
+            if delete:
+                role.delete()
 
     def accept_invitation(self, member, user):
         workspace = member.workspace
@@ -56,9 +70,7 @@ class MemberManager(Manager):
         # membership exists, we need to join current membership to existing
         else:
             self.join_member(member, existing_member)
-            member.delete()
             member = existing_member
-            member.save()
 
         # reload member
         member = Member.objects.get(id=member.id)

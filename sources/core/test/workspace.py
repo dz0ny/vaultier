@@ -14,7 +14,7 @@ class ApiWorkspaceTest(TransactionTestCase):
 
     #todo: create, edit
 
-    def test_create_workspace(self):
+    def test_010_create_workspace(self):
 
         # create user
         email = 'jan.misek@rclick.cz'
