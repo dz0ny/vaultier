@@ -13,6 +13,7 @@ from core.api.perms.shared import IsAuthenticated
 from core.api.user import RelatedUserSerializer
 from core.auth.authentication import TokenAuthentication
 from core.models.member import Member
+from core.models.member_fields import MemberStatusField
 from core.models.role import Role
 from core.models.role_fields import RoleLevelField
 from core.models.workspace import Workspace
@@ -104,8 +105,17 @@ class MemberWorkspaceKeySerializer(ModelSerializer):
     public_key = SerializerMethodField('get_public_key')
     status = IntegerField(read_only=True)
 
+    def validate_workspace_key(self, attrs, source):
+        if  not self.object.status == MemberStatusField.STATUS_NON_APPROVED_MEMBER:
+            raise ValidationError('workspace_key can be modified only on NON_APPROVED_MEMBER status')
+        return attrs
+
     def get_public_key(self, obj):
         return obj.user.public_key
+
+    def save_object(self, obj, **kwargs):
+        obj.status = MemberStatusField.STATUS_MEMBER
+        return super(MemberWorkspaceKeySerializer, self).save_object(obj, **kwargs)
 
     class Meta:
         model = Member
