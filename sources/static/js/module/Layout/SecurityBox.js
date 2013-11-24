@@ -5,8 +5,13 @@ Vaultier.LayoutSecurityBoxView = Ember.View.extend({
     templateName: 'Layout/SecurityBox',
 
     actions: {
+
+        settings: function() {
+            alert('Not implemented')
+        },
+
         logout: function () {
-            var auth = this.get('auth');
+            var auth = this.get('controller.auth');
             auth.logout().then(function () {
                 $.notify('You have been successfully logged out.', 'success');
                 var ctrl = this.get('controller');

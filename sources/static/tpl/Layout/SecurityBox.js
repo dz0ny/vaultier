@@ -21,7 +21,7 @@ function program1(depth0,data) {
   data.buffer.push("\r\n        </a>\r\n\r\n        <ul class=\"dropdown-menu caret-right vlt-dropdown\">\r\n            <li><a ");
   hashContexts = {'target': depth0};
   hashTypes = {'target': "ID"};
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "logout", {hash:{
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "settings", {hash:{
     'target': ("view")
   },contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
   data.buffer.push(" href=\"\" >Personal settings</a></li>\r\n            <li><a ");

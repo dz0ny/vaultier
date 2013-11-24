@@ -35,7 +35,7 @@ def send_invitation(member):
     template = 'mailer/invitation'
     context = build_context(member)
 
-    to = ['jan.misek@rclick.cz']
+    to = [member.invitation_email]
     from_email = 'info@rclick.cz'
     subject = 'Invitation'
 
