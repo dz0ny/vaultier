@@ -1,6 +1,12 @@
 Vaultier.Role = DS.Model.extend(
     CreatedUpdatedMixin,
     {
+
+        /**
+         * @DI Service.Auth
+         */
+        auth: null,
+
         level: DS.attr('number'),
         member: DS.attr(),
         to_workspace: DS.attr(),

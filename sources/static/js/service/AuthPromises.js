@@ -1,12 +1,12 @@
 Service.AuthPromises = Ember.Object.extend({
 
     token: null,
+    coder: null,
 
     _auth: function (email, privateKey) {
+        var coder = this.coder;
         return function (password) {
             return Ember.RSVP.Promise(function (resolve, reject) {
-
-                var coder = Service.Coder.current();
                 var signature = coder.sign(email, privateKey);
 
                 Ember.$.ajax({
@@ -54,7 +54,7 @@ Service.AuthPromises = Ember.Object.extend({
         return function (token) {
             Ember.$.ajaxSetup({
                 beforeSend: function (xhr) {
-                    xhr.setRequestHeader('X-Vaultier-Token',token);
+                    xhr.setRequestHeader('X-Vaultier-Token', token);
                 }
             });
             this.set('token', token);

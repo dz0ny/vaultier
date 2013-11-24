@@ -124,8 +124,8 @@ Vaultier.AuthRegisterKeysRoute = Ember.Route.extend({
 
         if (!ctrl.get('props.keysReady')) {
             ctrl.set('props.nextButtonDisabled', true);
-            var coder = Service.Coder.create.current();
-            coder.generateKeys(function (keys) {
+            var auth = this.get('auth');
+            auth.generateKeys(function (keys) {
                 ctrl.set('props.keys', keys);
                 ctrl.set('props.keysReady', true);
             }.bind(this));
@@ -180,7 +180,7 @@ Vaultier.AuthRegisterCredsRoute = Ember.Route.extend({
         next: function () {
 
             // prepare data
-            var auth = Service.Auth.current();
+            var auth = this.get('auth');
             var ctrl = this.get('controller');
             var user = ctrl.get('content');
             var keys = ctrl.get('props.keys');
@@ -252,7 +252,7 @@ Vaultier.AuthRegisterSumRoute = Ember.Route.extend({
 
         downloadKey: function () {
             // start download
-            var blob = new Blob([Service.Auth.current().get('privateKey')], {type: "text/plain;charset=utf-8"});
+            var blob = new Blob([this.get('auth.privateKey')], {type: "text/plain;charset=utf-8"});
             saveAs(blob, "vaultier.key");
         },
 

@@ -15,6 +15,7 @@ Service.Invitations = Ember.Object.extend({
     init: function () {
         this._super();
         this.session = Service.Session.current();
+        this.auth = Vaultier.__container__.lookup('service:auth');
         this.env = Service.Environment.current()
         this.store = Vaultier.__container__.lookup('store:main');
     },

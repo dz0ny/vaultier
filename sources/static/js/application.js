@@ -16,20 +16,30 @@ Vaultier = Ember.Application.create({
         //@todo: do invitations
         //@todo: inject auth to invitations
 
-        // auth
+        // model:Role
+        this.inject('model:Role', 'auth', 'service:auth');
+
+        // model:Workspace
+        this.inject('model:Workspace', 'members', 'service:members');
+
+        // model:Secret
+        this.inject('model:Secret', 'members', 'service:members');
+
+
+        // service:auth
         this.register('service:auth', Service.Auth)
         this.inject('route', 'auth', 'service:auth');
         this.inject('controller', 'auth', 'service:auth');
-        this.inject('model:Role', 'auth', 'service:auth');
 
-        // Coder service
+        // service:coder
         this.register('service:coder', Service.Coder)
 
-        // Members service
+        // service:members
         this.register('service:members', Service.Members)
         this.inject('service:members', 'auth', 'service:auth')
         this.inject('service:members', 'store', 'store:main');
         this.inject('service:members', 'coder', 'service:coder')
+        this.inject('route:WorkspacesCreate', 'members', 'service:members')
         this.inject('route:Workspace',  'members', 'service:members' )
         this.inject('route:WorkspaceMemberApprove',  'members', 'service:members' )
 

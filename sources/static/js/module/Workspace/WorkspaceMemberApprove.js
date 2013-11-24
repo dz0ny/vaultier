@@ -37,7 +37,7 @@ Vaultier.WorkspaceMemberApproveRoute = Ember.Route.extend(
                 promise.then(
                     function () {
                         $.notify('Members were successfully approved.', 'success');
-                        //history.go(-1)
+                        history.go(-1)
                     },
                     function () {
                         $.notify('Oooups! Something went wrong.', 'error');

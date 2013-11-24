@@ -1,6 +1,12 @@
 Vaultier.Secret = DS.Model.extend(
     CreatedUpdatedMixin, {
 
+        /**
+         * @DI Service.Members
+         */
+        members: null,
+
+
         types: new Utils.ConstantList({
             'NOTE': {
                 value: 100,
@@ -42,8 +48,15 @@ Vaultier.Secret = DS.Model.extend(
         }.property('type'),
 
         decode: function () {
+            var members = this.get('members');
+
             var data = this.get('data');
-            var data = JSON.parse(data);
+            try {
+                data = members.decryptWorkspaceData(data)
+            } catch (e) {
+                console.error('Cannot decrypt data')
+                console.error(e.stack);
+            }
             this.setProperties(data);
         },
 
@@ -73,7 +86,8 @@ Vaultier.Secret = DS.Model.extend(
 
             }
 
-            this.set('data', JSON.stringify(data));
+            data = this.get('members').encryptWorkspaceData(data)
+            this.set('data', data);
 
         },
 

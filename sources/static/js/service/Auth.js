@@ -5,8 +5,12 @@ Service.Auth = Ember.Object.extend({
     init: function () {
         this._super(arguments);
         this.store = Vaultier.__container__.lookup('store:main');
+        this.coder = Vaultier.__container__.lookup('service:coder');
         this.session = Service.Session.current();
-        this.promises = Service.AuthPromises.create()
+        this.promises = Service.AuthPromises.create({
+            coder: this.coder
+        })
+
     },
 
     store: null,
@@ -25,6 +29,11 @@ Service.Auth = Ember.Object.extend({
     isChecked: function () {
         return this.get('checked') == true
     }.property('user', 'checked'),
+
+    generateKeys: function(callback) {
+        var coder = this.get('coder');
+        return this.coder.generateKeys(callback);
+    },
 
     login: function (email, privateKey) {
         return this.promises.login(email, privateKey)
@@ -141,4 +150,3 @@ Service.Auth = Ember.Object.extend({
 
 })
 ;
-Service.Auth.reopenClass(Utils.Singleton);

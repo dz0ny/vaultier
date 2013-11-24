@@ -85,11 +85,11 @@ Service.Coder = Ember.Object.extend({
     },
 
     decryptAES: function (value, passPhrase) {
-        return CryptoJS.AES.decrypt(value, passPhrase);
+        return CryptoJS.AES.decrypt(value, passPhrase).toString(CryptoJS.enc.Utf8);
     },
 
     encryptAES: function (value, passPhrase) {
-        return CryptoJS.AES.encrypt(value, passPhrase);
+        return CryptoJS.AES.encrypt(value, passPhrase).toString()
     }
 
 
