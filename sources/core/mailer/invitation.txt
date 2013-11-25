@@ -1,1 +1,7 @@
-PLAIN INVITATION NOT IMPLEMENTED YET
+You have been invited to Vaultier
+
+Please use following url to accept invitation:
+
+{{ url }}
+
+Thanks, you rock!
