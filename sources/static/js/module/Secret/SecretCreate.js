@@ -21,13 +21,12 @@ Vaultier.SecretCreateView = Ember.View.extend({
 });
 
 Vaultier.SecretCreateSelectRoute = Ember.Route.extend(
-    Utils.ErrorAwareRouteMixin,
     {
 
         model: function(params, transition) {
 
             // check permissions
-            if (!this.checkPermissions(transition, function () {
+            if (!this.get('auth').checkPermissions(transition, function () {
                 return this.modelFor('Card').get('perms.create')
             }.bind(this), true)) {
                 return;
@@ -66,13 +65,12 @@ Vaultier.SecretCreateSubmitController = Ember.Controller.extend({
 
 
 Vaultier.SecretCreateSubmitRoute = Ember.Route.extend(
-    Utils.ErrorAwareRouteMixin,
     {
 
         model: function (params, transition) {
 
             // check permissions
-            if (!this.checkPermissions(transition, function () {
+            if (!this.get('auth').checkPermissions(transition, function () {
                 return this.modelFor('Card').get('perms.create')
             }.bind(this), true)) {
                 return;

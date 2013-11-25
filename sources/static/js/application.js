@@ -12,9 +12,19 @@ Ember.MODEL_FACTORY_INJECTIONS = true;
 Vaultier = Ember.Application.create({
     LOG_TRANSITIONS: true,
 
-    ready: function() {
+    ready: function () {
         //@todo: do invitations
         //@todo: inject auth to invitations
+
+
+        // service:errors
+        this.register('service:errors', Service.Errors)
+        this.inject('route', 'errors', 'service:errors');
+        this.inject('service:errors', 'errorController', 'controller:ErrorGeneric')
+        this.inject('service:errors', 'router', 'router:main')
+
+        this.__container__.lookup('service:errors').register();
+
 
         // model:Role
         this.inject('model:Role', 'auth', 'service:auth');
@@ -40,8 +50,8 @@ Vaultier = Ember.Application.create({
         this.inject('service:members', 'store', 'store:main');
         this.inject('service:members', 'coder', 'service:coder')
         this.inject('route:WorkspacesCreate', 'members', 'service:members')
-        this.inject('route:Workspace',  'members', 'service:members' )
-        this.inject('route:WorkspaceMemberApprove',  'members', 'service:members' )
+        this.inject('route:Workspace', 'members', 'service:members')
+        this.inject('route:WorkspaceMemberApprove', 'members', 'service:members')
 
     }
 
@@ -70,29 +80,4 @@ $(document).ready(function () {
     });
 })
 
-
-
-/**************************************************
- **************************************************
- * Stack trace logging
- **************************************************
- **************************************************
- */
-
-Ember.RSVP.configure('onerror', function (error) {
-    console.error(error.message);
-    console.error(error.stack);
-});
-
-Ember.Router.reopenClass({
-    _defaultErrorHandler: function (error, transition) {
-        this._super(error, transition)
-        console.log(error.stack)
-    }
-})
-
-Ember.onerror = function (error) {
-    console.error(error.message);
-    console.log(error.stack);
-}
 

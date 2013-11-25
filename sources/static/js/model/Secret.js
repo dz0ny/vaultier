@@ -1,5 +1,7 @@
 Vaultier.Secret = DS.Model.extend(
-    CreatedUpdatedMixin, {
+    CreatedUpdatedMixin,
+    NonInvalidState,
+    {
 
         /**
          * @DI Service.Members

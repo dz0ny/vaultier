@@ -1,10 +1,7 @@
 Vaultier.VaultRoute = Ember.Route.extend(
-    Utils.ErrorAwareRouteMixin,
     {
         model: function (params, transition) {
-
             var model = this.get('store').find('Vault', params.vault )
-                .then(null, this.handleErrors(transition))
             return model;
         },
 

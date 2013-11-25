@@ -33,12 +33,14 @@ Service.Members = Ember.Object.extend({
     },
 
     decryptWorkspaceKey: function (workspace) {
+        workspace.set('keyError', false)
         var key = workspace.get('membership.workspace_key');
         if (key) {
             var coder = this.get('coder');
             var privateKey = this.get('auth.privateKey');
             key = coder.decryptRSA(key, privateKey);
             if (!key) {
+                workspace.set('keyError', true)
                 throw new Error('Cannot decrypt workspace key')
             }
         } else {

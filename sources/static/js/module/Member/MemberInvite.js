@@ -1,5 +1,4 @@
 Vaultier.MemberInviteRoute = Ember.Route.extend(
-    Utils.ErrorAwareRouteMixin,
     {
 
         inviteObject: null,
@@ -8,7 +7,7 @@ Vaultier.MemberInviteRoute = Ember.Route.extend(
             this.setProperties(this.setupInviteData(params));
 
             // check permissions
-            if (!this.checkPermissions(transition, function () {
+            if (!this.get('auth').checkPermissions(transition, function () {
                 return this.get('inviteObject.perms.invite')
             }.bind(this), true)) {
                 return;
@@ -51,7 +50,7 @@ Vaultier.MemberInviteRoute = Ember.Route.extend(
                             role,
                             inviteParams,
                             true,
-                            false
+                            true
                         ));
                 });
 

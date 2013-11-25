@@ -1,10 +1,9 @@
 Vaultier.VaultEditRoute = Ember.Route.extend(
-    Utils.ErrorAwareRouteMixin,
     {
         model: function (params, transition) {
             var vault = this.modelFor('Vault');
 
-            if (!this.checkPermissions(transition, function() {
+            if (!this.get('auth').checkPermissions(transition, function() {
                 return vault.get('perms.update')
             }.bind(this), true)) {
                 return;

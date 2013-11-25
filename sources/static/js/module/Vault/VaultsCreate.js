@@ -1,10 +1,9 @@
 Vaultier.VaultsCreateRoute = Ember.Route.extend(
-    Utils.ErrorAwareRouteMixin,
     {
 
         model: function (params, transition) {
 
-            if (!this.checkPermissions(transition, function() {
+            if (!this.get('auth').checkPermissions(transition, function() {
                 return this.modelFor('Workspace').get('perms.create')
             }.bind(this), true)) {
                 return;

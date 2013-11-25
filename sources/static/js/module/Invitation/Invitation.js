@@ -1,16 +1,13 @@
 Vaultier.InvitationUseRoute = Ember.Route.extend(
-    Utils.ErrorAwareRouteMixin,
     {
         model: function (params, transition) {
             transition.abort();
             return Service.Invitations.current().useInvitation(params.invitation, params.hash, params.data)
-                .fail(this.handleErrors(transition))
         }
     });
 
 
 Vaultier.InvitationAcceptRoute = Ember.Route.extend(
-    Utils.ErrorAwareRouteMixin,
     {
 
         model: function (params, transition) {
@@ -57,7 +54,6 @@ Vaultier.InvitationAcceptRoute = Ember.Route.extend(
     });
 
 Vaultier.InvitationAnonymousRoute = Ember.Route.extend(
-//    Utils.ErrorAwareRouteMixin,
     {
     });
 

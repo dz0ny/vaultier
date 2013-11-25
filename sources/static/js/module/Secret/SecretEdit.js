@@ -1,5 +1,4 @@
 Vaultier.SecretEditRoute = Ember.Route.extend(
-    Utils.ErrorAwareRouteMixin,
     {
 
         serialize: function (secret) {
@@ -12,8 +11,7 @@ Vaultier.SecretEditRoute = Ember.Route.extend(
             var store = this.get('store');
             var promise = store.find('Secret', params.secret);
             promise
-                .then(null, this.handleErrors(transition))
-                .then(this.checkPermissions(transition, function (model) {
+                .then(this.get('auth').checkPermissions(transition, function (model) {
                     perms = model.get('perms.update');
                     return perms
                 }))

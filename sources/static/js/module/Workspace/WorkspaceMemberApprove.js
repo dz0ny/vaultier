@@ -1,12 +1,11 @@
 Vaultier.WorkspaceMemberApproveRoute = Ember.Route.extend(
-    Utils.ErrorAwareRouteMixin,
     {
 
         model: function (params, transition) {
 
             // check permissions
             var workspace = this.modelFor('Workspace');
-            if (!this.checkPermissions(transition, function () {
+            if (!this.get('auth').checkPermissions(transition, function () {
                 return workspace.get('perms.invite')
             }.bind(this), true)) {
                 return;

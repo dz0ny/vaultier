@@ -1,10 +1,17 @@
 Vaultier.Workspace = DS.Model.extend(
     CreatedUpdatedMixin,
+    NonInvalidState,
     {
         /**
          * @DI Service.Members
          */
         members: null,
+
+        /**
+         * Managed by Service.Members, True when key cannot be decrypted
+         */
+        keyError: false,
+
 
         name: DS.attr('string'),
         vaults: DS.attr('number'),
@@ -12,10 +19,11 @@ Vaultier.Workspace = DS.Model.extend(
         perms: DS.attr(),
         membership: DS.attr(),
 
+
         /**
          * Returns if user given by membership is approved on current workspace
          */
-        isApproved: function() {
+        isApproved: function () {
             return this.get('membership.status') == Vaultier.Member.proto().statuses['MEMBER'].value
         }.property('membership.status'),
 
@@ -37,7 +45,8 @@ Vaultier.Workspace = DS.Model.extend(
                 }.bind(this))
 
             return promise
-        }
+        },
+
 
     }
 );

@@ -1,5 +1,6 @@
 Vaultier.Role = DS.Model.extend(
     CreatedUpdatedMixin,
+    NonInvalidState,
     {
 
         /**

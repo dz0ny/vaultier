@@ -1,7 +1,14 @@
 {{#unless view.workspace.isApproved}}
     <div class="alert alert-warning top-15">
-        <b>Not approved yet.</b>
+        <b>Not approved yet.<br/></b>
         Your access to this workspace has not been approved yet. You will not be able to see secret informations in
         workspace
     </div>
 {{/unless}}
+
+{{#if view.workspace.keyError}}
+    <div class="alert alert-danger top-15">
+        <b>Workspace key error. <br/></b>
+        Your workspace key cannot be decoded. It means you have no access to workspace secret data
+    </div>
+{{/if}}

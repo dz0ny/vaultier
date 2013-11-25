@@ -1,5 +1,7 @@
 Vaultier.User = DS.Model.extend(
-    CreatedUpdatedMixin, {
+    CreatedUpdatedMixin,
+    NonInvalidState,
+    {
         email: DS.attr('string'),
         nickname: DS.attr('string')
     })

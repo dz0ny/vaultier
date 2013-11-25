@@ -159,7 +159,7 @@ function program14(depth0,data) {
 function program15(depth0,data) {
   
   
-  data.buffer.push("\r\n                                                    <span class=\"glyphicon glyphicon-ok\"></span>\r\n                                                    Approve\r\n                                            ");
+  data.buffer.push("\r\n                                                <span class=\"glyphicon glyphicon-ok\"></span>\r\n                                                Approve\r\n                                            ");
   }
 
 function program17(depth0,data) {
@@ -181,8 +181,13 @@ function program19(depth0,data) {
   }
 function program20(depth0,data) {
   
-  
-  data.buffer.push("\r\n                                        <span class=\"label label-warning\">\r\n                                It's you\r\n                                </span>\r\n                                    ");
+  var buffer = '', hashTypes, hashContexts;
+  data.buffer.push("\r\n                                        <span class=\"label label-default\">\r\n                                            ");
+  hashTypes = {};
+  hashContexts = {};
+  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "role.printableName", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
+  data.buffer.push("\r\n                                        </span>\r\n                                        <span class=\"label label-warning\">\r\n                                        It's you\r\n                                        </span>\r\n\r\n                                    ");
+  return buffer;
   }
 
 function program22(depth0,data) {
@@ -213,7 +218,7 @@ function program24(depth0,data) {
   data.buffer.push("\r\n\r\n                                    ");
   hashTypes = {};
   hashContexts = {};
-  stack1 = helpers['if'].call(depth0, "role.isCurrentUser", {hash:{},inverse:self.noop,fn:self.program(20, program20, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
+  stack1 = helpers['if'].call(depth0, "role.isCurrentUser", {hash:{},inverse:self.noop,fn:self.program(25, program25, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n\r\n                                    <span class=\"label label-default\">\r\n                                        ");
   hashTypes = {};
@@ -221,6 +226,11 @@ function program24(depth0,data) {
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "role.printableName", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
   data.buffer.push("\r\n                                    </span>\r\n\r\n                                ");
   return buffer;
+  }
+function program25(depth0,data) {
+  
+  
+  data.buffer.push("\r\n                                        <span class=\"label label-warning\">\r\n                                        It's you\r\n                                        </span>\r\n                                    ");
   }
 
   data.buffer.push("<div class=\"vlt-page-nav\">\r\n\r\n    <div class=\"vlt-page-toolbar pull-right\">\r\n        <div>\r\n\r\n            <a href=\"javascript:window.history.go(-1)\" class=\"btn btn-default\">\r\n                <span class=\"glyphicon glyphicon-chevron-left\"></span>\r\n                Back\r\n            </a>\r\n\r\n            <div style=\"display: none\">\r\n                <a href=\"#\" class=\"btn btn-default\">\r\n                    <span class=\"glyphicon glyphicon-question-sign\"></span>\r\n                    Permissions\r\n                </a>\r\n            </div>\r\n\r\n            ");

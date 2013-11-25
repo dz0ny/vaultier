@@ -1,5 +1,4 @@
 Vaultier.WorkspacesRoute = Ember.Route.extend(
-    Utils.ErrorAwareRouteMixin,
     {
 
         beforeModel: function (transition) {
@@ -24,12 +23,10 @@ Vaultier.WorkspacesRoute = Ember.Route.extend(
     });
 
 Vaultier.WorkspacesIndexRoute = Ember.Route.extend(
-    Utils.ErrorAwareRouteMixin,
     {
         model: function (params, transition) {
             var store = this.get('store');
             var promise = store.find('Workspace');
-            promise.then(null, this.handleErrors(transition))
             return promise;
         },
 

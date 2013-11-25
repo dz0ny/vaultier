@@ -1,10 +1,9 @@
 Vaultier.WorkspaceEditRoute = Ember.Route.extend(
-    Utils.ErrorAwareRouteMixin,
     {
         model: function (params, transition) {
             var workspace = this.modelFor('Workspace');
 
-            if (!this.checkPermissions(transition, function() {
+            if (!this.get('auth').checkPermissions(transition, function() {
                 return workspace.get('perms.update')
             }.bind(this), true)) {
                 return;

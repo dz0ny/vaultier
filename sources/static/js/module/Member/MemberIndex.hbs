@@ -94,8 +94,8 @@
                                         </div>
                                         <div class="col-md-6">
                                             {{#link-to 'Workspace.memberApprove' class="btn btn-success" href="#"}}
-                                                    <span class="glyphicon glyphicon-ok"></span>
-                                                    Approve
+                                                <span class="glyphicon glyphicon-ok"></span>
+                                                Approve
                                             {{/link-to}}
                                         </div>
                                     </div>
@@ -111,9 +111,13 @@
                                 {{#unless block.readOnly}}
 
                                     {{#if role.isCurrentUser}}
+                                        <span class="label label-default">
+                                            {{role.printableName}}
+                                        </span>
                                         <span class="label label-warning">
-                                It's you
-                                </span>
+                                        It's you
+                                        </span>
+
                                     {{else}}
                                         <div class="input-group">
                                             {{view view.Select
@@ -133,8 +137,8 @@
 
                                     {{#if role.isCurrentUser}}
                                         <span class="label label-warning">
-                                It's you
-                                </span>
+                                        It's you
+                                        </span>
                                     {{/if}}
 
                                     <span class="label label-default">

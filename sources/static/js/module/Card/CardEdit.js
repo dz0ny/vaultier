@@ -1,5 +1,4 @@
 Vaultier.CardEditRoute = Ember.Route.extend(
-    Utils.ErrorAwareRouteMixin,
     {
 
         serialize: function(card) {
@@ -11,7 +10,7 @@ Vaultier.CardEditRoute = Ember.Route.extend(
         model: function (params, transition) {
             var card = this.modelFor('Card');
 
-            if (!this.checkPermissions(transition, function() {
+            if (!this.get('auth').checkPermissions(transition, function() {
                 return card.get('perms.update')
             }.bind(this), true)) {
                 return;

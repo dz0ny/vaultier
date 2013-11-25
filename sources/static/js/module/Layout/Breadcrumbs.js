@@ -25,7 +25,7 @@ Vaultier.Breadcrumbs = Ember.Object.extend({
                 }
             } catch (e) {
                 console.error(e.message);
-                console.error('Breadcrumbs error during generate route (' + route + ')');
+                console.error('Breadcrumbs error during generate route (' + link + ')');
             }
         }
 

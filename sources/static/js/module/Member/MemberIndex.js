@@ -1,5 +1,4 @@
 Vaultier.MemberIndexRoute = Ember.Route.extend(
-    Utils.ErrorAwareRouteMixin,
     {
 
         inviteObject: null,
@@ -9,7 +8,7 @@ Vaultier.MemberIndexRoute = Ember.Route.extend(
             this.setProperties(this.setupInviteData(params))
 
             // check permissions
-            if (!this.checkPermissions(transition, function () {
+            if (!this.get('auth').checkPermissions(transition, function () {
                 return this.get('inviteObject.perms.invite')
             }.bind(this), true)) {
                 return;
@@ -109,7 +108,7 @@ Vaultier.MemberIndexRoute = Ember.Route.extend(
             if (models.vault) {
                 blocks.push(Ember.Object.create({
                     type: 'vault',
-                    url: this.get('router').generate('Card.memberIndex', models.workspace, models.vault),
+                    url: this.get('router').generate('Vault.memberIndex', models.vault),
                     object: models.vault,
                     roles: models.vaultRoles
                 }));
@@ -118,7 +117,7 @@ Vaultier.MemberIndexRoute = Ember.Route.extend(
             if (models.workspace) {
                 blocks.push(Ember.Object.create({
                     type: 'workspace',
-                    url: this.get('router').generate('Vault.memberIndex', models.workspace),
+                    url: this.get('router').generate('Workspace.memberIndex', models.workspace),
                     object: models.workspace,
                     roles: models.workspaceRoles
                 }));
@@ -185,7 +184,7 @@ Vaultier.MemberIndexController = Ember.Controller.extend({
                 index: index,
                 isSecond: index == 1,
                 isHidden: item.roles.get('length') == 0 && index > 0,
-                readOnly: index > 1
+                readOnly: index > 0
             })
 
             return item

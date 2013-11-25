@@ -122,17 +122,14 @@ var router = Vaultier.Router.map(function () {
         //this.route('about', { path: '/about'});
     })
 
-    this.route("Error400", { path: "/errors/error-400"});
-    this.route("Error403", { path: "/errors/error-403"});
+    this.route("ErrorGeneric", { path: "/errors/"});
     this.route("Error404", { path: "*path"}); //also referred as /errors/error-404
 
 });
 
 Service.Environment.current().set('router', router);
 
-
 Vaultier.ApplicationRoute = Ember.Route.extend(
-    Utils.ErrorAwareRouteMixin,
     {
         model: function (params, transition) {
             var auth = this.get('auth');
@@ -142,7 +139,6 @@ Vaultier.ApplicationRoute = Ember.Route.extend(
     });
 
 Vaultier.IndexRoute = Ember.Route.extend(
-    Utils.ErrorAwareRouteMixin,
     {
         redirect: function () {
             var auth = this.get('auth');

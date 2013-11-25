@@ -237,7 +237,7 @@ function program26(depth0,data) {
 function program28(depth0,data) {
   
   
-  data.buffer.push("\r\n\r\n                    <div class=\"jumbotron vlt-empty vlt-secret col-md-8 col-md-offset-2\">\r\n                        <div class=\"vlt-header\">\r\n                            <div class=\"vlt-icon\">\r\n\r\n                            </div>\r\n                            <div class=\"vlt-title\">\r\n                                <h1>Your access to workspace not approved</h1>\r\n                            </div>\r\n                        </div>\r\n\r\n                        <p>\r\n                            Unitl you will not get approved, you cannot see secret workspace data\r\n                        </p>\r\n\r\n                    </div>\r\n\r\n                ");
+  data.buffer.push("\r\n\r\n                    <div class=\"jumbotron vlt-empty vlt-secret col-md-8 col-md-offset-2\">\r\n                        <div class=\"vlt-header\">\r\n                            <div class=\"vlt-icon\">\r\n\r\n                            </div>\r\n                            <div class=\"vlt-title\">\r\n                                <h1>Your access to workspace not approved</h1>\r\n                            </div>\r\n                        </div>\r\n\r\n                        <p>\r\n                            Until you will get approved, you cannot see secret workspace data\r\n                        </p>\r\n\r\n                    </div>\r\n\r\n                ");
   }
 
   data.buffer.push("<div class=\"vlt-page-nav\">\r\n\r\n    ");
@@ -250,7 +250,7 @@ function program28(depth0,data) {
   hashTypes = {};
   hashContexts = {};
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "card.name", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
-  data.buffer.push("</h2>\r\n    </div>\r\n\r\n\r\n    <div class=\"clearfix\"></div>\r\n\r\n</div>\r\n\r\n<div class=\"row\">\r\n    <div class=\"col-md-12\">\r\n\r\n        <div class=\"vlt-card-detail\">\r\n\r\n            ");
+  data.buffer.push("</h2>\r\n    </div>\r\n\r\n\r\n    <div class=\"clearfix\"></div>\r\n\r\n</div>\r\n\r\n<div class=\"row\">\r\n    <div class=\"col-md-12\">\r\n\r\n        <div class=\"vlt-card-detail\">\r\n\r\n\r\n            ");
   hashTypes = {};
   hashContexts = {};
   stack2 = helpers['if'].call(depth0, "length", {hash:{},inverse:self.program(23, program23, data),fn:self.program(15, program15, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});

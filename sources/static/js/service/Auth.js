@@ -35,6 +35,32 @@ Service.Auth = Ember.Object.extend({
         return this.coder.generateKeys(callback);
     },
 
+    checkPermissions: function (transition, check, noPromise) {
+        var fn = function (model) {
+            var result = false;
+            try {
+                result = check(model)
+            } catch (e) {
+                console.error(e.stack)
+            }
+
+            if (!result) {
+                var e = new Error('Missing client permission');
+                e.status = 403
+                throw e
+            }
+            return result
+        }.bind(this)
+
+        if (noPromise) {
+            return fn()
+        } else {
+            return fn
+        }
+
+    },
+
+
     login: function (email, privateKey) {
         return this.promises.login(email, privateKey)
             .then(

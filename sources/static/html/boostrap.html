@@ -115,14 +115,14 @@
     <script src="{% static 'tpl/Layout/WorkspaceBox.js' %}"></script>
     <script src="{% static 'tpl/Layout/Breadcrumbs.js' %}"></script>
     <script src="{% static 'tpl/Layout/LayoutStandard.js' %}"></script>
+    <script src="{% static 'tpl/Layout/LayoutError.js' %}"></script>
     <script src="{% static 'tpl/Layout/Confirm.js' %}"></script>
 
     {############# home and system #}
     <script src="{% static 'tpl/Home/HomeIndex.js' %}"></script>
 
-    <script src="{% static 'tpl/Error/Error400.js' %}"></script>
-    <script src="{% static 'tpl/Error/Error403.js' %}"></script>
     <script src="{% static 'tpl/Error/Error404.js' %}"></script>
+    <script src="{% static 'tpl/Error/ErrorGeneric.js' %}"></script>
 
     {############ auth #}
     <script src="{% static 'tpl/Auth/AuthLogin.js' %}"></script>
@@ -191,7 +191,6 @@
     <script src="{% static 'js/utils/ConstantList.js' %}"></script>
     <script src="{% static 'js/utils/Singleton.js' %}"></script>
     <script src="{% static 'js/utils/HandlebarsHelpers.js' %}"></script>
-    <script src="{% static 'js/utils/ErrorAwareRouteMixin.js' %}"></script>
     <script src="{% static 'js/utils/RSVPAjax.js' %}"></script>
     <script src="{% static 'js/utils/MutableAdapterMixin.js' %}"></script>
 
@@ -204,6 +203,7 @@
 
     {############# services #}
 
+    <script src="{% static 'js/service/Errors.js' %}"></script>
     <script src="{% static 'js/service/Environment.js' %}"></script>
     <script src="{% static 'js/service/Auth.js' %}"></script>
     <script src="{% static 'js/service/AuthPromises.js' %}"></script>
