@@ -193,7 +193,7 @@ LOGGING = {
     }
 }
 
-EMAIL_BACKEND = 'core.mailer.backends.DevelopmentEmailBackend'
+EMAIL_BACKEND = 'core.mailer.backends.VaultierEmailBackend'
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 25
 EMAIL_HOST_USER = ''
@@ -211,10 +211,11 @@ EMBER_TPL_MASK = "\w+.hbs$"
 
 # Indicates options for frontend
 FT_FEATURES = {
-    'dev_shared_key': False # development features
+    'dev_shared_key': False # True to use/generate same key for all users
 }
 
 # Indicates options for backed
 BK_FEATURES = {
-    'dev_shared_key':False # development features
+    'dev_mail_to': False, # 'email@example.com' to send all emails to this address
+    'dev_shared_key':False # True to use/generate same key for all users
 }

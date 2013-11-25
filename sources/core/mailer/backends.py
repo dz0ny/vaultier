@@ -1,8 +1,11 @@
 from django.core.mail.backends.smtp import EmailBackend
+from vaultier.settings import BK_FEATURES
 
-class DevelopmentEmailBackend(EmailBackend):
+
+class VaultierEmailBackend(EmailBackend):
     def send_messages(self, email_messages):
-        for email_message in email_messages:
-            email_message.to=['jan.misek@rclick.cz']
+        if BK_FEATURES.get('dev_mail_to'):
+            for email_message in email_messages:
+                email_message.to=[BK_FEATURES.get('dev_mail_to')]
 
-        return super(DevelopmentEmailBackend, self).send_messages(email_messages)
+        return super(VaultierEmailBackend, self).send_messages(email_messages)

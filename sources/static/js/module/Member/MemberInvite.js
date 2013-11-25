@@ -13,8 +13,6 @@ Vaultier.MemberInviteRoute = Ember.Route.extend(
             }.bind(this), true)) {
                 return;
             }
-
-            console.log('a');
         },
 
         /**
