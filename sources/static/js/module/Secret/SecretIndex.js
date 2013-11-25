@@ -1,9 +1,15 @@
 Vaultier.SecretIndexRoute = Ember.Route.extend({
 
     model: function (params, queryParams) {
+        var workspace = this.modelFor('Workspace')
         var card = this.modelFor('Card');
         var store = this.get('store');
-        return store.find('Secret', {card: card.get('id')});
+
+        if (workspace.get('isApproved')) {
+            return store.find('Secret', {card: card.get('id')});
+        } else {
+            return []
+        }
     },
 
     setupController: function (ctrl, model) {

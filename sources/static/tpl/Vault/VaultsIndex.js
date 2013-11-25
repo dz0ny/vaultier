@@ -72,8 +72,14 @@ function program7(depth0,data) {
 
 function program9(depth0,data) {
   
-  var buffer = '', stack1, hashTypes, hashContexts;
-  data.buffer.push("\r\n            ");
+  var buffer = '', stack1, hashContexts, hashTypes;
+  data.buffer.push("\r\n\r\n            ");
+  hashContexts = {'workspace': depth0};
+  hashTypes = {'workspace': "ID"};
+  data.buffer.push(escapeExpression(helpers.view.call(depth0, "Vaultier.WorkspacesIndexNotApprovedView", {hash:{
+    'workspace': ("")
+  },contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
+  data.buffer.push("\r\n\r\n            ");
   hashTypes = {};
   hashContexts = {};
   stack1 = helpers.each.call(depth0, {hash:{},inverse:self.noop,fn:self.program(10, program10, data),contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data});

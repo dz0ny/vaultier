@@ -195,32 +195,49 @@ function program21(depth0,data) {
 function program23(depth0,data) {
   
   var buffer = '', stack1, hashTypes, hashContexts;
-  data.buffer.push("\r\n\r\n\r\n                <div class=\"jumbotron vlt-empty vlt-secret col-md-8 col-md-offset-2\">\r\n                    <div class=\"vlt-header\">\r\n                        <div class=\"vlt-icon\">\r\n\r\n                        </div>\r\n                        <div class=\"vlt-title\">\r\n                            <h1>You do not have any secret yet</h1>\r\n                        </div>\r\n                    </div>\r\n\r\n                    ");
+  data.buffer.push("\r\n\r\n                ");
   hashTypes = {};
   hashContexts = {};
-  stack1 = helpers['if'].call(depth0, "card.perms.create", {hash:{},inverse:self.noop,fn:self.program(24, program24, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
+  stack1 = helpers['if'].call(depth0, "workspace.isApproved", {hash:{},inverse:self.program(28, program28, data),fn:self.program(24, program24, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\r\n\r\n                </div>\r\n            ");
+  data.buffer.push("\r\n\r\n            ");
   return buffer;
   }
 function program24(depth0,data) {
   
-  var buffer = '', stack1, stack2, hashContexts, hashTypes, options;
-  data.buffer.push("\r\n\r\n                        <p>\r\n                            What are secrets for? Lorem ipsum dolor sit amet, consectetur adipiscing elit.\r\n                        </p>\r\n\r\n                        <p class=\"top-30\">\r\n                            ");
-  hashContexts = {'class': depth0};
-  hashTypes = {'class': "STRING"};
-  options = {hash:{
-    'class': ("btn btn-lg btn-primary")
-  },inverse:self.noop,fn:self.program(25, program25, data),contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
-  stack2 = ((stack1 = helpers['link-to'] || depth0['link-to']),stack1 ? stack1.call(depth0, "Secret.createSelect", options) : helperMissing.call(depth0, "link-to", "Secret.createSelect", options));
-  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("\r\n                        </p>\r\n\r\n                    ");
+  var buffer = '', stack1, hashTypes, hashContexts;
+  data.buffer.push("\r\n\r\n                    <div class=\"jumbotron vlt-empty vlt-secret col-md-8 col-md-offset-2\">\r\n                        <div class=\"vlt-header\">\r\n                            <div class=\"vlt-icon\">\r\n\r\n                            </div>\r\n                            <div class=\"vlt-title\">\r\n                                <h1>You do not have any secret yet</h1>\r\n                            </div>\r\n                        </div>\r\n\r\n                        ");
+  hashTypes = {};
+  hashContexts = {};
+  stack1 = helpers['if'].call(depth0, "card.perms.create", {hash:{},inverse:self.noop,fn:self.program(25, program25, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\r\n\r\n                    </div>\r\n\r\n                ");
   return buffer;
   }
 function program25(depth0,data) {
   
+  var buffer = '', stack1, stack2, hashContexts, hashTypes, options;
+  data.buffer.push("\r\n\r\n                            <p>\r\n                                What are secrets for? Lorem ipsum dolor sit amet, consectetur adipiscing elit.\r\n                            </p>\r\n\r\n                            <p class=\"top-30\">\r\n                                ");
+  hashContexts = {'class': depth0};
+  hashTypes = {'class': "STRING"};
+  options = {hash:{
+    'class': ("btn btn-lg btn-primary")
+  },inverse:self.noop,fn:self.program(26, program26, data),contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
+  stack2 = ((stack1 = helpers['link-to'] || depth0['link-to']),stack1 ? stack1.call(depth0, "Secret.createSelect", options) : helperMissing.call(depth0, "link-to", "Secret.createSelect", options));
+  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
+  data.buffer.push("\r\n                            </p>\r\n\r\n                        ");
+  return buffer;
+  }
+function program26(depth0,data) {
   
-  data.buffer.push("\r\n                                <span class=\"glyphicon glyphicon-plus\"></span>\r\n                                Create new secret\r\n                            ");
+  
+  data.buffer.push("\r\n                                    <span class=\"glyphicon glyphicon-plus\"></span>\r\n                                    Create new secret\r\n                                ");
+  }
+
+function program28(depth0,data) {
+  
+  
+  data.buffer.push("\r\n\r\n                    <div class=\"jumbotron vlt-empty vlt-secret col-md-8 col-md-offset-2\">\r\n                        <div class=\"vlt-header\">\r\n                            <div class=\"vlt-icon\">\r\n\r\n                            </div>\r\n                            <div class=\"vlt-title\">\r\n                                <h1>Your access to workspace not approved</h1>\r\n                            </div>\r\n                        </div>\r\n\r\n                        <p>\r\n                            Unitl you will not get approved, you cannot see secret workspace data\r\n                        </p>\r\n\r\n                    </div>\r\n\r\n                ");
   }
 
   data.buffer.push("<div class=\"vlt-page-nav\">\r\n\r\n    ");

@@ -12,6 +12,14 @@ Vaultier.Workspace = DS.Model.extend(
         perms: DS.attr(),
         membership: DS.attr(),
 
+        /**
+         * Returns if user given by membership is approved on current workspace
+         */
+        isApproved: function() {
+            return this.get('membership.status') == Vaultier.Member.proto().statuses['MEMBER'].value
+        }.property('membership.status'),
+
+
         save: function () {
             var isNew = !this.get('id');
             var promise = this._super(arguments)
