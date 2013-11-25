@@ -26,8 +26,13 @@ Service.Coder = Ember.Object.extend({
     }),
 
     generateKeys: function (callback) {
-//        var generator = new JSEncrypt({default_key_size: 1024});
-        var generator = this.TestingGenerator.create();
+        if (VaultierConfig.get('FT_FEATURES.dev_shared_key')) {
+            // development generator
+            var generator = this.TestingGenerator.create();
+        } else {
+            // production generator
+            var generator = new JSEncrypt({default_key_size: 1024});
+        }
 
         var build = function () {
             return  {

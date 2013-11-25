@@ -1,7 +1,5 @@
 import os.path
-import socket
-
-# Django settings for vaultier project.
+import sys
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -11,6 +9,10 @@ ADMINS = (
 )
 
 MANAGERS = ADMINS
+
+
+PROJECT_ROOT =  os.path.realpath(os.path.join(os.path.dirname(__file__), '..').replace('\\', '/'))
+
 
 DATABASES = {
     'default': {
@@ -24,7 +26,6 @@ DATABASES = {
         'PORT': '', # Set to empty string for default.
     }
 }
-import sys
 if 'test' in sys.argv or 'test_coverage' in sys.argv: #Covers regular testing and django-coverage
     DATABASES['default']['ENGINE'] = 'django.db.backends.sqlite3'
 
@@ -42,8 +43,6 @@ TIME_ZONE = 'America/Chicago'
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'en-us'
-
-SITE_ID = 1
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
@@ -64,8 +63,6 @@ MEDIA_ROOT = ''
 # trailing slash.
 # Examples: "http://example.com/media/", "http://media.example.com/"
 MEDIA_URL = ''
-
-PROJECT_ROOT =  os.path.realpath(os.path.join(os.path.dirname(__file__), '..').replace('\\', '/'))
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
@@ -131,12 +128,6 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
 )
 
-EMBER_TPL_DIR = os.path.join(PROJECT_ROOT, 'static/js/module');
-
-EMBER_TPL_CMPDIR = os.path.join(PROJECT_ROOT, 'static/tpl');
-
-EMBER_TPL_MASK = "\w+.hbs$"
-
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': (
         'rest_framework.filters.DjangoFilterBackend',
@@ -148,11 +139,10 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
        'rest_framework.permissions.AllowAny',
     ),
-    # 'PAGINATE_BY': 10
 }
+
 #
 # SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
-
 
 COMPRESS_ENABLED = 0
 
@@ -203,17 +193,28 @@ LOGGING = {
     }
 }
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'core.mailer.backends.DevelopmentEmailBackend'
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 25
 EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = False
 
-# LOGIN_URL = '/login/'
-
 AUTH_USER_MODEL = 'core.User'
-
 AUTHENTICATION_BACKENDS = ( 'core.auth.authentication.Backend', )
 
 TEST_RUNNER = 'django.test.simple.DjangoTestSuiteRunner'
+
+EMBER_TPL_DIR = os.path.join(PROJECT_ROOT, 'static/js/module');
+EMBER_TPL_CMPDIR = os.path.join(PROJECT_ROOT, 'static/tpl');
+EMBER_TPL_MASK = "\w+.hbs$"
+
+# Indicates options for frontend
+FT_FEATURES = {
+    'dev_shared_key': False # development features
+}
+
+# Indicates options for backed
+BK_FEATURES = {
+    'dev_shared_key':False # development features
+}
