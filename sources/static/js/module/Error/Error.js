@@ -11,6 +11,10 @@ Vaultier.ErrorGenericRoute = Ember.Route.extend({
             data.message = error.message
         }
 
+        if (error && error.title) {
+            data.title = error.title
+        }
+
         if (error && error.status == 403) {
             data.title = 'Access denied!';
             data.message = 'You do not have access to desired area'

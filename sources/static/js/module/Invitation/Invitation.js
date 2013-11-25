@@ -14,11 +14,20 @@ Vaultier.InvitationAcceptRoute = Ember.Route.extend(
             var invitations = Service.Invitations.current();
             var promise = invitations.listRolesInSession();
 
-            promise.fail(function() {
+            promise = promise.fail(function (error) {
+                console.error(error.stack)
                 transition.abort();
                 invitations.clearInvitationsInSession()
-                $.notify('There are no pending invitations', 'warning');
-                this.transitionTo('index')
+
+                if (error && error.status == 400 && error.errors && error.errors.hash) {
+                    this.get('errors').renderError({
+                            title: 'Invalid invitation.',
+                            message: 'this invitation cannot be used. It was already used by other member'
+                        })
+                } else {
+                    throw new Error('Invalid invitation');
+                }
+
             }.bind(this))
 
             return promise;
@@ -35,7 +44,7 @@ Vaultier.InvitationAcceptRoute = Ember.Route.extend(
 
         actions: {
             acceptInvitations: function () {
-                var invitations =  Service.Invitations.current()
+                var invitations = Service.Invitations.current()
                 invitations.acceptInvitationsInSession().
                     then(function () {
                         invitations.clearInvitationsInSession()

@@ -183,6 +183,7 @@ Service.Invitations = Ember.Object.extend({
      */
     useInvitation: function (id, hash) {
         return Ember.RSVP.resolve()
+
             .then(function () {
                 return this._validateInvitation(id, hash);
             }.bind(this))
@@ -198,6 +199,7 @@ Service.Invitations = Ember.Object.extend({
                     return this.get('env.router').transitionTo('Invitation.anonymous')
                 }
             }.bind(this))
+
     }
 
 
