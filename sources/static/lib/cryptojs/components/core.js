@@ -5,7 +5,7 @@ code.google.com/p/crypto-js
 code.google.com/p/crypto-js/wiki/License
 */
 /**
- * CryptoJS core components.
+ * CryptoJS vaultier components.
  */
 var CryptoJS = CryptoJS || (function (Math, undefined) {
     /**

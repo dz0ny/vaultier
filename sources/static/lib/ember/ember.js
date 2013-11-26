@@ -253,12 +253,12 @@ var define, requireModule;
 
   You can also use the shorthand `Em` instead of `Ember`.
 
-  Ember-Runtime is a framework that provides core functions for Ember including
+  Ember-Runtime is a framework that provides vaultier functions for Ember including
   cross-platform functions, support for property observing and objects. Its
   focus is on small size and performance. You can use this in place of or
   along-side other cross-platform libraries such as jQuery.
 
-  The core Runtime framework is based on the jQuery API with a number of
+  The vaultier Runtime framework is based on the jQuery API with a number of
   performance optimizations.
 
   @class Ember
@@ -267,7 +267,7 @@ var define, requireModule;
 */
 
 if ('undefined' === typeof Ember) {
-  // Create core object. Make it act like an instance of Ember.Namespace so that
+  // Create vaultier object. Make it act like an instance of Ember.Namespace so that
   // objects assigned to it are given a sane string representation.
   Ember = {};
 }
@@ -13934,7 +13934,7 @@ var get = Ember.get,
 /**
   ## Overview
 
-  This mixin provides properties and property observing functionality, core
+  This mixin provides properties and property observing functionality, vaultier
   features of the Ember object model.
 
   Properties and observers allow one object to observe changes to a
@@ -14235,7 +14235,7 @@ Ember.Observable = Ember.Mixin.create({
   /**
     Adds an observer on a property.
 
-    This is the core method used to register an observer for a property.
+    This is the vaultier method used to register an observer for a property.
 
     Once you call this method, any time the key's value is set, your observer
     will be notified. Note that the observers are triggered any time the

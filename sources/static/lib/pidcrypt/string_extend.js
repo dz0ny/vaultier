@@ -14,7 +14,7 @@
 /*----------------------------------------------------------------------------*/
 /*
 *  Maps the pidcrypt utillity functions for string operations to the
-*  javascript core class String
+*  javascript vaultier class String
 *
 *
 /*----------------------------------------------------------------------------*/

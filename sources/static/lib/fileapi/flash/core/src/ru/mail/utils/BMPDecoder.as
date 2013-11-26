@@ -160,7 +160,7 @@ package ru.mail.utils
 					nPlains = coreHeader.readUnsignedShort();
 					nBitsPerPixel = coreHeader.readUnsignedShort();
 				} catch ( e:IOError ) {
-					//throw new VerifyError("invalid core header");
+					//throw new VerifyError("invalid vaultier header");
 					trace ("BMPDecoder invalid core header");
 				}
 			}

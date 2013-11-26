@@ -5,7 +5,7 @@ code.google.com/p/crypto-js
 code.google.com/p/crypto-js/wiki/License
 */
 /**
- * Cipher core components.
+ * Cipher vaultier components.
  */
 CryptoJS.lib.Cipher || (function (undefined) {
     // Shortcuts

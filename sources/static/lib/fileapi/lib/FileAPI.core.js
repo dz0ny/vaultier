@@ -180,7 +180,7 @@
 
 
 		/**
-		 * FileAPI (core object)
+		 * FileAPI (vaultier object)
 		 */
 		api = {
 			version: '2.0.0',

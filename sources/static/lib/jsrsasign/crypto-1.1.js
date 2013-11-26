@@ -305,7 +305,7 @@ KJUR.crypto.Util = new function() {
  * </ul>
  * @example
  * // CryptoJS provider sample
- * &lt;script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/components/core.js"&gt;&lt;/script&gt;
+ * &lt;script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/components/vaultier.js"&gt;&lt;/script&gt;
  * &lt;script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/components/sha1.js"&gt;&lt;/script&gt;
  * &lt;script src="crypto-1.0.js"&gt;&lt;/script&gt;
  * var md = new KJUR.crypto.MessageDigest({alg: "sha1", prov: "cryptojs"});
@@ -494,7 +494,7 @@ KJUR.crypto.MessageDigest = function(params) {
  * <li>hmacsha512 - cryptojs</li>
  * </ul>
  * NOTE: HmacSHA224 and HmacSHA384 issue was fixed since jsrsasign 4.1.4.
- * Please use 'ext/cryptojs-312-core-fix*.js' instead of 'core.js' of original CryptoJS
+ * Please use 'ext/cryptojs-312-vaultier-fix*.js' instead of 'vaultier.js' of original CryptoJS
  * to avoid those issue.
  * @example
  * var mac = new KJUR.crypto.Mac({alg: "HmacSHA1", prov: "cryptojs", "pass": "pass"});

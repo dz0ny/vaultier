@@ -111,7 +111,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'core.middleware.DisableCSRFMiddleware.DisableCSRFMiddleware'
+    'vaultier.middleware.DisableCSRFMiddleware.DisableCSRFMiddleware'
 )
 
 ROOT_URLCONF = 'app.urls'
@@ -120,7 +120,7 @@ ROOT_URLCONF = 'app.urls'
 WSGI_APPLICATION = 'app.wsgi.application'
 
 TEMPLATE_DIRS = (
-    os.path.join(PROJECT_ROOT, 'core'),
+    os.path.join(PROJECT_ROOT, 'vaultier'),
     os.path.join(PROJECT_ROOT, 'static/html'),
 
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -157,7 +157,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable the admin:
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    'core',
+    'vaultier',
     'compressor',
     'rest_framework',
     'django_extensions',
@@ -193,15 +193,15 @@ LOGGING = {
     }
 }
 
-EMAIL_BACKEND = 'core.mailer.backends.VaultierEmailBackend'
+EMAIL_BACKEND = 'vaultier.mailer.backends.VaultierEmailBackend'
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 25
 EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = False
 
-AUTH_USER_MODEL = 'core.User'
-AUTHENTICATION_BACKENDS = ( 'core.auth.authentication.Backend', )
+AUTH_USER_MODEL = 'vaultier.User'
+AUTHENTICATION_BACKENDS = ( 'vaultier.auth.authentication.Backend', )
 
 TEST_RUNNER = 'django.test.simple.DjangoTestSuiteRunner'
 

@@ -17,7 +17,7 @@
 
 /*----------------------------------------------------------------------------*/
 /*
-*  pidCrypt AES core implementation for block en-/decryption for use in pidCrypt
+*  pidCrypt AES vaultier implementation for block en-/decryption for use in pidCrypt
 *  Library.
 *  Derived from jsaes version 0.1 (See original license below)
 *  Only minor Changes (e.g. using a precompiled this.SBoxInv) and port to an

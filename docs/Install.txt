@@ -1,0 +1,27 @@
+Clone
+====
+cd /www
+mkdir /www/vaultier
+cd vaultier
+git clone git@git.rclick.cz:rclick/vaultier.git .
+
+Install required packages
+==================
+sudo apt-get install postgresql postgresql-contrib
+sudo apt-get install python
+sudo apt-get install python-dev
+sudo apt-get install python-pip
+sudo pip install virtualenv
+
+Create settings
+===========
+
+
+Create venv
+========
+virtualenv ./env
+source ./env/bin/activate
+pip install -r sources/REQUIREMENTS
+
+Start vaultier
+=========

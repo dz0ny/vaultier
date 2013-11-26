@@ -1101,7 +1101,7 @@ window.TraceKit = TraceKit;
 'use strict';
 
 // First, check for JSON support
-// If there is no JSON, we no-op the core features of Raven
+// If there is no JSON, we no-op the vaultier features of Raven
 // since JSON is required to encode the payload
 var _Raven = window.Raven,
     hasJSON = !!(window.JSON && window.JSON.stringify),
@@ -1127,7 +1127,7 @@ var TK = TraceKit.noConflict();
 TK.remoteFetching = false;
 
 /*
- * The core Raven singleton
+ * The vaultier Raven singleton
  *
  * @this {Raven}
  */

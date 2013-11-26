@@ -196,7 +196,7 @@ KJUR.crypto.Util = new function() {
  * </ul>
  * @example
  * // CryptoJS provider sample
- * &lt;script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/components/core.js"&gt;&lt;/script&gt;
+ * &lt;script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/components/vaultier.js"&gt;&lt;/script&gt;
  * &lt;script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/components/sha1.js"&gt;&lt;/script&gt;
  * &lt;script src="crypto-1.0.js"&gt;&lt;/script&gt;
  * var md = new KJUR.crypto.MessageDigest({alg: "sha1", prov: "cryptojs"});

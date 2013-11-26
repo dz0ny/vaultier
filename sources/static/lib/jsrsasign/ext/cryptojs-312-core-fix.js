@@ -7,7 +7,7 @@
  * https://crypto-js.googlecode.com/svn-history/r667/branches/3.x/src/core.js
  */
 /**
- * CryptoJS core components.
+ * CryptoJS vaultier components.
  */
 var CryptoJS = CryptoJS || (function (Math, undefined) {
     /**

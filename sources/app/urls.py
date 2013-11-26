@@ -17,11 +17,11 @@ urlpatterns = patterns('',
 
     # url(r'^testing/$', views.SecurityViewSet.as_view()),
 
-    url(r'^api/', include('core.urls_api')),
+    url(r'^api/', include('vaultier.urls_api')),
     url(r'^admin/', include(admin.site.urls)),
 
     # Frontend
-    url(r'^', include('core.urls')),
+    url(r'^', include('vaultier.urls')),
 )
 
 if settings.DEBUG :
