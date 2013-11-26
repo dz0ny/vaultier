@@ -10,9 +10,16 @@ fi
 PROJDIR=$MY_PATH/../sources
 PIDFILE="$PROJDIR/mysite.pid"
 SOCKET="$PROJDIR/mysite.sock"
+VENV ="$PROJDIR/env/bin/activate"
 
 start() {
-        eval source $PROJDIR/env/bin/activate
+        if [ -f $PIDFILE ]; then
+            echo "Already running"
+            exit 1
+        fi
+
+        echo "Activating virtual env $VENV"
+        source $VENV
 
         echo "Starting Vaultier"
         eval $PROJDIR/manage.py runfcgi \
