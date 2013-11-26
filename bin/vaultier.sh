@@ -1,4 +1,5 @@
-#!/bin/sh
+#!/bin/bash
+
 MY_PATH="`dirname \"$0\"`"              # relative
 MY_PATH="`( cd \"$MY_PATH\" && pwd )`"  # absolutized and normalized
 if [ -z "$MY_PATH" ] ; then
@@ -12,23 +13,20 @@ PIDFILE="$PROJDIR/mysite.pid"
 SOCKET="$PROJDIR/mysite.sock"
 VENV="$PROJDIR/env/bin/activate"
 
+echo "======================================"
+echo "Vaultier start script"
+echo "======================================"
+
 start() {
         if [ -f $PIDFILE ]; then
             echo "Already running"
             exit 1
         fi
-
         echo "Activating virtual: env $VENV"
         source $VENV
 
         echo "Starting Vaultier"
-        eval $PROJDIR/manage.py runfcgi \
-        maxchildren=10 \
-        maxspare=5 \
-        minspare=2 \
-        method=prefork \
-        socket=$SOCKET
-        pidfile=$PIDFILE
+        eval $PROJDIR/manage.py runfcgi maxchildren=10 maxspare=5 minspare=2 method=prefork socket=$SOCKET pidfile=$PIDFILE
         echo "started."
 }
 
@@ -39,6 +37,7 @@ stop() {
             kill `cat -- $PIDFILE`
             rm -f -- $PIDFILE
         fi
+        echo stopped.
 }
 
 case "$1" in
