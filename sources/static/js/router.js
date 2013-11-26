@@ -127,6 +127,13 @@ var router = Vaultier.Router.map(function () {
 
 });
 
+Ember.Route.reopen({
+  activate: function() {
+      this._super();
+      window.scrollTo(0, 0);
+  }
+});
+
 Service.Environment.current().set('router', router);
 
 Vaultier.ApplicationRoute = Ember.Route.extend(
