@@ -10,7 +10,9 @@
             <li><a {{ action settings target=view }} href="" >Personal settings</a></li>
             <li><a {{ action logout target=view }} href="" >Logout</a></li>
 
-            <li><a {{bind-attr  href=auth.token}} class="copy-token" >Copy token to clipboard</a></li>
+            {{#if showToken}}
+                <li><a {{bind-attr  href=auth.token}} class="copy-token" >Copy token to clipboard</a></li>
+            {{/if}}
         </ul>
     </div>
 {{else}}

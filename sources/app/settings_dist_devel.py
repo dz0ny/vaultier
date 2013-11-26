@@ -14,10 +14,12 @@ DATABASES = {
 
 # Indicates options for frontend
 FT_FEATURES = {
-    'dev_shared_key': True # development features
+    'dev_shared_key': True, # for all users same private key is used
+    'dev_show_token': True, # Token is available to copy/paste in user profile box
 }
 
-# Indicates options for backed
+# Indicates options for backend
 BK_FEATURES = {
-    'dev_shared_key':True # development features
+    'dev_mail_to': 'jan.misek@rclick.cz', # all emails goes to only this user
+    'dev_shared_key': True, # for all users same private key is used
 }
