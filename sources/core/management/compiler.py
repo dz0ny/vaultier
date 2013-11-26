@@ -6,7 +6,7 @@ import logging
 from threading import Thread, Lock, current_thread
 from Queue import Queue
 
-from vaultier import settings
+from app import settings
 from core.management.utils import NullConsole, ReadableError, is_outdated
 
 

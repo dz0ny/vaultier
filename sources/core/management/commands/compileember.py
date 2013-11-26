@@ -3,7 +3,7 @@ import signal
 from optparse import make_option
 from django.core.management.base import BaseCommand
 
-from vaultier import settings
+from app import settings
 from core.management.utils import Console, NullConsole, ReadableError, cant_compile, cant_observe
 
 

@@ -1,5 +1,5 @@
 from django.core.mail.backends.smtp import EmailBackend
-from vaultier.settings import BK_FEATURES
+from app.settings import BK_FEATURES
 
 
 class VaultierEmailBackend(EmailBackend):

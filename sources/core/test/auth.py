@@ -6,7 +6,7 @@ from core.auth.authentication import Backend
 
 from core.test.auth_tools import auth_api_call, register_api_call
 from tools import format_response
-from vaultier.settings import PROJECT_ROOT
+from app.settings import PROJECT_ROOT
 
 class SignaturesTest(TestCase):
     def test_rsa(self):

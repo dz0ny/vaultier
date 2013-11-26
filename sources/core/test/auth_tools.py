@@ -1,7 +1,7 @@
 from django.core.urlresolvers import reverse
 from rest_framework.test import APIClient
 from core.auth.authentication import Backend
-from vaultier.settings import PROJECT_ROOT
+from app.settings import PROJECT_ROOT
 
 
 def auth_api_call(email=None, signature=None):

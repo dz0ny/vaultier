@@ -3,7 +3,7 @@ from django.core.mail.message import EmailMultiAlternatives
 from django.template.context import Context
 from django.template.loader import get_template
 from pynliner import Pynliner
-from vaultier.settings import PROJECT_ROOT, EMAIL_BACKEND, SITE_URL
+from app.settings import PROJECT_ROOT, EMAIL_BACKEND, SITE_URL
 import urlparse
 
 def render_email(template, context=None):

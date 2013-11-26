@@ -1,7 +1,7 @@
 from django.http.response import HttpResponse
 from django.shortcuts import render
 from django.template.context import Context
-from vaultier.settings import FT_FEATURES, BK_FEATURES
+from app.settings import FT_FEATURES, BK_FEATURES
 import json
 
 

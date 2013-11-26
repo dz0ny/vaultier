@@ -114,10 +114,10 @@ MIDDLEWARE_CLASSES = (
     'core.middleware.DisableCSRFMiddleware.DisableCSRFMiddleware'
 )
 
-ROOT_URLCONF = 'vaultier.urls'
+ROOT_URLCONF = 'app.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'vaultier.wsgi.application'
+WSGI_APPLICATION = 'app.wsgi.application'
 
 TEMPLATE_DIRS = (
     os.path.join(PROJECT_ROOT, 'core'),
