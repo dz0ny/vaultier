@@ -18,7 +18,7 @@ start() {
             exit 1
         fi
 
-        echo "Activating virtual env $VENV"
+        echo "Activating virtual: env $VENV"
         source $VENV
 
         echo "Starting Vaultier"
@@ -29,7 +29,7 @@ start() {
         method=prefork \
         socket=$SOCKET
         pidfile=$PIDFILE
-        echo
+        echo "started."
 }
 
 stop() {
