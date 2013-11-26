@@ -9,8 +9,8 @@ if [ -z "$MY_PATH" ] ; then
 fi
 
 PROJDIR=$MY_PATH/../sources
-PIDFILE="$MY_PATH/../run/mysite.pid"
-SOCKET="$MY_PATH/../run/mysite.sock"
+PIDFILE="$MY_PATH/../run/vaultier.pid"
+SOCKET="$MY_PATH/../run/vaultier.sock"
 VENV="$MY_PATH/../env/bin/activate"
 
 echo "======================================"
