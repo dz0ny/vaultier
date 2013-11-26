@@ -40,6 +40,17 @@ stop() {
         echo stopped.
 }
 
+status() {
+        if [ -f $PIDFILE ]; then
+            ps -ef | grep `cat $PIDFILE`
+            echo ''
+            echo 'running.'
+        else
+            echo 'stopped.'
+        fi
+
+}
+
 case "$1" in
   start)
         start
@@ -48,7 +59,7 @@ case "$1" in
         stop
         ;;
   status)
-        status FOO
+        status
         ;;
   restart|reload|condrestart)
         stop
