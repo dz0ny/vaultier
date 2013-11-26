@@ -31,7 +31,6 @@ Vaultier.Workspace = DS.Model.extend(
         save: function () {
             var isNew = !this.get('id');
             var promise = this._super(arguments)
-
                 // after save, approve workspace
                 .then(function (workspace) {
                     if (isNew) {
@@ -44,8 +43,12 @@ Vaultier.Workspace = DS.Model.extend(
                     }
                 }.bind(this))
 
+                .then(function(workspace) {
+                    return workspace.reload()
+                })
+
             return promise
-        },
+        }
 
 
     }

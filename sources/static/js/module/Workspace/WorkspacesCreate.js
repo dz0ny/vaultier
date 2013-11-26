@@ -3,7 +3,7 @@ Vaultier.WorkspacesCreateRoute = Ember.Route.extend({
         save: function () {
             var record = this.get('controller.content');
             var promise = record.save()
-                .then(function () {
+                .then(function (record) {
                     $.notify('You workspace has been successfully created.', 'success');
                     this.transitionTo('Workspace.index', record);
                 }.bind(this))
