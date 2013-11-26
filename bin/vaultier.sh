@@ -10,7 +10,7 @@ fi
 PROJDIR=$MY_PATH/../sources
 PIDFILE="$PROJDIR/mysite.pid"
 SOCKET="$PROJDIR/mysite.sock"
-VENV ="$PROJDIR/env/bin/activate"
+VENV="$PROJDIR/env/bin/activate"
 
 start() {
         if [ -f $PIDFILE ]; then
