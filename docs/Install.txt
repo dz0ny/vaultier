@@ -21,7 +21,9 @@ pip install -r sources/REQUIREMENTS
 
 Prepare config
 ==========
-cd sources/
+ cp sources/app/settings.py-prod-dist sources/app/settings.py
+ mcedit sources/app/settings.py
+
 
 Prepare database
 =============
@@ -31,15 +33,19 @@ create user vaultier with password 'vaultier'
 create database vaultier owner vaultier
 CTRL+] or \q
 exit
+cd sources
+./manage.py syncdb
 
 
 Configure nginx
 ===========
-cd /etc/nginx/sites-enabled/
-sudo ln -s /www/vaultier/cfg/nginx.conf /etc/nginx/sites-enabled/vaultier
-sudo chmod 0777 /var/www/vaultier/run/vaultier.sock
-chmod -R 755 /www/vaultier/sources/static
+cp cfg/nginx.conf-dist cfg/nginx.conf
+mcedit cfg/nginx.conf
 
+sudo ln -s /www/vaultier/cfg/nginx.conf /etc/nginx/sites-enabled/vaultier
+sudo chmod 0777 -R /var/www/vaultier/run/
+chmod -R 755 /www/vaultier/sources/static
 
 Start vaultier
 =========
+./bin/vaultier start
