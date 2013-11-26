@@ -22,11 +22,9 @@ start() {
             echo "Already running"
             exit 1
         fi
-        echo "Activating virtual: env $VENV"
-        source $VENV
 
         echo "Starting Vaultier"
-        eval $PROJDIR/manage.py runfcgi maxchildren=10 maxspare=5 minspare=2 method=prefork socket=$SOCKET pidfile=$PIDFILE
+        eval  sudo -u www-data -s "source $VENV; $PROJDIR/manage.py runfcgi maxchildren=10 maxspare=5 minspare=2 method=prefork socket=$SOCKET pidfile=$PIDFILE"
         echo "started."
 }
 
