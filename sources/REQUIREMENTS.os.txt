@@ -4,6 +4,8 @@
 sudo apt-get install postgresql postgresql-contrib
 sudo apt-get install python
 sudo apt-get install python-dev
+sudo apt-get install python-pip
+sudo pip install virtualenv
 
 # # # # # # # # # # # # # # # # # # # # #
 # for development and testing

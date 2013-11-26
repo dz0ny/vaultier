@@ -7,7 +7,7 @@ if [ -z "$MY_PATH" ] ; then
   exit 1  # fail
 fi
 
-PROJDIR=$MY_PATH/..
+PROJDIR=$MY_PATH/../sources
 PIDFILE="$PROJDIR/mysite.pid"
 SOCKET="$PROJDIR/mysite.sock"
 
