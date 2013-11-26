@@ -19,4 +19,4 @@ run/*
 nbproject/
 .idea/
 
-sources/vaultier/settings.py
+sources/app/settings.py
