@@ -11,7 +11,7 @@ fi
 PROJDIR=$MY_PATH/../sources
 PIDFILE="$PROJDIR/mysite.pid"
 SOCKET="$PROJDIR/mysite.sock"
-VENV="$PROJDIR/env/bin/activate"
+VENV="$MY_PATH/../env/bin/activate"
 
 echo "======================================"
 echo "Vaultier start script"
@@ -55,7 +55,6 @@ case "$1" in
         start
         ;;
   *)
-        echo "Vaultier fastcgi control"
         echo "Usage: $0 {start|stop|restart|reload|status}"
         exit 1
 
