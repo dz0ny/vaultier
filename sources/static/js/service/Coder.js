@@ -31,7 +31,7 @@ Service.Coder = Ember.Object.extend({
             var generator = this.TestingGenerator.create();
         } else {
             // production generator
-            var generator = new JSEncrypt({default_key_size: 1024});
+            var generator = new JSEncrypt({default_key_size: 2048});
         }
 
         var build = function () {
@@ -77,15 +77,13 @@ Service.Coder = Ember.Object.extend({
     },
 
     generateWorkspaceKey: function () {
-        var min = 10;
-        var max = 20;
-        var length = Math.floor(Math.random() * (max - min + 1)) + min;
-        var text = "";
-        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-        for (var i = 0; i < length; i++)
-            text += possible.charAt(Math.floor(Math.random() * possible.length));
-
+        var length = 32;
+        var text = '';
+        for (var i = 0; i < length; i++) {
+            text = text + String.fromCharCode(
+                Math.floor(Math.random() * (255))
+            )
+       }
         return text;
     },
 
