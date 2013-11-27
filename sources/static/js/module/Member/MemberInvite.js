@@ -37,7 +37,7 @@ Vaultier.MemberInviteRoute = Ember.Route.extend(
 
         actions: {
             save: function (invited, role) {
-                var invitations = Service.Invitations.current();
+                var invitations = this.get('invitations');
                 var inviteWorkspace = this.get('inviteWorkspace');
                 var inviteParams = this.get('inviteParams');
                 var invitedPromises = [];

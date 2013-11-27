@@ -27,4 +27,3 @@ Service.Session = Ember.CoreObject.extend({
     }
 
 });
-Service.Session.reopenClass(Utils.Singleton);

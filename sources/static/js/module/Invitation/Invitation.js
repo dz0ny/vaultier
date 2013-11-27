@@ -1,8 +1,14 @@
 Vaultier.InvitationUseRoute = Ember.Route.extend(
     {
+
+        /**
+         * @DI service:invitations
+         */
+        invitations: null,
+
         model: function (params, transition) {
             transition.abort();
-            return Service.Invitations.current().useInvitation(params.invitation, params.hash, params.data)
+            return this.get('invitations').useInvitation(params.invitation, params.hash, params.data)
         }
     });
 
@@ -10,8 +16,13 @@ Vaultier.InvitationUseRoute = Ember.Route.extend(
 Vaultier.InvitationAcceptRoute = Ember.Route.extend(
     {
 
+       /**
+         * @DI service:invitations
+         */
+        invitations: null,
+
         model: function (params, transition) {
-            var invitations = Service.Invitations.current();
+            var invitations = this.get('invitations');
             var promise = invitations.listRolesInSession();
 
             promise = promise.fail(function (error) {
@@ -44,7 +55,7 @@ Vaultier.InvitationAcceptRoute = Ember.Route.extend(
 
         actions: {
             acceptInvitations: function () {
-                var invitations = Service.Invitations.current()
+                var invitations = this.get('invitations')
                 invitations.acceptInvitationsInSession().
                     then(function () {
                         invitations.clearInvitationsInSession()
@@ -54,7 +65,7 @@ Vaultier.InvitationAcceptRoute = Ember.Route.extend(
             },
 
             rejectInvitations: function () {
-                var invitations = Service.Invitations.current();
+                var invitations = this.get('invitations');
                 invitations.clearInvitationsInSession();
                 $.notify('You have rejected your pending invitations', 'warning');
                 this.transitionTo('index')

@@ -4,18 +4,26 @@ Service.Auth = Ember.Object.extend({
 
     init: function () {
         this._super(arguments);
-        this.store = Vaultier.__container__.lookup('store:main');
-        this.coder = Vaultier.__container__.lookup('service:coder');
-        this.session = Service.Session.current();
         this.promises = Service.AuthPromises.create({
             coder: this.coder
         })
 
     },
 
+    /**
+     * @DI store:main
+     */
     store: null,
+
+    /**
+     * @DI service:coder
+     */
+    coder: null,
+
+    /**
+     * @DI service:session
+     */
     session: null,
-    storage: null,
     callbacks: [],
     token: null,
     user: null,
@@ -157,22 +165,23 @@ Service.Auth = Ember.Object.extend({
 
     deleteFromSession: function () {
         this.session.remove('auth');
-    },
-
-    saveToStorage: function (ttl) {
-        this.storage.set('auth', {
-            email: this.get('user').get('email'),
-            privateKey: this.get('privateKey')
-        }, ttl);
-    },
-
-    loadFromStorage: function () {
-        return this.storage.get('auth');
-    },
-
-    deleteFromStorage: function () {
-        this.storage.remove('auth');
     }
+
+//    @todo saving credentials
+//    saveToStorage: function (ttl) {
+//        this.storage.set('auth', {
+//            email: this.get('user').get('email'),
+//            privateKey: this.get('privateKey')
+//        }, ttl);
+//    },
+//
+//    loadFromStorage: function () {
+//        return this.storage.get('auth');
+//    },
+//
+//    deleteFromStorage: function () {
+//        this.storage.remove('auth');
+//    }
 
 })
 ;

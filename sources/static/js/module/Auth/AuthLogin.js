@@ -5,8 +5,6 @@
 var LoginProps = Ember.Object.extend({
     init: function () {
         this._super(arguments);
-        var session = Service.Session.current();
-        //this.set('latestUser', session.getPersistAuth());
     },
     rememberOptions: [
         {ttl: 0, text: 'Do not remember'},

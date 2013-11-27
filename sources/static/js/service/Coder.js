@@ -100,5 +100,3 @@ Service.Coder = Ember.Object.extend({
 
 
 });
-
-Service.Auth.reopenClass(Utils.Singleton);

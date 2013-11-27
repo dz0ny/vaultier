@@ -4,20 +4,24 @@ Service.Invitations = Ember.Object.extend({
 
     SESSION_KEY : 'invitations',
 
+    /**
+     * @DI service:session
+     */
     session: null,
     /**
-     * @DI Service.Auth
+     * @DI service:auth
      */
     auth: null,
-    env: null,
+    /**
+     * @DI store:main
+     */
     store: null,
+
+    env: null,
 
     init: function () {
         this._super();
-        this.session = Service.Session.current();
-        this.auth = Vaultier.__container__.lookup('service:auth');
         this.env = Service.Environment.current()
-        this.store = Vaultier.__container__.lookup('store:main');
     },
 
 
@@ -204,5 +208,3 @@ Service.Invitations = Ember.Object.extend({
 
 
 })
-;
-Service.Invitations.reopenClass(Utils.Singleton);

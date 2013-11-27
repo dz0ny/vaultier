@@ -11,7 +11,7 @@ Vaultier.WorkspacesRoute = Ember.Route.extend(
             }
 
             // if any invitations store in session, user will be redirected
-            if (Service.Invitations.current().hasInvitationsInSession()) {
+            if (this.get('invitations').hasInvitationsInSession()) {
                 transition.abort();
                 var url = transition.router.generate('Invitation.accept');
                 this.router.replaceWith(url);
