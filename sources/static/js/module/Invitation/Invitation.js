@@ -16,7 +16,7 @@ Vaultier.InvitationUseRoute = Ember.Route.extend(
 Vaultier.InvitationAcceptRoute = Ember.Route.extend(
     {
 
-       /**
+        /**
          * @DI service:invitations
          */
         invitations: null,
@@ -26,15 +26,18 @@ Vaultier.InvitationAcceptRoute = Ember.Route.extend(
             var promise = invitations.listRolesInSession();
 
             promise = promise.fail(function (error) {
-                console.error(error.stack)
                 transition.abort();
                 invitations.clearInvitationsInSession()
 
-                if (error && error.status == 400 && error.errors && error.errors.hash) {
+                if (
+                    (error && error.status == 400 && error.errors && error.errors.hash) // already accepted
+                        || (error && error.status == 404) // not found
+                    ) {
+                    console.error(error.stack)
                     this.get('errors').renderError({
-                            title: 'Invalid invitation.',
-                            message: 'this invitation cannot be used. It was already used by other member'
-                        })
+                        title: 'Invalid invitation.',
+                        message: 'this invitation cannot be used. Not found or it was already used by other member'
+                    })
                 } else {
                     throw new Error('Invalid invitation');
                 }
