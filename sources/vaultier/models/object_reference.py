@@ -42,11 +42,12 @@ class ObjectReference(object):
 
 
     def set_object(self, object):
+        self.to_workspace = None
+        self.to_vault = None
+        self.to_card = None
+        self.type = None
+
         if not object:
-            self.to_workspace = None
-            self.to_vault = None
-            self.to_card = None
-            self.type = None
             return
 
         if object.__class__.__name__ == 'Workspace':
