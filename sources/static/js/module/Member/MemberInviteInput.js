@@ -5,6 +5,8 @@ Vaultier.MemberInviteInput = Ember.Component.extend({
 
     store: null,
 
+    auth: null,
+
     workspace: null,
 
     tagName: "input",
@@ -16,6 +18,9 @@ Vaultier.MemberInviteInput = Ember.Component.extend({
         }
         if (!this.workspace) {
             throw 'MemberInviteInput requires workspace to autocomplete. Inject workspace to component as workspace=workspace'
+        }
+        if (!this.auth) {
+            throw 'MemberInviteInput requires auth service to autocomplete. Inject auth to component as auth=auth'
         }
 
         var el = Ember.$(this.get('element'));
@@ -38,14 +43,19 @@ Vaultier.MemberInviteInput = Ember.Component.extend({
                 .then(function (members) {
                     var results = [];
                     members.forEach(function (member) {
-                        results.push({
-                            invitation: member.get('status') == member.statuses['INVITED'].value,
-                            text: member.get('email'),
-                            id: member.get('id'),
-                            nickname: member.get('nickname'),
-                            email: member.get('email')
-                        });
-                    });
+                        var invitation = member.get('status') == member.statuses['INVITED'].value;
+
+                        // do not include current user
+                        if (member.get('user') != this.auth.get('user.id')) {
+                            results.push({
+                                invitation: invitation,
+                                text: member.get('email'),
+                                id: invitation ? member.get('email') : member.get('id'),
+                                nickname: member.get('nickname'),
+                                email: member.get('email')
+                            });
+                        }
+                    }.bind(this));
                     this.query.callback({results: results});
                 }.bind(this))
         };
@@ -80,6 +90,7 @@ Vaultier.MemberInviteInput = Ember.Component.extend({
             query: function (query) {
                 ajaxQueryContext.store = this.get('controller.store')
                 ajaxQueryContext.query = query;
+                ajaxQueryContext.auth = this.get('auth')
                 ajaxQueryContext.workspace = this.get('workspace')
                 Ember.run.debounce(ajaxQueryContext, ajaxQuery, 500);
 
@@ -88,9 +99,9 @@ Vaultier.MemberInviteInput = Ember.Component.extend({
             formatResult: function (member) {
                 var str = Utils.HandlebarsHelpers.current().printUser(member, {hash: {}})
                 if (member.invitation) {
-                    str = 'Invite <b>'+str+'</b>'
+                    str = 'Invite <b>' + str + '</b>'
                 } else {
-                    str = 'grant to <b>'+str+'</b>'
+                    str = 'grant to <b>' + str + '</b>'
                 }
                 return str
             },
@@ -98,11 +109,11 @@ Vaultier.MemberInviteInput = Ember.Component.extend({
             formatSelection: function (member) {
                 var str = Utils.HandlebarsHelpers.current().printUser(member, {hash: {}})
                 if (member.invitation) {
-                    str = 'Invite <b>'+str+'</b>'
+                    str = 'Invite <b>' + str + '</b>'
                 } else {
-                    str = 'grant to <b>'+str+'</b>'
+                    str = 'grant to <b>' + str + '</b>'
                 }
-                 return str
+                return str
             }
 
         });

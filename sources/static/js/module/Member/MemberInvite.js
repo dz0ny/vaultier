@@ -36,7 +36,7 @@ Vaultier.MemberInviteRoute = Ember.Route.extend(
         },
 
         actions: {
-            save: function (invited, role) {
+            save: function (invited, role, resend) {
                 var invitations = this.get('invitations');
                 var inviteWorkspace = this.get('inviteWorkspace');
                 var inviteParams = this.get('inviteParams');
@@ -50,7 +50,7 @@ Vaultier.MemberInviteRoute = Ember.Route.extend(
                             role,
                             inviteParams,
                             true,
-                            true
+                            resend
                         ));
                 });
 
@@ -85,6 +85,7 @@ Vaultier.MemberInviteController = Ember.Controller.extend({
     workspace: null,
     role: null,
     invited: [],
+    resend: true,
 
     isSubmitDisabled: function () {
         return !this.get('invited.length')

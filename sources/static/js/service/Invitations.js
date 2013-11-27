@@ -32,10 +32,7 @@ Service.Invitations = Ember.Object.extend({
             // do get - resend invitation
             return Utils.RSVPAjax({
                 url: '/api/members/' + id + '/',
-                type: 'put',
-                data: {
-                    resend: resend
-                }
+                type: 'get'
             });
         } else {
             // do post - invite - send invitation

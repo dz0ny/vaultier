@@ -26,6 +26,10 @@ Service.Auth = Ember.Object.extend({
     session: null,
     callbacks: [],
     token: null,
+
+    /**
+     * Current authenticated user model
+     */
     user: null,
     checked: false,
     privateKey: null,
