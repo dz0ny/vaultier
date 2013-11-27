@@ -14,6 +14,9 @@ Vaultier.MemberInviteInput = Ember.Component.extend({
         if (!this.store) {
             throw 'MemberInviteInput requires store to autocomplete. Inject store to component as store=store'
         }
+        if (!this.workspace) {
+            throw 'MemberInviteInput requires workspace to autocomplete. Inject workspace to component as workspace=workspace'
+        }
 
         var el = Ember.$(this.get('element'));
 
@@ -28,7 +31,7 @@ Vaultier.MemberInviteInput = Ember.Component.extend({
 
         var ajaxQuery = function () {
             var members = this.store.find('Member', {
-                workspace: this.workspace.get('id'),
+                workspace: Utils.E.recordId(this.workspace),
                 search: this.query.term,
                 ordering: '-status'
             })
