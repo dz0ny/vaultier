@@ -18,13 +18,13 @@ function program1(depth0,data) {
   hashTypes = {};
   hashContexts = {};
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "auth.user.nickname", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
-  data.buffer.push("\r\n        </a>\r\n\r\n        <ul class=\"dropdown-menu caret-right vlt-dropdown\">\r\n            <li><a ");
-  hashContexts = {'target': depth0};
-  hashTypes = {'target': "ID"};
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "settings", {hash:{
-    'target': ("view")
-  },contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
-  data.buffer.push(" href=\"\" >Personal settings</a></li>\r\n            <li><a ");
+  data.buffer.push("\r\n        </a>\r\n\r\n        <ul class=\"dropdown-menu caret-right vlt-dropdown\">\r\n            <li>");
+  hashTypes = {};
+  hashContexts = {};
+  options = {hash:{},inverse:self.noop,fn:self.program(2, program2, data),contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
+  stack2 = ((stack1 = helpers['link-to'] || depth0['link-to']),stack1 ? stack1.call(depth0, "Settings.index", options) : helperMissing.call(depth0, "link-to", "Settings.index", options));
+  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
+  data.buffer.push("</li>\r\n            <li><a ");
   hashContexts = {'target': depth0};
   hashTypes = {'target': "ID"};
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "logout", {hash:{
@@ -33,12 +33,18 @@ function program1(depth0,data) {
   data.buffer.push(" href=\"\" >Logout</a></li>\r\n\r\n            ");
   hashTypes = {};
   hashContexts = {};
-  stack2 = helpers['if'].call(depth0, "showToken", {hash:{},inverse:self.noop,fn:self.program(2, program2, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
+  stack2 = helpers['if'].call(depth0, "showToken", {hash:{},inverse:self.noop,fn:self.program(4, program4, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
   data.buffer.push("\r\n        </ul>\r\n    </div>\r\n");
   return buffer;
   }
 function program2(depth0,data) {
+  
+  
+  data.buffer.push("Settings");
+  }
+
+function program4(depth0,data) {
   
   var buffer = '', stack1, hashContexts, hashTypes, options;
   data.buffer.push("\r\n                <li><a ");
@@ -52,7 +58,7 @@ function program2(depth0,data) {
   return buffer;
   }
 
-function program4(depth0,data) {
+function program6(depth0,data) {
   
   var buffer = '', stack1, stack2, hashContexts, hashTypes, options;
   data.buffer.push("\r\n    <div class=\" vlt-security-box pull-right\">\r\n       ");
@@ -60,7 +66,7 @@ function program4(depth0,data) {
   hashTypes = {'class': "STRING"};
   options = {hash:{
     'class': ("btn btn-primary btn-sm")
-  },inverse:self.noop,fn:self.program(5, program5, data),contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
+  },inverse:self.noop,fn:self.program(7, program7, data),contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
   stack2 = ((stack1 = helpers['link-to'] || depth0['link-to']),stack1 ? stack1.call(depth0, "AuthLogin", options) : helperMissing.call(depth0, "link-to", "AuthLogin", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
   data.buffer.push("\r\n       ");
@@ -68,19 +74,19 @@ function program4(depth0,data) {
   hashTypes = {'class': "STRING"};
   options = {hash:{
     'class': ("btn btn-default btn-sm")
-  },inverse:self.noop,fn:self.program(7, program7, data),contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
+  },inverse:self.noop,fn:self.program(9, program9, data),contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
   stack2 = ((stack1 = helpers['link-to'] || depth0['link-to']),stack1 ? stack1.call(depth0, "AuthRegister", options) : helperMissing.call(depth0, "link-to", "AuthRegister", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
   data.buffer.push("\r\n    </div>\r\n");
   return buffer;
   }
-function program5(depth0,data) {
+function program7(depth0,data) {
   
   
   data.buffer.push("Login");
   }
 
-function program7(depth0,data) {
+function program9(depth0,data) {
   
   
   data.buffer.push("Create an account");
@@ -88,7 +94,7 @@ function program7(depth0,data) {
 
   hashTypes = {};
   hashContexts = {};
-  stack1 = helpers['if'].call(depth0, "auth.isAuthenticated", {hash:{},inverse:self.program(4, program4, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
+  stack1 = helpers['if'].call(depth0, "auth.isAuthenticated", {hash:{},inverse:self.program(6, program6, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   else { data.buffer.push(''); }
   

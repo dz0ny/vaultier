@@ -26,7 +26,7 @@ function program5(depth0,data) {
   return buffer;
   }
 
-  data.buffer.push("<div class=\"row\">\r\n    <div class=\"col-md-12\">\r\n\r\n        <div class=\"vlt-dialog\">\r\n            <div class=\"vlt-dialog-content\">\r\n                <div class=\"vlt-dialog-header\">\r\n                    <h2>Create new secret wizard</h2>\r\n\r\n                    <ul class=\"nav nav-pills nav-justified vlt-wizard-steps\">\r\n                        ");
+  data.buffer.push("<div class=\"row\">\r\n    <div class=\"col-md-12\">\r\n\r\n        <div class=\"vlt-dialog vlt-dialog-window\">\r\n            <div class=\"vlt-dialog-content\">\r\n                <div class=\"vlt-dialog-header\">\r\n                    <h2>Create new secret wizard</h2>\r\n\r\n                    <ul class=\"nav nav-pills nav-justified vlt-wizard-steps\">\r\n                        ");
   hashContexts = {'tab': depth0};
   hashTypes = {'tab': "STRING"};
   stack1 = helpers.view.call(depth0, "view.TabView", {hash:{

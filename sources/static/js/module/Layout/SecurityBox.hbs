@@ -7,7 +7,7 @@
         </a>
 
         <ul class="dropdown-menu caret-right vlt-dropdown">
-            <li><a {{ action settings target=view }} href="" >Personal settings</a></li>
+            <li>{{#link-to 'Settings.index'}}Settings{{/link-to}}</li>
             <li><a {{ action logout target=view }} href="" >Logout</a></li>
 
             {{#if showToken}}

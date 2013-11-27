@@ -64,7 +64,7 @@ function program14(depth0,data) {
   data.buffer.push("\r\n                            Next\r\n                        ");
   }
 
-  data.buffer.push("<div class=\"row\">\r\n    <div class=\"col-md-12\">\r\n\r\n        <div class=\"vlt-dialog vlt-tabs-modal vlt-register\">\r\n            <div class=\"vlt-dialog-content\">\r\n                <div class=\"vlt-dialog-header\">\r\n                    <h2>Register to Vaultier</h2>\r\n\r\n                    <ul class=\"nav nav-pills nav-justified vlt-wizard-steps\">\r\n                        ");
+  data.buffer.push("<div class=\"row\">\r\n    <div class=\"col-md-12\">\r\n\r\n        <div class=\"vlt-dialog vlt-dialog-window vlt-register\">\r\n            <div class=\"vlt-dialog-content\">\r\n                <div class=\"vlt-dialog-header\">\r\n                    <h2>Register to Vaultier</h2>\r\n\r\n                    <ul class=\"nav nav-pills nav-justified vlt-wizard-steps\">\r\n                        ");
   hashContexts = {'tab': depth0};
   hashTypes = {'tab': "STRING"};
   stack1 = helpers.view.call(depth0, "view.TabView", {hash:{

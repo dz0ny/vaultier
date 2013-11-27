@@ -26,10 +26,23 @@ var router = Vaultier.Router.map(function () {
      ************************************************************/
 
     this.resource('Invitation', {path: '/invitations'}, function () {
+        // automatic Invitation.index
         this.route('use', { path: '/use/:invitation/:hash' });
         this.route('anonymous', { path: '/anonymous' });
         this.route('accept', { path: '/accept' });
     })
+
+    /************************************************************
+     * Settings
+     ************************************************************/
+
+    this.resource('Settings', {path: '/settings'}, function () {
+        // automatic Settings.index
+         this.route('personal', { path: '/personal' });
+         this.route('workspaces', { path: '/workspaces' });
+
+    })
+
 
     /************************************************************
      * Workspaces
@@ -128,10 +141,10 @@ var router = Vaultier.Router.map(function () {
 });
 
 Ember.Route.reopen({
-  activate: function() {
-      this._super();
-      window.scrollTo(0, 0);
-  }
+    activate: function () {
+        this._super();
+        window.scrollTo(0, 0);
+    }
 });
 
 Service.Environment.current().set('router', router);

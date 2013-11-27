@@ -36,7 +36,7 @@ function program5(depth0,data) {
   return buffer;
   }
 
-  data.buffer.push("<div class=\"row\">\n    <div class=\"col-md-12\">\n\n        <div class=\"vlt-dialog vlt-tabs-modal\">\n            <form>\n                <div class=\"vlt-dialog-content\">\n                    <div class=\"vlt-dialog-header\">\n                        <h2>Edit secret</h2>\n                    </div>\n                    <div class=\"vlt-dialog-body\">\n\n                        ");
+  data.buffer.push("<div class=\"row\">\n    <div class=\"col-md-12\">\n\n        <div class=\"vlt-dialog vlt-dialog-window\">\n            <form>\n                <div class=\"vlt-dialog-content\">\n                    <div class=\"vlt-dialog-header\">\n                        <h2>Edit secret</h2>\n                    </div>\n                    <div class=\"vlt-dialog-body\">\n\n                        ");
   hashTypes = {};
   hashContexts = {};
   stack1 = helpers['if'].call(depth0, "isNote", {hash:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});

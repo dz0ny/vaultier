@@ -39,7 +39,7 @@ function program6(depth0,data) {
   data.buffer.push("Create new\r\n                    account here");
   }
 
-  data.buffer.push("<div class=\"row\">\r\n    <div class=\"col-md-12\">\r\n\r\n        <div class=\"vlt-dialog vlt-tabs-modal vlt-login\">\r\n            <div class=\"vlt-dialog-content\">\r\n        <form class=\"form-horizontal\" role=\"form\">\r\n\r\n                <div class=\"vlt-dialog-header\">\r\n                    <h2>Login</h2>\r\n\r\n                    ");
+  data.buffer.push("<div class=\"row\">\r\n    <div class=\"col-md-12\">\r\n\r\n        <div class=\"vlt-dialog vlt-dialog-window vlt-login\">\r\n            <div class=\"vlt-dialog-content\">\r\n        <form class=\"form-horizontal\" role=\"form\">\r\n\r\n                <div class=\"vlt-dialog-header\">\r\n                    <h2>Login</h2>\r\n\r\n                    ");
   hashTypes = {};
   hashContexts = {};
   stack1 = helpers['if'].call(depth0, "props.latestUser", {hash:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});

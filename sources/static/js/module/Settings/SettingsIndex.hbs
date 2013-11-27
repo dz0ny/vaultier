@@ -1,0 +1,30 @@
+<br/>
+<br/>
+
+<div class="row">
+    <div class="col-md-3">
+        <ul class="nav nav-pills nav-stacked">
+            {{#view view.TabView tab="personal" }}
+                {{#link-to 'Settings.personal'}}
+                    My profile
+                {{/link-to}}
+            {{/view}}
+
+            {{#view view.TabView tab="workspaces" }}
+                {{#link-to 'Settings.workspaces'}}
+                    My workspaces
+                {{/link-to}}
+            {{/view}}
+        </ul>
+    </div>
+
+    <div class="col-md-9">
+        {{outlet Settings}}
+    </div>
+
+</div>
+
+
+
+
+

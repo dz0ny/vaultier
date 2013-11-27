@@ -808,12 +808,16 @@ span.vlt-user img {
 *************************************************************
 *************************************************************/
 
+
 .vlt-dialog {
-    margin: 50px auto 50px auto;
-    width: 600px;
     background-color: #ffffff;
     border: 1px solid #E0DBDB;
     border-radius: 6px;
+}
+
+.vlt-dialog-window {
+    margin: 50px auto 50px auto;
+    width: 600px;
 }
 
 .vlt-dialog .vlt-dialog-header,
