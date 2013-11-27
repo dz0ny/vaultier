@@ -12,6 +12,7 @@ DATABASES = {
     }
 }
 
+# url of site used in emailing, templates and so.
 SITE_URL = 'http://your.site.com/'
 
 COMPRESS_ENABLED = 1

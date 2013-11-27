@@ -21,7 +21,7 @@ def render_email(template, context=None):
     return (plain, html)
 
 def build_context(member):
-    url = urlparse.urljoin(SITE_URL, '/#/invitations/use/{member}/{hash}/')
+    url = urlparse.urljoin(SITE_URL, '#/invitations/use/{member}/{hash}/')
     url = url.replace('{member}', str(member.id))
     url = url.replace('{hash}', str(member.invitation_hash))
 
