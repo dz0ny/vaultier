@@ -1,9 +1,9 @@
 {{#if auth.isAuthenticated}}
     <div class="panel panel-default vlt-security-box dropdown pull-right">
-        {{gravatarImg auth.user.email size=25 class="vlt-avatar"}}
+        {{gravatarImg auth.user.clean.email size=25 class="vlt-avatar"}}
 
         <a href="#" class="vlt-username dropdown-toggle" data-toggle="dropdown">
-            {{auth.user.nickname}}
+            {{auth.user.clean.nickname}}
         </a>
 
         <ul class="dropdown-menu caret-right vlt-dropdown">

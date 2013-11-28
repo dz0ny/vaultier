@@ -5,6 +5,7 @@ Service.Auth = Ember.Object.extend({
     init: function () {
         this._super(arguments);
         this.promises = Service.AuthPromises.create({
+            store: this.store,
             coder: this.coder
         })
 
@@ -42,7 +43,7 @@ Service.Auth = Ember.Object.extend({
         return this.get('checked') == true
     }.property('user', 'checked'),
 
-    generateKeys: function(callback) {
+    generateKeys: function (callback) {
         var coder = this.get('coder');
         return this.coder.generateKeys(callback);
     },
@@ -91,14 +92,24 @@ Service.Auth = Ember.Object.extend({
 
     reload: function () {
         var session = this.loadFromSession() || {};
-        var sessionUser = session.user || null;
+        var sessionUser = session.user || null
         var sessionPrivateKey = session.privateKey || null;
         var sessionToken = session.token || null;
 
-        this.promises._useToken()(sessionToken);
-        this.setAuthenticatedUser(sessionUser, sessionPrivateKey, sessionToken)
-
-        return Ember.RSVP.resolve();
+        return this.promises.user(sessionUser, sessionToken)
+            .then(
+                //success
+                function (user) {
+                    return this.setAuthenticatedUser(
+                        user,
+                        sessionPrivateKey,
+                        sessionToken
+                    )
+                }.bind(this),
+                //fail
+                function () {
+                    return this.setAuthenticatedUser(null)
+                }.bind(this))
     },
 
 
@@ -154,11 +165,10 @@ Service.Auth = Ember.Object.extend({
     },
 
     saveToSession: function () {
-        var email = this.get('user') ? this.get('user').email : null;
         this.session.set('auth', {
             token: this.get('token'),
-            email: email,
-            user: this.get('user'),
+            email: this.get('user.email'),
+            user: this.get('user.id'),
             privateKey: this.get('privateKey')
         });
     },

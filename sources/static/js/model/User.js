@@ -1,12 +1,13 @@
 Vaultier.User = DS.Model.extend(
     CreatedUpdatedMixin,
+    ExposeCleanAttributesMixin,
     NonInvalidState,
     {
-        email: DS.attr('string'),
-        nickname: DS.attr('string')
-    })
 
-Vaultier.AuthenticatedUser = Vaultier.User.extend({
-    public_key: DS.attr('string')
-});
+
+
+        email: DS.attr('string'),
+        nickname: DS.attr('string'),
+        public_key: DS.attr('string')
+    });
 

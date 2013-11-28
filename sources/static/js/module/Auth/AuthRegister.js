@@ -166,7 +166,7 @@ Vaultier.AuthRegisterCredsRoute = Ember.Route.extend({
         // prepare user model
         var user = ctrl.get('content');
         if (!user) {
-            var user = this.get('store').createRecord('AuthenticatedUser');
+            var user = this.get('store').createRecord('User');
             ctrl.set('content', user);
         }
 

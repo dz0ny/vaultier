@@ -20,7 +20,7 @@ def register_api_call(*args, **kwargs):
     pubkey = open(PROJECT_ROOT+'/vaultier/test/fixtures/vaultier.pub', 'r').read()
     kwargs['public_key'] = pubkey
 
-    url = reverse('auth-user')
+    url = reverse('user-list')
     client = APIClient()
     response = client.post(url, kwargs)
     return response

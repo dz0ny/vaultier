@@ -33,7 +33,7 @@ Vaultier.ApplicationAdapter = DS.DjangoRESTAdapter.extend(
         },
 
         urls: {
-            AuthenticatedUser: '/api/auth/user'
+//            AuthenticatedUser: '/api/auth/user'
         },
 
         /**

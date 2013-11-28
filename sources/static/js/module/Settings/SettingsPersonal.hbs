@@ -4,11 +4,42 @@
             <h2>Personal settings</h2>
         </div>
 
-        <div class="vlt-dialog-body">
-        </div>
+        <form class="form-horizontal" role="form">
+            <div class="vlt-dialog-body">
 
-        <div class="vlt-dialog-footer">
-        </div>
+                <div class="form-group" {{bindAttr class='errors.email:has-error'}}>
+                    <label for="register-form-email" class="col-lg-4 control-label">Email *</label>
+
+                    <div class="col-lg-4">
+                        {{ view Ember.TextField elementId='register-form-email' valueBinding='content.email' class="form-control" placeholder="Please enter valid email address"}}
+                        <span class="error">
+                            {{errors.email}}
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group" {{bindAttr class='errors.nickname:has-error'}}>
+                    <label for="register-form-nickname" class="col-lg-4 control-label">Your nickname *</label>
+
+                    <div class="col-lg-4">
+                        {{ view Ember.TextField elementId='register-form-nickname' valueBinding='content.nickname' class="form-control" placeholder="Please enter your nickname"}}
+                        <span class="error">
+                            {{errors.nickname}}
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group" {{bindAttr class='errors.nickname:has-error'}}>
+                    <div class="col-sm-4 col-sm-offset-4">
+                        <a {{action save}} class="btn btn-primary">Save changes</a>
+                    </div>
+                </div>
+
+                <br/>
+            </div>
+
+        </form>
+
 
     </div>
 </div>

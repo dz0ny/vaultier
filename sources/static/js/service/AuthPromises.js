@@ -1,97 +1,69 @@
 Service.AuthPromises = Ember.Object.extend({
 
     token: null,
+    /**
+     * @config
+     */
+    store: null,
+    /**
+     * @config
+     */
     coder: null,
 
     _auth: function (email, privateKey) {
         var coder = this.coder;
-        return function (password) {
-            return Ember.RSVP.Promise(function (resolve, reject) {
-                var signature = coder.sign(email, privateKey);
+        var signature = coder.sign(email, privateKey);
 
-                Ember.$.ajax({
-                    url: '/api/auth/auth',
-                    type: 'post',
-                    data: {
-                        email: email,
-                        signature: signature
-                    }
-                }).then(
-                    function (response) {
-                        // do set token here
-                        resolve(response.token);
-                    },
-                    function () {
-                        console.error('Auth call unsuccessfull');
-                        reject();
-                    }
-                );
-            });
-        }
+        return Utils.RSVPAjax({
+            url: '/api/auth/auth',
+            type: 'post',
+            data: {
+                email: email,
+                signature: signature
+            }})
     },
 
-    _retrieveUser: function () {
-        return function () {
-            return Ember.RSVP.Promise(function (resolve, reject) {
-                Ember.$.ajax({
-                    url: '/api/auth/user',
-                    type: 'get'
-                }).then(
-                    function (user) {
-                        resolve(user);
-                    },
-                    function (error) {
-                        console.error('User cannot be retrieved');
-                        reject(error);
-                    }
-
-                )
-            });
+    _retrieveUser: function (id) {
+        if (!id) {
+           return Ember.RSVP.reject('User id not specified')
         }
+        return this.get('store').find('User', id)
+            .then(null, function () {
+                console.error('Cannot retrieve user with id {id}'.replace('{id}', id))
+            })
     },
 
-    _useToken: function () {
-        return function (token) {
-            Ember.$.ajaxSetup({
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader('X-Vaultier-Token', token);
-                }
-            });
-            this.set('token', token);
-
-            return Ember.RSVP.resolve();
-        }.bind(this);
+    _useToken: function (token) {
+        Ember.$.ajaxSetup({
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('X-Vaultier-Token', token);
+            }
+        });
+        this.set('token', token);
+        return Ember.RSVP.resolve();
     },
 
     _resetToken: function () {
-        return function () {
-            Ember.$.ajaxSetup({
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader('X-Vaultier-Token', '');
-                }
-            });
-            this.set('token', null)
+        Ember.$.ajaxSetup({
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('X-Vaultier-Token', '');
+            }
+        });
+        this.set('token', null)
 
-            return Ember.RSVP.resolve();
-        }.bind(this);
+        return Ember.RSVP.resolve();
     },
 
     _unauth: function () {
-        return function () {
-            return Ember.RSVP.Promise(function (resolve, reject) {
-                Ember.$.ajax({
-                    url: '/api/auth/logout',
-                    type: 'post'
-                }).always(function () {
-                        resolve();
-                    });
-            });
-        }
+        return Utils.RSVPAjax({
+            url: '/api/auth/logout',
+            type: 'post'
+        })
     },
 
-    user: function () {
-        return Ember.RSVP.resolve()
-            .then(this._retrieveUser(token))
+    user: function (user, token) {
+        this._useToken(token)
+        return this._retrieveUser(user)
     },
 
     logout: function () {
@@ -101,10 +73,22 @@ Service.AuthPromises = Ember.Object.extend({
     },
 
     login: function (email, privateKey) {
+        var user;
+        var token;
         return Ember.RSVP.resolve()
-            .then(this._auth(email, privateKey))
-            .then(this._useToken())
-            .then(this._retrieveUser())
+            .then(function() {
+                return this._auth(email, privateKey)
+            }.bind(this))
+
+            .then(function(response) {
+                user = response.user;
+                token = response.token
+                return this._useToken(token)
+            }.bind(this))
+
+            .then(function() {
+                return this._retrieveUser(user)
+            }.bind(this))
     }
 
 

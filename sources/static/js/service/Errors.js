@@ -2,6 +2,8 @@ Po.NS('Service');
 
 Service.Errors = Ember.Object.extend({
 
+
+
     /**
      * @DI router
      */
@@ -9,11 +11,10 @@ Service.Errors = Ember.Object.extend({
     errorController: null,
     errorRoute: 'ErrorGeneric',
 
-
     transitionTo: function (route, replaceAddressBar) {
         var router = this.get('router');
         var url = router.generate(route).replace('#', '')
-        Ember.run.join(router, function () {
+        Ember.run.next(router, function () {
             if (replaceAddressBar) {
                 this.replaceURL(url)
             } else {
@@ -35,39 +36,36 @@ Service.Errors = Ember.Object.extend({
         console.error(error.stack);
     },
 
+    processError: function (error) {
+        this.logError(error);
+        try {
+            // rendering must be done outside ember
+//                this.renderError(error)
+        } catch (e) {
+            console.error('--CANNOT-RENDER-ERROR--');
+            console.error(e.stack);
+        }
+    },
+
     register: function () {
         var self = this;
 
-        var renderError = function (error) {
-            try {
-                self.renderError(error)
-            } catch (e) {
-                console.error('--CANNOT-RENDER-ERROR--');
-                console.error(e.stack);
-            }
-        };
-
-        var logError = function (error) {
-            self.logError(error)
-        }
-
-
         Ember.RSVP.configure('onerror', function (error) {
-            logError(error)
-            renderError(error)
+            console.log('Ember.RSVP.error');
+            self.processError(error)
         });
 
         Ember.Router.reopenClass({
             _defaultErrorHandler: function (error, transition) {
-                this._super(error, transition)
-                logError(error)
-                renderError(error)
+//                this._super(error, transition)
+                console.log('Ember.Router.error');
+                self.processError(error)
             }
         })
 
         Ember.onerror = function (error) {
-            logError(error)
-            renderError(error);
+               console.log('Ember.error');
+            self.processError(error)
         }
 
     }
