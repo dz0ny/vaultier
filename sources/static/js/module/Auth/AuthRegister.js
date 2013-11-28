@@ -186,7 +186,7 @@ Vaultier.AuthRegisterCredsRoute = Ember.Route.extend({
             var keys = ctrl.get('props.keys');
 
             // saves user
-            if (user.get('currentState').stateName != 'root.loaded.created.invalid') {
+            if (user.get('isValid')) {
 
                 // update model
                 user.set('public_key', keys.publicKey);

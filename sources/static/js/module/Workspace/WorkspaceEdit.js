@@ -3,7 +3,7 @@ Vaultier.WorkspaceEditRoute = Ember.Route.extend(
         model: function (params, transition) {
             var workspace = this.modelFor('Workspace');
 
-            if (!this.get('auth').checkPermissions(transition, function() {
+            if (!this.get('auth').checkPermissions(transition, function () {
                 return workspace.get('perms.update')
             }.bind(this), true)) {
                 return;
@@ -26,18 +26,21 @@ Vaultier.WorkspaceEditRoute = Ember.Route.extend(
 
         actions: {
             save: function () {
-                var record = this.get('controller.content');
-                record.save().then(
-                    function () {
-                        $.notify('Your changes has been successfully saved.', 'success');
-                        history.go(-1);
-                    }.bind(this),
-                    function () {
-                        $.notify('Oooups! Something went wrong.', 'error');
-                    }
-                )
+                if (this.get('controller.content.isValid')) {
+
+                    var record = this.get('controller.content');
+                    record.save().then(
+                        function () {
+                            $.notify('Your changes has been successfully saved.', 'success');
+                            history.go(-1);
+                        }.bind(this),
+                        function () {
+                            $.notify('Oooups! Something went wrong.', 'error');
+                        }
+                    )
+                }
             }
-        },
+        }
     });
 
 Vaultier.WorkspaceEditController = Ember.ObjectController.extend({

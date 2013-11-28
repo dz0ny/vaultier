@@ -3,7 +3,7 @@ Vaultier.VaultEditRoute = Ember.Route.extend(
         model: function (params, transition) {
             var vault = this.modelFor('Vault');
 
-            if (!this.get('auth').checkPermissions(transition, function() {
+            if (!this.get('auth').checkPermissions(transition, function () {
                 return vault.get('perms.update')
             }.bind(this), true)) {
                 return;
@@ -27,16 +27,18 @@ Vaultier.VaultEditRoute = Ember.Route.extend(
 
         actions: {
             save: function () {
-                var record = this.get('controller.content');
-                record.save().then(
-                    function () {
-                        $.notify('Your changes has been successfully saved.', 'success');
-                        history.go(-1);
-                    }.bind(this),
-                    function () {
-                        $.notify('Oooups! Something went wrong.', 'error');
-                    }
-                )
+                if (this.get('controller.content.isValid')) {
+                    var record = this.get('controller.content');
+                    record.save().then(
+                        function () {
+                            $.notify('Your changes has been successfully saved.', 'success');
+                            history.go(-1);
+                        }.bind(this),
+                        function () {
+                            $.notify('Oooups! Something went wrong.', 'error');
+                        }
+                    )
+                }
             }
         },
     });

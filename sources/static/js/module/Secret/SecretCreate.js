@@ -23,7 +23,7 @@ Vaultier.SecretCreateView = Ember.View.extend({
 Vaultier.SecretCreateSelectRoute = Ember.Route.extend(
     {
 
-        model: function(params, transition) {
+        model: function (params, transition) {
 
             // check permissions
             if (!this.get('auth').checkPermissions(transition, function () {
@@ -149,17 +149,19 @@ Vaultier.SecretCreateSubmitRoute = Ember.Route.extend(
 
         actions: {
             submit: function () {
-                var record = this.get('controller.content');
+                if (this.get('controller.content.isValid')) {
+                    var record = this.get('controller.content');
 
-                record.save().then(
-                    function () {
-                        $.notify('Your secret has been successfully created.', 'success');
-                        this.transitionTo('Secret.index', this.get('Card'));
-                    }.bind(this),
-                    function () {
-                        $.notify('Oooups! Something went wrong.', 'error');
-                    }
-                )
+                    record.save().then(
+                        function () {
+                            $.notify('Your secret has been successfully created.', 'success');
+                            this.transitionTo('Secret.index', this.get('Card'));
+                        }.bind(this),
+                        function () {
+                            $.notify('Oooups! Something went wrong.', 'error');
+                        }
+                    )
+                }
             }
         }
 

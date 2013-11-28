@@ -1,7 +1,7 @@
 Vaultier.CardEditRoute = Ember.Route.extend(
     {
 
-        serialize: function(card) {
+        serialize: function (card) {
             return {
                 card: card.id
             }
@@ -10,7 +10,7 @@ Vaultier.CardEditRoute = Ember.Route.extend(
         model: function (params, transition) {
             var card = this.modelFor('Card');
 
-            if (!this.get('auth').checkPermissions(transition, function() {
+            if (!this.get('auth').checkPermissions(transition, function () {
                 return card.get('perms.update')
             }.bind(this), true)) {
                 return;
@@ -35,18 +35,21 @@ Vaultier.CardEditRoute = Ember.Route.extend(
 
         actions: {
             save: function () {
-                var record = this.get('controller.content');
-                record.save().then(
-                    function () {
-                        $.notify('Your changes has been successfully saved.', 'success');
-                        history.go(-1);
-                    }.bind(this),
-                    function () {
-                        $.notify('Oooups! Something went wrong.', 'error');
-                    }
-                )
+                if (this.get('controller.content.isValid')) {
+
+                    var record = this.get('controller.content');
+                    record.save().then(
+                        function () {
+                            $.notify('Your changes has been successfully saved.', 'success');
+                            history.go(-1);
+                        }.bind(this),
+                        function () {
+                            $.notify('Oooups! Something went wrong.', 'error');
+                        }
+                    )
+                }
             }
-        },
+        }
     });
 
 Vaultier.CardEditController = Ember.ObjectController.extend({
