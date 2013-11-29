@@ -24,7 +24,9 @@ start() {
         fi
 
         echo "Starting Vaultier"
+        source $VENV
         eval  sudo -u www-data -s "$PROJDIR/manage.py runfcgi maxchildren=10 maxspare=5 minspare=2 method=prefork socket=$SOCKET pidfile=$PIDFILE; chmod 777 $SOCKET"
+        deactivate
         echo "started."
 }
 
