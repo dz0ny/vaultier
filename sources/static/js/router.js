@@ -39,7 +39,7 @@ var router = Vaultier.Router.map(function () {
     this.resource('Settings', {path: '/settings'}, function () {
         // automatic Settings.index
          this.route('personal', { path: '/personal' });
-         this.route('workspaces', { path: '/workspaces' });
+         this.route('keys', { path: '/keys' });
 
     })
 

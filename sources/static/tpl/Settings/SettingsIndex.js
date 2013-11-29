@@ -28,7 +28,7 @@ function program4(depth0,data) {
   hashTypes = {};
   hashContexts = {};
   options = {hash:{},inverse:self.noop,fn:self.program(5, program5, data),contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
-  stack2 = ((stack1 = helpers['link-to'] || depth0['link-to']),stack1 ? stack1.call(depth0, "Settings.workspaces", options) : helperMissing.call(depth0, "link-to", "Settings.workspaces", options));
+  stack2 = ((stack1 = helpers['link-to'] || depth0['link-to']),stack1 ? stack1.call(depth0, "Settings.keys", options) : helperMissing.call(depth0, "link-to", "Settings.keys", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
   data.buffer.push("\n            ");
   return buffer;
@@ -36,7 +36,7 @@ function program4(depth0,data) {
 function program5(depth0,data) {
   
   
-  data.buffer.push("\n                    My workspaces\n                ");
+  data.buffer.push("\n                    Access keys\n                ");
   }
 
   data.buffer.push("<br/>\n<br/>\n\n<div class=\"row\">\n    <div class=\"col-md-3\">\n        <ul class=\"nav nav-pills nav-stacked\">\n            ");
@@ -50,7 +50,7 @@ function program5(depth0,data) {
   hashContexts = {'tab': depth0};
   hashTypes = {'tab': "STRING"};
   stack1 = helpers.view.call(depth0, "view.TabView", {hash:{
-    'tab': ("workspaces")
+    'tab': ("keys")
   },inverse:self.noop,fn:self.program(4, program4, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n        </ul>\n    </div>\n\n    <div class=\"col-md-9\">\n        ");
