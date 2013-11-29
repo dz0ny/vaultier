@@ -151,7 +151,8 @@ Service.Environment.current().set('router', router);
 
 Vaultier.ApplicationRoute = Ember.Route.extend(
     {
-        model: function (params, transition) {
+        beforeModel: function (params, transition) {
+            // auth
             var auth = this.get('auth');
             var status = auth.reload()
             return status;

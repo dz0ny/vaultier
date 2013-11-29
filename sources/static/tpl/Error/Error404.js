@@ -9,7 +9,7 @@ function program1(depth0,data) {
   data.buffer.push("\r\n                Go to homepage\r\n            ");
   }
 
-  data.buffer.push("<div class=\"col-md-4 col-md-offset-4 top-150 bottom-150 alert alert-danger\">\r\n        <div>\r\n            <h4>Oooups! 404 Page not found</h4>\r\n\r\n            <p>\r\n                Page you are trying to access does not exists on our server\r\n            </p>\r\n        </div>\r\n\r\n        <div class=\"btn-group pull-right\">\r\n            ");
+  data.buffer.push("<div class=\"col-md-6 col-md-offset-3 top-150 bottom-150 alert alert-danger\">\r\n        <div>\r\n            <h4>Oooups! 404 Page not found</h4>\r\n\r\n            <p>\r\n                Page you are trying to access does not exists on our server\r\n            </p>\r\n        </div>\r\n\r\n        <div class=\"btn-group pull-right\">\r\n            ");
   hashContexts = {'class': depth0};
   hashTypes = {'class': "STRING"};
   options = {hash:{

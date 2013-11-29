@@ -1,9 +1,35 @@
 <div class="vlt-page-nav">
 
-    {{#exp  "( workspace.perms.invite || workspace.perms.create)" }}
+    {{#exp  "( workspace.perms.invite || workspace.perms.create || workspace.perms.update || workspace.perms.delete)" }}
 
         <div class="vlt-page-toolbar pull-right">
             <div>
+
+                {{#exp  "( workspace.perms.update || workspace.perms.delete)"}}
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown">
+                            <span class="glyphicon glyphicon-cog"></span>
+                        </button>
+                        <ul class="dropdown-menu caret-left">
+
+                            {{#if workspace.perms.update}}
+                                <li>
+                                    {{#link-to "Workspace.edit" workspace}}
+                                        Edit workspace
+                                    {{/link-to}}
+                                </li>
+                            {{/if}}
+
+                            {{#if workspace.perms.delete}}
+                                <li>
+                                    <a href="#" {{action deleteWorkspace workspace}}>Delete workspace</a>
+                                </li>
+                            {{/if}}
+
+                        </ul>
+                    </div>
+                {{/exp}}
+
 
                 {{#if workspace.perms.invite }}
                     {{#link-to "Workspace.memberIndex" workspace class="btn btn-default"}}

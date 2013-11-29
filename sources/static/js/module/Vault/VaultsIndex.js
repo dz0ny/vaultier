@@ -25,7 +25,28 @@ Vaultier.VaultsIndexRoute = Ember.Route.extend({
                 .addWorkspace()
                 .addText('Dashboard')
         )
+    },
 
+    actions: {
+        deleteWorkspace: function (workspace) {
+            Vaultier.confirmModal(this, 'Are you sure?', function () {
+                workspace.deleteRecord();
+
+                workspace.save().then(
+                    function () {
+                        $.notify('Your workspace has been successfully deleted.', 'success');
+                        this.transitionTo('index');
+                    }.bind(this),
+                    function (error) {
+                        this.get('errors').logError(error);
+                        workspace.rollback();
+                        $.notify('Oooups! Something went wrong.', 'error');
+                    }.bind(this)
+                );
+            }.bind(this));
+
+
+        }
 
     }
 });

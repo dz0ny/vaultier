@@ -8,9 +8,11 @@ Service.Errors = Ember.Object.extend({
     errorController: null,
 
     /**
-     * @DI ErrorView
+     * @DI router:main
      */
-    errorView: null,
+    router: null,
+    errorRoute: 'ErrorGeneric',
+
     rendering: false,
 
     parseError: function (error) {
@@ -46,18 +48,15 @@ Service.Errors = Ember.Object.extend({
 
             this.set('rendering', true)
 
-            var ctrl = this.get('errorController');
+            var ctrl = this.get('errorController')
             var data = this.parseError(error)
             ctrl.set('error', error)
             ctrl.set('content', data)
 
-            var view = this.get('errorView');
-            view.set('controller', ctrl);
-            view.appendTo($('body'));
-
-            Ember.run.scheduleOnce('render', this, function () {
-                this.set('rendering', false)
-            });
+            var router = this.get('router');
+            var errorRoute = this.get('errorRoute')
+            var url = router.generate(errorRoute).replace('#', '')
+            router.handleURL(url)
         } else {
             console.error('FATAL ERROR - rendering of error in progress')
         }
@@ -67,14 +66,56 @@ Service.Errors = Ember.Object.extend({
 
     logError: function (error) {
         if (!error.type) {
-           error.type = 'Global.error';
+            error.type = 'Global.error';
         }
         console.error(error.stack);
-        Raven.captureException(error);
+
+        if (!error.status) {
+            try {
+                var c = this.get('container');
+
+                // capture user
+                Raven.setUser(null)
+                var auth = c.lookup('service:auth');
+                var user;
+                if (auth && (user = auth.get('user'))) {
+                    user = {
+                        email: user.get('email'),
+                        id: user.get('id')
+                    }
+                    Raven.setUser(user)
+                }
+                // capture current path
+                var a = c.lookup('controller:application')
+                var currentPath = '';
+                if (a) {
+                    currentPath = a.get('currentPath')
+                }
+
+                //capture tags
+                var tags = {}
+                tags['type'] = error.type;
+                tags['errorDuringRendering'] = this.get('rendering')
+                tags['currentPath'] = currentPath
+
+
+            } catch (e) {
+                console.error('Ignored error during capturing');
+                console.error(e.stack);
+            }
+        }
+
+
+        Raven.captureException(error, {extra: tags});
+        console.log('Captured error' + error.type);
     },
 
     processError: function (error) {
-        this.logError(error);
+        try {
+            this.logError(error)
+        } catch (e) {
+            console.error('--CANNOT-CAPTURE-ERROR')
+        }
         try {
             this.renderError(error)
         } catch (e) {
@@ -84,6 +125,8 @@ Service.Errors = Ember.Object.extend({
     },
 
     setupRaven: function () {
+
+
         Raven.config('http://df6466226ad14775b23818b42df3a5c8@sentry.rclick.cz/5', {
             whitelistUrls: []
         }).install();

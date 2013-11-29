@@ -9,7 +9,7 @@ function program1(depth0,data) {
   data.buffer.push("\r\n            Go to homepage\r\n        ");
   }
 
-  data.buffer.push("<div class=\"col-md-4 col-md-offset-4 top-150 bottom-150 alert alert-danger\">\r\n    <div>\r\n        <h4>");
+  data.buffer.push("<div class=\"col-md-6 col-md-offset-3 top-150 bottom-150 alert alert-danger\">\r\n    <div>\r\n        <h4>");
   hashTypes = {};
   hashContexts = {};
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "content.title", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));

@@ -1,3 +1,19 @@
+Vaultier.ErrorGenericRoute = Ember.Route.extend({
+    deactivate: function () {
+        this.set('errors.rendering', false)
+    },
+
+    renderTemplate: function() {
+        var tpl = this.get('controller.content.template');
+        if (tpl) {
+            this.render(tpl)
+        } else {
+            this.render('ErrorGeneric')
+        }
+    }
+
+})
+
 Vaultier.ErrorGenericController = Ember.Controller.extend({
     content: {
         title: 'Oooups! Error',
@@ -7,12 +23,12 @@ Vaultier.ErrorGenericController = Ember.Controller.extend({
 
 Vaultier.ErrorGenericView = Ember.View.extend({
     templateName: 'Error/ErrorGeneric',
-    layoutName: 'Layout/LayoutError'
+    layoutName: 'Error/Layout'
 });
 
 Vaultier.Error404View = Ember.View.extend({
     templateName: 'Error/Error404',
-    layoutName: 'Layout/LayoutError'
+    layoutName: 'Error/Layout'
 });
 
 
