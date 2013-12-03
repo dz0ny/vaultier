@@ -214,6 +214,10 @@
     margin-bottom: 150px;
 }
 
+.top-0 {
+    margin-top: 0px;
+}
+
 .top-5 {
     margin-top: 5px;
 }
@@ -224,6 +228,10 @@
 
 .top-15 {
     margin-top: 15px;
+}
+
+.top-20 {
+    margin-top: 20px;
 }
 
 .top-30 {

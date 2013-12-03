@@ -95,19 +95,19 @@ Vaultier.Secret = DS.Model.extend(
 
         didLoad: function () {
             this.decode();
-            return this._super(arguments);
+            return this._super();
         },
 
         didReload: function () {
             this.decode();
-            return this._super(arguments);
+            return this._super();
         },
 
         save: function () {
             if (this.get('currentState.stateName') != 'root.deleted.uncommitted') {
                 this.encode();
             }
-            return this._super(arguments);
+            return this._super();
         }
 
     });

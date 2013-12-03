@@ -159,6 +159,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'vaultier',
     'compressor',
+    'south',
     'rest_framework',
     'django_extensions',
     # 'django_handlebars',

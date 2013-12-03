@@ -28,6 +28,7 @@ class Secret(ChangesMixin, models.Model):
 
     objects = CardManager()
 
+    name = models.CharField(max_length=255, default='', blank=True, null=True)
     type = SecretTypeField()
     data = models.TextField(null=True, blank=True)
     card = models.ForeignKey('vaultier.Card', on_delete=CASCADE)

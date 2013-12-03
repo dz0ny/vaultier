@@ -4,7 +4,43 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, hashContexts, hashTypes, options, escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing;
 
 
-  data.buffer.push("<div class=\"col-md-10 col-md-offset-1\">\r\n\r\n    <h4>Please fillout data for your password secret</h4>\r\n\r\n    <div class=\"form-group\" ");
+  data.buffer.push("<div class=\"col-md-10 col-md-offset-1\">\r\n\r\n    <div class=\"form-group\" ");
+  hashContexts = {'class': depth0};
+  hashTypes = {'class': "STRING"};
+  data.buffer.push(escapeExpression(helpers.bindAttr.call(depth0, {hash:{
+    'class': ("errors.name:has-error")
+  },contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
+  data.buffer.push(">\r\n        <label for=\"secret-name\">Name</label>\r\n        ");
+  hashTypes = {};
+  hashContexts = {};
+  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "errors.url", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
+  data.buffer.push("\r\n        ");
+  hashContexts = {'elementId': depth0,'valueBinding': depth0,'class': depth0};
+  hashTypes = {'elementId': "STRING",'valueBinding': "STRING",'class': "STRING"};
+  data.buffer.push(escapeExpression(helpers.view.call(depth0, "Em.TextField", {hash:{
+    'elementId': ("secret-name"),
+    'valueBinding': ("content.name"),
+    'class': ("form-control")
+  },contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
+  data.buffer.push("\r\n        <div class=\"help-block\">\r\n            Informational field. Do not enter any sensitive information. This field is not cyphered\r\n        </div>\r\n    </div>\r\n\r\n    <h4>Please fillout data for your password secret</h4>\r\n\r\n    <div class=\"form-group\" ");
+  hashContexts = {'class': depth0};
+  hashTypes = {'class': "STRING"};
+  data.buffer.push(escapeExpression(helpers.bindAttr.call(depth0, {hash:{
+    'class': ("errors.url:has-error")
+  },contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
+  data.buffer.push(">\r\n        <label for=\"secret-name\">Name</label>\r\n        ");
+  hashTypes = {};
+  hashContexts = {};
+  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "errors.url", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
+  data.buffer.push("\r\n        ");
+  hashContexts = {'elementId': depth0,'valueBinding': depth0,'class': depth0};
+  hashTypes = {'elementId': "STRING",'valueBinding': "STRING",'class': "STRING"};
+  data.buffer.push(escapeExpression(helpers.view.call(depth0, "Em.TextField", {hash:{
+    'elementId': ("secret-name"),
+    'valueBinding': ("content.name"),
+    'class': ("form-control")
+  },contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
+  data.buffer.push("\r\n        <div class=\"help-block\">\r\n            Informational field. Do not enter any sensitive information. This field is not cyphered\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"form-group\" ");
   hashContexts = {'class': depth0};
   hashTypes = {'class': "STRING"};
   data.buffer.push(escapeExpression(helpers.bindAttr.call(depth0, {hash:{
