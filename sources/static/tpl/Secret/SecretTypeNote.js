@@ -11,13 +11,13 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   data.buffer.push("\r\n        ");
   hashContexts = {'elementId': depth0,'valueBinding': depth0,'class': depth0,'rows': depth0};
   hashTypes = {'elementId': "STRING",'valueBinding': "STRING",'class': "STRING",'rows': "INTEGER"};
-  data.buffer.push(escapeExpression(helpers.view.call(depth0, "Em.TextArea", {hash:{
+  data.buffer.push(escapeExpression(helpers.view.call(depth0, "Vaultier.EpicEditorInput", {hash:{
     'elementId': ("card-description"),
     'valueBinding': ("content.note"),
     'class': ("form-control"),
     'rows': (8)
   },contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
-  data.buffer.push("\r\n    </div>\r\n</div>\r\n\r\n<div class=\"clearfix\"></div>\r\n\r\n");
+  data.buffer.push("\r\n         <div class=\"help-block\">\r\n             Markdown is available. Markdown manual <a href=\"https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet\" target=\"_blank\">here</a>\r\n         </div>\r\n    </div>\r\n</div>\r\n\r\n<div class=\"clearfix\"></div>\r\n\r\n");
   return buffer;
   
 });

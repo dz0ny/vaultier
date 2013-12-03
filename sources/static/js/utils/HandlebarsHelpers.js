@@ -15,6 +15,21 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
         return value;
     },
 
+    renderMarkdown: function (string, options) {
+
+        marked.setOptions(Po.merge({
+            gfm: true,
+            tables: true,
+            breaks: false,
+            pedantic: false,
+            sanitize: true,
+            smartLists: true,
+            smartypants: false
+        }, options));
+
+        return marked(string);
+    },
+
     gravatarImg: function (email, options) {
         var cls = options.hash.class || '';
         var server = window.location.protocol + '//' + window.location.host;
@@ -137,6 +152,17 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
 
     register: function () {
 
+        var renderMarkdown = this.renderMarkdown.bind(this)
+        Ember.Handlebars.registerBoundHelper('renderMarkdown', function (s) {
+            return new Ember.Handlebars.SafeString(renderMarkdown(s));
+        });
+
+        /////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////
+
+
         var printAgo = this.printAgo.bind(this)
         Ember.Handlebars.registerBoundHelper('printAgo', function (t) {
             return new Ember.Handlebars.SafeString(printAgo(t));
@@ -213,7 +239,7 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
         Ember.Handlebars.registerHelper('exp', function (exp, options) {
 
             var get = function (path) {
-                return options.data.view.get('controller.'+path);
+                return options.data.view.get('controller.' + path);
             }
 
             var parseVariable = function (node, name) {

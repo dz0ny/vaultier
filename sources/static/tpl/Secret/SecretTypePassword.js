@@ -77,7 +77,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
     'class': ("form-control"),
     'rows': (5)
   },contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
-  data.buffer.push("\r\n    </div>\r\n</div>\r\n\r\n<div class=\"clearfix\"></div>");
+  data.buffer.push("\r\n    </div>\r\n    <div class=\"help-block\">\r\n        Markdown is available. Markdown manual <a\r\n            href=\"https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet\"\r\n            target=\"_blank\">\r\n        here\r\n    </a>\r\n    </div>\r\n</div>\r\n\r\n<div class=\"clearfix\"></div>");
   return buffer;
   
 });
