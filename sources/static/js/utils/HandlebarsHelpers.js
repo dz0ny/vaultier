@@ -17,6 +17,10 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
 
     renderMarkdown: function (string, options) {
 
+        if (!string) {
+            string = '';
+        }
+
         marked.setOptions(Po.merge({
             gfm: true,
             tables: true,
