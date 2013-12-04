@@ -50,6 +50,7 @@ class Workspace(ChangesMixin, models.Model, TreeItemMixin):
 
     objects = WorkspaceManager()
     name = models.CharField(max_length=255)
+    slug = models.CharField(max_length=255, default='')
     description = models.CharField(max_length=1024, blank=True, null=True)
     created_by = models.ForeignKey('vaultier.User', on_delete=PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)

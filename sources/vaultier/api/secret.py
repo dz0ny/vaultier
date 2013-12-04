@@ -49,7 +49,6 @@ class SecretViewSet(ModelViewSet):
     API endpoint that allows secrets to be viewed or edited.
     """
     model = Secret
-    # permission_classes = (IsAuthenticated,)
     serializer_class = SecretSerializer
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated, CanManageSecretPermission)

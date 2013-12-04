@@ -1,3 +1,20 @@
+/**
+ * Slug solution:
+ * http://stackoverflow.com/questions/19727250/ember-adds-empty-row-to-data-with-slug-as-id
+ *
+ * For ember slug is supplied as id. To use numeric id use pk on model
+ *
+ */
+Vaultier.ApplicationSerializer = DS.DjangoRESTSerializer.extend({
+    normalize: function(type, hash, property) {
+        hash.pk = hash.id;
+        if (type.typeKey == 'Workspace' || type.typeKey == 'Vault' || type.typeKey == 'Card') {
+            hash.id = hash.slug;
+        }
+        return this._super(type, hash, property);
+    }
+});
+
 Vaultier.ApplicationAdapter = DS.DjangoRESTAdapter.extend(
     Utils.MutableMethodsAdapterMixin,
     Utils.MutableUrlsAdapterMixin,
@@ -46,6 +63,8 @@ Vaultier.ApplicationAdapter = DS.DjangoRESTAdapter.extend(
         }
 
     });
+
+
 
 
 /**

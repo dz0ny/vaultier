@@ -1,10 +1,9 @@
-from rest_framework.permissions import BasePermission
+from rest_framework.permissions import BasePermission, IsAuthenticated
 from rest_framework.relations import PrimaryKeyRelatedField
 from rest_framework.serializers import ModelSerializer, NestedValidationError,ValidationError
 from rest_framework.viewsets import ModelViewSet
 from vaultier.api.fields.relations import RelatedNestedField
 from vaultier.api.member import RelatedMemberSerializer
-from vaultier.api.perms.shared import IsAuthenticated
 from vaultier.api.user import RelatedUserSerializer
 from vaultier.auth.authentication import TokenAuthentication
 from vaultier.models import Role

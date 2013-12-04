@@ -14,8 +14,9 @@ Vaultier.Workspace = DS.Model.extend(
         keyError: false,
 
 
+        pk: DS.attr('number'),
         name: DS.attr('string'),
-        vaults: DS.attr('number'),
+        slug: DS.attr('string'),
         description: DS.attr('string'),
         perms: DS.attr(),
         membership: DS.attr(),

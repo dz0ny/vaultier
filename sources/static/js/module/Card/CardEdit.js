@@ -1,12 +1,6 @@
 Vaultier.CardEditRoute = Ember.Route.extend(
     {
 
-        serialize: function (card) {
-            return {
-                card: card.id
-            }
-        },
-
         model: function (params, transition) {
             var card = this.modelFor('Card');
 

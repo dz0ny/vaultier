@@ -19,7 +19,7 @@ Vaultier.VaultsCreateRoute = Ember.Route.extend(
                 if (this.get('controller.content.isValid')) {
                     var workspace = this.get('workspace');
                     var record = this.get('controller.content');
-                    record.set('workspace', this.get('workspace').id)
+                    record.set('workspace', this.get('workspace.pk'))
 
                     record.save().then(
                         function () {

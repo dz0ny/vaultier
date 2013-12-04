@@ -84,7 +84,7 @@ Vaultier.SecretCreateSubmitRoute = Ember.Route.extend(
 
         afterModel: function (secret, transition) {
 
-            secret.set('card', this.modelFor('Card').get('id'));
+            secret.set('card', this.modelFor('Card').get('pk'));
 
             var SecretClass = Vaultier.Secret.proto();
             switch (transition.params.type.toUpperCase()) {

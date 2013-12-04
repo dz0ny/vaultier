@@ -7,7 +7,7 @@ Vaultier.VaultsIndexRoute = Ember.Route.extend({
 
         // retrieve vaults
         var store = this.get('store');
-        return store.find('Vault', {workspace: workspace.get('id')});
+        return store.find('Vault', {workspace: workspace.get('pk')});
     },
 
     setupController: function (ctrl, vaults) {

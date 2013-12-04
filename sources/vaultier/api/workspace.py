@@ -1,15 +1,16 @@
-from rest_framework.fields import SerializerMethodField
+from rest_framework.fields import SerializerMethodField, SlugField
 from rest_framework.permissions import IsAuthenticated, BasePermission
 from rest_framework.serializers import ModelSerializer
 from rest_framework.viewsets import ModelViewSet
 from vaultier.api.fields.perms import PermsField
 from vaultier.api.member import RelatedMemberSerializer
+from vaultier.api.shared.slug import RetrieveBySlugMixin
 from vaultier.api.user import RelatedUserSerializer
 from vaultier.auth.authentication import TokenAuthentication
 from vaultier.models import Workspace
 from vaultier.models.member import Member
-from vaultier.models.role import Role
 from vaultier.models.role_fields import RoleLevelField
+from vaultier.models.slug import Slug
 from vaultier.perms.check import has_object_acl
 
 
@@ -32,6 +33,7 @@ class WorkspaceMembershipSerializer(RelatedMemberSerializer):
 
 
 class WorkspaceSerializer(ModelSerializer):
+    slug = SlugField(read_only=True)
     created_by = RelatedUserSerializer(required=False)
     perms = PermsField()
     membership = SerializerMethodField('get_membership')
@@ -45,15 +47,15 @@ class WorkspaceSerializer(ModelSerializer):
 
     class Meta:
         model = Workspace
-        fields = ('id', 'name', 'description', 'membership', 'perms', 'created_at', 'updated_at', 'created_by')
+        fields = ('id', 'slug', 'name', 'description', 'membership', 'perms', 'created_at', 'updated_at', 'created_by')
 
 
 class RelatedWorkspaceSerializer(WorkspaceSerializer):
     class Meta(WorkspaceSerializer.Meta):
-        fields = ['id', 'name']
+        fields = ['id', 'slug','name']
 
 
-class WorkspaceViewSet(ModelViewSet):
+class WorkspaceViewSet(RetrieveBySlugMixin, ModelViewSet):
     """
     API endpoint that allows workspaces to be viewed or edited.
     """
