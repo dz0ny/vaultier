@@ -26,6 +26,7 @@ class Card(ChangesMixin,models.Model, TreeItemMixin):
     objects = CardManager()
 
     name = models.CharField(max_length=255)
+    slug = models.CharField(max_length=255, default='')
     description = models.CharField(max_length=1024, blank=True, null=True)
     vault = models.ForeignKey('vaultier.Vault', on_delete=CASCADE)
     created_by = models.ForeignKey('vaultier.User', on_delete=PROTECT)

@@ -3,7 +3,7 @@ Vaultier.CardsIndexRoute = Ember.Route.extend({
     model: function (params, transition) {
         var vault = this.modelFor('Vault');
         var store = this.get('store');
-        return store.find('Card', {vault: vault.get('id')});
+        return store.find('Card', {vault: vault.get('pk')});
     },
 
     setupController: function (ctrl, model) {

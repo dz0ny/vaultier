@@ -2,13 +2,6 @@ Vaultier.Breadcrumbs = Ember.Object.extend({
 
     items: null,
 
-    normalize: function (params) {
-//        var environment = Vaultier.Services.Context.ContextService.current();
-//        if (params.workspace == '_env') {
-//            params.workspace = environment.workspace.id;
-//        }
-        return params;
-    },
 
     addLink: function (link, title, params) {
         this.items = this.items || [];
@@ -18,11 +11,11 @@ Vaultier.Breadcrumbs = Ember.Object.extend({
         if (link) {
             try {
                 if (params) {
-                    params = this.normalize(params);
-                    link = this.router.generate(link, [params])
+                    args = [link, params]
                 } else {
-                    link = this.router.generate(link)
+                    args = [link]
                 }
+                link = this.router.generate.apply(this.router, args)
             } catch (e) {
                 console.error(e.message);
                 console.error('Breadcrumbs error during generate route (' + link + ')');
@@ -51,7 +44,7 @@ Vaultier.Breadcrumbs = Ember.Object.extend({
     addVault: function () {
         var vault = Service.Environment.current().vault;
         if (vault) {
-            this.addLink('Vault.index', vault.get('name'), [vault.get('id')])
+            this.addLink('Vault.index', vault.get('name'), vault)
         }
         return this;
     },
@@ -59,7 +52,7 @@ Vaultier.Breadcrumbs = Ember.Object.extend({
     addCard: function () {
         var card = Service.Environment.current().card;
         if (card) {
-            this.addLink('Card.index', card.get('name'), [card.get('id')])
+            this.addLink('Card.index', card.get('name'), card)
         }
         return this;
     },
@@ -68,7 +61,7 @@ Vaultier.Breadcrumbs = Ember.Object.extend({
     addWorkspace: function () {
         var workspace = Service.Environment.current().workspace;
         if (workspace) {
-            this.addLink('Workspace.index', workspace.get('name'), [workspace.get('id')])
+            this.addLink('Workspace.index', workspace.get('name'), workspace)
         }
         return this;
     }

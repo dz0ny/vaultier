@@ -22,7 +22,7 @@ Vaultier.CardsCreateRoute = Ember.Route.extend(
                     var vault = this.get('vault');
 
                     var record = this.get('controller.content');
-                    record.set('vault', vault.get('id'))
+                    record.set('vault', vault.get('pk'))
 
                     record.save().then(
                         function () {

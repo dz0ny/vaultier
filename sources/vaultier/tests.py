@@ -8,6 +8,7 @@ from vaultier.test.member import member_suite
 from vaultier.test.role import role_suite
 from vaultier.test.secret import secret_suite
 from vaultier.test.secret_perms import secret_perms_suite
+from vaultier.test.slug import slug_suite
 from vaultier.test.vault import vault_suite
 from vaultier.test.vault_perms import vault_perms_suite
 from vaultier.test.workspace import workspace_suite
@@ -35,5 +36,7 @@ def suite():
 
     suite.addTest(secret_suite())
     suite.addTest(secret_perms_suite())
+
+    suite.addTest(slug_suite())
 
     return suite

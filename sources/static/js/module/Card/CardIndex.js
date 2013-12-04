@@ -10,9 +10,14 @@ Vaultier.CardRoute = Ember.Route.extend(
             Service.Environment.current().set('card', card);
         },
 
-        serialize: function (card) {
+        serialize: function (model) {
+            var slug = model.get('slug')
+            if (!slug || slug=='') {
+                slug = false
+            }
+
             return {
-                card: card.get('id')
+                card: slug ? slug :  model.get('pk')
             }
         }
     });

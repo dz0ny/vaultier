@@ -9,9 +9,13 @@ Vaultier.VaultRoute = Ember.Route.extend(
             Service.Environment.current().set('vault', vault);
         },
 
-        serialize: function (vault) {
+        serialize: function (model) {
+            var slug = model.get('slug')
+            if (!slug || slug=='') {
+                slug = false
+            }
             return {
-                vault: vault.get('id')
+                vault: slug ? slug :  model.get('pk')
             }
         }
 

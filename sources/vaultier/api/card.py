@@ -1,7 +1,9 @@
+from rest_framework.fields import SlugField
 from rest_framework.permissions import IsAuthenticated, BasePermission
 from rest_framework.serializers import ModelSerializer
 from rest_framework.viewsets import ModelViewSet
 from vaultier.api.fields.perms import PermsField
+from vaultier.api.shared.slug import RetrieveBySlugMixin
 from vaultier.api.user import RelatedUserSerializer
 from vaultier.auth.authentication import TokenAuthentication
 from vaultier.models import Card
@@ -31,15 +33,16 @@ class CanManageCardPermission(BasePermission):
 
 
 class CardSerializer(ModelSerializer):
+    slug = SlugField(read_only=True)
     created_by = RelatedUserSerializer(required=False)
     perms = PermsField()
 
     class Meta:
         model = Card
-        fields = ('id', 'name', 'description','vault', 'perms', 'created_at', 'updated_at', 'created_by')
+        fields = ('id', 'slug', 'name', 'description','vault', 'perms', 'created_at', 'updated_at', 'created_by')
 
 
-class CardViewSet(ModelViewSet):
+class CardViewSet(RetrieveBySlugMixin, ModelViewSet):
     """
     API endpoint that allows cars to be viewed or edited.
     """

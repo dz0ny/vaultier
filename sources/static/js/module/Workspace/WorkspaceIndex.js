@@ -15,6 +15,7 @@ Vaultier.WorkspaceRoute = Ember.Route.extend(
             // select working workspace
             this.get('members').selectWorkspace(workspace)
 
+
             // set environments
             // @deprecated
             Service.Environment.current().set('workspace', workspace);
@@ -25,8 +26,13 @@ Vaultier.WorkspaceRoute = Ember.Route.extend(
         },
 
         serialize: function (model) {
+            var slug = model.get('slug')
+            if (!slug || slug=='') {
+                slug = false
+            }
+
             return {
-                workspace: model.get('id')
+                workspace: slug ? slug :  model.get('pk')
             }
         }
 

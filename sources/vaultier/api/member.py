@@ -3,13 +3,12 @@ from rest_framework.decorators import action
 from rest_framework.fields import SerializerMethodField, EmailField, BooleanField, CharField, Field, ModelField, IntegerField
 from rest_framework.filters import SearchFilter, DjangoFilterBackend, OrderingFilter
 from rest_framework.mixins import CreateModelMixin, ListModelMixin, RetrieveModelMixin
-from rest_framework.permissions import BasePermission
+from rest_framework.permissions import BasePermission, IsAuthenticated
 from rest_framework.relations import PrimaryKeyRelatedField
 from rest_framework.response import Response
 from rest_framework.serializers import ModelSerializer, Serializer
 from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_200_OK
 from rest_framework.viewsets import GenericViewSet, ModelViewSet
-from vaultier.api.perms.shared import IsAuthenticated
 from vaultier.api.user import RelatedUserSerializer
 from vaultier.auth.authentication import TokenAuthentication
 from vaultier.mailer.invitation import resend_invitation
