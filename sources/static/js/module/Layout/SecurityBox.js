@@ -1,5 +1,3 @@
-Po.NS('Vaultier.Layout');
-
 Vaultier.LayoutSecurityBoxView = Ember.View.extend({
     tagName: 'span',
     templateName: 'Layout/SecurityBox',

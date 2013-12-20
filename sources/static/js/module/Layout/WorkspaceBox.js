@@ -1,5 +1,3 @@
-Po.NS('Vaultier.Layout');
-
 Vaultier.LayoutWorkspaceBoxController = Ember.Controller.extend({
 
     env: null,
