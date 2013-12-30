@@ -23,7 +23,7 @@ Vaultier.CardRoute = Ember.Route.extend(
     });
 
 Vaultier.CardIndexRoute = Ember.Route.extend({
-    redirect: function() {
+    beforeModel: function() {
         this.transitionTo('Secret.index')
     }
 })

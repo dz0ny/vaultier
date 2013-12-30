@@ -1,125 +1,129 @@
+Vaultier.LayoutSearchBoxViewVaultTpl = null;
+Vaultier.LayoutSearchBoxViewCardTpl = null;
+
 Vaultier.LayoutSearchBoxView = Ember.View.extend({
     tagName: 'span',
     templateName: 'Layout/SearchBox',
 
-    /**
-     * @DI store:main
-     */
-    router: null,
+    vaultTpl: [
+        '<div class="vlt-search-result vlt-{{type}}">',
+        '<div class="vlt-line vlt-name">{{name}}</div>',
+        '<div class="vlt-line vlt-path help-block">{{workspace.name}} >  {{name}}</div>',
+        '<div class="vlt-line vlt-desc help-block">{{description}}</div>',
+        '</div>'
+    ].join(''),
+
+    cardTpl: [
+        '<div class="vlt-search-result vlt-{{type}}">',
+        '<div class="vlt-line vlt-name">{{name}}</div>',
+        '<div class="vlt-line vlt-path help-block">{{workspace.name}} > {{vault.name}} > {{name}}</div>',
+        '<div class="vlt-line vlt-desc help-block">{{description}}</div>',
+        '</div>'
+    ].join(''),
+
+    init: function () {
+        this._super.apply(this, arguments)
+        Vaultier.LayoutSearchBoxViewVaultTpl = this.vaultTpl = Vaultier.LayoutSearchBoxViewVaultTpl || Handlebars.compile(this.vaultTpl)
+        Vaultier.LayoutSearchBoxViewCardTpl = this.cardTpl = Vaultier.LayoutSearchBoxViewCardTpl || Handlebars.compile(this.cardTpl)
+    },
+
+    willDestroyElement: function () {
+        var el = $(this.get('element'));
+        var input = el.find('select');
+        var selectize = input[0].selectize;
+        selectize.destroy();
+    },
 
     didInsertElement: function () {
-        // prepare handlebars typeahed templating
-        var templatingEngine = {
-            compile: function (template) {
-                var template = Handlebars.compile(template)
-                return {
-                    render: function (ctx) {
-                        return template(ctx)
-                    }
-                }
-            }
-
-        };
         var ctrl = this.get('controller')
         var el = $(this.get('element'));
-        var input = el.find('input');
+        var input = el.find('select');
+        var vaultTpl = this.get('vaultTpl')
+        var cardTpl = this.get('cardTpl')
+        var sort = 0;
+        var router = this.get('router');
 
+        var navigate = function (item) {
 
-        var filter = function (type, data) {
-            var results = [];
-            var data = data[type];
-
-            data.forEach(function (item) {
-
-                item.value = item.name
-                item.tokens = item.name.split()
-                item.type = type;
-
-                if (item.workspace) {
-                    item.workspace_name = item.workspace.name
-                }
-
-                if (item.vault) {
-                    item.vault_name = item.vault.name
-                }
-
-                item = Ember.Object.create(item);
-                item.set('workspace', Ember.Object.create(item.get('workspace')));
-                item.set('vault', Ember.Object.create(item.get('vault')));
-
-                results.push(item)
-            });
-            return results
-        }
-
-        var navigate = function (datum) {
-
-            if (datum.type == 'cards') {
-                ctrl.transitionToRoute('Card.index', datum.workspace, datum.vault, datum)
-//                var url = router.generate('Card.index', datum.workspace, datum.vault, datum);
-//                router.replaceWith(url);
+            if (item.type == 'card') {
+                var url = router.generate('Card.index', item.workspace.slug, item.vault.slug, item.slug).replace('#','')
+                ctrl.transitionToRoute(url)
             } else {
-                ctrl.transitionToRoute('Vault.index', datum.workspace, datum);
-//                console.log(url)
-//                router.transitionTo('Vault.index', datum.workspace, datum)
+                var url = router.generate('Vault.index', item.workspace.slug, item.slug).replace('#', '')
+                ctrl.transitionToRoute(url)
             }
         }
 
-        input.typeahead(
-            [
-                {
-                    limit: 5,
-                    name: 'cards',
-                    header: '<h4>Cards found</h4>',
-                    remote: {
-                        url: '/api/search/search?type=cards&query=%QUERY',
-                        filter: function (data) {
-                            var result = filter('cards', data)
-                            return result
-                        }
-                    },
-                    template: [
-                        '<div class="vlt-line vlt-name">{{name}}</div>',
-                        '<div class="vlt-line vlt-path help-block">{{workspace_name}} > {{vault_name}} > {{name}}</div>',
-                        '<div class="vlt-line vlt-desc help-block">{{description}}</div>'
-                    ].join(''),
-                    engine: templatingEngine
-                },
-                {
-                    limit: 5,
-                    name: 'vaults',
-                    header: '<h4>Vaults found</h4>',
-                    remote: {
-                        url: '/api/search/search?type=vaults&query=%QUERY',
-                        filter: function (data) {
-                            var result = filter('vaults', data)
-                            return result
-                        }
-                    },
-                    template: [
-                        '<div class="vlt-line vlt-name">{{name}}</div>',
-                        '<div class="vlt-line vlt-path help-block">{{workspace_name}} >  {{name}}</div>',
-                        '<div class="vlt-line vlt-desc help-block">{{description}}</div>'
-                    ].join(''),
-                    engine: templatingEngine
+        input.selectize({
+            valueField: 'uid',
+            labelField: 'name',
+            searchField: 'name',
+            sortField: 'sort',
+            highlight: false,
+            options: [],
+            create: false,
+            onType: function(s) {
+              if (s.trim()=='') {
+                  this.clearOptions();
+                  this.refreshOptions(true);
+              }
+            },
+            render: {
+                option: function (item, escape) {
+                    var html = '';
+                    if (item.get('type') == 'card') {
+                        html = cardTpl(item)
+                    } else {
+                        html = vaultTpl(item)
+                    }
+                    return html
                 }
-            ]);
-        el.find('.tt-hint').addClass('form-control');
+            },
+            load: function (query, callback) {
+                if (!query.length) return callback();
+                $.ajax({
+                    url: '/api/search/search',
+                    type: 'GET',
+                    data: {
+                        query: query
+                    },
+                    error: function () {
+                        callback();
+                    },
+                    success: function (data) {
+                        result = []
 
-        input.on('changed', function (e, datum) {
-            console.log('changed')
-//            Ember.run.later(ctrl, function() {
-//                navigate(datum)
-//            }, 250)
-        });
+                        data.cards.forEach(function (card) {
+                            sort++;
+                            card.id = card.slug
+                            card.sort = sort
+                            card.type = 'card';
+                            card.uid = 'c-' + card.id
+                            result.push(Ember.Object.create(card))
+                        });
+
+                        data.vaults.forEach(function (vault) {
+                            sort++;
+                            vault.id = vault.slug;
+                            vault.sort = sort;
+                            vault.type = 'vault';
+                            vault.uid = 'v-' + vault.id
+                            result.push(Ember.Object.create(vault))
+                        });
+
+                         callback(result)
+                    }
+                });
+            }
+        })
+
+        var selectize = input[0].selectize;
+        selectize.on('item_add', function (value, item) {
+            navigate(selectize.options[value]);
+        })
 
 
-        //debug
-//        Ember.run.later(this, function () {
-//            input.eq(0).val("a").trigger("input");
-//        }, 100)
     }
-
 });
 
 Vaultier.LayoutSearchBoxController = Ember.Controller.extend({

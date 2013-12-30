@@ -53,6 +53,7 @@ Vaultier.registerDI = function(app) {
 
         // view:SearchBox
         app.inject('view:LayoutSearchBox', 'router', 'router:main');
+        app.inject('view:LayoutSearchBox', 'store', 'store:main');
 
 
 }
