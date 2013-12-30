@@ -5,12 +5,22 @@ from django.db.models import F, Q
 from vaultier.tools.changes import ChangesMixin
 from vaultier.tools.tree import TreeItemMixin
 
+
 class VaultManager(Manager):
     def search(self, user, query, max_results=5):
-        return self.all_for_user(user).filter(
-            Q(name__contains=query) |
-            Q(description__contains=query)
-        )[:max_results]
+        list = query.split()
+        result = self.all_for_user(user).filter(
+            Q(reduce(lambda x, y: x & y, [Q(name__icontains=word) for word in list])) |
+            Q(reduce(lambda x, y: x & y, [Q(description__icontains=word) for word in list]))
+        ).order_by('updated_at')
+
+
+        return result[:max_results]
+
+        #return self.all_for_user(user).filter(
+        #    Q(name__icontains=query) |
+        #    Q(description__icontains=query)
+        #)
 
     def all_for_user(self, user):
         vaults = self.filter(

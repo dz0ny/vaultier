@@ -149,7 +149,6 @@
     display: block;
 }
 
-
 /*************************************************************
 **************************************************************
 * Components restiling
@@ -165,13 +164,11 @@
     background-image: url('../images/preloader_100x100.gif') !important;
 }
 
-
 /*************************************************************
 **************************************************************
 * rows
 *************************************************************
 *************************************************************/
-
 
 .padding-0 {
     padding: 0px;
@@ -192,7 +189,6 @@
 .padding-30 {
     padding: 30px;
 }
-
 
 .bottom-5 {
     margin-bottom: 5px;
@@ -513,6 +509,92 @@ span.vlt-user img {
     padding: 0px 50px 0px 10px;
 }
 
+.vlt-search-box .tt-dropdown-menu {
+    min-width: 250px
+}
+
+/*
+* Drop down carrets
+*/
+
+.vlt-search-box .tt-dropdown-menu {
+    margin-top: 8px;
+}
+
+.vlt-search-box .tt-dropdown-menu::before {
+    position: absolute;
+    top: -7px;
+    left: 9px;
+    display: inline-block;
+    border-right: 7px solid transparent;
+    border-bottom: 7px solid #CCC;
+    border-left: 7px solid transparent;
+    border-bottom-color: rgba(0, 0, 0, 0.2);;
+    content: '';
+}
+
+.vlt-search-box .tt-dropdown-menu::after {
+    position: absolute;
+    top: -6px;
+    left: 10px;
+    display: inline-block;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid white;
+    border-left: 6px solid transparent;
+    content: '';
+}
+
+.vlt-search-box .tt-dropdown-menu > div h4 {
+    padding: 4px;
+    margin: 4px -3px 4px -3px;
+    background-color: #F5F5F5;
+    border-bottom: 1px solid #E0DBDB;
+}
+
+.vlt-search-box .tt-dropdown-menu .help-block {
+    padding: 0px;
+    margin: 0px;
+    font-size: 12px;
+}
+
+.vlt-search-box .tt-dropdown-menu .vlt-line {
+    width: 190px;
+    white-space: nowrap !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.vlt-search-box .tt-dropdown-menu .tt-is-under-cursor .help-block {
+    color: white;
+}
+
+.vlt-search-box .tt-dropdown-menu .tt-suggestion {
+    padding-left: 45px;
+    background-position: 5px 5px;
+    background-size: 32px 32px;
+    background-repeat: no-repeat;
+}
+
+.vlt-search-box .tt-dropdown-menu .tt-dataset-cards .tt-suggestion {
+    background-image: url('../images/icon-card-grey.png');
+}
+
+.vlt-search-box .tt-dropdown-menu .tt-dataset-cards .tt-suggestion.tt-is-under-cursor {
+    background-image: url('../images/icon-card-white.png');
+}
+
+.vlt-search-box .tt-dropdown-menu .tt-dataset-vaults .tt-suggestion {
+    background-image: url('../images/icon-vault-grey.png');
+}
+
+.vlt-search-box .tt-dropdown-menu .tt-dataset-vaults .tt-suggestion.tt-is-under-cursor {
+    background-image: url('../images/icon-vault-white.png');
+}
+
+/*.vlt-search-box .tt-dropdown-menu {*/
+/*display: block !important;*/
+/*}*/
+
 /*************************************************************
 **************************************************************
 * Wizard
@@ -658,7 +740,6 @@ span.vlt-user img {
 *************************************************************
 *************************************************************/
 
-
 .vlt-preloader {
     margin: 0px auto;
     background-size: 100% 100%;
@@ -796,6 +877,7 @@ span.vlt-user img {
 .vlt-secret .vlt-inner .vlt-attr-name {
     background-color: #F5F5F5;
 }
+
 .vlt-secret .vlt-inner .vlt-attrs {
     min-height: 100px;
 }
@@ -807,6 +889,7 @@ span.vlt-user img {
 .vlt-secret .vlt-inner .vlt-controls .vlt-author {
     padding: 0px;
 }
+
 .vlt-secret .vlt-inner .vlt-controls .vlt-buttons .btn-group {
     float: right;
 }
@@ -819,14 +902,11 @@ span.vlt-user img {
     border-top-width: 4px;
 }
 
-
-
 /*************************************************************
 **************************************************************
 * Dialog
 *************************************************************
 *************************************************************/
-
 
 .vlt-dialog {
     background-color: #ffffff;
@@ -1002,21 +1082,17 @@ span.vlt-user img {
     font-size: 20px;
 }
 
-
 .vlt-markdown h3 {
     font-size: 16px;
 }
-
 
 .vlt-markdown h4 {
     font-size: 14px;
 }
 
-
 .vlt-markdown h5 {
     font-size: 13px;
 }
-
 
 .vlt-markdown h6 {
     font-size: 12px;

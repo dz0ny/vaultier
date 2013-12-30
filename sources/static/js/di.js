@@ -42,7 +42,6 @@ Vaultier.registerDI = function(app) {
         app.inject('route:Workspace', 'members', 'service:members')
         app.inject('route:WorkspaceMemberApprove', 'members', 'service:members')
 
-
         // model:Role
         app.inject('model:Role', 'auth', 'service:auth');
 
@@ -51,5 +50,9 @@ Vaultier.registerDI = function(app) {
 
         // model:Secret
         app.inject('model:Secret', 'members', 'service:members');
+
+        // view:SearchBox
+        app.inject('view:LayoutSearchBox', 'router', 'router:main');
+
 
 }

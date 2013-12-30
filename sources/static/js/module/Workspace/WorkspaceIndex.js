@@ -15,7 +15,6 @@ Vaultier.WorkspaceRoute = Ember.Route.extend(
             // select working workspace
             this.get('members').selectWorkspace(workspace)
 
-
             // set environments
             // @deprecated
             Service.Environment.current().set('workspace', workspace);
