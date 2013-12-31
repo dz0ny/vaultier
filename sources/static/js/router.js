@@ -38,8 +38,8 @@ var router = Vaultier.Router.map(function () {
 
     this.resource('Settings', {path: '/settings'}, function () {
         // automatic Settings.index
-         this.route('personal', { path: '/personal' });
-         this.route('keys', { path: '/keys' });
+        this.route('personal', { path: '/personal' });
+        this.route('keys', { path: '/keys' });
 
     })
 
@@ -151,6 +151,34 @@ Service.Environment.current().set('router', router);
 
 Vaultier.ApplicationRoute = Ember.Route.extend(
     {
+        isLoading: false,
+
+        actions: {
+            loading: function (transition, originRoute) {
+                if (!this.get('isLoading')) {
+                    this.set('isLoading', true);
+                    var el = $('<div />')
+                    var queue = el
+                        .addClass('vlt-loading-overlay')
+                        .css({'display': 'none'})
+                        .appendTo('body')
+                        .fadeIn(100)
+                    transition.then(function () {
+                        queue
+                            .fadeOut(100)
+                            .queue(function () {
+                                el.remove();
+                                this.set('isLoading', false);
+                            }.bind(this))
+                    }.bind(this))
+                }
+//                Ember.run.scheduleOnce('afterRender', this, function () {
+//                    console.log('done');
+//                })
+            }
+        },
+
+
         beforeModel: function (params, transition) {
             // auth
             var auth = this.get('auth');

@@ -11,19 +11,19 @@ Vaultier.CardRoute = Ember.Route.extend(
         },
 
         serialize: function (model) {
-            var slug = model.get('slug')
-            if (!slug || slug=='') {
-                slug = false
+            // primitives
+            if (typeof model == 'string' || typeof model == 'number') {
+                return model
             }
 
             return {
-                card: slug ? slug :  model.get('pk')
+                card: model.get('id')
             }
         }
     });
 
 Vaultier.CardIndexRoute = Ember.Route.extend({
-    beforeModel: function() {
+    beforeModel: function () {
         this.transitionTo('Secret.index')
     }
 })

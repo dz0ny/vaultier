@@ -12,6 +12,7 @@ Vaultier.SecretIndexRoute = Ember.Route.extend({
         }
     },
 
+
     setupController: function (ctrl, model) {
         ctrl.set('content', model);
 

@@ -41,32 +41,33 @@ Vaultier.LayoutSearchBoxView = Ember.View.extend({
         var vaultTpl = this.get('vaultTpl')
         var cardTpl = this.get('cardTpl')
         var sort = 0;
-        var router = this.get('router');
 
         var navigate = function (item) {
-
             if (item.type == 'card') {
-                var url = router.generate('Card.index', item.workspace.slug, item.vault.slug, item.slug).replace('#','')
-                ctrl.transitionToRoute(url)
+                ctrl.transitionToRoute('Secret.index', item.workspace.slug, item.vault.slug, item.slug)
             } else {
-                var url = router.generate('Vault.index', item.workspace.slug, item.slug).replace('#', '')
-                ctrl.transitionToRoute(url)
+                ctrl.transitionToRoute('Cards.index', item.workspace.slug, item.slug)
             }
         }
 
         input.selectize({
             valueField: 'uid',
             labelField: 'name',
-            searchField: 'name',
+            searchField: 'keywords',
             sortField: 'sort',
             highlight: false,
             options: [],
             create: false,
-            onType: function(s) {
-              if (s.trim()=='') {
-                  this.clearOptions();
-                  this.refreshOptions(true);
-              }
+            // onType and score rewriten to leave search on remote
+            onType: function (s) {
+                this.clearOptions();
+                this.refreshOptions(true);
+            },
+            score: function (search) {
+                var score = this.getScoreFunction(search);
+                return function (item) {
+                    return score(item) + 1;
+                };
             },
             render: {
                 option: function (item, escape) {
@@ -111,15 +112,23 @@ Vaultier.LayoutSearchBoxView = Ember.View.extend({
                             result.push(Ember.Object.create(vault))
                         });
 
-                         callback(result)
+                        callback(result)
                     }
                 });
             }
         })
 
         var selectize = input[0].selectize;
-        selectize.on('item_add', function (value, item) {
-            navigate(selectize.options[value]);
+
+        selectize.on('item_add', function (value) {
+            var item = selectize.options[value];
+
+            selectize.clearOptions();
+            selectize.refreshOptions(true);
+
+            selectize.blur();
+
+            navigate(item);
         })
 
 

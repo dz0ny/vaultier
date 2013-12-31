@@ -10,19 +10,20 @@ Vaultier.VaultRoute = Ember.Route.extend(
         },
 
         serialize: function (model) {
-            var slug = model.get('slug')
-            if (!slug || slug=='') {
-                slug = false
+            // primitives
+            if (typeof model == 'string' || typeof model == 'number') {
+                return model
             }
+
             return {
-                vault: slug ? slug :  model.get('pk')
+                vault: model.get('id')
             }
         }
 
     });
 
 Vaultier.VaultIndexRoute = Ember.Route.extend({
-    redirect: function() {
+    beforeModel: function() {
         this.transitionTo('Cards.index')
     }
 })

@@ -25,20 +25,20 @@ Vaultier.WorkspaceRoute = Ember.Route.extend(
         },
 
         serialize: function (model) {
-            var slug = model.get('slug')
-            if (!slug || slug=='') {
-                slug = false
+            // primitives
+            if (typeof model == 'string' || typeof model == 'number') {
+                return model
             }
 
             return {
-                workspace: slug ? slug :  model.get('pk')
+                workspace: model.get('id')
             }
         }
 
     });
 
 Vaultier.WorkspaceIndexRoute = Ember.Route.extend({
-    redirect: function () {
+    beforeModel: function () {
         this.transitionTo('Vaults.index')
     }
 })

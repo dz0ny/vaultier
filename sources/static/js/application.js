@@ -10,6 +10,7 @@ Ember.MODEL_FACTORY_INJECTIONS = true;
 
 Vaultier = Ember.Application.create({
     LOG_TRANSITIONS: true,
+    // LOG_TRANSITIONS_INTERNAL: true,
 
     ready: function () {
         LGTM.configure('defer', Ember.RSVP.defer);
@@ -17,7 +18,7 @@ Vaultier = Ember.Application.create({
         $.notify.defaults({
             className: 'success',
             style: 'bootstrap',
-            position: 'top center'
+            position: 'bottom center'
         })
 
         Utils.HandlebarsHelpers.current().register();
@@ -35,6 +36,23 @@ Vaultier = Ember.Application.create({
  **************************************************
  **************************************************
  */
+
+var keypressBindings = [
+    {
+        "keys"          : "alt s",
+        "is_exclusive"  : true,
+        "on_keydown"    : function() {
+            $('.vlt-search-box select')[0].selectize.focus()
+            return false;
+        },
+        "on_keyup"      : function(e) {
+            //pass
+        },
+        "this"          : window
+    }
+];
+keypress.register_many(keypressBindings);
+
 
 $(document).ready(function () {
     $('body').tooltip({

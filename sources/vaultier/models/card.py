@@ -12,9 +12,9 @@ class CardManager(Manager):
 
         list = query.split()
         result = self.all_for_user(user).filter(
-            Q(reduce(lambda x, y: x & y, [Q(name__icontains=word) for word in list])) |
-            Q(reduce(lambda x, y: x & y, [Q(description__icontains=word) for word in list])) |
-            Q(reduce(lambda x, y: x & y, [Q(secret__name__icontains=word) for word in list]))
+            Q(reduce(lambda x, y: x | y, [Q(name__icontains=word) for word in list])) |
+            Q(reduce(lambda x, y: x | y, [Q(description__icontains=word) for word in list])) |
+            Q(reduce(lambda x, y: x | y, [Q(secret__name__icontains=word) for word in list]))
         ).order_by('updated_at')
         return result[:max_results]
 

@@ -51,9 +51,6 @@ Vaultier.registerDI = function(app) {
         // model:Secret
         app.inject('model:Secret', 'members', 'service:members');
 
-        // view:SearchBox
-        app.inject('view:LayoutSearchBox', 'router', 'router:main');
-        app.inject('view:LayoutSearchBox', 'store', 'store:main');
 
 
 }
