@@ -147,37 +147,23 @@ Ember.Route.reopen({
     }
 });
 
-Service.Environment.current().set('router', router);
-
 Vaultier.ApplicationRoute = Ember.Route.extend(
     {
-        isLoading: false,
 
         actions: {
             loading: function (transition, originRoute) {
-                if (!this.get('isLoading')) {
-                    this.set('isLoading', true);
-                    var el = $('<div />')
-                    var queue = el
-                        .addClass('vlt-loading-overlay')
-                        .css({'display': 'none'})
-                        .appendTo('body')
-                        .fadeIn(100)
-                    transition.then(function () {
-                        queue
-                            .fadeOut(100)
-                            .queue(function () {
-                                el.remove();
-                                this.set('isLoading', false);
-                            }.bind(this))
-                    }.bind(this))
-                }
+                console.log('loading');
+                ApplicationLoader.showLoader();
+
 //                Ember.run.scheduleOnce('afterRender', this, function () {
 //                    console.log('done');
 //                })
+                transition.then(function () {
+                    ApplicationLoader.hideLoader();
+                }.bind(this))
             }
-        },
 
+        },
 
         beforeModel: function (params, transition) {
             // auth
@@ -185,7 +171,8 @@ Vaultier.ApplicationRoute = Ember.Route.extend(
             var status = auth.reload()
             return status;
         }
-    });
+    })
+;
 
 Vaultier.IndexRoute = Ember.Route.extend(
     {

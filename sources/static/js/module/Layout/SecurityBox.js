@@ -28,5 +28,7 @@ Vaultier.LayoutSecurityBoxView = Ember.View.extend({
 });
 
 Vaultier.LayoutSecurityBoxController = Ember.Controller.extend({
-    showToken: VaultierConfig.get('FT_FEATURES.dev_show_token')
+    showToken: function() {
+        return this.get('config.FT_FEATURES.dev_show_token')
+    }.property('showToken')
 });

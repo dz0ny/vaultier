@@ -1,0 +1,100 @@
+{% load staticfiles %}
+{% load compress %}
+
+{% compress js %}
+
+    <script src="{% static 'js/application.js' %}"></script>
+    <script src="{% static 'js/di.js' %}"></script>
+
+    {############# Router #}
+
+    <script src="{% static 'js/router.js' %}"></script>
+
+    {############# services #}
+
+    <script src="{% static 'js/service/Errors.js' %}"></script>
+    <script src="{% static 'js/service/Environment.js' %}"></script>
+    <script src="{% static 'js/service/Auth.js' %}"></script>
+    <script src="{% static 'js/service/AuthPromises.js' %}"></script>
+    <script src="{% static 'js/service/Session.js' %}"></script>
+    <script src="{% static 'js/service/Coder.js' %}"></script>
+    <script src="{% static 'js/service/Invitations.js' %}"></script>
+    <script src="{% static 'js/service/Members.js' %}"></script>
+
+    {############# model #}
+    <script src="{% static 'js/model/shared/Shared.js' %}"></script>
+    <script src="{% static 'js/model/shared/Adapter.js' %}"></script>
+    <script src="{% static 'js/model/User.js' %}"></script>
+    <script src="{% static 'js/model/Workspace.js' %}"></script>
+    <script src="{% static 'js/model/Member.js' %}"></script>
+    <script src="{% static 'js/model/Role.js' %}"></script>
+    <script src="{% static 'js/model/Vault.js' %}"></script>
+    <script src="{% static 'js/model/Card.js' %}"></script>
+    <script src="{% static 'js/model/Secret.js' %}"></script>
+
+    {############# Layout #}
+    <script src="{% static 'js/module/Layout/LayoutStandard.js' %}"></script>
+    <script src="{% static 'js/module/Layout/SecurityBox.js' %}"></script>
+    <script src="{% static 'js/module/Layout/SearchBox.js' %}"></script>
+    <script src="{% static 'js/module/Layout/Breadcrumbs.js' %}"></script>
+    <script src="{% static 'js/module/Layout/WorkspaceBox.js' %}"></script>
+    <script src="{% static 'js/module/Layout/Confirm.js' %}"></script>
+
+    {############# Home and system#}
+    <script src="{% static 'js/module/Home/HomeIndex.js' %}"></script>
+
+    <script src="{% static 'js/module/Error/Error.js' %}"></script>
+
+    {############# Auth #}
+    <script src="{% static 'js/module/Auth/AuthLogin.js' %}"></script>
+    <script src="{% static 'js/module/Auth/AuthRegister.js' %}"></script>
+
+    {############# Invitation #}
+    <script src="{% static 'js/module/Invitation/Invitation.js' %}"></script>
+
+    {############# member #}
+    <script src="{% static 'js/module/Member/MemberIndex.js' %}"></script>
+    <script src="{% static 'js/module/Member/MemberInvite.js' %}"></script>
+    <script src="{% static 'js/module/Member/MemberInviteInput.js' %}"></script>
+
+    {############# Workspace #}
+    <script src="{% static 'js/module/Workspace/WorkspacesIndex.js' %}"></script>
+    <script src="{% static 'js/module/Workspace/WorkspacesCreate.js' %}"></script>
+
+    <script src="{% static 'js/module/Workspace/WorkspaceIndex.js' %}"></script>
+    <script src="{% static 'js/module/Workspace/WorkspaceEdit.js' %}"></script>
+    <script src="{% static 'js/module/Workspace/WorkspaceMember.js' %}"></script>
+    <script src="{% static 'js/module/Workspace/WorkspaceMemberApprove.js' %}"></script>
+
+
+    {############# Vault #}
+    <script src="{% static 'js/module/Vault/VaultsIndex.js' %}"></script>
+    <script src="{% static 'js/module/Vault/VaultsCreate.js' %}"></script>
+
+    <script src="{% static 'js/module/Vault/VaultIndex.js' %}"></script>
+    <script src="{% static 'js/module/Vault/VaultEdit.js' %}"></script>
+    <script src="{% static 'js/module/Vault/VaultMember.js' %}"></script>
+
+    {############# Card #}
+    <script src="{% static 'js/module/Card/CardsIndex.js' %}"></script>
+    <script src="{% static 'js/module/Card/CardsCreate.js' %}"></script>
+
+    <script src="{% static 'js/module/Card/CardIndex.js' %}"></script>
+    <script src="{% static 'js/module/Card/CardEdit.js' %}"></script>
+    <script src="{% static 'js/module/Card/CardMember.js' %}"></script>
+
+    {############# Secret #}
+    <script src="{% static 'js/module/Secret/EditorInput.js' %}"></script>
+
+    <script src="{% static 'js/module/Secret/SecretCreate.js' %}"></script>
+    <script src="{% static 'js/module/Secret/SecretEdit.js' %}"></script>
+
+    <script src="{% static 'js/module/Secret/SecretType.js' %}"></script>
+    <script src="{% static 'js/module/Secret/SecretIndex.js' %}"></script>
+
+    {############# Settings #}
+    <script src="{% static 'js/module/Settings/SettingsIndex.js' %}"></script>
+    <script src="{% static 'js/module/Settings/SettingsPersonal.js' %}"></script>
+    <script src="{% static 'js/module/Settings/SettingsKeys.js' %}"></script>
+
+{% endcompress %}

@@ -1,5 +1,12 @@
 Vaultier.registerDI = function(app) {
 
+        // service:config
+        app.register('config:main', Vaultier.Config)
+        app.inject('route', 'config', 'config:main');
+        app.inject('controller', 'config', 'config:main');
+        app.inject('view', 'config', 'config:main');
+        app.inject('service', 'config', 'config:main');
+
         // service:errors
         app.register('service:errors', Service.Errors)
         app.inject('route', 'errors', 'service:errors');

@@ -4,7 +4,6 @@ from django.template.context import Context
 from app.settings import FT_FEATURES, BK_FEATURES
 import json
 
-
 def index(request):
     return render(request, 'boostrap.html', Context({
         'FT_FEATURES' : FT_FEATURES,
@@ -15,7 +14,7 @@ def config(request):
     script = json.dumps({
         'FT_FEATURES': FT_FEATURES
     });
-    script = 'VaultierConfig = Ember.Object.create('+script+');'
+    script = 'InitializeConfig = function(app) {  app.Config = Ember.Object.extend('+script+'); }'
 
     return HttpResponse(script, mimetype='text/javascript')
 

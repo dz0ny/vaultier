@@ -1,0 +1,84 @@
+{% load staticfiles %}
+{% load compress %}
+
+{% compress js %}
+
+    {############# layouts #}
+
+    <script src="{% static 'tpl/Layout/SecurityBox.js' %}"></script>
+    <script src="{% static 'tpl/Layout/WorkspaceBox.js' %}"></script>
+    <script src="{% static 'tpl/Layout/SearchBox.js' %}"></script>
+    <script src="{% static 'tpl/Layout/Breadcrumbs.js' %}"></script>
+    <script src="{% static 'tpl/Layout/LayoutStandard.js' %}"></script>
+    <script src="{% static 'tpl/Layout/Confirm.js' %}"></script>
+
+    {############# home and system #}
+    <script src="{% static 'tpl/Home/HomeIndex.js' %}"></script>
+
+    <script src="{% static 'tpl/Error/Error404.js' %}"></script>
+    <script src="{% static 'tpl/Error/ErrorGeneric.js' %}"></script>
+    <script src="{% static 'tpl/Error/Layout.js' %}"></script>
+
+    {############ auth #}
+    <script src="{% static 'tpl/Auth/AuthLogin.js' %}"></script>
+    <script src="{% static 'tpl/Auth/AuthLoginLatest.js' %}"></script>
+    <script src="{% static 'tpl/Auth/AuthLoginSwitch.js' %}"></script>
+    <script src="{% static 'tpl/Auth/AuthRegister.js' %}"></script>
+    <script src="{% static 'tpl/Auth/AuthRegisterBefore.js' %}"></script>
+    <script src="{% static 'tpl/Auth/AuthRegisterKeys.js' %}"></script>
+    <script src="{% static 'tpl/Auth/AuthRegisterCreds.js' %}"></script>
+    <script src="{% static 'tpl/Auth/AuthRegisterSum.js' %}"></script>
+
+    {############ invitation #}
+    <script src="{% static 'tpl/Invitation/InvitationAnonymous.js' %}"></script>
+    <script src="{% static 'tpl/Invitation/InvitationAccept.js' %}"></script>
+
+    {############ workspace #}
+    <script src="{% static 'tpl/Workspace/WorkspacesIndex.js' %}"></script>
+    <script src="{% static 'tpl/Workspace/WorkspacesIndexItem.js' %}"></script>
+    <script src="{% static 'tpl/Workspace/WorkspacesIndexNotApproved.js' %}"></script>
+    <script src="{% static 'tpl/Workspace/WorkspacesCreate.js' %}"></script>
+    <script src="{% static 'tpl/Workspace/WorkspaceEdit.js' %}"></script>
+    <script src="{% static 'tpl/Workspace/WorkspaceMemberApprove.js' %}"></script>
+
+    {############# vault #}
+
+    <script src="{% static 'tpl/Vault/VaultsIndex.js' %}"></script>
+    <script src="{% static 'tpl/Vault/VaultsIndexItem.js' %}"></script>
+    <script src="{% static 'tpl/Vault/VaultsCreate.js' %}"></script>
+    <script src="{% static 'tpl/Vault/VaultEdit.js' %}"></script>
+
+    {############# card #}
+
+    <script src="{% static 'tpl/Card/CardsIndex.js' %}"></script>
+    <script src="{% static 'tpl/Card/CardsIndexItem.js' %}"></script>
+    <script src="{% static 'tpl/Card/CardsCreate.js' %}"></script>
+    <script src="{% static 'tpl/Card/CardEdit.js' %}"></script>
+
+    {############# secret #}
+
+    <script src="{% static 'tpl/Secret/SecretCreate.js' %}"></script>
+    <script src="{% static 'tpl/Secret/SecretTypeSelect.js' %}"></script>
+    <script src="{% static 'tpl/Secret/SecretTypeNote.js' %}"></script>
+    <script src="{% static 'tpl/Secret/SecretTypePassword.js' %}"></script>
+    <script src="{% static 'tpl/Secret/SecretTypeFile.js' %}"></script>
+
+    <script src="{% static 'tpl/Secret/SecretEdit.js' %}"></script>
+    <script src="{% static 'tpl/Secret/SecretIndex.js' %}"></script>
+
+    <script src="{% static 'tpl/Secret/SecretIndexItemNote.js' %}"></script>
+    <script src="{% static 'tpl/Secret/SecretIndexItemPassword.js' %}"></script>
+    <script src="{% static 'tpl/Secret/SecretIndexItemFile.js' %}"></script>
+    <script src="{% static 'tpl/Secret/SecretIndexItemControls.js' %}"></script>
+
+    {############# member #}
+
+    <script src="{% static 'tpl/Member/MemberIndex.js' %}"></script>
+    <script src="{% static 'tpl/Member/MemberInvite.js' %}"></script>
+
+    {############# Settings #}
+    <script src="{% static 'tpl/Settings/SettingsIndex.js' %}"></script>
+    <script src="{% static 'tpl/Settings/SettingsPersonal.js' %}"></script>
+    <script src="{% static 'tpl/Settings/SettingsKeys.js' %}"></script>
+
+{% endcompress %}

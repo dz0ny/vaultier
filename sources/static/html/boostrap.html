@@ -5,309 +5,57 @@
 <html lang="en">
 <head>
 
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="">
-<meta name="author" content="">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-<link rel="shortcut icon" href="/static/images/logo-black.png">
+    <link rel="shortcut icon" href="/static/images/logo-black.png">
 
-<title>Vaultier</title>
-
-
-{####################################################################}
-{# libs#}
-{####################################################################}
-
-{############# boostrap #}
-
-<link href="{% static 'lib/bootstrap/dist/css/bootstrap.css' %}" rel="stylesheet">
-<link href="{% static 'lib/bootstrap/assets/css/bootwatch.min.css' %}" rel="stylesheet">
-
-{############# ui components #}
-<link href="{% static 'lib/select2/select2.css' %}" rel="stylesheet">
-<link href="{% static 'lib/select2/select2-bootstrap.css' %}" rel="stylesheet">
-
-<link href="{% static 'lib/selectizejs/dist/css/selectize.bootstrap3.css' %}" rel="stylesheet">
-
-
-{############# main css #}
-<link href="{% static 'css/main.css' %}" rel="stylesheet">
+    <title>Vaultier</title>
 
 
     {####################################################################}
-    {# libs#}
+    {# CSS #}
     {####################################################################}
 
-    {############# raven #}
-    <script src="{% static 'lib/sentry/raven.js' %}"></script>
+    {############# boostrap #}
+
+    <link href="{% static 'lib/bootstrap/dist/css/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/bootstrap/assets/css/bootwatch.min.css' %}" rel="stylesheet">
+
+    {############# ui components #}
+    <link href="{% static 'lib/select2/select2.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/select2/select2-bootstrap.css' %}" rel="stylesheet">
+
+    <link href="{% static 'lib/selectizejs/dist/css/selectize.bootstrap3.css' %}" rel="stylesheet">
+
+
+    {############# main css #}
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
+
+
+    {####################################################################}
+    {# JAVASCRIPTS #}
+    {####################################################################}
 
     {############# jquery #}
     <script src="{% static 'lib/jquery/jquery.js' %}"></script>
-    <script src="{% static 'lib/jquery.notify/jquery.notify.js' %}"></script>
-    <script src="{% static 'lib/jquery.jstorage/jstorage.js' %}"></script>
-    <script src="{% static 'lib/jquery.cookie/jquery.cookie.js' %}"></script>
-    <script src="{% static 'lib/jquery.session/jquery.session.js' %}"></script>
+    <script src="{% static 'lib/headjs/head.js' %}"></script>
+    <script src="{% static 'js/loader.js' %}"></script>
 
-    {############# generic #}
-    <script src="{% static 'lib/moment/moment.js' %}"></script>
-    <script src="{% static 'lib/jsep/jsep.js' %}"></script>
-
-    {############# cyphers - symteric + shared #}
-    <script src="{% static 'lib/cryptojs/components/core.js' %}"></script>
-    <script src="{% static 'lib/cryptojs/components/enc-base64.js' %}"></script>
-    <script src="{% static 'lib/cryptojs/components/md5.js' %}"></script>
-    <script src="{% static 'lib/cryptojs/components/sha1.js' %}"></script>
-    <script src="{% static 'lib/cryptojs/components/sha256.js' %}"></script>
-    <script src="{% static 'lib/cryptojs/components/ripemd160.js' %}"></script>
-    <script src="{% static 'lib/cryptojs/components/x64-core.js' %}"></script>
-    <script src="{% static 'lib/cryptojs/components/sha512.js' %}"></script>
-    <script src="{% static 'lib/cryptojs/rollups/aes.js' %}"></script>
-
-    {############# cyphers - signing #}
-    <script src="{% static 'lib/jsrsasign/ext/jsbn.js' %}"></script>
-    <script src="{% static 'lib/jsrsasign/ext/jsbn2.js' %}"></script>
-    <script src="{% static 'lib/jsrsasign/ext/rsa.js' %}"></script>
-    <script src="{% static 'lib/jsrsasign/ext/rsa2.js' %}"></script>
-    <script src="{% static 'lib/jsrsasign/ext/base64.js' %}"></script>
-    <script src="{% static 'lib/jsrsasign/rsapem-1.1.js' %}"></script>
-    <script src="{% static 'lib/jsrsasign/rsasign-1.2.js' %}"></script>
-    <script src="{% static 'lib/jsrsasign/asn1hex-1.1.js' %}"></script>
-    <script src="{% static 'lib/jsrsasign/x509-1.1.js' %}"></script>
-    <script src="{% static 'lib/jsrsasign/crypto-1.1.js' %}"></script>
-
-    {############# cyphers - crypting #}
-    <script src="{% static 'lib/jsencrypt/bin/jsencrypt.js' %}"></script>
-
-    {############# working with files #}
-    <script src="{% static 'lib/filesaver/filesaver.js' %}"></script>
-    <script src="{% static 'lib/fileapi/dist/FileAPI.js' %}"></script>
-
-    {############# validations #}
-    <script src="{% static 'lib/lgtm/dist/lgtm-standalone.js' %}"></script>
-
-    {############# ember, ember-data, handlebars vaultier #}
-    <script src="{% static 'lib/handlebars/handlebars.js' %}"></script>
-    <script src="{% static 'lib/ember/ember.js' %}"></script>
-    <script src="{% static 'lib/ember/ember-data.js' %}"></script>
-    <script src="{% static 'lib/ember/ember-data-django.js' %}"></script>
-
-    {############# ui-tools #}
-    <script src="{% static 'lib/select2/select2.js' %}"></script>
-
-    <script src="{% static 'lib/selectizejs/dist/js/standalone/selectize.js' %}"></script>
-
-    <script src="{% static 'lib/keypressjs/keypress.js' %}"></script>
-
-    <script src="{% static 'lib/marked/lib/marked.js' %}"></script>
-
-    {############# handlebars helpers #}
-
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="{% static 'lib/bootstrap/assets/js/html5shiv.js' %}"></script>
-    <script src="{% static 'lib/bootstrap/assets/js/respond.min.js' %}"></script>
-    <![endif]-->
-
-    <script src="{% static 'lib/bootstrap/dist/js/bootstrap.js' %}"></script>
-
+    {############# components #}
+    {% include 'boostrap_lib.html' %}
+    {% include 'boostrap_tpl.html' %}
+    {% include 'boostrap_utils.html' %}
+    {% include 'boostrap_app.html' %}
 
     {####################################################################}
-    {# templates#}
-    {####################################################################}
-
-
-    {############# layouts #}
-
-    <script src="{% static 'tpl/Layout/SecurityBox.js' %}"></script>
-    <script src="{% static 'tpl/Layout/WorkspaceBox.js' %}"></script>
-    <script src="{% static 'tpl/Layout/SearchBox.js' %}"></script>
-    <script src="{% static 'tpl/Layout/Breadcrumbs.js' %}"></script>
-    <script src="{% static 'tpl/Layout/LayoutStandard.js' %}"></script>
-    <script src="{% static 'tpl/Layout/Confirm.js' %}"></script>
-
-    {############# home and system #}
-    <script src="{% static 'tpl/Home/HomeIndex.js' %}"></script>
-
-    <script src="{% static 'tpl/Error/Error404.js' %}"></script>
-    <script src="{% static 'tpl/Error/ErrorGeneric.js' %}"></script>
-    <script src="{% static 'tpl/Error/Layout.js' %}"></script>
-
-    {############ auth #}
-    <script src="{% static 'tpl/Auth/AuthLogin.js' %}"></script>
-    <script src="{% static 'tpl/Auth/AuthLoginLatest.js' %}"></script>
-    <script src="{% static 'tpl/Auth/AuthLoginSwitch.js' %}"></script>
-    <script src="{% static 'tpl/Auth/AuthRegister.js' %}"></script>
-    <script src="{% static 'tpl/Auth/AuthRegisterBefore.js' %}"></script>
-    <script src="{% static 'tpl/Auth/AuthRegisterKeys.js' %}"></script>
-    <script src="{% static 'tpl/Auth/AuthRegisterCreds.js' %}"></script>
-    <script src="{% static 'tpl/Auth/AuthRegisterSum.js' %}"></script>
-
-    {############ invitation #}
-    <script src="{% static 'tpl/Invitation/InvitationAnonymous.js' %}"></script>
-    <script src="{% static 'tpl/Invitation/InvitationAccept.js' %}"></script>
-
-    {############ workspace #}
-    <script src="{% static 'tpl/Workspace/WorkspacesIndex.js' %}"></script>
-    <script src="{% static 'tpl/Workspace/WorkspacesIndexItem.js' %}"></script>
-    <script src="{% static 'tpl/Workspace/WorkspacesIndexNotApproved.js' %}"></script>
-    <script src="{% static 'tpl/Workspace/WorkspacesCreate.js' %}"></script>
-    <script src="{% static 'tpl/Workspace/WorkspaceEdit.js' %}"></script>
-    <script src="{% static 'tpl/Workspace/WorkspaceMemberApprove.js' %}"></script>
-
-    {############# vault #}
-
-    <script src="{% static 'tpl/Vault/VaultsIndex.js' %}"></script>
-    <script src="{% static 'tpl/Vault/VaultsIndexItem.js' %}"></script>
-    <script src="{% static 'tpl/Vault/VaultsCreate.js' %}"></script>
-    <script src="{% static 'tpl/Vault/VaultEdit.js' %}"></script>
-
-    {############# card #}
-
-    <script src="{% static 'tpl/Card/CardsIndex.js' %}"></script>
-    <script src="{% static 'tpl/Card/CardsIndexItem.js' %}"></script>
-    <script src="{% static 'tpl/Card/CardsCreate.js' %}"></script>
-    <script src="{% static 'tpl/Card/CardEdit.js' %}"></script>
-
-    {############# secret #}
-
-    <script src="{% static 'tpl/Secret/SecretCreate.js' %}"></script>
-    <script src="{% static 'tpl/Secret/SecretTypeSelect.js' %}"></script>
-    <script src="{% static 'tpl/Secret/SecretTypeNote.js' %}"></script>
-    <script src="{% static 'tpl/Secret/SecretTypePassword.js' %}"></script>
-    <script src="{% static 'tpl/Secret/SecretTypeFile.js' %}"></script>
-
-    <script src="{% static 'tpl/Secret/SecretEdit.js' %}"></script>
-    <script src="{% static 'tpl/Secret/SecretIndex.js' %}"></script>
-
-    <script src="{% static 'tpl/Secret/SecretIndexItemNote.js' %}"></script>
-    <script src="{% static 'tpl/Secret/SecretIndexItemPassword.js' %}"></script>
-    <script src="{% static 'tpl/Secret/SecretIndexItemFile.js' %}"></script>
-    <script src="{% static 'tpl/Secret/SecretIndexItemControls.js' %}"></script>
-
-    {############# member #}
-
-    <script src="{% static 'tpl/Member/MemberIndex.js' %}"></script>
-    <script src="{% static 'tpl/Member/MemberInvite.js' %}"></script>
-
-    {############# Settings #}
-    <script src="{% static 'tpl/Settings/SettingsIndex.js' %}"></script>
-    <script src="{% static 'tpl/Settings/SettingsPersonal.js' %}"></script>
-    <script src="{% static 'tpl/Settings/SettingsKeys.js' %}"></script>
-
-
-    {####################################################################}
-    {# utils#}
-    {####################################################################}
-
-    <script src="{% static 'js/utils/Pohon.js' %}"></script>
-    <script src="{% static 'js/utils/E.js' %}"></script>
-
-    <script src="{% static 'js/utils/ConstantList.js' %}"></script>
-    <script src="{% static 'js/utils/Singleton.js' %}"></script>
-    <script src="{% static 'js/utils/HandlebarsHelpers.js' %}"></script>
-    <script src="{% static 'js/utils/RSVPAjax.js' %}"></script>
-    <script src="{% static 'js/utils/MutableAdapterMixin.js' %}"></script>
-
-    {####################################################################}
-    {# application#}
+    {# config and start #}
     {####################################################################}
 
     <script src="{% url 'config' %}"></script>
-    <script src="{% static 'js/application.js' %}"></script>
-    <script src="{% static 'js/di.js' %}"></script>
-
-    {############# services #}
-
-    <script src="{% static 'js/service/Errors.js' %}"></script>
-    <script src="{% static 'js/service/Environment.js' %}"></script>
-    <script src="{% static 'js/service/Auth.js' %}"></script>
-    <script src="{% static 'js/service/AuthPromises.js' %}"></script>
-    <script src="{% static 'js/service/Session.js' %}"></script>
-    <script src="{% static 'js/service/Coder.js' %}"></script>
-    <script src="{% static 'js/service/Invitations.js' %}"></script>
-    <script src="{% static 'js/service/Members.js' %}"></script>
-
-    {############# model #}
-    <script src="{% static 'js/model/shared/Shared.js' %}"></script>
-    <script src="{% static 'js/model/shared/Adapter.js' %}"></script>
-    <script src="{% static 'js/model/User.js' %}"></script>
-    <script src="{% static 'js/model/Workspace.js' %}"></script>
-    <script src="{% static 'js/model/Member.js' %}"></script>
-    <script src="{% static 'js/model/Role.js' %}"></script>
-    <script src="{% static 'js/model/Vault.js' %}"></script>
-    <script src="{% static 'js/model/Card.js' %}"></script>
-    <script src="{% static 'js/model/Secret.js' %}"></script>
-
-    {############# Layout #}
-    <script src="{% static 'js/module/Layout/LayoutStandard.js' %}"></script>
-    <script src="{% static 'js/module/Layout/SecurityBox.js' %}"></script>
-    <script src="{% static 'js/module/Layout/SearchBox.js' %}"></script>
-    <script src="{% static 'js/module/Layout/Breadcrumbs.js' %}"></script>
-    <script src="{% static 'js/module/Layout/WorkspaceBox.js' %}"></script>
-    <script src="{% static 'js/module/Layout/Confirm.js' %}"></script>
-
-    {############# Home and system#}
-    <script src="{% static 'js/module/Home/HomeIndex.js' %}"></script>
-
-    <script src="{% static 'js/module/Error/Error.js' %}"></script>
-
-    {############# Auth #}
-    <script src="{% static 'js/module/Auth/AuthLogin.js' %}"></script>
-    <script src="{% static 'js/module/Auth/AuthRegister.js' %}"></script>
-
-    {############# Invitation #}
-    <script src="{% static 'js/module/Invitation/Invitation.js' %}"></script>
-
-    {############# member #}
-    <script src="{% static 'js/module/Member/MemberIndex.js' %}"></script>
-    <script src="{% static 'js/module/Member/MemberInvite.js' %}"></script>
-    <script src="{% static 'js/module/Member/MemberInviteInput.js' %}"></script>
-
-    {############# Workspace #}
-    <script src="{% static 'js/module/Workspace/WorkspacesIndex.js' %}"></script>
-    <script src="{% static 'js/module/Workspace/WorkspacesCreate.js' %}"></script>
-
-    <script src="{% static 'js/module/Workspace/WorkspaceIndex.js' %}"></script>
-    <script src="{% static 'js/module/Workspace/WorkspaceEdit.js' %}"></script>
-    <script src="{% static 'js/module/Workspace/WorkspaceMember.js' %}"></script>
-    <script src="{% static 'js/module/Workspace/WorkspaceMemberApprove.js' %}"></script>
-
-
-    {############# Vault #}
-    <script src="{% static 'js/module/Vault/VaultsIndex.js' %}"></script>
-    <script src="{% static 'js/module/Vault/VaultsCreate.js' %}"></script>
-
-    <script src="{% static 'js/module/Vault/VaultIndex.js' %}"></script>
-    <script src="{% static 'js/module/Vault/VaultEdit.js' %}"></script>
-    <script src="{% static 'js/module/Vault/VaultMember.js' %}"></script>
-
-    {############# Card #}
-    <script src="{% static 'js/module/Card/CardsIndex.js' %}"></script>
-    <script src="{% static 'js/module/Card/CardsCreate.js' %}"></script>
-
-    <script src="{% static 'js/module/Card/CardIndex.js' %}"></script>
-    <script src="{% static 'js/module/Card/CardEdit.js' %}"></script>
-    <script src="{% static 'js/module/Card/CardMember.js' %}"></script>
-
-    {############# Secret #}
-    <script src="{% static 'js/module/Secret/EditorInput.js' %}"></script>
-
-    <script src="{% static 'js/module/Secret/SecretCreate.js' %}"></script>
-    <script src="{% static 'js/module/Secret/SecretEdit.js' %}"></script>
-
-    <script src="{% static 'js/module/Secret/SecretType.js' %}"></script>
-    <script src="{% static 'js/module/Secret/SecretIndex.js' %}"></script>
-
-    {############# Settings #}
-    <script src="{% static 'js/module/Settings/SettingsIndex.js' %}"></script>
-    <script src="{% static 'js/module/Settings/SettingsPersonal.js' %}"></script>
-    <script src="{% static 'js/module/Settings/SettingsKeys.js' %}"></script>
-
-
-    {############# Router #}
-    <script src="{% static 'js/router.js' %}"></script>
+    <script src="{% static 'js/run.js' %}"></script>
 
 
 </head>

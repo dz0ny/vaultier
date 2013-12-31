@@ -56,7 +56,7 @@ Vaultier.AuthLoginSwitchRoute = Ember.Route.extend(
 
         setupController: function (ctrl) {
             //   testing
-            if (VaultierConfig.get('FT_FEATURES.dev_shared_key')) {
+            if (this.get('config.FT_FEATURES.dev_shared_key')) {
                 var keys = this.get('auth').generateKeys();
                 var pkey = keys.privateKey
                 ctrl.set('email', 'jan.misek@rclick.cz');
