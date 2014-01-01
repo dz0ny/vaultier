@@ -439,6 +439,7 @@
 .vlt-wspace-box {
     margin: 8px 10px 8px 0px;
     padding: 5px 10px 5px 5px;
+    height: 37px;
 }
 
 .vlt-wspace-box .vlt-wspacename {
@@ -449,6 +450,8 @@
 }
 
 .vlt-wspace-box .vlt-wspaceimg {
+    margin-left: 5px;
+    margin-right: 5px;
     border-radius: 4px;
     width: 25px;
     height: 25px;
@@ -1105,40 +1108,3 @@ span.vlt-user img {
     font-size: 12px;
 }
 
-
-/*************************************************************
-**************************************************************
-* Loader
-*************************************************************
-*************************************************************/
-
-.vlt-loading-overlay {
-    z-index: 2000;
-    opacity: 0.5;
-    background-color: #FFFFFF;
-    position: fixed;
-    top: 0;
-    left:0;
-    width: 100%;
-    height: 100%;
-}
-
-.vlt-loading-overlay .vlt-text {
-    color: #000000;
-    font-size: 30px;
-    font-weight: bolder;
-    width: 300px;
-    height: 300px;
-    line-height: 300px;
-    margin-left: -150px;
-    margin-top: -150px;
-    background-image: url('../images/preloader_250x250.gif');
-    background-repeat: no-repeat;
-    background-size: 150px 150px;
-    background-position: 50% 50%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    text-align:center;
-    vertical-align: bottom;
-}

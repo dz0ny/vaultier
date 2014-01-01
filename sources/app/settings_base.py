@@ -120,7 +120,7 @@ ROOT_URLCONF = 'app.urls'
 WSGI_APPLICATION = 'app.wsgi.application'
 
 TEMPLATE_DIRS = (
-    os.path.join(PROJECT_ROOT, 'vaultier'),
+    os.path.join(PROJECT_ROOT, 'vaultier/tempates'),
     os.path.join(PROJECT_ROOT, 'static/html'),
 
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".

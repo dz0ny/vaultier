@@ -1,6 +1,2 @@
-$(document).ready(function () {
-    ApplicationLoader.ready(function () {
-        Vaultier.advanceReadiness();
-    })
-    ApplicationLoader.loadQueued();
-});
+ApplicationLoader.hideLoader(1000);
+Vaultier.advanceReadiness();

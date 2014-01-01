@@ -152,7 +152,6 @@ Vaultier.ApplicationRoute = Ember.Route.extend(
 
         actions: {
             loading: function (transition, originRoute) {
-                console.log('loading');
                 ApplicationLoader.showLoader();
 
 //                Ember.run.scheduleOnce('afterRender', this, function () {

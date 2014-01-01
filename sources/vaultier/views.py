@@ -5,7 +5,7 @@ from app.settings import FT_FEATURES, BK_FEATURES
 import json
 
 def index(request):
-    return render(request, 'boostrap.html', Context({
+    return render(request, 'index.html', Context({
         'FT_FEATURES' : FT_FEATURES,
         'BK_FEATURES' : BK_FEATURES
     }))

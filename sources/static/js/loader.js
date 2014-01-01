@@ -8,13 +8,47 @@ ApplicationLoader = {
 
     showLoader: function () {
         if (!this.loaderEl) {
-            this.loaderEl = $('<div />')
-            this.loaderElQueue = this.loaderEl
+            var text = $('<div />')
+                .addClass("vlt-text")
+                .css({
+                    'color': ' #000000',
+                    'font-family': '"Helvetica Neue", Helvetica, Arial, sans-serif',
+                    'font-size': ' 30px',
+                    'font-weight': ' bolder',
+                    'width': ' 300px',
+                    'height': ' 300px',
+                    'line-height': ' 300px',
+                    'margin-left': ' -150px',
+                    'margin-top': ' -150px',
+                    'background-image': " url('/static/images/preloader_250x250.gif')",
+                    'background-repeat': 'no-repeat',
+                    'background-size': ' 150px 150px',
+                    'background-position': ' 50% 50%',
+                    'position': ' absolute',
+                    'top': ' 50%',
+                    'left': ' 50%',
+                    'text-align': 'center',
+                    'vertical-align': ' bottom',
+                })
+
+            var overlay = $('<div />')
                 .addClass('vlt-loading-overlay')
-                .css({'display': 'none'})
-                .html('<div class="vlt-text" />')
+                .css({
+                    'z-index': '2000',
+                    'opacity': '0.5',
+                    'background-color': '#FFFFFF',
+                    'position': 'fixed',
+                    'top': '0',
+                    'left': '0',
+                    'width': '100%',
+                    'height': '100%'
+                })
+
+            this.loaderEl = overlay
+                .append(text)
                 .appendTo('body')
-                .fadeIn(100)
+
+            this.loaderElQueue = this.loaderEl.fadeIn(100)
         }
     },
 
@@ -41,6 +75,7 @@ ApplicationLoader = {
 
     ready: function (fn) {
         head.ready(function () {
+            console.log('loaded');
             this.percent = 0;
             this.loaded = 0;
             this.loadQueue = [];
