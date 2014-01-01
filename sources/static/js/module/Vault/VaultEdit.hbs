@@ -11,7 +11,7 @@
 
                         <div class="col-md-8 col-md-offset-2">
 
-                            <div class="form-group" {{bindAttr class='errors.name:has-error'}}>
+                            <div class="form-group" {{bind-attr class='errors.name:has-error'}}>
                                 <label for="vault-name">Name</label>
                                 {{errors.name}}
                                 {{view Em.TextField elementId='vault-name' valueBinding='content.name' class="form-control"}}

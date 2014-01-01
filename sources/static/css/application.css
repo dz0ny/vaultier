@@ -536,6 +536,11 @@ span.vlt-user img {
 *************************************************************
 *************************************************************/
 
+.vlt-security-box.vlt-anonymous {
+    background-color: transparent;
+    border: 0px;
+}
+
 .vlt-security-box {
     font-weight: bold;
     background-color: #F5F5F5;

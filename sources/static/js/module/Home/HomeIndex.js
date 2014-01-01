@@ -5,13 +5,6 @@ Vaultier.HomeRoute = Ember.Route.extend({
 });
 
 Vaultier.HomeIndexRoute = Ember.Route.extend({
-
-        model: function() {
-            return new Ember.RSVP.Promise(function(resolve) {
-                console.log('resolved');
-                resolve();
-            })
-        },
 });
 
 Vaultier.HomeIndexController = Ember.ArrayController.extend({

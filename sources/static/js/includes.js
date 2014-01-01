@@ -299,7 +299,8 @@ $(document).ready(function () {
      ************************************
      ************************************/
 
-    ApplicationLoader.queueFile(STATIC_URL + 'css/main.css');
+    ApplicationLoader.queueFile(STATIC_URL + 'css/application.css');
+    ApplicationLoader.queueFile(STATIC_URL + 'css/home.css');
 
 
     /************************************
