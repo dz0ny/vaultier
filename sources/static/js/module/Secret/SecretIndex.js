@@ -38,7 +38,6 @@ Vaultier.SecretIndexRoute = Ember.Route.extend({
                 .addWorkspace()
                 .addVault()
                 .addCard()
-                .addText('Detail')
         )
     },
 

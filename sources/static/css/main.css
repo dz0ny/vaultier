@@ -1,8 +1,36 @@
 /*************************************************************
 **************************************************************
+* globals
+*************************************************************
+*************************************************************/
+
+body {
+    padding: 0px;
+    margin: 0px;
+    overflow-y: scroll;
+}
+
+a {
+    transition: color 500ms;
+}
+
+a:hover {
+    transition: color 500ms;
+    text-decoration: none;
+}
+
+/*************************************************************
+**************************************************************
 * Bootstrap compatibility with ember "script element" issue
 *************************************************************
 *************************************************************/
+
+/*
+* Dropdown
+*/
+.dropdown-menu a, .dropdown-menu:hover{
+    transition: none;
+}
 
 /*
 * Drop down carrets
@@ -79,11 +107,6 @@
     margin-bottom: 0;
     border-bottom-right-radius: 4px;
     border-bottom-left-radius: 4px;
-}
-
-.breadcrumb > li::before {
-    padding: 0px;
-    content: normal;
 }
 
 /*
@@ -250,6 +273,25 @@
     background-color: #F5F5F5;
 }
 
+.vlt-breads .vlt-icon {
+    margin: -2px 2px 0px 0px;
+    width: 20px;
+    height: 20px;
+}
+
+.vlt-breads a {
+    border-radius: 4px;
+    border: 1px solid transparent;
+    transition: border-color 500ms, background-color 500ms;
+    padding: 4px;
+}
+
+.vlt-breads a:hover {
+    border: 1px solid #317EB2;
+    transition: border-color 500ms, background-color 500ms;
+    background-color: #FFFFFF;
+}
+
 .vlt-breads .breadcrumb {
     background-color: #F5F5F5;
     margin-bottom: 0px;
@@ -401,6 +443,10 @@
 *************************************************************
 *************************************************************/
 
+.navbar {
+    margin: 0px;
+}
+
 .vlt-branding {
     padding-top: 0px;
     padding-bottom: 0px;
@@ -437,6 +483,10 @@
 *************************************************************/
 
 .vlt-wspace-box {
+    font-weight: bold;
+    background-color: #F5F5F5;
+    border: 1px solid #E0DBDB;
+    border-radius: 4px;
     margin: 8px 10px 8px 0px;
     padding: 5px 10px 5px 5px;
     height: 37px;
@@ -487,6 +537,10 @@ span.vlt-user img {
 *************************************************************/
 
 .vlt-security-box {
+    font-weight: bold;
+    background-color: #F5F5F5;
+    border: 1px solid #E0DBDB;
+    border-radius: 4px;
     margin: 8px 0px 8px 0px;
     padding: 5px 10px 5px 5px;
 }
@@ -509,17 +563,21 @@ span.vlt-user img {
 *************************************************************/
 
 .vlt-search-box {
-    margin: 8px 0px 8px 0px;
+    margin: 8px 0px 8px 100px;
     padding: 0px 50px 0px 10px;
     width: 250px;
 }
 
-.vlt-search-box .selectize-input:after  {
+.vlt-search-box .selectize-input {
+    border: 2px solid #E0DBDB;
+}
+
+.vlt-search-box .selectize-input:after {
     display: none !important;
 }
 
 /*.selectize-dropdown.single {*/
-    /*display: block !important;*/
+/*display: block !important;*/
 /*}*/
 
 /*
@@ -528,7 +586,7 @@ span.vlt-user img {
 
 .vlt-search-box .selectize-dropdown {
     margin-top: 12px;
-    min-width: 300px;
+    min-width: 350px;
 }
 
 .vlt-search-box .selectize-dropdown-content {
@@ -558,7 +616,6 @@ span.vlt-user img {
     content: '';
 }
 
-
 .vlt-search-box .vlt-search-result .help-block {
     padding: 0px;
     margin: 0px;
@@ -581,6 +638,11 @@ span.vlt-user img {
     background-position: 5px 5px;
     background-size: 32px 32px;
     background-repeat: no-repeat;
+    border-bottom: 1px solid #E0DBDB;
+}
+
+.vlt-search-box .vlt-search-result:last-child {
+    border-bottom: 0px;
 }
 
 .vlt-search-box .vlt-search-result.active {
@@ -603,7 +665,6 @@ span.vlt-user img {
 .vlt-search-box .vlt-search-result.vlt-vault.active {
     background-image: url('../images/icon-vault-white.png');
 }
-
 
 /*************************************************************
 **************************************************************
@@ -780,11 +841,13 @@ span.vlt-user img {
     border: 2px solid #EEEEEE;
     border-radius: 6px;
     background-color: #EEEEEE;
+    transition: border-color 500ms, background-color 500ms;
 }
 
 .vlt-select-secret-item:hover {
     background-color: #2FA4E7;
     border-color: #2FA4E7;
+    transition: border-color 500ms, background-color 500ms;
 }
 
 .vlt-select-secret-item .vlt-visual .vlt-icon {

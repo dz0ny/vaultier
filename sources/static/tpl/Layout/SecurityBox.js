@@ -6,7 +6,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   var buffer = '', stack1, stack2, hashContexts, hashTypes, options;
-  data.buffer.push("\r\n    <div class=\"panel panel-default vlt-security-box dropdown pull-right\">\r\n        ");
+  data.buffer.push("\r\n    <div class=\"vlt-security-box dropdown pull-right\">\r\n        ");
   hashContexts = {'size': depth0,'class': depth0};
   hashTypes = {'size': "INTEGER",'class': "STRING"};
   options = {hash:{

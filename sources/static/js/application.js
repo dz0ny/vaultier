@@ -80,6 +80,14 @@ Vaultier = Ember.Application.create({
          **************************************************
          */
 
+        // instead css overflow-y:scroll
+//        var minHeight = function () {
+//            $('html').css('height', $(window).height()+1);
+//        }
+//        $(window).resize(minHeight());
+//        minHeight();
+
+
         var keypressBindings = [
             {
                 "keys": "alt s",

@@ -35,11 +35,12 @@
 
     {{#each block in blocks }}
 
-
         {{#if block.isSecond}}
-            <div class="top-30">
-                <h3>Inherited memberships</h3>
-            </div>
+            {{#unless block.isHidden}}
+                <div class="top-30">
+                    <h3>Inherited memberships</h3>
+                </div>
+            {{/unless}}
         {{/if}}
 
         {{#unless block.isHidden}}
