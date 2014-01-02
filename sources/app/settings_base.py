@@ -158,11 +158,9 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'vaultier',
-    'compressor',
     'south',
     'rest_framework',
     'django_extensions',
-    # 'django_handlebars',
 )
 
 # A sample logging configuration. The only tangible logging
