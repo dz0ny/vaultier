@@ -30,7 +30,7 @@ function program7(depth0,data) {
 function program9(depth0,data) {
   
   var buffer = '', stack1, stack2, hashContexts, hashTypes, options;
-  data.buffer.push("\r\n                        Do you have account already? ");
+  data.buffer.push("\r\n                        <div class=\"pull-left\">\r\n                            Do you have account already?\r\n                            ");
   hashContexts = {'class': depth0};
   hashTypes = {'class': "STRING"};
   options = {hash:{
@@ -38,13 +38,13 @@ function program9(depth0,data) {
   },inverse:self.noop,fn:self.program(10, program10, data),contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
   stack2 = ((stack1 = helpers['link-to'] || depth0['link-to']),stack1 ? stack1.call(depth0, "AuthLogin", options) : helperMissing.call(depth0, "link-to", "AuthLogin", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("\r\n                    ");
+  data.buffer.push("\r\n                        </div>\r\n                    ");
   return buffer;
   }
 function program10(depth0,data) {
   
   
-  data.buffer.push("Login to\r\n                        your\r\n                        account here");
+  data.buffer.push("\r\n                                Login to your account here\r\n                            ");
   }
 
 function program12(depth0,data) {

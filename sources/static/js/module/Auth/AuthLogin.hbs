@@ -3,46 +3,50 @@
 
         <div class="vlt-dialog vlt-dialog-window vlt-login">
             <div class="vlt-dialog-content">
-        <form class="form-horizontal" role="form">
+                <form class="form-horizontal" role="form">
 
-                <div class="vlt-dialog-header">
-                    <h2>Login</h2>
+                    <div class="vlt-dialog-header">
+                        <h2>Login</h2>
 
-                    {{#if props.latestUser }}
+                        {{#if props.latestUser }}
 
-                        <ul class="nav nav-tabs vlt-login-tabs">
-                            <li class="AuthLoginLatest">
-                                {{#link-to 'AuthLogin.latest'}}
-                                    Latest
-                                {{/link-to}}
-                            </li>
-                            <li class="AuthLoginSwitch">
-                                {{#link-to 'AuthLogin.switch'}}
-                                    Switch
-                                {{/link-to}}
-                            </li>
-                        </ul>
+                            <ul class="nav nav-tabs vlt-login-tabs">
+                                <li class="AuthLoginLatest">
+                                    {{#link-to 'AuthLogin.latest'}}
+                                        Latest
+                                    {{/link-to}}
+                                </li>
+                                <li class="AuthLoginSwitch">
+                                    {{#link-to 'AuthLogin.switch'}}
+                                        Switch
+                                    {{/link-to}}
+                                </li>
+                            </ul>
 
-                    {{/if}}
+                        {{/if}}
 
-                </div>
-                <div class="vlt-dialog-body">
-
-                    <div class="tab-content">
-                        <div class="tab-pane active">
-                            {{outlet AuthLogin}}
-                        </div>
                     </div>
+                    <div class="vlt-dialog-body">
+
+                        <div class="tab-content">
+                            <div class="tab-pane active">
+                                {{outlet AuthLogin}}
+                            </div>
+                        </div>
 
 
-                </div>
-                <div class="vlt-dialog-footer">
-                    Do not have account yet? {{#link-to 'AuthRegister' class="btn btn-default btn-sm" }}Create new
-                    account here{{/link-to}}
-                    <button type="submit" {{ action login}} {{bind-attr disabled=loginButtonDisabled }} class="btn btn-primary">
-                        Login
-                    </button>
-                </div>
+                    </div>
+                    <div class="vlt-dialog-footer">
+                        <div class="pull-left">
+                            Do not have account yet? {{#link-to 'AuthRegister' class="btn btn-default btn-sm" }}Create
+                            new
+                            account here{{/link-to}}
+                        </div>
+                        <button type="submit" {{ action login}} {{bind-attr disabled=loginButtonDisabled }}
+                                class="btn btn-primary">
+                            Login
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>

@@ -1,38 +1,57 @@
-<div class="jumbotron">
-    <h1>Marketing stuff!</h1>
+<div class="vlt-hp">
+    <div class="jumbotron">
+        <div class="vlt-message">
+            <div class="vlt-visual">
+                <img src="/static/images/logo-hp.png">
+            </div>
+            <div class="vlt-text">
+                <h1>
+                    Vaultier
+                </h1>
 
-    <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus
-        commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet.</p>
+                <p class="lead">
+                    Easy and secure password and credentials sharing across teams.
+                </p>
 
-    <p><a class="btn btn-lg btn-success" href="#">Get started today</a></p>
-</div>
+                    <p>
+                           {{#link-to 'AuthRegister'  class="btn btn-lg btn-success" }}Get started today <b> for free </b>{{/link-to}}
+                    </p>
+            </div>
+        </div>
 
-<div class="row">
-    <div class="col-lg-4">
-        <h2>Heading</h2>
-
-        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris
-            condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.
-            Donec sed odio dui. </p>
-
-        <p><a class="btn btn-primary" href="#">View details »</a></p>
     </div>
-    <div class="col-lg-4">
-        <h2>Heading</h2>
 
-        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris
-            condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.
-            Donec sed odio dui. </p>
+    <div class="row">
+        <div class="col-lg-4 vlt-feature vlt-feature-secure">
+            <h2>Absolutely secure</h2>
 
-        <p><a class="btn btn-primary" href="#">View details »</a></p>
-    </div>
-    <div class="col-lg-4">
-        <h2>Heading</h2>
+            <p>
+                We use advanced security based on RSA. All your data stored in our databases are cyphered and cannot be readed by
+                anybody else than you and your team.
+            </p>
 
-        <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta
-            felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum
-            massa.</p>
+            <!--
+            <p><a class="btn btn-primary" href="#">View details »</a></p>
+            -->
 
-        <p><a class="btn btn-primary" href="#">View details »</a></p>
+        </div>
+        <div class="col-lg-4 vlt-feature vlt-feature-team">
+            <h2>Team productivity</h2>
+
+            <p>Invite and colaborate with your team. You can selectively grant access permission to any team member to share credentials. </p>
+
+            <!--
+            <p><a class="btn btn-primary" href="#">View details »</a></p>
+            -->
+        </div>
+        <div class="col-lg-4 vlt-feature vlt-feature-cloud">
+            <h2>Cloud solution</h2>
+
+            <p>Vaultier is online. It is always available from web browser or mobile. No need to install, works out of the box</p>
+
+            <!--
+            <p><a class="btn btn-primary" href="#">View details »</a></p>
+            -->
+        </div>
     </div>
 </div>

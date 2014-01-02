@@ -1,5 +1,12 @@
 Vaultier.registerDI = function(app) {
 
+        // service:config
+        app.register('config:main', Vaultier.Config)
+        app.inject('route', 'config', 'config:main');
+        app.inject('controller', 'config', 'config:main');
+        app.inject('view', 'config', 'config:main');
+        app.inject('service', 'config', 'config:main');
+
         // service:errors
         app.register('service:errors', Service.Errors)
         app.inject('route', 'errors', 'service:errors');
@@ -42,7 +49,6 @@ Vaultier.registerDI = function(app) {
         app.inject('route:Workspace', 'members', 'service:members')
         app.inject('route:WorkspaceMemberApprove', 'members', 'service:members')
 
-
         // model:Role
         app.inject('model:Role', 'auth', 'service:auth');
 
@@ -51,5 +57,7 @@ Vaultier.registerDI = function(app) {
 
         // model:Secret
         app.inject('model:Secret', 'members', 'service:members');
+
+
 
 }

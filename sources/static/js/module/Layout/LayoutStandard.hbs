@@ -1,4 +1,4 @@
-<div class="navbar navbar-default navbar-fixed-top">
+<div class="navbar navbar-default navbar-static-top">
 
     <div class="container">
 
@@ -15,7 +15,12 @@
                     </a>
                 </div>
             </div>
+        </div>
 
+        <div class="navbar-left">
+            {{#if auth.isAuthenticated}}
+                {{render "LayoutSearchBox" LayoutWorkspaceBox}}
+            {{/if}}
         </div>
 
         <div class="navbar-right">
@@ -24,6 +29,7 @@
             {{render "LayoutSecurityBox" LayoutSecurityBox}}
 
             {{render "LayoutWorkspaceBox" LayoutWorkspaceBox}}
+
 
 
             <div class="clearfix"></div>

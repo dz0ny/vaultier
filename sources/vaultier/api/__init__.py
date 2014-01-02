@@ -1,5 +1,3 @@
-__author__ = 'jan'
-
 from rest_framework.exceptions import APIException as BaseAPIException
 
 class ApiException(BaseAPIException):

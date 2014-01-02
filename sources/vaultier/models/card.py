@@ -2,13 +2,27 @@ from django.db import models
 from django.db.models.deletion import PROTECT, CASCADE
 from django.db.models.manager import Manager
 from django.db.models import F, Q
-
-from vaultier.models.role_fields import RoleLevelField
 from vaultier.tools.changes import ChangesMixin
 from vaultier.tools.tree import TreeItemMixin
 
 
 class CardManager(Manager):
+
+    def search(self, user, query, max_results=5):
+
+        list = query.split()
+        result = self.all_for_user(user).filter(
+            Q(reduce(lambda x, y: x | y, [Q(name__icontains=word) for word in list])) |
+            Q(reduce(lambda x, y: x | y, [Q(description__icontains=word) for word in list])) |
+            Q(reduce(lambda x, y: x | y, [Q(secret__name__icontains=word) for word in list]))
+        ).order_by('updated_at')
+        return result[:max_results]
+
+        #return self.all_for_user(user).filter(
+        #    Q(name__icontains=query) |
+        #    Q(description__icontains=query) |
+        #    Q(secret__name__icontains=query)
+        #)[:max_results]
 
     def all_for_user(self, user):
         cards = self.filter(

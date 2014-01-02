@@ -120,7 +120,7 @@ ROOT_URLCONF = 'app.urls'
 WSGI_APPLICATION = 'app.wsgi.application'
 
 TEMPLATE_DIRS = (
-    os.path.join(PROJECT_ROOT, 'vaultier'),
+    os.path.join(PROJECT_ROOT, 'vaultier/tempates'),
     os.path.join(PROJECT_ROOT, 'static/html'),
 
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -144,7 +144,7 @@ REST_FRAMEWORK = {
 #
 # SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 
-COMPRESS_ENABLED = 0
+COMPRESS_ENABLED = 1
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -158,11 +158,9 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'vaultier',
-    'compressor',
     'south',
     'rest_framework',
     'django_extensions',
-    # 'django_handlebars',
 )
 
 # A sample logging configuration. The only tangible logging

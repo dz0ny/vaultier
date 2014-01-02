@@ -45,9 +45,12 @@
 
                 <div class="vlt-dialog-footer">
                     {{#unless props.loginButtonHidden}}
-                        Do you have account already? {{#link-to 'AuthLogin' class="btn btn-default btn-sm" }}Login to
-                        your
-                        account here{{/link-to}}
+                        <div class="pull-left">
+                            Do you have account already?
+                            {{#link-to 'AuthLogin' class="btn btn-default btn-sm" }}
+                                Login to your account here
+                            {{/link-to}}
+                        </div>
                     {{/unless}}
                     <button {{action next}} {{bind-attr disabled=props.nextButtonDisabled}} class="btn btn-primary">
                         <span class="glyphicon glyphicon glyphicon-chevron-right"></span>

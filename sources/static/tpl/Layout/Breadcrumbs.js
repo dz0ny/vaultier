@@ -1,7 +1,7 @@
 Ember.TEMPLATES["Layout/Breadcrumbs"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  var stack1, hashTypes, hashContexts, escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, self=this;
+  var stack1, hashTypes, hashContexts, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, self=this;
 
 function program1(depth0,data) {
   
@@ -20,25 +20,43 @@ function program2(depth0,data) {
   data.buffer.push("\r\n                    ");
   hashTypes = {};
   hashContexts = {};
-  stack1 = helpers['if'].call(depth0, "last", {hash:{},inverse:self.program(5, program5, data),fn:self.program(3, program3, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
+  stack1 = helpers['if'].call(depth0, "last", {hash:{},inverse:self.program(6, program6, data),fn:self.program(3, program3, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n                ");
   return buffer;
   }
 function program3(depth0,data) {
   
-  var buffer = '', hashTypes, hashContexts;
-  data.buffer.push("\r\n                        <li class=\"active\">\r\n                            <h2>\r\n                               ");
+  var buffer = '', stack1, hashTypes, hashContexts;
+  data.buffer.push("\r\n                        <li class=\"active\">\r\n                            ");
+  hashTypes = {};
+  hashContexts = {};
+  stack1 = helpers['if'].call(depth0, "icon", {hash:{},inverse:self.noop,fn:self.program(4, program4, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\r\n                            <h2>\r\n                                ");
   hashTypes = {};
   hashContexts = {};
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "title", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
   data.buffer.push("\r\n                            </h2>\r\n                        </li>\r\n                    ");
   return buffer;
   }
-
-function program5(depth0,data) {
+function program4(depth0,data) {
   
   var buffer = '', stack1, hashContexts, hashTypes, options;
+  data.buffer.push("\r\n                                <img class=\"vlt-icon\" ");
+  hashContexts = {'src': depth0};
+  hashTypes = {'src': "ID"};
+  options = {hash:{
+    'src': ("icon")
+  },contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
+  data.buffer.push(escapeExpression(((stack1 = helpers['bind-attr'] || depth0['bind-attr']),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "bind-attr", options))));
+  data.buffer.push(">\r\n                            ");
+  return buffer;
+  }
+
+function program6(depth0,data) {
+  
+  var buffer = '', stack1, stack2, hashContexts, hashTypes, options;
   data.buffer.push("\r\n                        <li>\r\n                            <a ");
   hashContexts = {'href': depth0};
   hashTypes = {'href': "ID"};
@@ -49,8 +67,26 @@ function program5(depth0,data) {
   data.buffer.push(">\r\n                                ");
   hashTypes = {};
   hashContexts = {};
+  stack2 = helpers['if'].call(depth0, "icon", {hash:{},inverse:self.noop,fn:self.program(7, program7, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
+  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
+  data.buffer.push("\r\n                                ");
+  hashTypes = {};
+  hashContexts = {};
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "title", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
   data.buffer.push("\r\n                            </a>\r\n                        </li>\r\n                    ");
+  return buffer;
+  }
+function program7(depth0,data) {
+  
+  var buffer = '', stack1, hashContexts, hashTypes, options;
+  data.buffer.push("\r\n                                    <img class=\"vlt-icon\" ");
+  hashContexts = {'src': depth0};
+  hashTypes = {'src': "ID"};
+  options = {hash:{
+    'src': ("icon")
+  },contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
+  data.buffer.push(escapeExpression(((stack1 = helpers['bind-attr'] || depth0['bind-attr']),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "bind-attr", options))));
+  data.buffer.push(">\r\n                                ");
   return buffer;
   }
 

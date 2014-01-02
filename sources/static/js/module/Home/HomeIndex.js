@@ -1,5 +1,5 @@
 Vaultier.HomeRoute = Ember.Route.extend({
-    redirect: function() {
+    beforeModel: function() {
         this.transitionTo('Home.index');
     }
 });

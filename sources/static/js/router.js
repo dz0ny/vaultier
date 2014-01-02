@@ -38,8 +38,8 @@ var router = Vaultier.Router.map(function () {
 
     this.resource('Settings', {path: '/settings'}, function () {
         // automatic Settings.index
-         this.route('personal', { path: '/personal' });
-         this.route('keys', { path: '/keys' });
+        this.route('personal', { path: '/personal' });
+        this.route('keys', { path: '/keys' });
 
     })
 
@@ -147,17 +147,31 @@ Ember.Route.reopen({
     }
 });
 
-Service.Environment.current().set('router', router);
-
 Vaultier.ApplicationRoute = Ember.Route.extend(
     {
+
+        actions: {
+            loading: function (transition, originRoute) {
+                ApplicationLoader.showLoader();
+
+//                Ember.run.scheduleOnce('afterRender', this, function () {
+//                    console.log('done');
+//                })
+                transition.then(function () {
+                    ApplicationLoader.hideLoader();
+                }.bind(this))
+            }
+
+        },
+
         beforeModel: function (params, transition) {
             // auth
             var auth = this.get('auth');
             var status = auth.reload()
             return status;
         }
-    });
+    })
+;
 
 Vaultier.IndexRoute = Ember.Route.extend(
     {

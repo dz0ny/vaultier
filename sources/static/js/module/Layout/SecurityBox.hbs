@@ -1,5 +1,5 @@
 {{#if auth.isAuthenticated}}
-    <div class="panel panel-default vlt-security-box dropdown pull-right">
+    <div class="vlt-security-box dropdown pull-right">
         {{gravatarImg auth.user.clean.email size=25 class="vlt-avatar"}}
 
         <a href="#" class="vlt-username dropdown-toggle" data-toggle="dropdown">
@@ -16,7 +16,7 @@
         </ul>
     </div>
 {{else}}
-    <div class=" vlt-security-box pull-right">
+    <div class=" vlt-security-box vlt-anonymous pull-right ">
        {{#link-to 'AuthLogin' class="btn btn-primary btn-sm" }}Login{{/link-to}}
        {{#link-to 'AuthRegister' class="btn btn-default btn-sm" }}Create an account{{/link-to}}
     </div>

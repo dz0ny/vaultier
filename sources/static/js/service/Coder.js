@@ -26,7 +26,7 @@ Service.Coder = Ember.Object.extend({
     }),
 
     generateKeys: function (callback) {
-        if (VaultierConfig.get('FT_FEATURES.dev_shared_key')) {
+        if (this.get('config.FT_FEATURES.dev_shared_key')) {
             // development generator
             var generator = this.TestingGenerator.create();
         } else {
