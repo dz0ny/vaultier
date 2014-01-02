@@ -88,87 +88,6 @@ $(document).ready(function () {
     /************************************
      ************************************
      ************************************
-     * Templates
-     ************************************
-     ************************************
-     ************************************
-     ************************************/
-
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Layout/SecurityBox.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Layout/WorkspaceBox.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Layout/SearchBox.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Layout/Breadcrumbs.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Layout/LayoutStandard.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Layout/Confirm.js');
-
-    /********************** home and system **/
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Home/HomeIndex.js');
-
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Error/Error404.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Error/ErrorGeneric.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Error/Layout.js');
-
-    /**########### auth **/
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Auth/AuthLogin.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Auth/AuthLoginLatest.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Auth/AuthLoginSwitch.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Auth/AuthRegister.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Auth/AuthRegisterBefore.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Auth/AuthRegisterKeys.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Auth/AuthRegisterCreds.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Auth/AuthRegisterSum.js');
-
-    /**########### invitation **/
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Invitation/InvitationAnonymous.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Invitation/InvitationAccept.js');
-
-    /********************** workspace **/
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Workspace/WorkspacesIndex.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Workspace/WorkspacesIndexItem.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Workspace/WorkspacesIndexNotApproved.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Workspace/WorkspacesCreate.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Workspace/WorkspaceEdit.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Workspace/WorkspaceMemberApprove.js');
-
-    /********************** vault **/
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Vault/VaultsIndex.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Vault/VaultsIndexItem.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Vault/VaultsCreate.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Vault/VaultEdit.js');
-
-    /********************** card **/
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Card/CardsIndex.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Card/CardsIndexItem.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Card/CardsCreate.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Card/CardEdit.js');
-
-    /********************** secret **/
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Secret/SecretCreate.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Secret/SecretTypeSelect.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Secret/SecretTypeNote.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Secret/SecretTypePassword.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Secret/SecretTypeFile.js');
-
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Secret/SecretEdit.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Secret/SecretIndex.js');
-
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Secret/SecretIndexItemNote.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Secret/SecretIndexItemPassword.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Secret/SecretIndexItemFile.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Secret/SecretIndexItemControls.js');
-
-    /********************** member **/
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Member/MemberIndex.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Member/MemberInvite.js');
-
-    /********************** Settings **/
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Settings/SettingsIndex.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Settings/SettingsPersonal.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Settings/SettingsKeys.js');
-
-    /************************************
-     ************************************
-     ************************************
      * Utils
      ************************************
      ************************************
@@ -202,7 +121,11 @@ $(document).ready(function () {
 
     ApplicationLoader.queueFile(STATIC_URL + 'js/router.js');
 
-    /********************** services **/
+    /********************** Shared components **/
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Shared/Tree/EmberTreeNode.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'js/module/Shared/Tree/EmberTree.js');
+
+    /********************** Services **/
 
     ApplicationLoader.queueFile(STATIC_URL + 'js/service/Errors.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/service/Environment.js');
@@ -224,7 +147,19 @@ $(document).ready(function () {
     ApplicationLoader.queueFile(STATIC_URL + 'js/model/Card.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/model/Secret.js');
 
+    /********************** Shared **/
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Member/MemberIndex.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Member/MemberInvite.js');
+
+
     /********************** Layout **/
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Layout/SecurityBox.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Layout/WorkspaceBox.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Layout/SearchBox.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Layout/Breadcrumbs.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Layout/LayoutStandard.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Layout/Confirm.js');
+
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Layout/LayoutStandard.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Layout/SecurityBox.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Layout/SearchBox.js');
@@ -233,15 +168,32 @@ $(document).ready(function () {
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Layout/Confirm.js');
 
     /********************** Home and system**/
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Error/Error404.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Error/ErrorGeneric.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Error/Layout.js');
+
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Home/HomeIndex.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Home/HomeIndex.js');
 
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Error/Error.js');
 
     /********************** Auth **/
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Auth/AuthLogin.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Auth/AuthLoginLatest.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Auth/AuthLoginSwitch.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Auth/AuthLogin.js');
+
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Auth/AuthRegister.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Auth/AuthRegisterBefore.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Auth/AuthRegisterKeys.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Auth/AuthRegisterCreds.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Auth/AuthRegisterSum.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Auth/AuthRegister.js');
 
+
     /********************** Invitation **/
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Invitation/InvitationAnonymous.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Invitation/InvitationAccept.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Invitation/Invitation.js');
 
     /********************** member **/
@@ -250,41 +202,80 @@ $(document).ready(function () {
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Member/MemberInviteInput.js');
 
     /********************** Workspace **/
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Workspace/WorkspacesIndex.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Workspace/WorkspacesIndexItem.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Workspace/WorkspacesIndexNotApproved.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Workspace/WorkspacesCreate.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Workspace/WorkspacesIndex.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Workspace/WorkspacesCreate.js');
 
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Workspace/WorkspaceEdit.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Workspace/WorkspaceMemberApprove.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Workspace/WorkspaceIndex.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Workspace/WorkspaceEdit.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Workspace/WorkspaceMember.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Workspace/WorkspaceMemberApprove.js');
 
-
     /********************** Vault **/
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Vault/VaultsIndex.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Vault/VaultsIndexItem.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Vault/VaultsIndex.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Vault/VaultsCreate.js');
 
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Vault/VaultsCreate.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Vault/VaultEdit.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Vault/VaultIndex.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Vault/VaultEdit.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Vault/VaultMember.js');
 
     /********************** Card **/
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Card/CardsIndex.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Card/CardsIndexItem.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Card/CardsCreate.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Card/CardEdit.js');
+
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Card/CardsIndex.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Card/CardsCreate.js');
 
-    ApplicationLoader.queueFile(STATIC_URL + 'js/module/Card/CardIndex.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Card/CardEdit.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'js/module/Card/CardIndex.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Card/CardMember.js');
+
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Card/CardMove.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Card/CardMoveVaultNode.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'js/module/Card/CardMove.js');
 
     /********************** Secret **/
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Secret/EditorInput.js');
 
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Secret/SecretIndex.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Secret/SecretEdit.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Secret/SecretCreate.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Secret/SecretCreate.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Secret/SecretEdit.js');
 
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Secret/SecretTypeSelect.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Secret/SecretTypeNote.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Secret/SecretTypePassword.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Secret/SecretTypeFile.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Secret/SecretType.js');
+
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Secret/SecretIndexItemNote.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Secret/SecretIndexItemPassword.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Secret/SecretIndexItemFile.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Secret/SecretIndexItemControls.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Secret/SecretIndex.js');
 
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Secret/SecretMove.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Secret/SecretMoveVaultNode.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Secret/SecretMoveCardNode.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'js/module/Secret/SecretMove.js');
+
     /********************** Settings **/
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Settings/SettingsIndex.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Settings/SettingsPersonal.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Settings/SettingsKeys.js');
+
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Settings/SettingsIndex.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Settings/SettingsPersonal.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Settings/SettingsKeys.js');

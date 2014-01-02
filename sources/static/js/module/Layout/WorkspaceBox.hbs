@@ -9,25 +9,25 @@
 
         <ul class="dropdown-menu caret-right">
             <li>
-                {{#linkTo 'Workspace.index' env.workspace }}
+                {{#link-to 'Workspace.index' env.workspace }}
                     Go to workspace dashboard
-                {{/linkTo}}
+                {{/link-to}}
             </li>
 
             {{#if env.workspace.perms.update }}
             <li>
-                {{#linkTo 'Workspace.edit' env.workspace }}
+                {{#link-to 'Workspace.edit' env.workspace }}
                     Setup workspace
-                {{/linkTo}}
+                {{/link-to}}
             </li>
             {{/if}}
 
             <li class="divider"></li>
 
             <li>
-                {{#linkTo 'Workspaces.index'}}
+                {{#link-to 'Workspaces.index'}}
                     Switch to another workspace
-                {{/linkTo}}
+                {{/link-to}}
             </li>
 
         </ul>
