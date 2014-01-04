@@ -21,6 +21,8 @@ $(document).ready(function () {
     ApplicationLoader.queueFile(STATIC_URL + 'lib/jquery.session/jquery.session.js');
 
     /******************** Generic **/
+
+    ApplicationLoader.queueFile(STATIC_URL + 'lib/pohon/pohon.js');
     ApplicationLoader.queueFile(STATIC_URL + 'lib/moment/moment.js');
     ApplicationLoader.queueFile(STATIC_URL + 'lib/jsep/jsep.js');
 
@@ -60,6 +62,10 @@ $(document).ready(function () {
     ApplicationLoader.queueFile(STATIC_URL + 'lib/ember/ember-data.js');
     ApplicationLoader.queueFile(STATIC_URL + 'lib/ember/ember-data-django.js');
 
+    /******************** Ember extension **/
+    ApplicationLoader.queueFile(STATIC_URL + 'lib/ember-ext/Tree/EmberTree.js');
+
+
     /******************** Validations **/
     ApplicationLoader.queueFile(STATIC_URL + 'lib/lgtm/dist/lgtm-standalone.js');
 
@@ -94,8 +100,6 @@ $(document).ready(function () {
      ************************************
      ************************************/
 
-
-    ApplicationLoader.queueFile(STATIC_URL + 'js/utils/Pohon.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/utils/E.js');
 
     ApplicationLoader.queueFile(STATIC_URL + 'js/utils/ConstantList.js');
@@ -116,14 +120,7 @@ $(document).ready(function () {
 
     ApplicationLoader.queueFile(STATIC_URL + 'js/application.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/di.js');
-
-    /********************** Router **/
-
     ApplicationLoader.queueFile(STATIC_URL + 'js/router.js');
-
-    /********************** Shared components **/
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Shared/Tree/EmberTreeNode.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'js/module/Shared/Tree/EmberTree.js');
 
     /********************** Services **/
 

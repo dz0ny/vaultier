@@ -6,7 +6,11 @@ Utils.E = {
         exception = Po.F.optional(exception, false)
 
         if (record instanceof DS.Model) {
-            return record.get('id');
+            var id = parseInt(record.get('id'));
+            if (isNaN(id)) {
+                id = record.get('pk');
+            }
+            return id;
         }
         var num = parseInt(record);
         if (isNaN(num)) {

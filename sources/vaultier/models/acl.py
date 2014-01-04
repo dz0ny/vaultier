@@ -26,5 +26,13 @@ class Acl(ObjectReference,models.Model):
     role = models.ForeignKey('vaultier.Role', on_delete=CASCADE)
     user = models.ForeignKey('vaultier.User', on_delete=CASCADE)
 
+    def get_target_string(self):
+        if (self.type == 100):
+            return 'workspace:'+str(self.to_workspace.id)
+        if (self.type == 200):
+            return 'vault:'+str(self.to_vault.id)
+        if (self.type == 300):
+            return 'card:'+str(self.to_card.id)
+
     def __unicode__(self):
-        return 'Acl(' + str(self.id) + '): to:' + str(self.type) + ' level:' + str(self.level) + ' user: '+str(self.user)
+        return 'Acl(' + str(self.id) + '): to:' + str(self.get_target_string()) + ' level:' + str(self.level) + ' user: '+str(self.user)

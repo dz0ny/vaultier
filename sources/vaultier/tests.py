@@ -34,13 +34,14 @@ def suite():
     #
     #suite.addTest(card_suite())
     #suite.addTest(card_perms_suite())
+    suite.addTest(card_perms_suite())
     #
     #suite.addTest(secret_suite())
     #suite.addTest(secret_perms_suite())
     #
     #suite.addTest(slug_suite())
     #
-    suite.addTest(search_suite())
+    #suite.addTest(search_suite())
 
 
     return suite

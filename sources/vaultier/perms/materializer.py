@@ -2,6 +2,7 @@ from vaultier.models import Acl
 from vaultier.models.acl_fields import AclDirectionField
 from vaultier.models.role_fields import RoleLevelField
 
+
 class CreateRoleMaterializer(object):
     role = None
 
@@ -43,11 +44,16 @@ class CreateRoleMaterializer(object):
             acls.extend(self.materialize_childs(child))
         return acls
 
+    def materialize_current(self, object):
+        acls = []
+        acls.append(self.acl_for_object(object, AclDirectionField.DIR_DOWN))
+        return acls
+
     def materialize(self, object):
         acls = []
 
         # materialize current
-        acls.append(self.acl_for_object(object, AclDirectionField.DIR_DOWN))
+        acls.extend(self.materialize_current(object))
 
         # materialize child objects
         acls.extend(self.materialize_childs(object))
@@ -60,9 +66,7 @@ class CreateRoleMaterializer(object):
         saver.save_materialized(acls)
 
 
-
 class MaterializationSaver(object):
-
     def save_materialized(self, acls):
         saved = []
 
@@ -101,7 +105,6 @@ class MaterializationSaver(object):
 
 
 class UpdateRoleLevelMaterializer(object):
-
     def __init__(self, role):
         self.role = role
 
@@ -111,8 +114,8 @@ class UpdateRoleLevelMaterializer(object):
             direction=AclDirectionField.DIR_DOWN
         ).update(level=self.role.level)
 
-class UpdateRoleMemberMaterializer(object):
 
+class UpdateRoleMemberMaterializer(object):
     def __init__(self, role):
         self.role = role
 
@@ -121,8 +124,8 @@ class UpdateRoleMemberMaterializer(object):
             role=self.role,
         ).update(user=self.role.member.user)
 
-class UpdateMemberUserMaterializer(object):
 
+class UpdateMemberUserMaterializer(object):
     def __init__(self, member):
         self.member = member
 
@@ -139,22 +142,41 @@ class UpdateMemberUserMaterializer(object):
             materializer = CreateRoleMaterializer(role)
             materializer.materialize(role.get_object())
 
-class InsertedObjectMaterializer(object):
 
+class InsertedObjectMaterializer(object):
     def __init__(self, object):
         self.object = object
 
     def materialize(self):
         parent = self.object.get_parent_object()
+        roles = []
         acls = []
-        if parent:
-            for acl in parent.acl_set.all():
-                acl.id = None
-                acl.set_object(self.object)
-                acls.append(acl);
+        while parent:
+            for role in parent.role_set.all():
+                roles.append(role)
+            parent = parent.get_parent_object()
 
-            # save materialized
-            saver = MaterializationSaver()
-            saver.save_materialized(acls)
+        for role in roles:
+            rm = CreateRoleMaterializer(role);
+            acls.extend(rm.materialize_current(self.object))
+
+        # save materialized
+        saver = MaterializationSaver()
+        saver.save_materialized(acls)
 
 
+class MovedObjectMaterializer(object):
+    def __init__(self, object):
+        self.object = object
+
+    def materialize(self):
+        # delete all acls related to object
+        self.object.acl_set.all().delete()
+
+        # delete all acls related to object roles, including acls of previous parents
+        Acl.objects.filter(role__in=self.object.role_set.all()).delete()
+
+        # object previous acl are now cleared
+        # rematerialize object as inserted
+        m = InsertedObjectMaterializer(self.object)
+        m.materialize()

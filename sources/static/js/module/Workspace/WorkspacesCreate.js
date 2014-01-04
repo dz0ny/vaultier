@@ -9,7 +9,7 @@ Vaultier.WorkspacesCreateRoute = Ember.Route.extend({
                         this.transitionTo('Workspace.index', record);
                     }.bind(this))
 
-                    .fail(function () {
+                    .catch(function () {
                         $.notify('Oooups! Something went wrong.', 'error');
                     }
                 )
