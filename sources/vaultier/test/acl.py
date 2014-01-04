@@ -28,9 +28,6 @@ class AclTest(TransactionTestCase):
         w.created_by = u
         w.save()
 
-        # already materialized roles should be deleted
-        Acl.objects.all().delete()
-
         v = Vault()
         v._user = u
         v.name = 'vault'
@@ -51,6 +48,10 @@ class AclTest(TransactionTestCase):
         m.created_by = u
         m.save()
 
+
+        ## already materialized roles should be deleted to test only create role
+        Acl.objects.all().delete()
+
         role = Role()
         role.level = RoleLevelField.LEVEL_WRITE
         role.created_by = u
@@ -58,8 +59,10 @@ class AclTest(TransactionTestCase):
         role.member = m
         role.save()
 
+        acls = list(Acl.objects.all())
         # 3 acls should be in db
         self.assertEquals(Acl.objects.all().count(),3)
+
 
         # parent acls should be read
         self.assertEquals(w.acl_set.all().count(), 1)
@@ -196,9 +199,6 @@ class AclTest(TransactionTestCase):
         w.created_by = u
         w.save()
 
-        # already materialized roles should be deleted
-        Acl.objects.all().delete()
-
         v = Vault()
         v._user = u
         v.name = 'vault'
@@ -218,6 +218,9 @@ class AclTest(TransactionTestCase):
         m.workspace = w
         m.created_by = u
         m.save()
+
+        # already materialized roles should be deleted
+        Acl.objects.all().delete()
 
         role = Role()
         role.level = RoleLevelField.LEVEL_READ
