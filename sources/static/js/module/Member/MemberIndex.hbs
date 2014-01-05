@@ -70,14 +70,16 @@
                 <table class="table vlt-table">
 
                     {{#unless block.roles.length}}
-                        <div class="padding-15">
-                            There are no permission to this object.
+                        <div>
+                            <div class="padding-15">
+                                There are no permission to this object.
 
-                            {{#link-to inviteRouteName class="btn btn-default btn-sm"}}
-                                <span class="glyphicon glyphicon-user"></span>
-                                Invite
-                            {{/link-to}}
+                                {{#link-to inviteRouteName class="btn btn-default btn-sm"}}
+                                    <span class="glyphicon glyphicon-user"></span>
+                                    Invite
+                                {{/link-to}}
 
+                            </div>
                         </div>
                     {{/unless}}
 

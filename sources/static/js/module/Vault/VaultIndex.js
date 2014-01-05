@@ -10,6 +10,7 @@ Vaultier.VaultRoute = Ember.Route.extend(
                         error.status = 404
                         throw error
                     }
+                    return model
                 })
             return model;
         },

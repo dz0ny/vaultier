@@ -52,7 +52,7 @@ def on_object_moved(signal=None, sender=None, instance=None, event_type=None, **
         if ( instance.__class__.__name__ == 'Card' and instance.old_changes().get('vault')):
             materializer = MovedObjectMaterializer(instance);
         if (instance.__class__.__name__ == 'Secret' and instance.old_changes().get('card')):
-            materializer = MovedObjectMaterializer(instance);
+            materializer = MovedObjectMaterializer(instance.card);
 
         if materializer:
             materializer.materialize()
