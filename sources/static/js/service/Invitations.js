@@ -16,8 +16,10 @@ Service.Invitations = Ember.Object.extend({
      * @DI store:main
      */
     store: null,
-
-    env: null,
+    /**
+     * @DI router:main
+     */
+    router: null,
 
     init: function () {
         this._super();
@@ -40,7 +42,7 @@ Service.Invitations = Ember.Object.extend({
                 url: '/api/members/',
                 type: 'post',
                 data: {
-                    workspace: workspace.id,
+                    workspace: Utils.E.recordId(workspace),
                     email: emailOrId,
                     send: send,
                     resend: resend
@@ -84,7 +86,7 @@ Service.Invitations = Ember.Object.extend({
     },
 
     _storeInvitationToSession: function (id, hash, data) {
-        return Ember.RSVP.Promise(function (resolve, reject) {
+        return new Ember.RSVP.Promise(function (resolve, reject) {
             var invitation = {
                 id: id,
                 hash: hash
@@ -145,7 +147,7 @@ Service.Invitations = Ember.Object.extend({
             promises.push(this.store.find('MemberRole', invitations[id]))
         }
 
-        var promise = Ember.RSVP.Promise(function (resolve, reject) {
+        var promise = new Ember.RSVP.Promise(function (resolve, reject) {
 
             if (promises.length) {
                 result = [];
@@ -156,7 +158,7 @@ Service.Invitations = Ember.Object.extend({
                         });
                         resolve(result)
                     }
-                ).fail(reject)
+                ).catch(reject)
             } else {
                 resolve([]);
             }
@@ -195,9 +197,9 @@ Service.Invitations = Ember.Object.extend({
 
             .then(function () {
                 if (this.get('auth').get('isAuthenticated')) {
-                    return this.get('env.router').transitionTo('Invitation.accept')
+                    return this.get('router').transitionTo('Invitation.accept')
                 } else {
-                    return this.get('env.router').transitionTo('Invitation.anonymous')
+                    return this.get('router').transitionTo('Invitation.anonymous')
                 }
             }.bind(this))
 

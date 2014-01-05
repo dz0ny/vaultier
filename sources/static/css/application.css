@@ -1176,3 +1176,50 @@ span.vlt-user img {
     font-size: 12px;
 }
 
+
+/*************************************************************
+**************************************************************
+* Tree nodes
+*************************************************************
+*************************************************************/
+.vlt-tree ul {
+   padding-left: 25px;
+}
+
+.vlt-tree li {
+    list-style: none;
+}
+
+.vlt-tree > .treebranch {
+    padding: 20px;
+    margin-left: 5px;
+    border: 1px solid #E0DBDB;
+}
+
+.vlt-tree li .vlt-node  {
+    line-height: 35px;
+    padding-left: 25px;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    background-position: 0px 6px;
+    background-size: 20px 20px;
+    transition: background-image 1s ease-in-out;
+}
+
+.vlt-tree li .vlt-node,
+.vlt-tree li .vlt-node label {
+    cursor: pointer;
+}
+
+
+.vlt-tree li .vlt-node.vlt-vault {
+    background-image: url('../images/icon-vault-grey.png');
+}
+
+.vlt-tree li .vlt-node.vlt-loading {
+    background-image: url('../images/preloader_100x100.gif');
+}
+
+.vlt-tree li .vlt-node.vlt-card {
+    __background-image: url('../images/icon-card-grey.png');
+}

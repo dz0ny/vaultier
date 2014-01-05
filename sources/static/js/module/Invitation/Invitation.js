@@ -25,7 +25,7 @@ Vaultier.InvitationAcceptRoute = Ember.Route.extend(
             var invitations = this.get('invitations');
             var promise = invitations.listRolesInSession();
 
-            promise = promise.fail(function (error) {
+            promise = promise.catch(function (error) {
                 transition.abort();
                 invitations.clearInvitationsInSession()
 

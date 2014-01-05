@@ -59,7 +59,7 @@ Vaultier.MemberInviteRoute = Ember.Route.extend(
                         $.notify('Your invitations has been saved', 'success');
                         window.history.go(-1);
                     })
-                    .fail(function () {
+                    .catch(function () {
                         $.notify('Oooups! Something went wrong.', 'error');
                     })
 

@@ -1,17 +1,16 @@
 from django.test.testcases import TransactionTestCase
 from django.utils import unittest
 from django.utils.unittest.suite import TestSuite
-from rest_framework.status import HTTP_201_CREATED, HTTP_403_FORBIDDEN, HTTP_200_OK, HTTP_204_NO_CONTENT
+from rest_framework.status import HTTP_403_FORBIDDEN, HTTP_200_OK, HTTP_204_NO_CONTENT
 from vaultier.models.member import Member
 from vaultier.models.role_fields import RoleLevelField
 from vaultier.test.auth_tools import auth_api_call, register_api_call
-from vaultier.test.card_tools import create_card_api_call, list_cards_api_call, retrieve_card_api_call, delete_card_api_call
+from vaultier.test.card_tools import create_card_api_call, retrieve_card_api_call, delete_card_api_call, update_card_api_call
 from vaultier.test.member_tools import invite_member_api_call, accept_invitation_api_call
 from vaultier.test.role_tools import create_role_api_call
 from vaultier.test.tools import format_response
-from vaultier.test.vault_tools import create_vault_api_call, delete_vault_api_call, list_vaults_api_call, retrieve_vault_api_call
+from vaultier.test.vault_tools import create_vault_api_call, retrieve_vault_api_call
 from vaultier.test.workspace_tools import create_workspace_api_call, delete_workspace_api_call, list_workspaces_api_call, retrieve_workspace_api_call
-from vaultier.tools.changes import post_change
 
 
 class ApiCardPermsTest(TransactionTestCase):
@@ -194,6 +193,69 @@ class ApiCardPermsTest(TransactionTestCase):
         self.assertEqual(
             response.status_code,
             HTTP_403_FORBIDDEN,
+            format_response(response)
+        )
+
+    def test_040_move(self):
+        # create user1
+        email = 'jan@rclick.cz'
+        user1 = register_api_call(email=email, nickname='Jan').data
+        user1token = auth_api_call(email=email).data.get('token')
+
+        # create user2
+        email = 'marcel@rclick.cz'
+        user2 = register_api_call(email=email, nickname='Marcel').data
+        user2token = auth_api_call(email=email).data.get('token')
+
+        # create workspace for user1
+        workspace1 = create_workspace_api_call(user1token, name='workspace').data
+
+        # create vault for user1
+        vault1 = create_vault_api_call(user1token, name='vault1_in_workspace', workspace=workspace1.get('id')).data
+
+        # user1 creates vault2
+        vault2 = create_vault_api_call(user1token, name='vault2_in_workspace', workspace=workspace1.get('id')).data
+
+        # user1 creates card1 inside vault1
+        card1 = create_card_api_call(user1token, name="card1_in_vault1", vault=vault1.get('id')).data
+
+        # invite user 2 to vault2
+        user2member = invite_member_api_call(user1token, email=user2.get('email'), workspace=workspace1.get('id')).data
+        user2hash = Member.objects.get(pk=user2member.get('id')).invitation_hash
+        user2accepted = accept_invitation_api_call(user2token, id=user2member.get('id'), hash=user2hash)
+        user2role = create_role_api_call(
+            user1token,
+            member=user2member.get('id'),
+            to_vault=vault2.get('id'),
+            level=RoleLevelField.LEVEL_READ
+        )
+
+        # user 2 tries to retrieve card1 should not be allowed
+        response = retrieve_card_api_call(user2token, card1.get('id'))
+        self.assertEqual(
+            response.status_code,
+            HTTP_403_FORBIDDEN,
+            format_response(response)
+        )
+
+        # user 2 tries to retrieve vault2 should be allowed
+        response = retrieve_vault_api_call(user2token, vault2.get('id'))
+        self.assertEqual(
+            response.status_code,
+            HTTP_200_OK,
+            format_response(response)
+        )
+
+        # user1 moves card to vault2
+        update_card_api_call(user1token, card1.get('id'),{
+            'vault': vault2.get('id')
+        }).data
+
+        # card1 should be now accessible to user 2
+        response = retrieve_card_api_call(user2token, card1.get('id'))
+        self.assertEqual(
+            response.status_code,
+            HTTP_200_OK,
             format_response(response)
         )
 

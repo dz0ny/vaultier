@@ -2,7 +2,18 @@ Vaultier.CardRoute = Ember.Route.extend(
     {
 
         model: function (params, transition) {
-            var model = this.get('store').find('Card', params.card);
+            var vault = this.modelFor('Vault');
+            var model = this.get('store')
+                .find('Card', params.card)
+                .then(function (model) {
+                    if (model.get('vault') != vault.get('pk')) {
+                        var error = new Error();
+                        error.status = 404
+                        throw error
+                    }
+                    return model
+                })
+
             return model;
         },
 

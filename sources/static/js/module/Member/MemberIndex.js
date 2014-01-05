@@ -34,21 +34,21 @@ Vaultier.MemberIndexRoute = Ember.Route.extend(
             if (blocks.workspace) {
                 queries.workspace = workspace
                 queries.workspaceRoles = store.find('Role', {
-                    to_workspace: workspace.get('id')
+                    to_workspace: workspace.get('pk')
                 })
             }
 
             if (blocks.vault) {
                 queries.vault = vault
                 queries.vaultRoles = store.find('Role', {
-                    to_vault: vault.get('id')
+                    to_vault: vault.get('pk')
                 })
             }
 
             if (blocks.card) {
                 queries.card = card
                 queries.cardRoles = store.find('Role', {
-                    to_card: card.get('id')
+                    to_card: card.get('pk')
                 })
             }
 

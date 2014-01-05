@@ -92,7 +92,7 @@ function program8(depth0,data) {
 function program10(depth0,data) {
   
   var buffer = '', stack1, stack2, hashContexts, hashTypes, options;
-  data.buffer.push("\r\n                        <div class=\"padding-15\">\r\n                            There are no permission to this object.\r\n\r\n                            ");
+  data.buffer.push("\r\n                        <div>\r\n                            <div class=\"padding-15\">\r\n                                There are no permission to this object.\r\n\r\n                                ");
   hashContexts = {'class': depth0};
   hashTypes = {'class': "STRING"};
   options = {hash:{
@@ -100,13 +100,13 @@ function program10(depth0,data) {
   },inverse:self.noop,fn:self.program(11, program11, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
   stack2 = ((stack1 = helpers['link-to'] || depth0['link-to']),stack1 ? stack1.call(depth0, "inviteRouteName", options) : helperMissing.call(depth0, "link-to", "inviteRouteName", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("\r\n\r\n                        </div>\r\n                    ");
+  data.buffer.push("\r\n\r\n                            </div>\r\n                        </div>\r\n                    ");
   return buffer;
   }
 function program11(depth0,data) {
   
   
-  data.buffer.push("\r\n                                <span class=\"glyphicon glyphicon-user\"></span>\r\n                                Invite\r\n                            ");
+  data.buffer.push("\r\n                                    <span class=\"glyphicon glyphicon-user\"></span>\r\n                                    Invite\r\n                                ");
   }
 
 function program13(depth0,data) {

@@ -12,7 +12,6 @@ Vaultier.registerDI = function(app) {
         app.inject('route', 'errors', 'service:errors');
         app.inject('service:errors', 'errorController', 'controller:ErrorGeneric')
         app.inject('service:errors', 'router', 'router:main')
-        app.__container__.lookup('service:errors').register();
 
         // service:session
         app.register('service:session', Service.Session)
@@ -33,6 +32,7 @@ Vaultier.registerDI = function(app) {
         app.inject('service:invitations', 'store', 'store:main')
         app.inject('service:invitations', 'session', 'service:session')
         app.inject('service:invitations', 'auth', 'service:auth');
+        app.inject('service:invitations', 'router', 'router:main');
         app.inject('route:InvitationUse', 'invitations', 'service:invitations')
         app.inject('route:InvitationAccept', 'invitations', 'service:invitations')
         app.inject('route:WorkspaceMemberInvite', 'invitations', 'service:invitations')

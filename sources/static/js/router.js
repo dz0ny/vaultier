@@ -102,6 +102,9 @@ var router = Vaultier.Router.map(function () {
                             // edit
                             this.route('edit', { path: '/edit'});
 
+                            // move
+                            this.route('move', { path: '/move'});
+
                             // members
                             this.route('memberIndex', { path: '/team'});
                             this.route('memberInvite', { path: '/team/invite'});
@@ -113,6 +116,7 @@ var router = Vaultier.Router.map(function () {
                                 this.route('createSelect', { path: '/create/select'});
                                 this.route('createSubmit', { path: '/create/submit/:type'});
                                 this.route('edit', { path: '/edit/:secret'});
+                                this.route('move', { path: '/move/:secret'});
                             })
                         })
 
@@ -149,11 +153,15 @@ Ember.Route.reopen({
 
 Vaultier.ApplicationRoute = Ember.Route.extend(
     {
-
         actions: {
+
+            error: function (error, transition) {
+                this.get('errors').processError(error);
+                return false;
+            },
+
             loading: function (transition, originRoute) {
                 ApplicationLoader.showLoader();
-
 //                Ember.run.scheduleOnce('afterRender', this, function () {
 //                    console.log('done');
 //                })

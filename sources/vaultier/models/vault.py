@@ -35,6 +35,9 @@ class Vault(ChangesMixin, models.Model, TreeItemMixin):
         db_table = u'vaultier_vault'
         app_label = 'vaultier'
 
+    def __unicode__(self):
+        return 'Vault('+str(self.id)+'):'+self.name
+
     objects = VaultManager()
 
     name = models.CharField(max_length=255)

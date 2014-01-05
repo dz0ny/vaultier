@@ -1,8 +1,9 @@
 from vaultier.models.card import Card
 from vaultier.models.member import Member
 from vaultier.models.role import Role
+from vaultier.models.secret import Secret
 from vaultier.models.vault import Vault
-from vaultier.perms.materializer import CreateRoleMaterializer,  UpdateRoleLevelMaterializer, UpdateRoleMemberMaterializer, UpdateMemberUserMaterializer, InsertedObjectMaterializer
+from vaultier.perms.materializer import CreateRoleMaterializer, UpdateRoleLevelMaterializer, UpdateRoleMemberMaterializer, UpdateMemberUserMaterializer, InsertedObjectMaterializer, MovedObjectMaterializer
 from vaultier.tools.changes import post_change, INSERT, UPDATE
 
 
@@ -36,6 +37,26 @@ def on_object_inserted(signal=None, sender=None, instance=None, event_type=None,
         materializer = InsertedObjectMaterializer(instance)
         materializer.materialize()
 
+# when object is moved (parent id is changed)
+#@todo:disallow moving of vaults
+def on_object_moved(signal=None, sender=None, instance=None, event_type=None, **kwargs):
+    if (event_type == UPDATE):
+        materializer = None
+        n = instance.__class__.__name__
+        c = instance.changes()
+        o = instance.old_changes()
+        p = instance.previous_changes()
+        os = instance.old_state()
+        ps = instance.previous_state()
+
+        if ( instance.__class__.__name__ == 'Card' and instance.old_changes().get('vault')):
+            materializer = MovedObjectMaterializer(instance);
+        if (instance.__class__.__name__ == 'Secret' and instance.old_changes().get('card')):
+            materializer = MovedObjectMaterializer(instance.card);
+
+        if materializer:
+            materializer.materialize()
+
 
 def register_signals():
     post_change.connect(on_role_created, sender=Role)
@@ -45,3 +66,7 @@ def register_signals():
 
     post_change.connect(on_object_inserted, sender=Vault)
     post_change.connect(on_object_inserted, sender=Card)
+
+    post_change.connect(on_object_moved, sender=Card)
+    post_change.connect(on_object_moved, sender=Secret)
+

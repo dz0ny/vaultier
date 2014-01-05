@@ -1,7 +1,4 @@
 Vaultier.ErrorGenericRoute = Ember.Route.extend({
-    deactivate: function () {
-        this.set('errors.rendering', false)
-    },
 
     renderTemplate: function() {
         var tpl = this.get('controller.content.template');
