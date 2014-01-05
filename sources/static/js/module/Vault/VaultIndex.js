@@ -1,7 +1,16 @@
 Vaultier.VaultRoute = Ember.Route.extend(
     {
         model: function (params, transition) {
-            var model = this.get('store').find('Vault', params.vault )
+            workspace = this.modelFor('Workspace');
+            model = this.get('store')
+                .find('Vault', params.vault)
+                .then(function (model) {
+                    if (model.get('workspace') != workspace.get('pk')) {
+                        var error = new Error();
+                        error.status = 404
+                        throw error
+                    }
+                })
             return model;
         },
 
@@ -23,7 +32,7 @@ Vaultier.VaultRoute = Ember.Route.extend(
     });
 
 Vaultier.VaultIndexRoute = Ember.Route.extend({
-    beforeModel: function() {
+    beforeModel: function () {
         this.transitionTo('Cards.index')
     }
 })

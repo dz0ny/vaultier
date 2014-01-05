@@ -102,7 +102,7 @@ var router = Vaultier.Router.map(function () {
                             // edit
                             this.route('edit', { path: '/edit'});
 
-                         // move
+                            // move
                             this.route('move', { path: '/move'});
 
                             // members
@@ -153,8 +153,13 @@ Ember.Route.reopen({
 
 Vaultier.ApplicationRoute = Ember.Route.extend(
     {
-
         actions: {
+
+            error: function (error, transition) {
+                this.get('errors').processError(error);
+                return false;
+            },
+
             loading: function (transition, originRoute) {
                 ApplicationLoader.showLoader();
 //                Ember.run.scheduleOnce('afterRender', this, function () {

@@ -12,7 +12,6 @@ Vaultier.registerDI = function(app) {
         app.inject('route', 'errors', 'service:errors');
         app.inject('service:errors', 'errorController', 'controller:ErrorGeneric')
         app.inject('service:errors', 'router', 'router:main')
-//        app.__container__.lookup('service:errors').register();
 
         // service:session
         app.register('service:session', Service.Session)
