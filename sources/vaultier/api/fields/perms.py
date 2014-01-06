@@ -1,4 +1,6 @@
 from rest_framework.fields import Field
+from vaultier.models.acl import Acl
+from vaultier.models.acl_fields import AclLevelField
 from vaultier.models.role_fields import RoleLevelField
 
 class PermsField(Field):
@@ -17,16 +19,14 @@ class PermsField(Field):
         acls = self.get_acls(obj, user)
 
         for acl in acls:
-            if acl.level == RoleLevelField.LEVEL_CREATE:
-                perms['read'] = True
+            if acl.level == AclLevelField.LEVEL_CREATE:
                 perms['create'] = True
-            if acl.level == RoleLevelField.LEVEL_READ:
+            if acl.level == AclLevelField.LEVEL_READ:
                 perms['read'] = True
-            if acl.level == RoleLevelField.LEVEL_WRITE:
+            if acl.level == AclLevelField.LEVEL_WRITE:
                 perms['update'] = True
                 perms['delete'] = True
                 perms['create'] = True
-                perms['read'] = True
                 perms['invite'] = True
         return perms
 

@@ -1,7 +1,8 @@
 from vaultier.models import Acl
 from vaultier.models.acl_fields import AclDirectionField
+from vaultier.models.role import Role
 from vaultier.models.role_fields import RoleLevelField
-from vaultier.perms.strategy import ReadAclStrategy, WriteAclStrategy
+from vaultier.perms.strategy import ReadAclStrategy, WriteAclStrategy, CreateAclStrategy
 
 
 class CreateRoleMaterializer(object):
@@ -13,7 +14,7 @@ class CreateRoleMaterializer(object):
     def get_strategy(self):
         strategy = None
         if (self.role.level == RoleLevelField.LEVEL_CREATE):
-            strategy = ReadAclStrategy
+            strategy = CreateAclStrategy
         if (self.role.level == RoleLevelField.LEVEL_READ):
             strategy = ReadAclStrategy
         if (self.role.level == RoleLevelField.LEVEL_WRITE):
@@ -162,19 +163,19 @@ class InsertedObjectMaterializer(object):
     def __init__(self, object):
         self.object = object
 
-    ## adds WRITE role for object created by user which have CREATE role to parent object
-    #def materialize_roles(self):
-    #    parent = self.object.get_parent_object()
-    #    if parent:
-    #        for parent_role in parent.role_set.all():
-    #            if (parent_role.member.user and parent_role.member.user.id == self.object.created_by.id):
-    #                if (role.level == RoleLevelField.LEVEL_CREATE):
-    #                    role = Role()
-    #                    role.member = parent_role.member
-    #                    role.created_by = role.member.user
-    #                    role.level = RoleLevelField.LEVEL_WRITE
-    #                    role.set_object(self.object)
-    #                    role.save()
+    # adds WRITE role for object created by user which have CREATE role to parent object
+    def materialize_role(self):
+        parent = self.object.get_parent_object()
+        if parent:
+            for parent_role in parent.role_set.all():
+                if (parent_role.member.user and parent_role.member.user.id == self.object.created_by.id):
+                    if (parent_role.level == RoleLevelField.LEVEL_CREATE):
+                        role = Role()
+                        role.member = parent_role.member
+                        role.created_by = role.member.user
+                        role.level = RoleLevelField.LEVEL_WRITE
+                        role.set_object(self.object)
+                        role.save()
 
     # materialize roles
     def materialize(self):

@@ -35,7 +35,13 @@ def on_member_is_regular(signal=None, sender=None, instance=None, event_type=Non
 def on_object_inserted(signal=None, sender=None, instance=None, event_type=None, **kwargs):
     if event_type == INSERT:
         materializer = InsertedObjectMaterializer(instance)
+
+        # materialize CREATE roles
+        materializer.materialize_role()
+
+        # materialize acl
         materializer.materialize()
+
 
 # when object is moved (parent id is changed)
 #@todo:disallow moving of vaults

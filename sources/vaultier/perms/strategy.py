@@ -63,10 +63,16 @@ class WriteAclStrategy(ReadAclStrategy):
         return acls
 
 
-class CreateAclStrategy(object):
-    def acl_for_child(self, object ):
-        pass
-    def acl_for_parent(self, object):
-        pass
-    def acl_for_object(self, object):
-        pass
+class CreateAclStrategy(ReadAclStrategy):
+    def acl_for_child(self, role, object ):
+        return []
+
+    def acl_for_object(self, role, object):
+        acls = super(CreateAclStrategy, self).acl_for_object(role, object);
+
+        acl = self.construct_acl(role, object)
+        acl.direction = AclDirectionField.DIR_CURRENT
+        acl.level = AclLevelField.LEVEL_CREATE
+        acls.append(acl)
+
+        return acls
