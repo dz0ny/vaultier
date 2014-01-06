@@ -14,7 +14,7 @@ class RoleManager(Manager):
 
         # all workspaces user has permission write
         workspaces = Workspace.objects.filter(
-            acl__level = AclLevelField.LEVEL_WRITE,
+            acl__level = AclLevelField.LEVEL_READ,
             acl__user = user
         ).distinct()
 

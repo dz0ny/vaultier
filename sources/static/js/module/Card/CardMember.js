@@ -24,6 +24,16 @@ Vaultier.CardMemberIndexRoute = Vaultier.MemberIndexRoute.extend({
         return {
             inviteRouteName: 'Card.memberInvite'
         }
+    },
+
+    setupRoleLevels: function () {
+        var levels = Vaultier.Role.proto().roles.toArray().filter(function (item, index) {
+            if (item.id == 'CREATE') {
+                return false
+            }
+            return item
+        });
+        return levels;
     }
 });
 
@@ -53,6 +63,16 @@ Vaultier.CardMemberInviteRoute = Vaultier.MemberInviteRoute.extend({
             .addCard()
             .addLink('Card.memberIndex', 'Collaborators')
             .addText('Invite');
+    },
+
+    setupRoleLevels: function () {
+        var levels = Vaultier.Role.proto().roles.toArray().filter(function (item, index) {
+            if (item.id == 'CREATE') {
+                return false
+            }
+            return item
+        });
+        return levels;
     }
 
 });

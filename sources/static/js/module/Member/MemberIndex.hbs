@@ -54,13 +54,15 @@
                     </div>
                     <div class="col-md-4 vlt-controls">
                         {{#if block.readOnly }}
-                            <a class="btn btn-default btn-sm"
-                                {{bind-attr href=block.url}}
-                               data-toggle="tooltip"
-                               title="Edit roles"
-                                    >
-                                <span class="glyphicon glyphicon-edit"></span>
-                            </a>
+                            {{#if block.object.perms.invite}}
+                                <a class="btn btn-default btn-sm"
+                                    {{bind-attr href=block.url}}
+                                   data-toggle="tooltip"
+                                   title="Edit roles"
+                                        >
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                </a>
+                            {{/if}}
                         {{/if}}
 
                     </div>

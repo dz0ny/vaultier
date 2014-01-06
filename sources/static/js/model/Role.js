@@ -15,6 +15,10 @@ Vaultier.Role = DS.Model.extend(
         to_card: DS.attr(),
 
         roles: new Utils.ConstantList({
+            'CREATE': {
+                value: 50,
+                text: 'Create'
+            },
             'READ': {
                 value: 100,
                 text: 'Read'

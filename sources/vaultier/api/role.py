@@ -17,8 +17,8 @@ from vaultier.perms.check import has_object_acl
 class CanManageRolePermission(BasePermission):
     def has_object_permission(self, request, view, role):
 
-        workspace = role.get_object().get_root_object()
-        result = has_object_acl(request.user, workspace, AclLevelField.LEVEL_WRITE)
+        object = role.get_object()
+        result = has_object_acl(request.user, object, AclLevelField.LEVEL_WRITE)
 
         return result
 

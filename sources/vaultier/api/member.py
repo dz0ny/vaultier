@@ -7,7 +7,7 @@ from rest_framework.permissions import BasePermission, IsAuthenticated
 from rest_framework.relations import PrimaryKeyRelatedField
 from rest_framework.response import Response
 from rest_framework.serializers import ModelSerializer, Serializer
-from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_200_OK
+from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_200_OK, HTTP_405_METHOD_NOT_ALLOWED
 from rest_framework.viewsets import GenericViewSet, ModelViewSet
 from vaultier.api.user import RelatedUserSerializer
 from vaultier.auth.authentication import TokenAuthentication
@@ -24,7 +24,7 @@ from vaultier.perms.check import has_object_acl
 class CanManageMemberPermission(BasePermission):
     def has_object_permission(self, request, view, obj):
         workspace = obj.workspace
-        result = has_object_acl(request.user, workspace, AclLevelField.LEVEL_WRITE)
+        result = has_object_acl(request.user, workspace, AclLevelField.LEVEL_READ)
 
         return result
 
@@ -241,6 +241,12 @@ class MemberViewSet(ModelViewSet):
                 status=HTTP_200_OK,
             )
         return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
+
+    def destroy(self, request, *args, **kwargs):
+            return Response(
+                {'detail': 'Not supported'},
+                status=HTTP_405_METHOD_NOT_ALLOWED,
+            )
 
     def create(self, request, *args, **kwargs):
         return self.invite(request, *args, **kwargs)

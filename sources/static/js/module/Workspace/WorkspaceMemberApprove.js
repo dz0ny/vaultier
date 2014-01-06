@@ -6,7 +6,7 @@ Vaultier.WorkspaceMemberApproveRoute = Ember.Route.extend(
             // check permissions
             var workspace = this.modelFor('Workspace');
             if (!this.get('auth').checkPermissions(transition, function () {
-                return workspace.get('perms.invite')
+                return workspace.get('perms.read')
             }.bind(this), true)) {
                 return;
             }
@@ -24,7 +24,6 @@ Vaultier.WorkspaceMemberApproveRoute = Ember.Route.extend(
                 Vaultier.Breadcrumbs.create({router: this.get('router')})
                     .addHome()
                     .addWorkspace()
-                    .addLink('Workspace.memberIndex', 'Collaborators')
                     .addText('List of members to approve')
             );
         },

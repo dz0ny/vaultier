@@ -1,6 +1,6 @@
 Vaultier.VaultMemberIndexRoute = Vaultier.MemberIndexRoute.extend({
 
-    setupInviteData: function(params) {
+    setupInviteData: function (params) {
         var vault = this.modelFor('Vault');
         return {
             inviteObject: vault
@@ -24,6 +24,7 @@ Vaultier.VaultMemberIndexRoute = Vaultier.MemberIndexRoute.extend({
             inviteRouteName: 'Vault.memberInvite'
         }
     }
+
 });
 
 
