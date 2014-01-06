@@ -7,6 +7,7 @@ from vaultier.api.member import RelatedMemberSerializer
 from vaultier.api.user import RelatedUserSerializer
 from vaultier.auth.authentication import TokenAuthentication
 from vaultier.models import Role
+from vaultier.models.acl_fields import AclLevelField
 from vaultier.models.member import Member
 from vaultier.models.role import Role
 from vaultier.models.role_fields import RoleLevelField
@@ -17,7 +18,7 @@ class CanManageRolePermission(BasePermission):
     def has_object_permission(self, request, view, role):
 
         workspace = role.get_object().get_root_object()
-        result = has_object_acl(request.user, workspace, RoleLevelField.LEVEL_WRITE)
+        result = has_object_acl(request.user, workspace, AclLevelField.LEVEL_WRITE)
 
         return result
 

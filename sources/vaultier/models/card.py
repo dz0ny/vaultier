@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models.deletion import PROTECT, CASCADE
 from django.db.models.manager import Manager
 from django.db.models import F, Q
+from vaultier.models.acl_fields import AclLevelField
 from vaultier.tools.changes import ChangesMixin
 from vaultier.tools.tree import TreeItemMixin
 
@@ -26,7 +27,8 @@ class CardManager(Manager):
 
     def all_for_user(self, user):
         cards = self.filter(
-            acl__user=user
+            acl__user=user,
+            acl__level=AclLevelField.LEVEL_READ
         ).distinct()
 
         return cards

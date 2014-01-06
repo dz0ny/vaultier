@@ -20,7 +20,7 @@ def suite():
     suite = TestSuite()
 
     suite.addTest(auth_suite())
-    suite.addTest(acl_suite())
+    #suite.addTest(acl_suite())
     suite.addTest(role_suite())
     suite.addTest(member_suite())
 

@@ -17,6 +17,9 @@ class PermsField(Field):
         acls = self.get_acls(obj, user)
 
         for acl in acls:
+            if acl.level == RoleLevelField.LEVEL_CREATE:
+                perms['read'] = True
+                perms['create'] = True
             if acl.level == RoleLevelField.LEVEL_READ:
                 perms['read'] = True
             if acl.level == RoleLevelField.LEVEL_WRITE:

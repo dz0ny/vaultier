@@ -12,6 +12,7 @@ from rest_framework.viewsets import GenericViewSet, ModelViewSet
 from vaultier.api.user import RelatedUserSerializer
 from vaultier.auth.authentication import TokenAuthentication
 from vaultier.mailer.invitation import resend_invitation
+from vaultier.models.acl_fields import AclLevelField
 from vaultier.models.member import Member
 from vaultier.models.member_fields import MemberStatusField
 from vaultier.models.role import Role
@@ -23,7 +24,7 @@ from vaultier.perms.check import has_object_acl
 class CanManageMemberPermission(BasePermission):
     def has_object_permission(self, request, view, obj):
         workspace = obj.workspace
-        result = has_object_acl(request.user, workspace, RoleLevelField.LEVEL_WRITE)
+        result = has_object_acl(request.user, workspace, AclLevelField.LEVEL_WRITE)
 
         return result
 
@@ -231,7 +232,7 @@ class MemberViewSet(ModelViewSet):
         serializer = MemberResendSerializer(data=request.DATA)
         if serializer.is_valid():
             member = self.get_object(
-                queryset=Member.objects.all_acls(request.user)
+                queryset=Member.objects.all_for_user(request.user)
                 .filter(status=MemberStatusField.STATUS_INVITED))
 
             resend_invitation(member)
@@ -248,6 +249,6 @@ class MemberViewSet(ModelViewSet):
         return self.resend(request, *args, **kwargs)
 
     def get_queryset(self):
-        queryset = Member.objects.all_acls(self.request.user)
+        queryset = Member.objects.all_for_user(self.request.user)
         return queryset
 

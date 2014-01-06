@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models.deletion import PROTECT, CASCADE
 from django.db.models.manager import Manager
+from vaultier.models.acl_fields import AclLevelField
 from vaultier.models.secret_fields import SecretTypeField
 from vaultier.tools.changes import ChangesMixin
 
@@ -10,7 +11,8 @@ class CardManager(Manager):
 
         from vaultier.models.card import Card
         cards = Card.objects.filter(
-            acl__user=user
+            acl__user=user,
+            acl__level=AclLevelField.LEVEL_READ
         ).distinct()
         
         secrets = self.filter(

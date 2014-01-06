@@ -1,7 +1,8 @@
 from vaultier.models import Acl
 from vaultier.models.acl_fields import AclDirectionField
 from vaultier.models.role_fields import RoleLevelField
-from vaultier.perms.strategy import StandardAclStrategy
+from vaultier.perms.strategy import ReadAclStrategy, WriteAclStrategy
+
 
 class CreateRoleMaterializer(object):
     role = None
@@ -12,11 +13,11 @@ class CreateRoleMaterializer(object):
     def get_strategy(self):
         strategy = None
         if (self.role.level == RoleLevelField.LEVEL_CREATE):
-            strategy = StandardAclStrategy
+            strategy = ReadAclStrategy
         if (self.role.level == RoleLevelField.LEVEL_READ):
-            strategy = StandardAclStrategy
+            strategy = ReadAclStrategy
         if (self.role.level == RoleLevelField.LEVEL_WRITE):
-            strategy = StandardAclStrategy
+            strategy = WriteAclStrategy
         if (not strategy):
             raise  RuntimeError('Cannot find ACL strategy for role level'+str(self.role.level))
         return strategy()
@@ -32,8 +33,10 @@ class CreateRoleMaterializer(object):
 
         if (direction == AclDirectionField.DIR_UP):
             return strategy.acl_for_parent(self.role, object)
+
         if (direction == AclDirectionField.DIR_DOWN):
             return strategy.acl_for_child(self.role, object)
+
         if (direction == AclDirectionField.DIR_CURRENT):
             return strategy.acl_for_object(self.role, object)
 
@@ -69,6 +72,7 @@ class CreateRoleMaterializer(object):
         # materialize parent objects
         acls.extend(self.materialize_parents(object))
 
+        # materialize child objects
         acls.extend(self.materialize_childs(object))
 
         # save materialized
@@ -80,11 +84,13 @@ class MaterializationSaver(object):
     def save_materialized(self, acls):
         saved = []
 
+        # find existing acl
         # this should be optimized, not do million db queries
         for acl in acls:
             try:
                 Acl.objects.get(
                     role=acl.role,
+                    direction=acl.direction,
                     level=acl.level,
                     to_workspace=acl.to_workspace,
                     to_vault=acl.to_vault,

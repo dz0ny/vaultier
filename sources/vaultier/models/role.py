@@ -1,30 +1,30 @@
 from django.db import models
 from django.db.models.deletion import PROTECT, CASCADE
 from django.db.models.manager import Manager
-from vaultier.auth.rolechecker import RoleChecker
-from vaultier.auth.rolesumarizer import RoleSummarizer
+#from vaultier.auth.rolechecker import RoleChecker
+#from vaultier.auth.rolesumarizer import RoleSummarizer
+from vaultier.models.acl_fields import AclLevelField
 from vaultier.models.role_fields import RoleLevelField
 from vaultier.models.object_reference import ObjectReference, ObjectReferenceTypeField
 from vaultier.tools.changes import ChangesMixin
 
 
 class RoleManager(Manager):
-    def get_roles_to_object(self, object, user):
-        checker = RoleChecker()
-        return checker.get_roles_and_parent_roles(object, user)
-
-    def get_summarized_role_to_object(self, object, user):
-        roles = self.get_roles_to_object(object, user)
-        summarizer = RoleSummarizer()
-        return summarizer.summarize_roles(roles)
+    #def get_roles_to_object(self, object, user):
+    #    checker = RoleChecker()
+    #    return checker.get_roles_and_parent_roles(object, user)
+    #
+    #def get_summarized_role_to_object(self, object, user):
+    #    roles = self.get_roles_to_object(object, user)
+    #    summarizer = RoleSummarizer()
+    #    return summarizer.summarize_roles(roles)
 
     def all_for_user(self, user):
         from vaultier.models.workspace import Workspace
 
-
         # all workspaces user has permission write
         workspaces = Workspace.objects.filter(
-            acl__level = RoleLevelField.LEVEL_WRITE,
+            acl__level = AclLevelField.LEVEL_WRITE,
             acl__user = user
         ).distinct()
 
