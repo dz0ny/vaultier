@@ -96,7 +96,7 @@ function program9(depth0,data) {
     'href': ("block.url")
   },contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
   data.buffer.push(escapeExpression(((stack1 = helpers['bind-attr'] || depth0['bind-attr']),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "bind-attr", options))));
-  data.buffer.push("\r\n                                   data-toggle=\"tooltip\"\r\n                                   title=\"Edit roles\"\r\n                                        >\r\n                                    <span class=\"glyphicon glyphicon-edit\"></span>\r\n                                </a>\r\n                            ");
+  data.buffer.push("\r\n                                   data-toggle=\"tooltip\"\r\n                                   title=\"Edit inherited roles\"\r\n                                        >\r\n                                    <span class=\"glyphicon glyphicon-edit\"></span>\r\n                                </a>\r\n                            ");
   return buffer;
   }
 
@@ -203,19 +203,31 @@ function program21(depth0,data) {
   }
 function program22(depth0,data) {
   
-  var buffer = '', hashTypes, hashContexts;
-  data.buffer.push("\r\n                                        <span class=\"label label-default\">\r\n                                            ");
+  var buffer = '', stack1, hashContexts, hashTypes, options;
+  data.buffer.push("\r\n                                        <span class=\"label label-warning\">\r\n                                        It's you\r\n                                        </span>\r\n                                        <span class=\"label label-default\" data-toggle=\"tooltip\" ");
+  hashContexts = {'data-toggle': depth0,'title': depth0};
+  hashTypes = {'data-toggle': "STRING",'title': "ID"};
+  options = {hash:{
+    'data-toggle': ("tooltip"),
+    'title': ("role.printableDesc")
+  },contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
+  data.buffer.push(escapeExpression(((stack1 = helpers['bind-attr'] || depth0['bind-attr']),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "bind-attr", options))));
+  data.buffer.push(">\r\n                                            ");
   hashTypes = {};
   hashContexts = {};
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "role.printableName", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
-  data.buffer.push("\r\n                                        </span>\r\n                                        <span class=\"label label-warning\">\r\n                                        It's you\r\n                                        </span>\r\n\r\n                                    ");
+  data.buffer.push("\r\n                                        </span>\r\n\r\n\r\n                                    ");
   return buffer;
   }
 
 function program24(depth0,data) {
   
-  var buffer = '', hashContexts, hashTypes;
-  data.buffer.push("\r\n                                        <div class=\"input-group\">\r\n                                            ");
+  var buffer = '', hashTypes, hashContexts;
+  data.buffer.push("\r\n                                        <div class=\"vlt-edit-perms\">\r\n                                            <a class=\"vlt-delete btn btn-default btn-sm\" ");
+  hashTypes = {};
+  hashContexts = {};
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "deleteRole", "role", "block", {hash:{},contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
+  data.buffer.push(">\r\n                                                <span class=\"glyphicon glyphicon-trash\"></span>\r\n                                            </a>\r\n                                            ");
   hashContexts = {'role': depth0,'class': depth0,'contentBinding': depth0,'optionValuePath': depth0,'optionLabelPath': depth0,'valueBinding': depth0};
   hashTypes = {'role': "ID",'class': "STRING",'contentBinding': "STRING",'optionValuePath': "STRING",'optionLabelPath': "STRING",'valueBinding': "STRING"};
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "view.Select", {hash:{
@@ -226,23 +238,26 @@ function program24(depth0,data) {
     'optionLabelPath': ("content.text"),
     'valueBinding': ("role.level")
   },contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
-  data.buffer.push("\r\n                                            <a class=\"vlt-delete btn btn-default btn-sm input-group-btn\" ");
-  hashTypes = {};
-  hashContexts = {};
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "deleteRole", "role", "block", {hash:{},contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
-  data.buffer.push(">\r\n                                                <span class=\"glyphicon glyphicon-trash\"></span>\r\n                                            </a>\r\n                                        </div>\r\n                                    ");
+  data.buffer.push("\r\n                                        </div>\r\n                                    ");
   return buffer;
   }
 
 function program26(depth0,data) {
   
-  var buffer = '', stack1, hashTypes, hashContexts;
+  var buffer = '', stack1, hashTypes, hashContexts, options;
   data.buffer.push("\r\n\r\n                                    ");
   hashTypes = {};
   hashContexts = {};
   stack1 = helpers['if'].call(depth0, "role.isCurrentUser", {hash:{},inverse:self.noop,fn:self.program(27, program27, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\r\n\r\n                                    <span class=\"label label-default\">\r\n                                        ");
+  data.buffer.push("\r\n\r\n                                    <span class=\"label label-default\" data-toggle='tooltip' ");
+  hashContexts = {'title': depth0};
+  hashTypes = {'title': "ID"};
+  options = {hash:{
+    'title': ("role.printableDesc")
+  },contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
+  data.buffer.push(escapeExpression(((stack1 = helpers['bind-attr'] || depth0['bind-attr']),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "bind-attr", options))));
+  data.buffer.push(">\r\n                                        ");
   hashTypes = {};
   hashContexts = {};
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "role.printableName", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));

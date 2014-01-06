@@ -17,15 +17,18 @@ Vaultier.Role = DS.Model.extend(
         roles: new Utils.ConstantList({
             'CREATE': {
                 value: 50,
-                text: 'Create'
+                text: 'Create own',
+                desc:'Can create new, modify own, invite and grant permissions to own'
             },
             'READ': {
                 value: 100,
+                desc: 'Can read mine and others',
                 text: 'Read'
             },
             'WRITE': {
                 value: 200,
-                text: 'Write'
+                text: 'Write',
+                desc: 'Can write mine and others, invite and grant permissions to mine and others '
             }
         }),
 
@@ -61,6 +64,16 @@ Vaultier.Role = DS.Model.extend(
         isNonApprovedMember : function() {
             return this.get('member.status') == Vaultier.Member.proto().statuses['NON_APPROVED_MEMBER'].value;
         }.property('member.status'),
+
+        printableDesc: function() {
+            var val = this.roles.getByValue(this.get('level'));
+            if (val) {
+                return val.desc
+            } else {
+                return 'Unknown role level'
+            }
+
+        }.property('level'),
 
         printableName: function() {
             var val = this.roles.getByValue(this.get('level'));

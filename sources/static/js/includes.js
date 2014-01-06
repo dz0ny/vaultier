@@ -194,9 +194,10 @@ $(document).ready(function () {
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Invitation/Invitation.js');
 
     /********************** member **/
+    ApplicationLoader.queueFile(STATIC_URL + 'js/module/Member/MemberInviteInput.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Member/MemberIndex.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Member/MemberInvite.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'js/module/Member/MemberInviteInput.js');
+
 
     /********************** Workspace **/
     ApplicationLoader.queueFile(STATIC_URL + 'tpl/Workspace/WorkspacesIndex.js');

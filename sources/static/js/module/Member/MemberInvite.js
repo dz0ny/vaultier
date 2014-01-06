@@ -96,6 +96,7 @@ Vaultier.MemberInviteController = Ember.Controller.extend({
 
 Vaultier.MemberInviteView = Ember.View.extend({
     templateName: 'Member/MemberInvite',
-    layoutName: 'Layout/LayoutStandard'
+    layoutName: 'Layout/LayoutStandard',
 
+    Select: Vaultier.MemberSelectRoleView
 });

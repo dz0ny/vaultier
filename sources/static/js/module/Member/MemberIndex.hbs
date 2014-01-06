@@ -58,7 +58,7 @@
                                 <a class="btn btn-default btn-sm"
                                     {{bind-attr href=block.url}}
                                    data-toggle="tooltip"
-                                   title="Edit roles"
+                                   title="Edit inherited roles"
                                         >
                                     <span class="glyphicon glyphicon-edit"></span>
                                 </a>
@@ -116,15 +116,19 @@
                                 {{#unless block.readOnly}}
 
                                     {{#if role.isCurrentUser}}
-                                        <span class="label label-default">
-                                            {{role.printableName}}
-                                        </span>
                                         <span class="label label-warning">
                                         It's you
                                         </span>
+                                        <span class="label label-default" data-toggle="tooltip" {{bind-attr data-toggle='tooltip' title=role.printableDesc}}>
+                                            {{role.printableName}}
+                                        </span>
+
 
                                     {{else}}
-                                        <div class="input-group">
+                                        <div class="vlt-edit-perms">
+                                            <a class="vlt-delete btn btn-default btn-sm" {{action deleteRole role block}}>
+                                                <span class="glyphicon glyphicon-trash"></span>
+                                            </a>
                                             {{view view.Select
                                             role=role
                                             class="form-control vlt-perms"
@@ -133,9 +137,6 @@
                                             optionLabelPath="content.text"
                                             valueBinding="role.level"
                                             }}
-                                            <a class="vlt-delete btn btn-default btn-sm input-group-btn" {{action deleteRole role block}}>
-                                                <span class="glyphicon glyphicon-trash"></span>
-                                            </a>
                                         </div>
                                     {{/if}}
                                 {{else}}
@@ -146,7 +147,7 @@
                                         </span>
                                     {{/if}}
 
-                                    <span class="label label-default">
+                                    <span class="label label-default" data-toggle='tooltip' {{bind-attr title=role.printableDesc}}>
                                         {{role.printableName}}
                                     </span>
 

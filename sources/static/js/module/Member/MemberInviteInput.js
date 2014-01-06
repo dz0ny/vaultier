@@ -125,3 +125,39 @@ Vaultier.MemberInviteInput = Ember.Component.extend({
     }
 
 });
+
+Vaultier.MemberSelectRoleView = Ember.Select.extend({
+
+    willDestroyElement: function () {
+        var el = $(this.get('element'));
+        var selectize = el[0].selectize;
+        selectize.destroy();
+    },
+
+    didInsertElement: function () {
+        var el = $(this.get('element'));
+        el.selectize({
+            create: false,
+            highlight: false,
+            render: {
+                option: function (item, escape) {
+                    var item = Vaultier.Role.proto().roles.getByValue(item.value);
+                    return [
+                        '<div>',
+                        '<div>' + item.text + '</div>',
+                        '<div class="help-block">' + item.desc + '</div>',
+                        '</div>'
+                    ].join('')
+                }.bind(this)
+            }
+
+        })
+        var selectize = el[0].selectize;
+        selectize.on('change', function (value) {
+            this.set('value', value)
+            this.send('changed', value);
+        }.bind(this));
+
+
+    }
+});
