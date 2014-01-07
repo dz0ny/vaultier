@@ -16,7 +16,6 @@ from vaultier.models.acl_fields import AclLevelField
 from vaultier.models.member import Member
 from vaultier.models.member_fields import MemberStatusField
 from vaultier.models.role import Role
-from vaultier.models.role_fields import RoleLevelField
 from vaultier.models.workspace import Workspace
 from vaultier.perms.check import has_object_acl
 

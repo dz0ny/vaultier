@@ -8,15 +8,13 @@ from vaultier.models.role import Role
 from vaultier.models.role_fields import RoleLevelField
 from vaultier.test.auth_tools import auth_api_call, register_api_call
 from vaultier.test.member_tools import invite_member_api_call, accept_invitation_api_call
-from vaultier.test.role_tools import create_role_api_call, list_role_api_call
+from vaultier.test.role_tools import create_role_api_call, list_role_api_call, update_role_api_call, delete_role_api_call
 from vaultier.test.tools import format_response
+from vaultier.test.vault_tools import create_vault_api_call
 from vaultier.test.workspace_tools import create_workspace_api_call
 
 
 class ApiRoleTest(TransactionTestCase):
-
-    #todo test edit should not be allowed
-    #todo test roles are moving together with member
 
     def test_010_permissions_to_manage_roles(self):
         # create first user
@@ -111,10 +109,29 @@ class ApiRoleTest(TransactionTestCase):
             format_response(response)
         )
 
-        # user1 changes role level to only read, user2 should not be able to list any roles
+        # user1 changes role level to only read, user2 should  be able to list roles
         create_role_api_call(user1token, user2member.get('id'), workspace1.get('id'), level=RoleLevelField.LEVEL_READ)
 
         response = list_role_api_call(user2token)
+
+        self.assertEqual(
+            response.status_code,
+            HTTP_200_OK,
+            format_response(response)
+        )
+        self.assertEqual(
+            len(response.data),
+            2,
+            format_response(response)
+        )
+
+        # create another user
+        email = 'michal@rclick.cz'
+        register_api_call(email=email, nickname='stepan').data
+        user3token = auth_api_call(email=email).data.get('token')
+
+        # user3 should not be able to list roles
+        response = list_role_api_call(user3token)
 
         self.assertEqual(
             response.status_code,
@@ -127,11 +144,6 @@ class ApiRoleTest(TransactionTestCase):
             format_response(response)
         )
 
-
-
-        def test_merged_member_role_is_also_moved_with_member(self):
-            #@todo: impl
-            pass
 
 
     def test_030_role_is_saved_only_once(self):
@@ -198,6 +210,101 @@ class ApiRoleTest(TransactionTestCase):
         self.assertEqual(
             response.status_code,
             HTTP_400_BAD_REQUEST,
+            format_response(response)
+        )
+
+    def test_050_create_role(self):
+        # create first user
+        email = 'jan@rclick.cz'
+        register_api_call(email=email, nickname='jan').data
+        user1token = auth_api_call(email=email).data.get('token')
+
+        # create another user
+        email = 'stepan@rclick.cz'
+        register_api_call(email=email, nickname='stepan').data
+        user2token = auth_api_call(email=email).data.get('token')
+
+        # create workspace for user1
+        workspace1 = create_workspace_api_call(user1token, name='workspace1').data
+
+        # create vault for user1
+        vault1 = create_vault_api_call(user1token, name='vault1', workspace=workspace1.get('id')).data
+
+        # user1 invites user 2
+        user2member = invite_member_api_call(user1token, 'jakub@rclick.cz', workspace1.get('id')).data
+        user2invitation = Member.objects.get(pk=user2member.get('id')).invitation_hash
+        accept_invitation_api_call(user2token, id=user2member.get('id'), hash=user2invitation)
+
+        # user 1 creates role for user 2
+        response = create_role_api_call(user1token, user2member.get('id'), to_vault=vault1.get('id'), level=RoleLevelField.LEVEL_READ)
+        self.assertEqual(
+            response.status_code,
+            HTTP_201_CREATED,
+            format_response(response)
+        )
+
+        #user 2 tries to create role, should be forbidden
+        response = create_role_api_call(user2token, user2member.get('id'), to_vault=vault1.get('id'), level=RoleLevelField.LEVEL_READ)
+        self.assertEqual(
+            response.status_code,
+            HTTP_403_FORBIDDEN,
+            format_response(response)
+        )
+
+    def test_050_edit_and_delete_role(self):
+        # create first user
+        email = 'jan@rclick.cz'
+        register_api_call(email=email, nickname='jan').data
+        user1token = auth_api_call(email=email).data.get('token')
+
+        # create another user
+        email = 'stepan@rclick.cz'
+        register_api_call(email=email, nickname='stepan').data
+        user2token = auth_api_call(email=email).data.get('token')
+
+        # create workspace for user1
+        workspace1 = create_workspace_api_call(user1token, name='workspace1').data
+
+        # create vault for user1
+        vault1 = create_vault_api_call(user1token, name='vault1', workspace=workspace1.get('id')).data
+
+        # user1 invites user 2
+        user2member = invite_member_api_call(user1token, 'jakub@rclick.cz', workspace1.get('id')).data
+        user2invitation = Member.objects.get(pk=user2member.get('id')).invitation_hash
+        accept_invitation_api_call(user2token, id=user2member.get('id'), hash=user2invitation)
+
+        # user 1 creates role for user 2
+        role = create_role_api_call(user1token, user2member.get('id'), to_vault=vault1.get('id'), level=RoleLevelField.LEVEL_READ).data
+
+        #user 2 tries to update role, should be forbidden
+        response = update_role_api_call(user2token, role.get('id'), RoleLevelField.LEVEL_WRITE)
+        self.assertEqual(
+            response.status_code,
+            HTTP_403_FORBIDDEN,
+            format_response(response)
+        )
+
+        #user 2  delete role, should be forbidden
+        response = delete_role_api_call(user2token, role.get('id'))
+        self.assertEqual(
+            response.status_code,
+            HTTP_403_FORBIDDEN,
+            format_response(response)
+        )
+
+        #user 1 update role to write,
+        response = update_role_api_call(user1token, role.get('id'), RoleLevelField.LEVEL_WRITE)
+        self.assertEqual(
+            response.status_code,
+            HTTP_200_OK,
+            format_response(response)
+        )
+
+        #user 2 tries to update role, should be allowed
+        response = update_role_api_call(user2token, role.get('id'), RoleLevelField.LEVEL_WRITE)
+        self.assertEqual(
+            response.status_code,
+            HTTP_200_OK,
             format_response(response)
         )
 

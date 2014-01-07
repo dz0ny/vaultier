@@ -182,6 +182,7 @@ class InsertedObjectMaterializer(object):
         parent = self.object.get_parent_object()
         roles = []
         acls = []
+
         while parent:
             for role in parent.role_set.all():
                 roles.append(role)
@@ -189,7 +190,7 @@ class InsertedObjectMaterializer(object):
 
         for role in roles:
             rm = CreateRoleMaterializer(role);
-            acls.extend(rm.materialize_current(self.object))
+            acls.extend(rm.materialize_childs(role.get_object()))
 
         # save materialized
         saver = MaterializationSaver()
