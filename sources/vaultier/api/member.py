@@ -1,14 +1,13 @@
 from django.core.exceptions import ValidationError
 from rest_framework.decorators import action
-from rest_framework.fields import SerializerMethodField, EmailField, BooleanField, CharField, Field, ModelField, IntegerField
+from rest_framework.fields import SerializerMethodField, EmailField, BooleanField, CharField, IntegerField
 from rest_framework.filters import SearchFilter, DjangoFilterBackend, OrderingFilter
-from rest_framework.mixins import CreateModelMixin, ListModelMixin, RetrieveModelMixin
 from rest_framework.permissions import BasePermission, IsAuthenticated
 from rest_framework.relations import PrimaryKeyRelatedField
 from rest_framework.response import Response
 from rest_framework.serializers import ModelSerializer, Serializer
-from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_200_OK, HTTP_405_METHOD_NOT_ALLOWED
-from rest_framework.viewsets import GenericViewSet, ModelViewSet
+from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_200_OK
+from rest_framework.viewsets import ModelViewSet
 from vaultier.api.user import RelatedUserSerializer
 from vaultier.auth.authentication import TokenAuthentication
 from vaultier.mailer.invitation import resend_invitation
@@ -19,7 +18,6 @@ from vaultier.models.role import Role
 from vaultier.models.workspace import Workspace
 from vaultier.perms.check import has_object_acl
 
-
 class CanManageMemberPermission(BasePermission):
     def has_object_permission(self, request, view, obj):
         workspace = obj.workspace
@@ -27,6 +25,24 @@ class CanManageMemberPermission(BasePermission):
 
         return result
 
+class CanManageWorkspaceKey(BasePermission):
+    def has_object_permission(self, request, view, obj):
+        workspace = obj.workspace
+        is_manager = has_object_acl(request.user, workspace, AclLevelField.LEVEL_WRITE)
+        is_managing_approved = Member.objects.get(user=request.user, workspace=workspace).status==MemberStatusField.STATUS_MEMBER
+        is_managed_non_approved = Member.objects.get(user=obj.user, workspace=workspace).status==MemberStatusField.STATUS_NON_APPROVED_MEMBER
+
+        result = is_manager or (is_managing_approved and  is_managed_non_approved)
+        return result
+
+
+class CanDeleteMember(BasePermission):
+    def has_object_permission(self, request, view, obj):
+        workspace = obj.workspace
+        is_manager = has_object_acl(request.user, workspace, AclLevelField.LEVEL_WRITE)
+
+        result = is_manager
+        return result
 
 class MemberSerializer(ModelSerializer):
     email = SerializerMethodField('get_email')
@@ -112,8 +128,6 @@ class MemberWorkspaceKeySerializer(ModelSerializer):
     status = IntegerField(read_only=True)
 
     def validate_workspace_key(self, attrs, source):
-        if not self.object.status == MemberStatusField.STATUS_NON_APPROVED_MEMBER:
-            raise ValidationError('workspace_key can be modified only on NON_APPROVED_MEMBER status')
         return attrs
 
     def get_public_key(self, obj):
@@ -131,8 +145,8 @@ class MemberWorkspaceKeySerializer(ModelSerializer):
 class MemberViewSet(ModelViewSet):
     model = Member
     serializer_class = MemberSerializer
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated, )
+    authentication_classes = (TokenAuthentication, )
+    permission_classes = (IsAuthenticated, CanManageMemberPermission)
     filter_backends = (SearchFilter, DjangoFilterBackend, OrderingFilter )
     search_fields = ('invitation_email', 'user__email', 'user__nickname',)
     filter_fields = ('workspace', 'status')
@@ -140,10 +154,15 @@ class MemberViewSet(ModelViewSet):
 
     @action(methods=['GET'])
     def roles(self, request, pk=None):
+        self.permission_classes = (IsAuthenticated,)
         member = self.get_object(queryset=Member.objects.all())
+        self.check_object_permissions(request, member)
+
         serializer = MemberAcceptSerializer(instance=member, data=request.QUERY_PARAMS, files=request.FILES)
         if serializer.is_valid():
-            roles = Role.objects.filter(member=member)
+            roles = Role.objects.filter(
+                member=member
+            )
             data = []
             for role in roles:
                 data.append(MemberRoleSerializer(instance=role).data)
@@ -161,7 +180,10 @@ class MemberViewSet(ModelViewSet):
 
     @action(methods=['POST'])
     def accept(self, request, pk=None):
+        self.permission_classes = (IsAuthenticated,)
         member = self.get_object(queryset=Member.objects.all())
+        self.check_object_permissions(request, member)
+
         serializer = MemberAcceptSerializer(instance=member, data=request.DATA, files=request.FILES)
         if serializer.is_valid():
             serializer.save(user=request.user)
@@ -177,8 +199,11 @@ class MemberViewSet(ModelViewSet):
 
     @action(methods=['PUT', 'GET'])
     def workspace_key(self, request, pk=None):
+        self.permission_classes = self.permission_classes + (CanManageWorkspaceKey,)
+        member = self.get_object(queryset=Member.objects.all())
+        self.check_object_permissions(request, member)
+
         if request.method == 'GET':
-            member = self.get_object(queryset=Member.objects.all())
             serializer = MemberWorkspaceKeySerializer(instance=member, data=request.DATA, files=request.FILES)
             return Response(
                 serializer.data,
@@ -186,7 +211,6 @@ class MemberViewSet(ModelViewSet):
             )
 
         if request.method == 'PUT':
-            member = self.get_object(queryset=Member.objects.all())
             serializer = MemberWorkspaceKeySerializer(instance=member, data=request.DATA, files=request.FILES)
             if serializer.is_valid():
                 serializer.save()
@@ -202,8 +226,8 @@ class MemberViewSet(ModelViewSet):
 
 
     def invite(self, request, *args, **kwargs):
-        self.permission_classes = self.permission_classes + (CanManageMemberPermission,)
         serializer = MemberInviteSerializer(data=request.DATA)
+
         if serializer.is_valid():
             member = Member(
                 invitation_email=serializer.object.get('email'),
@@ -227,12 +251,14 @@ class MemberViewSet(ModelViewSet):
         return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
 
     def resend(self, request, *args, **kwargs):
-        self.permission_classes = self.permission_classes + (CanManageMemberPermission,)
         serializer = MemberResendSerializer(data=request.DATA)
         if serializer.is_valid():
+
             member = self.get_object(
                 queryset=Member.objects.all_for_user(request.user)
                 .filter(status=MemberStatusField.STATUS_INVITED))
+
+            self.check_object_permissions(request, member)
 
             resend_invitation(member)
             return Response(
@@ -242,10 +268,8 @@ class MemberViewSet(ModelViewSet):
         return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
 
     def destroy(self, request, *args, **kwargs):
-            return Response(
-                {'detail': 'Not supported'},
-                status=HTTP_405_METHOD_NOT_ALLOWED,
-            )
+            self.permission_classes = self.permission_classes + (CanDeleteMember,)
+            return super(MemberViewSet, self).destroy(request, *args, **kwargs)
 
     def create(self, request, *args, **kwargs):
         return self.invite(request, *args, **kwargs)

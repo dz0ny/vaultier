@@ -1,9 +1,12 @@
 from django.db import models
 from django.db.models.deletion import PROTECT, CASCADE
 from django.db.models.manager import Manager
+from django.db.models.query_utils import Q
 from vaultier.models.acl_fields import AclLevelField
+from vaultier.models.card import Card
 from vaultier.models.role_fields import RoleLevelField
 from vaultier.models.object_reference import ObjectReference, ObjectReferenceTypeField
+from vaultier.models.vault import Vault
 from vaultier.tools.changes import ChangesMixin
 
 
@@ -18,10 +21,23 @@ class RoleManager(Manager):
             acl__user = user
         ).distinct()
 
+        # all vaults user has permission read
+        vaults = Vault.objects.filter(
+            acl__level = AclLevelField.LEVEL_READ,
+            acl__user = user
+        ).distinct()
+
+        # all cards user has permission read
+        cards = Card.objects.filter(
+            acl__level = AclLevelField.LEVEL_READ,
+            acl__user = user
+        ).distinct()
+
+
         # all roles (to_workspace, to_vault, to_card) related to workspaces in which user has permission to write
         roles = self.filter(
-            member__workspace__in=workspaces
-        )
+            Q(to_workspace__in=workspaces) | Q(to_vault__in=vaults) | Q(to_card__in=cards)
+        ).distinct()
 
         return roles
 
