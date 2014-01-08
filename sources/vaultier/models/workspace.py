@@ -3,6 +3,7 @@ from django.db.models.deletion import PROTECT
 from django.db.models.manager import Manager
 from django.db.models import F, Q
 from vaultier.models.acl import Acl
+from vaultier.models.acl_fields import AclLevelField
 
 from vaultier.models.member import Member
 from vaultier.models.member_fields import MemberStatusField
@@ -16,7 +17,8 @@ class WorkspaceManager(Manager):
 
     def all_for_user(self, user):
         workspaces = self.filter(
-            acl__user=user
+            acl__user=user,
+            acl__level=AclLevelField.LEVEL_READ
         ).distinct()
 
         return workspaces

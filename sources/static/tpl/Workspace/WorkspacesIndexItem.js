@@ -6,15 +6,15 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   var buffer = '', stack1, hashTypes, hashContexts, options;
-  data.buffer.push("\r\n    <div class=\"vlt-icon\">\r\n        <img src=\"/static/images/icon-workspace-grey.png\"/>\r\n    </div>\r\n    <div class=\"vlt-text\">\r\n        <h4 class=\"list-group-item-heading\">");
+  data.buffer.push("\n    <div class=\"vlt-icon\">\n        <img src=\"/static/images/icon-workspace-grey.png\"/>\n    </div>\n    <div class=\"vlt-text\">\n        <h4 class=\"list-group-item-heading\">");
   hashTypes = {};
   hashContexts = {};
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "name", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
-  data.buffer.push("</h4>\r\n\r\n    <p class=\"list-group-item-text\">\r\n        ");
+  data.buffer.push("</h4>\n\n    <p class=\"list-group-item-text\">\n        ");
   hashTypes = {};
   hashContexts = {};
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "description", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
-  data.buffer.push("\r\n        </p>\r\n\r\n        <div class=\"help-block top-15\">\r\n            By ");
+  data.buffer.push("\n        </p>\n\n        <div class=\"help-block top-15\">\n            By ");
   hashTypes = {};
   hashContexts = {};
   options = {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
@@ -24,13 +24,13 @@ function program1(depth0,data) {
   hashContexts = {};
   options = {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
   data.buffer.push(escapeExpression(((stack1 = helpers.printAgo || depth0.printAgo),stack1 ? stack1.call(depth0, "updated_at", options) : helperMissing.call(depth0, "printAgo", "updated_at", options))));
-  data.buffer.push("\r\n\r\n        </div>\r\n\r\n        ");
+  data.buffer.push("\n\n        </div>\n\n        ");
   hashContexts = {'workspace': depth0};
   hashTypes = {'workspace': "ID"};
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "Vaultier.WorkspacesIndexNotApprovedView", {hash:{
     'workspace': ("")
   },contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
-  data.buffer.push("\r\n\r\n    </div>\r\n\r\n");
+  data.buffer.push("\n\n    </div>\n\n");
   return buffer;
   }
 
@@ -39,9 +39,9 @@ function program1(depth0,data) {
   options = {hash:{
     'class': ("list-group-item vlt-workspace-item")
   },inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0,depth0],types:["STRING","ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
-  stack2 = ((stack1 = helpers['link-to'] || depth0['link-to']),stack1 ? stack1.call(depth0, "Workspace.index", "", options) : helperMissing.call(depth0, "link-to", "Workspace.index", "", options));
+  stack2 = ((stack1 = helpers['link-to'] || depth0['link-to']),stack1 ? stack1.call(depth0, "Workspace.index", "id", options) : helperMissing.call(depth0, "link-to", "Workspace.index", "id", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("\r\n\r\n\r\n\r\n");
+  data.buffer.push("\n\n\n\n");
   return buffer;
   
 });

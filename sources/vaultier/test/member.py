@@ -1,13 +1,13 @@
 from django.test.testcases import TransactionTestCase
 from django.utils import unittest
 from django.utils.unittest.suite import TestSuite
-from rest_framework.status import HTTP_200_OK, HTTP_403_FORBIDDEN
+from rest_framework.status import HTTP_200_OK, HTTP_403_FORBIDDEN, HTTP_400_BAD_REQUEST, HTTP_204_NO_CONTENT
 from vaultier.models.member import Member
 from vaultier.models.member_fields import MemberStatusField
 from vaultier.models.role import Role
 from vaultier.models.role_fields import RoleLevelField
 from vaultier.test.auth_tools import auth_api_call, register_api_call
-from vaultier.test.member_tools import invite_member_api_call, accept_invitation_api_call, list_members_api_call
+from vaultier.test.member_tools import invite_member_api_call, accept_invitation_api_call, list_member_roles_api_call, get_workspace_key_api_call, set_workspace_key_api_call, delete_member_api_call, list_members_api_call
 from vaultier.test.role_tools import create_role_api_call
 from vaultier.test.tools import format_response
 from vaultier.test.workspace_tools import create_workspace_api_call
@@ -54,7 +54,7 @@ class ApiInviteTest(TransactionTestCase):
         response = invite_member_api_call(user1token, email='jakub@rclick.cz', workspace=workspace2.get('id'))
         self.assertEqual(response.status_code, HTTP_403_FORBIDDEN, format_response(response))
 
-    def test_020_acceptations_membership_merging(self):
+    def test_020_acceptations_membership_merging_and_accepting(self):
 
         # create first user
         email = 'jan@rclick.cz'
@@ -127,53 +127,353 @@ class ApiInviteTest(TransactionTestCase):
         # both roles should be write
         self.assertEqual(Role.objects.filter(level=RoleLevelField.LEVEL_WRITE).count(), 2)
 
+    def test_030_list_roles_for_hash(self):
+
+        # create first user
+        email = 'jan@rclick.cz'
+        register_api_call(email=email, nickname='jan').data
+        user1token = auth_api_call(email=email).data.get('token')
+
+        # create second user
+        email = 'jakub@rclick.cz'
+        register_api_call(email=email, nickname='jakub').data
+        user2token = auth_api_call(email=email).data.get('token')
+
+        # create workspace for user1
+        user1workspace = create_workspace_api_call(user1token, name='u1_workspace').data
+        self.assertEqual(Role.objects.all().count(), 1)
+
+        #invite user 2
+        user2member = invite_member_api_call(user1token, 'jakub@rclick.cz', user1workspace.get('id')).data
+        user2invitation = Member.objects.get(pk=user2member.get('id')).invitation_hash
+        create_role_api_call(user1token, user2member.get('id'), to_workspace=user1workspace.get('id'), level=RoleLevelField.LEVEL_READ)
+
+        #invite user 3
+        user3member = invite_member_api_call(user1token, 'marcel@rclick.cz', user1workspace.get('id')).data
+        user3invitation = Member.objects.get(pk=user3member.get('id')).invitation_hash
+        create_role_api_call(user1token, user3member.get('id'), to_workspace=user1workspace.get('id'), level=RoleLevelField.LEVEL_READ)
 
 
-        # todo: move this to member_perms
-        # user2 accepted all 3 invitations, but he has no roles in any workspace, he should see no memebers
-        #response = list_members_api_call(user2token, workspace=user1workspace.get('id'))
-        #self.assertEqual(
-        #    len(response.data),
-        #    0
-        #)
+        # list roles for workspace1 without hash, should be forbidden
+        response = list_member_roles_api_call(user2token, user2member.get('id'), 'testovaci-hash' )
+        self.assertEquals(
+            response.status_code,
+            HTTP_400_BAD_REQUEST,
+            format_response(response)
+        )
 
-        # todo: move this to member_perms
-        # user1 should see two members
-        #response = list_members_api_call(user1token, workspace=user1workspace.get('id'))
-        #self.assertEqual(
-        #    len(response.data),
-        #    2
-        #)
+        # list roles for workspace1 with hash, should be allowed
+        response = list_member_roles_api_call(user2token, user2member.get('id'),user2invitation )
+        self.assertEquals(
+            response.status_code,
+            HTTP_200_OK,
+            format_response(response)
+        )
 
-    #def test_030_accept_invitation_by_myself(self):
-    #    # create first user
-    #    email = 'tomas@rclick.cz'
-    #    register_api_call(email=email, nickname='tomas').data
-    #    user1token = auth_api_call(email=email).data.get('token')
-    #
-    #    # create workspace
-    #    workspace1 = create_workspace_api_call(user1token, name='workspace1').data
-    #
-    #    # user1 tries to invite member
-    #    user1member = invite_member_api_call(
-    #        user1token,
-    #        email='jan@rclick.cz',
-    #        workspace=workspace1.get('id'),
-    #        send=True,
-    #        resend=True
-    #    ).data
-    #    user1member = Member.objects.get(id=user1member.get('id'))
-    #
-    #    # user1 grant read role to member
-    #    create_role_api_call()l(
-    #        user1token,
-    #        user1member.get('id'),
-    #        level=RoleLevelField.LEVEL_READ,
-    #        to_workspace=workspace1.get('id')
-    #    )
-    #
-    #    # user1 tries to accept invitations
-    #    accept_invitation_api_call()
+        # only one role should be visible
+        self.assertEquals(
+            len(response.data),
+            1,
+            format_response(response)
+        )
+
+
+
+
+    def test_041_get_workspace_key(self):
+        #only member approved member of workspace can see workspace key
+        #only manager can see approved member workspace key
+
+        # create first user
+        email = 'jan@rclick.cz'
+        register_api_call(email=email, nickname='jan').data
+        user1token = auth_api_call(email=email).data.get('token')
+
+        # create second user
+        email = 'jakub@rclick.cz'
+        register_api_call(email=email, nickname='jakub').data
+        user2token = auth_api_call(email=email).data.get('token')
+
+        # create third user
+        email = 'marcel@rclick.cz'
+        register_api_call(email=email, nickname='jakub').data
+        user3token = auth_api_call(email=email).data.get('token')
+
+        # create workspace for user1
+        user1workspace = create_workspace_api_call(user1token, name='u1_workspace').data
+        self.assertEqual(Role.objects.all().count(), 1)
+
+        #invite user 2
+        user2member = invite_member_api_call(user1token, 'jakub@rclick.cz', user1workspace.get('id')).data
+        user2invitation = Member.objects.get(pk=user2member.get('id')).invitation_hash
+        user2role = create_role_api_call(user1token, user2member.get('id'), to_workspace=user1workspace.get('id'), level=RoleLevelField.LEVEL_READ)
+        response = accept_invitation_api_call(user2token, user2member.get('id'), user2invitation)
+        self.assertEquals(
+            response.status_code,
+            HTTP_200_OK,
+            format_response(response)
+        )
+
+        #invite user 3
+        user3member = invite_member_api_call(user1token, 'marcel@rclick.cz', user1workspace.get('id')).data
+        user3invitation = Member.objects.get(pk=user3member.get('id')).invitation_hash
+        user3role = create_role_api_call(user1token, user3member.get('id'), to_workspace=user1workspace.get('id'), level=RoleLevelField.LEVEL_READ)
+        response = accept_invitation_api_call(user3token, user3member.get('id'), user3invitation)
+        self.assertEquals(
+            response.status_code,
+            HTTP_200_OK,
+            format_response(response)
+        )
+
+        # user 3 cannot get workspace key of user2
+        response = get_workspace_key_api_call(user2token, user3member.get('id'))
+        self.assertEquals(
+            response.status_code,
+            HTTP_403_FORBIDDEN,
+            format_response(response)
+        )
+
+        # user 3 cannot get workspace key of user1
+        response = get_workspace_key_api_call(user2token, 1)
+        self.assertEquals(
+            response.status_code,
+            HTTP_403_FORBIDDEN,
+            format_response(response)
+        )
+
+        # user1 should be able to get workspace key of user 2
+        response = get_workspace_key_api_call(user1token, user2member.get('id'))
+        self.assertEquals(
+            response.status_code,
+            HTTP_200_OK,
+            format_response(response)
+        )
+
+        # user1 will transfer keys to user2
+        response = set_workspace_key_api_call(user1token, user2member.get('id'), 'this-is-only-mockup-key')
+        self.assertEquals(
+            response.status_code,
+            HTTP_200_OK,
+            format_response(response)
+        )
+
+        # user 2 should be able to read workspace_key of user 3
+        response = get_workspace_key_api_call(user2token, user3member.get('id'))
+        self.assertEquals(
+            response.status_code,
+            HTTP_200_OK,
+            format_response(response)
+        )
+
+
+
+    def test_042_set_workspace_key(self):
+        #transfer key
+        #key cannot be empty
+        #non_approved member cannot transfer key
+        #transfer key cannot be done only once by regular member
+        #transfer key can be done repeatedly by workspace manager
+
+         # create first user
+        email = 'jan@rclick.cz'
+        register_api_call(email=email, nickname='jan').data
+        user1token = auth_api_call(email=email).data.get('token')
+
+        # create second user
+        email = 'jakub@rclick.cz'
+        register_api_call(email=email, nickname='jakub').data
+        user2token = auth_api_call(email=email).data.get('token')
+
+        # create third user
+        email = 'marcel@rclick.cz'
+        register_api_call(email=email, nickname='jakub').data
+        user3token = auth_api_call(email=email).data.get('token')
+
+        # create workspace for user1
+        user1workspace = create_workspace_api_call(user1token, name='u1_workspace').data
+        self.assertEqual(Role.objects.all().count(), 1)
+
+        #invite user 2
+        user2member = invite_member_api_call(user1token, 'jakub@rclick.cz', user1workspace.get('id')).data
+        user2invitation = Member.objects.get(pk=user2member.get('id')).invitation_hash
+        user2role = create_role_api_call(user1token, user2member.get('id'), to_workspace=user1workspace.get('id'), level=RoleLevelField.LEVEL_READ)
+        response = accept_invitation_api_call(user2token, user2member.get('id'), user2invitation)
+        self.assertEquals(
+            response.status_code,
+            HTTP_200_OK,
+            format_response(response)
+        )
+
+        #invite user 3
+        user3member = invite_member_api_call(user1token, 'marcel@rclick.cz', user1workspace.get('id')).data
+        user3invitation = Member.objects.get(pk=user3member.get('id')).invitation_hash
+        user3role = create_role_api_call(user1token, user3member.get('id'), to_workspace=user1workspace.get('id'), level=RoleLevelField.LEVEL_READ)
+        response = accept_invitation_api_call(user3token, user3member.get('id'), user3invitation)
+        self.assertEquals(
+            response.status_code,
+            HTTP_200_OK,
+            format_response(response)
+        )
+
+        # user 3 cannot set workspace key of user2
+        response = set_workspace_key_api_call(user2token, user3member.get('id'), 'mockup')
+        self.assertEquals(
+            response.status_code,
+            HTTP_403_FORBIDDEN,
+            format_response(response)
+        )
+
+        # user 3 cannot set workspace key of user1
+        response = set_workspace_key_api_call(user2token, 1,'mockup')
+        self.assertEquals(
+            response.status_code,
+            HTTP_403_FORBIDDEN,
+            format_response(response)
+        )
+
+        # user1 should be able to set workspace key of user 2
+        response = set_workspace_key_api_call(user1token, user2member.get('id'),'mockup')
+        self.assertEquals(
+            response.status_code,
+            HTTP_200_OK,
+            format_response(response)
+        )
+
+        # user2 should be able to set workspace key of user3
+        response = set_workspace_key_api_call(user2token, user3member.get('id'), 'mockup')
+        self.assertEquals(
+            response.status_code,
+            HTTP_200_OK,
+            format_response(response)
+        )
+
+        # user 2 should not be able to rewrite workspace_key of user 3
+        response = set_workspace_key_api_call(user2token, user3member.get('id'), 'mockup')
+        self.assertEquals(
+            response.status_code,
+            HTTP_403_FORBIDDEN,
+            format_response(response)
+        )
+
+        # user1 should be able to rewrite workspace key of user3
+        response = set_workspace_key_api_call(user1token, user3member.get('id'), 'mockup')
+        self.assertEquals(
+            response.status_code,
+            HTTP_200_OK,
+            format_response(response)
+        )
+
+
+    def test_050_delete_member(self):
+        #only workspace manager can delete member
+        #no roles should be in db for member
+        #no acl should be in db for member
+
+         # create first user
+        email = 'jan@rclick.cz'
+        register_api_call(email=email, nickname='jan').data
+        user1token = auth_api_call(email=email).data.get('token')
+
+        # create second user
+        email = 'jakub@rclick.cz'
+        register_api_call(email=email, nickname='jakub').data
+        user2token = auth_api_call(email=email).data.get('token')
+
+        # create third user
+        email = 'marcel@rclick.cz'
+        register_api_call(email=email, nickname='jakub').data
+        user3token = auth_api_call(email=email).data.get('token')
+
+        # create workspace for user1
+        user1workspace = create_workspace_api_call(user1token, name='u1_workspace').data
+        self.assertEqual(Role.objects.all().count(), 1)
+
+        #invite user 2
+        user2member = invite_member_api_call(user1token, 'jakub@rclick.cz', user1workspace.get('id')).data
+        user2invitation = Member.objects.get(pk=user2member.get('id')).invitation_hash
+        user2role = create_role_api_call(user1token, user2member.get('id'), to_workspace=user1workspace.get('id'), level=RoleLevelField.LEVEL_READ)
+        response = accept_invitation_api_call(user2token, user2member.get('id'), user2invitation)
+        self.assertEquals(
+            response.status_code,
+            HTTP_200_OK,
+            format_response(response)
+        )
+
+        #invite user 3
+        user3member = invite_member_api_call(user1token, 'marcel@rclick.cz', user1workspace.get('id')).data
+        user3invitation = Member.objects.get(pk=user3member.get('id')).invitation_hash
+        user3role = create_role_api_call(user1token, user3member.get('id'), to_workspace=user1workspace.get('id'), level=RoleLevelField.LEVEL_READ)
+        response = accept_invitation_api_call(user3token, user3member.get('id'), user3invitation)
+        self.assertEquals(
+            response.status_code,
+            HTTP_200_OK,
+            format_response(response)
+        )
+
+
+        response = delete_member_api_call(user2token, user3member.get('id') )
+        self.assertEquals(
+            response.status_code,
+            HTTP_403_FORBIDDEN,
+            format_response(response)
+        )
+
+        response = delete_member_api_call(user1token, user3member.get('id') )
+        self.assertEquals(
+            response.status_code,
+            HTTP_204_NO_CONTENT,
+            format_response(response)
+        )
+
+    def test_60_list_members(self):
+        #only workspace manager can list members
+        #manager should se members only of workspaces he is manager of
+
+         # create first user
+        email = 'jan@rclick.cz'
+        register_api_call(email=email, nickname='jan').data
+        user1token = auth_api_call(email=email).data.get('token')
+
+        # create second user
+        email = 'jakub@rclick.cz'
+        register_api_call(email=email, nickname='jakub').data
+        user2token = auth_api_call(email=email).data.get('token')
+
+        # create third  user
+        email = 'marcel@rclick.cz'
+        register_api_call(email=email, nickname='marcel').data
+        user3token = auth_api_call(email=email).data.get('token')
+
+        # create workspace for user1
+        user1workspace = create_workspace_api_call(user1token, name='u1_workspace').data
+        self.assertEqual(Role.objects.all().count(), 1)
+
+        #invite user 2
+        user2member = invite_member_api_call(user1token, 'jakub@rclick.cz', user1workspace.get('id')).data
+        user2invitation = Member.objects.get(pk=user2member.get('id')).invitation_hash
+        user2role = create_role_api_call(user1token, user2member.get('id'), to_workspace=user1workspace.get('id'), level=RoleLevelField.LEVEL_READ)
+        response = accept_invitation_api_call(user2token, user2member.get('id'), user2invitation)
+
+        response = list_members_api_call(user1token, user1workspace.get('id'))
+        self.assertEquals(
+            response.status_code,
+            HTTP_200_OK,
+            format_response(response)
+        )
+        self.assertEquals(
+            len(response.data),
+            2,
+            format_response(response)
+        )
+        response = list_members_api_call(user3token, user1workspace.get('id'))
+        self.assertEquals(
+            len(response.data),
+            0,
+            format_response(response)
+        )
+
+
+
 
 
 def member_suite():

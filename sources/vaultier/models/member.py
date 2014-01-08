@@ -12,7 +12,7 @@ from vaultier.tools.changes import ChangesMixin
 class MemberManager(Manager):
     #from members where member.workspace in (select
 
-    def all_acls(self, user):
+    def all_for_user(self, user):
         from vaultier.models.workspace import Workspace
 
         workspaces = Workspace.objects.all_for_user(user)

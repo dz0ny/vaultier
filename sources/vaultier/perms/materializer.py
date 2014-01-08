@@ -1,6 +1,8 @@
 from vaultier.models import Acl
 from vaultier.models.acl_fields import AclDirectionField
+from vaultier.models.role import Role
 from vaultier.models.role_fields import RoleLevelField
+from vaultier.perms.strategy import ReadAclStrategy, WriteAclStrategy, CreateAclStrategy
 
 
 class CreateRoleMaterializer(object):
@@ -9,30 +11,43 @@ class CreateRoleMaterializer(object):
     def __init__(self, role):
         self.role = role
 
-    def acl_for_object(self, object, direction=None):
+    def get_strategy(self):
+        strategy = None
+        if (self.role.level == RoleLevelField.LEVEL_CREATE):
+            strategy = CreateAclStrategy
+        if (self.role.level == RoleLevelField.LEVEL_READ):
+            strategy = ReadAclStrategy
+        if (self.role.level == RoleLevelField.LEVEL_WRITE):
+            strategy = WriteAclStrategy
+        if (not strategy):
+            raise  RuntimeError('Cannot find ACL strategy for role level'+str(self.role.level))
+        return strategy()
+
+    def acl_for_object(self, object, direction):
+
         if not self.role.member.user:
             raise RuntimeError(''
                                'Acl could be materialized upon conrete '
                                'member. Not the invited one without user set')
 
-        acl = Acl()
-        acl.role = self.role
-        acl.direction = direction
-        acl.user = self.role.member.user
-        if direction == AclDirectionField.DIR_UP:
-            acl.level = RoleLevelField.LEVEL_READ
-        else:
-            acl.level = self.role.level
+        strategy = self.get_strategy()
 
-        acl.set_object(object)
+        if (direction == AclDirectionField.DIR_UP):
+            return strategy.acl_for_parent(self.role, object)
 
-        return acl
+        if (direction == AclDirectionField.DIR_DOWN):
+            return strategy.acl_for_child(self.role, object)
+
+        if (direction == AclDirectionField.DIR_CURRENT):
+            return strategy.acl_for_object(self.role, object)
+
+        raise  RuntimeError('Unknown ACL direction'+str(direction))
 
     def materialize_parents(self, object):
         acls = []
         parent = object.get_parent_object()
         if parent:
-            acls.append(self.acl_for_object(parent, AclDirectionField.DIR_UP))
+            acls.extend(self.acl_for_object(parent, AclDirectionField.DIR_UP))
             acls.extend(self.materialize_parents(parent))
         return acls
 
@@ -40,13 +55,13 @@ class CreateRoleMaterializer(object):
         acls = []
         childs = object.get_child_objects()
         for child in childs:
-            acls.append(self.acl_for_object(child, AclDirectionField.DIR_DOWN))
+            acls.extend(self.acl_for_object(child, AclDirectionField.DIR_DOWN))
             acls.extend(self.materialize_childs(child))
         return acls
 
     def materialize_current(self, object):
         acls = []
-        acls.append(self.acl_for_object(object, AclDirectionField.DIR_DOWN))
+        acls.extend(self.acl_for_object(object, AclDirectionField.DIR_CURRENT))
         return acls
 
     def materialize(self, object):
@@ -55,11 +70,11 @@ class CreateRoleMaterializer(object):
         # materialize current
         acls.extend(self.materialize_current(object))
 
-        # materialize child objects
-        acls.extend(self.materialize_childs(object))
-
         # materialize parent objects
         acls.extend(self.materialize_parents(object))
+
+        # materialize child objects
+        acls.extend(self.materialize_childs(object))
 
         # save materialized
         saver = MaterializationSaver()
@@ -70,21 +85,18 @@ class MaterializationSaver(object):
     def save_materialized(self, acls):
         saved = []
 
+        # find existing acl
         # this should be optimized, not do million db queries
         for acl in acls:
             try:
-                existing = Acl.objects.get(
+                Acl.objects.get(
                     role=acl.role,
+                    direction=acl.direction,
+                    level=acl.level,
                     to_workspace=acl.to_workspace,
                     to_vault=acl.to_vault,
                     to_card=acl.to_card
                 )
-
-                # same acl found, so update existing, ignore same
-                if existing.level < acl.level:
-                    existing.level = acl.level
-                    existing.save()
-                    saved.append(existing)
 
             except Acl.DoesNotExist:
                 # standard behaviour acl not found, so create new
@@ -110,10 +122,12 @@ class UpdateRoleLevelMaterializer(object):
 
     def materialize(self):
         Acl.objects.filter(
-            role=self.role,
-            direction=AclDirectionField.DIR_DOWN
-        ).update(level=self.role.level)
+            role=self.role
+        ).delete()
 
+        if (self.role.member.user):
+            materializer = CreateRoleMaterializer(self.role)
+            materializer.materialize(self.role.get_object())
 
 class UpdateRoleMemberMaterializer(object):
     def __init__(self, role):
@@ -121,14 +135,16 @@ class UpdateRoleMemberMaterializer(object):
 
     def materialize(self):
         Acl.objects.filter(
-            role=self.role,
-        ).update(user=self.role.member.user)
+            role=self.role
+        ).delete()
+
+        materializer = CreateRoleMaterializer(self.role)
+        materializer.materialize(self.role.get_object())
 
 
 class UpdateMemberUserMaterializer(object):
     def __init__(self, member):
         self.member = member
-
 
     def materialize(self):
         member = self.member
@@ -147,10 +163,26 @@ class InsertedObjectMaterializer(object):
     def __init__(self, object):
         self.object = object
 
+    # adds WRITE role for object created by user which have CREATE role to parent object
+    def materialize_role(self):
+        parent = self.object.get_parent_object()
+        if parent:
+            for parent_role in parent.role_set.all():
+                if (parent_role.member.user and parent_role.member.user.id == self.object.created_by.id):
+                    if (parent_role.level == RoleLevelField.LEVEL_CREATE):
+                        role = Role()
+                        role.member = parent_role.member
+                        role.created_by = role.member.user
+                        role.level = RoleLevelField.LEVEL_WRITE
+                        role.set_object(self.object)
+                        role.save()
+
+    # materialize roles
     def materialize(self):
         parent = self.object.get_parent_object()
         roles = []
         acls = []
+
         while parent:
             for role in parent.role_set.all():
                 roles.append(role)
@@ -158,12 +190,11 @@ class InsertedObjectMaterializer(object):
 
         for role in roles:
             rm = CreateRoleMaterializer(role);
-            acls.extend(rm.materialize_current(self.object))
+            acls.extend(rm.materialize_childs(role.get_object()))
 
         # save materialized
         saver = MaterializationSaver()
         saver.save_materialized(acls)
-
 
 class MovedObjectMaterializer(object):
     def __init__(self, object):

@@ -31,7 +31,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   data.buffer.push("\r\n\r\n                                ");
   hashContexts = {'class': depth0,'elementId': depth0,'contentBinding': depth0,'optionValuePath': depth0,'optionLabelPath': depth0,'valueBinding': depth0};
   hashTypes = {'class': "STRING",'elementId': "STRING",'contentBinding': "STRING",'optionValuePath': "STRING",'optionLabelPath': "STRING",'valueBinding': "STRING"};
-  data.buffer.push(escapeExpression(helpers.view.call(depth0, "Ember.Select", {hash:{
+  data.buffer.push(escapeExpression(helpers.view.call(depth0, "view.Select", {hash:{
     'class': ("form-control"),
     'elementId': ("invite-form-role"),
     'contentBinding': ("roleLevels"),

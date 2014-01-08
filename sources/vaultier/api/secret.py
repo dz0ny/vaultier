@@ -7,6 +7,7 @@ from vaultier.api.fields.perms import PermsField
 from vaultier.api.user import RelatedUserSerializer
 from vaultier.auth.authentication import TokenAuthentication
 from vaultier.models import Secret
+from vaultier.models.acl_fields import AclLevelField
 from vaultier.models.role_fields import RoleLevelField
 from vaultier.perms.check import has_object_acl
 
@@ -16,14 +17,14 @@ class CanManageSecretPermission(BasePermission):
 
         if view.action == 'retrieve' or view.action == 'list':
 
-            result = has_object_acl(request.user, obj.card, RoleLevelField.LEVEL_READ)
+            result = has_object_acl(request.user, obj.card, AclLevelField.LEVEL_READ)
 
             return result
         else:
             result = True
 
             # check permission to card
-            result = result and has_object_acl(request.user, obj.card, RoleLevelField.LEVEL_WRITE)
+            result = result and has_object_acl(request.user, obj.card, AclLevelField.LEVEL_WRITE)
 
             return result
 

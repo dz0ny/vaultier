@@ -2,6 +2,7 @@ from django.test.testcases import TransactionTestCase
 from django.utils import unittest
 from django.utils.unittest.suite import TestSuite
 from vaultier.models.acl import Acl
+from vaultier.models.acl_fields import AclLevelField
 from vaultier.models.card import Card
 from vaultier.models.member import Member
 from vaultier.models.member_fields import MemberStatusField
@@ -12,9 +13,36 @@ from vaultier.models.vault import Vault
 from vaultier.models.workspace import Workspace
 
 
-
-
 class AclTest(TransactionTestCase):
+    def assertAcl(self, level=None, count=None, role=None, workspace=None, vault=None, card=None):
+        if (workspace):
+            o = workspace
+            if type(o) != Workspace:
+                o = Workspace.objects.get(id=workspace)
+        if (vault):
+            o = vault
+            if type(o) != Vault:
+                o = Vault.objects.get(id=vault)
+        if (card):
+            o = card
+            if type(o) != Card:
+                o = Card.objects.get(id=card)
+
+        if not o:
+            raise RuntimeError('Unknown test type')
+
+        aclset = o.acl_set.all()
+
+        if (role):
+            aclset = aclset.filter(role=role)
+
+        if (level):
+            aclset = aclset.filter(level=level)
+
+        if (count == None):
+            self.assertGreaterEqual(aclset.count(), 1)
+        else:
+            self.assertEquals(aclset.count(), count)
 
 
     def test_010_create_role(self):
@@ -51,6 +79,7 @@ class AclTest(TransactionTestCase):
 
         ## already materialized roles should be deleted to test only create role
         Acl.objects.all().delete()
+        Role.objects.all().delete()
 
         role = Role()
         role.level = RoleLevelField.LEVEL_WRITE
@@ -59,27 +88,14 @@ class AclTest(TransactionTestCase):
         role.member = m
         role.save()
 
-        acls = list(Acl.objects.all())
-        # 3 acls should be in db
-        self.assertEquals(Acl.objects.all().count(),3)
+        self.assertAcl(level=AclLevelField.LEVEL_READ, count=1, workspace=w)
 
+        self.assertAcl(level=AclLevelField.LEVEL_WRITE, count=1, vault=v)
+        self.assertAcl(level=AclLevelField.LEVEL_READ, count=1, vault=v)
 
-        # parent acls should be read
-        self.assertEquals(w.acl_set.all().count(), 1)
-        self.assertEquals(w.acl_set.all()[0].level,RoleLevelField.LEVEL_READ)
+        self.assertAcl(level=AclLevelField.LEVEL_WRITE, count=1, card=c)
+        self.assertAcl(level=AclLevelField.LEVEL_READ, count=1, card=c)
 
-        # current should be write
-        self.assertEquals(v.acl_set.all().count(), 1)
-        self.assertEquals(v.acl_set.all()[0].level,RoleLevelField.LEVEL_WRITE)
-
-        #childs should be write
-        self.assertEquals(c.acl_set.all().count(), 1)
-        self.assertEquals(c.acl_set.all()[0].level,RoleLevelField.LEVEL_WRITE)
-
-
-        # current should be write
-        self.assertEquals(v.acl_set.all().count(), 1)
-        self.assertEquals(v.acl_set.all()[0].level,RoleLevelField.LEVEL_WRITE)
 
     def test_020_invited_member(self):
         u = User()
@@ -94,6 +110,7 @@ class AclTest(TransactionTestCase):
 
         # already materialized roles should be deleted
         Acl.objects.all().delete()
+        Role.objects.all().delete()
 
         m = Member()
         m.workspace = w
@@ -108,7 +125,7 @@ class AclTest(TransactionTestCase):
         role.save()
 
         # 0 acls should be in db, because no materialization should happen on invited member
-        self.assertEquals(Acl.objects.all().count(),0)
+        self.assertEquals(Acl.objects.all().count(), 0)
 
     def test_030_invited_member_become_regular(self):
         u = User()
@@ -123,6 +140,7 @@ class AclTest(TransactionTestCase):
 
         # already materialized roles should be deleted
         Acl.objects.all().delete()
+        Role.objects.all().delete()
 
         m = Member()
         m.workspace = w
@@ -140,7 +158,8 @@ class AclTest(TransactionTestCase):
         m.save()
 
         # 1 acls should be in db, because materialization should happen on regular member
-        self.assertEquals(Acl.objects.all().count(),1)
+        self.assertAcl(level=AclLevelField.LEVEL_WRITE, role=role, count=1, workspace=w)
+        self.assertAcl(level=AclLevelField.LEVEL_READ, role=role, count=1, workspace=w)
 
     def test_040_members_are_joined(self):
         u1 = User()
@@ -159,6 +178,7 @@ class AclTest(TransactionTestCase):
 
         # already materialized roles should be deleted
         Acl.objects.all().delete()
+        Role.objects.all().delete()
 
         m1 = Member()
         m1.workspace = w
@@ -173,7 +193,7 @@ class AclTest(TransactionTestCase):
         m2.save()
 
         role = Role()
-        role.level = RoleLevelField.LEVEL_WRITE
+        role.level = RoleLevelField.LEVEL_READ
         role.created_by = u1
         role.set_object(w)
         role.member = m1
@@ -182,10 +202,10 @@ class AclTest(TransactionTestCase):
         Member.objects.join_member(m1, m2)
 
         # 1 acls should be in db, because materialization should happen on regular member
-        self.assertEquals(Acl.objects.all().count(),1)
+        self.assertEquals(Acl.objects.all().count(), 1)
 
         # acls should be related to m2
-        self.assertEquals(Acl.objects.all()[0].user, m2.user )
+        self.assertEquals(Acl.objects.all()[0].user, m2.user)
 
 
     def test_050_update_role(self):
@@ -221,6 +241,8 @@ class AclTest(TransactionTestCase):
 
         # already materialized roles should be deleted
         Acl.objects.all().delete()
+        Role.objects.all().delete()
+
 
         role = Role()
         role.level = RoleLevelField.LEVEL_READ
@@ -229,28 +251,24 @@ class AclTest(TransactionTestCase):
         role.member = m
         role.save()
 
+
+        # parent acls should be read
+        self.assertAcl(level=AclLevelField.LEVEL_READ, count=1, workspace=w)
+
         role.level = RoleLevelField.LEVEL_WRITE
         role.save()
 
-        # 3 acls should be in db
-        self.assertEquals(Acl.objects.all().count(),3)
+        # parent acls should be write
+        self.assertAcl(level=AclLevelField.LEVEL_READ, count=1, workspace=w)
 
-        # parent acls should be read
-        self.assertEquals(w.acl_set.all().count(), 1)
-        self.assertEquals(w.acl_set.all()[0].level,RoleLevelField.LEVEL_READ)
 
         # current should be write
-        self.assertEquals(v.acl_set.all().count(), 1)
-        self.assertEquals(v.acl_set.all()[0].level,RoleLevelField.LEVEL_WRITE)
+        self.assertAcl(level=AclLevelField.LEVEL_WRITE, count=1, vault=v)
+        self.assertAcl(level=AclLevelField.LEVEL_READ, count=1, vault=v)
 
         #childs should be write
-        self.assertEquals(c.acl_set.all().count(), 1)
-        self.assertEquals(c.acl_set.all()[0].level,RoleLevelField.LEVEL_WRITE)
-
-
-        # current should be write
-        self.assertEquals(v.acl_set.all().count(), 1)
-        self.assertEquals(v.acl_set.all()[0].level,RoleLevelField.LEVEL_WRITE)
+        self.assertAcl(level=AclLevelField.LEVEL_WRITE, count=1, card=c)
+        self.assertAcl(level=AclLevelField.LEVEL_READ, count=1, card=c)
 
     def test_060_create_object(self):
         u = User()
@@ -263,12 +281,9 @@ class AclTest(TransactionTestCase):
         w.created_by = u
         w.save()
 
-        # There should be one materialized acl in database
-        self.assertEquals(w.acl_set.all().count(), 1)
-
-        workspace_acl = w.acl_set.all()[0]
-        self.assertEquals(workspace_acl.user, u)
-        self.assertEquals(workspace_acl.level, RoleLevelField.LEVEL_WRITE)
+        # current should be write
+        self.assertAcl(level=AclLevelField.LEVEL_WRITE, count=1, workspace=w)
+        self.assertAcl(level=AclLevelField.LEVEL_READ, count=1, workspace=w)
 
         v = Vault()
         v._user = u
@@ -277,11 +292,9 @@ class AclTest(TransactionTestCase):
         v.created_by = u
         v.save()
 
-        # there should be one another
-        self.assertEquals(Acl.objects.exclude(id=workspace_acl.id).count(), 1);
-
-        acl = Acl.objects.exclude(id=workspace_acl.id)[0]
-        self.assertEquals(acl.level, RoleLevelField.LEVEL_WRITE)
+        # current should be write
+        self.assertAcl(level=AclLevelField.LEVEL_WRITE, count=1, vault=v)
+        self.assertAcl(level=AclLevelField.LEVEL_READ, count=1, vault=v)
 
     def test_070_delete_object_or_role(self):
         u = User()
@@ -301,13 +314,14 @@ class AclTest(TransactionTestCase):
         v.created_by = u
         v.save()
 
-        # there should be two acls
-        self.assertEquals(Acl.objects.count(), 2);
+        # current should be write
+        self.assertAcl(level=AclLevelField.LEVEL_WRITE, count=1, vault=v)
+        self.assertAcl(level=AclLevelField.LEVEL_READ, count=1, vault=v)
 
         v.delete()
 
         # there should be one acls
-        self.assertEquals(Acl.objects.count(), 1);
+        self.assertEquals(Acl.objects.count(), 2);
 
         # there should be one role
         self.assertEquals(Role.objects.count(), 1);
@@ -317,6 +331,74 @@ class AclTest(TransactionTestCase):
         # there should be no acls
         self.assertEquals(Acl.objects.count(), 0);
 
+    def test_080_create_role_test(self):
+        u = User()
+        u.email = 'misan'
+        u.save()
+
+        w = Workspace()
+        w._user = u
+        w.name = 'workspace'
+        w.created_by = u
+        w.save()
+
+        v = Vault()
+        v._user = u
+        v.name = 'vault'
+        v.workspace = w
+        v.created_by = u
+        v.save()
+
+        c = Card()
+        c.name = 'vault'
+        c.vault = v
+        c.created_by = u
+        c.save()
+
+        m = Member()
+        m.user = u
+        m.status = MemberStatusField.STATUS_MEMBER
+        m.workspace = w
+        m.created_by = u
+        m.save()
+
+        # already materialized roles should be deleted
+        Acl.objects.all().delete()
+        Role.objects.all().delete()
+
+        role = Role()
+        role.level = RoleLevelField.LEVEL_CREATE
+        role.created_by = u
+        role.set_object(v)
+        role.member = m
+        role.save()
+
+        # workspace read
+        self.assertAcl(level=AclLevelField.LEVEL_READ, count=1, workspace=w)
+        self.assertAcl(level=AclLevelField.LEVEL_WRITE, count=0, workspace=w)
+
+        # vault read and create
+        self.assertAcl(level=AclLevelField.LEVEL_READ, count=1, vault=v)
+        self.assertAcl(level=AclLevelField.LEVEL_WRITE, count=0, vault=v)
+        self.assertAcl(level=AclLevelField.LEVEL_CREATE, count=1, vault=v)
+
+        # no permissions to card
+        self.assertEquals(Role.objects.count() , 1)
+        self.assertAcl(count=0, card=c)
+
+        c = Card()
+        c.name = 'Another card'
+        c.vault = v
+        c.created_by = u
+        c.save()
+
+        # manage role created to child, read and write on card
+        self.assertEquals(Role.objects.count() , 2)
+        self.assertAcl(level=AclLevelField.LEVEL_WRITE, count=1, card=c)
+        self.assertAcl(level=AclLevelField.LEVEL_CREATE, count=0, card=c)
+
+        a = list(c.acl_set.all())
+        self.assertAcl(level=AclLevelField.LEVEL_READ, count=1, card=c)
 
 
 def acl_suite():

@@ -78,6 +78,14 @@ Vaultier.InvitationAcceptRoute = Ember.Route.extend(
 
 Vaultier.InvitationAnonymousRoute = Ember.Route.extend(
     {
+        setupController: function (ctrl, model) {
+            ctrl.set('content', model)
+            ctrl.set('breadcrumbs',
+                Vaultier.Breadcrumbs.create({router: this.get('router')})
+                    .addHome()
+                    .addText('Accept invitation')
+            );
+        },
     });
 
 

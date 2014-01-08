@@ -192,6 +192,7 @@ Vaultier.MemberIndexController = Ember.Controller.extend({
     }.property('content.@each')
 });
 
+
 Vaultier.MemberIndexView = Ember.View.extend({
     templateName: 'Member/MemberIndex',
     layoutName: 'Layout/LayoutStandard',
@@ -199,14 +200,15 @@ Vaultier.MemberIndexView = Ember.View.extend({
 
     Item: Ember.View.extend({
         tagName: 'tr',
-        Select: Ember.Select.extend({
-
-            didInsertElement: function () {
-                this.addObserver('value', this, function () {
+        Select: Vaultier.MemberSelectRoleView.extend({
+            actions: {
+                changed: function () {
                     this.get('controller').send('changeRole', this.get('role'), this.get('block'));
-                })
+                }
             }
         })
+
+
     })
 
 });

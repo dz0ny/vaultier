@@ -8,6 +8,7 @@ from vaultier.api.shared.slug import RetrieveBySlugMixin
 from vaultier.api.user import RelatedUserSerializer
 from vaultier.auth.authentication import TokenAuthentication
 from vaultier.models import Workspace
+from vaultier.models.acl_fields import AclLevelField
 from vaultier.models.member import Member
 from vaultier.models.role_fields import RoleLevelField
 from vaultier.models.slug import Slug
@@ -18,9 +19,9 @@ class CanManageWorkspace(BasePermission):
     def has_object_permission(self, request, view, obj):
 
         if view.action == 'retrieve' or view.action == 'list' :
-            required_level = RoleLevelField.LEVEL_READ
+            required_level = AclLevelField.LEVEL_READ
         else:
-            required_level = RoleLevelField.LEVEL_WRITE
+            required_level = AclLevelField.LEVEL_WRITE
 
         if not obj.pk:
             return True

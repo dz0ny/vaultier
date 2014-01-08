@@ -6,18 +6,17 @@ from vaultier.api.fields.relations import RelatedNestedField
 from vaultier.api.member import RelatedMemberSerializer
 from vaultier.api.user import RelatedUserSerializer
 from vaultier.auth.authentication import TokenAuthentication
-from vaultier.models import Role
+from vaultier.models.acl_fields import AclLevelField
 from vaultier.models.member import Member
 from vaultier.models.role import Role
-from vaultier.models.role_fields import RoleLevelField
 from vaultier.perms.check import has_object_acl
 
 
 class CanManageRolePermission(BasePermission):
     def has_object_permission(self, request, view, role):
 
-        workspace = role.get_object().get_root_object()
-        result = has_object_acl(request.user, workspace, RoleLevelField.LEVEL_WRITE)
+        object = role.get_object()
+        result = has_object_acl(request.user, object, AclLevelField.LEVEL_WRITE)
 
         return result
 
@@ -64,7 +63,7 @@ class RoleViewSet(ModelViewSet):
     serializer_class = RoleSerializer
 
     def get_serializer_class(self):
-        if self.action == 'update':
+        if self.action == 'update'  or self.action == 'partial_update':
             return RoleUpdateSerializer
         else:
             return super(RoleViewSet, self).get_serializer_class()

@@ -188,6 +188,40 @@ a:hover {
     background-image: url('../images/preloader_100x100.gif') !important;
 }
 
+/*
+*Selectize
+*/
+.selectize-control {
+    text-align: left;
+}
+
+/*
+*Selectize
+*/
+
+
+.selectize-dropdown-content .active {
+    color: #fff;
+    background-color: #2fa4e7;
+}
+
+.selectize-dropdown-content div[data-selectable] {
+    border-bottom: 1px solid #E0DBDB;
+}
+.selectize-dropdown-content div[data-selectable]:last-child {
+    border-bottom: 0px;
+}
+
+.selectize-dropdown-content div[data-selectable] .help-block {
+    font-size: 12px;
+    line-height: 12px;
+}
+
+.selectize-dropdown-content div[data-selectable].active .help-block {
+    color: #fff;
+    background-color: #2fa4e7;
+}
+
 /*************************************************************
 **************************************************************
 * rows
@@ -1089,6 +1123,27 @@ span.vlt-user img {
 * Permissions panel
 *************************************************************
 *************************************************************/
+
+.vlt-panel-permissions .vlt-table .vlt-perms {
+    float: right;
+}
+
+.vlt-panel-permissions .vlt-table .vlt-perms .help-block{
+    font-size: 12px;
+}
+
+
+.vlt-panel-permissions .vlt-table .vlt-delete
+{
+    margin-left: 5px;
+    min-height: 35px;
+    float: right;
+}
+
+
+
+
+vlt-delete
 
 .vlt-panel-permissions .vlt-table .vlt-user {
     vertical-align: middle;
