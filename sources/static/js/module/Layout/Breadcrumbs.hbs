@@ -5,21 +5,25 @@
                 {{#each breadcrumbs.items }}
                     {{#if last}}
                         <li class="active">
-                            {{#if icon}}
-                                <img class="vlt-icon" {{bind-attr src=icon}}>
-                            {{/if}}
-                            <h2>
-                                {{ title }}
-                            </h2>
-                        </li>
-                    {{else}}
-                        <li>
-                            <a {{bind-attr href=link}}>
+                            <div class="vlt-bread-item-wrapper">
                                 {{#if icon}}
                                     <img class="vlt-icon" {{bind-attr src=icon}}>
                                 {{/if}}
-                                {{ title }}
-                            </a>
+                                <h2>
+                                    {{ title }}
+                                </h2>
+                            </div>
+                        </li>
+                    {{else}}
+                        <li>
+                            <div class="vlt-bread-item-wrapper">
+                                <a {{bind-attr href=link}}>
+                                    {{#if icon}}
+                                        <img class="vlt-icon" {{bind-attr src=icon}}>
+                                    {{/if}}
+                                    {{ title }}
+                                </a>
+                            </div>
                         </li>
                     {{/if}}
                 {{/each}}

@@ -332,6 +332,12 @@ a:hover {
     padding-left: 0px;
 }
 
+
+.vlt-breads .breadcrumb .vlt-bread-item-wrapper {
+    display: inline-block;
+}
+
+
 .vlt-breads .breadcrumb .active h2 {
     font-size: 14px;
     font-weight: bold;
