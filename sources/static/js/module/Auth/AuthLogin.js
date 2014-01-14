@@ -72,10 +72,9 @@ Vaultier.AuthLoginSwitchRoute = Ember.Route.extend(
                 var privateKey = ctrl.get('privateKey');
 
                 var auth = this.get('auth');
-                auth.login(email, privateKey).then(
+                auth.login(email, privateKey, true).then(
                     function () {
                         $.notify('You have been successfully logged in.', 'success');
-                        this.transitionTo('index');
                     }.bind(this),
                     function () {
                         $.notify('We are sorry, but your login failed', 'error');

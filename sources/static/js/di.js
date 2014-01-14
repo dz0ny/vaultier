@@ -20,6 +20,7 @@ Vaultier.registerDI = function(app) {
         app.register('service:auth', Service.Auth)
         app.inject('service:auth', 'coder', 'service:coder')
         app.inject('service:auth', 'store', 'store:main')
+        app.inject('service:auth', 'router', 'router:main')
         app.inject('service:auth', 'session', 'service:session')
         app.inject('route', 'auth', 'service:auth');
         app.inject('controller', 'auth', 'service:auth');

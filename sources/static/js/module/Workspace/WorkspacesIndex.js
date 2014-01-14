@@ -3,11 +3,8 @@ Vaultier.WorkspacesRoute = Ember.Route.extend(
 
         beforeModel: function (transition) {
             // only authenticated user can access
-            if (!this.get('auth.isAuthenticated')) {
-                $.notify('You do not have access to secured area. Please login', 'error');
-                transition.abort();
-                this.transitionTo('AuthLogin');
-                return;
+            if (!this.get('auth').checkAuthenticatedOrLogin(transition)) {
+                return false;
             }
 
             // if any invitations store in session, user will be redirected

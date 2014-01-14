@@ -1,5 +1,12 @@
 Vaultier.SettingsRoute = Ember.Route.extend({
 
+    beforeModel: function (transition) {
+        // only authenticated user can access
+        if (!this.get('auth').checkAuthenticatedOrLogin(transition)) {
+            return false;
+        }
+    }
+
 })
 
 Vaultier.SettingsView = Ember.View.extend({
@@ -20,13 +27,13 @@ Vaultier.SettingsView = Ember.View.extend({
 });
 
 Vaultier.SettingsController = Ember.Controller.extend({
-        needs: ['application']
+    needs: ['application']
 })
 
 Vaultier.SettingsIndexRoute = Ember.Route.extend({
 
-    beforeModel: function(transition) {
-            transition.abort()
-            this.transitionTo('Settings.personal');
+    beforeModel: function (transition) {
+        transition.abort()
+        this.transitionTo('Settings.personal');
     }
 })

@@ -201,7 +201,7 @@ Vaultier.AuthRegisterCredsRoute = Ember.Route.extend({
                 promise.then(
                     // success create
                     function () {
-                        return auth.login(user.get('email'), keys.privateKey)
+                        return auth.login(user.get('email'), keys.privateKey, false)
                             .then(function () {
                                 this.transitionTo('AuthRegister.sum');
                             }.bind(this));
