@@ -179,6 +179,9 @@ Service.Auth = Ember.Object.extend({
             .then(function () {
                 this.setAuthenticatedUser(null);
             }.bind(this))
+            .then(function() {
+                window.location = '/'
+            })
     },
 
     /**

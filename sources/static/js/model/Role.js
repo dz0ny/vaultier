@@ -20,18 +20,18 @@ Vaultier.Role = RL.Model.extend(
         roles: new Utils.ConstantList({
             'CREATE': {
                 value: 50,
-                text: 'Create own',
-                desc:'Can create new, modify own, invite and grant permissions to own'
+                text: 'Create new',
+                desc:'Can read this object. Can create new child objects. Can modify, delete, invite and grant permissions to created objects'
             },
             'READ': {
                 value: 100,
-                desc: 'Can read mine and others',
-                text: 'Read'
+                desc: 'Can read this object and all child objects',
+                text: 'View only'
             },
             'WRITE': {
                 value: 200,
-                text: 'Write',
-                desc: 'Can write mine and others, invite and grant permissions to mine and others '
+                text: 'Manage',
+                desc: 'Can create, modify, delete, invite and grant permissions to this object and all child objects'
             }
         }),
 

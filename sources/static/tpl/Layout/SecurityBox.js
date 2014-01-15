@@ -62,18 +62,20 @@ function program6(depth0,data) {
   
   var buffer = '', stack1, stack2, hashContexts, hashTypes, options;
   data.buffer.push("\r\n    <div class=\" vlt-security-box vlt-anonymous pull-right \">\r\n       ");
-  hashContexts = {'class': depth0};
-  hashTypes = {'class': "STRING"};
+  hashContexts = {'class': depth0,'activeClass': depth0};
+  hashTypes = {'class': "STRING",'activeClass': "STRING"};
   options = {hash:{
-    'class': ("btn btn-primary btn-sm")
+    'class': ("btn btn-primary btn-sm"),
+    'activeClass': ("")
   },inverse:self.noop,fn:self.program(7, program7, data),contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
   stack2 = ((stack1 = helpers['link-to'] || depth0['link-to']),stack1 ? stack1.call(depth0, "AuthLogin", options) : helperMissing.call(depth0, "link-to", "AuthLogin", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
   data.buffer.push("\r\n       ");
-  hashContexts = {'class': depth0};
-  hashTypes = {'class': "STRING"};
+  hashContexts = {'class': depth0,'activeClass': depth0};
+  hashTypes = {'class': "STRING",'activeClass': "STRING"};
   options = {hash:{
-    'class': ("btn btn-default btn-sm")
+    'class': ("btn btn-default btn-sm"),
+    'activeClass': ("")
   },inverse:self.noop,fn:self.program(9, program9, data),contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
   stack2 = ((stack1 = helpers['link-to'] || depth0['link-to']),stack1 ? stack1.call(depth0, "AuthRegister", options) : helperMissing.call(depth0, "link-to", "AuthRegister", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }

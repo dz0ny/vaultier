@@ -228,15 +228,14 @@ function program24(depth0,data) {
   hashContexts = {};
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "deleteRole", "role", "block", {hash:{},contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
   data.buffer.push(">\r\n                                                <span class=\"glyphicon glyphicon-trash\"></span>\r\n                                            </a>\r\n                                            ");
-  hashContexts = {'role': depth0,'class': depth0,'contentBinding': depth0,'optionValuePath': depth0,'optionLabelPath': depth0,'valueBinding': depth0};
-  hashTypes = {'role': "ID",'class': "STRING",'contentBinding': "STRING",'optionValuePath': "STRING",'optionLabelPath': "STRING",'valueBinding': "STRING"};
+  hashContexts = {'role': depth0,'class': depth0,'contentBinding': depth0,'optionValuePath': depth0,'optionLabelPath': depth0};
+  hashTypes = {'role': "ID",'class': "STRING",'contentBinding': "STRING",'optionValuePath': "STRING",'optionLabelPath': "STRING"};
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "view.Select", {hash:{
     'role': ("role"),
     'class': ("form-control vlt-perms"),
     'contentBinding': ("roleLevels"),
     'optionValuePath': ("content.value"),
-    'optionLabelPath': ("content.text"),
-    'valueBinding': ("role.level")
+    'optionLabelPath': ("content.text")
   },contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
   data.buffer.push("\r\n                                        </div>\r\n                                    ");
   return buffer;

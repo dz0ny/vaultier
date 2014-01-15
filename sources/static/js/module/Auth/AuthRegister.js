@@ -199,35 +199,31 @@ Vaultier.AuthRegisterCredsRoute = Ember.Route.extend({
             var user = ctrl.get('content');
             var keys = ctrl.get('props.keys');
 
-            // saves user
-            if (user.get('isValid')) {
+            // update model
+            user.set('public_key', keys.publicKey);
 
-                // update model
-                user.set('public_key', keys.publicKey);
+            // preapre controller
+            ctrl.set('props.nextButtonDisabled', true);
 
-                // preapre controller
-                ctrl.set('props.nextButtonDisabled', true);
+            // register promise
+            var promise = user.saveRecord();
 
-                // register promise
-                var promise = user.saveRecord();
+            // authenticate promise
+            promise.then(
+                // success create
+                function () {
+                    return auth.login(user.get('email'), keys.privateKey, false)
+                        .then(function () {
+                            auth.rememberUser(null);
+                            this.transitionTo('AuthRegister.sum');
+                        }.bind(this));
+                }.bind(this),
 
-                // authenticate promise
-                promise.then(
-                    // success create
-                    function () {
-                        return auth.login(user.get('email'), keys.privateKey, false)
-                            .then(function () {
-                                auth.rememberUser(null);
-                                this.transitionTo('AuthRegister.sum');
-                            }.bind(this));
-                    }.bind(this),
-
-                    // unsuccess create
-                    function (errors) {
-                        ctrl.set('errors', Ember.Object.create(errors.errors));
-                        ctrl.set('props.nextButtonDisabled', false);
-                    }.bind(this));
-            }
+                // unsuccess create
+                function (errors) {
+                    ctrl.set('errors', Ember.Object.create(errors.errors));
+                    ctrl.set('props.nextButtonDisabled', false);
+                }.bind(this));
 
         }
     }
