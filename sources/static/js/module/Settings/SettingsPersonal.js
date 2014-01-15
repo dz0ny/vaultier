@@ -8,10 +8,6 @@ Vaultier.SettingsPersonalRoute = Ember.Route.extend(
             ctrl.set('content', this.get('auth.user'))
         },
 
-        deactivate: function () {
-            this.get('auth.user').rollback()
-        },
-
         actions: {
             save: function () {
                 var record = this.get('controller.content');

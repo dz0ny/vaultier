@@ -9,25 +9,29 @@
                 <div class="col-md-8 col-md-offset-2">
 
                     <div class="form-group" {{bind-attr class='content.errors.email:has-error'}}>
-                        <label for="register-form-email" class="col-lg-4 control-label">Email *</label>
+                        <label for="register-form-email" class="control-label">Email *</label>
 
-                        <div class="col-lg-4">
-                            {{ view Ember.TextField elementId='register-form-email' valueBinding='content.email' class="form-control" placeholder="Please enter valid email address"}}
-                            <span class="error">
-                                {{content.errors.email}}
-                            </span>
-                        </div>
+                        {{ view Ember.TextField
+                        elementId='register-form-email'
+                        valueBinding='content.email'
+                        class="form-control"
+                        placeholder="Please enter valid email address"}}
+                        <span class="error">
+                            {{content.errors.email}}
+                        </span>
                     </div>
 
                     <div class="form-group" {{bind-attr class='content.errors.nickname:has-error'}}>
-                        <label for="register-form-nickname" class="col-lg-4 control-label">Your nickname *</label>
+                        <label for="register-form-nickname" class="control-label">Your nickname *</label>
 
-                        <div class="col-lg-4">
-                            {{ view Ember.TextField elementId='register-form-nickname' valueBinding='content.nickname' class="form-control" placeholder="Please enter your nickname"}}
-                            <span class="error">
-                                {{content.errors.nickname}}
-                            </span>
-                        </div>
+                        {{ view Ember.TextField
+                        elementId='register-form-nickname'
+                        valueBinding='content.nickname'
+                        class="form-control"
+                        placeholder="Please enter your nickname"}}
+                        <span class="error">
+                            {{content.errors.nickname}}
+                        </span>
                     </div>
 
                 </div>

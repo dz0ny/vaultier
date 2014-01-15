@@ -1,5 +1,6 @@
 Vaultier.Vault = RL.Model.extend(
-    CreatedUpdatedMixin,
+    Vaultier.CreatedUpdatedMixin,
+    Vaultier.RollbackMixin,
     {
         name: RL.attr('string'),
         slug: RL.attr('string'),

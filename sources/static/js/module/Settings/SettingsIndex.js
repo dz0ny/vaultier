@@ -5,6 +5,10 @@ Vaultier.SettingsRoute = Ember.Route.extend({
         if (!this.get('auth').checkAuthenticatedOrLogin(transition)) {
             return false;
         }
+    },
+
+    deactivate: function () {
+        this.get('auth.user').rollback()
     }
 
 })

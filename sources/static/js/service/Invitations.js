@@ -2,7 +2,7 @@ Po.NS('Service');
 
 Service.Invitations = Ember.Object.extend({
 
-    SESSION_KEY : 'invitations',
+    SESSION_KEY: 'invitations',
 
     /**
      * @DI service:session
@@ -57,7 +57,7 @@ Service.Invitations = Ember.Object.extend({
         var data = {
             member: member.id,
             level: role,
-            to_workspace: Utils.E.recordId(params.to_workspace) ,
+            to_workspace: Utils.E.recordId(params.to_workspace),
             to_vault: Utils.E.recordId(params.to_vault),
             to_card: Utils.E.recordId(params.to_card)
         };
@@ -102,31 +102,31 @@ Service.Invitations = Ember.Object.extend({
         }.bind(this));
     },
 
-    hasInvitationsInSession: function() {
-       var invitations = this.session.get(this.SESSION_KEY, null);
+    hasInvitationsInSession: function () {
+        var invitations = this.session.get(this.SESSION_KEY, null);
         return invitations !== null;
     },
 
-    acceptInvitationsInSession: function () {
-        var invitations = this.session.get(this.SESSION_KEY, {});
-
-        var promises = [];
-        for (id in invitations) {
-            var invitation = invitations[id];
-            promises.push(Utils.RSVPAjax({
-                url: '/api/members/' + id + '/accept/',
-                type: 'post',
-                data: {
-                    hash: invitation.hash
-                }
-            }))
+    acceptInvitationsInSession: function (invitations) {
+        if (invitations) {
+            invitations = Ember.RSVP.resolve(invitations)
+        } else {
+            invitations = this.fetchInvitationsInSession();
         }
 
-        return Ember.RSVP.all(promises);
-
+        var promise = invitations
+            .then(function (invitations) {
+                var promises = [];
+                invitations.forEach(function (invitation) {
+                    invitation.set('status', 200);
+                    promises.push(invitation.saveRecord())
+                })
+                return Ember.RSVP.all(promises)
+            });
+        return promise
     },
 
-    clearInvitationsInSession: function() {
+    clearInvitationsInSession: function () {
         this.session.set(this.SESSION_KEY, null);
     },
 
@@ -137,35 +137,20 @@ Service.Invitations = Ember.Object.extend({
 
 
     /**
-     * List all roles related to invitation in session
+     * Fetches all invitations stored in session from server
      */
-    listRolesInSession: function () {
+    fetchInvitationsInSession: function () {
         var invitations = this.session.get(this.SESSION_KEY, {});
         var promises = []
+        var store = this.get('store');
 
-        for (id in invitations) {
-            promises.push(this.store.find('MemberRole', invitations[id]))
+        for (i in invitations) {
+            if (invitations.hasOwnProperty(i)) {
+                promises.push(store.find('Invitation', invitations[i].hash));
+            }
         }
 
-        var promise = new Ember.RSVP.Promise(function (resolve, reject) {
-
-            if (promises.length) {
-                result = [];
-                Ember.RSVP.all(promises).then(
-                    function (all) {
-                        all.forEach(function (populatedDataStore) {
-                            result = result.concat(populatedDataStore.toArray())
-                        });
-                        resolve(result)
-                    }
-                ).catch(reject)
-            } else {
-                resolve([]);
-            }
-
-        });
-
-        return promise
+        return Ember.RSVP.all(promises)
     },
 
 

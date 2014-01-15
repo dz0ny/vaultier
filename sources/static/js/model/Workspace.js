@@ -1,6 +1,6 @@
 Vaultier.Workspace = RL.Model.extend(
-    CreatedUpdatedMixin,
-    ExposeCleanAttributesMixin,
+    Vaultier.CreatedUpdatedMixin,
+    Vaultier.RollbackMixin,
     {
         init: function() {
             this.set('members', Vaultier.__container__.lookup('service:members'))
@@ -37,7 +37,7 @@ Vaultier.Workspace = RL.Model.extend(
                 // after save, approve workspace
                 promise = promise
                     .then(function () {
-                            this.get('members').approveNewWorkspace(workspace)
+                            return this.get('members').transferKeyToWorkspace(workspace)
                     }.bind(this))
                     .then(function () {
                         return workspace.reloadRecord()

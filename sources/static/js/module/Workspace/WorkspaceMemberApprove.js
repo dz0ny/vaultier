@@ -12,7 +12,7 @@ Vaultier.WorkspaceMemberApproveRoute = Ember.Route.extend(
             }
 
             // load members
-            var promise = this.get('members').loadMembersToApprove(workspace)
+            var promise = this.get('members').loadMembersWithoutWorkspaceKey(workspace)
 
             return promise
         },
@@ -30,7 +30,7 @@ Vaultier.WorkspaceMemberApproveRoute = Ember.Route.extend(
 
         actions: {
             acceptMembers: function () {
-                var promise = this.get('members').approveMembers();
+                var promise = this.get('members').transferKeysToMembers();
 
                 promise.then(
                     function () {

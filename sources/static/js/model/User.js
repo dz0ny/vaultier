@@ -1,6 +1,6 @@
 Vaultier.User = RL.Model.extend(
-    CreatedUpdatedMixin,
-    ExposeCleanAttributesMixin,
+    Vaultier.CreatedUpdatedMixin,
+    Vaultier.RollbackMixin,
     {
 
         email: RL.attr('string'),

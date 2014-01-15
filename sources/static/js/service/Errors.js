@@ -17,9 +17,9 @@ Service.Errors = Ember.Object.extend({
 
     init: function () {
         this._super();
-        Raven.config('http://df6466226ad14775b23818b42df3a5c8@sentry.rclick.cz/5', {
-            whitelistUrls: []
-        }).install();
+//        Raven.config('http://df6466226ad14775b23818b42df3a5c8@sentry.rclick.cz/5', {
+//            whitelistUrls: []
+//        }).install();
     },
 
     parseError: function (error) {
@@ -52,7 +52,6 @@ Service.Errors = Ember.Object.extend({
 
 
     renderError: function (error) {
-        return;
         var ctrl = this.get('errorController')
         var data = this.parseError(error)
         ctrl.set('error', error)
@@ -60,9 +59,7 @@ Service.Errors = Ember.Object.extend({
 
         var router = this.get('router');
         var errorRoute = this.get('errorRoute')
-        var url = router.generate(errorRoute).replace('#', '')
-        router.handleURL(url)
-
+        router.intermediateTransitionTo(errorRoute)
         ApplicationLoader.hideLoader()
     },
 

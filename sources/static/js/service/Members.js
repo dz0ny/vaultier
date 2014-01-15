@@ -50,7 +50,7 @@ Service.Members = Ember.Object.extend({
         return key
     },
 
-    loadMembersToApprove: function () {
+    loadMembersWithoutWorkspaceKey: function () {
         var workspace = this.get('workspace')
         if (!workspace) {
             throw Error('Workspace not selected')
@@ -58,7 +58,7 @@ Service.Members = Ember.Object.extend({
 
         var promise = this.get('store').find('Member', {
             workspace: Utils.E.recordId(workspace),
-            status: Vaultier.Member.proto().statuses['NON_APPROVED_MEMBER'].value
+            status: Vaultier.Member.proto().statuses['MEMBER_WITHOUT_WORKSPACE_KEY'].value
         })
 
         promise.then(function (data) {
@@ -68,11 +68,11 @@ Service.Members = Ember.Object.extend({
         return promise;
     },
 
-    approveMember: function (memberId, workspaceKey) {
+    transferKeyToMember: function (memberId, workspaceKey) {
         var store = this.get('store');
         var coder = this.get('coder');
         var promise =
-            store.find('MemberWorkspaceKey', memberId)
+            store.find('WorkspaceKey', memberId)
                 .then(function (member) {
                     var publicKey = member.get('public_key')
                     var wk = coder.encryptRSA(workspaceKey, publicKey);
@@ -83,12 +83,12 @@ Service.Members = Ember.Object.extend({
         return promise
     },
 
-    approveNewWorkspace: function (workspace) {
+    transferKeyToWorkspace: function (workspace) {
         var workspaceKey = this.decryptWorkspaceKey(workspace)
-        return this.approveMember(workspace.get('membership.id'), workspaceKey)
+        return this.transferKeyToMember(workspace.get('membership.id'), workspaceKey)
     },
 
-    approveMembers: function () {
+    transferKeysToMembers: function () {
         var members = this.get('membersToApprove')
         if (!members) {
             throw Error('Members not loaded')
@@ -102,7 +102,7 @@ Service.Members = Ember.Object.extend({
 
         var promises = []
         members.forEach(function (member) {
-            promises.push(this.approveMember(member.get('id'), workspaceKey))
+            promises.push(this.transferKeyToMember(member.get('id'), workspaceKey))
         }.bind(this))
 
         var promises = Ember.RSVP.all(promises);

@@ -48,7 +48,7 @@ class CanManageVaultPermission(BasePermission):
 
 class VaultSerializer(ModelSerializer):
     slug = SlugField(read_only=True)
-    created_by = RelatedUserSerializer(required=False)
+    created_by = RelatedUserSerializer(read_only=True)
     perms = PermsField()
 
     class Meta:

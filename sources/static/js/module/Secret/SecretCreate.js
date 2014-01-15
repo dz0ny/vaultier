@@ -138,15 +138,6 @@ Vaultier.SecretCreateSubmitRoute = Ember.Route.extend(
             this.render(this.template, {outlet: 'tab', into: 'SecretCreate'});
         },
 
-        deactivate: function () {
-            var record = this.get('controller.content');
-            var store = this.get('store');
-            if (!record.get('id')) {
-                //record.rollback();
-                store.deleteRecord(record);
-            }
-        },
-
         actions: {
             submit: function () {
                 var record = this.get('controller.content');

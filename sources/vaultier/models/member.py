@@ -69,7 +69,7 @@ class MemberManager(Manager):
         # user membership does not exists, or it is only invite
         if not existing_member:
             member.user = user
-            member.status = MemberStatusField.STATUS_NON_APPROVED_MEMBER
+            member.status = MemberStatusField.STATUS_MEMBER_WITHOUT_WORKSPACE_KEY
             member.save()
 
         # membership exists, we need to join current membership to existing

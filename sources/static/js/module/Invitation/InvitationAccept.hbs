@@ -15,12 +15,14 @@
                                 <b>Please see invitations to accept:</b>
                             </div>
                             <table class="table vlt-table table-bordered">
-                                {{#each role in content}}
+                                {{#each invitation in content}}
+                                    {{#each role in invitation.roles}}
 
-                                    <tr>
-                                        <td>{{role.name}} by user {{printUser role.created_by}} </td>
-                                    </tr>
+                                        <tr>
+                                            <td>{{role.name}} by user {{printUser role.created_by}} </td>
+                                        </tr>
 
+                                    {{/each}}
                                 {{/each}}
                             </table>
                         </div>

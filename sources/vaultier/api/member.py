@@ -30,7 +30,7 @@ class CanManageWorkspaceKey(BasePermission):
         workspace = obj.workspace
         is_manager = has_object_acl(request.user, workspace, AclLevelField.LEVEL_WRITE)
         is_managing_approved = Member.objects.get(user=request.user, workspace=workspace).status==MemberStatusField.STATUS_MEMBER
-        is_managed_non_approved = Member.objects.get(user=obj.user, workspace=workspace).status==MemberStatusField.STATUS_NON_APPROVED_MEMBER
+        is_managed_non_approved = Member.objects.get(user=obj.user, workspace=workspace).status==MemberStatusField.STATUS_MEMBER_WITHOUT_WORKSPACE_KEY
 
         result = is_manager or (is_managing_approved and  is_managed_non_approved)
         return result

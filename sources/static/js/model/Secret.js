@@ -1,8 +1,9 @@
 Vaultier.Secret = RL.Model.extend(
-    CreatedUpdatedMixin,
+    Vaultier.CreatedUpdatedMixin,
+    Vaultier.RollbackMixin,
     {
 
-        init: function() {
+        init: function () {
             this.set('members', Vaultier.__container__.lookup('service:members'))
             return this._super.apply(this, arguments);
         },
@@ -104,11 +105,9 @@ Vaultier.Secret = RL.Model.extend(
             return this._super();
         },
 
-        save: function () {
-            if (this.get('currentState.stateName') != 'root.deleted.uncommitted') {
-                this.encode();
-            }
-            return this._super();
+        saveRecord: function () {
+            this.encode();
+            return this._super.apply(this,arguments);
         }
 
     });

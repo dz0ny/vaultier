@@ -134,11 +134,14 @@ $(document).ready(function () {
     ApplicationLoader.queueFile(STATIC_URL + 'js/service/Members.js');
 
     /********************** model **/
-    ApplicationLoader.queueFile(STATIC_URL + 'js/model/shared/Shared.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'js/model/shared/Adapter.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'js/model/mixin/CreatedUpdatedMixin.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'js/model/mixin/RollbackMixin.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'js/model/adapter/Adapter.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/model/User.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/model/Workspace.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'js/model/WorkspaceKey.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/model/Member.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'js/model/Invitation.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/model/Role.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/model/Vault.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/model/Card.js');

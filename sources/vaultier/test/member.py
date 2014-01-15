@@ -94,7 +94,7 @@ class ApiInviteTest(TransactionTestCase):
         )
 
         # 3 invitations in db, one approved member
-        self.assertEqual(Member.objects.filter(status=MemberStatusField.STATUS_NON_APPROVED_MEMBER) .count(),1)
+        self.assertEqual(Member.objects.filter(status=MemberStatusField.STATUS_MEMBER_WITHOUT_WORKSPACE_KEY) .count(),1)
         self.assertEqual(Member.objects.filter(status=MemberStatusField.STATUS_INVITED) .count(),2)
 
         # 3 roles in db, 2 for invitations, 1 for exisitng workspace
@@ -109,7 +109,7 @@ class ApiInviteTest(TransactionTestCase):
         )
 
         # 0 approved member, 2 non approved member
-        self.assertEqual(Member.objects.filter(status=MemberStatusField.STATUS_NON_APPROVED_MEMBER) .count(),2)
+        self.assertEqual(Member.objects.filter(status=MemberStatusField.STATUS_MEMBER_WITHOUT_WORKSPACE_KEY) .count(),2)
 
         # 3 roles only should exists, for user1 and for user2 and for invitation 3
         self.assertEqual(Role.objects.all().count(), 3)

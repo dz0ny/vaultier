@@ -1,5 +1,6 @@
 Vaultier.Role = RL.Model.extend(
-    CreatedUpdatedMixin,
+    Vaultier.CreatedUpdatedMixin,
+    Vaultier.RollbackMixin,
     {
 
         auth: null,
@@ -64,7 +65,7 @@ Vaultier.Role = RL.Model.extend(
         }.property('member.status'),
 
         isNonApprovedMember : function() {
-            return this.get('member.status') == Vaultier.Member.proto().statuses['NON_APPROVED_MEMBER'].value;
+            return this.get('member.status') == Vaultier.Member.proto().statuses['MEMBER_WITHOUT_WORKSPACE_KEY'].value;
         }.property('member.status'),
 
         printableDesc: function() {
