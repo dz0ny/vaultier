@@ -47,7 +47,7 @@ Vaultier.MemberInviteRoute = Ember.Route.extend(
                         invitations.invite(
                             inviteWorkspace,
                             emailOrId,
-                            role,
+                            role.level,
                             inviteParams,
                             true,
                             resend
@@ -70,7 +70,8 @@ Vaultier.MemberInviteRoute = Ember.Route.extend(
         setupController: function (ctrl, model) {
             ctrl.set('workspace', this.modelFor('Workspace'))
             ctrl.set('breadcrumbs', this.setupBreadcrumbs());
-            ctrl.set('content', []);
+            ctrl.set('invited', []);
+            ctrl.set('role', {});
             ctrl.set('roleLevels', this.setupRoleLevels());
         },
 
@@ -88,7 +89,7 @@ Vaultier.MemberInviteController = Ember.Controller.extend({
     resend: true,
 
     isSubmitDisabled: function () {
-        return !this.get('invited.length')
+        return !this.get('invited.length') && !this.get('role..level')
     }.property('invited.length'),
 
     breadcrumbs: null

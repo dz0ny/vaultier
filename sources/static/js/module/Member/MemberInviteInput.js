@@ -156,8 +156,7 @@ Vaultier.MemberSelectRoleView = Ember.Select.extend({
         selectize.setValue(this.get('role.level'));
         selectize.on('change', function (value) {
             if (value) {
-                var role = this.get('role');
-                role.set('level', value)
+                this.set('role.level', value);
                 this.send('changed', value);
             }
         }.bind(this));

@@ -40,15 +40,13 @@
 
                             <div class="form-group">
                                 <label for="invite-form-role">Permissions</label>
-                                {{errors.description}}
-
                                 {{view view.Select
+                                role=role
                                 class="form-control"
                                 elementId="invite-form-role"
                                 contentBinding="roleLevels"
                                 optionValuePath="content.value"
                                 optionLabelPath="content.text"
-                                valueBinding="role"
                                 }}
 
                             </div>
