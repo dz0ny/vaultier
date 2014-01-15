@@ -738,31 +738,6 @@ span.vlt-user img {
 
 /*************************************************************
 **************************************************************
-* tabbable modal
-*************************************************************
-*************************************************************/
-
-.vlt-tabs-modal.modal-dialog .modal-header {
-    padding: 15px 0px 0px 0px;
-    border-bottom: 0px;
-}
-
-.vlt-tabs-modal.modal-dialog .modal-header h2 {
-    padding: 0px 15px 15px 25px;
-    margin: 0px;
-    border-bottom: 0px;
-}
-
-.vlt-tabs-modal.modal-dialog .nav-tabs {
-    padding: 0px 18px 0px 18px;
-}
-
-.vlt-tabs-modal.modal-dialog .nav-pills {
-    padding: 0px 18px 0px 18px;
-}
-
-/*************************************************************
-**************************************************************
 * Register modal
 *************************************************************
 *************************************************************/
@@ -1024,6 +999,9 @@ span.vlt-user img {
     margin: 50px auto 50px auto;
     width: 600px;
 }
+.vlt-dialog .vlt-dialog-header {
+    border-bottom: 1px solid #E0DBDB;
+}
 
 .vlt-dialog .vlt-dialog-header,
 .vlt-dialog .vlt-dialog-body,
@@ -1033,6 +1011,7 @@ span.vlt-user img {
 
 .vlt-dialog .vlt-dialog-header h2 {
     text-align: center;
+    padding: 0px;
     margin: 0px;
 }
 
