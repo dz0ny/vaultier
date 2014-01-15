@@ -1,13 +1,10 @@
-Vaultier.User = DS.Model.extend(
+Vaultier.User = RL.Model.extend(
     CreatedUpdatedMixin,
     ExposeCleanAttributesMixin,
-    NonInvalidState,
     {
 
-
-
-        email: DS.attr('string'),
-        nickname: DS.attr('string'),
-        public_key: DS.attr('string')
+        email: RL.attr('string'),
+        nickname: RL.attr('string'),
+        public_key: RL.attr('string')
     });
 

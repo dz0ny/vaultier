@@ -84,7 +84,7 @@ Vaultier.SecretCreateSubmitRoute = Ember.Route.extend(
 
         afterModel: function (secret, transition) {
 
-            secret.set('card', this.modelFor('Card').get('pk'));
+            secret.set('card', this.modelFor('Card').get('id'));
 
             var SecretClass = Vaultier.Secret.proto();
             switch (transition.params.type.toUpperCase()) {
@@ -149,19 +149,17 @@ Vaultier.SecretCreateSubmitRoute = Ember.Route.extend(
 
         actions: {
             submit: function () {
-                if (this.get('controller.content.isValid')) {
-                    var record = this.get('controller.content');
+                var record = this.get('controller.content');
 
-                    record.save().then(
-                        function () {
-                            $.notify('Your secret has been successfully created.', 'success');
-                            this.transitionTo('Secret.index', this.get('Card'));
-                        }.bind(this),
-                        function () {
-                            $.notify('Oooups! Something went wrong.', 'error');
-                        }
-                    )
-                }
+                record.saveRecord().then(
+                    function () {
+                        $.notify('Your secret has been successfully created.', 'success');
+                        this.transitionTo('Secret.index', this.get('Card'));
+                    }.bind(this),
+                    function () {
+                        $.notify('Oooups! Something went wrong.', 'error');
+                    }
+                )
             }
         }
 

@@ -1,11 +1,12 @@
-Vaultier.Workspace = DS.Model.extend(
+Vaultier.Workspace = RL.Model.extend(
     CreatedUpdatedMixin,
     ExposeCleanAttributesMixin,
-    NonInvalidState,
     {
-        /**
-         * @DI Service.Members
-         */
+        init: function() {
+            this.set('members', Vaultier.__container__.lookup('service:members'))
+            return this._super.apply(this, arguments);
+        },
+
         members: null,
 
         /**
@@ -13,13 +14,11 @@ Vaultier.Workspace = DS.Model.extend(
          */
         keyError: false,
 
-
-        pk: DS.attr('number'),
-        name: DS.attr('string'),
-        slug: DS.attr('string'),
-        description: DS.attr('string'),
-        perms: DS.attr(),
-        membership: DS.attr(),
+        name: RL.attr('string'),
+        slug: RL.attr('string'),
+        description: RL.attr('string'),
+        perms: RL.attr('object',{ readOnly: true }),
+        membership: RL.attr('object', { readOnly: true }),
 
 
         /**
@@ -30,26 +29,19 @@ Vaultier.Workspace = DS.Model.extend(
         }.property('membership.status'),
 
 
-        save: function () {
-            var isNew = !this.get('id');
-            var promise = this._super(arguments)
-
+        saveRecord: function () {
+            var isNew = this.get('isNew');
+            var promise = this._super.apply(this, arguments)
+            var workspace = this;
             if (isNew) {
                 // after save, approve workspace
-                promise = promise.then(function (workspace) {
-                        if (isNew) {
-                            return  this.get('members').approveNewWorkspace(workspace)
-                                .then(function () {
-                                    return workspace
-                                })
-                        } else {
-                            return workspace
-                        }
+                promise = promise
+                    .then(function () {
+                            this.get('members').approveNewWorkspace(workspace)
                     }.bind(this))
-
-                    .then(function (workspace) {
-                        return workspace.reload()
-                    })
+                    .then(function () {
+                        return workspace.reloadRecord()
+                    }.bind(this))
             }
 
             return promise

@@ -7,7 +7,8 @@ Vaultier.WorkspaceRoute = Ember.Route.extend(
         member: null,
 
         model: function (params, transition) {
-            var promise = this.get('store').find('Workspace', params.workspace);
+            var promise = this.get('store').find('Workspace', params.workspace)
+
             return promise;
         },
 
@@ -31,10 +32,27 @@ Vaultier.WorkspaceRoute = Ember.Route.extend(
             }
 
             return {
-                workspace: model.get('id')
+                workspace: model.get('slug')
+            }
+        },
+
+        actions: {
+            deleteWorkspace: function (workspace) {
+                Vaultier.confirmModal(this, 'Are you sure?', function () {
+                    workspace
+                        .deleteRecord()
+                        .then(
+                            function () {
+                                $.notify('Your workspace has been successfully deleted.', 'success');
+                                this.transitionTo('index');
+                            }.bind(this))
+                        .catch(function (error) {
+                            $.notify('Oooups! Something went wrong.', 'error');
+                            throw error
+                        }.bind(this))
+                }.bind(this));
             }
         }
-
     });
 
 Vaultier.WorkspaceIndexRoute = Ember.Route.extend({

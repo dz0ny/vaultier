@@ -24,6 +24,10 @@ Vaultier.WorkspacesIndexRoute = Ember.Route.extend(
         model: function (params, transition) {
             var store = this.get('store');
             var promise = store.find('Workspace');
+
+            promise.then(function(workspaces) {
+                console.log(workspaces.get('firstObject'));
+            });
             return promise;
         },
 

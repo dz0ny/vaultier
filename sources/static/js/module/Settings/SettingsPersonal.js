@@ -14,17 +14,17 @@ Vaultier.SettingsPersonalRoute = Ember.Route.extend(
 
         actions: {
             save: function () {
-                if (this.get('controller.content.isValid')) {
-                    var record = this.get('controller.content');
-                    record.save().then(
-                        function () {
-                            $.notify('Your changes has been successfully saved.', 'success');
-                        }.bind(this),
-                        function () {
-                            $.notify('Oooups! Something went wrong.', 'error');
-                        })
-                }
-           }
+                var record = this.get('controller.content');
+                record
+                    .saveRecord()
+                    .then(
+                    function () {
+                        $.notify('Your changes has been successfully saved.', 'success');
+                    }.bind(this),
+                    function () {
+                        $.notify('Oooups! Something went wrong.', 'error');
+                    })
+            }
         }
     });
 

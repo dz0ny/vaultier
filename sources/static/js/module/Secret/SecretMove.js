@@ -22,7 +22,7 @@ Vaultier.SecretVaultNodeView = Ember.Tree.TreeNodeView.extend({
 
     loadData: function () {
         var store = this.get('controller.store');
-        var id = this.get('content.pk');
+        var id = this.get('content.id');
         var nodes = store
             .find('Card', {vault: id})
             .then(function (model) {
@@ -57,7 +57,7 @@ Vaultier.SecretMoveRoute = Ember.Route.extend(
 
             var vaults =
                 store.
-                    find('vault', {workspace: workspace.get('pk')})
+                    find('Vault', {workspace: workspace.get('id')})
                     .then(function (model) {
                         model.forEach(function (item) {
                             item.set('branch', true)
@@ -91,7 +91,9 @@ Vaultier.SecretMoveRoute = Ember.Route.extend(
             save: function () {
                 var record = this.get('controller.content');
                 record.set('card', this.get('controller.selected'))
-                record.save().then(
+                record
+                    .saveRecord()
+                    .then(
                     function () {
                         $.notify('Your secret has been successfully moved.', 'success');
                         history.go(-1);

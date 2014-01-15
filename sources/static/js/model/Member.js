@@ -1,12 +1,11 @@
-Vaultier.Member = DS.Model.extend(
+Vaultier.Member = RL.Model.extend(
     CreatedUpdatedMixin,
-    NonInvalidState,
     {
-        status: DS.attr('number'),
-        email: DS.attr('string'),
-        nickname: DS.attr('string'),
-        user: DS.attr(),
-        workspace: DS.attr(),
+        status: RL.attr('number'),
+        email: RL.attr('string'),
+        nickname: RL.attr('string'),
+        user: RL.attr('object'),
+        workspace: RL.attr('object'),
 
         statuses: new Utils.ConstantList({
             'INVITED': {
@@ -25,21 +24,21 @@ Vaultier.Member = DS.Model.extend(
 
     });
 
-Vaultier.MemberWorkspaceKey = DS.Model.extend(
+Vaultier.MemberWorkspaceKey = RL.Model.extend(
     NonInvalidState,
     {
-        public_key: DS.attr('string'),
-        workspace_key: DS.attr('string'),
-        status: DS.attr('string')
+        public_key: RL.attr('string'),
+        workspace_key: RL.attr('string'),
+        status: RL.attr('string')
     })
 
 
-Vaultier.MemberRole = DS.Model.extend(
+Vaultier.MemberRole = RL.Model.extend(
     NonInvalidState,
     {
-        created_by: DS.attr(),
-        to_name: DS.attr('string'),
-        to_type: DS.attr('number'),
+        created_by: RL.attr('object'),
+        to_name: RL.attr('string'),
+        to_type: RL.attr('number'),
 
         name: function () {
             var Role = Vaultier.Role.proto();

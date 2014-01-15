@@ -6,7 +6,7 @@ Vaultier.SecretIndexRoute = Ember.Route.extend({
         var store = this.get('store');
 
         if (workspace.get('isApproved')) {
-            return store.find('Secret', {card: card.get('pk')});
+            return store.find('Secret', {card: card.get('id')});
         } else {
             return []
         }
@@ -44,18 +44,18 @@ Vaultier.SecretIndexRoute = Ember.Route.extend({
     actions: {
         deleteCard: function (card) {
             Vaultier.confirmModal(this, 'Are you sure?', function () {
-                card.deleteRecord();
-
-                card.save().then(
-                    function () {
-                        $.notify('Your card has been successfully deleted.', 'success');
-                        this.transitionTo('Cards.index', this.get('vault'));
-                    }.bind(this),
-                    function (error) {
-                        card.rollback();
-                        $.notify('Oooups! Something went wrong.', 'error');
-                    }.bind(this)
-                );
+                card
+                    .deleteRecord()
+                    .then(
+                        function () {
+                            $.notify('Your card has been successfully deleted.', 'success');
+                            this.transitionTo('Cards.index', this.get('vault'));
+                        }.bind(this),
+                        function (error) {
+                            card.rollback();
+                            $.notify('Oooups! Something went wrong.', 'error');
+                        }.bind(this)
+                    );
             }.bind(this));
         },
 
@@ -63,18 +63,18 @@ Vaultier.SecretIndexRoute = Ember.Route.extend({
             Vaultier.confirmModal(this, 'Are you sure?', function () {
 
                 this.get('controller.content').removeObject(secret)
-                secret.deleteRecord();
+                secret
+                    .deleteRecord()
+                    .then(
+                        function () {
+                            $.notify('Your secret has been successfully deleted.', 'success');
+                        }.bind(this),
 
-                secret.save().then(
-                    function () {
-                        $.notify('Your secret has been successfully deleted.', 'success');
-                    }.bind(this),
-
-                    function (error) {
-                        secret.rollback();
-                        $.notify('Oooups! Something went wrong.', 'error');
-                    }.bind(this)
-                );
+                        function (error) {
+                            secret.rollback();
+                            $.notify('Oooups! Something went wrong.', 'error');
+                        }.bind(this)
+                    );
             }.bind(this));
         }
 

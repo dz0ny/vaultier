@@ -77,7 +77,7 @@ Service.Members = Ember.Object.extend({
                     var publicKey = member.get('public_key')
                     var wk = coder.encryptRSA(workspaceKey, publicKey);
                     member.set('workspace_key', wk)
-                    return member.save()
+                    return member.saveRecord()
                 })
 
         return promise

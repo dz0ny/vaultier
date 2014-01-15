@@ -13,14 +13,27 @@
 
                             <div class="form-group" {{bind-attr class='errors.name:has-error'}}>
                                 <label for="workspace-name">Name</label>
-                                {{errors.name}}
-                                {{view Em.TextField elementId='workspace-name' valueBinding='content.name' class="form-control"}}
-                            </div>
 
-                            <div class="form-group">
+                                {{view Em.TextField
+                                elementId='workspace-name'
+                                valueBinding='content.name'
+                                class="form-control"
+                                }}
+                                <span class="error">
+                                    {{content.errors.name}}
+                                </span></div>
+
+                            <div class="form-group" {{bind-attr class='errors.description:has-error'}}>
                                 <label for="workspace-description">Description</label>
-                                {{errors.description}}
-                                {{view Em.TextArea elementId='workspace-description' valueBinding='content.description' class="form-control" rows=5}}
+                                {{view Em.TextArea
+                                elementId='workspace-description'
+                                valueBinding='content.description'
+                                class="form-control"
+                                rows=5
+                                }}
+                                <span class="error">
+                                    {{content.errors.description}}
+                                </span>
                             </div>
                         </div>
 

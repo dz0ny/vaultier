@@ -16,7 +16,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   hashTypes = {'name': "STRING",'value': "ID"};
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "view.Radio", {hash:{
     'name': ("move-target"),
-    'value': ("view.content.pk")
+    'value': ("view.content.id")
   },contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
   data.buffer.push("\n        ");
   hashTypes = {};

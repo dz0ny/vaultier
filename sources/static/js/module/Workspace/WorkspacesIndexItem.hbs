@@ -1,4 +1,4 @@
-{{#link-to 'Workspace.index' this.id class="list-group-item vlt-workspace-item"}}
+{{#link-to 'Workspace.index' this class="list-group-item vlt-workspace-item"}}
     <div class="vlt-icon">
         <img src="/static/images/icon-workspace-grey.png"/>
     </div>
@@ -11,7 +11,6 @@
 
         <div class="help-block top-15">
             By {{printUser created_by}} updated at {{printAgo updated_at }}
-
         </div>
 
         {{view Vaultier.WorkspacesIndexNotApprovedView workspace=this }}

@@ -1,13 +1,11 @@
-Vaultier.Vault = DS.Model.extend(
+Vaultier.Vault = RL.Model.extend(
     CreatedUpdatedMixin,
-    NonInvalidState,
     {
-        pk: DS.attr('number'),
-        name: DS.attr('string'),
-        slug: DS.attr('string'),
-        workspace: DS.attr('number'),
-        description: DS.attr('string'),
-        perms: DS.attr()
+        name: RL.attr('string'),
+        slug: RL.attr('string'),
+        workspace: RL.attr('number'),
+        description: RL.attr('string'),
+        perms: RL.attr('object')
 
     });
 

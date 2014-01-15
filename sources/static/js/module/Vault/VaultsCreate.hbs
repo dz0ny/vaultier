@@ -11,16 +11,30 @@
 
                         <div class="col-md-8 col-md-offset-2">
 
-                            <div class="form-group" {{bind-attr class='errors.name:has-error'}}>
+                            <div class="form-group" {{bind-attr class='content.errors.name:has-error'}}>
                                 <label for="workspace-name">Name</label>
-                                {{errors.name}}
-                                {{view Em.TextField elementId='workspace-name' valueBinding='content.name' class="form-control"}}
+                                {{view Em.TextField
+                                elementId='workspace-name'
+                                valueBinding='content.name'
+                                class="form-control"
+                                }}
+                                <span class="error">
+                                    {{content.errors.name}}
+                                </span>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group" {{bind-attr class='content.errors.description:has-error'}}>
                                 <label for="workspace-description">Description</label>
-                                {{errors.description}}
-                                {{view Em.TextArea elementId='workspace-description' valueBinding='content.description' class="form-control" rows=5}}
+
+                                {{view Em.TextArea
+                                elementId='workspace-description'
+                                valueBinding='content.description'
+                                class="form-control"
+                                rows=5
+                                }}
+                                <span class="error">
+                                    {{content.errors.description}}
+                                </span>
                             </div>
                         </div>
 

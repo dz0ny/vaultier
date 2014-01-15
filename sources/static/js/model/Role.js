@@ -1,18 +1,20 @@
-Vaultier.Role = DS.Model.extend(
+Vaultier.Role = RL.Model.extend(
     CreatedUpdatedMixin,
-    NonInvalidState,
     {
 
-        /**
-         * @DI Service.Auth
-         */
         auth: null,
 
-        level: DS.attr('number'),
-        member: DS.attr(),
-        to_workspace: DS.attr(),
-        to_vault: DS.attr(),
-        to_card: DS.attr(),
+        init: function() {
+            this.set('auth', Vaultier.__container__.lookup('service:auth'))
+            return this._super.apply(this, arguments);
+        },
+
+
+        level: RL.attr('number'),
+        member: RL.attr('object'),
+        to_workspace: RL.attr('object'),
+        to_vault: RL.attr('object'),
+        to_card: RL.attr('object'),
 
         roles: new Utils.ConstantList({
             'CREATE': {

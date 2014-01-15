@@ -1,11 +1,12 @@
-Vaultier.Secret = DS.Model.extend(
+Vaultier.Secret = RL.Model.extend(
     CreatedUpdatedMixin,
-    NonInvalidState,
     {
 
-        /**
-         * @DI Service.Members
-         */
+        init: function() {
+            this.set('members', Vaultier.__container__.lookup('service:members'))
+            return this._super.apply(this, arguments);
+        },
+
         members: null,
 
 
@@ -25,11 +26,11 @@ Vaultier.Secret = DS.Model.extend(
         }),
 
 
-        name: DS.attr('string'),
-        type: DS.attr('number'),
-        data: DS.attr('string'),
-        card: DS.attr('number'),
-        perms: DS.attr(),
+        name: RL.attr('string'),
+        type: RL.attr('number'),
+        data: RL.attr('string'),
+        card: RL.attr('number'),
+        perms: RL.attr('object'),
 
         password: null,
         username: null,

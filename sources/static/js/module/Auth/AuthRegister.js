@@ -209,7 +209,7 @@ Vaultier.AuthRegisterCredsRoute = Ember.Route.extend({
                 ctrl.set('props.nextButtonDisabled', true);
 
                 // register promise
-                var promise = user.save();
+                var promise = user.saveRecord();
 
                 // authenticate promise
                 promise.then(

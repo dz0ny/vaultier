@@ -59,8 +59,7 @@ $(document).ready(function () {
     /******************** Ember,Handlebars **/
     ApplicationLoader.queueFile(STATIC_URL + 'lib/handlebars/handlebars.js');
     ApplicationLoader.queueFile(STATIC_URL + 'lib/ember/ember.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'lib/ember/ember-data.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'lib/ember/ember-data-django.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'lib/ember-restless/dist/ember-restless+extras.js');
 
     /******************** Ember extension **/
     ApplicationLoader.queueFile(STATIC_URL + 'lib/ember-ext/Tree/EmberTree.js');

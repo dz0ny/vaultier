@@ -52,6 +52,7 @@ Service.Errors = Ember.Object.extend({
 
 
     renderError: function (error) {
+        return;
         var ctrl = this.get('errorController')
         var data = this.parseError(error)
         ctrl.set('error', error)
@@ -76,29 +77,29 @@ Service.Errors = Ember.Object.extend({
         }
 
         // capture user
-        Raven.setUser(null)
-        var auth = c.lookup('service:auth');
-        var user;
-        if (auth && (user = auth.get('user'))) {
-            user = {
-                email: user.get('email'),
-                id: user.get('id')
-            }
-            Raven.setUser(user)
-        }
-        // capture current path
-        var a = c.lookup('controller:application')
-        var currentPath = '';
-        if (a) {
-            currentPath = a.get('currentPath')
-        }
-
-        //capture tags
-        var tags = {}
-        tags['type'] = error.type;
-        tags['errorDuringRendering'] = this.get('rendering')
-        tags['currentPath'] = currentPath
-
+//        Raven.setUser(null)
+//        var auth = c.lookup('service:auth');
+//        var user;
+//        if (auth && (user = auth.get('user'))) {
+//            user = {
+//                email: user.get('email'),
+//                id: user.get('id')
+//            }
+//            Raven.setUser(user)
+//        }
+//        // capture current path
+//        var a = c.lookup('controller:application')
+//        var currentPath = '';
+//        if (a) {
+//            currentPath = a.get('currentPath')
+//        }
+//
+//        //capture tags
+//        var tags = {}
+//        tags['type'] = error.type;
+//        tags['errorDuringRendering'] = this.get('rendering')
+//        tags['currentPath'] = currentPath
+//
         //Raven.captureException(error, {extra: tags});
     },
 

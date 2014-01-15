@@ -14,7 +14,7 @@
 
                             {{#if workspace.perms.update}}
                                 <li>
-                                    {{#link-to "Workspace.edit" workspace.pk}}
+                                    {{#link-to "Workspace.edit" workspace.slug}}
                                         Edit workspace
                                     {{/link-to}}
                                 </li>
@@ -32,7 +32,7 @@
 
 
                 {{#if workspace.perms.invite }}
-                    {{#link-to "Workspace.memberIndex" workspace class="btn btn-default"}}
+                    {{#link-to "Workspace.memberIndex" workspace.slug class="btn btn-default"}}
                         <span class="glyphicon glyphicon-user"></span>
                         Collaborate
                     {{/link-to}}
@@ -40,7 +40,7 @@
 
                 {{#if workspace.perms.create }}
                     {{#if length}}
-                        {{#link-to "Vaults.create" workspace class="btn btn-primary"}}
+                        {{#link-to "Vaults.create" workspace.slug class="btn btn-primary"}}
                             <span class="glyphicon glyphicon-plus"></span>
                             Create new vault
                         {{/link-to}}

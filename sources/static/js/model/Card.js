@@ -1,12 +1,10 @@
-Vaultier.Card = DS.Model.extend(
+Vaultier.Card = RL.Model.extend(
     CreatedUpdatedMixin,
-    NonInvalidState,
     {
-        pk: DS.attr('number'),
-        name: DS.attr('string'),
-        slug: DS.attr('string'),
-        description: DS.attr('string'),
-        vault: DS.attr('number'),
-        perms: DS.attr()
+        name: RL.attr('string'),
+        slug: RL.attr('string'),
+        description: RL.attr('string'),
+        vault: RL.attr('number'),
+        perms: RL.attr('object')
     });
 
