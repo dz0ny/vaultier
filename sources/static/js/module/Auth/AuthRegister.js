@@ -42,7 +42,24 @@ Vaultier.AuthRegisterRoute = Ember.Route.extend({
         } else {
             transition.router.replaceWith('AuthRegister.before');
         }
+    },
+
+    model: function () {
+        var auth = this.get('auth');
+        if (auth.get('isAuthenticated')) {
+            return auth.get('user');
+        } else {
+            return this.get('store').createRecord('User');
+        }
+    },
+
+    deactivate: function () {
+        var user = this.modelFor(user);
+        if (user) {
+            this.get('store').unloadRecord(user);
+        }
     }
+
 });
 
 /////////////////////////////////////////////////////////////////
@@ -164,11 +181,8 @@ Vaultier.AuthRegisterCredsRoute = Ember.Route.extend({
         ctrl.set('props.nextButtonTitle', 'Sumit your credentials');
 
         // prepare user model
-        var user = ctrl.get('content');
-        if (!user) {
-            var user = this.get('store').createRecord('User');
-            ctrl.set('content', user);
-        }
+        var user = this.modelFor('AuthRegister')
+        ctrl.set('content', user);
 
         // check if keys, otherwise go to step 1
         if (!ctrl.get('props.keysReady')) {
@@ -203,6 +217,7 @@ Vaultier.AuthRegisterCredsRoute = Ember.Route.extend({
                     function () {
                         return auth.login(user.get('email'), keys.privateKey, false)
                             .then(function () {
+                                auth.rememberUser(null);
                                 this.transitionTo('AuthRegister.sum');
                             }.bind(this));
                     }.bind(this),
@@ -242,7 +257,10 @@ Vaultier.AuthRegisterSumRoute = Ember.Route.extend({
     },
 
     setupController: function (ctrl) {
-        this._super(arguments);
+        // prepare user model
+        var user = this.modelFor('AuthRegister')
+        ctrl.set('content', user);
+
         ctrl.set('props.loginButtonHidden', true);
         ctrl.set('props.nextButtonDisabled', false);
         ctrl.set('props.nextButtonTitle', 'Start using vaultier')

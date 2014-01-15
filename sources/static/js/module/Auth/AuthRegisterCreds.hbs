@@ -19,7 +19,7 @@
                 <div class="col-lg-4">
                     {{ view Ember.TextField elementId='register-form-email' valueBinding='content.email' class="form-control" placeholder="Please enter valid email address"}}
                     <span class="error">
-                        {{errors.email}}
+                        {{content.errors.email}}
                     </span>
                 </div>
             </div>
@@ -30,7 +30,7 @@
                 <div class="col-lg-4">
                     {{ view Ember.TextField elementId='register-form-nickname' valueBinding='content.nickname' class="form-control" placeholder="Please enter your nickname"}}
                     <span class="error">
-                        {{errors.nickname}}
+                        {{content.errors.nickname}}
                     </span>
                 </div>
             </div>

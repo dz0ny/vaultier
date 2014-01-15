@@ -129,6 +129,7 @@ $(document).ready(function () {
     ApplicationLoader.queueFile(STATIC_URL + 'js/service/Auth.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/service/AuthPromises.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/service/Session.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'js/service/Storage.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/service/Coder.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/service/Invitations.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/service/Members.js');
@@ -176,8 +177,6 @@ $(document).ready(function () {
 
     /********************** Auth **/
     ApplicationLoader.queueFile(STATIC_URL + 'tpl/Auth/AuthLogin.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Auth/AuthLoginLatest.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Auth/AuthLoginSwitch.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Auth/AuthLogin.js');
 
     ApplicationLoader.queueFile(STATIC_URL + 'tpl/Auth/AuthRegister.js');

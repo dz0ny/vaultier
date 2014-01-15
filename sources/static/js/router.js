@@ -16,10 +16,7 @@ var router = Vaultier.Router.map(function () {
      * Login
      ************************************************************/
 
-    this.resource('AuthLogin', {path: '/auth/login'}, function () {
-        this.route('switch', { path: '/switch-user' });
-        this.route('latest', { path: '/latest-user' });
-    })
+    this.route('AuthLogin', {path: '/auth/login'})
 
     /************************************************************
      * invitations

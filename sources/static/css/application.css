@@ -28,7 +28,7 @@ a:hover {
 /*
 * Dropdown
 */
-.dropdown-menu a, .dropdown-menu:hover{
+.dropdown-menu a, .dropdown-menu:hover {
     transition: none;
 }
 
@@ -199,7 +199,6 @@ a:hover {
 *Selectize
 */
 
-
 .selectize-dropdown-content .active {
     color: #fff;
     background-color: #2fa4e7;
@@ -208,6 +207,7 @@ a:hover {
 .selectize-dropdown-content div[data-selectable] {
     border-bottom: 1px solid #E0DBDB;
 }
+
 .selectize-dropdown-content div[data-selectable]:last-child {
     border-bottom: 0px;
 }
@@ -332,11 +332,9 @@ a:hover {
     padding-left: 0px;
 }
 
-
 .vlt-breads .breadcrumb .vlt-bread-item-wrapper {
     display: inline-block;
 }
-
 
 .vlt-breads .breadcrumb .active h2 {
     font-size: 14px;
@@ -765,16 +763,6 @@ span.vlt-user img {
 
 /*************************************************************
 **************************************************************
-* Login modal
-*************************************************************
-*************************************************************/
-
-.vlt-login.vlt-dialog {
-    width: 700px;
-}
-
-/*************************************************************
-**************************************************************
 * Register modal
 *************************************************************
 *************************************************************/
@@ -841,13 +829,13 @@ span.vlt-user img {
 *************************************************************
 *************************************************************/
 
-.vlt-login.modal-dialog {
+.vlt-login.vlt-dialog {
     width: 700px;
 }
 
-.vlt-login.modal-dialog .alert {
-    margin-left: 15px;
-    margin-right: 15px;
+.vlt-login .vlt-login-key,
+.vlt-login .vlt-login-switch {
+    min-width: 120px;
 }
 
 /*************************************************************
@@ -1134,23 +1122,17 @@ span.vlt-user img {
     float: right;
 }
 
-.vlt-panel-permissions .vlt-table .vlt-perms .help-block{
+.vlt-panel-permissions .vlt-table .vlt-perms .help-block {
     font-size: 12px;
 }
 
-
-.vlt-panel-permissions .vlt-table .vlt-delete
-{
+.vlt-panel-permissions .vlt-table .vlt-delete {
     margin-left: 5px;
     min-height: 35px;
     float: right;
 }
 
-
-
-
 vlt-delete
-
 .vlt-panel-permissions .vlt-table .vlt-user {
     vertical-align: middle;
 }
@@ -1237,14 +1219,13 @@ vlt-delete
     font-size: 12px;
 }
 
-
 /*************************************************************
 **************************************************************
 * Tree nodes
 *************************************************************
 *************************************************************/
 .vlt-tree ul {
-   padding-left: 25px;
+    padding-left: 25px;
 }
 
 .vlt-tree li {
@@ -1257,7 +1238,7 @@ vlt-delete
     border: 1px solid #E0DBDB;
 }
 
-.vlt-tree li .vlt-node  {
+.vlt-tree li .vlt-node {
     line-height: 35px;
     padding-left: 25px;
     cursor: pointer;
@@ -1271,7 +1252,6 @@ vlt-delete
 .vlt-tree li .vlt-node label {
     cursor: pointer;
 }
-
 
 .vlt-tree li .vlt-node.vlt-vault {
     background-image: url('../images/icon-vault-grey.png');

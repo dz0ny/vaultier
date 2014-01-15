@@ -30,6 +30,12 @@ Service.Auth = Ember.Object.extend({
      * @DI service:session
      */
     session: null,
+
+    /**
+     * @DI service:storage
+     */
+    storage: null,
+
     callbacks: [],
     token: null,
 
@@ -122,6 +128,22 @@ Service.Auth = Ember.Object.extend({
                     this.setAuthenticatedUser(null)
                     return Ember.RSVP.reject()
                 }.bind(this))
+    },
+
+    rememberUser: function (email,privateKey, ttl) {
+        if (email && ttl) {
+            this.get('storage').set('remember', {
+                email: email,
+                privateKey: privateKey,
+                ttl: ttl
+            }, ttl);
+        } else {
+            this.get('storage').remove('remember');
+        }
+    },
+
+    getRememberedUser: function (user) {
+        return this.get('storage').get('remember', null);
     },
 
     /**
@@ -242,21 +264,7 @@ Service.Auth = Ember.Object.extend({
         this.session.remove('auth');
     }
 
-//    @todo saving credentials
-//    saveToStorage: function (ttl) {
-//        this.storage.set('auth', {
-//            email: this.get('user').get('email'),
-//            privateKey: this.get('privateKey')
-//        }, ttl);
-//    },
-//
-//    loadFromStorage: function () {
-//        return this.storage.get('auth');
-//    },
-//
-//    deleteFromStorage: function () {
-//        this.storage.remove('auth');
-//    }
+
 
 })
 ;

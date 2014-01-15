@@ -99,7 +99,7 @@ Service.Errors = Ember.Object.extend({
         tags['errorDuringRendering'] = this.get('rendering')
         tags['currentPath'] = currentPath
 
-        Raven.captureException(error, {extra: tags});
+        //Raven.captureException(error, {extra: tags});
     },
 
     processError: function (error) {

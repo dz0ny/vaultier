@@ -1,74 +1,123 @@
 Ember.TEMPLATES["Auth/AuthLogin"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  var buffer = '', stack1, stack2, hashTypes, hashContexts, options, self=this, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
+  var buffer = '', stack1, stack2, hashContexts, hashTypes, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, self=this;
 
 function program1(depth0,data) {
   
-  var buffer = '', stack1, stack2, hashTypes, hashContexts, options;
-  data.buffer.push("\r\n\r\n                            <ul class=\"nav nav-tabs vlt-login-tabs\">\r\n                                <li class=\"AuthLoginLatest\">\r\n                                    ");
+  var buffer = '', stack1, hashContexts, hashTypes, options;
+  data.buffer.push("\r\n                                            <div class=\"input-group\">\r\n                                                <input ");
+  hashContexts = {'value': depth0};
+  hashTypes = {'value': "ID"};
+  options = {hash:{
+    'value': ("email")
+  },contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
+  data.buffer.push(escapeExpression(((stack1 = helpers['bind-attr'] || depth0['bind-attr']),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "bind-attr", options))));
+  data.buffer.push("\r\n                                                        disabled type=\"email\"\r\n                                                        class=\"form-control\"\r\n                                                        id=\"login-form-email\"\r\n                                                        placeholder=\"Email\">\r\n                                                  <span class=\"input-group-btn\">\r\n                                                    <a ");
   hashTypes = {};
   hashContexts = {};
-  options = {hash:{},inverse:self.noop,fn:self.program(2, program2, data),contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
-  stack2 = ((stack1 = helpers['link-to'] || depth0['link-to']),stack1 ? stack1.call(depth0, "AuthLogin.latest", options) : helperMissing.call(depth0, "link-to", "AuthLogin.latest", options));
-  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("\r\n                                </li>\r\n                                <li class=\"AuthLoginSwitch\">\r\n                                    ");
-  hashTypes = {};
-  hashContexts = {};
-  options = {hash:{},inverse:self.noop,fn:self.program(4, program4, data),contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
-  stack2 = ((stack1 = helpers['link-to'] || depth0['link-to']),stack1 ? stack1.call(depth0, "AuthLogin.switch", options) : helperMissing.call(depth0, "link-to", "AuthLogin.switch", options));
-  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("\r\n                                </li>\r\n                            </ul>\r\n\r\n                        ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "switchUser", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
+  data.buffer.push(" class=\"vlt-login-switch btn btn-default\">Switch\r\n                                                        user</a>\r\n                                                  </span>\r\n                                            </div>\r\n                                        ");
   return buffer;
   }
-function program2(depth0,data) {
+
+function program3(depth0,data) {
   
-  
-  data.buffer.push("\r\n                                        Latest\r\n                                    ");
+  var buffer = '', hashContexts, hashTypes;
+  data.buffer.push("\r\n                                            ");
+  hashContexts = {'elementId': depth0,'valueBinding': depth0,'class': depth0,'placeholder': depth0};
+  hashTypes = {'elementId': "STRING",'valueBinding': "STRING",'class': "STRING",'placeholder': "STRING"};
+  data.buffer.push(escapeExpression(helpers.view.call(depth0, "Ember.TextField", {hash:{
+    'elementId': ("login-form-email"),
+    'valueBinding': ("email"),
+    'class': ("form-control"),
+    'placeholder': ("Enter your email")
+  },contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
+  data.buffer.push("\r\n                                        ");
+  return buffer;
   }
 
-function program4(depth0,data) {
+function program5(depth0,data) {
   
   
-  data.buffer.push("\r\n                                        Switch\r\n                                    ");
+  data.buffer.push("\r\n                                            <input disabled\r\n                                                   class=\"form-control\"\r\n                                                   value=\"Using remebered key\"\r\n                                                   id=\"login-form-key\"\r\n                                                   placeholder=\"Key\">\r\n                                        ");
   }
 
-function program6(depth0,data) {
+function program7(depth0,data) {
+  
+  var buffer = '', stack1, hashContexts, hashTypes, options;
+  data.buffer.push("\r\n                                            <div class=\"input-group\">\r\n                                                <input ");
+  hashContexts = {'value': depth0};
+  hashTypes = {'value': "ID"};
+  options = {hash:{
+    'value': ("filename")
+  },contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
+  data.buffer.push(escapeExpression(((stack1 = helpers['bind-attr'] || depth0['bind-attr']),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "bind-attr", options))));
+  data.buffer.push("\r\n                                                        type=\"text\"\r\n                                                        class=\"form-control\"\r\n                                                        readonly=\"\"\r\n                                                        placeholder=\"Select your key\">\r\n\r\n                                            <span class=\"vlt-login-key input-group-btn btn btn-default btn-file\">\r\n                                                Browse <input type=\"file\">\r\n                                            </span>\r\n                                            </div>\r\n                                        ");
+  return buffer;
+  }
+
+function program9(depth0,data) {
   
   
   data.buffer.push("Create\r\n                            new\r\n                            account here");
   }
 
-  data.buffer.push("<div class=\"row\">\r\n    <div class=\"col-md-12\">\r\n\r\n        <div class=\"vlt-dialog vlt-dialog-window vlt-login\">\r\n            <div class=\"vlt-dialog-content\">\r\n                <form class=\"form-horizontal\" role=\"form\">\r\n\r\n                    <div class=\"vlt-dialog-header\">\r\n                        <h2>Login</h2>\r\n\r\n                        ");
+  data.buffer.push("<div class=\"row\">\r\n    <div class=\"col-md-12\">\r\n\r\n        <div class=\"vlt-dialog vlt-dialog-window vlt-login\">\r\n            <div class=\"vlt-dialog-content\">\r\n                <form class=\"form-horizontal\" role=\"form\">\r\n\r\n                    <div class=\"vlt-dialog-header\">\r\n                        <h2>Login</h2>\r\n                    </div>\r\n                    <div class=\"vlt-dialog-body\">\r\n                        <div class=\"row\">\r\n\r\n                            <div class=\"col-md-7\">\r\n\r\n                                <div class=\"form-group ");
+  hashContexts = {'class': depth0};
+  hashTypes = {'class': "STRING"};
+  options = {hash:{
+    'class': ("error:has-error")
+  },contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
+  data.buffer.push(escapeExpression(((stack1 = helpers['bind-attr'] || depth0['bind-attr']),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "bind-attr", options))));
+  data.buffer.push(" ");
+  hashContexts = {'class': depth0};
+  hashTypes = {'class': "STRING"};
+  options = {hash:{
+    'class': ("emailSuccess:has-success")
+  },contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
+  data.buffer.push(escapeExpression(((stack1 = helpers['bind-attr'] || depth0['bind-attr']),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "bind-attr", options))));
+  data.buffer.push("\">\r\n                                    <label for=\"login-form-email\" class=\"col-lg-4 control-label\">Email</label>\r\n\r\n                                    <div class=\"col-lg-8\">\r\n                                        ");
   hashTypes = {};
   hashContexts = {};
-  stack1 = helpers['if'].call(depth0, "props.latestUser", {hash:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\r\n\r\n                    </div>\r\n                    <div class=\"vlt-dialog-body\">\r\n\r\n                        <div class=\"tab-content\">\r\n                            <div class=\"tab-pane active\">\r\n                                ");
+  stack2 = helpers['if'].call(depth0, "latestUser", {hash:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
+  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
+  data.buffer.push("\r\n                                    </div>\r\n                                </div>\r\n\r\n                                <div class=\"form-group\" ");
+  hashContexts = {'class': depth0};
+  hashTypes = {'class': "STRING"};
+  options = {hash:{
+    'class': ("error:has-error")
+  },contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
+  data.buffer.push(escapeExpression(((stack1 = helpers['bind-attr'] || depth0['bind-attr']),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "bind-attr", options))));
+  data.buffer.push(">\r\n                                    <label for=\"login-form-key\" class=\"col-lg-4 control-label\">Key</label>\r\n\r\n                                    <div class=\"col-lg-8\">\r\n                                        ");
   hashTypes = {};
   hashContexts = {};
-  options = {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
-  data.buffer.push(escapeExpression(((stack1 = helpers.outlet || depth0.outlet),stack1 ? stack1.call(depth0, "AuthLogin", options) : helperMissing.call(depth0, "outlet", "AuthLogin", options))));
-  data.buffer.push("\r\n                            </div>\r\n                        </div>\r\n\r\n\r\n                    </div>\r\n                    <div class=\"vlt-dialog-footer\">\r\n                        <div class=\"pull-left\">\r\n                            Do not have account yet? ");
+  stack2 = helpers['if'].call(depth0, "latestUser", {hash:{},inverse:self.program(7, program7, data),fn:self.program(5, program5, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
+  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
+  data.buffer.push("\r\n                                    </div>\r\n                                </div>\r\n\r\n                                <br/>\r\n\r\n                                <div class=\"form-group\">\r\n                                    <label for=\"login-form-remember\"\r\n                                           class=\"col-lg-4 control-label\">Remember</label>\r\n\r\n                                    <div class=\"col-lg-8\">\r\n                                        ");
+  hashContexts = {'class': depth0,'elementId': depth0,'contentBinding': depth0,'optionValuePath': depth0,'optionLabelPath': depth0,'valueBinding': depth0};
+  hashTypes = {'class': "STRING",'elementId': "STRING",'contentBinding': "STRING",'optionValuePath': "STRING",'optionLabelPath': "STRING",'valueBinding': "STRING"};
+  data.buffer.push(escapeExpression(helpers.view.call(depth0, "Ember.Select", {hash:{
+    'class': ("form-control"),
+    'elementId': ("login-form-remember"),
+    'contentBinding': ("rememberOptions"),
+    'optionValuePath': ("content.ttl"),
+    'optionLabelPath': ("content.text"),
+    'valueBinding': ("ttl")
+  },contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
+  data.buffer.push("\r\n\r\n                                        <p class=\"help-block\">\r\n                                            Your credentials will be stored for selected period of time.\r\n                                            Remebering crednentials is not secure because key is being stored in your\r\n                                            browser.\r\n                                        </p>\r\n\r\n                                    </div>\r\n                                </div>\r\n\r\n\r\n                            </div>\r\n\r\n                            <div class=\"col-md-5\">\r\n\r\n                                <div class=\"callout callout-info\">\r\n                                    <h4>How our security works</h4>\r\n\r\n                                    <p>\r\n                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus in diam eu\r\n                                        nisl accumsan condimentum. Duis rhoncus enim a urna aliquet fringilla.\r\n                                    </p>\r\n                                </div>\r\n                            </div>\r\n\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"vlt-dialog-footer\">\r\n                        <div class=\"pull-left\">\r\n                            Do not have account yet? ");
   hashContexts = {'class': depth0};
   hashTypes = {'class': "STRING"};
   options = {hash:{
     'class': ("btn btn-default btn-sm")
-  },inverse:self.noop,fn:self.program(6, program6, data),contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
+  },inverse:self.noop,fn:self.program(9, program9, data),contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
   stack2 = ((stack1 = helpers['link-to'] || depth0['link-to']),stack1 ? stack1.call(depth0, "AuthRegister", options) : helperMissing.call(depth0, "link-to", "AuthRegister", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
   data.buffer.push("\r\n                        </div>\r\n                        <button type=\"submit\" ");
   hashTypes = {};
   hashContexts = {};
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "login", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
-  data.buffer.push(" ");
-  hashContexts = {'disabled': depth0};
-  hashTypes = {'disabled': "ID"};
-  options = {hash:{
-    'disabled': ("loginButtonDisabled")
-  },contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
-  data.buffer.push(escapeExpression(((stack1 = helpers['bind-attr'] || depth0['bind-attr']),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "bind-attr", options))));
-  data.buffer.push("\r\n                                class=\"btn btn-primary\">\r\n                            Login\r\n                        </button>\r\n                    </div>\r\n                </form>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n\r\n\r\n");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "loginUser", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
+  data.buffer.push(" class=\"btn btn-primary\">\r\n                            Login\r\n                        </button>\r\n                    </div>\r\n                </form>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n\r\n\r\n");
   return buffer;
   
 });
