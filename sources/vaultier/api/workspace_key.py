@@ -2,7 +2,7 @@ from rest_framework.fields import SerializerMethodField, IntegerField, CharField
 from rest_framework.permissions import BasePermission, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.serializers import ModelSerializer
-from rest_framework.status import HTTP_200_OK, HTTP_405_METHOD_NOT_ALLOWED
+from rest_framework.status import HTTP_405_METHOD_NOT_ALLOWED
 from rest_framework.viewsets import ModelViewSet
 from vaultier.auth.authentication import TokenAuthentication
 from vaultier.models.acl_fields import AclLevelField
@@ -23,7 +23,7 @@ class CanManageWorkspaceKey(BasePermission):
 class WorkspaceKeySerializer(ModelSerializer):
     public_key = SerializerMethodField('get_public_key')
     status = IntegerField(read_only=True)
-    workspace_key = CharField(required=True, blank=False)
+    workspace_key = CharField(required=True)
 
     def get_public_key(self, obj):
         return obj.user.public_key
