@@ -210,7 +210,7 @@ function program25(depth0,data) {
   data.buffer.push("\r\n\r\n                ");
   hashTypes = {};
   hashContexts = {};
-  stack1 = helpers['if'].call(depth0, "workspace.isApproved", {hash:{},inverse:self.program(30, program30, data),fn:self.program(26, program26, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
+  stack1 = helpers['if'].call(depth0, "workspace.hasValidKey", {hash:{},inverse:self.program(30, program30, data),fn:self.program(26, program26, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n\r\n            ");
   return buffer;

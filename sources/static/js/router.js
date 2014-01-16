@@ -170,10 +170,11 @@ Vaultier.ApplicationRoute = Ember.Route.extend(
         },
 
         beforeModel: function (params, transition) {
-            // auth
+            // reload authenticated user from server
             var auth = this.get('auth');
             var status = auth.reload()
             return status;
+
         }
     })
 ;

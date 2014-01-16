@@ -3,7 +3,9 @@ from django.db.models.deletion import PROTECT, CASCADE
 from django.db.models.manager import Manager
 import hmac
 import uuid
+from django.db.models.query_utils import Q
 from vaultier.mailer.invitation import resend_invitation
+from vaultier.models.acl_fields import AclLevelField
 from vaultier.models.member_fields import MemberStatusField
 from hashlib import sha1
 from vaultier.tools.changes import ChangesMixin
@@ -18,6 +20,25 @@ class MemberManager(Manager):
         workspaces = Workspace.objects.all_for_user(user)
         result = Member.objects.filter(workspace__in=workspaces)
         return result
+
+    def all_to_transfer_keys(self, user):
+        from vaultier.models.workspace import Workspace
+
+        # only members where current user has transfered key
+        workspaces_with_keys = Workspace.objects.filter(
+            membership__status=MemberStatusField.STATUS_MEMBER,
+            membership__user=user
+        )
+
+        query = Member.objects.all_for_user(user).filter(
+                Q(status=MemberStatusField.STATUS_MEMBER_WITHOUT_WORKSPACE_KEY)
+                &
+                Q(workspace__in=workspaces_with_keys)
+                &
+                ~Q(user=user)
+        ).distinct()
+
+        return query
 
     def generate_invitation_hash(self):
         def get_unique():
@@ -58,7 +79,7 @@ class MemberManager(Manager):
                 to_vault=role.to_vault,
                 to_card=role.to_card,
                 level__gte=role.level
-            ).exclude(id=role.id).count() >=1
+            ).exclude(id=role.id).count() >= 1
             if delete:
                 role.delete()
 

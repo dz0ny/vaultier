@@ -22,9 +22,9 @@ Vaultier.Workspace = RL.Model.extend(
 
 
         /**
-         * Returns if user given by membership is approved on current workspace
+         * Returns if user given by membership has workspacekey
          */
-        isApproved: function () {
+        hasValidKey: function () {
             return this.get('membership.status') == Vaultier.Member.proto().statuses['MEMBER'].value
         }.property('membership.status'),
 
@@ -37,7 +37,7 @@ Vaultier.Workspace = RL.Model.extend(
                 // after save, approve workspace
                 promise = promise
                     .then(function () {
-                            return this.get('members').transferKeyToWorkspace(workspace)
+                            return this.get('members').transferKeyToCreatedWorkspace(workspace)
                     }.bind(this))
                     .then(function () {
                         return workspace.reloadRecord()

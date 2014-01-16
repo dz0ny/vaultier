@@ -4,6 +4,10 @@ Vaultier.JSONSerializer = RESTless.JSONSerializer.extend({
         return this._super.apply(this, [resource, {nonEmbedded: true}]);
     },
 
+    keyForResourceName: function() {
+        return null
+    },
+
     // Vaultier does not use camelizations
     attributeNameForKey: function (klass, key) {
         return key;

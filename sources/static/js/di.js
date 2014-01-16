@@ -48,14 +48,24 @@ Vaultier.registerDI = function (app) {
     app.inject('route:CardMemberInvite', 'invitations', 'service:invitations')
     app.inject('route:Workspaces', 'invitations', 'service:invitations')
 
+    // service:keytransfer
+    app.register('service:keytransfer', Service.KeyTransfer)
+    app.inject('service:keytransfer', 'store', 'store:main');
+    app.inject('service:keytransfer', 'auth', 'service:auth');
+    app.inject('service:keytransfer', 'coder', 'service:coder');
+
     // service:members
     app.register('service:members', Service.Members)
     app.inject('service:members', 'auth', 'service:auth')
     app.inject('service:members', 'store', 'store:main');
     app.inject('service:members', 'coder', 'service:coder')
+    app.inject('service:members', 'keytransfer', 'service:keytransfer')
     app.inject('route:WorkspacesCreate', 'members', 'service:members')
     app.inject('route:Workspace', 'members', 'service:members')
     app.inject('route:WorkspaceMemberApprove', 'members', 'service:members')
+
+
+
 
     // model injections - it is done in model inits
 

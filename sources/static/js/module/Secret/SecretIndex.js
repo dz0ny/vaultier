@@ -5,11 +5,7 @@ Vaultier.SecretIndexRoute = Ember.Route.extend({
         var card = this.modelFor('Card');
         var store = this.get('store');
 
-        if (workspace.get('isApproved')) {
-            return store.find('Secret', {card: card.get('id')});
-        } else {
-            return []
-        }
+        return store.find('Secret', {card: card.get('id')});
     },
 
 

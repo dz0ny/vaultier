@@ -16,39 +16,90 @@ Service.Members = Ember.Object.extend({
      */
     store: null,
 
+    /**
+     * @DI service:keytransfer
+     */
+
+    keytransfer: null,
+
     membersToApprove: null,
     workspace: null,
     workspaceKey: null,
 
-    selectWorkspace: function (workspace) {
-        this.set('membersToApprove', null)
+    checkInterval: 1000,
+    checkIntervalId: null,
 
+    init: function () {
+        this._super(this, arguments);
+    },
+
+    startChecking: function (workspace) {
+        // start checking interval
+        this.set('checkIntervalId', setInterval(
+            function () {
+                this.checkWorkspaceKey(workspace);
+            }.bind(this),
+            this.get('checkInterval')
+        ));
+    },
+
+    stopChecking: function () {
+        clearInterval(this.get('checkIntervalId'));
+    },
+
+    selectWorkspace: function (workspace) {
+
+        this.set('membersToApprove', null)
         this.set('workspace', workspace)
 
         if (workspace) {
-            this.set('workspaceKey', this.decryptWorkspaceKey(workspace))
+            this.stopChecking();
+
+            var cryptedKey = workspace.get('membership.workspace_key');
+            var workspaceKey = null;
+            workspace.set('keyError', false);
+
+            if (workspace.get('membership.status') == Vaultier.Member.proto().statuses['MEMBER'].value) {
+                try {
+                    workspaceKey = this.get('keytransfer').decryptWorkspaceKey(cryptedKey)
+                } catch (error) {
+                    console.error(error);
+                    workspace.set('keyError', true);
+                }
+
+                this.set('workspaceKey', workspaceKey)
+            } else {
+                this.startChecking(workspace);
+            }
         } else {
             this.set('workspaceKey', null)
         }
     },
 
-    decryptWorkspaceKey: function (workspace) {
-        workspace.set('keyError', false)
-        var key = workspace.get('membership.workspace_key');
-        if (key) {
-            var coder = this.get('coder');
-            var privateKey = this.get('auth.privateKey');
-            key = coder.decryptRSA(key, privateKey);
-            if (!key) {
-                workspace.set('keyError', true)
-                throw new Error('Cannot decrypt workspace key')
-            }
-        } else {
-            // generate new
-            key = this.get('coder').generateWorkspaceKey();
-        }
-        return key
+
+    checkWorkspaceKey: function (workspace) {
+        this.get('store').find('Workspace', workspace.get('id'))
+            .then(function (workspaceCheck) {
+                if (workspaceCheck.get('membership.status') == Vaultier.Member.proto().statuses['MEMBER'].value) {
+                    this.stopChecking();
+                    workspace.reloadRecord()
+                        .then(function () {
+                            this.selectWorkspace(workspace);
+                            $.notify(
+                                ['Keys to workspace "{workspace}" has been transfered to you. ',
+                                    'You can now fully work with workspace']
+                                    .join('')
+                                    .replace('{workspace}', workspace.get('name')),
+                                {
+                                    autoHideDelay: 10000
+                                }
+                            )
+                        }.bind(this))
+                }
+            }.bind(this))
+
     },
+
 
     loadMembersWithoutWorkspaceKey: function () {
         var workspace = this.get('workspace')
@@ -56,36 +107,18 @@ Service.Members = Ember.Object.extend({
             throw Error('Workspace not selected')
         }
 
-        var promise = this.get('store').find('Member', {
-            workspace: Utils.E.recordId(workspace),
-            status: Vaultier.Member.proto().statuses['MEMBER_WITHOUT_WORKSPACE_KEY'].value
-        })
+        var promise = this.get('store')
 
-        promise.then(function (data) {
-            this.set('membersToApprove', data)
-        }.bind(this))
+            .find('Member', {
+                workspace: Utils.E.recordId(workspace),
+                status: Vaultier.Member.proto().statuses['MEMBER_WITHOUT_WORKSPACE_KEY'].value
+            })
+            .then(function (data) {
+                this.set('membersToApprove', data)
+                return data
+            }.bind(this))
 
         return promise;
-    },
-
-    transferKeyToMember: function (memberId, workspaceKey) {
-        var store = this.get('store');
-        var coder = this.get('coder');
-        var promise =
-            store.find('WorkspaceKey', memberId)
-                .then(function (member) {
-                    var publicKey = member.get('public_key')
-                    var wk = coder.encryptRSA(workspaceKey, publicKey);
-                    member.set('workspace_key', wk)
-                    return member.saveRecord()
-                })
-
-        return promise
-    },
-
-    transferKeyToWorkspace: function (workspace) {
-        var workspaceKey = this.decryptWorkspaceKey(workspace)
-        return this.transferKeyToMember(workspace.get('membership.id'), workspaceKey)
     },
 
     transferKeysToMembers: function () {
@@ -98,17 +131,25 @@ Service.Members = Ember.Object.extend({
             throw Error('Workspace not selected')
         }
 
-        var workspaceKey = this.get('workspaceKey')
-
         var promises = []
+        var keytransfer = this.get('keytransfer');
+        var decryptedKey = this.get('workspaceKey')
+
         members.forEach(function (member) {
-            promises.push(this.transferKeyToMember(member.get('id'), workspaceKey))
+            promises.push(this.keytransfer.transferKeyToMember(member, decryptedKey))
         }.bind(this))
 
         var promises = Ember.RSVP.all(promises);
         return promises;
-
     },
+
+
+    transferKeyToCreatedWorkspace: function (workspace) {
+        var keytransfer = this.get('keytransfer');
+        var decryptedKey = keytransfer.generateWorkspaceKey();
+        return keytransfer.transferKeyToMember(workspace.get('membership.id'), decryptedKey)
+    },
+
 
     decryptWorkspaceData: function (data) {
         var coder = this.get('coder');

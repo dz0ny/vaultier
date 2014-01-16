@@ -127,7 +127,7 @@ function program15(depth0,data) {
   data.buffer.push("\n\n            ");
   hashContexts = {'workspace': depth0};
   hashTypes = {'workspace': "ID"};
-  data.buffer.push(escapeExpression(helpers.view.call(depth0, "Vaultier.WorkspacesIndexNotApprovedView", {hash:{
+  data.buffer.push(escapeExpression(helpers.view.call(depth0, "Vaultier.WorkspacesIndexWithoutKeysView", {hash:{
     'workspace': ("workspace")
   },contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
   data.buffer.push("\n\n            ");

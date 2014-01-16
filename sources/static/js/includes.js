@@ -132,6 +132,7 @@ $(document).ready(function () {
     ApplicationLoader.queueFile(STATIC_URL + 'js/service/Coder.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/service/Invitations.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/service/Members.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'js/service/KeyTransfer.js');
 
     /********************** model **/
     ApplicationLoader.queueFile(STATIC_URL + 'js/model/mixin/CreatedUpdatedMixin.js');
@@ -203,7 +204,7 @@ $(document).ready(function () {
     /********************** Workspace **/
     ApplicationLoader.queueFile(STATIC_URL + 'tpl/Workspace/WorkspacesIndex.js');
     ApplicationLoader.queueFile(STATIC_URL + 'tpl/Workspace/WorkspacesIndexItem.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Workspace/WorkspacesIndexNotApproved.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Workspace/WorkspacesIndexWithoutKeys.js');
     ApplicationLoader.queueFile(STATIC_URL + 'tpl/Workspace/WorkspacesCreate.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Workspace/WorkspacesIndex.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Workspace/WorkspacesCreate.js');

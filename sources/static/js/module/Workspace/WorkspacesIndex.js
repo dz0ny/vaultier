@@ -52,6 +52,6 @@ Vaultier.WorkspacesIndexItemView = Ember.View.extend({
     templateName: 'Workspace/WorkspacesIndexItem'
 });
 
-Vaultier.WorkspacesIndexNotApprovedView = Ember.View.extend({
-    templateName: 'Workspace/WorkspacesIndexNotApproved'
+Vaultier.WorkspacesIndexWithoutKeysView = Ember.View.extend({
+    templateName: 'Workspace/WorkspacesIndexWithoutKeys'
 });
