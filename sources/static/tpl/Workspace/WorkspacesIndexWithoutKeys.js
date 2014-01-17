@@ -6,7 +6,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   
-  data.buffer.push("\n    <div class=\"alert alert-warning top-15\">\n        <b>Not approved yet.<br/></b>\n        Your access to this workspace has not been approved yet. You will not be able to see secret informations in\n        workspace\n    </div>\n");
+  data.buffer.push("\n    <div class=\"alert alert-warning top-15\">\n        <b> Your access to workspace is limited.<br/></b>\n        Workspace key has not been transfered to you yet. Key will be transfered to you automatically once\n        some workspace team member will go online.\n    </div>\n");
   }
 
 function program3(depth0,data) {

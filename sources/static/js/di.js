@@ -54,15 +54,15 @@ Vaultier.registerDI = function (app) {
     app.inject('service:keytransfer', 'auth', 'service:auth');
     app.inject('service:keytransfer', 'coder', 'service:coder');
 
-    // service:members
-    app.register('service:members', Service.Members)
-    app.inject('service:members', 'auth', 'service:auth')
-    app.inject('service:members', 'store', 'store:main');
-    app.inject('service:members', 'coder', 'service:coder')
-    app.inject('service:members', 'keytransfer', 'service:keytransfer')
-    app.inject('route:WorkspacesCreate', 'members', 'service:members')
-    app.inject('route:Workspace', 'members', 'service:members')
-    app.inject('route:WorkspaceMemberApprove', 'members', 'service:members')
+    // service:workspacekey
+    app.register('service:workspacekey', Service.WorkspaceKey)
+    app.inject('service:workspacekey', 'auth', 'service:auth')
+    app.inject('service:workspacekey', 'store', 'store:main');
+    app.inject('service:workspacekey', 'coder', 'service:coder')
+    app.inject('service:workspacekey', 'keytransfer', 'service:keytransfer')
+    app.inject('route:WorkspacesCreate', 'workspacekey', 'service:workspacekey')
+    app.inject('route:Workspace', 'workspacekey', 'service:workspacekey')
+    app.inject('route:WorkspaceMemberApprove', 'workspacekey', 'service:workspacekey')
 
 
 

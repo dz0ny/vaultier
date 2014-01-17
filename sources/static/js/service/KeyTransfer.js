@@ -9,10 +9,6 @@ Service.KeyTransfer = Ember.Object.extend({
     coder: null,
 
     /**
-     * @DI service:members
-     */
-    members: null,
-    /**
      * @DI service:auth
      */
     auth: null,
@@ -22,7 +18,7 @@ Service.KeyTransfer = Ember.Object.extend({
      */
     store: null,
 
-    interval: 10000,
+    interval: 60000,
 
     _registeredQuery: null,
 
@@ -58,25 +54,27 @@ Service.KeyTransfer = Ember.Object.extend({
                 .then(function (members) {
                     var promises = []
                     members.forEach(function (member) {
+                        // do only for foreign memberships
+                        if (member.get('user') != this.get('auth.user.id')) {
 
-                        // for each member
-                        var workspaceId = member.get('workspace');
-                        if (workspaceId) {
-                            this.get('store').find('Workspace', workspaceId)
-                                .then(function (workspace) {
-                                    try {
-                                        var encryptedKey = workspace.get('membership.workspace_key');
-                                        var decryptedKey = this.decryptWorkspaceKey(encryptedKey);
-                                        promises.push(this.transferKeyToMember(member, decryptedKey));
-                                    } catch (error) {
-                                        console.error('Keytransfer failed for member {id}'.replace('{id}', member.get('id')))
-                                        console.error(error.stack);
-                                    }
-                                }.bind(this));
-                        } else {
-                            console.error('missing workspace id')
+                            // for each member
+                            var workspaceId = member.get('workspace');
+                            if (workspaceId) {
+                                this.get('store').find('Workspace', workspaceId)
+                                    .then(function (workspace) {
+                                        try {
+                                            var encryptedKey = workspace.get('membership.workspace_key');
+                                            var decryptedKey = this.decryptWorkspaceKey(encryptedKey);
+                                            promises.push(this.transferKeyToMember(member, decryptedKey));
+                                        } catch (error) {
+                                            console.error('Keytransfer failed for member {id}'.replace('{id}', member.get('id')))
+                                            console.error(error.stack);
+                                        }
+                                    }.bind(this));
+                            } else {
+                                console.error('missing workspace id')
+                            }
                         }
-
                     }.bind(this));
 
                     return Ember.RSVP.all(promises);
@@ -102,10 +100,11 @@ Service.KeyTransfer = Ember.Object.extend({
 
 
     transferKeyToMember: function (member, decryptedKey) {
+        var id = Utils.E.recordId(member);
         var store = this.get('store');
         var coder = this.get('coder');
-          var promise =
-            store.find('WorkspaceKey', member.get('id'))
+        var promise =
+            store.find('WorkspaceKey', id)
                 .then(function (member) {
                     var publicKey = member.get('public_key')
                     var wk = coder.encryptRSA(decryptedKey, publicKey);

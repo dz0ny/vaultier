@@ -2,22 +2,25 @@ Vaultier.Workspace = RL.Model.extend(
     Vaultier.CreatedUpdatedMixin,
     Vaultier.RollbackMixin,
     {
-        init: function() {
-            this.set('members', Vaultier.__container__.lookup('service:members'))
+        init: function () {
+            this.set('workspacekey', Vaultier.__container__.lookup('service:workspacekey'))
             return this._super.apply(this, arguments);
         },
 
-        members: null,
+        /**
+         * @DI service:workspacekey
+         */
+        workspacekey: null,
 
         /**
-         * Managed by Service.Members, True when key cannot be decrypted
+         * Managed by Service.WorkspaceKey, True when key cannot be decrypted
          */
         keyError: false,
 
         name: RL.attr('string'),
         slug: RL.attr('string'),
         description: RL.attr('string'),
-        perms: RL.attr('object',{ readOnly: true }),
+        perms: RL.attr('object', { readOnly: true }),
         membership: RL.attr('object', { readOnly: true }),
 
 
@@ -37,7 +40,7 @@ Vaultier.Workspace = RL.Model.extend(
                 // after save, approve workspace
                 promise = promise
                     .then(function () {
-                            return this.get('members').transferKeyToCreatedWorkspace(workspace)
+                        return this.get('workspacekey').transferKeyToCreatedWorkspace(workspace)
                     }.bind(this))
                     .then(function () {
                         return workspace.reloadRecord()

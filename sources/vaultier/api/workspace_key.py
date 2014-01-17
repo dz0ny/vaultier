@@ -8,35 +8,8 @@ from rest_framework.viewsets import ModelViewSet
 from vaultier.api.user import RelatedUserSerializer
 from vaultier.api.workspace import RelatedWorkspaceSerializer
 from vaultier.auth.authentication import TokenAuthentication
-from vaultier.models.acl_fields import AclLevelField
 from vaultier.models.member import Member
 from vaultier.models.member_fields import MemberStatusField
-from vaultier.models.workspace import Workspace
-from vaultier.perms.check import has_object_acl
-
-
-class CanManageWorkspaceKey(BasePermission):
-    def has_object_permission(self, request, view, obj):
-        workspace = obj.workspace
-        is_manager = has_object_acl(
-            request.user,
-            workspace,
-            AclLevelField.LEVEL_WRITE
-        )
-
-        is_managing_approved = Member.objects.get(
-            user=request.user,
-            workspace=workspace
-        ).status == MemberStatusField.STATUS_MEMBER
-
-        is_managed_non_approved = Member.objects.get(
-            user=obj.user,
-            workspace=workspace
-        ).status == MemberStatusField.STATUS_MEMBER_WITHOUT_WORKSPACE_KEY
-
-        result = is_manager or (is_managing_approved and is_managed_non_approved)
-        return result
-
 
 class WorkspaceKeySerializer(ModelSerializer):
     public_key = SerializerMethodField('get_public_key')
@@ -65,7 +38,7 @@ class ShortenedWorkspaceKeySerializer(ModelSerializer):
 class WorkspaceKeyViewSet(ModelViewSet):
     model = Member
     authentication_classes = (TokenAuthentication, )
-    permission_classes = (IsAuthenticated, CanManageWorkspaceKey)
+    permission_classes = (IsAuthenticated,)
 
     def destroy(self, request, *args, **kwargs):
         return Response(status=HTTP_405_METHOD_NOT_ALLOWED, data={'detail': 'Destroy not provided'})

@@ -24,6 +24,11 @@ Vaultier.SecretCreateSelectRoute = Ember.Route.extend(
     {
 
         model: function (params, transition) {
+            // check workspace keys
+            var workspace = this.modelFor('Workspace')
+            if (!workspace.get('hasValidKey')) {
+                throw Error('Cannot edit secret without valid workspace key');
+            }
 
             // check permissions
             if (!this.get('auth').checkPermissions(transition, function () {
@@ -68,6 +73,11 @@ Vaultier.SecretCreateSubmitRoute = Ember.Route.extend(
     {
 
         model: function (params, transition) {
+            // check workspace keys
+            var workspace = this.modelFor('Workspace')
+            if (!workspace.get('hasValidKey')) {
+                throw Error('Cannot edit secret without valid workspace key');
+            }
 
             // check permissions
             if (!this.get('auth').checkPermissions(transition, function () {

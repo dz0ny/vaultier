@@ -131,7 +131,7 @@ $(document).ready(function () {
     ApplicationLoader.queueFile(STATIC_URL + 'js/service/Storage.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/service/Coder.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/service/Invitations.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'js/service/Members.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'js/service/WorkspaceKey.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/service/KeyTransfer.js');
 
     /********************** model **/

@@ -39,7 +39,7 @@ function program1(depth0,data) {
   options = {hash:{
     'class': ("list-group-item vlt-workspace-item")
   },inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0,depth0],types:["STRING","ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
-  stack2 = ((stack1 = helpers['link-to'] || depth0['link-to']),stack1 ? stack1.call(depth0, "Workspace.index", "", options) : helperMissing.call(depth0, "link-to", "Workspace.index", "", options));
+  stack2 = ((stack1 = helpers['link-to'] || depth0['link-to']),stack1 ? stack1.call(depth0, "Workspace.index", "slug", options) : helperMissing.call(depth0, "link-to", "Workspace.index", "slug", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
   data.buffer.push("\n\n\n\n");
   return buffer;

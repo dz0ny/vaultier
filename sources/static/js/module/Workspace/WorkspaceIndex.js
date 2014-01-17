@@ -2,9 +2,9 @@ Vaultier.WorkspaceRoute = Ember.Route.extend(
     {
 
         /**
-         * @DI Service.Members
+         * @DI service:workspacekey
          */
-        member: null,
+        workspacekey: null,
 
         model: function (params, transition) {
             var promise = this.get('store').find('Workspace', params.workspace)
@@ -14,7 +14,7 @@ Vaultier.WorkspaceRoute = Ember.Route.extend(
 
         afterModel: function (workspace, transition) {
             // select working workspace
-            this.get('members').selectWorkspace(workspace)
+            this.get('workspacekey').selectWorkspace(workspace)
 
             // set environments
             // @deprecated

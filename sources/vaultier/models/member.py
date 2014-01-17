@@ -22,23 +22,13 @@ class MemberManager(Manager):
         return result
 
     def all_to_transfer_keys(self, user):
-        from vaultier.models.workspace import Workspace
 
-        # only members where current user has transfered key
-        workspaces_with_keys = Workspace.objects.filter(
-            membership__status=MemberStatusField.STATUS_MEMBER,
-            membership__user=user
-        )
-
-        query = Member.objects.all_for_user(user).filter(
-                Q(status=MemberStatusField.STATUS_MEMBER_WITHOUT_WORKSPACE_KEY)
-                &
-                Q(workspace__in=workspaces_with_keys)
-                &
-                ~Q(user=user)
+        query = self.all_for_user(user).filter(
+            status=MemberStatusField.STATUS_MEMBER_WITHOUT_WORKSPACE_KEY
         ).distinct()
 
         return query
+
 
     def generate_invitation_hash(self):
         def get_unique():

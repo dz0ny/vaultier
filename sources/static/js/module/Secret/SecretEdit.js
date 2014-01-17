@@ -8,6 +8,12 @@ Vaultier.SecretEditRoute = Ember.Route.extend(
         },
 
         model: function (params, transition) {
+            // check workspace keys
+            var workspace = this.modelFor('Workspace')
+            if (!workspace.get('hasValidKey')) {
+                throw Error('Cannot edit secret without valid workspace key');
+            }
+
             var store = this.get('store');
             var promise = store.find('Secret', params.secret);
             promise

@@ -4,11 +4,14 @@ Vaultier.Secret = RL.Model.extend(
     {
 
         init: function () {
-            this.set('members', Vaultier.__container__.lookup('service:members'))
+            this.set('workspacekey', Vaultier.__container__.lookup('service:workspacekey'))
             return this._super.apply(this, arguments);
         },
 
-        members: null,
+        /**
+         * @DI service:workspacekey
+         */
+        workspacekey: null,
 
 
         types: new Utils.ConstantList({
@@ -33,6 +36,8 @@ Vaultier.Secret = RL.Model.extend(
         card: RL.attr('number'),
         perms: RL.attr('object'),
 
+        decoded: false,
+
         password: null,
         username: null,
         url: null,
@@ -51,15 +56,28 @@ Vaultier.Secret = RL.Model.extend(
             return this.get('type') == this.types['FILE'].value;
         }.property('type'),
 
+        deferDecode: function () {
+            var workspacekey = this.get('workspacekey');
+            workspacekey.one('keyTransfered', function () {
+                this.decode();
+            }.bind(this))
+        },
+
         decode: function () {
-            var members = this.get('members');
+            var workspacekey = this.get('workspacekey');
 
             var data = this.get('data');
             try {
-                data = members.decryptWorkspaceData(data)
+                data = workspacekey.decryptWorkspaceData(data)
+                this.set('decoded', true);
             } catch (e) {
-                console.error('Cannot decrypt data')
-                console.error(e.stack);
+                this.set('decoded', false);
+                if (e instanceof Service.WorkspaceKeyDecryptSoftError) {
+                    console.warn(e.stack);
+                    this.deferDecode();
+                } else {
+                    throw e
+                }
             }
             this.setProperties(data);
         },
@@ -90,7 +108,7 @@ Vaultier.Secret = RL.Model.extend(
 
             }
 
-            data = this.get('members').encryptWorkspaceData(data)
+            data = this.get('workspacekey').encryptWorkspaceData(data)
             this.set('data', data);
 
         },
@@ -107,7 +125,7 @@ Vaultier.Secret = RL.Model.extend(
 
         saveRecord: function () {
             this.encode();
-            return this._super.apply(this,arguments);
+            return this._super.apply(this, arguments);
         }
 
     });
