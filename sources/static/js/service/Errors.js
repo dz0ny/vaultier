@@ -50,6 +50,16 @@ Service.Errors = Ember.Object.extend({
         return data
     },
 
+    consoleError: function(error, level) {
+        level = level || 'error';
+        // log error
+        if (error.stack) {
+            console[level](error.stack)
+        } else {
+            console[level](error);
+        }
+
+    },
 
     renderError: function (error) {
         var ctrl = this.get('errorController')
@@ -66,12 +76,7 @@ Service.Errors = Ember.Object.extend({
     logError: function (error) {
         var c = this.get('container');
 
-        // log error
-        if (error.stack) {
-            console.error(error.stack)
-        } else {
-            console.error(error);
-        }
+        this.consoleError(error);
 
         // capture user
 //        Raven.setUser(null)

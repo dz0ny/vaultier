@@ -4,7 +4,7 @@
         <img class="vlt-wspaceimg" src="/static/images/icon-workspace-grey.png ">
 
         <a href="#" class="vlt-wspacename dropdown-toggle" data-toggle="dropdown">
-            {{ env.workspace.cleanValues.name }}
+            {{ellipsis env.workspace.cleanValues.name 12 }}
         </a>
 
         <ul class="dropdown-menu caret-right">

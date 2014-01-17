@@ -92,17 +92,9 @@
                                 {{printUser role.member size=50}}
                             </td>
                             <td class="col-md-4 vlt-labels">
-                                {{#if role.isNonApprovedMember}}
-                                    <div class="label label-default">
-                                        <div class="col-md-6">
-                                            Accepted invitation. Please approve his access.
-                                        </div>
-                                        <div class="col-md-6">
-                                            {{#link-to 'Workspace.memberApprove' class="btn btn-success" href="#"}}
-                                                <span class="glyphicon glyphicon-ok"></span>
-                                                Approve
-                                            {{/link-to}}
-                                        </div>
+                                {{#if role.isMemberWithoutKeys}}
+                                    <div class="label label-warning">
+                                        Does not have workspace key yet
                                     </div>
                                 {{/if}}
 

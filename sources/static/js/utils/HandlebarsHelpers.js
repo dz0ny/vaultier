@@ -62,8 +62,16 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
         } else {
             name = this.ucfirst(nickname);
         }
+        var short = this.ellipsis(name, 12);
 
-        return '<span class="vlt-user">' + avatar + name + '</span>';
+        var tooltip = 'data-toggle="tooltip" title="{name} ({email})"'
+            .replace('{name}', name)
+            .replace('{email}', email)
+
+        return '<span class="vlt-user" {tooltip} >{avatar} {name}</span>'
+            .replace('{tooltip}', tooltip)
+            .replace('{name}', short)
+            .replace('{avatar}', avatar)
     },
 
     printAgo: function (t) {

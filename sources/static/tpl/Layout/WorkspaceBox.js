@@ -9,7 +9,8 @@ function program1(depth0,data) {
   data.buffer.push("\r\n    <div class=\"vlt-wspace-box pull-right dropdown\">\r\n\r\n        <img class=\"vlt-wspaceimg\" src=\"/static/images/icon-workspace-grey.png \">\r\n\r\n        <a href=\"#\" class=\"vlt-wspacename dropdown-toggle\" data-toggle=\"dropdown\">\r\n            ");
   hashTypes = {};
   hashContexts = {};
-  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "env.workspace.cleanValues.name", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
+  options = {hash:{},contexts:[depth0,depth0],types:["ID","INTEGER"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
+  data.buffer.push(escapeExpression(((stack1 = helpers.ellipsis || depth0.ellipsis),stack1 ? stack1.call(depth0, "env.workspace.cleanValues.name", 12, options) : helperMissing.call(depth0, "ellipsis", "env.workspace.cleanValues.name", 12, options))));
   data.buffer.push("\r\n        </a>\r\n\r\n        <ul class=\"dropdown-menu caret-right\">\r\n            <li>\r\n                ");
   hashTypes = {};
   hashContexts = {};

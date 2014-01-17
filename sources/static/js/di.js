@@ -64,9 +64,14 @@ Vaultier.registerDI = function (app) {
     app.inject('route:Workspace', 'workspacekey', 'service:workspacekey')
     app.inject('route:WorkspaceMemberApprove', 'workspacekey', 'service:workspacekey')
 
+    // service:changekey
+    app.register('service:changekey', Service.ChangeKey)
+    app.inject('service:changekey', 'store', 'store:main');
+    app.inject('service:changekey', 'auth', 'service:auth');
+    app.inject('service:changekey', 'coder', 'service:coder');
 
-
+    // components injections
+    app.inject('component:change-key', 'changekey', 'service:changekey');
 
     // model injections - it is done in model inits
-
 }

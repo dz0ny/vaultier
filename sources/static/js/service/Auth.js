@@ -263,7 +263,7 @@ Service.Auth = Ember.Object.extend({
         return this.session.get('auth');
     },
 
-    deleteFromSession: function () {
+    clearSession: function () {
         this.session.remove('auth');
     }
 

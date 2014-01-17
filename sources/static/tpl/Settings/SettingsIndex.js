@@ -36,7 +36,7 @@ function program4(depth0,data) {
 function program5(depth0,data) {
   
   
-  data.buffer.push("\n                    Access keys\n                ");
+  data.buffer.push("\n                    Private key\n                ");
   }
 
   data.buffer.push("<br/>\n<br/>\n\n<div class=\"row\">\n    <div class=\"col-md-3\">\n        <ul class=\"nav nav-pills nav-stacked\">\n            ");

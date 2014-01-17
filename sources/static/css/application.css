@@ -8,15 +8,21 @@ body {
     padding: 0px;
     margin: 0px;
     overflow-y: scroll;
+    word-wrap: break-word !important;
 }
 
 a {
-    transition: color 500ms;
+    transition: color 500ms, background-color 500ms;
 }
 
 a:hover {
-    transition: color 500ms;
+    transition: color 500ms, background-color 500ms;
     text-decoration: none;
+}
+
+.nav a,
+.nav a:hover {
+    transition: none;
 }
 
 /*************************************************************
@@ -30,6 +36,17 @@ a:hover {
 */
 .dropdown-menu a, .dropdown-menu:hover {
     transition: none;
+}
+
+/*
+* Tooltip
+*/
+.tooltip.top .tooltip-inner {
+    background-color: #367EAC;
+}
+
+.tooltip.top .tooltip-arrow {
+    border-top-color: #367EAC;
 }
 
 /*
@@ -224,7 +241,18 @@ a:hover {
 
 /*************************************************************
 **************************************************************
-* rows
+* Labels
+*************************************************************
+*************************************************************/
+
+.label-header {
+    margin-top: -3px;
+    background-color: #317EAC;
+}
+
+/*************************************************************
+**************************************************************
+* layouts
 *************************************************************
 *************************************************************/
 
@@ -685,7 +713,6 @@ span.vlt-user img {
     color: white;
 }
 
-
 .vlt-search-box .vlt-search-result:last-child {
     border-bottom: 0px;
 }
@@ -1001,6 +1028,7 @@ span.vlt-user img {
     margin: 50px auto 50px auto;
     width: 600px;
 }
+
 .vlt-dialog .vlt-dialog-header {
     border-bottom: 1px solid #E0DBDB;
 }

@@ -64,7 +64,7 @@ Vaultier.Role = RL.Model.extend(
             return this.get('member.status') == Vaultier.Member.proto().statuses['INVITED'].value;
         }.property('member.status'),
 
-        isNonApprovedMember : function() {
+        isMemberWithoutKeys : function() {
             return this.get('member.status') == Vaultier.Member.proto().statuses['MEMBER_WITHOUT_WORKSPACE_KEY'].value;
         }.property('member.status'),
 

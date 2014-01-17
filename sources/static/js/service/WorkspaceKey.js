@@ -107,50 +107,6 @@ Service.WorkspaceKey = Ember.Object.extend(
             }
         },
 
-
-        loadMembersWithoutWorkspaceKey: function () {
-            var workspace = this.get('workspace')
-            if (!workspace) {
-                throw Error('Workspace not selected')
-            }
-
-            var promise = this.get('store')
-
-                .find('Member', {
-                    workspace: Utils.E.recordId(workspace),
-                    status: Vaultier.Member.proto().statuses['MEMBER_WITHOUT_WORKSPACE_KEY'].value
-                })
-                .then(function (data) {
-                    this.set('membersToApprove', data)
-                    return data
-                }.bind(this))
-
-            return promise;
-        },
-
-        transferKeysToMembers: function () {
-            var members = this.get('membersToApprove')
-            if (!members) {
-                throw Error('Members not loaded')
-            }
-            var workspace = this.get('workspace')
-            if (!workspace) {
-                throw Error('Workspace not selected')
-            }
-
-            var promises = []
-            var keytransfer = this.get('keytransfer');
-            var decryptedKey = this.get('workspaceKey')
-
-            members.forEach(function (member) {
-                promises.push(this.keytransfer.transferKeyToMember(member, decryptedKey))
-            }.bind(this))
-
-            var promises = Ember.RSVP.all(promises);
-            return promises;
-        },
-
-
         transferKeyToCreatedWorkspace: function (workspace) {
             var keytransfer = this.get('keytransfer');
             var decryptedKey = keytransfer.generateWorkspaceKey();

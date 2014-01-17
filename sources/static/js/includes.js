@@ -133,6 +133,7 @@ $(document).ready(function () {
     ApplicationLoader.queueFile(STATIC_URL + 'js/service/Invitations.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/service/WorkspaceKey.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/service/KeyTransfer.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'js/service/ChangeKey.js');
 
     /********************** model **/
     ApplicationLoader.queueFile(STATIC_URL + 'js/model/mixin/CreatedUpdatedMixin.js');
@@ -210,11 +211,9 @@ $(document).ready(function () {
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Workspace/WorkspacesCreate.js');
 
     ApplicationLoader.queueFile(STATIC_URL + 'tpl/Workspace/WorkspaceEdit.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Workspace/WorkspaceMemberApprove.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Workspace/WorkspaceIndex.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Workspace/WorkspaceEdit.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Workspace/WorkspaceMember.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'js/module/Workspace/WorkspaceMemberApprove.js');
 
     /********************** Vault **/
     ApplicationLoader.queueFile(STATIC_URL + 'tpl/Vault/VaultsIndex.js');
@@ -272,13 +271,15 @@ $(document).ready(function () {
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Secret/SecretMove.js');
 
     /********************** Settings **/
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Settings/SettingsIndex.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Settings/SettingsPersonal.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Settings/SettingsKeys.js');
 
+    ApplicationLoader.queueFile(STATIC_URL + 'js/module/Settings/ChangeKey.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Settings/ChangeKey.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Settings/SettingsIndex.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Settings/SettingsIndex.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Settings/SettingsPersonal.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Settings/SettingsPersonal.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Settings/SettingsKeys.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Settings/SettingsKeys.js');
 
 
     /************************************
