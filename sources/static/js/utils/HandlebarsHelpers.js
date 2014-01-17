@@ -53,6 +53,7 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
         var email = user.email || user.get('email');
         var nickname = user.nickname || user.get('nickname');
         var size = options.hash.size || 20;
+        var length = options.hash.ellipsis || 60;
 
         var avatar = this.gravatarImg(email, {hash: {size: size}});
 
@@ -62,7 +63,7 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
         } else {
             name = this.ucfirst(nickname);
         }
-        var short = this.ellipsis(name, 12);
+        var short = this.ellipsis(name, length);
 
         var tooltip = 'data-toggle="tooltip" title="{name} ({email})"'
             .replace('{name}', name)

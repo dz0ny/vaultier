@@ -47,6 +47,7 @@ var router = Vaultier.Router.map(function () {
     this.resource('Workspaces', {path: '/workspaces'}, function () {
         // automatic Workspaces.index
         this.route('create', { path: '/create'});
+        this.route('select', { path: '/select'});
 
         /************************************************************
          * Workspace
@@ -159,9 +160,9 @@ Vaultier.ApplicationRoute = Ember.Route.extend(
             loading: function (transition, originRoute) {
                 ApplicationLoader.showLoader();
 //                Ember.run.scheduleOnce('afterRender', this, function () {
-//                    console.log('done');
+//                    ApplicationLoader.hideLoader();
 //                })
-                transition.then(function () {
+                transition.promise.finally(function () {
                     ApplicationLoader.hideLoader();
                 }.bind(this))
             }

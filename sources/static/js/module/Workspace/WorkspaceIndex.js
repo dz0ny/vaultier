@@ -44,7 +44,11 @@ Vaultier.WorkspaceRoute = Ember.Route.extend(
                         .then(
                             function () {
                                 $.notify('Your workspace has been successfully deleted.', 'success');
-                                this.transitionTo('index');
+                                var workspaces = this.modelFor('Workspaces');
+                                workspaces.removeObject(workspaces.find(function(w) {
+                                    return workspace.get('id') == w.get('id')
+                                }));
+                                this.transitionTo('Workspaces.select');
                             }.bind(this))
                         .catch(function (error) {
                             $.notify('Oooups! Something went wrong.', 'error');
