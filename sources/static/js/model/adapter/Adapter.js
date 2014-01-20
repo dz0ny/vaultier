@@ -4,8 +4,8 @@ Vaultier.JSONSerializer = RESTless.JSONSerializer.extend({
         return this._super.apply(this, [resource, {nonEmbedded: true}]);
     },
 
-    keyForResourceName: function() {
-        return null
+    keyForResourceName: function (name) {
+        return name
     },
 
     // Vaultier does not use camelizations
@@ -21,8 +21,43 @@ Vaultier.RESTAdapter = RL.RESTAdapter.extend({
     serializer: Vaultier.JSONSerializer.create(),
 
     buildUrl: function (model, key) {
-        var url = this._super.apply(this, arguments);
-        return url + '/';
+        var resourcePath = this.resourcePath(Ember.get(model.constructor, 'resourceName'));
+        var resourceListFormat = Ember.get(model.constructor, 'resourceListFormat');
+        var resourceDetailFormat =  Ember.get(model.constructor, 'resourceDetailFormat');
+        var resourceFormat
+        var rootPath = this.get('rootPath');
+        var primaryKeyName = Ember.get(model.constructor, 'primaryKey');
+        var dataType = ''
+        var url;
+        var id = '';
+
+        if (key) {
+            id = key;
+        } else if (model.get(primaryKeyName)) {
+            id = model.get(primaryKeyName);
+        }
+
+        if (this.get('useContentTypeExtension') && dataType) {
+            var dataType = this.get('serializer.dataType');
+        }
+
+        if (!resourceListFormat) {
+            resourceListFormat = '{rootPath}/{resourcePath}/{dataType}'
+        }
+
+        if (!resourceDetailFormat) {
+            resourceDetailFormat = '{rootPath}/{resourcePath}/{id}/{dataType}'
+        }
+
+        resourceFormat = id ? resourceDetailFormat : resourceListFormat
+
+        var url = resourceFormat
+            .replace('{rootPath}',rootPath)
+            .replace('{resourcePath}', resourcePath)
+            .replace('{id}', id)
+            .replace('{dataType}', dataType)
+
+        return url;
     }
 }).create()
 

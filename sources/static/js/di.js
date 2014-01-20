@@ -66,6 +66,7 @@ Vaultier.registerDI = function (app) {
 
     // service:changekey
     app.register('service:changekey', Service.ChangeKey)
+    app.inject('route:SettingsKeys', 'changekey', 'service:changekey')
     app.inject('service:changekey', 'store', 'store:main');
     app.inject('service:changekey', 'auth', 'service:auth');
     app.inject('service:changekey', 'coder', 'service:coder');

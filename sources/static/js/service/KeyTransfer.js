@@ -91,7 +91,7 @@ Service.KeyTransfer = Ember.Object.extend({
 
         var coder = this.get('coder');
         var privateKey = this.get('auth.privateKey');
-        key = coder.decryptRSA(key, privateKey);
+        key = coder.decryptWorkspaceKey(key, privateKey);
         if (!key) {
             throw new Error('Cannot decrypt workspace key')
         }
@@ -107,7 +107,7 @@ Service.KeyTransfer = Ember.Object.extend({
             store.find('WorkspaceKey', id)
                 .then(function (member) {
                     var publicKey = member.get('public_key')
-                    var wk = coder.encryptRSA(decryptedKey, publicKey);
+                    var wk = coder.encryptWorkspaceKey(decryptedKey, publicKey);
                     member.set('workspace_key', wk)
                     return member.saveRecord()
                 })

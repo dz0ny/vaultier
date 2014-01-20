@@ -123,7 +123,7 @@ Service.WorkspaceKey = Ember.Object.extend(
 
             if (workspace.get('membership.status') == Vaultier.Member.proto().statuses['MEMBER'].value) {
                 var workspaceKey = this.get('workspaceKey');
-                data = coder.decryptAES(data, workspaceKey)
+                data = coder.decryptWorkspaceData(data, workspaceKey)
                 data = JSON.parse(data)
                 return data
             } else {
@@ -143,7 +143,7 @@ Service.WorkspaceKey = Ember.Object.extend(
             if (workspace.get('membership.status') == Vaultier.Member.proto().statuses['MEMBER'].value) {
                 var workspaceKey = this.get('workspaceKey');
                 data = JSON.stringify(data)
-                return coder.encryptAES(data, workspaceKey)
+                return coder.encryptWorkspaceData(data, workspaceKey)
             } else {
                 throw Error('Cannot encrypt. workspace.membership.status {status}'.replace('{status}', workspace.get('membership.status')))
                 return data

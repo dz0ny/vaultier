@@ -126,7 +126,7 @@ class Member(ChangesMixin, models.Model):
         app_label = 'vaultier'
 
     workspace = models.ForeignKey('vaultier.Workspace', related_name='membership', on_delete=CASCADE)
-    user = models.ForeignKey('vaultier.User', on_delete=CASCADE, null=True)
+    user = models.ForeignKey('vaultier.User', on_delete=CASCADE, null=True,  related_name='membership')
     invitation_hash = models.CharField(max_length=64, null=True, unique=True)
     invitation_email = models.CharField(max_length=1024, null=True)
     workspace_key = models.CharField(max_length=4096)

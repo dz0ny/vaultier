@@ -28,8 +28,8 @@ Service.AuthPromises = Ember.Object.extend({
            return Ember.RSVP.reject('User id not specified')
         }
         return this.get('store').find('User', id)
-            .then(null, function () {
-                console.error('Cannot retrieve user with id {id}'.replace('{id}', id))
+            .catch(function (error) {
+                throw Error('Cannot retrieve user with id {id}'.replace('{id}', id))
             })
     },
 

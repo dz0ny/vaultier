@@ -19,8 +19,8 @@ Vaultier.ChangeKeyComponent = Ember.Component.extend({
     },
 
     generate: function () {
-        var auth = this.get('changekey.auth')
-        auth.generateKeys(function (keys) {
+        var chk = this.get('changekey')
+        chk.generateKeys(function (keys) {
             this.set('keys', keys)
         }.bind(this))
     },

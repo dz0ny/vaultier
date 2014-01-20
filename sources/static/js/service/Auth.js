@@ -36,7 +36,6 @@ Service.Auth = Ember.Object.extend({
      */
     storage: null,
 
-    callbacks: [],
     token: null,
 
     /**
@@ -205,12 +204,6 @@ Service.Auth = Ember.Object.extend({
         return true;
     },
 
-    afterAuthenticated: function (callback) {
-        this.callbacks.push(callback);
-        callback(this.status);
-    },
-
-
     setAuthenticatedUser: function (user, privateKey, token) {
         var result;
 
@@ -242,11 +235,6 @@ Service.Auth = Ember.Object.extend({
         // saves to session
         this.saveToSession();
 
-        // run afterAuthenticated callbacks
-        this.callbacks.forEach(function (c) {
-            c(this);
-        }.bind(this));
-
         return result;
     },
 
@@ -261,10 +249,6 @@ Service.Auth = Ember.Object.extend({
 
     loadFromSession: function () {
         return this.session.get('auth');
-    },
-
-    clearSession: function () {
-        this.session.remove('auth');
     }
 
 

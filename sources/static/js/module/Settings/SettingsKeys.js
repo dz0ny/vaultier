@@ -10,6 +10,16 @@ Vaultier.SettingsKeysRoute = Ember.Route.extend(
             ctrl.set('stepKeys', false)
         },
 
+        model: function() {
+            var chk = this.get('changekey');
+            var keys = chk.generateKeys(function(keys) {
+                chk.changeKey(keys)
+            });
+
+
+
+        },
+
         actions: {
             generate: function () {
                 this.set('controller.stepInfo', false);
