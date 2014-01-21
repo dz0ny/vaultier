@@ -1,6 +1,6 @@
 Po.NS('Service');
 
-Service.WorkspaceKeyDecryptSoftError = function() {
+Service.WorkspaceKeyDecryptSoftError = function () {
     var error = Error.apply(this, arguments);
     this.stack = error.stack
 }
@@ -94,7 +94,7 @@ Service.WorkspaceKey = Ember.Object.extend(
                     try {
                         workspaceKey = this.get('keytransfer').decryptWorkspaceKey(cryptedKey)
                     } catch (error) {
-                        console.error(error);
+                        console.error(error.stack)
                         workspace.set('keyError', true);
                     }
 

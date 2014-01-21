@@ -30,39 +30,50 @@ Service.ChangeKey = Ember.Object.extend({
         var currentPrivateKey = this.get('auth.privateKey');
         var incomingPrivateKey = incomingPPK.privateKey;
         var incomingPublicKey = incomingPPK.publicKey;
+        var currentUser = this.get('auth.user');
         var coder = this.get('coder');
 
-        this.get('store')
-            .find('UserKey', this.get('auth.user.id'))
+        var promise = this.get('store')
+            .find('UserKey', currentUser.get('id'))
             .then(function (user) {
+                // set user dirty, force update
+                user.set('isDirty', true)
+
                 // set public key for user
                 user.set('public_key', incomingPublicKey)
 
                 // update all workspace keys
-                user.get('membership').forEach(function(member) {
+                user.get('membership').forEach(function (member) {
 
                     //decode current workspace key
                     var workspaceKey = coder.decryptWorkspaceKey(
-                        member.get('workspace_key'),
+                        member.workspace_key,
                         currentPrivateKey
                     )
 
+                    // encode new workspace key
                     var incomingWorkspaceKey = coder.encryptWorkspaceKey(
                         workspaceKey,
                         incomingPublicKey
                     )
 
-                    member.set('workspace_key', incomingWorkspaceKey)
+                    member.workspace_key = incomingWorkspaceKey
                 }.bind(this));
 
-                // saves user
+
                 return user
+                    // saves new keys
                     .saveRecord()
-                    .then(function() {
-                        return user
-                    });
+
+                    // then relogin with new credentials
+                    .then(function () {
+                        return this.get('auth').login(currentUser.get('email'), incomingPrivateKey)
+                    }.bind(this))
+
+
             }.bind(this));
 
+        return promise;
     }
 
 

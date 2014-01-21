@@ -135,48 +135,54 @@ function program15(depth0,data) {
 
 function program17(depth0,data) {
   
+  
+  data.buffer.push("\r\n                <div class=\"alert alert-danger top-15\">\r\n                    <b>Workspace key error. <br/></b>\r\n                    Your workspace key cannot be decoded. It means you have no access to workspace secret data\r\n                </div>\r\n            ");
+  }
+
+function program19(depth0,data) {
+  
   var buffer = '', stack1, hashTypes, hashContexts;
   data.buffer.push("\r\n\r\n                ");
   hashTypes = {};
   hashContexts = {};
-  stack1 = helpers['if'].call(depth0, "length", {hash:{},inverse:self.program(26, program26, data),fn:self.program(18, program18, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
+  stack1 = helpers['if'].call(depth0, "length", {hash:{},inverse:self.program(28, program28, data),fn:self.program(20, program20, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n\r\n            ");
   return buffer;
   }
-function program18(depth0,data) {
+function program20(depth0,data) {
   
   var buffer = '', stack1, hashTypes, hashContexts;
   data.buffer.push("\r\n                    ");
   hashTypes = {};
   hashContexts = {};
-  stack1 = helpers.each.call(depth0, {hash:{},inverse:self.noop,fn:self.program(19, program19, data),contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
+  stack1 = helpers.each.call(depth0, {hash:{},inverse:self.noop,fn:self.program(21, program21, data),contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n\r\n                ");
   return buffer;
   }
-function program19(depth0,data) {
+function program21(depth0,data) {
   
   var buffer = '', stack1, hashTypes, hashContexts;
   data.buffer.push("\r\n                        ");
   hashTypes = {};
   hashContexts = {};
-  stack1 = helpers['if'].call(depth0, "isNote", {hash:{},inverse:self.noop,fn:self.program(20, program20, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
+  stack1 = helpers['if'].call(depth0, "isNote", {hash:{},inverse:self.noop,fn:self.program(22, program22, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n\r\n                        ");
   hashTypes = {};
   hashContexts = {};
-  stack1 = helpers['if'].call(depth0, "isPassword", {hash:{},inverse:self.noop,fn:self.program(22, program22, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
+  stack1 = helpers['if'].call(depth0, "isPassword", {hash:{},inverse:self.noop,fn:self.program(24, program24, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n\r\n                        ");
   hashTypes = {};
   hashContexts = {};
-  stack1 = helpers['if'].call(depth0, "isFile", {hash:{},inverse:self.noop,fn:self.program(24, program24, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
+  stack1 = helpers['if'].call(depth0, "isFile", {hash:{},inverse:self.noop,fn:self.program(26, program26, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n                    ");
   return buffer;
   }
-function program20(depth0,data) {
+function program22(depth0,data) {
   
   var buffer = '', hashContexts, hashTypes;
   data.buffer.push("\r\n                            ");
@@ -189,7 +195,7 @@ function program20(depth0,data) {
   return buffer;
   }
 
-function program22(depth0,data) {
+function program24(depth0,data) {
   
   var buffer = '', hashContexts, hashTypes;
   data.buffer.push("\r\n                            ");
@@ -202,7 +208,7 @@ function program22(depth0,data) {
   return buffer;
   }
 
-function program24(depth0,data) {
+function program26(depth0,data) {
   
   var buffer = '', hashContexts, hashTypes;
   data.buffer.push("\r\n                            ");
@@ -215,18 +221,18 @@ function program24(depth0,data) {
   return buffer;
   }
 
-function program26(depth0,data) {
+function program28(depth0,data) {
   
   var buffer = '', stack1, hashTypes, hashContexts;
   data.buffer.push("\r\n\r\n                    <div class=\"jumbotron vlt-empty vlt-secret col-md-8 col-md-offset-2\">\r\n                        <div class=\"vlt-header\">\r\n                            <div class=\"vlt-icon\">\r\n\r\n                            </div>\r\n                            <div class=\"vlt-title\">\r\n                                <h1>You do not have any secret yet</h1>\r\n                            </div>\r\n                        </div>\r\n\r\n                        ");
   hashTypes = {};
   hashContexts = {};
-  stack1 = helpers['if'].call(depth0, "card.perms.create", {hash:{},inverse:self.noop,fn:self.program(27, program27, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
+  stack1 = helpers['if'].call(depth0, "card.perms.create", {hash:{},inverse:self.noop,fn:self.program(29, program29, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n\r\n                    </div>\r\n\r\n\r\n\r\n                ");
   return buffer;
   }
-function program27(depth0,data) {
+function program29(depth0,data) {
   
   var buffer = '', stack1, stack2, hashContexts, hashTypes, options;
   data.buffer.push("\r\n\r\n                            <p>\r\n                                What are secrets for? Lorem ipsum dolor sit amet, consectetur adipiscing elit.\r\n                            </p>\r\n\r\n                            <p class=\"top-30\">\r\n                                ");
@@ -234,19 +240,19 @@ function program27(depth0,data) {
   hashTypes = {'class': "STRING"};
   options = {hash:{
     'class': ("btn btn-lg btn-primary")
-  },inverse:self.noop,fn:self.program(28, program28, data),contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
+  },inverse:self.noop,fn:self.program(30, program30, data),contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
   stack2 = ((stack1 = helpers['link-to'] || depth0['link-to']),stack1 ? stack1.call(depth0, "Secret.createSelect", options) : helperMissing.call(depth0, "link-to", "Secret.createSelect", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
   data.buffer.push("\r\n                            </p>\r\n\r\n                        ");
   return buffer;
   }
-function program28(depth0,data) {
+function program30(depth0,data) {
   
   
   data.buffer.push("\r\n                                    <span class=\"glyphicon glyphicon-plus\"></span>\r\n                                    Create new secret\r\n                                ");
   }
 
-function program30(depth0,data) {
+function program32(depth0,data) {
   
   
   data.buffer.push("\r\n\r\n                <div class=\"jumbotron vlt-empty vlt-secret col-md-8 col-md-offset-2\">\r\n                    <div class=\"vlt-header\">\r\n                        <div class=\"vlt-icon\">\r\n\r\n                        </div>\r\n                        <div class=\"vlt-title\">\r\n                            <h1>Secrets are hidden</h1>\r\n                        </div>\r\n                    </div>\r\n\r\n                    <p>\r\n                        Workspace key has not been transfered to you yet.\r\n                        Secrets will be accessible once you receive workspace key.\r\n                        Key will be transfered to you automatically\r\n                        once some workspace team member will go online.\r\n                    </p>\r\n\r\n                </div>\r\n            ");
@@ -258,10 +264,15 @@ function program30(depth0,data) {
   options = {hash:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
   stack2 = ((stack1 = helpers.exp || depth0.exp),stack1 ? stack1.call(depth0, "( workspace.perms.invite || card.perms.create || card.perms.update || card.perms.delete)", options) : helperMissing.call(depth0, "exp", "( workspace.perms.invite || card.perms.create || card.perms.update || card.perms.delete)", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("\r\n\r\n    <div class=\"pull-left\">\r\n        <h2>Secrets on card</h2>\r\n    </div>\r\n\r\n\r\n    <div class=\"clearfix\"></div>\r\n\r\n</div>\r\n\r\n<div class=\"row\">\r\n    <div class=\"col-md-12\">\r\n\r\n        <div class=\"vlt-card-detail\">\r\n\r\n\r\n            ");
+  data.buffer.push("\r\n\r\n    <div class=\"pull-left\">\r\n        <h2>Secrets on card</h2>\r\n    </div>\r\n\r\n\r\n    <div class=\"clearfix\"></div>\r\n\r\n</div>\r\n\r\n<div class=\"row\">\r\n    <div class=\"col-md-12\">\r\n\r\n        <div class=\"vlt-card-detail\">\r\n\r\n            ");
   hashTypes = {};
   hashContexts = {};
-  stack2 = helpers['if'].call(depth0, "workspace.hasValidKey", {hash:{},inverse:self.program(30, program30, data),fn:self.program(17, program17, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
+  stack2 = helpers['if'].call(depth0, "workspace.keyError", {hash:{},inverse:self.noop,fn:self.program(17, program17, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
+  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
+  data.buffer.push("\r\n\r\n\r\n            ");
+  hashTypes = {};
+  hashContexts = {};
+  stack2 = helpers['if'].call(depth0, "workspace.hasValidKey", {hash:{},inverse:self.program(32, program32, data),fn:self.program(19, program19, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
   data.buffer.push("\r\n\r\n        </div>\r\n\r\n    </div>\r\n</div>\r\n\r\n");
   return buffer;

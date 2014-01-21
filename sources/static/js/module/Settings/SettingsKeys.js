@@ -10,16 +10,6 @@ Vaultier.SettingsKeysRoute = Ember.Route.extend(
             ctrl.set('stepKeys', false)
         },
 
-        model: function() {
-            var chk = this.get('changekey');
-            var keys = chk.generateKeys(function(keys) {
-                chk.changeKey(keys)
-            });
-
-
-
-        },
-
         actions: {
             generate: function () {
                 this.set('controller.stepInfo', false);
@@ -37,13 +27,20 @@ Vaultier.SettingsKeysRoute = Ember.Route.extend(
 
             save: function (keys, result) {
                 this.set('controller.keys', keys);
-                var promise = Ember.RSVP.resolve()
+
+                var promise = this.get('changekey')
+                    .changeKey(keys)
                     .then(function () {
                         this.set('controller.stepKeys', false);
                         this.set('controller.stepSuccess', true);
-                    }.bind(this));
+                    }.bind(this))
+                    .catch(function (error) {
+                        $.notify('There was an error during update of your key', 'error');
+                        this.get('errors').consoleError(error)
+                    }.bind(this))
 
                 result.promise = promise
+
             }
         }
 

@@ -151,16 +151,21 @@ Vaultier.SecretCreateSubmitRoute = Ember.Route.extend(
         actions: {
             submit: function () {
                 var record = this.get('controller.content');
+                var notifyError = function (error) {
+                    $.notify('Oooups! Something went wrong.', 'error');
+                    throw error
+                }
 
-                record.saveRecord().then(
-                    function () {
-                        $.notify('Your secret has been successfully created.', 'success');
-                        this.transitionTo('Secret.index', this.get('Card'));
-                    }.bind(this),
-                    function () {
-                        $.notify('Oooups! Something went wrong.', 'error');
-                    }
-                )
+                try {
+                    record.saveRecord()
+                        .then(function () {
+                            $.notify('Your secret has been successfully created.', 'success');
+                            this.transitionTo('Secret.index', this.get('Card'));
+                        }.bind(this))
+                        .catch(notifyError)
+                } catch (e) {
+                    notifyError(e)
+                }
             }
         }
 

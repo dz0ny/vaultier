@@ -29,6 +29,7 @@ Vaultier.registerDI = function (app) {
     app.inject('service:auth', 'router', 'router:main')
     app.inject('service:auth', 'session', 'service:session')
     app.inject('service:auth', 'storage', 'service:storage')
+
     app.inject('route', 'auth', 'service:auth');
     app.inject('controller', 'auth', 'service:auth');
 
@@ -41,6 +42,7 @@ Vaultier.registerDI = function (app) {
     app.inject('service:invitations', 'session', 'service:session')
     app.inject('service:invitations', 'auth', 'service:auth');
     app.inject('service:invitations', 'router', 'router:main');
+
     app.inject('route:InvitationUse', 'invitations', 'service:invitations')
     app.inject('route:InvitationAccept', 'invitations', 'service:invitations')
     app.inject('route:WorkspaceMemberInvite', 'invitations', 'service:invitations')
@@ -60,6 +62,7 @@ Vaultier.registerDI = function (app) {
     app.inject('service:workspacekey', 'store', 'store:main');
     app.inject('service:workspacekey', 'coder', 'service:coder')
     app.inject('service:workspacekey', 'keytransfer', 'service:keytransfer')
+
     app.inject('route:WorkspacesCreate', 'workspacekey', 'service:workspacekey')
     app.inject('route:Workspace', 'workspacekey', 'service:workspacekey')
     app.inject('route:WorkspaceMemberApprove', 'workspacekey', 'service:workspacekey')

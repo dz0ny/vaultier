@@ -57,8 +57,8 @@ class UserKeySerializer(ModelSerializer):
         self.fields['membership'].source = 'filtered_members';
         return super(UserKeySerializer, self).to_native(obj)
 
-    def save_object(self, obj, **kwargs):
-        return obj
+    #def save_object(self, obj, **kwargs):
+    #    return obj
 
     def validate_membership(self, attrs, source):
         all_modified = attrs.get('membership');

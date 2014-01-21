@@ -11,15 +11,10 @@ Vaultier.User = RL.Model.extend(
 
 Vaultier.UserKey = RL.Model.extend({
         public_key: RL.attr('string'),
-        membership: RL.hasMany('Vaultier.UserKeyMembership')
+        membership: RL.attr('object')
     });
 
 Vaultier.UserKey.reopenClass({
-    resourceDetailFormat: '{rootPath}/users/{id}/key'
+    resourceDetailFormat: '{rootPath}/users/{id}/key/'
 })
-
-Vaultier.UserKeyMembership = RL.Model.extend({
-        workspace_key: RL.attr('string')
-    });
-
 

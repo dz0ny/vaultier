@@ -76,7 +76,8 @@ Vaultier.Secret = RL.Model.extend(
                     console.warn(e.stack);
                     this.deferDecode();
                 } else {
-                    throw e
+                    console.error('Cannot decode');
+                    console.error(e.stack);
                 }
             }
             this.setProperties(data);

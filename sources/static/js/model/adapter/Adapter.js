@@ -66,7 +66,7 @@ Vaultier.RESTAdapter.registerTransform('object', {
         return native;
     },
     serialize: function (deserialized) {
-        return deserialized ? JSON.stringify(deserialized) : null
+        return deserialized
     }
 });
 
