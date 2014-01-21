@@ -154,6 +154,13 @@ Vaultier.MemberSelectRoleView = Ember.Select.extend({
         })
         var selectize = el[0].selectize;
         selectize.setValue(this.get('role.level'));
+
+        selectize.on('dropdown_close', function () {
+            if (!selectize.getValue()) {
+                selectize.setValue(this.get('role.level'))
+            }
+        }.bind(this));
+
         selectize.on('change', function (value) {
             if (value) {
                 this.set('role.level', value);

@@ -161,15 +161,15 @@ Vaultier.MemberIndexRoute = Ember.Route.extend(
             },
 
             changeRole: function (role, block) {
-                role
-                    .saveRecord()
-                    .then(function () {
-                        $.notify('User \'s permission has been updated.', 'success');
-                    })
-                    .catch(function (error) {
-                        $.notify('Oooups! Something went wrong.', 'error');
-                        this.get('errors').logError(error)
-                    }.bind(this))
+                    role
+                        .saveRecord()
+                        .then(function () {
+                            $.notify('User \'s permission has been updated.', 'success');
+                        })
+                        .catch(function (error) {
+                            $.notify('Oooups! Something went wrong.', 'error');
+                            this.get('errors').logError(error)
+                        }.bind(this))
             }
         }
 
