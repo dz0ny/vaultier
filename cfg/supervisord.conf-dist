@@ -1,0 +1,10 @@
+[program:vaultier]
+; Command to start app
+command = /www/vaultier/bin/vaultier_start.sh /home/jan/.virtualenvs/vaultier/bin/activate
+
+; User to run as
+user = root
+
+;Where to write log messages
+stdout_logfile = /www/vaultier/logs/gunicorn_supervisor.log
+redirect_stderr = true

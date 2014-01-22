@@ -1,6 +1,16 @@
+upstream vaultier_server {
+  server unix:/www/vaultier/run/vaultier.sock;
+}
+
 server {
-    listen   80;
-    server_name vaultier.rclick.cz;
+
+    listen   *:80;
+    server_name vautier.rclick.cz;
+
+    client_max_body_size 4G;
+
+    access_log /www/vaultier/logs/nginx-access.log;
+    error_log /www/vaultier/logs/nginx-error.log;
 
     location /static/ {
         autoindex on;
@@ -8,22 +18,34 @@ server {
     }
 
     location / {
-      # unix socket
+        # an HTTP header important enough to have its own Wikipedia entry:
+        #   http://en.wikipedia.org/wiki/X-Forwarded-For
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 
-      fastcgi_pass unix:/www/vaultier/run/vaultier.sock;
-      fastcgi_param PATH_INFO $fastcgi_script_name;
-      fastcgi_param REQUEST_METHOD $request_method;
-      fastcgi_param QUERY_STRING $query_string;
-      fastcgi_param CONTENT_TYPE $content_type;
-      fastcgi_param CONTENT_LENGTH $content_length;
-      fastcgi_intercept_errors off;
+        # enable this if and only if you use HTTPS, this helps Rack
+        # set the proper protocol for doing redirects:
+        # proxy_set_header X-Forwarded-Proto https;
 
-      # proxy
-      # proxy_set_header   Host                 $http_host;
-      # proxy_set_header   X-Real-IP            $remote_addr;
-      # proxy_set_header   X-Vaultier-Token      $http_x_vaultier_token;
-      # proxy_redirect    off;
-      # proxy_pass        http://localhost:9000;
+        # pass the Host: header from the client right along so redirects
+        # can be set properly within the Rack application
+        proxy_set_header Host $http_host;
+
+        # we don't want nginx trying to do something clever with
+        # redirects, we set the Host: header above already.
+        proxy_redirect off;
+
+        # set "proxy_buffering off" *only* for Rainbows! when doing
+        # Comet/long-poll stuff.  It's also safe to set if you're
+        # using only serving fast clients with Unicorn + nginx.
+        # Otherwise you _want_ nginx to buffer responses to slow
+        # clients, really.
+        # proxy_buffering off;
+
+        # Try to serve static files from nginx, no point in making an
+        # *application* server like Unicorn/Rainbows! serve static files.
+        if (!-f $request_filename) {
+            proxy_pass http://vaultier_server;
+            break;
+        }
     }
-
 }
