@@ -2,6 +2,8 @@ Vaultier.WorkspacesRoute = Ember.Route.extend(
     {
 
         beforeModel: function (transition) {
+
+
             // only authenticated user can access
             if (!this.get('auth').checkAuthenticatedOrLogin(transition)) {
                 return false;
@@ -14,12 +16,6 @@ Vaultier.WorkspacesRoute = Ember.Route.extend(
                 this.router.replaceWith(url);
                 return;
             }
-        },
-
-        model: function (params, transition) {
-            var store = this.get('store');
-            var promise = store.find('Workspace')
-            return promise;
         }
 
 
@@ -27,24 +23,32 @@ Vaultier.WorkspacesRoute = Ember.Route.extend(
 
 Vaultier.WorkspacesIndexRoute = Ember.Route.extend(
     {
-
         model: function (params, transition) {
-            var workspaces = this.modelFor('Workspaces');
-            if (workspaces.get('length') == 1 && !params.force) {
-                var workspace = workspaces.objectAt(0);
-                this.transitionTo('Workspace.index', workspace.get('slug'));
-            } else {
-                this.transitionTo('Workspaces.select');
-            }
+            var store = this.get('store');
+            var promise = store
+                .find('Workspace')
+                .then(function (workspaces) {
+                    if (workspaces.get('length') == 1) {
+                        var workspace = workspaces.objectAt(0);
+                        this.transitionTo('Workspace.index', workspace.get('slug'));
+                    } else {
+                        this.transitionTo('Workspaces.select');
+                    }
+                }.bind(this))
+
+            return promise
         }
+
     });
 
 
 Vaultier.WorkspacesSelectRoute = Ember.Route.extend(
     {
 
-        model: function() {
-            return this.modelFor('Workspaces');
+        model: function () {
+            var store = this.get('store');
+            var promise = store.find('Workspace')
+            return promise;
         },
 
         setupController: function (ctrl, model) {
@@ -57,7 +61,7 @@ Vaultier.WorkspacesSelectRoute = Ember.Route.extend(
             );
         },
 
-        renderTemplate : function() {
+        renderTemplate: function () {
             this.render('WorkspacesIndex');
         }
     });

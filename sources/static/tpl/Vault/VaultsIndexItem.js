@@ -45,7 +45,7 @@ function program2(depth0,data) {
     'prefix': ("Latest modification at:")
   },contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
   data.buffer.push(escapeExpression(((stack1 = helpers.printAgo || depth0.printAgo),stack1 ? stack1.call(depth0, "updated_at", options) : helperMissing.call(depth0, "printAgo", "updated_at", options))));
-  data.buffer.push("\n            </div>\n            <div class=\"clearfix\"></div>\n        </div>\n    ");
+  data.buffer.push("\n            </div>\n            <div class=\"clearfix\"></div>\n        </div>\n        <div class=\"clearfix\"></div>\n    ");
   return buffer;
   }
 function program3(depth0,data) {

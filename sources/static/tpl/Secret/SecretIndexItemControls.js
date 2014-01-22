@@ -1,7 +1,7 @@
 Ember.TEMPLATES["Secret/SecretIndexItemControls"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  var buffer = '', stack1, stack2, hashTypes, hashContexts, options, self=this, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
+  var buffer = '', stack1, stack2, hashContexts, hashTypes, options, self=this, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
 
 function program1(depth0,data) {
   
@@ -60,17 +60,22 @@ function program7(depth0,data) {
   return buffer;
   }
 
-  data.buffer.push("<div class=\"vlt-controls\">\r\n    <div class=\"help-block vlt-author col-md-6\">\r\n        By ");
-  hashTypes = {};
-  hashContexts = {};
-  options = {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
+  data.buffer.push("<div class=\"vlt-controls\">\r\n    <div class=\"help-block vlt-author col-md-6\">\r\n        <div class=\"vlt-footer-item help-block pull-left\">\r\n            ");
+  hashContexts = {'ellipsis': depth0,'prefix': depth0};
+  hashTypes = {'ellipsis': "INTEGER",'prefix': "STRING"};
+  options = {hash:{
+    'ellipsis': (12),
+    'prefix': ("Created by:")
+  },contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
   data.buffer.push(escapeExpression(((stack1 = helpers.printUser || depth0.printUser),stack1 ? stack1.call(depth0, "created_by", options) : helperMissing.call(depth0, "printUser", "created_by", options))));
-  data.buffer.push(" Updated: ");
-  hashTypes = {};
-  hashContexts = {};
-  options = {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
+  data.buffer.push("\r\n        </div>\r\n        <div class=\"vlt-footer-item help-block pull-right\">\r\n            ");
+  hashContexts = {'prefix': depth0};
+  hashTypes = {'prefix': "STRING"};
+  options = {hash:{
+    'prefix': ("Latest modification at:")
+  },contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
   data.buffer.push(escapeExpression(((stack1 = helpers.printAgo || depth0.printAgo),stack1 ? stack1.call(depth0, "updated_at", options) : helperMissing.call(depth0, "printAgo", "updated_at", options))));
-  data.buffer.push("\r\n    </div>\r\n\r\n    ");
+  data.buffer.push("\r\n        </div>\r\n        <div class=\"clearfix\"></div>\r\n    </div>\r\n\r\n    ");
   hashTypes = {};
   hashContexts = {};
   options = {hash:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};

@@ -9,6 +9,8 @@
             {{description}}
         </p>
 
+        {{view Vaultier.WorkspacesIndexWithoutKeysView workspace=this }}
+
         <div class="top-15">
             <div class="vlt-footer-item help-block pull-left">
                 {{printUser created_by  ellipsis=20 prefix='Created by:'}}
@@ -16,10 +18,10 @@
             <div class="vlt-footer-item help-block pull-right">
                 {{printAgo updated_at prefix='Latest modification at:' }}
             </div>
+            <div class="clearfix"></div>
         </div>
 
-        {{view Vaultier.WorkspacesIndexWithoutKeysView workspace=this }}
-
+        <div class="clearfix"></div>
     </div>
 
 {{/link-to}}
