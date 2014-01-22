@@ -24,7 +24,6 @@ Prepare config
  cp sources/app/settings.py-prod-dist sources/app/settings.py
  mcedit sources/app/settings.py
 
-
 Prepare database
 =============
 su - postgres
@@ -46,6 +45,25 @@ sudo ln -s /www/vaultier/cfg/nginx.conf /etc/nginx/sites-enabled/vaultier
 sudo chmod 0777 -R /var/www/vaultier/run/
 chmod -R 755 /www/vaultier/sources/static
 
-Start vaultier
+Test vaultier
 =========
-./bin/vaultier start
+./bin/vaultier_start <virtual_env_>/bin/activate
+CTRL+C
+
+Install supervisord
+=========
+sudo apt-get install supervisor
+cp cfg/supervisord.conf-dist /etc/supervisor/conf.d/vaultier.conf
+supervisorctl reread
+supervisorctl update
+supervisorctl status vaultier
+/etc/init.d/nginx restart
+
+
+Start stop restart
+=============
+/etc/init.d/nginx restart
+
+supervisorctl status vaultier
+supervisorctl start vaultier
+supervisorctl stop vaultier
