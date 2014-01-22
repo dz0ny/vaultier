@@ -10,8 +10,6 @@ from vaultier.auth.authentication import TokenAuthentication
 from vaultier.models import Workspace
 from vaultier.models.acl_fields import AclLevelField
 from vaultier.models.member import Member
-from vaultier.models.role_fields import RoleLevelField
-from vaultier.models.slug import Slug
 from vaultier.perms.check import has_object_acl
 
 
@@ -35,7 +33,7 @@ class WorkspaceMembershipSerializer(RelatedMemberSerializer):
 
 class WorkspaceSerializer(ModelSerializer):
     slug = SlugField(read_only=True)
-    created_by = RelatedUserSerializer(required=False)
+    created_by = RelatedUserSerializer(read_only=True)
     perms = PermsField()
     membership = SerializerMethodField('get_membership')
 

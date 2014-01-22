@@ -16,24 +16,21 @@ Vaultier.CardsCreateRoute = Ember.Route.extend(
 
         actions: {
             save: function () {
-                if (this.get('controller.content.isValid')) {
+                var workspace = this.get('workspace');
+                var vault = this.get('vault');
 
-                    var workspace = this.get('workspace');
-                    var vault = this.get('vault');
+                var record = this.get('controller.content');
+                record.set('vault', vault.get('id'))
 
-                    var record = this.get('controller.content');
-                    record.set('vault', vault.get('pk'))
-
-                    record.save().then(
-                        function () {
-                            $.notify('Your card has been successfully created.', 'success');
-                            this.transitionTo('Card.index', record);
-                        }.bind(this),
-                        function () {
-                            $.notify('Oooups! Something went wrong.', 'error');
-                        }
-                    )
-                }
+                record.saveRecord().then(
+                    function () {
+                        $.notify('Your card has been successfully created.', 'success');
+                        this.transitionTo('Card.index', record);
+                    }.bind(this),
+                    function () {
+                        $.notify('Oooups! Something went wrong.', 'error');
+                    }
+                )
             }
         },
 
@@ -60,15 +57,7 @@ Vaultier.CardsCreateRoute = Ember.Route.extend(
             )
 
 
-        },
-
-        deactivate: function () {
-            var record = this.get('controller.content');
-            if (!record.get('id')) {
-                var store = this.get('store');
-                store.deleteRecord(record);
-            }
-        },
+        }
 
     });
 

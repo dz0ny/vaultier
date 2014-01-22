@@ -2,18 +2,19 @@ Vaultier.WorkspaceRoute = Ember.Route.extend(
     {
 
         /**
-         * @DI Service.Members
+         * @DI service:workspacekey
          */
-        member: null,
+        workspacekey: null,
 
         model: function (params, transition) {
-            var promise = this.get('store').find('Workspace', params.workspace);
+            var promise = this.get('store').find('Workspace', params.workspace)
+
             return promise;
         },
 
         afterModel: function (workspace, transition) {
             // select working workspace
-            this.get('members').selectWorkspace(workspace)
+            this.get('workspacekey').selectWorkspace(workspace)
 
             // set environments
             // @deprecated
@@ -31,10 +32,31 @@ Vaultier.WorkspaceRoute = Ember.Route.extend(
             }
 
             return {
-                workspace: model.get('id')
+                workspace: model.get('slug')
+            }
+        },
+
+        actions: {
+            deleteWorkspace: function (workspace) {
+                Vaultier.confirmModal(this, 'Are you sure?', function () {
+                    workspace
+                        .deleteRecord()
+                        .then(
+                            function () {
+                                $.notify('Your workspace has been successfully deleted.', 'success');
+                                var workspaces = this.modelFor('Workspaces');
+                                workspaces.removeObject(workspaces.find(function(w) {
+                                    return workspace.get('id') == w.get('id')
+                                }));
+                                this.transitionTo('Workspaces.select');
+                            }.bind(this))
+                        .catch(function (error) {
+                            $.notify('Oooups! Something went wrong.', 'error');
+                            throw error
+                        }.bind(this))
+                }.bind(this));
             }
         }
-
     });
 
 Vaultier.WorkspaceIndexRoute = Ember.Route.extend({

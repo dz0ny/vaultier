@@ -16,10 +16,7 @@ var router = Vaultier.Router.map(function () {
      * Login
      ************************************************************/
 
-    this.resource('AuthLogin', {path: '/auth/login'}, function () {
-        this.route('switch', { path: '/switch-user' });
-        this.route('latest', { path: '/latest-user' });
-    })
+    this.route('AuthLogin', {path: '/auth/login'})
 
     /************************************************************
      * invitations
@@ -50,6 +47,7 @@ var router = Vaultier.Router.map(function () {
     this.resource('Workspaces', {path: '/workspaces'}, function () {
         // automatic Workspaces.index
         this.route('create', { path: '/create'});
+        this.route('select', { path: '/select'});
 
         /************************************************************
          * Workspace
@@ -63,7 +61,6 @@ var router = Vaultier.Router.map(function () {
             // member
             this.route('memberIndex', { path: '/team'});
             this.route('memberInvite', { path: '/team/invite'});
-            this.route('memberApprove', { path: '/team/approve' });
 
             /************************************************************
              * Vaults
@@ -163,9 +160,9 @@ Vaultier.ApplicationRoute = Ember.Route.extend(
             loading: function (transition, originRoute) {
                 ApplicationLoader.showLoader();
 //                Ember.run.scheduleOnce('afterRender', this, function () {
-//                    console.log('done');
+//                    ApplicationLoader.hideLoader();
 //                })
-                transition.then(function () {
+                transition.promise.finally(function () {
                     ApplicationLoader.hideLoader();
                 }.bind(this))
             }
@@ -173,10 +170,11 @@ Vaultier.ApplicationRoute = Ember.Route.extend(
         },
 
         beforeModel: function (params, transition) {
-            // auth
+            // reload authenticated user from server
             var auth = this.get('auth');
             var status = auth.reload()
             return status;
+
         }
     })
 ;

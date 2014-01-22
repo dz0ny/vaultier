@@ -7,12 +7,7 @@ Vaultier.LayoutSecurityBoxView = Ember.View.extend({
 
         logout: function () {
             var auth = this.get('controller.auth');
-            auth.logout().then(function () {
-                $.notify('You have been successfully logged out.', 'success');
-                var ctrl = this.get('controller');
-                ctrl.transitionToRoute('index');
-//                window.location.href = "/";
-            }.bind(this));
+            auth.logout();
         }
     },
 
@@ -28,7 +23,7 @@ Vaultier.LayoutSecurityBoxView = Ember.View.extend({
 });
 
 Vaultier.LayoutSecurityBoxController = Ember.Controller.extend({
-    showToken: function() {
+    showToken: function () {
         return this.get('config.FT_FEATURES.dev_show_token')
     }.property('showToken')
 });

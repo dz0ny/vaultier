@@ -9,18 +9,23 @@
                     </div>
                     <div class="vlt-dialog-body">
 
+
                         <div class="col-md-8 col-md-offset-2">
 
-                            <div class="form-group" {{bind-attr class='errors.name:has-error'}}>
+                            <div class="form-group" {{bind-attr class='content.errors.name:has-error'}}>
                                 <label for="card-name">Name</label>
-                                {{errors.name}}
                                 {{view Em.TextField elementId='card-name' valueBinding='content.name' class="form-control"}}
+                                <span class="error">
+                                    {{content.errors.name}}
+                                </span>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group" {{bind-attr class='content.errors.description:has-error'}}>
                                 <label for="card-description">Description</label>
-                                {{errors.description}}
                                 {{view Em.TextArea elementId='card-description' valueBinding='content.description' class="form-control" rows=5}}
+                                <span class="error">
+                                {{content.errors.description}}
+                                </span>
                             </div>
                         </div>
 

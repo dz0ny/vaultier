@@ -1,55 +1,50 @@
-Vaultier.Workspace = DS.Model.extend(
-    CreatedUpdatedMixin,
-    ExposeCleanAttributesMixin,
-    NonInvalidState,
+Vaultier.Workspace = RL.Model.extend(
+    Vaultier.CreatedUpdatedMixin,
+    Vaultier.RollbackMixin,
     {
-        /**
-         * @DI Service.Members
-         */
-        members: null,
+        init: function () {
+            this.set('workspacekey', Vaultier.__container__.lookup('service:workspacekey'))
+            return this._super.apply(this, arguments);
+        },
 
         /**
-         * Managed by Service.Members, True when key cannot be decrypted
+         * @DI service:workspacekey
+         */
+        workspacekey: null,
+
+        /**
+         * Managed by Service.WorkspaceKey, True when key cannot be decrypted
          */
         keyError: false,
 
-
-        pk: DS.attr('number'),
-        name: DS.attr('string'),
-        slug: DS.attr('string'),
-        description: DS.attr('string'),
-        perms: DS.attr(),
-        membership: DS.attr(),
+        name: RL.attr('string'),
+        slug: RL.attr('string'),
+        description: RL.attr('string'),
+        perms: RL.attr('object', { readOnly: true }),
+        membership: RL.attr('object', { readOnly: true }),
 
 
         /**
-         * Returns if user given by membership is approved on current workspace
+         * Returns if user given by membership has workspacekey
          */
-        isApproved: function () {
+        hasValidKey: function () {
             return this.get('membership.status') == Vaultier.Member.proto().statuses['MEMBER'].value
         }.property('membership.status'),
 
 
-        save: function () {
-            var isNew = !this.get('id');
-            var promise = this._super(arguments)
-
+        saveRecord: function () {
+            var isNew = this.get('isNew');
+            var promise = this._super.apply(this, arguments)
+            var workspace = this;
             if (isNew) {
                 // after save, approve workspace
-                promise = promise.then(function (workspace) {
-                        if (isNew) {
-                            return  this.get('members').approveNewWorkspace(workspace)
-                                .then(function () {
-                                    return workspace
-                                })
-                        } else {
-                            return workspace
-                        }
+                promise = promise
+                    .then(function () {
+                        return this.get('workspacekey').transferKeyToCreatedWorkspace(workspace)
                     }.bind(this))
-
-                    .then(function (workspace) {
-                        return workspace.reload()
-                    })
+                    .then(function () {
+                        return workspace.reloadRecord()
+                    }.bind(this))
             }
 
             return promise

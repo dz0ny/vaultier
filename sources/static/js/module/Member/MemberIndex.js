@@ -34,21 +34,21 @@ Vaultier.MemberIndexRoute = Ember.Route.extend(
             if (blocks.workspace) {
                 queries.workspace = workspace
                 queries.workspaceRoles = store.find('Role', {
-                    to_workspace: workspace.get('pk')
+                    to_workspace: workspace.get('id')
                 })
             }
 
             if (blocks.vault) {
                 queries.vault = vault
                 queries.vaultRoles = store.find('Role', {
-                    to_vault: vault.get('pk')
+                    to_vault: vault.get('id')
                 })
             }
 
             if (blocks.card) {
                 queries.card = card
                 queries.cardRoles = store.find('Role', {
-                    to_card: card.get('pk')
+                    to_card: card.get('id')
                 })
             }
 
@@ -145,31 +145,31 @@ Vaultier.MemberIndexRoute = Ember.Route.extend(
         actions: {
             deleteRole: function (role, block) {
                 Vaultier.confirmModal(this, 'Are you sure?', function () {
-                    role.deleteRecord();
-                    role.save().then(
-                        function () {
+                    role
+                        .deleteRecord()
+                        .then(function () {
                             block.roles.removeObject(role);
                             $.notify('User \'s permission has been removed.', 'success');
-                        },
-                        function () {
+                        })
+                        .catch(function (error) {
                             $.notify('Oooups! Something went wrong.', 'error');
-                        }
-                    )
+                            this.get('errors').logError(error)
+                        }.bind(this))
                 });
 
 
             },
 
             changeRole: function (role, block) {
-                role.save().then(
-                    function () {
-                        $.notify('User \'s permission has been updated.', 'success');
-                    },
-                    function () {
-                        role.rollback();
-                        $.notify('Oooups! Something went wrong.', 'error');
-                    }
-                )
+                    role
+                        .saveRecord()
+                        .then(function () {
+                            $.notify('User \'s permission has been updated.', 'success');
+                        })
+                        .catch(function (error) {
+                            $.notify('Oooups! Something went wrong.', 'error');
+                            this.get('errors').logError(error)
+                        }.bind(this))
             }
         }
 

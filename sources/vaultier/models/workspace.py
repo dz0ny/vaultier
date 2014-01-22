@@ -31,7 +31,7 @@ class WorkspaceManager(Manager):
         m = Member(
             workspace=workspace,
             user=workspace._user,
-            status=MemberStatusField.STATUS_NON_APPROVED_MEMBER,
+            status=MemberStatusField.STATUS_MEMBER_WITHOUT_WORKSPACE_KEY,
             created_by=workspace._user
         )
         m.save()

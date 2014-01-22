@@ -3,11 +3,8 @@ Vaultier.WorkspacesRoute = Ember.Route.extend(
 
         beforeModel: function (transition) {
             // only authenticated user can access
-            if (!this.get('auth.isAuthenticated')) {
-                $.notify('You do not have access to secured area. Please login', 'error');
-                transition.abort();
-                this.transitionTo('AuthLogin');
-                return;
+            if (!this.get('auth').checkAuthenticatedOrLogin(transition)) {
+                return false;
             }
 
             // if any invitations store in session, user will be redirected
@@ -17,17 +14,37 @@ Vaultier.WorkspacesRoute = Ember.Route.extend(
                 this.router.replaceWith(url);
                 return;
             }
+        },
 
+        model: function (params, transition) {
+            var store = this.get('store');
+            var promise = store.find('Workspace')
+            return promise;
         }
+
 
     });
 
 Vaultier.WorkspacesIndexRoute = Ember.Route.extend(
     {
+
         model: function (params, transition) {
-            var store = this.get('store');
-            var promise = store.find('Workspace');
-            return promise;
+            var workspaces = this.modelFor('Workspaces');
+            if (workspaces.get('length') == 1 && !params.force) {
+                var workspace = workspaces.objectAt(0);
+                this.transitionTo('Workspace.index', workspace.get('slug'));
+            } else {
+                this.transitionTo('Workspaces.select');
+            }
+        }
+    });
+
+
+Vaultier.WorkspacesSelectRoute = Ember.Route.extend(
+    {
+
+        model: function() {
+            return this.modelFor('Workspaces');
         },
 
         setupController: function (ctrl, model) {
@@ -38,13 +55,13 @@ Vaultier.WorkspacesIndexRoute = Ember.Route.extend(
                     .addHome()
                     .addText('List of workspaces')
             );
-        }
+        },
 
+        renderTemplate : function() {
+            this.render('WorkspacesIndex');
+        }
     });
 
-
-Vaultier.WorkspacesIndexController = Ember.ArrayController.extend({
-});
 
 Vaultier.WorkspacesIndexView = Ember.View.extend({
     templateName: 'Workspace/WorkspacesIndex',
@@ -55,6 +72,6 @@ Vaultier.WorkspacesIndexItemView = Ember.View.extend({
     templateName: 'Workspace/WorkspacesIndexItem'
 });
 
-Vaultier.WorkspacesIndexNotApprovedView = Ember.View.extend({
-    templateName: 'Workspace/WorkspacesIndexNotApproved'
+Vaultier.WorkspacesIndexWithoutKeysView = Ember.View.extend({
+    templateName: 'Workspace/WorkspacesIndexWithoutKeys'
 });

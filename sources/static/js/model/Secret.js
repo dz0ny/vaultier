@@ -1,12 +1,17 @@
-Vaultier.Secret = DS.Model.extend(
-    CreatedUpdatedMixin,
-    NonInvalidState,
+Vaultier.Secret = RL.Model.extend(
+    Vaultier.CreatedUpdatedMixin,
+    Vaultier.RollbackMixin,
     {
 
+        init: function () {
+            this.set('workspacekey', Vaultier.__container__.lookup('service:workspacekey'))
+            return this._super.apply(this, arguments);
+        },
+
         /**
-         * @DI Service.Members
+         * @DI service:workspacekey
          */
-        members: null,
+        workspacekey: null,
 
 
         types: new Utils.ConstantList({
@@ -25,11 +30,13 @@ Vaultier.Secret = DS.Model.extend(
         }),
 
 
-        name: DS.attr('string'),
-        type: DS.attr('number'),
-        data: DS.attr('string'),
-        card: DS.attr('number'),
-        perms: DS.attr(),
+        name: RL.attr('string'),
+        type: RL.attr('number'),
+        data: RL.attr('string'),
+        card: RL.attr('number'),
+        perms: RL.attr('object'),
+
+        decoded: false,
 
         password: null,
         username: null,
@@ -49,15 +56,29 @@ Vaultier.Secret = DS.Model.extend(
             return this.get('type') == this.types['FILE'].value;
         }.property('type'),
 
+        deferDecode: function () {
+            var workspacekey = this.get('workspacekey');
+            workspacekey.one('keyTransfered', function () {
+                this.decode();
+            }.bind(this))
+        },
+
         decode: function () {
-            var members = this.get('members');
+            var workspacekey = this.get('workspacekey');
 
             var data = this.get('data');
             try {
-                data = members.decryptWorkspaceData(data)
+                data = workspacekey.decryptWorkspaceData(data)
+                this.set('decoded', true);
             } catch (e) {
-                console.error('Cannot decrypt data')
-                console.error(e.stack);
+                this.set('decoded', false);
+                if (e instanceof Service.WorkspaceKeyDecryptSoftError) {
+                    console.warn(e.stack);
+                    this.deferDecode();
+                } else {
+                    console.error('Cannot decode');
+                    console.error(e.stack);
+                }
             }
             this.setProperties(data);
         },
@@ -88,7 +109,7 @@ Vaultier.Secret = DS.Model.extend(
 
             }
 
-            data = this.get('members').encryptWorkspaceData(data)
+            data = this.get('workspacekey').encryptWorkspaceData(data)
             this.set('data', data);
 
         },
@@ -103,11 +124,9 @@ Vaultier.Secret = DS.Model.extend(
             return this._super();
         },
 
-        save: function () {
-            if (this.get('currentState.stateName') != 'root.deleted.uncommitted') {
-                this.encode();
-            }
-            return this._super();
+        saveRecord: function () {
+            this.encode();
+            return this._super.apply(this, arguments);
         }
 
     });

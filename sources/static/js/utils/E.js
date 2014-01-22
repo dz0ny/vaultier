@@ -5,10 +5,10 @@ Utils.E = {
     recordId: function (record, exception) {
         exception = Po.F.optional(exception, false)
 
-        if (record instanceof DS.Model) {
+        if (record instanceof RL.Model) {
             var id = parseInt(record.get('id'));
             if (isNaN(id)) {
-                id = record.get('pk');
+                id = record.get('id');
             }
             return id;
         }

@@ -3,7 +3,7 @@ Vaultier.CardsIndexRoute = Ember.Route.extend({
     model: function (params, transition) {
         var vault = this.modelFor('Vault');
         var store = this.get('store');
-        return store.find('Card', {vault: vault.get('pk')});
+        return store.find('Card', {vault: vault.get('id')});
     },
 
     setupController: function (ctrl, model) {
@@ -31,18 +31,18 @@ Vaultier.CardsIndexRoute = Ember.Route.extend({
     actions: {
         deleteVault: function (vault) {
             Vaultier.confirmModal(this, 'Are you sure?', function () {
-                vault.deleteRecord();
-
-                vault.save().then(
-                    function () {
-                        $.notify('Your vault has been successfully deleted.', 'success');
-                        this.transitionTo('Vaults.index', this.get('workspace'));
-                    }.bind(this),
-                    function (error) {
-                        card.rollback();
-                        $.notify('Oooups! Something went wrong.', 'error');
-                    }.bind(this)
-                );
+                vault
+                    .deleteRecord()
+                    .then(
+                        function () {
+                            $.notify('Your vault has been successfully deleted.', 'success');
+                            this.transitionTo('Vaults.index', this.get('workspace'));
+                        }.bind(this),
+                        function (error) {
+                            card.rollback();
+                            $.notify('Oooups! Something went wrong.', 'error');
+                        }.bind(this)
+                    );
             }.bind(this));
 
 

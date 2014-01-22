@@ -24,6 +24,11 @@ Vaultier.SecretCreateSelectRoute = Ember.Route.extend(
     {
 
         model: function (params, transition) {
+            // check workspace keys
+            var workspace = this.modelFor('Workspace')
+            if (!workspace.get('hasValidKey')) {
+                throw Error('Cannot edit secret without valid workspace key');
+            }
 
             // check permissions
             if (!this.get('auth').checkPermissions(transition, function () {
@@ -68,6 +73,11 @@ Vaultier.SecretCreateSubmitRoute = Ember.Route.extend(
     {
 
         model: function (params, transition) {
+            // check workspace keys
+            var workspace = this.modelFor('Workspace')
+            if (!workspace.get('hasValidKey')) {
+                throw Error('Cannot edit secret without valid workspace key');
+            }
 
             // check permissions
             if (!this.get('auth').checkPermissions(transition, function () {
@@ -84,7 +94,7 @@ Vaultier.SecretCreateSubmitRoute = Ember.Route.extend(
 
         afterModel: function (secret, transition) {
 
-            secret.set('card', this.modelFor('Card').get('pk'));
+            secret.set('card', this.modelFor('Card').get('id'));
 
             var SecretClass = Vaultier.Secret.proto();
             switch (transition.params.type.toUpperCase()) {
@@ -138,29 +148,23 @@ Vaultier.SecretCreateSubmitRoute = Ember.Route.extend(
             this.render(this.template, {outlet: 'tab', into: 'SecretCreate'});
         },
 
-        deactivate: function () {
-            var record = this.get('controller.content');
-            var store = this.get('store');
-            if (!record.get('id')) {
-                //record.rollback();
-                store.deleteRecord(record);
-            }
-        },
-
         actions: {
             submit: function () {
-                if (this.get('controller.content.isValid')) {
-                    var record = this.get('controller.content');
+                var record = this.get('controller.content');
+                var notifyError = function (error) {
+                    $.notify('Oooups! Something went wrong.', 'error');
+                    throw error
+                }
 
-                    record.save().then(
-                        function () {
+                try {
+                    record.saveRecord()
+                        .then(function () {
                             $.notify('Your secret has been successfully created.', 'success');
                             this.transitionTo('Secret.index', this.get('Card'));
-                        }.bind(this),
-                        function () {
-                            $.notify('Oooups! Something went wrong.', 'error');
-                        }
-                    )
+                        }.bind(this))
+                        .catch(notifyError)
+                } catch (e) {
+                    notifyError(e)
                 }
             }
         }

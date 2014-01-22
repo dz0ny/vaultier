@@ -1,13 +1,20 @@
-Vaultier.User = DS.Model.extend(
-    CreatedUpdatedMixin,
-    ExposeCleanAttributesMixin,
-    NonInvalidState,
+Vaultier.User = RL.Model.extend(
+    Vaultier.CreatedUpdatedMixin,
+    Vaultier.RollbackMixin,
     {
-
-
-
-        email: DS.attr('string'),
-        nickname: DS.attr('string'),
-        public_key: DS.attr('string')
+        email: RL.attr('string'),
+        nickname: RL.attr('string'),
+        public_key: RL.attr('string')
     });
+
+
+
+Vaultier.UserKey = RL.Model.extend({
+        public_key: RL.attr('string'),
+        membership: RL.attr('object')
+    });
+
+Vaultier.UserKey.reopenClass({
+    resourceDetailFormat: '{rootPath}/users/{id}/key/'
+})
 

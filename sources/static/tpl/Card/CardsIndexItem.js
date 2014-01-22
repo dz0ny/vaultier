@@ -36,9 +36,11 @@ function program2(depth0,data) {
   options = {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
   data.buffer.push(escapeExpression(((stack1 = helpers.printAgo || depth0.printAgo),stack1 ? stack1.call(depth0, "updated_at", options) : helperMissing.call(depth0, "printAgo", "updated_at", options))));
   data.buffer.push("\r\n            </div>\r\n            <div class=\"vlt-footer-item help-block\">\r\n                By ");
-  hashTypes = {};
-  hashContexts = {};
-  options = {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
+  hashContexts = {'ellipsis': depth0};
+  hashTypes = {'ellipsis': "INTEGER"};
+  options = {hash:{
+    'ellipsis': (8)
+  },contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
   data.buffer.push(escapeExpression(((stack1 = helpers.printUser || depth0.printUser),stack1 ? stack1.call(depth0, "created_by", options) : helperMissing.call(depth0, "printUser", "created_by", options))));
   data.buffer.push("\r\n            </div>\r\n            <div class=\"clearfix\"></div>\r\n        </div>\r\n    ");
   return buffer;

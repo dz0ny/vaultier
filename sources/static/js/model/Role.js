@@ -1,34 +1,37 @@
-Vaultier.Role = DS.Model.extend(
-    CreatedUpdatedMixin,
-    NonInvalidState,
+Vaultier.Role = RL.Model.extend(
+    Vaultier.CreatedUpdatedMixin,
+    Vaultier.RollbackMixin,
     {
 
-        /**
-         * @DI Service.Auth
-         */
         auth: null,
 
-        level: DS.attr('number'),
-        member: DS.attr(),
-        to_workspace: DS.attr(),
-        to_vault: DS.attr(),
-        to_card: DS.attr(),
+        init: function() {
+            this.set('auth', Vaultier.__container__.lookup('service:auth'))
+            return this._super.apply(this, arguments);
+        },
+
+
+        level: RL.attr('number'),
+        member: RL.attr('object'),
+        to_workspace: RL.attr('object'),
+        to_vault: RL.attr('object'),
+        to_card: RL.attr('object'),
 
         roles: new Utils.ConstantList({
             'CREATE': {
                 value: 50,
-                text: 'Create own',
-                desc:'Can create new, modify own, invite and grant permissions to own'
+                text: 'Create new',
+                desc:'Can read this object. Can create new child objects. Can modify, delete, invite and grant permissions to created objects'
             },
             'READ': {
                 value: 100,
-                desc: 'Can read mine and others',
-                text: 'Read'
+                desc: 'Can read this object and all child objects',
+                text: 'View only'
             },
             'WRITE': {
                 value: 200,
-                text: 'Write',
-                desc: 'Can write mine and others, invite and grant permissions to mine and others '
+                text: 'Manage',
+                desc: 'Can create, modify, delete, invite and grant permissions to this object and all child objects'
             }
         }),
 
@@ -61,8 +64,8 @@ Vaultier.Role = DS.Model.extend(
             return this.get('member.status') == Vaultier.Member.proto().statuses['INVITED'].value;
         }.property('member.status'),
 
-        isNonApprovedMember : function() {
-            return this.get('member.status') == Vaultier.Member.proto().statuses['NON_APPROVED_MEMBER'].value;
+        isMemberWithoutKeys : function() {
+            return this.get('member.status') == Vaultier.Member.proto().statuses['MEMBER_WITHOUT_WORKSPACE_KEY'].value;
         }.property('member.status'),
 
         printableDesc: function() {

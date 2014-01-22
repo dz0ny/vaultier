@@ -22,7 +22,7 @@ Vaultier.CardMoveRoute = Ember.Route.extend(
 
             var vaults =
                 store.
-                    find('vault', {workspace: workspace.get('pk')})
+                    find('Vault', {workspace: workspace.get('id')})
                     .then(function (model) {
                         model.forEach(function (item) {
                             item.set('branch', true)
@@ -55,14 +55,18 @@ Vaultier.CardMoveRoute = Ember.Route.extend(
             save: function () {
                 var record = this.get('controller.content');
                 record.set('vault', this.get('controller.selected'))
-                record.save().then(
-                    function () {
+                record
+                    .saveRecord()
+                    .then(function() {
+                        return this.get('store').find('Vault', record.get('vault'))
+                    }.bind(this))
+                    .then(function (vault) {
                         $.notify('Your card has been successfully moved.', 'success');
                         this.transitionTo(
                             'Secret.index',
-                            this.modelFor('Workspace').pk,
-                            record.get('vault'),
-                            this.modelFor('card'.pk)
+                            this.modelFor('Workspace').get('slug'),
+                            vault.get('slug'),
+                            this.modelFor('Card').get('slug')
                         )
                     }.bind(this),
                     function () {

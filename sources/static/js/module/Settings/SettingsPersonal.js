@@ -8,23 +8,19 @@ Vaultier.SettingsPersonalRoute = Ember.Route.extend(
             ctrl.set('content', this.get('auth.user'))
         },
 
-        deactivate: function () {
-            this.get('auth.user').rollback()
-        },
-
         actions: {
             save: function () {
-                if (this.get('controller.content.isValid')) {
-                    var record = this.get('controller.content');
-                    record.save().then(
-                        function () {
-                            $.notify('Your changes has been successfully saved.', 'success');
-                        }.bind(this),
-                        function () {
-                            $.notify('Oooups! Something went wrong.', 'error');
-                        })
-                }
-           }
+                var record = this.get('controller.content');
+                record
+                    .saveRecord()
+                    .then(
+                    function () {
+                        $.notify('Your changes has been successfully saved.', 'success');
+                    }.bind(this),
+                    function () {
+                        $.notify('Oooups! Something went wrong.', 'error');
+                    })
+            }
         }
     });
 

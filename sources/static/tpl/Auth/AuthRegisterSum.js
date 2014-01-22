@@ -12,11 +12,11 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   hashTypes = {};
   hashContexts = {};
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "auth.user.nickname", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
-  data.buffer.push("\r\n                </div>\r\n\r\n            </div>\r\n        </div>\r\n\r\n        <div class=\"row top-15\">\r\n            <div class=\"row\">\r\n                <div class=\"col-md-5 col-md-offset-1\">\r\n                    <b>\r\n                        Your private key\r\n                    </b>\r\n                    <br/>\r\n                    <span class=\"help-block\">\r\n                        Used instead of password. Please download if you did not yet.\r\n                    </span>\r\n                </div>\r\n                <div class=\"col-md-4\">\r\n                    <a class=\"btn btn-default btn-sm\" ");
+  data.buffer.push("\r\n                </div>\r\n\r\n            </div>\r\n        </div>\r\n\r\n        <div class=\"row top-15\">\r\n            <div class=\"row\">\r\n                <div class=\"col-md-5 col-md-offset-1\">\r\n                    <b>\r\n                        Your private key\r\n                    </b>\r\n                    <br/>\r\n                    <span class=\"help-block\">\r\n                        Used instead of password. Please save if you did not yet.\r\n                    </span>\r\n                </div>\r\n                <div class=\"col-md-4\">\r\n                    <a class=\"btn btn-default btn-sm\" ");
   hashTypes = {};
   hashContexts = {};
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "downloadKey", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
-  data.buffer.push(">Download your key</a>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"clearfix\"></div>\r\n\r\n</div>\r\n");
+  data.buffer.push(">Save your key file</a>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"clearfix\"></div>\r\n\r\n</div>\r\n");
   return buffer;
   
 });

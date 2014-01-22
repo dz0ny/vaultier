@@ -8,15 +8,21 @@ body {
     padding: 0px;
     margin: 0px;
     overflow-y: scroll;
+    word-wrap: break-word !important;
 }
 
 a {
-    transition: color 500ms;
+    transition: color 500ms, background-color 500ms;
 }
 
 a:hover {
-    transition: color 500ms;
+    transition: color 500ms, background-color 500ms;
     text-decoration: none;
+}
+
+.nav a,
+.nav a:hover {
+    transition: none;
 }
 
 /*************************************************************
@@ -28,8 +34,19 @@ a:hover {
 /*
 * Dropdown
 */
-.dropdown-menu a, .dropdown-menu:hover{
+.dropdown-menu a, .dropdown-menu:hover {
     transition: none;
+}
+
+/*
+* Tooltip
+*/
+.tooltip.top .tooltip-inner {
+    background-color: #367EAC;
+}
+
+.tooltip.top .tooltip-arrow {
+    border-top-color: #367EAC;
 }
 
 /*
@@ -199,7 +216,6 @@ a:hover {
 *Selectize
 */
 
-
 .selectize-dropdown-content .active {
     color: #fff;
     background-color: #2fa4e7;
@@ -208,6 +224,7 @@ a:hover {
 .selectize-dropdown-content div[data-selectable] {
     border-bottom: 1px solid #E0DBDB;
 }
+
 .selectize-dropdown-content div[data-selectable]:last-child {
     border-bottom: 0px;
 }
@@ -224,7 +241,18 @@ a:hover {
 
 /*************************************************************
 **************************************************************
-* rows
+* Labels
+*************************************************************
+*************************************************************/
+
+.label-header {
+    margin-top: -3px;
+    background-color: #317EAC;
+}
+
+/*************************************************************
+**************************************************************
+* layouts
 *************************************************************
 *************************************************************/
 
@@ -332,11 +360,9 @@ a:hover {
     padding-left: 0px;
 }
 
-
 .vlt-breads .breadcrumb .vlt-bread-item-wrapper {
     display: inline-block;
 }
-
 
 .vlt-breads .breadcrumb .active h2 {
     font-size: 14px;
@@ -608,7 +634,7 @@ span.vlt-user img {
 *************************************************************/
 
 .vlt-search-box {
-    margin: 8px 0px 8px 100px;
+    margin: 8px 0px 8px 40px;
     padding: 0px 50px 0px 10px;
     width: 250px;
 }
@@ -667,6 +693,15 @@ span.vlt-user img {
     font-size: 12px;
 }
 
+.vlt-search-box .vlt-search-result {
+    padding: 6px;
+    padding-left: 45px;
+    background-position: 5px 7px;
+    background-size: 32px 32px;
+    background-repeat: no-repeat;
+    border-bottom: 1px solid #E0DBDB;
+}
+
 .vlt-search-box .vlt-search-result .vlt-line {
     width: 280px;
     white-space: nowrap !important;
@@ -676,14 +711,6 @@ span.vlt-user img {
 
 .vlt-search-box .vlt-search-result.active .help-block {
     color: white;
-}
-
-.vlt-search-box .vlt-search-result {
-    padding-left: 45px;
-    background-position: 5px 5px;
-    background-size: 32px 32px;
-    background-repeat: no-repeat;
-    border-bottom: 1px solid #E0DBDB;
 }
 
 .vlt-search-box .vlt-search-result:last-child {
@@ -736,41 +763,6 @@ span.vlt-user img {
 
 .vlt-wizard-steps li > a:hover {
     color: #2FA4E7;
-}
-
-/*************************************************************
-**************************************************************
-* tabbable modal
-*************************************************************
-*************************************************************/
-
-.vlt-tabs-modal.modal-dialog .modal-header {
-    padding: 15px 0px 0px 0px;
-    border-bottom: 0px;
-}
-
-.vlt-tabs-modal.modal-dialog .modal-header h2 {
-    padding: 0px 15px 15px 25px;
-    margin: 0px;
-    border-bottom: 0px;
-}
-
-.vlt-tabs-modal.modal-dialog .nav-tabs {
-    padding: 0px 18px 0px 18px;
-}
-
-.vlt-tabs-modal.modal-dialog .nav-pills {
-    padding: 0px 18px 0px 18px;
-}
-
-/*************************************************************
-**************************************************************
-* Login modal
-*************************************************************
-*************************************************************/
-
-.vlt-login.vlt-dialog {
-    width: 700px;
 }
 
 /*************************************************************
@@ -841,13 +833,13 @@ span.vlt-user img {
 *************************************************************
 *************************************************************/
 
-.vlt-login.modal-dialog {
+.vlt-login.vlt-dialog {
     width: 700px;
 }
 
-.vlt-login.modal-dialog .alert {
-    margin-left: 15px;
-    margin-right: 15px;
+.vlt-login .vlt-login-key,
+.vlt-login .vlt-login-switch {
+    min-width: 120px;
 }
 
 /*************************************************************
@@ -1037,6 +1029,10 @@ span.vlt-user img {
     width: 600px;
 }
 
+.vlt-dialog .vlt-dialog-header {
+    border-bottom: 1px solid #E0DBDB;
+}
+
 .vlt-dialog .vlt-dialog-header,
 .vlt-dialog .vlt-dialog-body,
 .vlt-dialog .vlt-dialog-footer {
@@ -1045,6 +1041,7 @@ span.vlt-user img {
 
 .vlt-dialog .vlt-dialog-header h2 {
     text-align: center;
+    padding: 0px;
     margin: 0px;
 }
 
@@ -1134,23 +1131,17 @@ span.vlt-user img {
     float: right;
 }
 
-.vlt-panel-permissions .vlt-table .vlt-perms .help-block{
+.vlt-panel-permissions .vlt-table .vlt-perms .help-block {
     font-size: 12px;
 }
 
-
-.vlt-panel-permissions .vlt-table .vlt-delete
-{
+.vlt-panel-permissions .vlt-table .vlt-delete {
     margin-left: 5px;
     min-height: 35px;
     float: right;
 }
 
-
-
-
 vlt-delete
-
 .vlt-panel-permissions .vlt-table .vlt-user {
     vertical-align: middle;
 }
@@ -1237,14 +1228,13 @@ vlt-delete
     font-size: 12px;
 }
 
-
 /*************************************************************
 **************************************************************
 * Tree nodes
 *************************************************************
 *************************************************************/
 .vlt-tree ul {
-   padding-left: 25px;
+    padding-left: 25px;
 }
 
 .vlt-tree li {
@@ -1257,7 +1247,7 @@ vlt-delete
     border: 1px solid #E0DBDB;
 }
 
-.vlt-tree li .vlt-node  {
+.vlt-tree li .vlt-node {
     line-height: 35px;
     padding-left: 25px;
     cursor: pointer;
@@ -1271,7 +1261,6 @@ vlt-delete
 .vlt-tree li .vlt-node label {
     cursor: pointer;
 }
-
 
 .vlt-tree li .vlt-node.vlt-vault {
     background-image: url('../images/icon-vault-grey.png');

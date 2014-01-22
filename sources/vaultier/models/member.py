@@ -3,7 +3,9 @@ from django.db.models.deletion import PROTECT, CASCADE
 from django.db.models.manager import Manager
 import hmac
 import uuid
+from django.db.models.query_utils import Q
 from vaultier.mailer.invitation import resend_invitation
+from vaultier.models.acl_fields import AclLevelField
 from vaultier.models.member_fields import MemberStatusField
 from hashlib import sha1
 from vaultier.tools.changes import ChangesMixin
@@ -18,6 +20,15 @@ class MemberManager(Manager):
         workspaces = Workspace.objects.all_for_user(user)
         result = Member.objects.filter(workspace__in=workspaces)
         return result
+
+    def all_to_transfer_keys(self, user):
+
+        query = self.all_for_user(user).filter(
+            status=MemberStatusField.STATUS_MEMBER_WITHOUT_WORKSPACE_KEY
+        ).distinct()
+
+        return query
+
 
     def generate_invitation_hash(self):
         def get_unique():
@@ -58,7 +69,7 @@ class MemberManager(Manager):
                 to_vault=role.to_vault,
                 to_card=role.to_card,
                 level__gte=role.level
-            ).exclude(id=role.id).count() >=1
+            ).exclude(id=role.id).count() >= 1
             if delete:
                 role.delete()
 
@@ -69,7 +80,7 @@ class MemberManager(Manager):
         # user membership does not exists, or it is only invite
         if not existing_member:
             member.user = user
-            member.status = MemberStatusField.STATUS_NON_APPROVED_MEMBER
+            member.status = MemberStatusField.STATUS_MEMBER_WITHOUT_WORKSPACE_KEY
             member.save()
 
         # membership exists, we need to join current membership to existing
@@ -115,7 +126,7 @@ class Member(ChangesMixin, models.Model):
         app_label = 'vaultier'
 
     workspace = models.ForeignKey('vaultier.Workspace', related_name='membership', on_delete=CASCADE)
-    user = models.ForeignKey('vaultier.User', on_delete=CASCADE, null=True)
+    user = models.ForeignKey('vaultier.User', on_delete=CASCADE, null=True,  related_name='membership')
     invitation_hash = models.CharField(max_length=64, null=True, unique=True)
     invitation_email = models.CharField(max_length=1024, null=True)
     workspace_key = models.CharField(max_length=4096)

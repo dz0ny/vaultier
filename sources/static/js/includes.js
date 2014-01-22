@@ -59,8 +59,7 @@ $(document).ready(function () {
     /******************** Ember,Handlebars **/
     ApplicationLoader.queueFile(STATIC_URL + 'lib/handlebars/handlebars.js');
     ApplicationLoader.queueFile(STATIC_URL + 'lib/ember/ember.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'lib/ember/ember-data.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'lib/ember/ember-data-django.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'lib/ember-restless/dist/ember-restless+extras.js');
 
     /******************** Ember extension **/
     ApplicationLoader.queueFile(STATIC_URL + 'lib/ember-ext/Tree/EmberTree.js');
@@ -129,16 +128,22 @@ $(document).ready(function () {
     ApplicationLoader.queueFile(STATIC_URL + 'js/service/Auth.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/service/AuthPromises.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/service/Session.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'js/service/Storage.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/service/Coder.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/service/Invitations.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'js/service/Members.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'js/service/WorkspaceKey.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'js/service/KeyTransfer.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'js/service/ChangeKey.js');
 
     /********************** model **/
-    ApplicationLoader.queueFile(STATIC_URL + 'js/model/shared/Shared.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'js/model/shared/Adapter.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'js/model/mixin/CreatedUpdatedMixin.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'js/model/mixin/RollbackMixin.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'js/model/adapter/Adapter.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/model/User.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/model/Workspace.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'js/model/WorkspaceKey.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/model/Member.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'js/model/Invitation.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/model/Role.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/model/Vault.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/model/Card.js');
@@ -176,8 +181,6 @@ $(document).ready(function () {
 
     /********************** Auth **/
     ApplicationLoader.queueFile(STATIC_URL + 'tpl/Auth/AuthLogin.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Auth/AuthLoginLatest.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Auth/AuthLoginSwitch.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Auth/AuthLogin.js');
 
     ApplicationLoader.queueFile(STATIC_URL + 'tpl/Auth/AuthRegister.js');
@@ -202,17 +205,15 @@ $(document).ready(function () {
     /********************** Workspace **/
     ApplicationLoader.queueFile(STATIC_URL + 'tpl/Workspace/WorkspacesIndex.js');
     ApplicationLoader.queueFile(STATIC_URL + 'tpl/Workspace/WorkspacesIndexItem.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Workspace/WorkspacesIndexNotApproved.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Workspace/WorkspacesIndexWithoutKeys.js');
     ApplicationLoader.queueFile(STATIC_URL + 'tpl/Workspace/WorkspacesCreate.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Workspace/WorkspacesIndex.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Workspace/WorkspacesCreate.js');
 
     ApplicationLoader.queueFile(STATIC_URL + 'tpl/Workspace/WorkspaceEdit.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Workspace/WorkspaceMemberApprove.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Workspace/WorkspaceIndex.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Workspace/WorkspaceEdit.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Workspace/WorkspaceMember.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'js/module/Workspace/WorkspaceMemberApprove.js');
 
     /********************** Vault **/
     ApplicationLoader.queueFile(STATIC_URL + 'tpl/Vault/VaultsIndex.js');
@@ -270,13 +271,15 @@ $(document).ready(function () {
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Secret/SecretMove.js');
 
     /********************** Settings **/
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Settings/SettingsIndex.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Settings/SettingsPersonal.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Settings/SettingsKeys.js');
 
+    ApplicationLoader.queueFile(STATIC_URL + 'js/module/Settings/ChangeKey.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Settings/ChangeKey.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Settings/SettingsIndex.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Settings/SettingsIndex.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Settings/SettingsPersonal.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Settings/SettingsPersonal.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Settings/SettingsKeys.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Settings/SettingsKeys.js');
 
 
     /************************************

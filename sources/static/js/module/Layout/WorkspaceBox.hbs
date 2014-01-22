@@ -4,7 +4,7 @@
         <img class="vlt-wspaceimg" src="/static/images/icon-workspace-grey.png ">
 
         <a href="#" class="vlt-wspacename dropdown-toggle" data-toggle="dropdown">
-            {{ env.workspace.clean.name }}
+            {{ellipsis env.workspace.cleanValues.name 20 }}
         </a>
 
         <ul class="dropdown-menu caret-right">
@@ -25,7 +25,7 @@
             <li class="divider"></li>
 
             <li>
-                {{#link-to 'Workspaces.index'}}
+                {{#link-to 'Workspaces.select'}}
                     Switch to another workspace
                 {{/link-to}}
             </li>

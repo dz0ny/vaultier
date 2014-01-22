@@ -16,21 +16,20 @@ Vaultier.VaultsCreateRoute = Ember.Route.extend(
 
         actions: {
             save: function () {
-                if (this.get('controller.content.isValid')) {
-                    var workspace = this.get('workspace');
-                    var record = this.get('controller.content');
-                    record.set('workspace', this.get('workspace.pk'))
+                var workspace = this.get('workspace');
+                var record = this.get('controller.content');
+                record.set('workspace', this.get('workspace.id'))
 
-                    record.save().then(
-                        function () {
-                            $.notify('Your vault has been successfully created.', 'success');
-                            this.transitionTo('Vault.index', record);
-                        }.bind(this),
-                        function () {
-                            $.notify('Oooups! Something went wrong.', 'error');
-                        }
-                    )
-                }
+                record
+                    .saveRecord()
+                    .then(function () {
+                        $.notify('Your vault has been successfully created.', 'success');
+                        this.transitionTo('Vault.index', record);
+                    }.bind(this))
+                    .catch(function (error) {
+                        $.notify('Oooups! Something went wrong.', 'error');
+                        this.get('errors').logError(error);
+                    }.bind(this))
             }
         },
 
@@ -50,14 +49,6 @@ Vaultier.VaultsCreateRoute = Ember.Route.extend(
                     .addText('Create new vault')
             )
 
-        },
-
-        deactivate: function () {
-            var record = this.get('controller.content');
-            if (!record.get('id')) {
-                var store = this.get('store');
-                store.deleteRecord(record);
-            }
         }
     });
 

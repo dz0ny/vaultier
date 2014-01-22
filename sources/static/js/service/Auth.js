@@ -22,10 +22,20 @@ Service.Auth = Ember.Object.extend({
     coder: null,
 
     /**
+     * @DI router:main
+     */
+    router: null,
+
+    /**
      * @DI service:session
      */
     session: null,
-    callbacks: [],
+
+    /**
+     * @DI service:storage
+     */
+    storage: null,
+
     token: null,
 
     /**
@@ -34,6 +44,11 @@ Service.Auth = Ember.Object.extend({
     user: null,
     checked: false,
     privateKey: null,
+
+    /**
+     * Transition to be retried after successfull login
+     */
+    transition: null,
 
     isAuthenticated: function () {
         return this.get('user.id') !== null
@@ -47,6 +62,7 @@ Service.Auth = Ember.Object.extend({
         var coder = this.get('coder');
         return this.coder.generateKeys(callback);
     },
+
 
     checkPermissions: function (transition, check, noPromise) {
         var fn = function (model) {
@@ -74,12 +90,36 @@ Service.Auth = Ember.Object.extend({
     },
 
 
-    login: function (email, privateKey) {
+    /**
+     * Logs in user promise
+     *
+     * if success promise returns Vaultier.User model
+     * if error promise returns null
+     *
+     * @param email
+     * @param privateKey
+     * @param bool transitionAfterLogin
+     * @returns {Ember.RSVP.Promise}
+     */
+    login: function (email, privateKey, transitionAfterLogin) {
         return this.promises.login(email, privateKey)
             .then(
                 // successfull login
                 function (user) {
+                    // save credentials
                     this.setAuthenticatedUser(user, privateKey, this.promises.get('token'))
+
+                    // transition to previously requested page
+                    if (transitionAfterLogin) {
+                        var transition = this.get('transition');
+                        if (transition) {
+                            transition.retry()
+                        } else {
+                            this.get('router').transitionTo('index')
+                        }
+                    }
+
+                    return user
                 }.bind(this),
 
                 // unsuccessfull login
@@ -89,7 +129,27 @@ Service.Auth = Ember.Object.extend({
                 }.bind(this))
     },
 
+    rememberUser: function (email,privateKey, ttl) {
+        if (email && ttl) {
+            this.get('storage').set('remember', {
+                email: email,
+                privateKey: privateKey,
+                ttl: ttl
+            }, ttl);
+        } else {
+            this.get('storage').remove('remember');
+        }
+    },
 
+    getRememberedUser: function (user) {
+        return this.get('storage').get('remember', null);
+    },
+
+    /**
+     * Used to reload user by token from server
+     * returns true or false - user token is valid / user token is invalid
+     * @returns {Ember.RSVP.Promise}
+     */
     reload: function () {
         var session = this.loadFromSession() || {};
         var sessionUser = session.user || null
@@ -118,11 +178,30 @@ Service.Auth = Ember.Object.extend({
             .then(function () {
                 this.setAuthenticatedUser(null);
             }.bind(this))
+            .then(function() {
+                window.location = '/'
+            })
     },
 
-    afterAuthenticated: function (callback) {
-        this.callbacks.push(callback);
-        callback(this.status);
+    /**
+     * Checks if user is authenticated
+     * if not redirects to login and store transition to be retried after succesfull login
+     * @param {Transition} transition
+     */
+    checkAuthenticatedOrLogin: function (transition) {
+        if (!this.get('isAuthenticated')) {
+            // abort transition
+            $.notify('You do not have access to secured area. Please login', 'error');
+            transition.abort();
+
+            // store transition
+            this.set('transition', transition)
+
+            //redirect to login
+            this.get('router').transitionTo('AuthLogin');
+            return false;
+        }
+        return true;
     },
 
     setAuthenticatedUser: function (user, privateKey, token) {
@@ -156,11 +235,6 @@ Service.Auth = Ember.Object.extend({
         // saves to session
         this.saveToSession();
 
-        // run afterAuthenticated callbacks
-        this.callbacks.forEach(function (c) {
-            c(this);
-        }.bind(this));
-
         return result;
     },
 
@@ -175,27 +249,9 @@ Service.Auth = Ember.Object.extend({
 
     loadFromSession: function () {
         return this.session.get('auth');
-    },
-
-    deleteFromSession: function () {
-        this.session.remove('auth');
     }
 
-//    @todo saving credentials
-//    saveToStorage: function (ttl) {
-//        this.storage.set('auth', {
-//            email: this.get('user').get('email'),
-//            privateKey: this.get('privateKey')
-//        }, ttl);
-//    },
-//
-//    loadFromStorage: function () {
-//        return this.storage.get('auth');
-//    },
-//
-//    deleteFromStorage: function () {
-//        this.storage.remove('auth');
-//    }
+
 
 })
 ;

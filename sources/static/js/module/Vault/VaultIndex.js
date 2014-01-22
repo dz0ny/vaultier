@@ -5,7 +5,7 @@ Vaultier.VaultRoute = Ember.Route.extend(
             model = this.get('store')
                 .find('Vault', params.vault)
                 .then(function (model) {
-                    if (model.get('workspace') != workspace.get('pk')) {
+                    if (model.get('workspace') != workspace.get('id')) {
                         var error = new Error();
                         error.status = 404
                         throw error
@@ -26,7 +26,7 @@ Vaultier.VaultRoute = Ember.Route.extend(
             }
 
             return {
-                vault: model.get('id')
+                vault: model.get('slug')
             }
         }
 

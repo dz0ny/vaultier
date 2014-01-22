@@ -13,11 +13,12 @@ function program1(depth0,data) {
     'size': (25),
     'class': ("vlt-avatar")
   },contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
-  data.buffer.push(escapeExpression(((stack1 = helpers.gravatarImg || depth0.gravatarImg),stack1 ? stack1.call(depth0, "auth.user.clean.email", options) : helperMissing.call(depth0, "gravatarImg", "auth.user.clean.email", options))));
+  data.buffer.push(escapeExpression(((stack1 = helpers.gravatarImg || depth0.gravatarImg),stack1 ? stack1.call(depth0, "auth.user.cleanValues.email", options) : helperMissing.call(depth0, "gravatarImg", "auth.user.cleanValues.email", options))));
   data.buffer.push("\r\n\r\n        <a href=\"#\" class=\"vlt-username dropdown-toggle\" data-toggle=\"dropdown\">\r\n            ");
   hashTypes = {};
   hashContexts = {};
-  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "auth.user.clean.nickname", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
+  options = {hash:{},contexts:[depth0,depth0],types:["ID","INTEGER"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
+  data.buffer.push(escapeExpression(((stack1 = helpers.ellipsis || depth0.ellipsis),stack1 ? stack1.call(depth0, "auth.user.cleanValues.nickname", 12, options) : helperMissing.call(depth0, "ellipsis", "auth.user.cleanValues.nickname", 12, options))));
   data.buffer.push("\r\n        </a>\r\n\r\n        <ul class=\"dropdown-menu caret-right vlt-dropdown\">\r\n            <li>");
   hashTypes = {};
   hashContexts = {};
@@ -62,18 +63,20 @@ function program6(depth0,data) {
   
   var buffer = '', stack1, stack2, hashContexts, hashTypes, options;
   data.buffer.push("\r\n    <div class=\" vlt-security-box vlt-anonymous pull-right \">\r\n       ");
-  hashContexts = {'class': depth0};
-  hashTypes = {'class': "STRING"};
+  hashContexts = {'class': depth0,'activeClass': depth0};
+  hashTypes = {'class': "STRING",'activeClass': "STRING"};
   options = {hash:{
-    'class': ("btn btn-primary btn-sm")
+    'class': ("btn btn-primary btn-sm"),
+    'activeClass': ("")
   },inverse:self.noop,fn:self.program(7, program7, data),contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
   stack2 = ((stack1 = helpers['link-to'] || depth0['link-to']),stack1 ? stack1.call(depth0, "AuthLogin", options) : helperMissing.call(depth0, "link-to", "AuthLogin", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
   data.buffer.push("\r\n       ");
-  hashContexts = {'class': depth0};
-  hashTypes = {'class': "STRING"};
+  hashContexts = {'class': depth0,'activeClass': depth0};
+  hashTypes = {'class': "STRING",'activeClass': "STRING"};
   options = {hash:{
-    'class': ("btn btn-default btn-sm")
+    'class': ("btn btn-default btn-sm"),
+    'activeClass': ("")
   },inverse:self.noop,fn:self.program(9, program9, data),contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
   stack2 = ((stack1 = helpers['link-to'] || depth0['link-to']),stack1 ? stack1.call(depth0, "AuthRegister", options) : helperMissing.call(depth0, "link-to", "AuthRegister", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }

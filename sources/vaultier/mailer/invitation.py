@@ -37,7 +37,7 @@ def send_invitation(member):
 
     to = [member.invitation_email]
     from_email = 'info@rclick.cz'
-    subject = 'Invitation'
+    subject = '[Vaultier] You have been invited'
 
     plain, html = render_email(template, context=context)
 

@@ -8,6 +8,12 @@ Vaultier.SecretEditRoute = Ember.Route.extend(
         },
 
         model: function (params, transition) {
+            // check workspace keys
+            var workspace = this.modelFor('Workspace')
+            if (!workspace.get('hasValidKey')) {
+                throw Error('Cannot edit secret without valid workspace key');
+            }
+
             var store = this.get('store');
             var promise = store.find('Secret', params.secret);
             promise
@@ -35,21 +41,24 @@ Vaultier.SecretEditRoute = Ember.Route.extend(
 
         actions: {
             save: function () {
-                if (this.get('controller.content.isValid')) {
+                var notifyError = function (error) {
+                    $.notify('Oooups! Something went wrong.', 'error');
+                    throw error
+                }
 
+                try {
                     var record = this.get('controller.content');
-                    record.save().then(
-                        function () {
+                    record.saveRecord()
+                        .then(function () {
                             $.notify('Your changes has been successfully saved.', 'success');
                             history.go(-1);
-                        }.bind(this),
-                        function () {
-                            $.notify('Oooups! Something went wrong.', 'error');
-                        }
-                    )
+                        }.bind(this))
+                        .catch(notifyError)
+                } catch (e) {
+                    notifyError(e);
                 }
             }
-        },
+        }
     });
 
 Vaultier.SecretEditController = Ember.ObjectController.extend({

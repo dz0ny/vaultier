@@ -42,7 +42,24 @@ Vaultier.AuthRegisterRoute = Ember.Route.extend({
         } else {
             transition.router.replaceWith('AuthRegister.before');
         }
+    },
+
+    model: function () {
+        var auth = this.get('auth');
+        if (auth.get('isAuthenticated')) {
+            return auth.get('user');
+        } else {
+            return this.get('store').createRecord('User');
+        }
+    },
+
+    deactivate: function () {
+        var user = this.modelFor(user);
+        if (user) {
+            this.get('store').unloadRecord(user);
+        }
     }
+
 });
 
 /////////////////////////////////////////////////////////////////
@@ -164,11 +181,8 @@ Vaultier.AuthRegisterCredsRoute = Ember.Route.extend({
         ctrl.set('props.nextButtonTitle', 'Sumit your credentials');
 
         // prepare user model
-        var user = ctrl.get('content');
-        if (!user) {
-            var user = this.get('store').createRecord('User');
-            ctrl.set('content', user);
-        }
+        var user = this.modelFor('AuthRegister')
+        ctrl.set('content', user);
 
         // check if keys, otherwise go to step 1
         if (!ctrl.get('props.keysReady')) {
@@ -185,34 +199,31 @@ Vaultier.AuthRegisterCredsRoute = Ember.Route.extend({
             var user = ctrl.get('content');
             var keys = ctrl.get('props.keys');
 
-            // saves user
-            if (user.get('isValid')) {
+            // update model
+            user.set('public_key', keys.publicKey);
 
-                // update model
-                user.set('public_key', keys.publicKey);
+            // preapre controller
+            ctrl.set('props.nextButtonDisabled', true);
 
-                // preapre controller
-                ctrl.set('props.nextButtonDisabled', true);
+            // register promise
+            var promise = user.saveRecord();
 
-                // register promise
-                var promise = user.save();
+            // authenticate promise
+            promise.then(
+                // success create
+                function () {
+                    return auth.login(user.get('email'), keys.privateKey, false)
+                        .then(function () {
+                            auth.rememberUser(null);
+                            this.transitionTo('AuthRegister.sum');
+                        }.bind(this));
+                }.bind(this),
 
-                // authenticate promise
-                promise.then(
-                    // success create
-                    function () {
-                        return auth.login(user.get('email'), keys.privateKey)
-                            .then(function () {
-                                this.transitionTo('AuthRegister.sum');
-                            }.bind(this));
-                    }.bind(this),
-
-                    // unsuccess create
-                    function (errors) {
-                        ctrl.set('errors', Ember.Object.create(errors.errors));
-                        ctrl.set('props.nextButtonDisabled', false);
-                    }.bind(this));
-            }
+                // unsuccess create
+                function (errors) {
+                    ctrl.set('errors', Ember.Object.create(errors.errors));
+                    ctrl.set('props.nextButtonDisabled', false);
+                }.bind(this));
 
         }
     }
@@ -242,7 +253,10 @@ Vaultier.AuthRegisterSumRoute = Ember.Route.extend({
     },
 
     setupController: function (ctrl) {
-        this._super(arguments);
+        // prepare user model
+        var user = this.modelFor('AuthRegister')
+        ctrl.set('content', user);
+
         ctrl.set('props.loginButtonHidden', true);
         ctrl.set('props.nextButtonDisabled', false);
         ctrl.set('props.nextButtonTitle', 'Start using vaultier')

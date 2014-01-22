@@ -1,9 +1,9 @@
 {{#if auth.isAuthenticated}}
     <div class="vlt-security-box dropdown pull-right">
-        {{gravatarImg auth.user.clean.email size=25 class="vlt-avatar"}}
+        {{gravatarImg auth.user.cleanValues.email size=25 class="vlt-avatar"}}
 
         <a href="#" class="vlt-username dropdown-toggle" data-toggle="dropdown">
-            {{auth.user.clean.nickname}}
+            {{ellipsis auth.user.cleanValues.nickname 12}}
         </a>
 
         <ul class="dropdown-menu caret-right vlt-dropdown">
@@ -17,7 +17,7 @@
     </div>
 {{else}}
     <div class=" vlt-security-box vlt-anonymous pull-right ">
-       {{#link-to 'AuthLogin' class="btn btn-primary btn-sm" }}Login{{/link-to}}
-       {{#link-to 'AuthRegister' class="btn btn-default btn-sm" }}Create an account{{/link-to}}
+       {{#link-to 'AuthLogin' class="btn btn-primary btn-sm" activeClass=""}}Login{{/link-to}}
+       {{#link-to 'AuthRegister' class="btn btn-default btn-sm" activeClass=""}}Create an account{{/link-to}}
     </div>
 {{/if}}

@@ -25,16 +25,6 @@ class CanManageMemberPermission(BasePermission):
 
         return result
 
-class CanManageWorkspaceKey(BasePermission):
-    def has_object_permission(self, request, view, obj):
-        workspace = obj.workspace
-        is_manager = has_object_acl(request.user, workspace, AclLevelField.LEVEL_WRITE)
-        is_managing_approved = Member.objects.get(user=request.user, workspace=workspace).status==MemberStatusField.STATUS_MEMBER
-        is_managed_non_approved = Member.objects.get(user=obj.user, workspace=workspace).status==MemberStatusField.STATUS_NON_APPROVED_MEMBER
-
-        result = is_manager or (is_managing_approved and  is_managed_non_approved)
-        return result
-
 
 class CanDeleteMember(BasePermission):
     def has_object_permission(self, request, view, obj):
@@ -80,28 +70,6 @@ class MemberInviteSerializer(Serializer):
 
 class MemberResendSerializer(Serializer):
     resend = BooleanField(required=False, default=True)
-
-
-class MemberAcceptSerializer(Serializer):
-    hash = CharField(required=True, max_length=80)
-
-    def restore_object(self, attrs, instance=None):
-        return instance
-
-    def save_object(self, obj, user=None):
-        self.object = Member.objects.accept_invitation(obj, user)
-
-    def validate_hash(self, attrs, source):
-        value = attrs[source]
-        # validate hash code
-        if not value == self.object.invitation_hash:
-            raise ValidationError("Invalid hash")
-
-        # only invited members could accept invitation
-        if not self.object.is_invitation():
-            raise ValidationError('Invitation already accepted')
-
-        return attrs
 
 
 class MemberRoleSerializer(ModelSerializer):
@@ -151,79 +119,6 @@ class MemberViewSet(ModelViewSet):
     search_fields = ('invitation_email', 'user__email', 'user__nickname',)
     filter_fields = ('workspace', 'status')
     ordering = ('status')
-
-    @action(methods=['GET'])
-    def roles(self, request, pk=None):
-        self.permission_classes = (IsAuthenticated,)
-        member = self.get_object(queryset=Member.objects.all())
-        self.check_object_permissions(request, member)
-
-        serializer = MemberAcceptSerializer(instance=member, data=request.QUERY_PARAMS, files=request.FILES)
-        if serializer.is_valid():
-            roles = Role.objects.filter(
-                member=member
-            )
-            data = []
-            for role in roles:
-                data.append(MemberRoleSerializer(instance=role).data)
-
-            return Response(
-                data,
-                status=HTTP_200_OK,
-            )
-        else:
-            return Response(
-                serializer.errors,
-                status=HTTP_400_BAD_REQUEST,
-            )
-
-
-    @action(methods=['POST'])
-    def accept(self, request, pk=None):
-        self.permission_classes = (IsAuthenticated,)
-        member = self.get_object(queryset=Member.objects.all())
-        self.check_object_permissions(request, member)
-
-        serializer = MemberAcceptSerializer(instance=member, data=request.DATA, files=request.FILES)
-        if serializer.is_valid():
-            serializer.save(user=request.user)
-            return Response(
-                MemberSerializer(serializer.object).data,
-                status=HTTP_200_OK,
-            )
-        else:
-            return Response(
-                serializer.errors,
-                status=HTTP_400_BAD_REQUEST,
-            )
-
-    @action(methods=['PUT', 'GET'])
-    def workspace_key(self, request, pk=None):
-        self.permission_classes = self.permission_classes + (CanManageWorkspaceKey,)
-        member = self.get_object(queryset=Member.objects.all())
-        self.check_object_permissions(request, member)
-
-        if request.method == 'GET':
-            serializer = MemberWorkspaceKeySerializer(instance=member, data=request.DATA, files=request.FILES)
-            return Response(
-                serializer.data,
-                status=HTTP_200_OK,
-            )
-
-        if request.method == 'PUT':
-            serializer = MemberWorkspaceKeySerializer(instance=member, data=request.DATA, files=request.FILES)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(
-                    serializer.data,
-                    status=HTTP_200_OK,
-                )
-            else:
-                return Response(
-                    serializer.errors,
-                    status=HTTP_400_BAD_REQUEST,
-                )
-
 
     def invite(self, request, *args, **kwargs):
         serializer = MemberInviteSerializer(data=request.DATA)

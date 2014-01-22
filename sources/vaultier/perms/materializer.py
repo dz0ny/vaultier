@@ -1,5 +1,6 @@
 from vaultier.models import Acl
 from vaultier.models.acl_fields import AclDirectionField
+from vaultier.models.member_fields import MemberStatusField
 from vaultier.models.role import Role
 from vaultier.models.role_fields import RoleLevelField
 from vaultier.perms.strategy import ReadAclStrategy, WriteAclStrategy, CreateAclStrategy
@@ -189,8 +190,9 @@ class InsertedObjectMaterializer(object):
             parent = parent.get_parent_object()
 
         for role in roles:
-            rm = CreateRoleMaterializer(role);
-            acls.extend(rm.materialize_childs(role.get_object()))
+            if not role.member.status == MemberStatusField.STATUS_INVITED:
+                rm = CreateRoleMaterializer(role);
+                acls.extend(rm.materialize_childs(role.get_object()))
 
         # save materialized
         saver = MaterializationSaver()
