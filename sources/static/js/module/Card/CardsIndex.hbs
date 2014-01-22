@@ -37,12 +37,10 @@
                 {{/if}}
 
                 {{#if vault.perms.create}}
-                    {{#if length}}
-                        {{#link-to "Cards.create" class="btn btn-primary"}}
-                            <span class="glyphicon glyphicon-plus"></span>
-                            Create new Card
-                        {{/link-to}}
-                    {{/if}}
+                    {{#link-to "Cards.create" class="btn btn-primary"}}
+                        <span class="glyphicon glyphicon-plus"></span>
+                        Create new Card
+                    {{/link-to}}
                 {{/if}}
 
             </div>
@@ -60,9 +58,9 @@
 <div class="row">
     <div class="col-md-12">
 
-        {{#if length}}
+        {{view Vaultier.WorkspacesIndexWithoutKeysView workspace=workspace }}
 
-            {{view Vaultier.WorkspacesIndexWithoutKeysView workspace=workspace }}
+        {{#if length}}
 
             {{#each}}
                 {{view Vaultier.CardsIndexItemView}}

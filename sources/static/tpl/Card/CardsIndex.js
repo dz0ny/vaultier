@@ -92,53 +92,36 @@ function program9(depth0,data) {
 
 function program11(depth0,data) {
   
-  var buffer = '', stack1, hashTypes, hashContexts;
+  var buffer = '', stack1, stack2, hashContexts, hashTypes, options;
   data.buffer.push("\n                    ");
-  hashTypes = {};
-  hashContexts = {};
-  stack1 = helpers['if'].call(depth0, "length", {hash:{},inverse:self.noop,fn:self.program(12, program12, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  hashContexts = {'class': depth0};
+  hashTypes = {'class': "STRING"};
+  options = {hash:{
+    'class': ("btn btn-primary")
+  },inverse:self.noop,fn:self.program(12, program12, data),contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
+  stack2 = ((stack1 = helpers['link-to'] || depth0['link-to']),stack1 ? stack1.call(depth0, "Cards.create", options) : helperMissing.call(depth0, "link-to", "Cards.create", options));
+  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
   data.buffer.push("\n                ");
   return buffer;
   }
 function program12(depth0,data) {
   
-  var buffer = '', stack1, stack2, hashContexts, hashTypes, options;
-  data.buffer.push("\n                        ");
-  hashContexts = {'class': depth0};
-  hashTypes = {'class': "STRING"};
-  options = {hash:{
-    'class': ("btn btn-primary")
-  },inverse:self.noop,fn:self.program(13, program13, data),contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
-  stack2 = ((stack1 = helpers['link-to'] || depth0['link-to']),stack1 ? stack1.call(depth0, "Cards.create", options) : helperMissing.call(depth0, "link-to", "Cards.create", options));
-  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("\n                    ");
-  return buffer;
-  }
-function program13(depth0,data) {
   
-  
-  data.buffer.push("\n                            <span class=\"glyphicon glyphicon-plus\"></span>\n                            Create new Card\n                        ");
+  data.buffer.push("\n                        <span class=\"glyphicon glyphicon-plus\"></span>\n                        Create new Card\n                    ");
   }
 
-function program15(depth0,data) {
+function program14(depth0,data) {
   
-  var buffer = '', stack1, hashContexts, hashTypes;
-  data.buffer.push("\n\n            ");
-  hashContexts = {'workspace': depth0};
-  hashTypes = {'workspace': "ID"};
-  data.buffer.push(escapeExpression(helpers.view.call(depth0, "Vaultier.WorkspacesIndexWithoutKeysView", {hash:{
-    'workspace': ("workspace")
-  },contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
+  var buffer = '', stack1, hashTypes, hashContexts;
   data.buffer.push("\n\n            ");
   hashTypes = {};
   hashContexts = {};
-  stack1 = helpers.each.call(depth0, {hash:{},inverse:self.noop,fn:self.program(16, program16, data),contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
+  stack1 = helpers.each.call(depth0, {hash:{},inverse:self.noop,fn:self.program(15, program15, data),contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n        ");
   return buffer;
   }
-function program16(depth0,data) {
+function program15(depth0,data) {
   
   var buffer = '', hashTypes, hashContexts;
   data.buffer.push("\n                ");
@@ -149,18 +132,18 @@ function program16(depth0,data) {
   return buffer;
   }
 
-function program18(depth0,data) {
+function program17(depth0,data) {
   
   var buffer = '', stack1, hashTypes, hashContexts;
   data.buffer.push("\n\n            <div class=\"jumbotron vlt-empty vlt-card col-md-8 col-md-offset-2\">\n\n                <div class=\"vlt-header\">\n                    <div class=\"vlt-icon\">\n\n                    </div>\n                    <div class=\"vlt-title\">\n                        <h1>You do not have any card yet</h1>\n                    </div>\n                </div>\n\n                ");
   hashTypes = {};
   hashContexts = {};
-  stack1 = helpers['if'].call(depth0, "vault.perms.create", {hash:{},inverse:self.noop,fn:self.program(19, program19, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
+  stack1 = helpers['if'].call(depth0, "vault.perms.create", {hash:{},inverse:self.noop,fn:self.program(18, program18, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n            </div>\n        ");
   return buffer;
   }
-function program19(depth0,data) {
+function program18(depth0,data) {
   
   var buffer = '', stack1, stack2, hashContexts, hashTypes, options;
   data.buffer.push("\n                    <p>\n                        What are cards for? Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n                    </p>\n\n                    <p class=\"top-30\">\n                        ");
@@ -168,11 +151,16 @@ function program19(depth0,data) {
   hashTypes = {'class': "STRING"};
   options = {hash:{
     'class': ("btn btn-lg btn-primary")
-  },inverse:self.noop,fn:self.program(13, program13, data),contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
+  },inverse:self.noop,fn:self.program(19, program19, data),contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
   stack2 = ((stack1 = helpers['link-to'] || depth0['link-to']),stack1 ? stack1.call(depth0, "Cards.create", options) : helperMissing.call(depth0, "link-to", "Cards.create", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
   data.buffer.push("\n                    </p>\n                ");
   return buffer;
+  }
+function program19(depth0,data) {
+  
+  
+  data.buffer.push("\n                            <span class=\"glyphicon glyphicon-plus\"></span>\n                            Create new Card\n                        ");
   }
 
   data.buffer.push("<div class=\"vlt-page-nav\">\n\n    ");
@@ -182,9 +170,15 @@ function program19(depth0,data) {
   stack2 = ((stack1 = helpers.exp || depth0.exp),stack1 ? stack1.call(depth0, "( workspace.perms.invite || vault.perms.create || vault.perms.update || vault.perms.delete)", options) : helperMissing.call(depth0, "exp", "( workspace.perms.invite || vault.perms.create || vault.perms.update || vault.perms.delete)", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
   data.buffer.push("\n\n    <div class=\"pull-left\">\n        <h2>Cards in vault</h2>\n    </div>\n\n    <div class=\"clearfix\"></div>\n\n</div>\n\n<div class=\"row\">\n    <div class=\"col-md-12\">\n\n        ");
+  hashContexts = {'workspace': depth0};
+  hashTypes = {'workspace': "ID"};
+  data.buffer.push(escapeExpression(helpers.view.call(depth0, "Vaultier.WorkspacesIndexWithoutKeysView", {hash:{
+    'workspace': ("workspace")
+  },contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
+  data.buffer.push("\n\n        ");
   hashTypes = {};
   hashContexts = {};
-  stack2 = helpers['if'].call(depth0, "length", {hash:{},inverse:self.program(18, program18, data),fn:self.program(15, program15, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
+  stack2 = helpers['if'].call(depth0, "length", {hash:{},inverse:self.program(17, program17, data),fn:self.program(14, program14, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
   data.buffer.push("\n\n    </div>\n</div>");
   return buffer;

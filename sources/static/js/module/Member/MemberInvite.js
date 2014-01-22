@@ -35,6 +35,10 @@ Vaultier.MemberInviteRoute = Ember.Route.extend(
             return Vaultier.Role.proto().roles.toArray();
         },
 
+        getDefaultRoleLevel: function() {
+            return Vaultier.Role.proto().roles['READ'].value
+        },
+
         actions: {
             save: function (invited, role, resend) {
                 var invitations = this.get('invitations');
@@ -71,7 +75,7 @@ Vaultier.MemberInviteRoute = Ember.Route.extend(
             ctrl.set('workspace', this.modelFor('Workspace'))
             ctrl.set('breadcrumbs', this.setupBreadcrumbs());
             ctrl.set('invited', []);
-            ctrl.set('role', {level: 50});
+            ctrl.set('role', {level: this.getDefaultRoleLevel()});
             ctrl.set('roleLevels', this.setupRoleLevels());
         },
 

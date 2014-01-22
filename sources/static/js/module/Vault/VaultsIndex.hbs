@@ -39,12 +39,10 @@
                 {{/if}}
 
                 {{#if workspace.perms.create }}
-                    {{#if length}}
                         {{#link-to "Vaults.create" workspace.slug class="btn btn-primary"}}
                             <span class="glyphicon glyphicon-plus"></span>
                             Create new vault
                         {{/link-to}}
-                    {{/if}}
                 {{/if}}
 
             </div>
@@ -63,10 +61,10 @@
 <div class="row">
     <div class="col-md-12">
 
+
+        {{view Vaultier.WorkspacesIndexWithoutKeysView workspace=workspace }}
+
         {{#if length}}
-
-            {{view Vaultier.WorkspacesIndexWithoutKeysView workspace=workspace }}
-
             {{#each}}
                 {{view Vaultier.VaultIndexItemView}}
             {{/each}}
