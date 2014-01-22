@@ -19,11 +19,11 @@
             {{/if}}
         </div>
         <div class="vlt-footer">
-            <div class="vlt-footer-item help-block">
-                Updated: {{printAgo updated_at }}
+            <div class="vlt-footer-item help-block pull-left">
+                {{printUser created_by  ellipsis=12 prefix='Created by:'}}
             </div>
-            <div class="vlt-footer-item help-block">
-                By {{printUser created_by  ellipsis=8}}
+            <div class="vlt-footer-item help-block pull-right">
+                {{printAgo updated_at prefix='Latest modification at:' }}
             </div>
             <div class="clearfix"></div>
         </div>

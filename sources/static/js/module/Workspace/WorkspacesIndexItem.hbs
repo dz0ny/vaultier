@@ -5,12 +5,17 @@
     <div class="vlt-text">
         <h4 class="list-group-item-heading">{{name}}</h4>
 
-    <p class="list-group-item-text">
-        {{description}}
+        <p class="list-group-item-text">
+            {{description}}
         </p>
 
-        <div class="help-block top-15">
-            By {{printUser created_by}} updated at {{printAgo updated_at }}
+        <div class="top-15">
+            <div class="vlt-footer-item help-block pull-left">
+                {{printUser created_by  ellipsis=20 prefix='Created by:'}}
+            </div>
+            <div class="vlt-footer-item help-block pull-right">
+                {{printAgo updated_at prefix='Latest modification at:' }}
+            </div>
         </div>
 
         {{view Vaultier.WorkspacesIndexWithoutKeysView workspace=this }}

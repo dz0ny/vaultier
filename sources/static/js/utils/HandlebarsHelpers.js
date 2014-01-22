@@ -54,6 +54,7 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
         var nickname = user.nickname || user.get('nickname');
         var size = options.hash.size || 20;
         var length = options.hash.ellipsis || 60;
+        var prefix = options.hash.prefix || '';
 
         var avatar = this.gravatarImg(email, {hash: {size: size}});
 
@@ -65,7 +66,8 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
         }
         var short = this.ellipsis(name, length);
 
-        var tooltip = 'data-toggle="tooltip" title="{name} ({email})"'
+        var tooltip = 'data-container="body" data-toggle="tooltip" title="{prefix} {name} ({email})"'
+            .replace('{prefix}', prefix)
             .replace('{name}', name)
             .replace('{email}', email)
 
@@ -75,14 +77,19 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
             .replace('{avatar}', avatar)
     },
 
-    printAgo: function (t) {
+    printAgo: function (t, options) {
+        var prefix = options.hash.prefix || '';
         var a;
+
         try {
             a = moment(t).fromNow();
         } catch (e) {
             console.error(e.stack)
         }
-        return '<span data-toggle=tooltip title="' + t + '">' + a + '</span>';
+        if (prefix) {
+            t = prefix + ' ' +t
+        }
+        return '<span data-container="body" data-toggle=tooltip title="' + t + '">' + a + '</span>';
     },
 
     /**
@@ -177,8 +184,8 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
 
 
         var printAgo = this.printAgo.bind(this)
-        Ember.Handlebars.registerBoundHelper('printAgo', function (t) {
-            return new Ember.Handlebars.SafeString(printAgo(t));
+        Ember.Handlebars.registerBoundHelper('printAgo', function (t, options) {
+            return new Ember.Handlebars.SafeString(printAgo(t, options));
         });
 
         /////////////////////////////////////////////////////////////////

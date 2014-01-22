@@ -472,7 +472,9 @@ a:hover {
 }
 
 .vlt-item .vlt-footer {
+    padding: 0px 10px 0px 10px;
     background-color: #F5F5F5;
+    font-size: 13px;
 }
 
 .vlt-item .vlt-footer > .vlt-footer-item {

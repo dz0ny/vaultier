@@ -30,18 +30,21 @@ function program2(depth0,data) {
   hashContexts = {};
   stack2 = helpers['if'].call(depth0, "description", {hash:{},inverse:self.program(5, program5, data),fn:self.program(3, program3, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("\n        </div>\n        <div class=\"vlt-footer\">\n            <div class=\"vlt-footer-item help-block\">\n                Updated: ");
-  hashTypes = {};
-  hashContexts = {};
-  options = {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
-  data.buffer.push(escapeExpression(((stack1 = helpers.printAgo || depth0.printAgo),stack1 ? stack1.call(depth0, "updated_at", options) : helperMissing.call(depth0, "printAgo", "updated_at", options))));
-  data.buffer.push("\n            </div>\n            <div class=\"vlt-footer-item help-block\">\n                By ");
-  hashContexts = {'ellipsis': depth0};
-  hashTypes = {'ellipsis': "INTEGER"};
+  data.buffer.push("\n        </div>\n        <div class=\"vlt-footer\">\n            <div class=\"vlt-footer-item help-block pull-left\">\n                ");
+  hashContexts = {'ellipsis': depth0,'prefix': depth0};
+  hashTypes = {'ellipsis': "INTEGER",'prefix': "STRING"};
   options = {hash:{
-    'ellipsis': (8)
+    'ellipsis': (12),
+    'prefix': ("Created by:")
   },contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
   data.buffer.push(escapeExpression(((stack1 = helpers.printUser || depth0.printUser),stack1 ? stack1.call(depth0, "created_by", options) : helperMissing.call(depth0, "printUser", "created_by", options))));
+  data.buffer.push("\n            </div>\n            <div class=\"vlt-footer-item help-block pull-right\">\n                ");
+  hashContexts = {'prefix': depth0};
+  hashTypes = {'prefix': "STRING"};
+  options = {hash:{
+    'prefix': ("Latest modification at:")
+  },contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
+  data.buffer.push(escapeExpression(((stack1 = helpers.printAgo || depth0.printAgo),stack1 ? stack1.call(depth0, "updated_at", options) : helperMissing.call(depth0, "printAgo", "updated_at", options))));
   data.buffer.push("\n            </div>\n            <div class=\"clearfix\"></div>\n        </div>\n    ");
   return buffer;
   }
