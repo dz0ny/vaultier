@@ -8,7 +8,6 @@ from vaultier.api.user import RelatedUserSerializer
 from vaultier.auth.authentication import TokenAuthentication
 from vaultier.models import Vault
 from vaultier.models.acl_fields import AclLevelField
-from vaultier.models.role_fields import RoleLevelField
 from vaultier.perms.check import has_object_acl
 
 
@@ -51,6 +50,11 @@ class VaultSerializer(ModelSerializer):
     created_by = RelatedUserSerializer(read_only=True)
     perms = PermsField()
 
+    def restore_fields(self, data, files):
+        if (self.context.get('view').action != 'create'):
+            self.fields.get('workspace').read_only=True
+        return super(VaultSerializer, self).restore_fields(data, files)
+
     class Meta:
         model = Vault
         fields = ('id', 'slug', 'name', 'description','workspace', 'perms', 'created_at', 'updated_at', 'created_by')
@@ -70,6 +74,7 @@ class VaultViewSet(RetrieveBySlugMixin, ModelViewSet):
     permission_classes = (IsAuthenticated, CanManageVaultPermission)
     serializer_class = VaultSerializer
     filter_fields = ('workspace',)
+
 
     def pre_save(self, object):
         if object.pk is None:
