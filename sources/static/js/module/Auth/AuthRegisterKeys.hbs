@@ -3,11 +3,12 @@
 
         <div class="row bottom-15">
             <div class="col-md-8 col-md-offset-2">
-                <h4>Your keys has been generated</h4>
+                <h4>We have generated your private and public key pair. </h4>
 
                 <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus in diam eu.
-                    nisl accumsan condimentum. Duis rhoncus enim a urna aliquet fringilla.
+                    Public key will be uploaded to Vaultier.
+                    But private key is only for you and will be used to log into the Vaultier and to encrypt your
+                    secrets.
                 </p>
             </div>
         </div>
@@ -15,21 +16,23 @@
         <div class="col-md-8 col-md-offset-2 alert alert-warning">
 
             <div class="row top-15">
-                <div class="row">
-                    <div class="col-md-5 col-md-offset-1">
-                        <b>
-                            Your private key
-                        </b>
-                        <br/>
-                    <span class="help-block">
-                        Used instead of password. Please save the key.
-                    </span>
-                    </div>
-                    <div class="col-md-4">
-                        <a class="btn btn-primary" {{ action downloadKey }}>Save your key file</a>
-                    </div>
+                <div class="col-md-10 col-md-offset-1 text-center">
+                    <a class="btn btn-primary" {{ action downloadKey }}>Save your private key file to your computer</a>
                 </div>
             </div>
+
+
+            <div class="row top-15">
+                <div class="col-md-10 col-md-offset-1">
+                    <p>
+                        Private key is used instead of password to log into Vaultier.
+                        Please keep private key safe and do not give it to anybody.
+                        Without private key you will not be able to log into Vaultier
+                        and your data will be rendered unreadable.
+                    </p>
+                </div>
+            </div>
+
         </div>
 
         <div class="clearfix"></div>
