@@ -179,11 +179,19 @@ Vaultier.MemberIndexRoute = Ember.Route.extend(
 
 Vaultier.MemberIndexController = Ember.Controller.extend({
     blocks: function () {
+        var secondMarked = false;
+        var shownIndex = 0
         return this.get('content').map(function (item, index) {
+            var isHidden = item.roles.get('length') == 0 && index > 0;
+            if (!isHidden) {
+                shownIndex++;
+            }
+            var isSecond = !isHidden && shownIndex > 1
+
             item.setProperties({
                 index: index,
-                isSecond: index == 1,
-                isHidden: item.roles.get('length') == 0 && index > 0,
+                isSecond: isSecond ,
+                isHidden: isHidden,
                 readOnly: index > 0
             })
 

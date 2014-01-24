@@ -30,17 +30,39 @@
                 {{/exp}}
 
                 {{#if vault.perms.invite}}
-                    {{#link-to "Vault.memberIndex" vault class="btn btn-default"}}
-                        <span class="glyphicon glyphicon-user"></span>
-                        Collaborate
-                    {{/link-to}}
+                    <div
+                            class="vlt-button-wrapper"
+                            data-toggle="tooltip"
+                            title=
+                                    "
+                             Invite new team members to collaborate over this vault
+                             or  grant access permission to current team members
+                             "
+                            data-placement="bottom"
+                            >
+                        {{#link-to "Vault.memberIndex" vault class="btn btn-default"}}
+                            <span class="glyphicon glyphicon-user"></span>
+                            Collaborate
+                        {{/link-to}}
+                    </div>
                 {{/if}}
 
                 {{#if vault.perms.create}}
-                    {{#link-to "Cards.create" class="btn btn-primary"}}
-                        <span class="glyphicon glyphicon-plus"></span>
-                        Create new Card
-                    {{/link-to}}
+                    <div
+                            class="vlt-button-wrapper"
+                            data-toggle="tooltip"
+                            title=
+                                    "
+                                    Card is analogy to sheet in folder. Card lets you organize your secrets into groups.
+                                    You can also collaborate with team over a card.
+                                    "
+                            data-placement="bottom"
+                            >
+                        {{#link-to "Cards.create" class="btn btn-primary"}}
+                            <span class="glyphicon glyphicon-plus"></span>
+                            Create new Card
+                        {{/link-to}}
+                    </div>
                 {{/if}}
 
             </div>
@@ -80,7 +102,8 @@
 
                 {{#if vault.perms.create }}
                     <p>
-                        What are cards for? Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Card is analogy to sheet in folder. Card lets you organize your secrets into groups.
+                        You can also collaborate with team over a card.
                     </p>
 
                     <p class="top-30">

@@ -73,7 +73,7 @@ function program6(depth0,data) {
 function program8(depth0,data) {
   
   var buffer = '', stack1, stack2, hashContexts, hashTypes, options;
-  data.buffer.push("\n                    ");
+  data.buffer.push("\n                    <div\n                            class=\"vlt-button-wrapper\"\n                            data-toggle=\"tooltip\"\n                            title=\n                                    \"\n                             Invite new team members to collaborate over this vault\n                             or  grant access permission to current team members\n                             \"\n                            data-placement=\"bottom\"\n                            >\n                        ");
   hashContexts = {'class': depth0};
   hashTypes = {'class': "STRING"};
   options = {hash:{
@@ -81,19 +81,19 @@ function program8(depth0,data) {
   },inverse:self.noop,fn:self.program(9, program9, data),contexts:[depth0,depth0],types:["STRING","ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
   stack2 = ((stack1 = helpers['link-to'] || depth0['link-to']),stack1 ? stack1.call(depth0, "Vault.memberIndex", "vault", options) : helperMissing.call(depth0, "link-to", "Vault.memberIndex", "vault", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("\n                ");
+  data.buffer.push("\n                    </div>\n                ");
   return buffer;
   }
 function program9(depth0,data) {
   
   
-  data.buffer.push("\n                        <span class=\"glyphicon glyphicon-user\"></span>\n                        Collaborate\n                    ");
+  data.buffer.push("\n                            <span class=\"glyphicon glyphicon-user\"></span>\n                            Collaborate\n                        ");
   }
 
 function program11(depth0,data) {
   
   var buffer = '', stack1, stack2, hashContexts, hashTypes, options;
-  data.buffer.push("\n                    ");
+  data.buffer.push("\n                    <div\n                            class=\"vlt-button-wrapper\"\n                            data-toggle=\"tooltip\"\n                            title=\n                                    \"\n                                    Card is analogy to sheet in folder. Card lets you organize your secrets into groups.\n                                    You can also collaborate with team over a card.\n                                    \"\n                            data-placement=\"bottom\"\n                            >\n                        ");
   hashContexts = {'class': depth0};
   hashTypes = {'class': "STRING"};
   options = {hash:{
@@ -101,13 +101,13 @@ function program11(depth0,data) {
   },inverse:self.noop,fn:self.program(12, program12, data),contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
   stack2 = ((stack1 = helpers['link-to'] || depth0['link-to']),stack1 ? stack1.call(depth0, "Cards.create", options) : helperMissing.call(depth0, "link-to", "Cards.create", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("\n                ");
+  data.buffer.push("\n                    </div>\n                ");
   return buffer;
   }
 function program12(depth0,data) {
   
   
-  data.buffer.push("\n                        <span class=\"glyphicon glyphicon-plus\"></span>\n                        Create new Card\n                    ");
+  data.buffer.push("\n                            <span class=\"glyphicon glyphicon-plus\"></span>\n                            Create new Card\n                        ");
   }
 
 function program14(depth0,data) {
@@ -146,21 +146,16 @@ function program17(depth0,data) {
 function program18(depth0,data) {
   
   var buffer = '', stack1, stack2, hashContexts, hashTypes, options;
-  data.buffer.push("\n                    <p>\n                        What are cards for? Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n                    </p>\n\n                    <p class=\"top-30\">\n                        ");
+  data.buffer.push("\n                    <p>\n                        Card is analogy to sheet in folder. Card lets you organize your secrets into groups.\n                        You can also collaborate with team over a card.\n                    </p>\n\n                    <p class=\"top-30\">\n                        ");
   hashContexts = {'class': depth0};
   hashTypes = {'class': "STRING"};
   options = {hash:{
     'class': ("btn btn-lg btn-primary")
-  },inverse:self.noop,fn:self.program(19, program19, data),contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
+  },inverse:self.noop,fn:self.program(12, program12, data),contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
   stack2 = ((stack1 = helpers['link-to'] || depth0['link-to']),stack1 ? stack1.call(depth0, "Cards.create", options) : helperMissing.call(depth0, "link-to", "Cards.create", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
   data.buffer.push("\n                    </p>\n                ");
   return buffer;
-  }
-function program19(depth0,data) {
-  
-  
-  data.buffer.push("\n                            <span class=\"glyphicon glyphicon-plus\"></span>\n                            Create new Card\n                        ");
   }
 
   data.buffer.push("<div class=\"vlt-page-nav\">\n\n    ");

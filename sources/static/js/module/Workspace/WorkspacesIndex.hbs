@@ -3,10 +3,19 @@
     {{#if length}}
         <div class="vlt-page-toolbar pull-right">
 
-            {{#link-to 'Workspaces.create' class="btn btn-primary" }}
-                <span class="glyphicon glyphicon-plus"></span>
+            <div
+                    title="
+                    Workspaces are used to organize your secrets. All your vaults, cards and secrets are
+                    stored inside workspace. You can also collaborate with your team at the workspace
+                    "
+                    data-toggle="tooltip"
+                    data-placement="bottom"
+                    >
+                {{#link-to 'Workspaces.create' class="btn btn-primary" }}
+                    <span class="glyphicon glyphicon-plus"></span>
                 Create new workspace
-            {{/link-to}}
+                {{/link-to}}
+            </div>
         </div>
     {{/if}}
 
@@ -39,7 +48,8 @@
                 </div>
 
                 <p>
-                    What are workspaces for? Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Workspaces are used to organize your secrets. All your vaults, cards and secrets are
+                    stored inside workspace. You can also collaborate with your team at the workspace
                 </p>
 
                 <p class="top-30">

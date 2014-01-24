@@ -66,7 +66,7 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
         }
         var short = this.ellipsis(name, length);
 
-        var tooltip = 'data-container="body" data-toggle="tooltip" title="{prefix} {name} ({email})"'
+        var tooltip = 'data-toggle="tooltip" title="{prefix} {name} ({email})"'
             .replace('{prefix}', prefix)
             .replace('{name}', name)
             .replace('{email}', email)
@@ -89,7 +89,7 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
         if (prefix) {
             t = prefix + ' ' +t
         }
-        return '<span data-container="body" data-toggle=tooltip title="' + t + '">' + a + '</span>';
+        return '<span data-toggle=tooltip title="' + t + '">' + a + '</span>';
     },
 
     /**

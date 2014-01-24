@@ -41,12 +41,13 @@ a:hover {
 /*
 * Tooltip
 */
-.tooltip.top .tooltip-inner {
+.tooltip .tooltip-inner {
     background-color: #367EAC;
 }
 
-.tooltip.top .tooltip-arrow {
-    border-top-color: #367EAC;
+.tooltip .tooltip-arrow {
+    border-top-color: #367EAC !important;
+    border-bottom-color: #367EAC !important;
 }
 
 /*
@@ -373,6 +374,16 @@ a:hover {
 
 /*************************************************************
 **************************************************************
+* Button wrapper for tooltips
+*************************************************************
+*************************************************************/
+
+.vlt-button-wrapper {
+    display: inline-block;
+}
+
+/*************************************************************
+**************************************************************
 * page and page section
 *************************************************************
 *************************************************************/
@@ -419,7 +430,6 @@ a:hover {
     width: 315px;
     float: left;
     display: block;
-    overflow: hidden;
     border: 1px solid #E0DBDB;
     transition: border-color 500ms;
     border-radius: 6px;
@@ -434,6 +444,7 @@ a:hover {
 }
 
 .vlt-item .vlt-header {
+    border-radius: 6px 6px 0px 0px;
     padding: 10px;
     height: 90px;
     position: relative;
@@ -472,6 +483,7 @@ a:hover {
 }
 
 .vlt-item .vlt-footer {
+    border-radius: 0px 0px 6px 6px;
     padding: 0px 10px 0px 10px;
     background-color: #F5F5F5;
     font-size: 13px;
@@ -883,6 +895,7 @@ span.vlt-user img {
     transition: border-color 500ms, background-color 500ms;
 }
 
+
 .vlt-select-secret-item:hover {
     background-color: #2FA4E7;
     border-color: #2FA4E7;
@@ -1077,23 +1090,27 @@ span.vlt-user img {
     min-height: 100px;
 }
 
+.vlt-empty.jumbotron .vlt-header .vlt-title h1 {
+    font-size: 40px
+}
+
 .vlt-empty.jumbotron.vlt-vault .vlt-header .vlt-icon {
-    margin-top: 5px;
+    margin-top: -5px;
     background-image: url('../images/icon-vault-grey.png')
 }
 
 .vlt-empty.jumbotron.vlt-workspace .vlt-header .vlt-icon {
-    margin-top: 5px;
+    margin-top: -8px;
     background-image: url('../images/icon-workspace-grey.png')
 }
 
 .vlt-empty.jumbotron.vlt-card .vlt-header .vlt-icon {
-    margin-top: 5px;
+    margin-top: -12px;
     background-image: url('../images/icon-card-grey.png')
 }
 
 .vlt-empty.jumbotron.vlt-secret .vlt-header .vlt-icon {
-    margin-top: 5px;
+    margin-top: -4px;
     background-image: url('../images/icon-secret-grey.png')
 }
 

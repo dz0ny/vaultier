@@ -23,15 +23,15 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   hashTypes = {};
   hashContexts = {};
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "errors.name", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
-  data.buffer.push("</span>\r\n    </div>\r\n    <div class=\"help-block\">\r\n        Informational field. Do not enter any sensitive information. This field is not cyphered\r\n    </div>\r\n\r\n\r\n    <h4 class=\"top-30\">Please fillout your note</h4>\r\n    <hr class=\"top-0\"/>\r\n\r\n    <div class=\"form-group\">\r\n        ");
+  data.buffer.push("</span>\r\n    </div>\r\n    <div class=\"help-block\">\r\n        Informational field. Do not enter any sensitive information. This field is not encrypted\r\n    </div>\r\n\r\n\r\n    <h4 class=\"top-30\">Please fillout your note</h4>\r\n    <hr class=\"top-0\"/>\r\n    <div class=\"form-group\">\r\n        ");
   hashTypes = {};
   hashContexts = {};
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "errors.description", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
   data.buffer.push("\r\n        ");
   hashContexts = {'elementId': depth0,'valueBinding': depth0,'class': depth0,'rows': depth0};
   hashTypes = {'elementId': "STRING",'valueBinding': "STRING",'class': "STRING",'rows': "INTEGER"};
-  data.buffer.push(escapeExpression(helpers.view.call(depth0, "Vaultier.EpicEditorInput", {hash:{
-    'elementId': ("card-description"),
+  data.buffer.push(escapeExpression(helpers.view.call(depth0, "Vaultier.EditorInput", {hash:{
+    'elementId': ("secret-description"),
     'valueBinding': ("content.note"),
     'class': ("form-control"),
     'rows': (8)

@@ -6,13 +6,13 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   
-  data.buffer.push("\r\n        <div class=\"list-item vlt-select-secret-item\">\r\n            <div class=\"vlt-visual\">\r\n                <div class=\"vlt-icon password\"></div>\r\n            </div>\r\n            <div class=\"vlt-desc\">\r\n                <h4>Secret password</h4>\r\n\r\n                <p>Dapibus ac facil Morbi leo risusibus ac facilisis in</p>\r\n\r\n                <div class=\"clearfix\"></div>\r\n            </div>\r\n        </div>\r\n    ");
+  data.buffer.push("\r\n        <div class=\"list-item vlt-select-secret-item\">\r\n            <div class=\"vlt-visual\">\r\n                <div class=\"vlt-icon password\"></div>\r\n            </div>\r\n            <div class=\"vlt-desc\">\r\n                <h4>Secret password</h4>\r\n\r\n                <p class=\"help-block\">This type of secret allows yout to save ordinary password together with username, url and related note</p>\r\n\r\n                <div class=\"clearfix\"></div>\r\n            </div>\r\n        </div>\r\n    ");
   }
 
 function program3(depth0,data) {
   
   
-  data.buffer.push("\r\n        <div class=\"list-item vlt-select-secret-item\">\r\n            <div class=\"vlt-visual\">\r\n                <div class=\"vlt-icon note\"></div>\r\n            </div>\r\n            <div class=\"vlt-desc\">\r\n                <h4>Secret note</h4>\r\n\r\n                <p>Dapibus ac facil Morbi leo risusibus ac facilisis in</p>\r\n\r\n                <div class=\"clearfix\"></div>\r\n            </div>\r\n        </div>\r\n    ");
+  data.buffer.push("\r\n        <div class=\"list-item vlt-select-secret-item\">\r\n            <div class=\"vlt-visual\">\r\n                <div class=\"vlt-icon note\"></div>\r\n            </div>\r\n            <div class=\"vlt-desc\">\r\n                <h4>Secret note</h4>\r\n\r\n                <p class=\"help-block\">Secret as note, you can save whatever text you want. You can use markdown to format note</p>\r\n\r\n                <div class=\"clearfix\"></div>\r\n            </div>\r\n        </div>\r\n    ");
   }
 
 function program5(depth0,data) {

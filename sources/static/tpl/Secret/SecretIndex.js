@@ -68,7 +68,7 @@ function program4(depth0,data) {
 function program6(depth0,data) {
   
   
-  data.buffer.push("\r\n                                        Move card\r\n                                    ");
+  data.buffer.push("\r\n                                        Move card to another vault\r\n                                    ");
   }
 
 function program8(depth0,data) {
@@ -85,7 +85,7 @@ function program8(depth0,data) {
 function program10(depth0,data) {
   
   var buffer = '', stack1, stack2, hashContexts, hashTypes, options;
-  data.buffer.push("\r\n\r\n                    ");
+  data.buffer.push("\r\n                    <div\r\n                            class=\"vlt-button-wrapper\"\r\n                            data-toggle=\"tooltip\"\r\n                            title=\r\n                                    \"\r\n                             Invite new team members to collaborate over this card\r\n                             or  grant access permission to current team members\r\n                             \"\r\n                            data-placement=\"bottom\"\r\n                            >\r\n                        ");
   hashContexts = {'class': depth0};
   hashTypes = {'class': "STRING"};
   options = {hash:{
@@ -93,13 +93,13 @@ function program10(depth0,data) {
   },inverse:self.noop,fn:self.program(11, program11, data),contexts:[depth0,depth0],types:["STRING","ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
   stack2 = ((stack1 = helpers['link-to'] || depth0['link-to']),stack1 ? stack1.call(depth0, "Card.memberIndex", "card", options) : helperMissing.call(depth0, "link-to", "Card.memberIndex", "card", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("\r\n                ");
+  data.buffer.push("\r\n                    </div>\r\n                ");
   return buffer;
   }
 function program11(depth0,data) {
   
   
-  data.buffer.push("\r\n                        <span class=\"glyphicon glyphicon-user\"></span>\r\n                        Collaborate\r\n                    ");
+  data.buffer.push("\r\n                            <span class=\"glyphicon glyphicon-user\"></span>\r\n                            Collaborate\r\n                        ");
   }
 
 function program13(depth0,data) {
@@ -116,7 +116,7 @@ function program13(depth0,data) {
 function program14(depth0,data) {
   
   var buffer = '', stack1, stack2, hashContexts, hashTypes, options;
-  data.buffer.push("\r\n                        ");
+  data.buffer.push("\r\n                        <div\r\n                                class=\"vlt-button-wrapper\"\r\n                                data-toggle=\"tooltip\"\r\n                                title=\r\n                                        \"\r\n                                         Create one or more secrets on this card.\r\n                                         Secrets are secured by encryption and accessible only to you and your team.\r\n                                         Secret could be password, note, credit card number or key file\r\n                                         \"\r\n                                data-placement=\"bottom\"\r\n                                >\r\n                            ");
   hashContexts = {'class': depth0};
   hashTypes = {'class': "STRING"};
   options = {hash:{
@@ -124,13 +124,13 @@ function program14(depth0,data) {
   },inverse:self.noop,fn:self.program(15, program15, data),contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
   stack2 = ((stack1 = helpers['link-to'] || depth0['link-to']),stack1 ? stack1.call(depth0, "Secret.createSelect", options) : helperMissing.call(depth0, "link-to", "Secret.createSelect", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("\r\n                    ");
+  data.buffer.push("\r\n                        </div>\r\n                    ");
   return buffer;
   }
 function program15(depth0,data) {
   
   
-  data.buffer.push("\r\n                            <span class=\"glyphicon glyphicon-plus\"></span>\r\n                            Create new secret\r\n                        ");
+  data.buffer.push("\r\n                                <span class=\"glyphicon glyphicon-plus\"></span>\r\n                                Create new secret\r\n                            ");
   }
 
 function program17(depth0,data) {
@@ -235,7 +235,7 @@ function program28(depth0,data) {
 function program29(depth0,data) {
   
   var buffer = '', stack1, stack2, hashContexts, hashTypes, options;
-  data.buffer.push("\r\n\r\n                            <p>\r\n                                What are secrets for? Lorem ipsum dolor sit amet, consectetur adipiscing elit.\r\n                            </p>\r\n\r\n                            <p class=\"top-30\">\r\n                                ");
+  data.buffer.push("\r\n\r\n                            <p>\r\n                                This card is empty.\r\n                                Please create one or more secrets on this card.\r\n                                Secret are secured by encryption and accessible only to you and your team.\r\n                                Secret could be password, note, credit card number or key file\r\n                            </p>\r\n\r\n                            <p class=\"top-30\">\r\n                                ");
   hashContexts = {'class': depth0};
   hashTypes = {'class': "STRING"};
   options = {hash:{
@@ -255,7 +255,7 @@ function program30(depth0,data) {
 function program32(depth0,data) {
   
   
-  data.buffer.push("\r\n\r\n                <div class=\"jumbotron vlt-empty vlt-secret col-md-8 col-md-offset-2\">\r\n                    <div class=\"vlt-header\">\r\n                        <div class=\"vlt-icon\">\r\n\r\n                        </div>\r\n                        <div class=\"vlt-title\">\r\n                            <h1>Secrets are hidden</h1>\r\n                        </div>\r\n                    </div>\r\n\r\n                    <p>\r\n                        Workspace key has not been transfered to you yet.\r\n                        Secrets will be accessible once you receive workspace key.\r\n                        Key will be transfered to you automatically\r\n                        once some workspace team member will go online.\r\n                    </p>\r\n\r\n                </div>\r\n            ");
+  data.buffer.push("\r\n\r\n                <div class=\"jumbotron vlt-empty vlt-secret col-md-8 col-md-offset-2\">\r\n                    <div class=\"vlt-header\">\r\n                        <div class=\"vlt-icon\">\r\n\r\n                        </div>\r\n                        <div class=\"vlt-title\">\r\n                            <h1>Secrets are hidden</h1>\r\n                        </div>\r\n                    </div>\r\n\r\n                    <p>\r\n                        <b>Workspace key has not been transfered to you yet.</b>\r\n                        Secrets will be accessible once you receive workspace key.\r\n                        Key will be transfered to you automatically\r\n                        once some workspace team member will go online.\r\n                    </p>\r\n\r\n                </div>\r\n            ");
   }
 
   data.buffer.push("<div class=\"vlt-page-nav\">\r\n\r\n    ");

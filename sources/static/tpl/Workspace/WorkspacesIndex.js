@@ -6,7 +6,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   var buffer = '', stack1, stack2, hashContexts, hashTypes, options;
-  data.buffer.push("\r\n        <div class=\"vlt-page-toolbar pull-right\">\r\n\r\n            ");
+  data.buffer.push("\r\n        <div class=\"vlt-page-toolbar pull-right\">\r\n\r\n            <div\r\n                    title=\"\r\n                    Workspaces are used to organize your secrets. All your vaults, cards and secrets are\r\n                    stored inside workspace. You can also collaborate with your team at the workspace\r\n                    \"\r\n                    data-toggle=\"tooltip\"\r\n                    data-placement=\"bottom\"\r\n                    >\r\n                ");
   hashContexts = {'class': depth0};
   hashTypes = {'class': "STRING"};
   options = {hash:{
@@ -14,13 +14,13 @@ function program1(depth0,data) {
   },inverse:self.noop,fn:self.program(2, program2, data),contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
   stack2 = ((stack1 = helpers['link-to'] || depth0['link-to']),stack1 ? stack1.call(depth0, "Workspaces.create", options) : helperMissing.call(depth0, "link-to", "Workspaces.create", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("\r\n        </div>\r\n    ");
+  data.buffer.push("\r\n            </div>\r\n        </div>\r\n    ");
   return buffer;
   }
 function program2(depth0,data) {
   
   
-  data.buffer.push("\r\n                <span class=\"glyphicon glyphicon-plus\"></span>\r\n                Create new workspace\r\n            ");
+  data.buffer.push("\r\n                    <span class=\"glyphicon glyphicon-plus\"></span>\r\n                Create new workspace\r\n                ");
   }
 
 function program4(depth0,data) {
@@ -48,7 +48,7 @@ function program5(depth0,data) {
 function program7(depth0,data) {
   
   var buffer = '', stack1, stack2, hashContexts, hashTypes, options;
-  data.buffer.push("\r\n            <div class=\"jumbotron vlt-empty vlt-workspace col-md-8 col-md-offset-2\">\r\n                <div class=\"vlt-header\">\r\n                    <div class=\"vlt-icon\">\r\n\r\n                    </div>\r\n                    <div class=\"vlt-title\">\r\n                        <h1>You do not have any workspace yet</h1>\r\n                    </div>\r\n                </div>\r\n\r\n                <p>\r\n                    What are workspaces for? Lorem ipsum dolor sit amet, consectetur adipiscing elit.\r\n                </p>\r\n\r\n                <p class=\"top-30\">\r\n                    ");
+  data.buffer.push("\r\n            <div class=\"jumbotron vlt-empty vlt-workspace col-md-8 col-md-offset-2\">\r\n                <div class=\"vlt-header\">\r\n                    <div class=\"vlt-icon\">\r\n\r\n                    </div>\r\n                    <div class=\"vlt-title\">\r\n                        <h1>You do not have any workspace yet</h1>\r\n                    </div>\r\n                </div>\r\n\r\n                <p>\r\n                    Workspaces are used to organize your secrets. All your vaults, cards and secrets are\r\n                    stored inside workspace. You can also collaborate with your team at the workspace\r\n                </p>\r\n\r\n                <p class=\"top-30\">\r\n                    ");
   hashContexts = {'class': depth0};
   hashTypes = {'class': "STRING"};
   options = {hash:{
