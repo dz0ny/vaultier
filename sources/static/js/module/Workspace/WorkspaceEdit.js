@@ -27,16 +27,19 @@ Vaultier.WorkspaceEditRoute = Ember.Route.extend(
         actions: {
             save: function () {
                 var record = this.get('controller.content');
-                record
+                var promise = record
                     .saveRecord()
                     .then(function () {
                         $.notify('Your changes has been successfully saved.', 'success');
                         history.go(-1);
                     }.bind(this))
+
                     .catch(function (error) {
                         $.notify('Oooups! Something went wrong.', 'error');
                         this.get('errors').logError(error);
                     }.bind(this))
+
+                ApplicationLoader.promise(promise);
             }
         }
     });

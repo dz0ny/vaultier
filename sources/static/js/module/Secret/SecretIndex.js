@@ -37,28 +37,12 @@ Vaultier.SecretIndexRoute = Ember.Route.extend({
     },
 
     actions: {
-        deleteCard: function (card) {
-            Vaultier.confirmModal(this, 'Are you sure?', function () {
-                card
-                    .deleteRecord()
-                    .then(
-                        function () {
-                            $.notify('Your card has been successfully deleted.', 'success');
-                            this.transitionTo('Cards.index', this.get('vault'));
-                        }.bind(this),
-                        function (error) {
-                            card.rollback();
-                            $.notify('Oooups! Something went wrong.', 'error');
-                        }.bind(this)
-                    );
-            }.bind(this));
-        },
 
         deleteSecret: function (secret) {
             Vaultier.confirmModal(this, 'Are you sure?', function () {
 
                 this.get('controller.content').removeObject(secret)
-                secret
+                var promise = secret
                     .deleteRecord()
                     .then(
                         function () {
@@ -70,6 +54,7 @@ Vaultier.SecretIndexRoute = Ember.Route.extend({
                             $.notify('Oooups! Something went wrong.', 'error');
                         }.bind(this)
                     );
+                ApplicationLoader.promise(promise)
             }.bind(this));
         }
 

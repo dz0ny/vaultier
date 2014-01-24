@@ -145,7 +145,7 @@ Vaultier.MemberIndexRoute = Ember.Route.extend(
         actions: {
             deleteRole: function (role, block) {
                 Vaultier.confirmModal(this, 'Are you sure?', function () {
-                    role
+                    var promise = role
                         .deleteRecord()
                         .then(function () {
                             block.roles.removeObject(role);
@@ -155,21 +155,25 @@ Vaultier.MemberIndexRoute = Ember.Route.extend(
                             $.notify('Oooups! Something went wrong.', 'error');
                             this.get('errors').logError(error)
                         }.bind(this))
+
+                    ApplicationLoader.promise(promise)
                 });
 
 
             },
 
             changeRole: function (role, block) {
-                    role
-                        .saveRecord()
-                        .then(function () {
-                            $.notify('User \'s permission has been updated.', 'success');
-                        })
-                        .catch(function (error) {
-                            $.notify('Oooups! Something went wrong.', 'error');
-                            this.get('errors').logError(error)
-                        }.bind(this))
+                var promise = role
+                    .saveRecord()
+                    .then(function () {
+                        $.notify('User \'s permission has been updated.', 'success');
+                    })
+                    .catch(function (error) {
+                        $.notify('Oooups! Something went wrong.', 'error');
+                        this.get('errors').logError(error)
+                    }.bind(this))
+
+                ApplicationLoader.promise(promise)
             }
         }
 
@@ -190,7 +194,7 @@ Vaultier.MemberIndexController = Ember.Controller.extend({
 
             item.setProperties({
                 index: index,
-                isSecond: isSecond ,
+                isSecond: isSecond,
                 isHidden: isHidden,
                 readOnly: index > 0
             })

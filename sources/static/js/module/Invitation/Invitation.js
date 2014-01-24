@@ -60,12 +60,14 @@ Vaultier.InvitationAcceptRoute = Ember.Route.extend(
             acceptInvitations: function () {
                 var invitations = this.get('controller.content')
                 var service = this.get('invitations')
-                service.acceptInvitationsInSession(invitations).
+                var promise = service.acceptInvitationsInSession(invitations).
                     then(function () {
                         service.clearInvitationsInSession()
                         $.notify('You have accepted your invitations', 'success');
                         this.transitionTo('index')
                     }.bind(this))
+
+                ApplicationLoader.promise(promise)
             },
 
             rejectInvitations: function () {

@@ -157,13 +157,17 @@ Vaultier.SecretCreateSubmitRoute = Ember.Route.extend(
                 }
 
                 try {
-                    record.saveRecord()
+                    var promise = record
+                        .saveRecord()
                         .then(function () {
                             $.notify('Your secret has been successfully created.', 'success');
                             this.transitionTo('Secret.index', this.get('Card'));
                         }.bind(this))
                         .catch(notifyError)
+
+                    ApplicationLoader.promise(promise)
                 } catch (e) {
+                    ApplicationLoader.hideLoader();
                     notifyError(e)
                 }
             }

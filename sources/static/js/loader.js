@@ -67,6 +67,19 @@ ApplicationLoader = {
         }
     },
 
+    promise: function (promise) {
+        this.showLoader();
+        return promise
+            .then(function (result) {
+                this.hideLoader()
+                return Ember.RSVP.resolve(result)
+            }.bind(this))
+            .catch(function(error) {
+                this.hideLoader()
+                return Ember.RSVP.reject(result);
+            })
+    },
+
     showLoaderText: function (text) {
         if (this.loaderEl) {
             this.loaderEl.find('.vlt-text').html(text);

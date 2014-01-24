@@ -67,6 +67,8 @@ Vaultier.MemberInviteRoute = Ember.Route.extend(
                         $.notify('Oooups! Something went wrong.', 'error');
                     })
 
+                ApplicationLoader.promise(bulk);
+
                 return bulk;
             }
         },

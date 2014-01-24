@@ -20,7 +20,7 @@ Vaultier.VaultsCreateRoute = Ember.Route.extend(
                 var record = this.get('controller.content');
                 record.set('workspace', this.get('workspace.id'))
 
-                record
+                var promise = record
                     .saveRecord()
                     .then(function () {
                         $.notify('Your vault has been successfully created.', 'success');
@@ -30,6 +30,8 @@ Vaultier.VaultsCreateRoute = Ember.Route.extend(
                         $.notify('Oooups! Something went wrong.', 'error');
                         this.get('errors').logError(error);
                     }.bind(this))
+
+                 ApplicationLoader.promise(promise);
             }
         },
 

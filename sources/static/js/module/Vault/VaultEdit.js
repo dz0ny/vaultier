@@ -28,7 +28,7 @@ Vaultier.VaultEditRoute = Ember.Route.extend(
         actions: {
             save: function () {
                 var record = this.get('controller.content');
-                record
+                var promise = record
                     .saveRecord()
                     .then(function () {
                         $.notify('Your changes has been successfully saved.', 'success');
@@ -38,6 +38,8 @@ Vaultier.VaultEditRoute = Ember.Route.extend(
                         $.notify('Oooups! Something went wrong.', 'error');
                         this.get('errors').logError(error)
                     }.bind(this))
+
+                 ApplicationLoader.promise(promise);
             }
         }
 

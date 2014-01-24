@@ -11,7 +11,7 @@ Vaultier.SettingsPersonalRoute = Ember.Route.extend(
         actions: {
             save: function () {
                 var record = this.get('controller.content');
-                record
+                var promise = record
                     .saveRecord()
                     .then(
                     function () {
@@ -20,7 +20,10 @@ Vaultier.SettingsPersonalRoute = Ember.Route.extend(
                     function () {
                         $.notify('Oooups! Something went wrong.', 'error');
                     })
+
+                ApplicationLoader.promise(promise)
             }
+
         }
     });
 

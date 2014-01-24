@@ -39,7 +39,7 @@ Vaultier.WorkspaceRoute = Ember.Route.extend(
         actions: {
             deleteWorkspace: function (workspace) {
                 Vaultier.confirmModal(this, 'Are you sure?', function () {
-                    workspace
+                    var promise = workspace
                         .deleteRecord()
                         .then(
                             function () {
@@ -50,6 +50,9 @@ Vaultier.WorkspaceRoute = Ember.Route.extend(
                             $.notify('Oooups! Something went wrong.', 'error');
                             throw error
                         }.bind(this))
+                    
+                    ApplicationLoader.promise(promise);
+
                 }.bind(this));
             }
         }

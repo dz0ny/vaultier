@@ -55,24 +55,26 @@ Vaultier.CardMoveRoute = Ember.Route.extend(
             save: function () {
                 var record = this.get('controller.content');
                 record.set('vault', this.get('controller.selected'))
-                record
+                var promise = record
                     .saveRecord()
-                    .then(function() {
+                    .then(function () {
                         return this.get('store').find('Vault', record.get('vault'))
                     }.bind(this))
                     .then(function (vault) {
-                        $.notify('Your card has been successfully moved.', 'success');
-                        this.transitionTo(
-                            'Secret.index',
-                            this.modelFor('Workspace').get('slug'),
-                            vault.get('slug'),
-                            this.modelFor('Card').get('slug')
-                        )
-                    }.bind(this),
+                    $.notify('Your card has been successfully moved.', 'success');
+                    this.transitionTo(
+                        'Secret.index',
+                        this.modelFor('Workspace').get('slug'),
+                        vault.get('slug'),
+                        this.modelFor('Card').get('slug')
+                    )
+                }.bind(this),
                     function () {
                         $.notify('Oooups! Something went wrong.', 'error');
                     }
                 )
+                
+                ApplicationLoader.promise(promise)
             }
         }
     });

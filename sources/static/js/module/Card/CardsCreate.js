@@ -22,7 +22,9 @@ Vaultier.CardsCreateRoute = Ember.Route.extend(
                 var record = this.get('controller.content');
                 record.set('vault', vault.get('id'))
 
-                record.saveRecord().then(
+                var promise = record
+                    .saveRecord()
+                    .then(
                     function () {
                         $.notify('Your card has been successfully created.', 'success');
                         this.transitionTo('Card.index', record);
@@ -31,6 +33,8 @@ Vaultier.CardsCreateRoute = Ember.Route.extend(
                         $.notify('Oooups! Something went wrong.', 'error');
                     }
                 )
+
+                ApplicationLoader.promise(promise)
             }
         },
 

@@ -46,7 +46,7 @@ function program3(depth0,data) {
 function program5(depth0,data) {
   
   
-  data.buffer.push("Move secret");
+  data.buffer.push("Move secret to another card");
   }
 
 function program7(depth0,data) {

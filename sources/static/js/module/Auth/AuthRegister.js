@@ -265,6 +265,7 @@ Vaultier.AuthRegisterCredsRoute = Ember.Route.extend({
                     ctrl.get('props').setProperties(newuservalues)
                 }.bind(this))
 
+            ApplicationLoader.promise(promise)
         }
     }
 });

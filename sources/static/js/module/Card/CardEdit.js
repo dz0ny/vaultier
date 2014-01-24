@@ -30,7 +30,7 @@ Vaultier.CardEditRoute = Ember.Route.extend(
         actions: {
             save: function () {
                 var record = this.get('controller.content');
-                record.saveRecord().then(
+                var promise = record.saveRecord().then(
                     function () {
                         $.notify('Your changes has been successfully saved.', 'success');
                         history.go(-1);
@@ -39,6 +39,9 @@ Vaultier.CardEditRoute = Ember.Route.extend(
                         $.notify('Oooups! Something went wrong.', 'error');
                     }
                 )
+                
+                ApplicationLoader.promise(promise)
+
             }
         }
     });
