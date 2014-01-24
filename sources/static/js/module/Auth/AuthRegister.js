@@ -7,7 +7,20 @@ var RegisterProps = Ember.Object.extend({
     nextButtonDisable: false,
     keysReady: false,
     keys: null,
-    loginButtonHidden: false
+    loginButtonHidden: false,
+    /**
+     * Stores transition created by newuserinit service to redirect to proper page after success registration
+     */
+    transitionAfterRegister: false,
+    /**
+     * Stores default workspace if created by newuserinitservice
+     */
+    defaultWorkspace: false,
+    /**
+     * Stores default vault if created by newuserinitservice
+     */
+    defaultVault: false
+
 });
 RegisterProps.reopenClass(Utils.Singleton);
 
@@ -163,6 +176,13 @@ Vaultier.AuthRegisterKeysView = Ember.View.extend({
 Vaultier.AuthRegisterCredsRoute = Ember.Route.extend({
     step: 'AuthRegisterCreds',
 
+    /**
+     * Reference to service newuserinit which is used to initialize user environment
+     * after successfull registration
+     * @DI service:newuserinit
+     */
+    newuserinit: null,
+
     beforeModel: function (transition) {
         if (this.get('auth').get('isAuthenticated')) {
             transition.router.replaceWith('AuthRegister.sum');
@@ -182,6 +202,14 @@ Vaultier.AuthRegisterCredsRoute = Ember.Route.extend({
 
         // prepare user model
         var user = this.modelFor('AuthRegister')
+
+        // testing
+//        var u = 'jan' + Math.round(Math.random() * 100000) + '@rclick.cz';
+//        user.setProperties({
+//            email: u,
+//            nickname: u
+//        });
+
         ctrl.set('content', user);
 
         // check if keys, otherwise go to step 1
@@ -206,24 +234,36 @@ Vaultier.AuthRegisterCredsRoute = Ember.Route.extend({
             ctrl.set('props.nextButtonDisabled', true);
 
             // register promise
-            var promise = user.saveRecord();
+            var promise = user
 
-            // authenticate promise
-            promise.then(
-                // success create
-                function () {
+                // save record
+                .saveRecord()
+
+                // login
+                .then(function () {
                     return auth.login(user.get('email'), keys.privateKey, false)
                         .then(function () {
                             auth.rememberUser(null);
                             this.transitionTo('AuthRegister.sum');
                         }.bind(this));
-                }.bind(this),
+                }.bind(this))
 
-                // unsuccess create
-                function (errors) {
+                // unsuccessfull login
+                .catch(function (errors) {
                     ctrl.set('errors', Ember.Object.create(errors.errors));
                     ctrl.set('props.nextButtonDisabled', false);
-                }.bind(this));
+                    return Ember.RSVP.reject(errors);
+                }.bind(this))
+
+                // create default user environment
+                .then(function () {
+                    return this.get('newuserinit').initializeUser()
+                }.bind(this))
+
+                // save transition and created workspace and vault
+                .then(function (newuservalues) {
+                    ctrl.get('props').setProperties(newuservalues)
+                }.bind(this))
 
         }
     }
@@ -271,7 +311,14 @@ Vaultier.AuthRegisterSumRoute = Ember.Route.extend({
         },
 
         next: function () {
-            this.transitionTo('index');
+            // get transition function created by newuserinit service this function is used to transition to proper page after registration
+            // in case user refreshes the page transition is not available anymore, in that case user is redirected to index
+            var transition = this.get('controller.props.transitionAfterRegister');
+            if (transition) {
+                transition()
+            } else {
+                this.transitionTo('index');
+            }
         }
     }
 });

@@ -134,6 +134,7 @@ $(document).ready(function () {
     ApplicationLoader.queueFile(STATIC_URL + 'js/service/WorkspaceKey.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/service/KeyTransfer.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/service/ChangeKey.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'js/service/NewUserInit.js');
 
     /********************** model **/
     ApplicationLoader.queueFile(STATIC_URL + 'js/model/mixin/CreatedUpdatedMixin.js');
