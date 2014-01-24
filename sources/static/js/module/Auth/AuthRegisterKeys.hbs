@@ -16,20 +16,32 @@
         <div class="col-md-8 col-md-offset-2 alert alert-warning">
 
             <div class="row top-15">
-                <div class="col-md-10 col-md-offset-1 text-center">
-                    <a class="btn btn-primary" {{ action downloadKey }}>Save your private key file to your computer</a>
+                <div class="col-md-10 col-md-offset-1">
+                    <p
+                            class="text-danger text-center"
+                            data-toggle="tooltip"
+                            title="
+                            Private key is used instead of password to log into Vaultier.
+                            Please keep private key safe and do not give it to anybody.
+                            Without private key you will not be able to log into Vaultier
+                            and your data will be rendered unreadable.
+                            ">
+
+                        <b>
+                            <span class="glyphicon glyphicon-exclamation-sign btn-lg"></span>
+                            <br/>
+                            Save private key to local computer and keep it carefully. Do not loose the key
+                        </b>
+                    </p>
                 </div>
             </div>
 
-
             <div class="row top-15">
-                <div class="col-md-10 col-md-offset-1">
-                    <p>
-                        Private key is used instead of password to log into Vaultier.
-                        Please keep private key safe and do not give it to anybody.
-                        Without private key you will not be able to log into Vaultier
-                        and your data will be rendered unreadable.
-                    </p>
+                <div class="col-md-10 col-md-offset-1 text-center">
+                    <a class="btn btn-primary btn-lg" {{ action downloadKey }}>
+                         <span class="glyphicon glyphicon-save"></span>
+                        Save the key
+                    </a>
                 </div>
             </div>
 
