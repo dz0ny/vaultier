@@ -4,6 +4,6 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   
 
 
-  data.buffer.push("<div class=\"vlt-search-box pull-left\">\n    <select placeholder=\"Search ALT+S\"></select>\n</div>\n");
+  data.buffer.push("<div class=\"vlt-search-box\">\n    <select placeholder=\"Search ALT+S\"></select>\n</div>\n");
   
 });

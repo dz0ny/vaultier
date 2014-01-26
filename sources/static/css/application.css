@@ -523,37 +523,48 @@ a:hover {
 *************************************************************
 *************************************************************/
 
-.navbar {
+.vlt-navbar {
     margin: 0px;
 }
 
-.vlt-branding {
-    padding-top: 0px;
-    padding-bottom: 0px;
-}
-
-.vlt-branding .vlt-brand {
-    padding: 8px 0px 8px 0px;
-    float: left;
-    line-height: 32px;
-}
-
-.vlt-branding .vlt-brand > a {
-    text-decoration: none;
-    color: #ffffff;
-}
-
-.vlt-branding .vlt-brand .vlt-brandimg {
-    display: inline-block;
+.vlt-navbar .vlt-logo {
     width: 32px;
     height: 32px;
 }
 
-.vlt-branding .vlt-brand .vlt-brandname {
+.vlt-navbar .vlt-brand {
     font-size: 32px;
     line-height: 32px;
     vertical-align: middle;
     display: inline-block;
+}
+
+.vlt-navbar .navbar-right {
+    margin-top: 5px;
+    margin-right: 5px !important;
+    margin-left: 5px !important;
+}
+
+.vlt-navbar.nav .open > a, .nav .open > a:focus {
+    background-color: transparent;
+    text-decoration: none;
+}
+
+@media (max-width: 767px) {
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+        color: #ffffff;
+        background-color: #44ADE9;
+    }
+}
+
+@media (max-width: 768px) {
+    .vlt-navbar .caret-right:before,
+    .vlt-navbar .caret-right:after,
+    .vlt-navbar .caret-left:before,
+    .vlt-navbar .caret-left:after {
+        display: none;
+    }
 }
 
 /*************************************************************
@@ -561,27 +572,25 @@ a:hover {
 * Workspace box in navbar
 *************************************************************
 *************************************************************/
-
 .vlt-wspace-box {
     font-weight: bold;
-    background-color: #F5F5F5;
-    border: 1px solid #E0DBDB;
+    background-color: #1686c6;
     border-radius: 4px;
-    margin: 8px 10px 8px 0px;
-    padding: 5px 10px 5px 5px;
-    height: 37px;
+    padding: 10px;
+    margin: 5px;
 }
 
 .vlt-wspace-box .vlt-wspacename {
     vertical-align: middle;
+    color: #FFFFFF;
     font-size: 14px;
     line-height: 14px;
     display: inline-block;
 }
 
 .vlt-wspace-box .vlt-wspaceimg {
-    margin-left: 5px;
-    margin-right: 5px;
+    margin-left: 0px;
+    margin-right: 10px;
     border-radius: 4px;
     width: 25px;
     height: 25px;
@@ -596,7 +605,6 @@ a:hover {
 * Avatar
 *************************************************************
 *************************************************************/
-
 img.vlt-avatar {
     border: 1px solid #E0DBDB;
     border-radius: 4px;
@@ -615,7 +623,6 @@ span.vlt-user img {
 * security box in navbar
 *************************************************************
 *************************************************************/
-
 .vlt-security-box.vlt-anonymous {
     background-color: transparent;
     border: 0px;
@@ -623,14 +630,14 @@ span.vlt-user img {
 
 .vlt-security-box {
     font-weight: bold;
-    background-color: #F5F5F5;
-    border: 1px solid #E0DBDB;
+    background-color: #1686c6;
     border-radius: 4px;
-    margin: 8px 0px 8px 0px;
-    padding: 5px 10px 5px 5px;
+    padding: 10px;
+    margin: 5px;
 }
 
 .vlt-security-box a.vlt-username {
+    color: #FFFFFF;
     vertical-align: middle;
     font-size: 14px;
     line-height: 14px;
@@ -646,11 +653,21 @@ span.vlt-user img {
 * search box in navbar
 *************************************************************
 *************************************************************/
-
 .vlt-search-box {
-    margin: 8px 0px 8px 40px;
-    padding: 0px 50px 0px 10px;
-    width: 250px;
+    margin: 14px 0px 0px 25px;
+    width: 190px;
+}
+
+@media (min-width: 1000px) {
+    .vlt-search-box {
+        width: 350px;
+    }
+}
+
+@media (max-width: 768px) {
+    .vlt-search-box {
+        width: 350px;
+    }
 }
 
 .vlt-search-box .selectize-input {
@@ -661,14 +678,9 @@ span.vlt-user img {
     display: none !important;
 }
 
-/*.selectize-dropdown.single {*/
-/*display: block !important;*/
-/*}*/
-
 /*
 * Drop down carrets
 */
-
 .vlt-search-box .selectize-dropdown {
     margin-top: 12px;
     min-width: 350px;
@@ -788,7 +800,6 @@ span.vlt-user img {
 * Register modal
 *************************************************************
 *************************************************************/
-
 .vlt-register.vlt-dialog .vlt-dialog-body {
     min-height: 300px;
 }
@@ -798,7 +809,6 @@ span.vlt-user img {
 * info boxes
 *************************************************************
 *************************************************************/
-
 .callout-info {
     background-color: #f0f7fd;
     border-color: #d0e3f0;
@@ -823,7 +833,6 @@ span.vlt-user img {
 * registration - generate keys
 *************************************************************
 *************************************************************/
-
 .vlt-register .modal-body {
     padding: 25px 50px 25px 50px;
 }
@@ -846,7 +855,6 @@ span.vlt-user img {
 * login
 *************************************************************
 *************************************************************/
-
 .vlt-login .vlt-login-key,
 .vlt-login .vlt-login-switch {
     min-width: 120px;
@@ -857,7 +865,6 @@ span.vlt-user img {
 * Preloader
 *************************************************************
 *************************************************************/
-
 .vlt-preloader {
     margin: 0px auto;
     background-size: 100% 100%;
@@ -880,7 +887,6 @@ span.vlt-user img {
 * Secret items - create
 *************************************************************
 *************************************************************/
-
 .vlt-select-secret-item {
     margin-top: 10px;
     cursor: pointer;
@@ -935,7 +941,6 @@ span.vlt-user img {
 * Secret items - detail
 *************************************************************
 *************************************************************/
-
 .vlt-secret {
     position: relative;
     border: 1px solid #e0dbdb;
@@ -1027,7 +1032,6 @@ span.vlt-user img {
 * Dialog
 *************************************************************
 *************************************************************/
-
 .vlt-dialog {
     margin-top: 50px;
     background-color: #ffffff;
@@ -1126,7 +1130,6 @@ span.vlt-user img {
 * Workspace item
 *************************************************************
 *************************************************************/
-
 .vlt-workspace-item {
     min-height: 100px;
     position: relative;
@@ -1152,7 +1155,6 @@ span.vlt-user img {
 * Permissions panel
 *************************************************************
 *************************************************************/
-
 .vlt-panel-permissions .vlt-table .vlt-perms {
     float: right;
 }
@@ -1219,7 +1221,6 @@ vlt-delete
 * Member invitations
 *************************************************************
 *************************************************************/
-
 .vaultier-member-invite-input .select2-choices {
     min-height: 150px;
 }
@@ -1229,7 +1230,6 @@ vlt-delete
 * Markdown
 *************************************************************
 *************************************************************/
-
 .vlt-markdown h1 {
     font-size: 24px;
 }

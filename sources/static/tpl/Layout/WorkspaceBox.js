@@ -6,7 +6,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   var buffer = '', stack1, stack2, hashTypes, hashContexts, options;
-  data.buffer.push("\r\n    <div class=\"vlt-wspace-box pull-right dropdown\">\r\n\r\n        <img class=\"vlt-wspaceimg\" src=\"/static/images/icon-workspace-grey.png \">\r\n\r\n        <a href=\"#\" class=\"vlt-wspacename dropdown-toggle\" data-toggle=\"dropdown\">\r\n            ");
+  data.buffer.push("\r\n    <div class=\"vlt-wspace-box dropdown\">\r\n\r\n        <img class=\"vlt-wspaceimg\" src=\"/static/images/icon-workspace-white.png \">\r\n\r\n        <a href=\"#\" class=\"vlt-wspacename dropdown-toggle\" data-toggle=\"dropdown\">\r\n            ");
   hashTypes = {};
   hashContexts = {};
   options = {hash:{},contexts:[depth0,depth0],types:["ID","INTEGER"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
