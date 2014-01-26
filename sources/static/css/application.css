@@ -847,10 +847,6 @@ span.vlt-user img {
 *************************************************************
 *************************************************************/
 
-.vlt-login.vlt-dialog {
-    width: 700px;
-}
-
 .vlt-login .vlt-login-key,
 .vlt-login .vlt-login-switch {
     min-width: 120px;
