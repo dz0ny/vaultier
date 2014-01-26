@@ -6,17 +6,13 @@
 }
 
 .vlt-hp .vlt-message .vlt-visual img {
-    margin-top: -10px;
-    position: absolute;
-    left:20px;
-    top:0px;
     width: 200px;
     height: 200px;
 }
 
-.vlt-hp .vlt-message .vlt-text {
-    margin-left: 250px;
-}
+/*.vlt-hp .vlt-message .vlt-text {*/
+    /*margin-left: 250px;*/
+/*}*/
 
 .vlt-hp .vlt-feature h2 {
     padding-left: 35px;
