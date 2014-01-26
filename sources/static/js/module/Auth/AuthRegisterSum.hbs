@@ -15,62 +15,56 @@
     <div class="col-md-8 col-md-offset-2 alert alert-warning">
 
         <div class="row bottom-5">
-            <div class="row">
-                <div class="col-md-5 col-md-offset-1">
-                    <b>
-                        Your email and username:
-                    </b>
-                </div>
-                <div class="col-md-4">
-                    {{ auth.user.email }}
-                </div>
-
+            <div class="col-md-5 col-md-offset-1">
+                <b>
+                    Your email and username:
+                </b>
             </div>
+            <div class="col-md-4">
+                {{ auth.user.email }}
+            </div>
+
         </div>
 
 
         <div class="row bottom-15">
-            <div class="row">
-                <div class="col-md-5 col-md-offset-1">
-                    <b>
-                        Your nickname:
-                    </b>
-                </div>
-                <div class="col-md-4">
-                    {{ auth.user.nickname }}
-                </div>
-
+            <div class="col-md-5 col-md-offset-1">
+                <b>
+                    Your nickname:
+                </b>
             </div>
+            <div class="col-md-4">
+                {{ auth.user.nickname }}
+            </div>
+
         </div>
 
         <div class="row top-15">
-            <div class="row">
-                <div class="col-md-5 col-md-offset-1">
-                    <b>
-                        Your private key
-                    </b>
-                    <br/>
+            <div class="col-md-5 col-md-offset-1">
+                <b>
+                    Your private key
+                </b>
+                <br/>
                     <span class="help-block">
                         Used instead of password. Please save if you did not yet.
                     </span>
-                </div>
-                <div class="col-md-4">
-                    <a
-                        {{ action downloadKey }}
-                            data-toggle="tooltip"
-                            title="
+            </div>
+            <div class="col-md-4">
+                <a
+                    {{ action downloadKey }}
+                        data-toggle="tooltip"
+                        title="
                             Private key is used instead of password to log into Vaultier.
                             Please keep private key safe and do not give it to anybody.
                             Without private key you will not be able to log into Vaultier
                             and your data will be rendered unreadable.
                             "
-                            class="btn btn-default btn-sm"
-                            >
-                        <span class="glyphicon glyphicon-save"></span>
-                        Save your  file
+                        class="btn btn-default btn-sm"
+                        >
+                    <span class="glyphicon glyphicon-save"></span>
+                    Save your file
 
-                    </a>
-                </div>
+                </a>
             </div>
         </div>
     </div>

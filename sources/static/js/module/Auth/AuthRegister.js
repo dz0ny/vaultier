@@ -149,7 +149,7 @@ Vaultier.AuthRegisterKeysRoute = Ember.Route.extend({
     },
 
     setupController: function (ctrl) {
-        ctrl.set('props.loginButtonHidden', false);
+        ctrl.set('props.loginButtonHidden', true);
         ctrl.set('props.nextButtonTitle', null)
 
         if (!ctrl.get('props.keysReady')) {
@@ -196,7 +196,7 @@ Vaultier.AuthRegisterCredsRoute = Ember.Route.extend({
     setupController: function (ctrl) {
         this._super(arguments);
 
-        ctrl.set('props.loginButtonHidden', false);
+        ctrl.set('props.loginButtonHidden', true);
         ctrl.set('props.nextButtonDisabled', false);
         ctrl.set('props.nextButtonTitle', 'Sumit your credentials');
 

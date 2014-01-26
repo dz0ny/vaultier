@@ -763,6 +763,10 @@ span.vlt-user img {
     border-radius: 6px;
 }
 
+.vlt-wizard-steps li a {
+    padding: 10px;
+}
+
 .vlt-wizard-steps li:first-of-type > a {
     border-radius: 6px 0px 0px 6px;
 }
@@ -784,10 +788,6 @@ span.vlt-user img {
 * Register modal
 *************************************************************
 *************************************************************/
-
-.vlt-register.vlt-dialog {
-    width: 900px;
-}
 
 .vlt-register.vlt-dialog .vlt-dialog-body {
     min-height: 300px;
@@ -894,7 +894,6 @@ span.vlt-user img {
     background-color: #EEEEEE;
     transition: border-color 500ms, background-color 500ms;
 }
-
 
 .vlt-select-secret-item:hover {
     background-color: #2FA4E7;
@@ -1034,9 +1033,11 @@ span.vlt-user img {
 *************************************************************/
 
 .vlt-dialog {
+    margin-top: 50px;
     background-color: #ffffff;
     border: 1px solid #E0DBDB;
     border-radius: 6px;
+    padding: 0px;
 }
 
 .vlt-dialog-window {
@@ -1064,6 +1065,16 @@ span.vlt-user img {
     border-top: 1px solid #E0DBDB;
     background-color: #F5F5F5;
     text-align: right;
+    border-radius: 0px 0px 6px 6px;
+}
+
+@media (max-width: 600px) {
+    .vlt-dialog .vlt-dialog-footer .vlt-left-buttons,
+    .vlt-dialog .vlt-dialog-footer .vlt-right-buttons {
+        padding: 10px 0px 10px 0px;
+        text-align: center;
+        width: 100%;
+    }
 }
 
 /*************************************************************
