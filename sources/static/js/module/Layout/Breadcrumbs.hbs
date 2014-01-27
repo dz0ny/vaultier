@@ -1,33 +1,36 @@
 {{#if breadcrumbs }}
     <div class="vlt-breads">
         <div class="container">
-            <ol class="breadcrumb">
-                {{#each breadcrumbs.items }}
-                    {{#if last}}
-                        <li class="active">
-                            <div class="vlt-bread-item-wrapper">
-                                {{#if icon}}
-                                    <img class="vlt-icon" {{bind-attr src=icon}}>
-                                {{/if}}
-                                <h2>
-                                    {{ title }}
-                                </h2>
-                            </div>
-                        </li>
-                    {{else}}
-                        <li>
-                            <div class="vlt-bread-item-wrapper">
-                                <a {{bind-attr href=link}}>
-                                    {{#if icon}}
-                                        <img class="vlt-icon" {{bind-attr src=icon}}>
-                                    {{/if}}
-                                    {{ title }}
-                                </a>
-                            </div>
-                        </li>
-                    {{/if}}
-                {{/each}}
-            </ol>
+            {{#each breadcrumbs.items }}
+                {{#if last}}
+                    <div class="vlt-bread active">
+                        <span class="vlt-bread-inner">
+                            {{#if icon}}
+                                <img class="vlt-icon" {{bind-attr src=icon}}>
+                            {{/if}}
+
+                            {{ title }}
+                         </span>
+                    </div>
+                {{else}}
+                    <div class="vlt-bread">
+                        <a {{bind-attr href=link}} class="vlt-bread-inner">
+                            {{#if icon}}
+                                <img class="vlt-icon" {{bind-attr src=icon}}>
+                            {{/if}}
+
+                            {{ title }}
+                        </a>
+                    </div>
+                {{/if}}
+
+                {{#unless last}}
+                    <div class="vlt-separator">
+                        <b> > </b>
+                    </div>
+                {{/unless}}
+            {{/each}}
         </div>
+        <div class="clearfix"></div>
     </div>
 {{/if}}

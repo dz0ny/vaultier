@@ -128,19 +128,8 @@ a:hover {
 }
 
 /*
-* Bredcrumbs
+* Notifyjs
 */
-
-.breadcrumb > li:before {
-    padding: 0 5px;
-    color: #cccccc;
-    content: "/\00a0";
-}
-
-.breadcrumb > li:first-of-type:before {
-    padding: 0px;
-    content: normal;
-}
 
 .notifyjs-bootstrap-base {
     width: 400px;
@@ -332,44 +321,56 @@ a:hover {
 *************************************************************/
 
 .vlt-breads {
+    padding: 10px 10px 10px 0px;
     border-bottom: 1px solid #E0DBDB;
     background-color: #F5F5F5;
 }
 
-.vlt-breads .vlt-icon {
-    margin: -2px 2px 0px 0px;
-    width: 20px;
-    height: 20px;
+.vlt-breads .vlt-bread {
+    float: left;
 }
 
-.vlt-breads a {
+.vlt-breads .vlt-separator {
+    padding: 4px;
+    float: left;
+}
+
+.vlt-breads .vlt-bread .vlt-bread-inner {
+    display: block;
     border-radius: 4px;
     border: 1px solid transparent;
     transition: border-color 500ms, background-color 500ms;
     padding: 4px;
 }
 
-.vlt-breads a:hover {
+.vlt-breads .vlt-bread .vlt-bread-inner {
+    border-radius: 4px;
+    border: 1px solid transparent;
+    transition: border-color 500ms, background-color 500ms;
+    padding: 4px;
+}
+
+.vlt-breads .vlt-bread a.vlt-bread-inner:hover {
     border: 1px solid #317EB2;
     transition: border-color 500ms, background-color 500ms;
     background-color: #FFFFFF;
 }
 
-.vlt-breads .breadcrumb {
-    background-color: #F5F5F5;
-    margin-bottom: 0px;
-    padding-left: 0px;
+.vlt-breads .vlt-bread .vlt-bread-inner .vlt-icon {
+    margin: -2px 2px 0px 0px;
+    width: 20px;
+    height: 20px;
 }
 
-.vlt-breads .breadcrumb .vlt-bread-item-wrapper {
-    display: inline-block;
-}
+@media (max-width: 767px) {
+    .vlt-breads .vlt-bread {
+        float: none;
+    }
 
-.vlt-breads .breadcrumb .active h2 {
-    font-size: 14px;
-    font-weight: bold;
-    display: inline-block;
-    margin: 0px;
+    .vlt-breads .vlt-separator {
+        display: none;
+    }
+
 }
 
 /*************************************************************
@@ -402,6 +403,11 @@ a:hover {
 .vlt-page > .vlt-page-nav {
     margin-bottom: 20px;
 }
+
+.vlt-page > .vlt-page-nav h2 {
+    margin-right: 20px;
+}
+
 
 .vlt-page > .vlt-page-nav .vlt-page-tabs {
     margin-top: 20px;
