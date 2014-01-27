@@ -69,7 +69,7 @@
 
                     <div class="clearfix"></div>
                 </div>
-                <table class="table vlt-table">
+                <div class="table vlt-table">
 
                     {{#unless block.roles.length}}
                         <div>
@@ -87,11 +87,11 @@
 
                     {{#each role in block.roles }}
 
-                        {{#view view.Item role=role block=block classNameBindings='role.isMember:normal:warning' }}
-                            <td class="col-md-4 vlt-user">
+                        {{#view view.Item role=role block=block class="vlt-row" classNameBindings='role.isMember:normal:invited' }}
+                            <div class="vlt-col col-sm-4 vlt-user">
                                 {{printUser role.member size=50}}
-                            </td>
-                            <td class="col-md-4 vlt-labels">
+                            </div>
+                            <div class="vlt-col col-sm-4 vlt-labels">
                                 {{#if role.isMemberWithoutKeys}}
                                     <div class="label label-warning">
                                         Does not have workspace key yet
@@ -103,8 +103,9 @@
                                         Invited only. Did not show up yet!
                                     </div>
                                 {{/if}}
-                            </td>
-                            <td class="col-md-4 vlt-actions">
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="vlt-col col-sm-4 vlt-actions">
                                 {{#unless block.readOnly}}
 
                                     {{#if role.isCurrentUser}}
@@ -143,12 +144,13 @@
                                     </span>
 
                                 {{/unless}}
-                            </td>
+                            </div>
+                            <div class="clearfix"></div>
 
                         {{/view}}
 
                     {{/each}}
-                </table>
+                </div>
 
             </div>
         {{/unless}}

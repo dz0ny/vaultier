@@ -52,7 +52,7 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
     printUser: function (user, options) {
         var email = user.email || user.get('email');
         var nickname = user.nickname || user.get('nickname');
-        var size = options.hash.size || 20;
+        var size = options.hash.size || 25;
         var length = options.hash.ellipsis || 60;
         var prefix = options.hash.prefix || '';
 

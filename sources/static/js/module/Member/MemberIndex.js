@@ -211,7 +211,7 @@ Vaultier.MemberIndexView = Ember.View.extend({
 
 
     Item: Ember.View.extend({
-        tagName: 'tr',
+        tagName: 'div',
         Select: Vaultier.MemberSelectRoleView.extend({
             actions: {
                 changed: function () {

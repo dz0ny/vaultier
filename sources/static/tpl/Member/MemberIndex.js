@@ -62,7 +62,7 @@ function program7(depth0,data) {
   hashContexts = {};
   stack1 = helpers['if'].call(depth0, "block.readOnly", {hash:{},inverse:self.noop,fn:self.program(8, program8, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\r\n\r\n                    </div>\r\n\r\n                    <div class=\"clearfix\"></div>\r\n                </div>\r\n                <table class=\"table vlt-table\">\r\n\r\n                    ");
+  data.buffer.push("\r\n\r\n                    </div>\r\n\r\n                    <div class=\"clearfix\"></div>\r\n                </div>\r\n                <div class=\"table vlt-table\">\r\n\r\n                    ");
   hashTypes = {};
   hashContexts = {};
   stack1 = helpers.unless.call(depth0, "block.roles.length", {hash:{},inverse:self.noop,fn:self.program(11, program11, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
@@ -72,7 +72,7 @@ function program7(depth0,data) {
   hashContexts = {};
   stack1 = helpers.each.call(depth0, "role", "in", "block.roles", {hash:{},inverse:self.noop,fn:self.program(14, program14, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\r\n                </table>\r\n\r\n            </div>\r\n        ");
+  data.buffer.push("\r\n                </div>\r\n\r\n            </div>\r\n        ");
   return buffer;
   }
 function program8(depth0,data) {
@@ -124,12 +124,13 @@ function program14(depth0,data) {
   
   var buffer = '', stack1, hashContexts, hashTypes;
   data.buffer.push("\r\n\r\n                        ");
-  hashContexts = {'role': depth0,'block': depth0,'classNameBindings': depth0};
-  hashTypes = {'role': "ID",'block': "ID",'classNameBindings': "STRING"};
+  hashContexts = {'role': depth0,'block': depth0,'class': depth0,'classNameBindings': depth0};
+  hashTypes = {'role': "ID",'block': "ID",'class': "STRING",'classNameBindings': "STRING"};
   stack1 = helpers.view.call(depth0, "view.Item", {hash:{
     'role': ("role"),
     'block': ("block"),
-    'classNameBindings': ("role.isMember:normal:warning")
+    'class': ("vlt-row"),
+    'classNameBindings': ("role.isMember:normal:invited")
   },inverse:self.noop,fn:self.program(15, program15, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n\r\n                    ");
@@ -138,14 +139,14 @@ function program14(depth0,data) {
 function program15(depth0,data) {
   
   var buffer = '', stack1, stack2, hashContexts, hashTypes, options;
-  data.buffer.push("\r\n                            <td class=\"col-md-4 vlt-user\">\r\n                                ");
+  data.buffer.push("\r\n                            <div class=\"vlt-col col-sm-4 vlt-user\">\r\n                                ");
   hashContexts = {'size': depth0};
   hashTypes = {'size': "INTEGER"};
   options = {hash:{
     'size': (50)
   },contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
   data.buffer.push(escapeExpression(((stack1 = helpers.printUser || depth0.printUser),stack1 ? stack1.call(depth0, "role.member", options) : helperMissing.call(depth0, "printUser", "role.member", options))));
-  data.buffer.push("\r\n                            </td>\r\n                            <td class=\"col-md-4 vlt-labels\">\r\n                                ");
+  data.buffer.push("\r\n                            </div>\r\n                            <div class=\"vlt-col col-sm-4 vlt-labels\">\r\n                                ");
   hashTypes = {};
   hashContexts = {};
   stack2 = helpers['if'].call(depth0, "role.isMemberWithoutKeys", {hash:{},inverse:self.noop,fn:self.program(16, program16, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
@@ -155,12 +156,12 @@ function program15(depth0,data) {
   hashContexts = {};
   stack2 = helpers['if'].call(depth0, "role.isInvited", {hash:{},inverse:self.noop,fn:self.program(18, program18, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("\r\n                            </td>\r\n                            <td class=\"col-md-4 vlt-actions\">\r\n                                ");
+  data.buffer.push("\r\n                                <div class=\"clearfix\"></div>\r\n                            </div>\r\n                            <div class=\"vlt-col col-sm-4 vlt-actions\">\r\n                                ");
   hashTypes = {};
   hashContexts = {};
   stack2 = helpers.unless.call(depth0, "block.readOnly", {hash:{},inverse:self.program(25, program25, data),fn:self.program(20, program20, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("\r\n                            </td>\r\n\r\n                        ");
+  data.buffer.push("\r\n                            </div>\r\n                            <div class=\"clearfix\"></div>\r\n\r\n                        ");
   return buffer;
   }
 function program16(depth0,data) {

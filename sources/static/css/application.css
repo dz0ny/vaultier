@@ -412,7 +412,6 @@ a:hover {
     margin-right: 20px;
 }
 
-
 .vlt-page > .vlt-page-nav .vlt-page-tabs {
     margin-top: 20px;
 }
@@ -501,7 +500,6 @@ a:hover {
 
 .vlt-item .vlt-footer > .vlt-footer-item {
     min-height: 20px;
-    padding: 5px 10px 5px 10px;
     float: right;
 }
 
@@ -1175,49 +1173,37 @@ span.vlt-user img {
 * Permissions panel
 *************************************************************
 *************************************************************/
-.vlt-panel-permissions .vlt-table .vlt-perms {
-    float: right;
+
+.vlt-panel-permissions .vlt-controls {
+    text-align: right;
 }
 
-.vlt-panel-permissions .vlt-table .vlt-perms .help-block {
-    font-size: 12px;
+.vlt-panel-permissions .vlt-table .vlt-row {
+    padding: 10px 0px 10px 0px;
+    border-bottom: 2px solid #F5F5F5;
 }
 
-.vlt-panel-permissions .vlt-table .vlt-delete {
-    margin-left: 5px;
-    min-height: 35px;
-    float: right;
+.vlt-panel-permissions .vlt-table .vlt-row:last-of-type {
+    border-bottom: 0px;
 }
 
-vlt-delete
-.vlt-panel-permissions .vlt-table .vlt-user {
-    vertical-align: middle;
-}
 
-.vlt-panel-permissions .vlt-table .vlt-user img {
-    vertical-align: middle;
-    margin-right: 15px;
-    float: left;
+.vlt-panel-permissions .vlt-table .vlt-row .vlt-user img {
+    vertical-align: top;
+    margin-left: 4px;
     width: 50px;
     height: 50px;
 }
 
-.vlt-panel-permissions .vlt-table .vlt-actions {
-    text-align: right;
+.vlt-panel-permissions .vlt-table .vlt-row .vlt-actions .vlt-perms {
+    float: right;
+    width: 150px;
 }
 
-.vlt-panel-permissions .vlt-table .vlt-actions .input-group {
-    margin-top: 10px;
-}
-
-.vlt-panel-permissions .vlt-table td .label {
-    margin-top: 15px;
-    display: inline-block;
-    padding: 10px;
-}
-
-.vlt-panel-permissions .vlt-table .vlt-actions .vlt-perms {
-    max-width: 200px;
+.vlt-panel-permissions .vlt-table .vlt-row .vlt-actions .vlt-delete {
+    margin-left: 5px;
+    min-height: 35px;
+    float: right;
 }
 
 .vlt-panel-permissions .panel-heading {
@@ -1225,15 +1211,33 @@ vlt-delete
     padding-right: 0px;
 }
 
-.vlt-panel-permissions .panel-heading .vlt-controls {
-    text-align: right;
-}
-
-.vlt-panel-permissions .vlt-table .vlt-labels .label {
-    margin-top: 8px;
-
+.vlt-panel-permissions .vlt-table .label {
+    float: right;
+    display: inline-block;
+    padding: 8px;
+    margin: 0px 0px 0px 5px;
     word-wrap: normal;
     white-space: normal;
+}
+
+@media (max-width: 767px) {
+    .vlt-panel-permissions .vlt-table .vlt-col {
+        float: none;
+        padding: 10px;
+    }
+
+    .vlt-panel-permissions .vlt-table .vlt-row .vlt-actions .vlt-perms {
+        float: left;
+    }
+
+    .vlt-panel-permissions .vlt-table .vlt-row .vlt-actions .vlt-delete {
+        float: left;
+    }
+
+    .vlt-panel-permissions .vlt-table .vlt-row .label {
+        float: left;
+    }
+
 }
 
 /*************************************************************
