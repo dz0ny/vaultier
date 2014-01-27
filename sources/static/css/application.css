@@ -368,7 +368,11 @@ a:hover {
     }
 
     .vlt-breads .vlt-separator {
-        display: none;
+        float: none;
+        margin-top: 5px;
+        overflow: hidden;
+        border-top: 1px solid #E0DBDB;
+        height: 1px;
     }
 
 }
