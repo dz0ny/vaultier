@@ -252,6 +252,7 @@ Vaultier.AuthRegisterCredsRoute = Ember.Route.extend({
                 .catch(function (errors) {
                     ctrl.set('errors', Ember.Object.create(errors.errors));
                     ctrl.set('props.nextButtonDisabled', false);
+                    $.notify('We are sorry, but your account cannot be created', 'error');
                     return Ember.RSVP.reject(errors);
                 }.bind(this))
 
