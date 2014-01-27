@@ -76,8 +76,8 @@ ApplicationLoader = {
             }.bind(this))
             .catch(function(error) {
                 this.hideLoader()
-                return Ember.RSVP.reject(result);
-            })
+                return Ember.RSVP.reject(error);
+            }.bind(this))
     },
 
     showLoaderText: function (text) {
