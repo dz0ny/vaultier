@@ -8,7 +8,7 @@ Vaultier.registerDI = function (app) {
     app.inject('service', 'config', 'config:main');
 
     // service:store
-    app.register('store:main', RESTless.get('client'), {instantiate: false})
+    app.register('store:main', Vaultier.Client, {instantiate: false})
     app.inject('route', 'store', 'store:main');
     app.inject('controller', 'store', 'store:main');
 
