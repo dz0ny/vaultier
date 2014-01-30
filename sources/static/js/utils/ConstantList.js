@@ -27,3 +27,13 @@ Utils.ConstantList.prototype.getByValue = function(value) {
         }
     }
 }
+
+Utils.ConstantList.prototype.getKeyByValue = function(value) {
+    for (prop in this) {
+        if (this.hasOwnProperty(prop)) {
+            if (this[prop].value == value) {
+                return prop
+            }
+        }
+    }
+}

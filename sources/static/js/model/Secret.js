@@ -83,6 +83,23 @@ Vaultier.Secret = RL.Model.extend(
             this.setProperties(data);
         },
 
+        applyMixinByType: function () {
+            var type = this.get('type');
+            var clsName = 'Vaultier.Secret' + this.types.getKeyByValue(type) + 'Mixin';
+            var cls = Ember.get(clsName);
+            if (!cls)
+                throw new Error('Cannot instantiate secret class mixin {mixin} for type {type}'
+                    .replace('{tyoe}', type)
+                    .replace('{mixin}', clsName))
+            cls.apply(this);
+        },
+
+        deserialize: function (data) {
+            this._super.apply(this, [data]);
+            this.applyMixinByType()
+            return this;
+        },
+
         encode: function () {
             var data;
             switch (this.get('type')) {
@@ -130,5 +147,15 @@ Vaultier.Secret = RL.Model.extend(
         }
 
     });
+
+Vaultier.SecretFILEMixin = Ember.Mixin.create({
+
+})
+
+Vaultier.SecretNOTEMixin = Ember.Mixin.create({
+})
+
+Vaultier.SecretPASSWORD = Ember.Mixin.create({
+})
 
 
