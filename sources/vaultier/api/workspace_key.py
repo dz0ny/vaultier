@@ -1,4 +1,3 @@
-from django.db.models.query_utils import Q
 from rest_framework.fields import SerializerMethodField, IntegerField, CharField
 from rest_framework.permissions import BasePermission, IsAuthenticated
 from rest_framework.response import Response
@@ -10,6 +9,11 @@ from vaultier.api.workspace import RelatedWorkspaceSerializer
 from vaultier.auth.authentication import TokenAuthentication
 from vaultier.models.fields import MemberStatusField
 from vaultier.models.member import Member
+
+
+class CanManageWorkspaceKey(BasePermission):
+    def has_object_permission(self, request, view, obj):
+        return Member.objects.all_to_transfer_keys(request.user).filter(id=obj.id).count()>0
 
 
 class WorkspaceKeySerializer(ModelSerializer):
@@ -39,7 +43,7 @@ class ShortenedWorkspaceKeySerializer(ModelSerializer):
 class WorkspaceKeyViewSet(ModelViewSet):
     model = Member
     authentication_classes = (TokenAuthentication, )
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, CanManageWorkspaceKey)
 
     def destroy(self, request, *args, **kwargs):
         return Response(status=HTTP_405_METHOD_NOT_ALLOWED, data={'detail': 'Destroy not provided'})
@@ -57,5 +61,7 @@ class WorkspaceKeyViewSet(ModelViewSet):
             return WorkspaceKeySerializer
 
     def get_queryset(self):
-        return Member.objects.all_to_transfer_keys(self.request.user)
-
+        if (self.action == 'list'):
+            return Member.objects.all_to_transfer_keys(self.request.user)
+        else:
+            return Member.objects.all_for_user(self.request.user)

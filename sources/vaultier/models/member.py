@@ -5,7 +5,7 @@ import hmac
 import uuid
 from django.db.models.query_utils import Q
 from vaultier.mailer.invitation import resend_invitation
-from vaultier.models.fields import AclLevelField, LowerCaseCharField, MemberStatusField
+from vaultier.models.fields import LowerCaseCharField, MemberStatusField
 from hashlib import sha1
 from vaultier.tools.changes import ChangesMixin
 
@@ -21,9 +21,27 @@ class MemberManager(Manager):
         return result
 
     def all_to_transfer_keys(self, user):
+        from vaultier.models.workspace import Workspace
+
+        workspaces_where_user_is_member_with_keys = Workspace.objects.filter(
+            membership__status=MemberStatusField.STATUS_MEMBER,
+            membership__user=user
+        ).distinct()
+
+        # has key can see all without workspace key
+        # OR
+        # has not key, can work only with own workspace key
 
         query = self.all_for_user(user).filter(
-            status=MemberStatusField.STATUS_MEMBER_WITHOUT_WORKSPACE_KEY
+            Q(
+                Q(workspace__in=workspaces_where_user_is_member_with_keys)
+                &
+                Q(status=MemberStatusField.STATUS_MEMBER_WITHOUT_WORKSPACE_KEY)
+            )
+            |
+            Q(
+                user=user
+            )
         ).distinct()
 
         return query
@@ -125,7 +143,7 @@ class Member(ChangesMixin, models.Model):
         app_label = 'vaultier'
 
     workspace = models.ForeignKey('vaultier.Workspace', related_name='membership', on_delete=CASCADE)
-    user = models.ForeignKey('vaultier.User', on_delete=CASCADE, null=True,  related_name='membership')
+    user = models.ForeignKey('vaultier.User', on_delete=CASCADE, null=True, related_name='membership')
     invitation_hash = models.CharField(max_length=64, null=True, unique=True)
     invitation_email = LowerCaseCharField(max_length=1024, null=True)
     workspace_key = models.CharField(max_length=4096)

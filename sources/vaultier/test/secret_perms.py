@@ -6,7 +6,8 @@ from vaultier.models.fields import RoleLevelField, SecretTypeField
 from vaultier.models.member import Member
 from vaultier.test.auth_tools import auth_api_call, register_api_call
 from vaultier.test.card_tools import create_card_api_call, list_cards_api_call, retrieve_card_api_call, delete_card_api_call
-from vaultier.test.member_tools import invite_member_api_call, accept_invitation_api_call
+from vaultier.test.invitation_tools import accept_invitation_api_call
+from vaultier.test.member_tools import invite_member_api_call
 from vaultier.test.role_tools import create_role_api_call
 from vaultier.test.secret_tools import create_secret_api_call, delete_secret_api_call, retrieve_secret_api_call
 from vaultier.test.tools import format_response
