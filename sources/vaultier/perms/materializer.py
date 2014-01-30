@@ -1,8 +1,6 @@
 from vaultier.models import Acl
-from vaultier.models.acl_fields import AclDirectionField
-from vaultier.models.member_fields import MemberStatusField
+from vaultier.models.fields import AclDirectionField, RoleLevelField, MemberStatusField
 from vaultier.models.role import Role
-from vaultier.models.role_fields import RoleLevelField
 from vaultier.perms.strategy import ReadAclStrategy, WriteAclStrategy, CreateAclStrategy
 
 

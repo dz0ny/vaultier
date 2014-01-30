@@ -2,12 +2,10 @@ from django.test.testcases import TransactionTestCase
 from django.utils import unittest
 from django.utils.unittest.suite import TestSuite
 from vaultier.models.acl import Acl
-from vaultier.models.acl_fields import AclLevelField
 from vaultier.models.card import Card
+from vaultier.models.fields import AclLevelField, RoleLevelField, MemberStatusField
 from vaultier.models.member import Member
-from vaultier.models.member_fields import MemberStatusField
 from vaultier.models.role import Role
-from vaultier.models.role_fields import RoleLevelField
 from vaultier.models.user import User
 from vaultier.models.vault import Vault
 from vaultier.models.workspace import Workspace

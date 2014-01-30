@@ -8,16 +8,20 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding field 'Secret.name'
-        db.add_column(u'vaultier_secret', 'name',
-                      self.gf('django.db.models.fields.CharField')(default='', max_length=255),
-                      keep_default=False)
 
+        # Changing field 'User.email'
+        db.alter_column(u'vaultier_user', 'email', self.gf('vaultier.models.fields.LowerCaseCharField')(unique=True, max_length=255))
+
+        # Changing field 'Member.invitation_email'
+        db.alter_column(u'vaultier_member', 'invitation_email', self.gf('vaultier.models.fields.LowerCaseCharField')(max_length=1024, null=True))
 
     def backwards(self, orm):
-        # Deleting field 'Secret.name'
-        db.delete_column(u'vaultier_secret', 'name')
 
+        # Changing field 'User.email'
+        db.alter_column(u'vaultier_user', 'email', self.gf('django.db.models.fields.CharField')(max_length=255, unique=True))
+
+        # Changing field 'Member.invitation_email'
+        db.alter_column(u'vaultier_member', 'invitation_email', self.gf('django.db.models.fields.CharField')(max_length=1024, null=True))
 
     models = {
         u'auth.group': {
@@ -59,6 +63,7 @@ class Migration(SchemaMigration):
             'description': ('django.db.models.fields.CharField', [], {'max_length': '1024', 'null': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'slug': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '255'}),
             'updated_at': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'vault': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['vaultier.Vault']"})
         },
@@ -67,11 +72,11 @@ class Migration(SchemaMigration):
             'created_at': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'created_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'members_created'", 'on_delete': 'models.PROTECT', 'to': "orm['vaultier.User']"}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'invitation_email': ('django.db.models.fields.CharField', [], {'max_length': '1024', 'null': 'True'}),
+            'invitation_email': ('vaultier.models.fields.LowerCaseCharField', [], {'max_length': '1024', 'null': 'True'}),
             'invitation_hash': ('django.db.models.fields.CharField', [], {'max_length': '64', 'unique': 'True', 'null': 'True'}),
             'status': ('vaultier.models.fields.MemberStatusField', [], {'default': '3'}),
             'updated_at': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['vaultier.User']", 'null': 'True'}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'membership'", 'null': 'True', 'to': "orm['vaultier.User']"}),
             'workspace': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'membership'", 'to': "orm['vaultier.Workspace']"}),
             'workspace_key': ('django.db.models.fields.CharField', [], {'max_length': '4096'})
         },
@@ -95,8 +100,17 @@ class Migration(SchemaMigration):
             'created_by': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['vaultier.User']", 'on_delete': 'models.PROTECT'}),
             'data': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '255'}),
+            'name': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'type': ('vaultier.models.fields.SecretTypeField', [], {}),
+            'updated_at': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'})
+        },
+        'vaultier.slug': {
+            'Meta': {'object_name': 'Slug'},
+            'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['contenttypes.ContentType']"}),
+            'created_at': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'object_id': ('django.db.models.fields.PositiveIntegerField', [], {}),
+            'slug': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255', 'db_index': 'True'}),
             'updated_at': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'})
         },
         'vaultier.token': {
@@ -109,7 +123,7 @@ class Migration(SchemaMigration):
         },
         'vaultier.user': {
             'Meta': {'object_name': 'User'},
-            'email': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255'}),
+            'email': ('vaultier.models.fields.LowerCaseCharField', [], {'unique': 'True', 'max_length': '255'}),
             'groups': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'related_name': "u'user_set'", 'blank': 'True', 'to': u"orm['auth.Group']"}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
@@ -128,6 +142,7 @@ class Migration(SchemaMigration):
             'description': ('django.db.models.fields.CharField', [], {'max_length': '1024', 'null': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'slug': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '255'}),
             'updated_at': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'workspace': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['vaultier.Workspace']"})
         },
@@ -138,6 +153,7 @@ class Migration(SchemaMigration):
             'description': ('django.db.models.fields.CharField', [], {'max_length': '1024', 'null': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'slug': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '255'}),
             'updated_at': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'})
         }
     }

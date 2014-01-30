@@ -3,12 +3,10 @@ from django.db.models.deletion import PROTECT
 from django.db.models.manager import Manager
 from django.db.models import F, Q
 from vaultier.models.acl import Acl
-from vaultier.models.acl_fields import AclLevelField
+from vaultier.models.fields import AclLevelField, RoleLevelField, MemberStatusField
 
 from vaultier.models.member import Member
-from vaultier.models.member_fields import MemberStatusField
 from vaultier.models.role import Role
-from vaultier.models.role_fields import RoleLevelField
 from vaultier.tools.changes import ChangesMixin
 from vaultier.tools.tree import TreeItemMixin
 

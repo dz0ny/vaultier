@@ -1,7 +1,7 @@
 from rest_framework.fields import Field
 from vaultier.models.acl import Acl
-from vaultier.models.acl_fields import AclLevelField
-from vaultier.models.role_fields import RoleLevelField
+from vaultier.models.fields import AclLevelField, RoleLevelField
+
 
 class PermsField(Field):
     read_only = True

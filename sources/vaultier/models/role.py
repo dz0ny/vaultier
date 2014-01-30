@@ -2,9 +2,8 @@ from django.db import models
 from django.db.models.deletion import PROTECT, CASCADE
 from django.db.models.manager import Manager
 from django.db.models.query_utils import Q
-from vaultier.models.acl_fields import AclLevelField
 from vaultier.models.card import Card
-from vaultier.models.role_fields import RoleLevelField
+from vaultier.models.fields import AclLevelField, RoleLevelField
 from vaultier.models.object_reference import ObjectReference, ObjectReferenceTypeField
 from vaultier.models.vault import Vault
 from vaultier.tools.changes import ChangesMixin

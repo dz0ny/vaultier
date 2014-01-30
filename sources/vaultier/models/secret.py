@@ -1,8 +1,7 @@
 from django.db import models
 from django.db.models.deletion import PROTECT, CASCADE
 from django.db.models.manager import Manager
-from vaultier.models.acl_fields import AclLevelField
-from vaultier.models.secret_fields import SecretTypeField
+from vaultier.models.fields import AclLevelField, SecretTypeField
 from vaultier.tools.changes import ChangesMixin
 
 

@@ -46,10 +46,10 @@ class Backend(ModelBackend):
 
     def authenticate(self, email=None, signature=None):
         try:
-            user = User.objects.get(email=email)
+            user = User.objects.get(email=email.lower())
         except User.DoesNotExist:
             return None
-        if (self.verify(user.public_key, user.email, signature)):
+        if (self.verify(user.public_key, email, signature)):
             token = Token(user=user);
             token.save();
             return token

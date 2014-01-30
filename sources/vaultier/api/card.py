@@ -7,8 +7,7 @@ from vaultier.api.shared.slug import RetrieveBySlugMixin
 from vaultier.api.user import RelatedUserSerializer
 from vaultier.auth.authentication import TokenAuthentication
 from vaultier.models import Card
-from vaultier.models.acl_fields import AclLevelField
-from vaultier.models.role_fields import RoleLevelField
+from vaultier.models.fields import AclLevelField, RoleLevelField
 from vaultier.perms.check import has_object_acl
 
 

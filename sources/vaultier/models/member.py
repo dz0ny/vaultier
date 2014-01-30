@@ -5,8 +5,7 @@ import hmac
 import uuid
 from django.db.models.query_utils import Q
 from vaultier.mailer.invitation import resend_invitation
-from vaultier.models.acl_fields import AclLevelField
-from vaultier.models.member_fields import MemberStatusField
+from vaultier.models.fields import AclLevelField, LowerCaseCharField, MemberStatusField
 from hashlib import sha1
 from vaultier.tools.changes import ChangesMixin
 
@@ -128,12 +127,13 @@ class Member(ChangesMixin, models.Model):
     workspace = models.ForeignKey('vaultier.Workspace', related_name='membership', on_delete=CASCADE)
     user = models.ForeignKey('vaultier.User', on_delete=CASCADE, null=True,  related_name='membership')
     invitation_hash = models.CharField(max_length=64, null=True, unique=True)
-    invitation_email = models.CharField(max_length=1024, null=True)
+    invitation_email = LowerCaseCharField(max_length=1024, null=True)
     workspace_key = models.CharField(max_length=4096)
     status = MemberStatusField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey('vaultier.User', on_delete=PROTECT, related_name='members_created')
+
 
     def is_invitation(self):
         if self.status == MemberStatusField.STATUS_INVITED:

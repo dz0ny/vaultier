@@ -11,9 +11,8 @@ from rest_framework.viewsets import ModelViewSet
 from vaultier.api.user import RelatedUserSerializer
 from vaultier.auth.authentication import TokenAuthentication
 from vaultier.mailer.invitation import resend_invitation
-from vaultier.models.acl_fields import AclLevelField
+from vaultier.models.fields import AclLevelField, MemberStatusField
 from vaultier.models.member import Member
-from vaultier.models.member_fields import MemberStatusField
 from vaultier.models.role import Role
 from vaultier.models.workspace import Workspace
 from vaultier.perms.check import has_object_acl

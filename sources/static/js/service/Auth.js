@@ -102,6 +102,8 @@ Service.Auth = Ember.Object.extend({
      * @returns {Ember.RSVP.Promise}
      */
     login: function (email, privateKey, transitionAfterLogin) {
+        email = email.toLowerCase();
+
         return this.promises.login(email, privateKey)
             .then(
                 // successfull login

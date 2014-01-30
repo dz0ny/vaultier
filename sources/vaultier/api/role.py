@@ -6,7 +6,7 @@ from vaultier.api.fields.relations import RelatedNestedField
 from vaultier.api.member import RelatedMemberSerializer
 from vaultier.api.user import RelatedUserSerializer
 from vaultier.auth.authentication import TokenAuthentication
-from vaultier.models.acl_fields import AclLevelField
+from vaultier.models.fields import AclLevelField
 from vaultier.models.member import Member
 from vaultier.models.role import Role
 from vaultier.perms.check import has_object_acl

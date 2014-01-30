@@ -1,8 +1,7 @@
 from django.db import models
 from django.db.models.deletion import CASCADE
 from django.db.models.manager import Manager
-from vaultier.models.acl_fields import AclDirectionField
-from vaultier.models.role_fields import RoleLevelField
+from vaultier.models.fields import AclDirectionField, RoleLevelField
 from vaultier.models.object_reference import ObjectReference, ObjectReferenceTypeField
 
 

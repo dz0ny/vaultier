@@ -55,6 +55,7 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
         var size = options.hash.size || 25;
         var length = options.hash.ellipsis || 60;
         var prefix = options.hash.prefix || '';
+        var disableTooltip = options.hash.disableTooltip || false;
 
         var avatar = this.gravatarImg(email, {hash: {size: size}});
 
@@ -66,10 +67,14 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
         }
         var short = this.ellipsis(name, length);
 
-        var tooltip = 'data-toggle="tooltip" title="{prefix} {name} ({email})"'
-            .replace('{prefix}', prefix)
-            .replace('{name}', name)
-            .replace('{email}', email)
+        if (!disableTooltip) {
+            var tooltip = 'data-toggle="tooltip" title="{prefix} {name} ({email})"'
+                .replace('{prefix}', prefix)
+                .replace('{name}', name)
+                .replace('{email}', email)
+        } else {
+            tooltip = ''
+        }
 
         return '<span class="vlt-user" {tooltip} >{avatar} {name}</span>'
             .replace('{tooltip}', tooltip)
@@ -87,7 +92,7 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
             console.error(e.stack)
         }
         if (prefix) {
-            t = prefix + ' ' +t
+            t = prefix + ' ' + t
         }
         return '<span data-toggle=tooltip title="' + t + '">' + a + '</span>';
     },

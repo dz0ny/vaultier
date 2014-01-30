@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
 from time import timezone
+from vaultier.models.fields import LowerCaseCharField
 from vaultier.tools.changes import ChangesMixin
 
 
@@ -32,7 +33,7 @@ class User(ChangesMixin, AbstractBaseUser, PermissionsMixin):
 
     nickname = models.CharField(max_length=255, blank=False, null=False)
     public_key = models.CharField(max_length=1024)
-    email = models.CharField(max_length=255, unique=True)
+    email = LowerCaseCharField(max_length=255, unique=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField('staff status',
                                    default=False,

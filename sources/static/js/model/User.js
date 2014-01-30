@@ -4,7 +4,16 @@ Vaultier.User = RL.Model.extend(
     {
         email: RL.attr('string'),
         nickname: RL.attr('string'),
-        public_key: RL.attr('string')
+        public_key: RL.attr('string'),
+
+        saveRecord : function() {
+            var email = this.get('email');
+            if (email) {
+                this.set('email', email.toLowerCase());
+            }
+            return this._super.apply(this, arguments);
+        }
+
     });
 
 

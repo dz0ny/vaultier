@@ -7,8 +7,8 @@ from rest_framework.viewsets import ModelViewSet
 from vaultier.api.member import MemberSerializer
 from vaultier.api.user import RelatedUserSerializer
 from vaultier.auth.authentication import TokenAuthentication
+from vaultier.models.fields import MemberStatusField
 from vaultier.models.member import Member
-from vaultier.models.member_fields import MemberStatusField
 from vaultier.models.role import Role
 
 class InvitationRoleSerializer(ModelSerializer):

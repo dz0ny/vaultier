@@ -3,9 +3,9 @@ from django.utils import unittest
 from django.utils.unittest.suite import TestSuite
 from rest_framework.status import HTTP_200_OK, HTTP_403_FORBIDDEN, HTTP_201_CREATED, HTTP_400_BAD_REQUEST
 from vaultier.models.acl import Acl
+from vaultier.models.fields import RoleLevelField
 from vaultier.models.member import Member
 from vaultier.models.role import Role
-from vaultier.models.role_fields import RoleLevelField
 from vaultier.test.auth_tools import auth_api_call, register_api_call
 from vaultier.test.member_tools import invite_member_api_call, accept_invitation_api_call
 from vaultier.test.role_tools import create_role_api_call, list_role_api_call, update_role_api_call, delete_role_api_call

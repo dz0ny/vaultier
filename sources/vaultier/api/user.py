@@ -9,8 +9,8 @@ from rest_framework.status import HTTP_405_METHOD_NOT_ALLOWED, HTTP_200_OK, HTTP
 from rest_framework.viewsets import ModelViewSet
 from vaultier.auth.authentication import TokenAuthentication
 from vaultier.models import User
+from vaultier.models.fields import MemberStatusField
 from vaultier.models.member import Member
-from vaultier.models.member_fields import MemberStatusField
 
 
 class CanManageUserPermission(BasePermission):
