@@ -32,29 +32,42 @@ Vaultier.Secret = RL.Model.extend(
 
         name: RL.attr('string'),
         type: RL.attr('number'),
+        /**
+         * Used to store encrypted data, small amount which is encrypted always
+         */
         data: RL.attr('string'),
+        /**
+         * Used to store large encrypted data. eg. file data. descrypted only on request
+         */
         card: RL.attr('number'),
         perms: RL.attr('object'),
 
-        decoded: false,
+        /**
+         * Holds cached data from blob
+         */
+        blob: null,
+        /**
+         * Holds information whether is blob marked to be saved
+         */
+        blobDirty: false,
 
-        password: null,
-        username: null,
-        url: null,
-        note: null,
-        file: null,
+        saveBlob: function () {
+            return new Ember.RSVP.Promise(function (resolve) {
+                console.log('saved')
+                resolve();
+            })
+        },
 
-        isNote: function () {
-            return this.get('type') == this.types['NOTE'].value;
-        }.property('type'),
-
-        isPassword: function () {
-            return this.get('type') == this.types['PASSWORD'].value;
-        }.property('type'),
-
-        isFile: function () {
-            return this.get('type') == this.types['FILE'].value;
-        }.property('type'),
+        loadBlob: function () {
+            if (blob) {
+                return Ember.RSVP.resolve(this.get('blob'))
+            } else {
+                return new Ember.RSVP.Promise(function (resolve) {
+                    console.log('loaded')
+                    resolve();
+                })
+            }
+        },
 
         deferDecode: function () {
             var workspacekey = this.get('workspacekey');
@@ -64,6 +77,7 @@ Vaultier.Secret = RL.Model.extend(
         },
 
         decode: function () {
+            this.set('decoded', false);
             var workspacekey = this.get('workspacekey');
 
             var data = this.get('data');
@@ -83,22 +97,30 @@ Vaultier.Secret = RL.Model.extend(
             this.setProperties(data);
         },
 
+
         applyMixinByType: function () {
             var type = this.get('type');
+            var applied = this.get('applied')
             var clsName = 'Vaultier.Secret' + this.types.getKeyByValue(type) + 'Mixin';
+
+            if (applied && applied != clsName) {
+                throw new Error('Cannot apply mixin {mixin}, already applied {applied}'
+                    .replace('{mixin}', clsName)
+                    .replace('{applied}', appliedMixin)
+                );
+            }
+
             var cls = Ember.get(clsName);
             if (!cls)
                 throw new Error('Cannot instantiate secret class mixin {mixin} for type {type}'
-                    .replace('{tyoe}', type)
-                    .replace('{mixin}', clsName))
-            cls.apply(this);
-        },
+                    .replace('{type}', type)
+                    .replace('{mixin}', clsName)
+                );
 
-        deserialize: function (data) {
-            this._super.apply(this, [data]);
-            this.applyMixinByType()
-            return this;
-        },
+            cls.apply(this);
+            this.set('appliedMixin', clsName);
+
+        }.observes('type'),
 
         encode: function () {
             var data;
@@ -149,13 +171,40 @@ Vaultier.Secret = RL.Model.extend(
     });
 
 Vaultier.SecretFILEMixin = Ember.Mixin.create({
+    isFile: function () {
+        return this.get('type') == this.types['FILE'].value;
+    }.property('type'),
 
+    saveRecord: function () {
+        this
+            ._super.apply(this)
+
+            .then(function () {
+                return this.saveBlob()
+            }.bind(this))
+
+    }
 })
 
 Vaultier.SecretNOTEMixin = Ember.Mixin.create({
+    note: null,
+
+    isNote: function () {
+        return this.get('type') == this.types['NOTE'].value;
+    }.property('type')
+
 })
 
-Vaultier.SecretPASSWORD = Ember.Mixin.create({
+Vaultier.SecretPASSWORDMixin = Ember.Mixin.create({
+    password: null,
+    username: null,
+    url: null,
+    note: null,
+
+    isPassword: function () {
+        return this.get('type') == this.types['PASSWORD'].value;
+    }.property('type')
+
 })
 
 
