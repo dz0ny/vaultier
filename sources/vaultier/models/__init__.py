@@ -1,4 +1,5 @@
 from user import User
+from vaultier.models.secret_blob import SecretBlob
 from workspace import Workspace
 from secret import Secret
 from role import Role

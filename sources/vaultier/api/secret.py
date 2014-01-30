@@ -1,13 +1,11 @@
 from rest_framework.permissions import IsAuthenticated, BasePermission
-from rest_framework.response import Response
 from rest_framework.serializers import ModelSerializer
-from rest_framework.status import HTTP_403_FORBIDDEN, HTTP_401_UNAUTHORIZED, HTTP_402_PAYMENT_REQUIRED, HTTP_400_BAD_REQUEST, HTTP_200_OK, HTTP_204_NO_CONTENT
 from rest_framework.viewsets import ModelViewSet
 from vaultier.api.fields.perms import PermsField
 from vaultier.api.user import RelatedUserSerializer
 from vaultier.auth.authentication import TokenAuthentication
 from vaultier.models import Secret
-from vaultier.models.fields import AclLevelField, RoleLevelField
+from vaultier.models.fields import AclLevelField
 from vaultier.perms.check import has_object_acl
 
 
@@ -36,7 +34,7 @@ class SecretPermsField(PermsField):
 
 
 class SecretSerializer(ModelSerializer):
-    created_by = RelatedUserSerializer(required=False)
+    created_by = RelatedUserSerializer(read_only=True)
     perms = SecretPermsField()
 
     class Meta:
@@ -67,3 +65,5 @@ class SecretViewSet(ModelViewSet):
         else:
             queryset = Secret.objects.all()
         return queryset
+
+
