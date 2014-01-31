@@ -5,7 +5,11 @@ Vaultier.Secret = RL.Model.extend(
 
         init: function () {
             this.set('workspacekey', Vaultier.__container__.lookup('service:workspacekey'))
+            this.set('store', Vaultier.__container__.lookup('store:main'))
+            this.emptyBlob();
+
             return this._super.apply(this, arguments);
+
         },
 
         /**
@@ -13,6 +17,10 @@ Vaultier.Secret = RL.Model.extend(
          */
         workspacekey: null,
 
+        /**
+         * @DI store:main
+         */
+        store: null,
 
         types: new Utils.ConstantList({
             'NOTE': {
@@ -46,26 +54,25 @@ Vaultier.Secret = RL.Model.extend(
          * Holds cached data from blob
          */
         blob: null,
-        /**
-         * Holds information whether is blob marked to be saved
-         */
-        blobDirty: false,
 
-        saveBlob: function () {
-            return new Ember.RSVP.Promise(function (resolve) {
-                console.log('saved')
-                resolve();
-            })
+        emptyBlob: function () {
+            this.set('blob', new Vaultier.SecretBlob({
+                id: this.get('id')
+            }));
         },
 
         loadBlob: function () {
-            if (blob) {
-                return Ember.RSVP.resolve(this.get('blob'))
+            var blob = this.get('blob');
+            if (!blob.get('isNew')) {
+                return Ember.RSVP.resolve(blob)
             } else {
-                return new Ember.RSVP.Promise(function (resolve) {
-                    console.log('loaded')
-                    resolve();
-                })
+                var promise = this.get('store')
+                    .find('SecretBlob', this.get('id'))
+                    .then(function (blob) {
+                        this.set('blob', blob);
+                        return blob;
+                    }.bind(this));
+                return promise;
             }
         },
 
@@ -97,6 +104,11 @@ Vaultier.Secret = RL.Model.extend(
             this.setProperties(data);
         },
 
+        /**
+         * Empty function - done by mixins
+         */
+        encode: Ember.K,
+
 
         applyMixinByType: function () {
             var type = this.get('type');
@@ -122,50 +134,28 @@ Vaultier.Secret = RL.Model.extend(
 
         }.observes('type'),
 
-        encode: function () {
-            var data;
-            switch (this.get('type')) {
-
-                case this.types['NOTE'].value:
-                {
-                    data = this.getProperties('note');
-                    break;
-                }
-                case this.types['PASSWORD'].value:
-                {
-                    data = this.getProperties('password', 'url', 'note', 'username');
-                    break;
-                }
-                case this.types['FILE'].value:
-                {
-                    data = this.getProperties('file', 'url', 'note', 'username');
-                    break;
-                }
-                default:
-                {
-                    throw 'Unspecified secret type cannot be encoded';
-                }
-
-            }
-
-            data = this.get('workspacekey').encryptWorkspaceData(data)
-            this.set('data', data);
-
-        },
-
         didLoad: function () {
             this.decode();
+            this.emptyBlob();
             return this._super();
         },
 
         didReload: function () {
             this.decode();
+            this.emptyBlob();
             return this._super();
         },
 
         saveRecord: function () {
+            var blob = this.get('blob');
             this.encode();
-            return this._super.apply(this, arguments);
+            return this
+                ._super.apply(this, arguments)
+                .then(function () {
+                    blob.set('id', this.get('id'))
+                    blob.saveRecord();
+                }.bind(this))
+                .then(this.emptyBlob.bind(this))
         }
 
     });
@@ -175,19 +165,29 @@ Vaultier.SecretFILEMixin = Ember.Mixin.create({
         return this.get('type') == this.types['FILE'].value;
     }.property('type'),
 
-    saveRecord: function () {
-        this
-            ._super.apply(this)
+    filename: null,
+    filesize: null,
+    filetype: null,
+    password: null,
+    username: null,
+    url: null,
+    note: null,
 
-            .then(function () {
-                return this.saveBlob()
-            }.bind(this))
-
+    encode: function () {
+        var data = this.getProperties('filesize', 'filename', 'filetype', 'url', 'note', 'username', 'password');
+        data = this.get('workspacekey').encryptWorkspaceData(data)
+        this.set('data', data);
     }
 })
 
 Vaultier.SecretNOTEMixin = Ember.Mixin.create({
     note: null,
+
+    encode: function () {
+        var data = this.getProperties('note');
+        data = this.get('workspacekey').encryptWorkspaceData(data)
+        this.set('data', data);
+    },
 
     isNote: function () {
         return this.get('type') == this.types['NOTE'].value;
@@ -201,10 +201,95 @@ Vaultier.SecretPASSWORDMixin = Ember.Mixin.create({
     url: null,
     note: null,
 
+    encode: function () {
+        var data = this.getProperties('password', 'url', 'note', 'username');
+        data = this.get('workspacekey').encryptWorkspaceData(data)
+        this.set('data', data);
+    },
+
     isPassword: function () {
         return this.get('type') == this.types['PASSWORD'].value;
     }.property('type')
-
 })
 
+Vaultier.SecretBlob = RL.Model.extend(
+    {
 
+        init: function () {
+            this.set('workspacekey', Vaultier.__container__.lookup('service:workspacekey'))
+            this._super.apply(this, arguments);
+        },
+
+        /**
+         * @DI service:workspacekey
+         */
+        workspacekey: null,
+
+
+//            function JSONtoBase64(jsonObj) {
+//        return Crypto.util.bytesToBase64(Crypto.charenc.UTF8.stringToBytes(Object.toJSON(jsonObj)));
+//    };
+//
+//    function base64ToJSON(bytes) {
+//        var jsonString = Crypto.charenc.UTF8.bytesToString(Crypto.util.base64ToBytes(bytes));
+//        return jsonString.evalJSON();
+//    };
+
+        serialize: function (data) {
+            var workspacekey = this.get('workspacekey');
+            var plain = this.get('plain');
+//            var encrypted = workspacekey.encryptWorkspaceData(plain);
+
+            var words = CryptoJS.enc.Utf8.parse(plain);
+            var encrypted = CryptoJS.enc.Base64.stringify(words);
+
+            return {blob: {data: encrypted}}
+        },
+
+        deserialize: function (data) {
+            var encrypted = data.blob.data
+            var workspacekey = this.get('workspacekey');
+            //var data = workspacekey.decryptWorkspaceData(encrypted);
+
+            var words = CryptoJS.enc.Base64.parse(encrypted);
+            console.log(words);
+            var data = CryptoJS.enc.Utf8.stringify(words);
+
+            this.set('plainData', data);
+            this.set('plainDirty', false);
+            this.set('data', encrypted);
+
+            return this
+        },
+
+        saveRecord: function () {
+            if (this.get('plainDirty')) {
+                // force saving
+                this.set('isDirty', true);
+                // call super saveRecord
+                return this._super.apply(this)
+            } else {
+                return Ember.RSVP.resolve(this);
+            }
+        },
+
+        decoded: false,
+
+        data: RL.attr('string'),
+
+        plainData: null,
+        plainDirty: false,
+
+        plain: function (key, value) {
+            // setter
+            if (arguments.length > 1) {
+                this.set('plainData', value);
+                this.set('plainDirty', true);
+            }
+
+            // getter
+            return this.get('plainData');
+        }.property('plainData', 'plainDirty')
+
+
+    });
