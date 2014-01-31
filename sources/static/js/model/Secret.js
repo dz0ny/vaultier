@@ -252,8 +252,16 @@ Vaultier.SecretBlob = RL.Model.extend(
             //var data = workspacekey.decryptWorkspaceData(encrypted);
 
             var words = CryptoJS.enc.Base64.parse(encrypted);
-            console.log(words);
             var data = CryptoJS.enc.Utf8.stringify(words);
+
+            var byteArray = []
+            var hex = []
+            for (var offset = 0; offset < data.length; offset++) {
+                byteArray[offset] = data.charCodeAt(offset);
+                hex[offset] = byteArray[offset].toString(16)
+            }
+            console.log(byteArray);
+            console.log(hex);
 
             this.set('plainData', data);
             this.set('plainDirty', false);
