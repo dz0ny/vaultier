@@ -230,6 +230,7 @@ Vaultier.SecretBlob = RL.Model.extend(
             var plain = this.get('plain');
             var encrypted = workspacekey.encryptWorkspaceData(plain);
 
+//            testing
 //            var words = CryptoJS.enc.Utf8.parse(plain);
 //            var encrypted = CryptoJS.enc.Base64.stringify(words);
 
@@ -237,16 +238,22 @@ Vaultier.SecretBlob = RL.Model.extend(
         },
 
         deserialize: function (data) {
-            var encrypted = data.blob.data
-            var workspacekey = this.get('workspacekey');
-            var data = workspacekey.decryptWorkspaceData(encrypted);
+            // put, patch and post returns no data
+            // so serialization is skipped
+            if (data.blob && data.blobk.data) {
 
+                var encrypted = data.blob.data
+                var workspacekey = this.get('workspacekey');
+                var data = workspacekey.decryptWorkspaceData(encrypted);
+
+//            testing
 //            var words = CryptoJS.enc.Base64.parse(encrypted);
 //            var data = CryptoJS.enc.Utf8.stringify(words);
 
-            this.set('plainData', data);
-            this.set('plainDirty', false);
-            this.set('data', encrypted);
+                this.set('plainData', data);
+                this.set('plainDirty', false);
+                this.set('data', encrypted);
+            }
 
             return this
         },

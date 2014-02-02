@@ -2,7 +2,7 @@ from django.core.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.serializers import ModelSerializer
-from rest_framework.status import HTTP_405_METHOD_NOT_ALLOWED
+from rest_framework.status import HTTP_405_METHOD_NOT_ALLOWED, HTTP_200_OK
 from rest_framework.viewsets import ModelViewSet
 from vaultier.api.secret import SecretSerializer, CanManageSecretPermission
 from vaultier.api.user import RelatedUserSerializer
@@ -29,6 +29,7 @@ class SecretBlobSerializer(ModelSerializer):
         model = SecretBlob
         fields = ('id', 'blob', 'updated_at', 'created_at', 'created_by')
 
+
 class SecretBlobViewSet(ModelViewSet):
     """
     API endpoint that allows secret blobs to be viewed or edited.
@@ -38,11 +39,24 @@ class SecretBlobViewSet(ModelViewSet):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated, CanManageSecretPermission)
 
+    def update(self, request, *args, **kwargs):
+        response = super(SecretBlobViewSet, self).update(request, *args, **kwargs);
+        if (response.status_code == HTTP_200_OK):
+            response.data = {'detail': 'success'}
+        return response
+
+    def partial_update(self, request, *args, **kwargs):
+        response = super(SecretBlobViewSet, self).partial_update(request, *args, **kwargs);
+        if (response.status_code == HTTP_200_OK):
+            response.data = {'detail': 'success'}
+        return response
+
+
     def list(self, request, *args, **kwargs):
-        return Response(status=HTTP_405_METHOD_NOT_ALLOWED, data={'detail':  'Method \'GET\' not allowed.'})
+        return Response(status=HTTP_405_METHOD_NOT_ALLOWED, data={'detail': 'Method \'GET\' not allowed.'})
 
     def destroy(self, request, *args, **kwargs):
-        return Response(status=HTTP_405_METHOD_NOT_ALLOWED, data={'detail':  'Method \'DELETE\' not allowed.'})
+        return Response(status=HTTP_405_METHOD_NOT_ALLOWED, data={'detail': 'Method \'DELETE\' not allowed.'})
 
     def create(self, request, *args, **kwargs):
         return Response(status=HTTP_405_METHOD_NOT_ALLOWED, data={'detail': 'Method \'POST\' not allowed.'})
