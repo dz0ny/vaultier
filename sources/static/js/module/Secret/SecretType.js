@@ -13,21 +13,20 @@ Vaultier.SecretTypeFileView = Ember.View.extend({
                 if (evt.type == 'load') {
                     var data = evt.result;
 
-                    var byteArray = []
-                    var hex = []
-                    for (var offset = 0; offset < data.length; offset++) {
-                        byteArray[offset] = data.charCodeAt(offset);
-                        hex[offset] = byteArray[offset].toString(16)
-                    }
-                    console.log(byteArray);
-                    console.log(hex);
-
+// testing
+//                    var byteArray = []
+//                    var hex = []
+//                    for (var offset = 0; offset < data.length; offset++) {
+//                        byteArray[offset] = data.charCodeAt(offset);
+//                        hex[offset] = byteArray[offset].toString(16)
+//                    }
+//                    console.log(byteArray);
+//                    console.log(hex);
+//
 //                    var byteArray = new Uint8Array(data.length);
 //                    for (var i = 0; i < data.length; i++) {
 //                        byteArray[i] = data.charCodeAt(i) & 0xff;
 //                    }
-//
-//
 //                    var blob = new Blob([byteArray.buffer], {type: 'application/octet-binary'});
 //                    saveAs(blob, name);
 

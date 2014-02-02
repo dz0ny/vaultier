@@ -50,21 +50,12 @@ Vaultier.SecretIndexRoute = Ember.Route.extend({
                     var type = secret.get('filetype');
                     var name = secret.get('filename');
 
-                    var sliceSize = 512;
-                    var byteArray = [];
-                    var byteCharacters = data;
-
-                    for (var offset = 0; offset < data.length; offset++) {
-                        byteArray[offset] = data.charCodeAt(offset);
+                    var byteArray = new Uint8Array(data.length);
+                    for (var i = 0; i < data.length; i++) {
+                        byteArray[i] = data.charCodeAt(i) & 0xff;
                     }
 
-
-//                    for (var i = 0; i < byteArray.length; i++) {
-//                        byteArray[i] = byteArray[i].toString(16);
-//                    }
-                    console.log(byteArray)
-
-                    var blob = new Blob(byteArrays, {type: 'application/octet-binary'});
+                    var blob = new Blob([byteArray.buffer], {type: type});
                     saveAs(blob, name);
                 }.bind(this))
 

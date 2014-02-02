@@ -52,7 +52,7 @@ Vaultier.SecretEditRoute = Ember.Route.extend(
                         .saveRecord()
                         .then(function () {
                             $.notify('Your changes has been successfully saved.', 'success');
-                            //history.go(-1);
+                            history.go(-1);
                         }.bind(this))
                         .catch(notifyError)
 

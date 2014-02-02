@@ -225,23 +225,13 @@ Vaultier.SecretBlob = RL.Model.extend(
          */
         workspacekey: null,
 
-
-//            function JSONtoBase64(jsonObj) {
-//        return Crypto.util.bytesToBase64(Crypto.charenc.UTF8.stringToBytes(Object.toJSON(jsonObj)));
-//    };
-//
-//    function base64ToJSON(bytes) {
-//        var jsonString = Crypto.charenc.UTF8.bytesToString(Crypto.util.base64ToBytes(bytes));
-//        return jsonString.evalJSON();
-//    };
-
         serialize: function (data) {
             var workspacekey = this.get('workspacekey');
             var plain = this.get('plain');
-//            var encrypted = workspacekey.encryptWorkspaceData(plain);
+            var encrypted = workspacekey.encryptWorkspaceData(plain);
 
-            var words = CryptoJS.enc.Utf8.parse(plain);
-            var encrypted = CryptoJS.enc.Base64.stringify(words);
+//            var words = CryptoJS.enc.Utf8.parse(plain);
+//            var encrypted = CryptoJS.enc.Base64.stringify(words);
 
             return {blob: {data: encrypted}}
         },
@@ -249,19 +239,10 @@ Vaultier.SecretBlob = RL.Model.extend(
         deserialize: function (data) {
             var encrypted = data.blob.data
             var workspacekey = this.get('workspacekey');
-            //var data = workspacekey.decryptWorkspaceData(encrypted);
+            var data = workspacekey.decryptWorkspaceData(encrypted);
 
-            var words = CryptoJS.enc.Base64.parse(encrypted);
-            var data = CryptoJS.enc.Utf8.stringify(words);
-
-            var byteArray = []
-            var hex = []
-            for (var offset = 0; offset < data.length; offset++) {
-                byteArray[offset] = data.charCodeAt(offset);
-                hex[offset] = byteArray[offset].toString(16)
-            }
-            console.log(byteArray);
-            console.log(hex);
+//            var words = CryptoJS.enc.Base64.parse(encrypted);
+//            var data = CryptoJS.enc.Utf8.stringify(words);
 
             this.set('plainData', data);
             this.set('plainDirty', false);
@@ -298,6 +279,5 @@ Vaultier.SecretBlob = RL.Model.extend(
             // getter
             return this.get('plainData');
         }.property('plainData', 'plainDirty')
-
 
     });
