@@ -23,6 +23,10 @@ class SecretBlobSerializer(ModelSerializer):
     def validate_blob(self, attrs, source):
         if not attrs.get('blob'):
             raise ValidationError('At least blob data must be specified')
+
+        if len(attrs.get('blob').data) > 100000:
+            raise ValidationError('Maximum blob size is 100K encrypted')
+
         return attrs
 
     class Meta:

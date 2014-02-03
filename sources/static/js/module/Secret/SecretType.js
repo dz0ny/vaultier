@@ -12,6 +12,21 @@ Vaultier.SecretTypeFileView = Ember.View.extend({
             FileAPI.readAsBinaryString(files[0], function (evt) {
                 if (evt.type == 'load') {
                     var data = evt.result;
+                    var size = evt.result.length;
+
+                    if (size > 25000) {
+                        input.closest('.form-group').addClass('has-error');
+                        $.notify('Maximum filesize 25K exceeded!', 'error');
+                    } else {
+                        // Success
+                        input.closest('.form-group').removeClass('has-error');
+
+                        controller.set('content.blob.plain', data);
+                        controller.set('content.filename', files[0].name);
+                        controller.set('content.filesize', files[0].size);
+                        controller.set('content.filetype', files[0].type);
+                    }
+
 
 // testing
 //                    var byteArray = []
@@ -31,11 +46,6 @@ Vaultier.SecretTypeFileView = Ember.View.extend({
 //                    saveAs(blob, name);
 
 
-                    // Success
-                    controller.set('content.blob.plain', data);
-                    controller.set('content.filename', files[0].name);
-                    controller.set('content.filesize', files[0].size);
-                    controller.set('content.filetype', files[0].type);
                 }
             })
         })
