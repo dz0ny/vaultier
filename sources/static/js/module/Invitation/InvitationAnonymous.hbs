@@ -1,30 +1,25 @@
-<div class="row">
-    <div class="col-md-12">
+<div class="vlt-dialog col-md-8 col-md-offset-2 top-50">
+    <form>
+        <div class="vlt-dialog-content">
+            <div class="vlt-dialog-header">
+                <h2>You have been invited to vaultier</h2>
+            </div>
+            <div class="vlt-dialog-body">
 
-        <div class="vlt-dialog vlt-dialog-window">
-            <form>
-                <div class="vlt-dialog-content">
-                    <div class="vlt-dialog-header">
-                        <h2>You have been invited to vaultier</h2>
-                    </div>
-                    <div class="vlt-dialog-body">
-
-                        <div class="col-md-8 col-md-offset-2 top-30 bottom-30">
-                            <b>
-                                Before further procceeding we need you to have account. Please login or create new
-                                account.
-                            </b>
-                        </div>
-
-                        <div class="clearfix"></div>
-
-                    </div>
-                    <div class="vlt-dialog-footer">
-                        {{#link-to 'AuthRegister' class="btn btn-default btn-sm" }}Create an account{{/link-to}}
-                        {{#link-to 'AuthLogin' class="btn btn-primary" }}Login{{/link-to}}
-                    </div>
+                <div class="col-md-8 col-md-offset-2 top-30 bottom-30">
+                    <b>
+                        Before further procceeding we need you to have account. Please login or create new
+                        account.
+                    </b>
                 </div>
-            </form>
+
+                <div class="clearfix"></div>
+
+            </div>
+            <div class="vlt-dialog-footer">
+                {{#link-to 'AuthRegister' class="btn btn-default btn-sm" }}Create an account{{/link-to}}
+                {{#link-to 'AuthLogin' class="btn btn-primary" }}Login{{/link-to}}
+            </div>
         </div>
-    </div>
+    </form>
 </div>

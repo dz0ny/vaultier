@@ -8,6 +8,14 @@ Vaultier.SettingsKeysRoute = Ember.Route.extend(
             ctrl.set('stepInfo', true);
             ctrl.set('stepSuccess', false);
             ctrl.set('stepKeys', false)
+
+            // set breadcrumbs
+            ctrl.controllerFor('Settings').set('breadcrumbs',
+                Vaultier.Breadcrumbs.create({router: this.get('router')})
+                    .addHome()
+                    .addSettings()
+                    .addText('Regenerate private key')
+            );
         },
 
         actions: {
@@ -47,6 +55,10 @@ Vaultier.SettingsKeysRoute = Ember.Route.extend(
         }
 
     });
+
+Vaultier.SettingsKeysController = Ember.Controller.extend({
+    needs: ['Settings']
+})
 
 
 Vaultier.SettingsKeysView = Ember.View.extend({

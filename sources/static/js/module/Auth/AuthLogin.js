@@ -69,6 +69,8 @@ Vaultier.AuthLoginRoute = Ember.Route.extend({
         },
 
         loginUser: function () {
+            ApplicationLoader.showLoader();
+
             var ctrl = this.get('controller');
             var email = ctrl.get('email');
             var ttl = ctrl.get('ttl');
@@ -77,18 +79,18 @@ Vaultier.AuthLoginRoute = Ember.Route.extend({
             var auth = this.get('auth');
             var promise = auth
                 .login(email, privateKey, true)
-                .then(
-                    function (user) {
-                        auth.rememberUser(email, privateKey, ttl)
-                        $.notify('You have been successfully logged in.', 'success');
-                    }.bind(this),
-                    function () {
-                        auth.rememberUser(null)
-                        this.loadRemebered();
-                        $.notify('We are sorry, but your login failed', 'error');
-                    }.bind(this)
+                .then(function (user) {
+                    auth.rememberUser(email, privateKey, ttl)
+                    $.notify('You have been successfully logged in.', 'success');
+                }.bind(this))
+                .catch(function () {
+                    auth.rememberUser(null)
+                    this.loadRemebered();
+                    ApplicationLoader.hideLoader()
+                    $.notify('We are sorry, but your login failed', 'error');
+                }.bind(this)
                 );
-            ApplicationLoader.promise(promise)
+
         }
 
     }

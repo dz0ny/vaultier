@@ -1,47 +1,43 @@
-<div class="row">
-    <div class="col-md-12">
+<div class="vlt-dialog col-md-8 col-md-offset-2 top-50">
+    <form>
+        <div class="vlt-dialog-content">
+            <div class="vlt-dialog-header">
+                <h2>You have pending invitations</h2>
+            </div>
+            <div class="vlt-dialog-body">
 
-        <div class="vlt-dialog vlt-dialog-window">
-            <form>
-                <div class="vlt-dialog-content">
-                    <div class="vlt-dialog-header">
-                        <h2>You have pending invitations</h2>
+                <div class="col-md-8 col-md-offset-2 top-15 bottom-30">
+                    <div class="bottom-15">
+                        You have been invited to Vaultier.
+                        <b>Please see invitations to accept:</b>
                     </div>
-                    <div class="vlt-dialog-body">
+                    <table class="table vlt-table table-bordered">
+                        {{#each invitation in content}}
+                            {{#each role in invitation.roles}}
 
-                        <div class="col-md-8 col-md-offset-2 top-15 bottom-30">
-                            <div class="bottom-15">
-                                You have been invited to Vaultier.
-                                <b>Please see invitations to accept:</b>
-                            </div>
-                            <table class="table vlt-table table-bordered">
-                                {{#each invitation in content}}
-                                    {{#each role in invitation.roles}}
+                                <tr>
+                                    <td>{{role.name}} by user {{printUser role.created_by}} </td>
+                                </tr>
 
-                                        <tr>
-                                            <td>{{role.name}} by user {{printUser role.created_by}} </td>
-                                        </tr>
-
-                                    {{/each}}
-                                {{/each}}
-                            </table>
-                        </div>
-
-                        <div class="clearfix"></div>
-
-                    </div>
-                    <div class="vlt-dialog-footer">
-                        <a href="#" class="btn btn-default btn-sm" {{ action rejectInvitations }}>
-                            <span class="glyphicon glyphicon-remove"></span>
-                            Reject invitations
-                        </a>
-                        <a href="#" class="btn btn-primary btn" {{ action acceptInvitations }}>
-                            <span class="glyphicon glyphicon-ok"></span>
-                            Accept invitations
-                        </a>
-                    </div>
+                            {{/each}}
+                        {{/each}}
+                    </table>
                 </div>
-            </form>
+
+                <div class="clearfix"></div>
+
+            </div>
+            <div class="vlt-dialog-footer">
+                <a href="#" class="btn btn-default btn-sm" {{ action rejectInvitations }}>
+                    <span class="glyphicon glyphicon-remove"></span>
+                    Reject invitations
+                </a>
+                <a href="#" class="btn btn-primary btn" {{ action acceptInvitations }}>
+                    <span class="glyphicon glyphicon-ok"></span>
+                    Accept invitations
+                </a>
+            </div>
         </div>
-    </div>
+    </form>
 </div>
+

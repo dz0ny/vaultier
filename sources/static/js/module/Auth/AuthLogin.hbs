@@ -1,136 +1,135 @@
-<div class="row">
-    <div class="vlt-dialog  vlt-login col-md-8 col-md-offset-2 col-xs-12">
-        <div class="vlt-dialog-content">
-            <form class="form-horizontal" role="form">
+<div class="vlt-dialog  vlt-login col-md-8 col-md-offset-2 col-xs-12 top-50">
+    <div class="vlt-dialog-content">
+        <form class="form-horizontal" role="form">
 
-                <div class="vlt-dialog-header">
-                    <h2>Login</h2>
-                </div>
-                <div class="vlt-dialog-body">
-                    <div class="row">
+            <div class="vlt-dialog-header">
+                <h2>Login</h2>
+            </div>
+            <div class="vlt-dialog-body">
+                <div class="row">
 
-                        <div class="col-md-5 bottom-15 pull-right">
+                    <div class="col-md-5 bottom-15 pull-right">
 
-                            <div class="callout callout-info">
-                                <h4>How our security works</h4>
+                        <div class="callout callout-info">
+                            <h4>How our security works</h4>
 
-                                <p>
-                                    Vaultier uses encryption algorithms to keep your data safe.
-                                    Because of strong security you log into the Vaultier with you email
-                                    and private key instead of password.
-                                    <br/>
+                            <p>
+                                Vaultier uses encryption algorithms to keep your data safe.
+                                Because of strong security you log into the Vaultier with you email
+                                and private key instead of password.
+                                <br/>
 
-                                </p>
-                            </div>
+                            </p>
                         </div>
+                    </div>
 
-                        <div class="col-md-7">
+                    <div class="col-md-7">
 
-                            <div class="form-group {{bind-attr class='error:has-error'}} {{bind-attr class='emailSuccess:has-success'}}">
-                                <label for="login-form-email" class="col-lg-4 control-label">Email</label>
+                        <div class="form-group {{bind-attr class='error:has-error'}} {{bind-attr class='emailSuccess:has-success'}}">
+                            <label for="login-form-email" class="col-lg-4 control-label">Email</label>
 
-                                <div class="col-lg-8">
-                                    {{#if latestUser }}
-                                        <div class="input-group">
-                                            <input {{ bind-attr value=email }}
-                                                    disabled type="email"
-                                                    class="form-control"
-                                                    id="login-form-email"
-                                                    placeholder="Email">
+                            <div class="col-lg-8">
+                                {{#if latestUser }}
+                                    <div class="input-group">
+                                        <input {{ bind-attr value=email }}
+                                                disabled type="email"
+                                                class="form-control"
+                                                id="login-form-email"
+                                                placeholder="Email">
                                                   <span class="input-group-btn">
                                                     <a {{action switchUser}} class="vlt-login-switch btn btn-default">Switch
                                                         user</a>
                                                   </span>
-                                        </div>
-                                    {{else}}
-                                        {{ view Ember.TextField
-                                        elementId='login-form-email'
-                                        valueBinding='email'
-                                        class="form-control"
-                                        placeholder="Enter your email"
-                                        }}
-                                    {{/if}}
-                                </div>
+                                    </div>
+                                {{else}}
+                                    {{ view Ember.TextField
+                                    elementId='login-form-email'
+                                    valueBinding='email'
+                                    class="form-control"
+                                    placeholder="Enter your email"
+                                    }}
+                                {{/if}}
                             </div>
+                        </div>
 
-                            <div class="form-group" {{bind-attr class='error:has-error'}}>
-                                <label for="login-form-key" class="col-lg-4 control-label">Key</label>
+                        <div class="form-group" {{bind-attr class='error:has-error'}}>
+                            <label for="login-form-key" class="col-lg-4 control-label">Key</label>
 
-                                <div class="col-lg-8">
-                                    {{#if latestUser }}
-                                        <input disabled
-                                               class="form-control"
-                                               value="Using remebered key"
-                                               id="login-form-key"
-                                               placeholder="Key">
-                                    {{else}}
-                                        <div class="input-group">
-                                            <input {{bind-attr value=filename}}
-                                                    type="text"
-                                                    class="form-control"
-                                                    readonly=""
-                                                    placeholder="Select your key">
+                            <div class="col-lg-8">
+                                {{#if latestUser }}
+                                    <input disabled
+                                           class="form-control"
+                                           value="Using remebered key"
+                                           id="login-form-key"
+                                           placeholder="Key">
+                                {{else}}
+                                    <div class="input-group">
+                                        <input {{bind-attr value=filename}}
+                                                type="text"
+                                                class="form-control"
+                                                readonly=""
+                                                placeholder="Select your key">
 
                                             <span class="vlt-login-key input-group-btn btn btn-default btn-file">
                                                 Browse <input type="file">
                                             </span>
-                                        </div>
-                                    {{/if}}
-                                </div>
+                                    </div>
+                                {{/if}}
                             </div>
+                        </div>
 
-                            <br/>
+                        <br/>
 
-                            <div class="form-group">
-                                <label for="login-form-remember"
-                                       class="col-lg-4 control-label">Remember</label>
+                        <div class="form-group">
+                            <label for="login-form-remember"
+                                   class="col-lg-4 control-label">Remember</label>
 
-                                <div class="col-lg-8">
-                                    {{view Ember.Select
-                                    class="form-control"
-                                    elementId="login-form-remember"
-                                    contentBinding="rememberOptions"
-                                    optionValuePath="content.ttl"
-                                    optionLabelPath="content.text"
-                                    valueBinding="ttl"
-                                    }}
+                            <div class="col-lg-8">
+                                {{view Ember.Select
+                                class="form-control"
+                                elementId="login-form-remember"
+                                contentBinding="rememberOptions"
+                                optionValuePath="content.ttl"
+                                optionLabelPath="content.text"
+                                valueBinding="ttl"
+                                }}
 
-                                    <p class="help-block">
-                                        Your credentials will be stored for selected period of time.
-                                        Remebering crednentials is not secure because key is being stored in your
-                                        browser.
-                                    </p>
+                                <p class="help-block">
+                                    Your credentials will be stored for selected period of time.
+                                    Remebering crednentials is not secure because key is being stored in your
+                                    browser.
+                                </p>
 
-                                </div>
                             </div>
-
-
                         </div>
 
 
                     </div>
-                </div>
 
-                <div class="vlt-dialog-footer">
-
-                    <div class="pull-right vlt-right-buttons">
-                        <button type="submit" {{ action loginUser}} class="btn btn-primary">
-                            Login
-                        </button>
-                    </div>
-
-                    <div class="pull-left vlt-right-buttons">
-                        Do not have account yet? {{#link-to 'AuthRegister' class="btn btn-default btn-sm" }}
-                        Create new account{{/link-to}}
-                    </div>
-
-                    <div class="clearfix"></div>
 
                 </div>
-            </form>
-        </div>
+            </div>
+
+            <div class="vlt-dialog-footer">
+
+                <div class="pull-right vlt-right-buttons">
+                    <button type="submit" {{ action loginUser}} class="btn btn-primary">
+                        Login
+                    </button>
+                </div>
+
+                <div class="pull-left vlt-right-buttons">
+                    Do not have account yet? {{#link-to 'AuthRegister' class="btn btn-default btn-sm" }}
+                    Create new account{{/link-to}}
+                </div>
+
+                <div class="clearfix"></div>
+
+            </div>
+        </form>
     </div>
 </div>
+
 
 
 

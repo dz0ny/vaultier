@@ -6,6 +6,14 @@ Vaultier.SettingsPersonalRoute = Ember.Route.extend(
 
         setupController: function (ctrl) {
             ctrl.set('content', this.get('auth.user'))
+
+                        // set breadcrumbs
+            ctrl.controllerFor('Settings').set('breadcrumbs',
+                Vaultier.Breadcrumbs.create({router: this.get('router')})
+                    .addHome()
+                    .addSettings()
+                    .addText('Personal settings')
+            );
         },
 
         actions: {
@@ -27,7 +35,9 @@ Vaultier.SettingsPersonalRoute = Ember.Route.extend(
         }
     });
 
-Vaultier.SettingsPersonalController = Ember.ObjectController.extend({})
+Vaultier.SettingsPersonalController = Ember.ObjectController.extend({
+    needs: ['Settings']
+});
 
 Vaultier.SettingsPersonalView = Ember.View.extend({
     templateName: 'Settings/SettingsPersonal'

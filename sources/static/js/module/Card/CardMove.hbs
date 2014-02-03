@@ -1,34 +1,31 @@
-<div class="row">
-    <div class="col-md-12">
-
-        <div class="vlt-dialog vlt-dialog-window">
-                <div class="vlt-dialog-content">
-                    <div class="vlt-dialog-header">
-                        <h2>Move card to another vault</h2>
-                    </div>
-                    <div class="vlt-dialog-body">
-                        <h4>Please select target vault</h4>
-                        <div class="vlt-tree">
-                            {{view view.Tree content=treeNodes}}
-                        </div>
-                        <div class="help-block">
-                            Also all granted permissions will be moved.
-                        </div>
-                        <div class="clearfix"></div>
-                   </div>
-                    <div class="vlt-dialog-footer">
-                        <a href="javascript:window.history.go(-1)" class="btn btn-default btn-sm">
-                            <span class="glyphicon glyphicon-chevron-left"></span>
-                            Back
-                        </a>
-                        <button {{ action save}} {{bind-attr disabled=moveDisabled }} class="btn btn-primary">
-                            <span class="glyphicon glyphicon-ok"></span>
-                            Move
-                        </button>
-                    </div>
-
-                </div>
+<div class="vlt-dialog col-md-8 col-md-offset-2 top-50">
+    <div class="vlt-dialog-content">
+        <div class="vlt-dialog-header">
+            <h2>Move card to another vault</h2>
         </div>
+        <div class="vlt-dialog-body">
+            <h4>Please select target vault</h4>
+
+            <div class="vlt-tree">
+                {{view view.Tree content=treeNodes}}
+            </div>
+            <div class="help-block">
+                Also all granted permissions will be moved.
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="vlt-dialog-footer">
+            <a href="javascript:window.history.go(-1)" class="btn btn-default btn-sm">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+                Back
+            </a>
+            <button {{ action save}} {{bind-attr disabled=moveDisabled }} class="btn btn-primary">
+                <span class="glyphicon glyphicon-ok"></span>
+                Move
+            </button>
+        </div>
+
     </div>
 </div>
+
 

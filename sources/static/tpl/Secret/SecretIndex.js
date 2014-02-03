@@ -264,7 +264,11 @@ function program32(depth0,data) {
   options = {hash:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
   stack2 = ((stack1 = helpers.exp || depth0.exp),stack1 ? stack1.call(depth0, "( workspace.perms.invite || card.perms.create || card.perms.update || card.perms.delete)", options) : helperMissing.call(depth0, "exp", "( workspace.perms.invite || card.perms.create || card.perms.update || card.perms.delete)", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("\r\n\r\n    <div class=\"pull-left\">\r\n        <h2>Secrets on card</h2>\r\n    </div>\r\n\r\n\r\n    <div class=\"clearfix\"></div>\r\n\r\n</div>\r\n\r\n<div class=\"row\">\r\n    <div class=\"col-md-12\">\r\n\r\n        <div class=\"vlt-card-detail\">\r\n\r\n            ");
+  data.buffer.push("\r\n\r\n    <div class=\"pull-left\">\r\n        <h2>Secrets on card \"");
+  hashTypes = {};
+  hashContexts = {};
+  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "card.name", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
+  data.buffer.push("\"</h2>\r\n    </div>\r\n\r\n\r\n    <div class=\"clearfix\"></div>\r\n\r\n</div>\r\n\r\n<div class=\"row\">\r\n    <div class=\"col-md-12\">\r\n\r\n        <div class=\"vlt-card-detail\">\r\n\r\n            ");
   hashTypes = {};
   hashContexts = {};
   stack2 = helpers['if'].call(depth0, "workspace.keyError", {hash:{},inverse:self.noop,fn:self.program(17, program17, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});

@@ -3,14 +3,14 @@
  */
 Vaultier.WorkspaceMemberIndexRoute = Vaultier.MemberIndexRoute.extend({
 
-    setupInviteData: function(params) {
+    setupInviteData: function (params) {
         var workspace = this.modelFor('Workspace');
         return {
             inviteObject: workspace
         }
     },
 
-    setupBlocks: function() {
+    setupBlocks: function () {
         return {workspace: true}
     },
 
@@ -18,7 +18,7 @@ Vaultier.WorkspaceMemberIndexRoute = Vaultier.MemberIndexRoute.extend({
         return Vaultier.Breadcrumbs.create({router: this.get('router')})
             .addHome()
             .addWorkspace()
-            .addText('Collaborators');
+            .addCollaboratorsIndex('Workspace.memberIndex');
     },
 
     setupInviteRoute: function (models) {
@@ -48,8 +48,8 @@ Vaultier.WorkspaceMemberInviteRoute = Vaultier.MemberInviteRoute.extend({
         return Vaultier.Breadcrumbs.create({router: this.get('router')})
             .addHome()
             .addWorkspace()
-            .addLink('Workspace.memberIndex', 'Collaborators')
-            .addText('Invite');
+            .addCollaboratorsIndex('Workspace.memberIndex')
+            .addCollaboratorsInvite('Workspace.memberInvite');
     }
 
 });

@@ -85,7 +85,7 @@ function program6(depth0,data) {
 function program8(depth0,data) {
   
   
-  data.buffer.push("\r\n                    <div class=\"vlt-separator\">\r\n                        <b> > </b>\r\n                    </div>\r\n                ");
+  data.buffer.push("\r\n                    <div class=\"vlt-separator\">\r\n                    |\r\n                    </div>\r\n                ");
   }
 
   hashTypes = {};

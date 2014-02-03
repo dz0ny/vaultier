@@ -16,7 +16,7 @@ Vaultier.VaultMemberIndexRoute = Vaultier.MemberIndexRoute.extend({
             .addHome()
             .addWorkspace()
             .addVault()
-            .addText('Collaborators');
+            .addCollaboratorsIndex('Vault.memberIndex');
     },
 
     setupInviteRoute: function (models) {
@@ -52,8 +52,8 @@ Vaultier.VaultMemberInviteRoute = Vaultier.MemberInviteRoute.extend({
             .addHome()
             .addWorkspace()
             .addVault()
-            .addLink('Vault.memberIndex', 'Collaborators')
-            .addText('Invite');
+            .addCollaboratorsIndex('Vault.memberIndex')
+            .addCollaboratorsInvite('Vault.memberInvite');
     }
 
 });

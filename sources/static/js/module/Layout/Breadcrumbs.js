@@ -22,6 +22,12 @@ Vaultier.Breadcrumbs = Ember.Object.extend({
             }
         }
 
+        title = Utils.HandlebarsHelpers.current().ellipsis(title, 25)
+
+        if (!icon) {
+            icon = '/static/images/icon-wrench-grey.png'
+        }
+
         this.items.push({
             link: link,
             title: title,
@@ -31,8 +37,8 @@ Vaultier.Breadcrumbs = Ember.Object.extend({
         return this;
     },
 
-    addText: function (text) {
-        this.addLink(null, text);
+    addText: function (text, icon) {
+        this.addLink(null, text, null, icon);
         return this;
     },
 
@@ -40,6 +46,19 @@ Vaultier.Breadcrumbs = Ember.Object.extend({
         // disabled for better user experience
         // this.addLink('index', 'Home');
         return this;
+    },
+
+    addSettings: function() {
+         //return this.addLink('Settings.index', 'Settings')
+        return this
+    },
+
+    addCollaboratorsIndex: function(route) {
+        return this.addLink(route, 'Collaborators', null, '/static/images/icon-user-grey.png')
+    },
+
+    addCollaboratorsInvite : function(route) {
+        return this.addLink(route, 'Invite', null, '/static/images/icon-plus-grey.png')
     },
 
     addVault: function () {

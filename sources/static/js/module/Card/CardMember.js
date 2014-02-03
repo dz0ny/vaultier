@@ -17,7 +17,7 @@ Vaultier.CardMemberIndexRoute = Vaultier.MemberIndexRoute.extend({
             .addWorkspace()
             .addVault()
             .addCard()
-            .addText('Collaborators');
+            .addCollaboratorsIndex('Card.memberIndex');
     },
 
     setupInviteRoute: function (models) {
@@ -61,8 +61,8 @@ Vaultier.CardMemberInviteRoute = Vaultier.MemberInviteRoute.extend({
             .addWorkspace()
             .addVault()
             .addCard()
-            .addLink('Card.memberIndex', 'Collaborators')
-            .addText('Invite');
+            .addCollaboratorsIndex('Card.memberIndex')
+            .addCollaboratorsInvite('Card.memberInvite');
     },
 
     setupRoleLevels: function () {
