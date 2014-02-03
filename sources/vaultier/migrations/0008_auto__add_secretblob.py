@@ -20,7 +20,7 @@ class Migration(SchemaMigration):
 
         # Adding field 'Secret.blob'
         db.add_column(u'vaultier_secret', 'blob',
-                      self.gf('django.db.models.fields.related.OneToOneField')(to=orm['vaultier.SecretBlob'], unique=True, null=True, blank=True),
+                      self.gf('django.db.models.fields.related.OneToOneField')(to=orm['vaultier.SecretBlob'], unique=True, null=True, on_delete=models.SET_NULL, blank=True),
                       keep_default=False)
 
 
@@ -104,7 +104,7 @@ class Migration(SchemaMigration):
         },
         'vaultier.secret': {
             'Meta': {'object_name': 'Secret'},
-            'blob': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['vaultier.SecretBlob']", 'unique': 'True', 'null': 'True', 'blank': 'True'}),
+            'blob': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['vaultier.SecretBlob']", 'unique': 'True', 'null': 'True', 'on_delete': 'models.SET_NULL', 'blank': 'True'}),
             'card': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['vaultier.Card']"}),
             'created_at': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'created_by': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['vaultier.User']", 'on_delete': 'models.PROTECT'}),

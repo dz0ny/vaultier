@@ -240,7 +240,7 @@ Vaultier.SecretBlob = RL.Model.extend(
         deserialize: function (data) {
             // put, patch and post returns no data
             // so serialization is skipped
-            if (data.blob && data.blobk.data) {
+            if (data.blob && data.blob.data) {
 
                 var encrypted = data.blob.data
                 var workspacekey = this.get('workspacekey');
