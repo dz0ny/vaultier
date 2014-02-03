@@ -38,6 +38,30 @@ Vaultier.SecretIndexRoute = Ember.Route.extend({
 
     actions: {
 
+        downloadBlob: function (secret) {
+            ApplicationLoader.showLoader();
+            secret
+                .loadBlob()
+                .finally(function () {
+                    ApplicationLoader.hideLoader();
+                })
+                .then(function () {
+                    var data = secret.get('blob.plain');
+                    var type = secret.get('filetype');
+                    var name = secret.get('filename');
+
+                    var byteArray = new Uint8Array(data.length);
+                    for (var i = 0; i < data.length; i++) {
+                        byteArray[i] = data.charCodeAt(i) & 0xff;
+                    }
+
+                    var blob = new Blob([byteArray.buffer], {type: type});
+                    saveAs(blob, name);
+                }.bind(this))
+
+
+        },
+
         deleteSecret: function (secret) {
             Vaultier.confirmModal(this, 'Are you sure?', function () {
 

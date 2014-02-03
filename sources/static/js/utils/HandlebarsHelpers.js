@@ -15,6 +15,11 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
         return value;
     },
 
+    humanFileSize: function (size) {
+        var i = Math.floor(Math.log(size) / Math.log(1024));
+        return ( size / Math.pow(1024, i) ).toFixed(2) * 1 + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i];
+    },
+
     renderMarkdown: function (string, options) {
 
         if (!string) {
@@ -207,6 +212,14 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
         /////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////
 
+        var humanFilesize = this.humanFileSize.bind(this);
+        Ember.Handlebars.registerBoundHelper('humanFilesize', humanFilesize);
+
+        /////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////
+
         var gravatarImg = this.gravatarImg.bind(this);
         Ember.Handlebars.registerBoundHelper('gravatarImg', function (email, options) {
             return new Ember.Handlebars.SafeString(gravatarImg(email, options));
@@ -327,6 +340,7 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
 
     }
 
-});
+})
+;
 
 Utils.HandlebarsHelpers.reopenClass(Utils.Singleton);

@@ -95,7 +95,7 @@ function program10(depth0,data) {
 function program12(depth0,data) {
   
   
-  data.buffer.push("\r\n            <div class=\"alert alert-warning top-15\">\r\n                Cyphered data cannot be decoded\r\n            </div>\r\n        ");
+  data.buffer.push("\r\n            <div class=\"alert alert-warning top-15\">\r\n                Encrypted data cannot be decrypted\r\n            </div>\r\n        ");
   }
 
   data.buffer.push("<div class=\"vlt-wrapper\">\r\n    <div class=\"vlt-visual\">\r\n        <div class=\"vlt-icon\">\r\n        </div>\r\n        <div class=\"vlt-type\">\r\n            Password\r\n        </div>\r\n    </div>\r\n    <div class=\"vlt-inner\">\r\n        ");

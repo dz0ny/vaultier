@@ -1,7 +1,9 @@
 Vaultier.JSONSerializer = RESTless.JSONSerializer.extend({
     // Vaultier posts are native jsons without root
     serialize: function (resource, options) {
-        return this._super.apply(this, [resource, {nonEmbedded: true}]);
+        options = options || {};
+        options.nonEmbedded = true;
+        return this._super.apply(this, [resource, options]);
     },
 
     keyForResourceName: function (name) {

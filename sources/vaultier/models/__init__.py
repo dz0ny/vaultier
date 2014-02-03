@@ -1,4 +1,5 @@
 from user import User
+from vaultier.models.secret_blob import SecretBlob
 from workspace import Workspace
 from secret import Secret
 from role import Role
@@ -26,3 +27,7 @@ from vaultier.models.slug import register_signals as slug_register_signals
 slug_register_signals(Workspace)
 slug_register_signals(Vault)
 slug_register_signals(Card)
+
+#Secret signals registration
+from vaultier.models.secret import register_signals as secret_register_signals
+secret_register_signals()
