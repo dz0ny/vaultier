@@ -75,6 +75,17 @@ Vaultier.AuthRegisterRoute = Ember.Route.extend({
 
 });
 
+Vaultier.AuthRegisterIndexRoute = Ember.Route.extend({
+    beforeModel: function (transition) {
+        if (this.get('auth').get('isAuthenticated')) {
+            transition.router.replaceWith('AuthRegister.sum');
+        } else {
+            transition.router.replaceWith('AuthRegister.before');
+        }
+    }
+});
+
+
 /////////////////////////////////////////////////////////////////
 //// STEP1 - Before
 /////////////////////////////////////////////////////////////////

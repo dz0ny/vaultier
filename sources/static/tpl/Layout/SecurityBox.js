@@ -62,7 +62,7 @@ function program4(depth0,data) {
 function program6(depth0,data) {
   
   var buffer = '', stack1, stack2, hashContexts, hashTypes, options;
-  data.buffer.push("\r\n    <div class=\" vlt-security-box vlt-anonymous pull-right \">\r\n       ");
+  data.buffer.push("\r\n    <div class=\" vlt-security-box vlt-anonymous\">\r\n       ");
   hashContexts = {'class': depth0,'activeClass': depth0};
   hashTypes = {'class': "STRING",'activeClass': "STRING"};
   options = {hash:{
