@@ -8,17 +8,16 @@ from vaultier.api.user import RelatedUserSerializer
 from vaultier.auth.authentication import TokenAuthentication
 from vaultier.models import Vault
 from vaultier.models.fields import AclLevelField
+from vaultier.models.history import History
 from vaultier.perms.check import has_object_acl
 from django.db import transaction
 import reversion
 
 
 class CanManageVaultPermission(BasePermission):
-
     def has_object_permission(self, request, view, obj):
 
-        if view.action == 'retrieve' or view.action == 'list' :
-
+        if view.action == 'retrieve' or view.action == 'list':
             result = has_object_acl(request.user, obj, AclLevelField.LEVEL_READ)
 
             return result
@@ -32,11 +31,14 @@ class CanManageVaultPermission(BasePermission):
             result = True
 
             # check permission to workspace
-            result = result and ( has_object_acl(request.user, obj.workspace, AclLevelField.LEVEL_WRITE ) or has_object_acl(request.user, obj.workspace, AclLevelField.LEVEL_CREATE ))
+            result = result and (
+            has_object_acl(request.user, obj.workspace, AclLevelField.LEVEL_WRITE) or has_object_acl(request.user,
+                                                                                                     obj.workspace,
+                                                                                                     AclLevelField.LEVEL_CREATE))
 
             return result
 
-        if view.action =='update' or view.action == 'partial_update':
+        if view.action == 'update' or view.action == 'partial_update':
             result = True
             # check permission to vault
             result = result and has_object_acl(request.user, obj, AclLevelField.LEVEL_WRITE)
@@ -54,17 +56,17 @@ class VaultSerializer(ModelSerializer):
 
     def restore_fields(self, data, files):
         if (self.context.get('view').action != 'create'):
-            self.fields.get('workspace').read_only=True
+            self.fields.get('workspace').read_only = True
         return super(VaultSerializer, self).restore_fields(data, files)
 
     class Meta:
         model = Vault
-        fields = ('id', 'slug', 'name', 'description','workspace', 'perms', 'created_at', 'updated_at', 'created_by')
+        fields = ('id', 'slug', 'name', 'description', 'workspace', 'perms', 'created_at', 'updated_at', 'created_by')
+
 
 class RelatedVaultSerializer(VaultSerializer):
     class Meta(VaultSerializer.Meta):
-        fields = ['id', 'slug','name']
-
+        fields = ['id', 'slug', 'name']
 
 
 class VaultViewSet(RetrieveBySlugMixin, ModelViewSet):
@@ -85,12 +87,24 @@ class VaultViewSet(RetrieveBySlugMixin, ModelViewSet):
     @transaction.atomic()
     @reversion.create_revision()
     def destroy(self, request, *args, **kwargs):
-        return super(VaultViewSet, self).destroy(request, *args, **kwargs);
+        result = super(VaultViewSet, self).destroy(request, *args, **kwargs);
+        reversion.add_meta(History,
+                           parent_object_id=1,
+                           parent_object_type=1,
+                           action_type=1
+        );
+        return result
 
     @transaction.atomic()
     @reversion.create_revision()
     def create(self, request, *args, **kwargs):
-        return super(VaultViewSet, self).create(request, *args, **kwargs);
+        result = super(VaultViewSet, self).create(request, *args, **kwargs);
+        reversion.add_meta(History,
+                           parent_object_id=self.object.workspace.id,
+                           parent_object_type=1,
+                           action_type=1
+        );
+        return result
 
 
     def pre_save(self, object):

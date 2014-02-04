@@ -2,15 +2,14 @@ from django.db import models
 from django.db.models.deletion import PROTECT, CASCADE
 from django.db.models.manager import Manager
 from django.db.models import F, Q
+from django.utils.timezone import now
 from vaultier.models.fields import AclLevelField
 from vaultier.tools.changes import ChangesMixin
 from vaultier.tools.tree import TreeItemMixin
 
 
 class CardManager(Manager):
-
     def search(self, user, query, max_results=5):
-
         list = query.split()
         result = self.all_for_user(user).filter(
             Q(reduce(lambda x, y: x | y, [Q(name__icontains=word) for word in list])) |
@@ -19,14 +18,9 @@ class CardManager(Manager):
         ).order_by('updated_at')
         return result[:max_results]
 
-        #return self.all_for_user(user).filter(
-        #    Q(name__icontains=query) |
-        #    Q(description__icontains=query) |
-        #    Q(secret__name__icontains=query)
-        #)[:max_results]
-
     def all_for_user(self, user):
         cards = self.filter(
+            deleted_at=None,
             acl__user=user,
             acl__level=AclLevelField.LEVEL_READ
         ).distinct()
@@ -34,7 +28,7 @@ class CardManager(Manager):
         return cards
 
 
-class Card(ChangesMixin,models.Model, TreeItemMixin):
+class Card(ChangesMixin, models.Model, TreeItemMixin):
     class Meta:
         app_label = 'vaultier'
         db_table = u'vaultier_card'
@@ -48,6 +42,11 @@ class Card(ChangesMixin,models.Model, TreeItemMixin):
     created_by = models.ForeignKey('vaultier.User', on_delete=PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    deleted_at = models.DateTimeField(null=True)
+
+    def delete(self, using=None):
+        self.deleted_at = now()
+        self.save()
 
     def get_child_objects(self):
         return []

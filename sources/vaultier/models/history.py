@@ -8,3 +8,7 @@ class History(models.Model):
     action_type =  PositiveIntegerField()
     parent_object_id = PositiveIntegerField()
     parent_object_type = PositiveIntegerField()
+
+    class Meta:
+        app_label= 'vaultier'
+        db_table = u'vaultier_history'

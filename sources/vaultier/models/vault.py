@@ -5,9 +5,11 @@ from django.db.models import F, Q
 from vaultier.models.fields import AclLevelField
 from vaultier.tools.changes import ChangesMixin
 from vaultier.tools.tree import TreeItemMixin
+from django.utils.timezone import now
 
 
 class VaultManager(Manager):
+
     def search(self, user, query, max_results=5):
         list = query.split()
         result = self.all_for_user(user).filter(
@@ -25,6 +27,7 @@ class VaultManager(Manager):
 
     def all_for_user(self, user):
         vaults = self.filter(
+            deleted_at=None,
             acl__user=user,
             acl__level=AclLevelField.LEVEL_READ
         ).distinct()
@@ -49,6 +52,12 @@ class Vault(ChangesMixin, models.Model, TreeItemMixin):
     created_by = models.ForeignKey('vaultier.User', on_delete=PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    deleted_at = models.DateTimeField(null=True)
+
+    def delete(self, using=None):
+        self.deleted_at = now()
+        self.save()
+
 
     def get_child_objects(self):
         return self.card_set.all()
