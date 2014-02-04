@@ -9,7 +9,8 @@ from vaultier.auth.authentication import TokenAuthentication
 from vaultier.models import Card
 from vaultier.models.fields import AclLevelField, RoleLevelField
 from vaultier.perms.check import has_object_acl
-
+from django.db import transaction
+import reversion
 
 class CanManageCardPermission(BasePermission):
 
@@ -60,6 +61,22 @@ class CardViewSet(RetrieveBySlugMixin, ModelViewSet):
     authentication_classes = (TokenAuthentication, )
     permission_classes = (IsAuthenticated, CanManageCardPermission)
     filter_fields = ('vault',)
+
+    @transaction.atomic()
+    @reversion.create_revision()
+    def update(self, request, *args, **kwargs):
+        return super(CardViewSet, self).update(request, *args, **kwargs);
+
+    @transaction.atomic()
+    @reversion.create_revision()
+    def destroy(self, request, *args, **kwargs):
+        return super(CardViewSet, self).destroy(request, *args, **kwargs);
+
+    @transaction.atomic()
+    @reversion.create_revision()
+    def create(self, request, *args, **kwargs):
+        return super(CardViewSet, self).create(request, *args, **kwargs);
+
 
     def pre_save(self, object):
         if object.pk is None:

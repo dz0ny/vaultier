@@ -9,6 +9,8 @@ from vaultier.auth.authentication import TokenAuthentication
 from vaultier.models import Vault
 from vaultier.models.fields import AclLevelField
 from vaultier.perms.check import has_object_acl
+from django.db import transaction
+import reversion
 
 
 class CanManageVaultPermission(BasePermission):
@@ -74,6 +76,21 @@ class VaultViewSet(RetrieveBySlugMixin, ModelViewSet):
     permission_classes = (IsAuthenticated, CanManageVaultPermission)
     serializer_class = VaultSerializer
     filter_fields = ('workspace',)
+
+    @transaction.atomic()
+    @reversion.create_revision()
+    def update(self, request, *args, **kwargs):
+        return super(VaultViewSet, self).update(request, *args, **kwargs);
+
+    @transaction.atomic()
+    @reversion.create_revision()
+    def destroy(self, request, *args, **kwargs):
+        return super(VaultViewSet, self).destroy(request, *args, **kwargs);
+
+    @transaction.atomic()
+    @reversion.create_revision()
+    def create(self, request, *args, **kwargs):
+        return super(VaultViewSet, self).create(request, *args, **kwargs);
 
 
     def pre_save(self, object):

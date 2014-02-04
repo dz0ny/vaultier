@@ -8,6 +8,7 @@ from member import Member
 from vault import Vault
 from card import Card
 from acl import Acl
+from history import History
 
 # South introspections
 from south.modelsinspector import add_introspection_rules
@@ -31,3 +32,7 @@ slug_register_signals(Card)
 #Secret signals registration
 from vaultier.models.secret import register_signals as secret_register_signals
 secret_register_signals()
+
+import reversion
+reversion.register(Vault, fields=['id', 'workspace', 'name', 'description', 'created_by', 'created_at', 'updated_at'])
+reversion.register(Card, fields=['id', 'vault', 'name', 'description', 'created_by', 'created_at', 'updated_at'])
