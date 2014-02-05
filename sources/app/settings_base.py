@@ -162,7 +162,6 @@ INSTALLED_APPS = (
     'south',
     'rest_framework',
     'django_extensions',
-    'reversion'
 )
 
 # A sample logging configuration. The only tangible logging

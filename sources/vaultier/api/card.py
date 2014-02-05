@@ -62,22 +62,6 @@ class CardViewSet(RetrieveBySlugMixin, ModelViewSet):
     permission_classes = (IsAuthenticated, CanManageCardPermission)
     filter_fields = ('vault',)
 
-    @transaction.atomic()
-    @reversion.create_revision()
-    def update(self, request, *args, **kwargs):
-        return super(CardViewSet, self).update(request, *args, **kwargs);
-
-    @transaction.atomic()
-    @reversion.create_revision()
-    def destroy(self, request, *args, **kwargs):
-        return super(CardViewSet, self).destroy(request, *args, **kwargs);
-
-    @transaction.atomic()
-    @reversion.create_revision()
-    def create(self, request, *args, **kwargs):
-        return super(CardViewSet, self).create(request, *args, **kwargs);
-
-
     def pre_save(self, object):
         if object.pk is None:
             self.check_object_permissions(self.request, object)

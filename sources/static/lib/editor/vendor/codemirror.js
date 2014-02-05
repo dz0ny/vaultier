@@ -5013,7 +5013,7 @@ window.CodeMirror = (function() {
 
   function makeHistory(startGen) {
     return {
-      // Arrays of history events. Doing something adds an event to
+      // Arrays of version events. Doing something adds an event to
       // done and clears undo. Undoing moves events from done to
       // undone, redoing moves them in the other direction.
       done: [], undone: [], undoDepth: Infinity,
@@ -5097,7 +5097,7 @@ window.CodeMirror = (function() {
   }
 
   // Used both to provide a JSON-safe object in .getHistory, and, when
-  // detaching a document, to split the history in two
+  // detaching a document, to split the version in two
   function copyHistoryArray(events, newGroup) {
     for (var i = 0, copy = []; i < events.length; ++i) {
       var event = events[i], changes = event.changes, newChanges = [];
@@ -5117,7 +5117,7 @@ window.CodeMirror = (function() {
     return copy;
   }
 
-  // Rebasing/resetting history to deal with externally-sourced changes
+  // Rebasing/resetting version to deal with externally-sourced changes
 
   function rebaseHistSel(pos, from, to, diff) {
     if (to < pos.line) {
@@ -5128,7 +5128,7 @@ window.CodeMirror = (function() {
     }
   }
 
-  // Tries to rebase an array of history events given a change in the
+  // Tries to rebase an array of version events given a change in the
   // document. If the change touches the same lines as the event, the
   // event, and everything 'behind' it, is discarded. If the change is
   // before the event, the event's positions are updated. Uses a

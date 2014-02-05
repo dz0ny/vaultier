@@ -79,34 +79,6 @@ class VaultViewSet(RetrieveBySlugMixin, ModelViewSet):
     serializer_class = VaultSerializer
     filter_fields = ('workspace',)
 
-    @transaction.atomic()
-    @reversion.create_revision()
-    def update(self, request, *args, **kwargs):
-        return super(VaultViewSet, self).update(request, *args, **kwargs);
-
-    @transaction.atomic()
-    @reversion.create_revision()
-    def destroy(self, request, *args, **kwargs):
-        result = super(VaultViewSet, self).destroy(request, *args, **kwargs);
-        reversion.add_meta(History,
-                           parent_object_id=1,
-                           parent_object_type=1,
-                           action_type=1
-        );
-        return result
-
-    @transaction.atomic()
-    @reversion.create_revision()
-    def create(self, request, *args, **kwargs):
-        result = super(VaultViewSet, self).create(request, *args, **kwargs);
-        reversion.add_meta(History,
-                           parent_object_id=self.object.workspace.id,
-                           parent_object_type=1,
-                           action_type=1
-        );
-        return result
-
-
     def pre_save(self, object):
         if object.pk is None:
             self.check_object_permissions(self.request, object)
