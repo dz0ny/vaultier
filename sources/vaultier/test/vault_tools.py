@@ -16,6 +16,13 @@ def delete_vault_api_call(token, id):
     response = client.delete(url)
     return response
 
+def update_vault_api_call(token, id, **kwargs):
+    url = reverse('vault-detail', args=(id,))
+    client = VaultierAPIClient()
+    client.token(token)
+    response = client.put(url, kwargs)
+    return response
+
 def retrieve_vault_api_call(token, id):
     url = reverse('vault-detail', args=(id,))
     client = VaultierAPIClient()

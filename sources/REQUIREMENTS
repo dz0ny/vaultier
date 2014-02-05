@@ -11,6 +11,7 @@ djangorestframework==2.3.12
 flup==1.0.2
 gunicorn==18.0
 html2text==3.200.3
+jsonfield==0.9.20
 mock==1.0.1
 psycopg2==2.5.1
 pycrypto==2.6.1

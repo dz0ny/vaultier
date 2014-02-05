@@ -27,7 +27,6 @@ class VaultManager(Manager):
 
     def all_for_user(self, user):
         vaults = self.filter(
-            deleted_at=None,
             acl__user=user,
             acl__level=AclLevelField.LEVEL_READ
         ).distinct()
@@ -52,11 +51,6 @@ class Vault(ChangesMixin, models.Model, TreeItemMixin):
     created_by = models.ForeignKey('vaultier.User', on_delete=PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    deleted_at = models.DateTimeField(null=True)
-
-    def delete(self, using=None):
-        self.deleted_at = now()
-        self.save()
 
 
     def get_child_objects(self):

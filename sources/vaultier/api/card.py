@@ -9,8 +9,6 @@ from vaultier.auth.authentication import TokenAuthentication
 from vaultier.models import Card
 from vaultier.models.fields import AclLevelField, RoleLevelField
 from vaultier.perms.check import has_object_acl
-from django.db import transaction
-import reversion
 
 class CanManageCardPermission(BasePermission):
 

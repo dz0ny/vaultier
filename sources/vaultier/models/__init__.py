@@ -32,3 +32,9 @@ slug_register_signals(Card)
 #Secret signals registration
 from vaultier.models.secret import register_signals as secret_register_signals
 secret_register_signals()
+
+#History signals
+from vaultier.models.version.signals import register_signals as version_register_signals
+version_register_signals()
+
+
