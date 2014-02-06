@@ -18,8 +18,9 @@ add_introspection_rules([], ["^vaultier\.models\.fields\.RoleLevelField"])
 add_introspection_rules([], ["^vaultier\.models\.fields\.SecretTypeField"])
 add_introspection_rules([], ["^vaultier\.models\.fields\.LowerCaseCharField"])
 add_introspection_rules([], ["^vaultier\.models\.object_reference\.ObjectReferenceTypeField"])
+add_introspection_rules([], ["^vaultier\.models\.version\.fields\.PythonClassField"])
 
-# Perms signals registration
+#Perms signals registration
 from vaultier.perms.signals import register_signals as perm_register_signals
 perm_register_signals()
 
@@ -29,12 +30,12 @@ slug_register_signals(Workspace)
 slug_register_signals(Vault)
 slug_register_signals(Card)
 
-#Secret signals registration
-from vaultier.models.secret import register_signals as secret_register_signals
-secret_register_signals()
-
 #History signals
 from vaultier.models.version.signals import register_signals as version_register_signals
 version_register_signals()
+
+#Secret signals registration
+from vaultier.models.secret import register_signals as secret_register_signals
+secret_register_signals()
 
 
