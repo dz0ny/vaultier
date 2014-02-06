@@ -12,14 +12,11 @@ def factory_handler(version, default_handler_cls):
 
 def register_handler( handler_cls=None, required_fields=None, required_sender=None, required_event_type=None):
 
-    def callback(signal=None, sender=None, instance=None, event_type=None, **kwargs):
-        changed_fields = instance.previous_changes().keys()
-        oldstate = instance.old_state();
-        prevstate = instance.previous_state();
-        currstate = instance.current_state();
+    def callback(signal=None, sender=None, instance=None, event_type=None, saved_values=None):
+        changed_fields = saved_values.keys()
 
-        if event_type == required_event_type and set(required_fields).issubset(changed_fields):
-            handler = factory_handler(Version(versioned=instance))
+        if event_type == required_event_type and set(changed_fields).intersection(required_fields):
+            handler = factory_handler(Version(versioned=instance), handler_cls)
             handler.store_changes(required_fields)
             handler.version.save()
 
@@ -52,7 +49,7 @@ class VersionHandler(object):
         self.version.object_fields = fields
 
     def serialize_object_data(self, fields):
-        data = self.version.versioned.old_changes()
+        data = self.version.versioned._current_values()
         serialized = {}
         if fields:
             for key in fields:

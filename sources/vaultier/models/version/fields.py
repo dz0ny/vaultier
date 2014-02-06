@@ -1,30 +1,22 @@
 from django.db import models
 from django.utils.importlib import import_module
 
-class PythonClassField(models.Field):
+class PythonClassField(models.CharField):
     description = "Field representing python class"
     __metaclass__ = models.SubfieldBase
 
-    def __init__(self, help_text=("Python class"), verbose_name='pythonclassfield', *args, **kwargs):
+    def __init__(self,  *args, **kwargs):
         self.name = "PythonClassField",
-        self.through = None
-        self.help_text = help_text
-        self.editable = True
-        self.creates_table = False
-        self.db_column = None
-        self.serialize = False
-        self.null = False
-        self.creation_counter = models.Field.creation_counter
-        models.Field.creation_counter += 1
+        self.max_length=255
         super(PythonClassField, self).__init__(*args, **kwargs)
-
-
-    def db_type(self, connection):
-        return 'varchar(255)'
 
     def to_python(self, value):
         if value in ( None, ''):
             return None
+
+        if not type(value)==type(''):
+            return value
+
         else:
             module_name, class_name = value.split('.');
             module = import_module(module_name);

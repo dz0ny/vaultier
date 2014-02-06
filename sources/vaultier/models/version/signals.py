@@ -3,19 +3,19 @@ from vaultier.models.version.handler import VersionHandler, register_handler, fa
 from vaultier.models.version.model import Version
 from vaultier.tools.changes import INSERT, post_change
 
-def callback(signal=None, sender=None, instance=None, event_type=None, saved_values=None):
-        pass
 
 def register_signals():
 
-
-    post_change.connect(callback, sender=Vault)
-
+    #def callback(signal=None, sender=None, instance=None, event_type=None, saved_values=None):
+    #        pass
     #
-    #register_handler(
-    #    required_sender=Vault,
-    #    required_fields=['description', 'name'],
-    #    required_event_type=INSERT,
-    #    handler_cls=VersionHandler
-    #)
+    #post_change.connect(callback, sender=Vault, weak=False)
+
+
+    register_handler(
+        required_sender=Vault,
+        required_fields=['description', 'name'],
+        required_event_type=INSERT,
+        handler_cls=VersionHandler
+    )
 
