@@ -16,7 +16,59 @@ DELETE = 3
 
 
 class ChangesMixin(object):
-    _states = []
+    """
+    ChangesMixin keeps track of changes for model instances.
+
+    It allows you to retrieve the following states from an instance:
+
+    1. current_state()
+        The current state of the instance.
+    2. previous_state()
+        The state of the instance **after** it was created, saved
+        or deleted the last time.
+    3. old_state()
+        The previous previous_state(), i.e. the state of the
+        instance **before** it was created, saved or deleted the
+        last time.
+
+    It also provides convenience methods to get changes between states:
+
+    1. changes()
+        Changes from previous_state to current_state.
+    2. previous_changes()
+        Changes from old_state to previous_state.
+    3. old_changes()
+        Changes from old_state to current_state.
+
+    And the following methods to determine if an instance was/is persisted in
+    the database:
+
+    1. was_persisted()
+        Was the instance persisted in its old state.
+    2. is_persisted()
+        Is the instance is_persisted in its current state.
+
+    This schematic tries to illustrate how these methods relate to
+    each other::
+
+
+        after create/save/delete            after save/delete                  now
+        |                                   |                                  |
+        .-----------------------------------.----------------------------------.
+        |\                                  |\                                 |\
+        | \                                 | \                                | \
+        |  old_state()                      |  previous_state()                |  current_state()
+        |                                   |                                  |
+        |-----------------------------------|----------------------------------|
+        |  previous_changes() (prev - old)  |  changes() (cur - prev)          |
+        |-----------------------------------|----------------------------------|
+        |                      old_changes()  (cur - old)                      |
+        .----------------------------------------------------------------------.
+         \                                                                      \
+          \                                                                      \
+           was_persisted()                                                        is_persisted()
+
+    """
 
     def __init__(self, *args, **kwargs):
         super(ChangesMixin, self).__init__(*args, **kwargs)
@@ -24,37 +76,14 @@ class ChangesMixin(object):
         self._states = []
         self._save_state(new_instance=True, event_type=CREATE)
 
-        def _post_save(sender, instance, **kwargs):
-            instance._post_save(**kwargs)
-
-        def _post_delete(sender, instance, **kwargs):
-            instance._post_delete(*kwargs)
-
         signals.post_save.connect(
-            _post_save,
-            weak=False,
-            sender=self.__class__,
+            _post_save, sender=self.__class__,
             dispatch_uid='django-changes-%s' % self.__class__.__name__
         )
         signals.post_delete.connect(
-            _post_delete,
-            weak=False,
-            sender=self.__class__,
+            _post_delete, sender=self.__class__,
             dispatch_uid='django-changes-%s' % self.__class__.__name__
         )
-
-    def _post_save(self, **kwargs):
-        if kwargs.get('created'):
-            event_type = INSERT
-        else:
-            event_type = UPDATE
-        self._save_state(event_type=event_type)
-        post_change.send(sender=self.__class__, instance=self, event_type=event_type)
-
-    def _post_delete(self, **kwargs):
-        self._save_state(event_type=DELETE)
-        post_change.send(sender=self.__class__, instance=self, event_type=DELETE)
-
 
     def _save_state(self, new_instance=False, event_type=INSERT):
         # Pipe the pk on deletes so that a correct snapshot of the current
@@ -187,3 +216,13 @@ class ChangesMixin(object):
         return self.__class__(**self.previous_state())
 
 
+def _post_save(sender, instance, **kwargs):
+    if kwargs.get('created'):
+        event_type = INSERT
+    else:
+        event_type = UPDATE
+    instance._save_state(new_instance=False, event_type=event_type)
+
+
+def _post_delete(sender, instance, **kwargs):
+    instance._save_state(new_instance=False, event_type=DELETE)
