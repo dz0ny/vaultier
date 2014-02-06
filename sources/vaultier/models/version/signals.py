@@ -3,10 +3,7 @@ from vaultier.models.version.handler import VersionHandler, register_handler, fa
 from vaultier.models.version.model import Version
 from vaultier.tools.changes import INSERT, post_change
 
-def callback(signal=None, sender=None, instance=None, event_type=None, **kwargs):
-        oldstate = instance.old_changes().keys()
-        prevstate = instance.previous_changes().keys()
-        currstate = instance.changes().keys()
+def callback(signal=None, sender=None, instance=None, event_type=None, saved_values=None):
         pass
 
 def register_signals():

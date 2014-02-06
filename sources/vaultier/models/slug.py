@@ -9,13 +9,18 @@ from vaultier.tools.slugify import unique_slugify
 
 class SlugManager(Manager):
     def on_model(self, signal=None, sender=None, instance=None, event_type=None, **kwargs):
-        # create slug with new instance
-        if event_type == INSERT:
-            self.create_slug_for_model(instance)
+        try:
+            instance.set_post_change_signal_enabled(False)
 
-        # create slug when name of instance changed. Slugs are not deleted (permalink pattern)
-        if event_type == UPDATE and instance.old_changes().get('name'):
-            self.create_slug_for_model(instance)
+            # create slug with new instance
+            if event_type == INSERT:
+                self.create_slug_for_model(instance)
+
+            # create slug when name of instance changed. Slugs are not deleted (permalink pattern)
+            if event_type == UPDATE and instance.saved_values().get('name'):
+                self.create_slug_for_model(instance)
+        finally:
+            instance.set_post_change_signal_enabled(True)
 
     def create_slug_for_model(self, model):
         # prepare query set to generate slug
