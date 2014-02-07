@@ -9,10 +9,10 @@ and changes have been recorded.
 
 from django.db.models import signals
 
-INSERT = 1
-UPDATE = 2
-DELETE = 3
-SOFT_DELETE = 4
+INSERT = 10
+UPDATE = 20
+DELETE = 30
+SOFT_DELETE = 40
 
 
 class ChangesMixin(object):

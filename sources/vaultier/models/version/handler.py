@@ -1,7 +1,8 @@
-from vaultier.models.version.fields import handlers
 from vaultier.models.version.model import Version
-from modelext.changes.changes import post_change
+from modelext.changes.changes import post_change, INSERT, UPDATE, SOFT_DELETE
 
+
+handlers = {}
 
 def factory_handler(version, default_handler_cls):
     if version.handler_cls:
@@ -11,7 +12,9 @@ def factory_handler(version, default_handler_cls):
         return default_handler_cls(version)
 
 
-def register_handler_signal(handler_cls=None, required_fields=None, required_sender=None, required_event_type=None):
+def register_handler_signal(handler=None, required_fields=None, required_sender=None, required_event_type=None):
+    handler_cls = handlers.get(handler)
+
     def callback(signal=None, sender=None, instance=None, event_type=None, saved_values=None, **kwargs):
         saved_keys = saved_values.keys()
 
@@ -29,7 +32,7 @@ def register_handler_signal(handler_cls=None, required_fields=None, required_sen
             version = Version(versioned=instance)
             handler = factory_handler(version, handler_cls)
             handler.store_state(intersection)
-            handler.version.save()
+            version.save()
 
     post_change.connect(callback, sender=required_sender, weak=False)
 
@@ -38,33 +41,55 @@ def register_handler_class(name, cls):
 
 class VersionHandler(object):
     version = None
+    action_name = 'action'
+    action_id = 0
 
     def __init__(self, version, **kwargs):
         self.version = version
         super(VersionHandler, self).__init__(**kwargs);
 
     def determine_action_name(self):
-        return 'action'
+        return self.action_name;
 
     def determine_versioned_parent(self):
         return self.version.versioned.get_parent_object()
 
     def determine_action_id(self):
-        return 0
+        return self.action_id
 
     def store_state(self, data):
-        self.version.object_data = data
+        self.version.revert_data = data
+        self.version.revert_repr = str(self.version.versioned)
+        self.version.revert_fields = data.keys()
 
         self.version.action_name = self.determine_action_name()
         self.version.action_id = self.determine_action_id();
         self.version.versioned_parent = self.determine_versioned_parent()
-        self.version.object_repr = str(self.version.versioned)
-        self.version.object_fields = data.keys()
+
 
     def revert(self):
         pass
 
     def can_revert(self):
-        pass
+        return True
 
-register_handler_class('base', VersionHandler)
+class ModelCreatedHandler(VersionHandler):
+    action_name='created'
+    action_id = INSERT
+
+    def store_state(self, data):
+        super(ModelCreatedHandler, self).store_state(data);
+        self.version.object_fields = {}
+        self.version.object_data = {}
+
+    def can_revert(self):
+        return False
+
+class ModelUpdatedHandler(VersionHandler):
+    action_name='updated'
+    action_id = UPDATE
+
+class ModelDeletedHandler(VersionHandler):
+    action_name='deleted'
+    action_id = SOFT_DELETE
+

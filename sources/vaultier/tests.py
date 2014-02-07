@@ -21,32 +21,32 @@ from vaultier.test.workspacekey import workspacekey_suite
 def suite():
     suite = TestSuite()
 
-    suite.addTest(auth_suite())
+    #suite.addTest(auth_suite())
+    #
+    #suite.addTest(acl_suite())
+    #
+    #suite.addTest(role_suite())
+    #
+    #suite.addTest(member_suite())
+    #suite.addTest(invitation_suite())
+    #suite.addTest(workspacekey_suite())
+    #
+    #suite.addTest(workspace_suite())
+    #suite.addTest(workspace_perms_suite())
+    #
+    #suite.addTest(vault_suite())
+    #suite.addTest(vault_perms_suite())
+    #
+    #suite.addTest(card_suite())
+    #suite.addTest(card_perms_suite())
+    #
+    #suite.addTest(secret_suite())
+    #suite.addTest(secret_perms_suite())
+    #
+    #suite.addTest(slug_suite())
+    #
+    #suite.addTest(search_suite())
 
-    suite.addTest(acl_suite())
-
-    suite.addTest(role_suite())
-
-    suite.addTest(member_suite())
-    suite.addTest(invitation_suite())
-    suite.addTest(workspacekey_suite())
-
-    suite.addTest(workspace_suite())
-    suite.addTest(workspace_perms_suite())
-
-    suite.addTest(vault_suite())
-    suite.addTest(vault_perms_suite())
-
-    suite.addTest(card_suite())
-    suite.addTest(card_perms_suite())
-
-    suite.addTest(secret_suite())
-    suite.addTest(secret_perms_suite())
-
-    suite.addTest(slug_suite())
-
-    suite.addTest(search_suite())
-
-    #suite.addTest(version_suite())
+    suite.addTest(version_suite())
 
     return suite

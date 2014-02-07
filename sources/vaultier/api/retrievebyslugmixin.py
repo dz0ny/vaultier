@@ -1,3 +1,5 @@
+from vaultier.models.slug.model import Slug
+
 class RetrieveBySlugMixin(object):
 
     def get_object(self, *args, **kwargs):
@@ -6,7 +8,7 @@ class RetrieveBySlugMixin(object):
         numeric = pk.isnumeric()
         if not numeric:
             try:
-                o = SlugMixin.objects.get(slug=pk)
+                o = Slug.objects.get(slug=pk)
                 self.kwargs['pk'] = o.object_id
             except:
                 pass

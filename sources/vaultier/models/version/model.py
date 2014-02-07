@@ -42,9 +42,9 @@ class Version(models.Model):
     handler_cls = PythonClassField(max_length=255)
 
     # serialized object representation
-    object_data = jsonfield.JSONField(help_text="The serialized form of this version of the model.")
-    object_fields =  jsonfield.JSONField(help_text="The serialized form of affected model fields.")
-    object_repr = models.TextField(help_text="A string representation of the object.")
+    revert_data = jsonfield.JSONField(help_text="The serialized form of this version of the model.")
+    revert_fields =  jsonfield.JSONField(help_text="The serialized form of affected model fields.")
+    revert_repr = models.TextField(help_text="A string representation of the object.")
 
     # versioned object relation
     versioned_type = models.ForeignKey(ContentType, related_name='version_versioned')

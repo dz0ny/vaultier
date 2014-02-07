@@ -1,5 +1,4 @@
 from django.db import models
-from django.utils.importlib import import_module
 from six import string_types
 
 
@@ -21,13 +20,16 @@ class PythonClassField(models.CharField):
             return value
 
         else:
+            from handler import handlers
             cls = None
             if handlers.has_key(value):
                 cls = handlers[value]
-            return cls
+            else:
+                raise AttributeError('handler class for "{name}" not found'.format(name=value))
 
     def get_prep_value(self, value):
         if value:
+            from handler import handlers
             for key in handlers:
                 if value==handlers[key]:
                     return key
@@ -41,8 +43,4 @@ class PythonClassField(models.CharField):
     def value_to_string(self, obj):
         value = self._get_val_from_obj(obj)
         return self.get_prep_value(value)
-
-
-handlers = {
-}
 
