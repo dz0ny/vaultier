@@ -1,10 +1,9 @@
 from django.db import models
 from django.db.models.deletion import PROTECT, CASCADE
 from django.db.models.manager import Manager
-from django.db.models import F, Q
-from django.utils.timezone import now
+from django.db.models import Q
 from vaultier.models.fields import AclLevelField
-from vaultier.tools.changes import ChangesMixin
+from modelext.changes.changes import ChangesMixin
 from vaultier.tools.tree import TreeItemMixin
 
 

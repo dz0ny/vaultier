@@ -8,8 +8,8 @@ from vaultier.api.fields.perms import PermsField
 from vaultier.api.shared.slug import RetrieveBySlugMixin
 from vaultier.api.user import RelatedUserSerializer
 from vaultier.auth.authentication import TokenAuthentication
-from vaultier.models import Vault
 from vaultier.models.fields import AclLevelField
+from vaultier.models.vault.model import Vault
 from vaultier.perms.check import has_object_acl
 
 

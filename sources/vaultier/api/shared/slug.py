@@ -1,12 +1,12 @@
 class RetrieveBySlugMixin(object):
 
     def get_object(self, *args, **kwargs):
-        from vaultier.models.slug import Slug
+        from modelext.slugify.model import SlugMixin
         pk = self.kwargs.get('pk')
         numeric = pk.isnumeric()
         if not numeric:
             try:
-                o = Slug.objects.get(slug=pk)
+                o = SlugMixin.objects.get(slug=pk)
                 self.kwargs['pk'] = o.object_id
             except:
                 pass

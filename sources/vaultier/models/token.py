@@ -1,9 +1,11 @@
-from django.db import models
-from django.db.models.deletion import PROTECT, CASCADE
 import uuid
 import hmac
 from hashlib import sha1
-from vaultier.tools.changes import ChangesMixin
+
+from django.db import models
+from django.db.models.deletion import CASCADE
+
+from modelext.changes.changes import ChangesMixin
 
 
 class Token(ChangesMixin, models.Model):

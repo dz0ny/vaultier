@@ -1,7 +1,6 @@
-from vaultier.models.vault import Vault
-from vaultier.models.version.handler import VersionHandler, register_handler_signal, factory_handler
-from vaultier.models.version.model import Version
-from vaultier.tools.changes import INSERT, post_change, UPDATE, DELETE, SOFT_DELETE
+from vaultier.models.vault.model import Vault
+from vaultier.models.version.handler import VersionHandler, register_handler_signal
+from modelext.changes.changes import SOFT_DELETE
 
 
 def register_signals():

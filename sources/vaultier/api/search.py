@@ -9,7 +9,7 @@ from vaultier.api.vault import VaultSerializer, RelatedVaultSerializer
 from vaultier.api.workspace import RelatedWorkspaceSerializer
 from vaultier.auth.authentication import TokenAuthentication
 from vaultier.models.card import Card
-from vaultier.models.vault import Vault
+from vaultier.models.vault.model import Vault
 
 
 class SearchSerializer(serializers.Serializer):

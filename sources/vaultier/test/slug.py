@@ -4,7 +4,7 @@ from django.utils.unittest.suite import TestSuite
 from vaultier.models.card import Card
 from vaultier.models.slug import Slug
 from vaultier.models.user import User
-from vaultier.models.vault import Vault
+from vaultier.models.vault.model import Vault
 from vaultier.models.workspace import Workspace
 
 

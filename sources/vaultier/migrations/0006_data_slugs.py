@@ -1,23 +1,16 @@
 # -*- coding: utf-8 -*-
-from south.utils import datetime_utils as datetime
-from south.db import db
 from south.v2 import DataMigration
-from django.db import models
-
 
 class Migration(DataMigration):
     def forwards(self, orm):
-        from vaultier.models.card import Card
-        from vaultier.models.slug import Slug
-        from vaultier.models.vault import Vault
-        from vaultier.models.workspace import Workspace
+        from modelext.slugify.model import SlugMixin
 
         for workspace in orm.Workspace.objects.all():
-            Slug.objects.create_slug_for_model(workspace)
+            orm.Slug.objects.create_slug_for_model(workspace)
         for vault in orm.Vault.objects.all():
-            Slug.objects.create_slug_for_model(vault)
+            orm.Slug.objects.create_slug_for_model(vault)
         for card in orm.Card.objects.all():
-            Slug.objects.create_slug_for_model(card)
+            orm.Slug.objects.create_slug_for_model(card)
 
 
     def backwards(self, orm):

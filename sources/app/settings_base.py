@@ -162,6 +162,7 @@ INSTALLED_APPS = (
     'south',
     'rest_framework',
     'django_extensions',
+    'modelext',
 )
 
 # A sample logging configuration. The only tangible logging

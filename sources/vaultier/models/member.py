@@ -1,13 +1,15 @@
+import hmac
+import uuid
+from hashlib import sha1
+
 from django.db import models
 from django.db.models.deletion import PROTECT, CASCADE
 from django.db.models.manager import Manager
-import hmac
-import uuid
 from django.db.models.query_utils import Q
+
 from vaultier.mailer.invitation import resend_invitation
 from vaultier.models.fields import LowerCaseCharField, MemberStatusField
-from hashlib import sha1
-from vaultier.tools.changes import ChangesMixin
+from modelext.changes.changes import ChangesMixin
 
 
 class MemberManager(Manager):

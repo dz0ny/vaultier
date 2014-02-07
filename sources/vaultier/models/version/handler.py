@@ -1,6 +1,6 @@
 from vaultier.models.version.fields import handlers
 from vaultier.models.version.model import Version
-from vaultier.tools.changes import post_change, INSERT
+from modelext.changes.changes import post_change
 
 
 def factory_handler(version, default_handler_cls):

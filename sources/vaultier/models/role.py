@@ -5,8 +5,8 @@ from django.db.models.query_utils import Q
 from vaultier.models.card import Card
 from vaultier.models.fields import AclLevelField, RoleLevelField
 from vaultier.models.object_reference import ObjectReference, ObjectReferenceTypeField
-from vaultier.models.vault import Vault
-from vaultier.tools.changes import ChangesMixin
+from vaultier.models.vault.model import Vault
+from modelext.changes.changes import ChangesMixin
 
 
 class RoleManager(Manager):

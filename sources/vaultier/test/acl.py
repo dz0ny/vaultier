@@ -7,7 +7,7 @@ from vaultier.models.fields import AclLevelField, RoleLevelField, MemberStatusFi
 from vaultier.models.member import Member
 from vaultier.models.role import Role
 from vaultier.models.user import User
-from vaultier.models.vault import Vault
+from vaultier.models.vault.model import Vault
 from vaultier.models.workspace import Workspace
 
 

@@ -1,8 +1,10 @@
+from time import timezone
+
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
-from time import timezone
+
 from vaultier.models.fields import LowerCaseCharField
-from vaultier.tools.changes import ChangesMixin
+from modelext.changes.changes import ChangesMixin
 
 
 class UserManager(BaseUserManager):

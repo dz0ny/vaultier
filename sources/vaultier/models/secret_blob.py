@@ -1,6 +1,6 @@
 from django.db import models
 from django.db.models import Manager, PROTECT
-from vaultier.tools.changes import ChangesMixin
+from modelext.changes.changes import ChangesMixin
 
 
 class SecretBlobManager(Manager):

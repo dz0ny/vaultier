@@ -2,7 +2,7 @@ from django.db import models
 from django.db.models.deletion import PROTECT, CASCADE, SET_NULL
 from django.db.models.manager import Manager
 from vaultier.models.fields import AclLevelField, SecretTypeField
-from vaultier.tools.changes import ChangesMixin, DELETE, post_change
+from modelext.changes.changes import ChangesMixin, DELETE, post_change
 
 
 class SecretManager(Manager):

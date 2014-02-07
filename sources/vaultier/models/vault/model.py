@@ -1,47 +1,9 @@
 from django.db import models
-from django.db.models.deletion import PROTECT, CASCADE
-from django.db.models.manager import Manager
-from django.db.models import F, Q
-from django.db.models import signals
-from django.db.models.query import QuerySet
+from django.db.models import Manager, Q, CASCADE, PROTECT
 from vaultier.models.fields import AclLevelField
-from vaultier.tools.changes import ChangesMixin, post_change, SOFT_DELETE
+from modelext.softdelete.softdelete import SoftDeleteManagerMixin, SoftDeleteMixin
+from modelext.changes.changes import ChangesMixin
 from vaultier.tools.tree import TreeItemMixin
-from django.utils.timezone import now
-
-class SoftDeleteManagerMixin(object):
-    def get_queryset(self):
-        """
-        Returns a new QuerySet object.  Subclasses can override this method
-        to easily customize the behavior of the Manager.
-        """
-        return QuerySet(self.model, using=self._db).filter(deleted_at=None)
-
-    def include_deleted(self):
-          return QuerySet(self.model, using=self._db)
-
-class SoftDeleteMixin(models.Model):
-    class Meta:
-        abstract = True
-
-    deleted_at = models.DateTimeField(null=True)
-
-    def softdelete(self, using=None):
-
-        try:
-            self.set_post_change_signal_enabled(False)
-            self.deleted_at = now()
-            self.save()
-        finally:
-            self.set_post_change_signal_enabled(True)
-
-        if self._post_change_signal_disabled == 0:
-            post_change.send(
-                sender=self.__class__,
-                instance=self,
-                event_type=SOFT_DELETE,
-                saved_values=self.saved_values()
-            )
 
 
 class VaultManager(SoftDeleteManagerMixin, Manager):
@@ -66,8 +28,6 @@ class VaultManager(SoftDeleteManagerMixin, Manager):
         ).distinct()
 
         return vaults
-
-
 
 
 class Vault(SoftDeleteMixin, ChangesMixin, models.Model, TreeItemMixin):
