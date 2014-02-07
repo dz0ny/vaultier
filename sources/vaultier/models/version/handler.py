@@ -1,8 +1,9 @@
-from vaultier.models.version.model import Version
+from django.db import models
+from six import string_types
 from modelext.changes.changes import post_change, INSERT, UPDATE, SOFT_DELETE
 
-
 handlers = {}
+
 
 def factory_handler(version, default_handler_cls):
     if version.handler_cls:
@@ -29,6 +30,8 @@ def register_handler_signal(handler=None, required_fields=None, required_sender=
                 # no required fields specifed, intersection is whole save state
                 intersection = saved_values
 
+            from vaultier.models.version.model import Version
+
             version = Version(versioned=instance)
             handler = factory_handler(version, handler_cls)
             handler.store_state(intersection)
@@ -36,8 +39,52 @@ def register_handler_signal(handler=None, required_fields=None, required_sender=
 
     post_change.connect(callback, sender=required_sender, weak=False)
 
+
 def register_handler_class(name, cls):
     handlers[name] = cls
+
+
+class VersionHandlerClassField(models.CharField):
+    description = "Field representing python class"
+    __metaclass__ = models.SubfieldBase
+
+    def __init__(self, *args, **kwargs):
+        self.name = "PythonClassField",
+        self.max_length = 255
+        self.default = None
+        super(VersionHandlerClassField, self).__init__(*args, **kwargs)
+
+    def to_python(self, value):
+        if value in ( None, ''):
+            return None
+
+        if not isinstance(value, string_types):
+            return value
+
+        else:
+            cls = None
+            if handlers.has_key(value):
+                cls = handlers[value]
+            else:
+                raise AttributeError('handler class for "{name}" not found'.format(name=value))
+            return cls
+
+    def get_prep_value(self, value):
+        if value:
+            for key in handlers:
+                if value == handlers[key]:
+                    return key
+        else:
+            return None
+
+
+    def get_internal_type(self):
+        return 'CharField'
+
+    def value_to_string(self, obj):
+        value = self._get_val_from_obj(obj)
+        return self.get_prep_value(value)
+
 
 class VersionHandler(object):
     version = None
@@ -66,6 +113,17 @@ class VersionHandler(object):
         self.version.action_id = self.determine_action_id();
         self.version.versioned_parent = self.determine_versioned_parent()
 
+    def get_diff(self):
+        result = {}
+        version = self.version
+        versioned = self.version.versioned
+        if (self.can_revert()):
+            for field in version.revert_fields:
+                result[field] = {
+                    'from': getattr(versioned, field),
+                    'to': version.revert_data[field],
+                }
+        return result
 
     def revert(self):
         pass
@@ -73,23 +131,25 @@ class VersionHandler(object):
     def can_revert(self):
         return True
 
+
 class ModelCreatedHandler(VersionHandler):
-    action_name='created'
+    action_name = 'created'
     action_id = INSERT
 
     def store_state(self, data):
         super(ModelCreatedHandler, self).store_state(data);
-        self.version.object_fields = {}
-        self.version.object_data = {}
+        self.version.revert_fields = {}
+        self.version.revert_data = {}
 
     def can_revert(self):
         return False
 
+
 class ModelUpdatedHandler(VersionHandler):
-    action_name='updated'
+    action_name = 'updated'
     action_id = UPDATE
 
-class ModelDeletedHandler(VersionHandler):
-    action_name='deleted'
-    action_id = SOFT_DELETE
 
+class ModelDeletedHandler(VersionHandler):
+    action_name = 'deleted'
+    action_id = SOFT_DELETE

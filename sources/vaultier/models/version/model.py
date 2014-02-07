@@ -6,7 +6,8 @@ from django.db.models.deletion import PROTECT
 from django.db.models.fields import PositiveIntegerField, CharField
 from django.utils.importlib import import_module
 import jsonfield
-from vaultier.models.version.fields import PythonClassField
+from vaultier.models.version.handler import VersionHandlerClassField
+
 
 class VersionManager(Manager):
 
@@ -33,13 +34,21 @@ class Version(models.Model):
 
     objects = VersionManager()
 
+    _handler = None
+
     def __unicode__(self):
         return 'Version(' + str(self.id) + '):' + self.action_name + ':' + self.action_code
+
+    def get_handler(self):
+        if not self._handler:
+            from vaultier.models.version.handler import factory_handler
+            self._handler = factory_handler(self, self.handler_cls)
+        return self._handler
 
     # action definition
     action_id = PositiveIntegerField(null=True)
     action_name = CharField(max_length=16, null=True)
-    handler_cls = PythonClassField(max_length=255)
+    handler_cls = VersionHandlerClassField(max_length=255)
 
     # serialized object representation
     revert_data = jsonfield.JSONField(help_text="The serialized form of this version of the model.")
