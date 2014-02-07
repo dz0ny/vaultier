@@ -1,10 +1,10 @@
 from django.test.testcases import TransactionTestCase
 from django.utils import unittest
 from django.utils.unittest.suite import TestSuite
-from rest_framework.status import HTTP_201_CREATED, HTTP_403_FORBIDDEN
-from vaultier.models.member import Member
-from vaultier.models.role import Role
-from vaultier.models.workspace import Workspace
+from rest_framework.status import HTTP_201_CREATED
+from vaultier.models.member.model import Member
+from vaultier.models.role.model import Role
+from vaultier.models.workspace.model import Workspace
 from vaultier.test.auth_tools import auth_api_call, register_api_call
 from vaultier.test.tools import format_response
 from vaultier.test.workspace_tools import create_workspace_api_call, delete_workspace_api_call

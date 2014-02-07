@@ -1,7 +1,7 @@
-from vaultier.models.card import Card
-from vaultier.models.member import Member
-from vaultier.models.role import Role
-from vaultier.models.secret import Secret
+from vaultier.models.card.model import Card
+from vaultier.models.member.model import Member
+from vaultier.models.role.model import Role
+from vaultier.models.secret.model import Secret
 from vaultier.models.vault.model import Vault
 from vaultier.perms.materializer import CreateRoleMaterializer, UpdateRoleLevelMaterializer, UpdateRoleMemberMaterializer, UpdateMemberUserMaterializer, InsertedObjectMaterializer, MovedObjectMaterializer
 from modelext.changes.changes import post_change, INSERT, UPDATE

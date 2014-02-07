@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
-from vaultier.models.acl import Acl
-from vaultier.models.fields import MemberStatusField
-from vaultier.models.role import Role
+from vaultier.models.acl.model import Acl
+from vaultier.models.member.fields import MemberStatusField
+from vaultier.models.role.model import Role
 from vaultier.perms.materializer import CreateRoleMaterializer
 
 class Command(BaseCommand):

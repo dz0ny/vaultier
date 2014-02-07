@@ -1,9 +1,9 @@
 from django.db import models
 from django.db.models import Manager, Q, CASCADE, PROTECT
-from vaultier.models.fields import AclLevelField
+from vaultier.models.acl.fields import AclLevelField
 from modelext.softdelete.softdelete import SoftDeleteManagerMixin, SoftDeleteMixin
 from modelext.changes.changes import ChangesMixin
-from vaultier.tools.tree import TreeItemMixin
+from vaultier.models.tree import TreeItemMixin
 
 
 class VaultManager(SoftDeleteManagerMixin, Manager):

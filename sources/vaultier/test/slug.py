@@ -1,11 +1,11 @@
 from django.test.testcases import TransactionTestCase
 from django.utils import unittest
 from django.utils.unittest.suite import TestSuite
-from vaultier.models.card import Card
-from vaultier.models.slug import Slug
-from vaultier.models.user import User
+from vaultier.models.card.model import Card
+from vaultier.models.slug.model import Slug
+from vaultier.models.user.model import User
 from vaultier.models.vault.model import Vault
-from vaultier.models.workspace import Workspace
+from vaultier.models.workspace.model import Workspace
 
 
 class SlugTest(TransactionTestCase):

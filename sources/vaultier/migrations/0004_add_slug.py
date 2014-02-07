@@ -47,9 +47,9 @@ class Migration(SchemaMigration):
         },
         'vaultier.acl': {
             'Meta': {'object_name': 'Acl'},
-            'direction': ('vaultier.models.fields.AclDirectionField', [], {}),
+            'direction': ('vaultier.models.acl.fields.AclDirectionField', [], {}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'level': ('vaultier.models.fields.RoleLevelField', [], {}),
+            'level': ('vaultier.models.role.fields.RoleLevelField', [], {}),
             'role': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['vaultier.Role']"}),
             'to_card': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['vaultier.Card']", 'null': 'True', 'blank': 'True'}),
             'to_vault': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['vaultier.Vault']", 'null': 'True', 'blank': 'True'}),
@@ -74,7 +74,7 @@ class Migration(SchemaMigration):
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'invitation_email': ('django.db.models.fields.CharField', [], {'max_length': '1024', 'null': 'True'}),
             'invitation_hash': ('django.db.models.fields.CharField', [], {'max_length': '64', 'unique': 'True', 'null': 'True'}),
-            'status': ('vaultier.models.fields.MemberStatusField', [], {'default': '3'}),
+            'status': ('vaultier.models.member.fields.MemberStatusField', [], {'default': '3'}),
             'updated_at': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['vaultier.User']", 'null': 'True'}),
             'workspace': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'membership'", 'to': "orm['vaultier.Workspace']"}),
@@ -85,7 +85,7 @@ class Migration(SchemaMigration):
             'created_at': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'created_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'roles_created'", 'on_delete': 'models.PROTECT', 'to': "orm['vaultier.User']"}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'level': ('vaultier.models.fields.RoleLevelField', [], {}),
+            'level': ('vaultier.models.role.fields.RoleLevelField', [], {}),
             'member': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['vaultier.Member']"}),
             'to_card': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['vaultier.Card']", 'null': 'True', 'blank': 'True'}),
             'to_vault': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['vaultier.Vault']", 'null': 'True', 'blank': 'True'}),
@@ -101,7 +101,7 @@ class Migration(SchemaMigration):
             'data': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '255', 'null': 'True', 'blank': 'True'}),
-            'type': ('vaultier.models.fields.SecretTypeField', [], {}),
+            'type': ('vaultier.models.secret.fields.SecretTypeField', [], {}),
             'updated_at': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'})
         },
         'vaultier.slug': {
