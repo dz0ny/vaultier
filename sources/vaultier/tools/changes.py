@@ -12,14 +12,14 @@ from django.db.models import signals
 INSERT = 1
 UPDATE = 2
 DELETE = 3
+SOFT_DELETE = 4
 
 
 class ChangesMixin(object):
-
-    _saved_values  = {}
+    _saved_values = {}
     _previous_values = {}
     _clean_values = {}
-    _post_change_signal_enabled = True
+    _post_change_signal_disabled = 0
 
     def __init__(self, *args, **kwargs):
         super(ChangesMixin, self).__init__(*args, **kwargs)
@@ -37,7 +37,7 @@ class ChangesMixin(object):
             instance._post_save(**kwargs)
 
         def _post_delete(sender, instance, **kwargs):
-            instance._post_delete(*kwargs)
+            instance._post_delete(**kwargs)
 
         signals.post_save.connect(
             _post_save,
@@ -53,7 +53,13 @@ class ChangesMixin(object):
         )
 
     def _compute_changed_field(self, current, previous):
-        return dict([(key, (was, current[key])) for key, was in previous.iteritems() if was != current[key]])
+        result = {}
+        for key in current.keys():
+            if (previous.has_key(key) and previous[key] != current[key]):
+                result[key] = previous[key]
+
+        return result
+        #return dict([(key, (was, current[key])) for key, was in previous.iteritems() if was != current[key]])
 
     def _save_state(self):
         self._previous_values = self._clean_values
@@ -78,22 +84,21 @@ class ChangesMixin(object):
         return dict
 
     def _post_delete(self, **kwargs):
-        self.pk = None
+        saved_values = self._current_values();
         self._save_state();
 
-        if self._post_change_signal_enabled:
+        if self._post_change_signal_disabled==0:
             post_change.send(
                 sender=self.__class__,
                 instance=self,
                 event_type=DELETE,
-                saved_values=self._saved_values,
+                saved_values=saved_values,
             )
-
 
     def _post_save(self, **kwargs):
         self._save_state();
 
-        if self._post_change_signal_enabled:
+        if self._post_change_signal_disabled==0:
 
             if kwargs.get('created'):
                 event_type = INSERT
@@ -120,6 +125,13 @@ class ChangesMixin(object):
         return self._clean_values
 
     def set_post_change_signal_enabled(self, enabled):
-        self._post_change_signal_enabled = enabled
+        if (enabled):
+            toadd = -1
+        else:
+            toadd = 1
 
+        self._post_change_signal_disabled += toadd
+
+        if (self._post_change_signal_disabled < 0):
+            self._post_change_signal_disabled = 0;
 

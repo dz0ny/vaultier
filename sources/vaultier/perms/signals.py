@@ -48,12 +48,6 @@ def on_object_inserted(signal=None, sender=None, instance=None, event_type=None,
 def on_object_moved(signal=None, sender=None, instance=None, event_type=None, **kwargs):
     if (event_type == UPDATE):
         materializer = None
-        n = instance.__class__.__name__
-        c = instance.changes()
-        o = instance.old_changes()
-        p = instance.previous_changes()
-        os = instance.old_state()
-        ps = instance.previous_state()
 
         if ( instance.__class__.__name__ == 'Card' and instance.old_changes().get('vault')):
             materializer = MovedObjectMaterializer(instance);

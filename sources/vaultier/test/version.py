@@ -3,6 +3,7 @@ from django.utils import unittest
 from django.utils.unittest.suite import TestSuite
 from rest_framework.status import HTTP_201_CREATED, HTTP_403_FORBIDDEN, HTTP_200_OK, HTTP_204_NO_CONTENT
 from vaultier.models.vault import Vault
+from vaultier.models.version.model import Version
 from vaultier.test.auth_tools import auth_api_call, register_api_call
 from vaultier.test.card_tools import create_card_api_call, list_cards_api_call, retrieve_card_api_call
 from vaultier.test.tools import format_response
@@ -33,6 +34,13 @@ class VersionTest(TransactionTestCase):
             'renamed_vault_in_workspace'
         )
 
+
+        delete_vault_api_call(user1token, 1)
+
+        vault = Vault.objects.include_deleted().get(pk=1)
+        version = Version.objects.get(pk=1);
+
+        pass
 
 
 

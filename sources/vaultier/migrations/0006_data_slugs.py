@@ -12,11 +12,11 @@ class Migration(DataMigration):
         from vaultier.models.vault import Vault
         from vaultier.models.workspace import Workspace
 
-        for workspace in Workspace.objects.all():
+        for workspace in orm.Workspace.objects.all():
             Slug.objects.create_slug_for_model(workspace)
-        for vault in Vault.objects.all():
+        for vault in orm.Vault.objects.all():
             Slug.objects.create_slug_for_model(vault)
-        for card in Card.objects.all():
+        for card in orm.Card.objects.all():
             Slug.objects.create_slug_for_model(card)
 
 
