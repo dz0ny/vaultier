@@ -49,7 +49,7 @@ class VersionHandlerClassField(models.CharField):
     __metaclass__ = models.SubfieldBase
 
     def __init__(self, *args, **kwargs):
-        self.name = "PythonClassField",
+        self.name = "VersionHandlerClassField",
         self.max_length = 255
         self.default = None
         super(VersionHandlerClassField, self).__init__(*args, **kwargs)
