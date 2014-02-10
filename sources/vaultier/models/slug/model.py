@@ -15,4 +15,4 @@ class Slug(SlugMixin, models.Model):
 
 
 def register_signals(model):
-    post_change.connect(SlugMixin.objects.on_model, sender=model)
+    post_change.connect(Slug.objects.on_model, sender=model)
