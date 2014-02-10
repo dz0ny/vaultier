@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models.deletion import PROTECT
 from django.db.models.manager import Manager
+from modelext.softdelete.softdelete import SoftDeleteManagerMixin, SoftDeleteMixin
 from vaultier.models.acl.fields import AclLevelField
 from vaultier.models.member.fields import MemberStatusField
 
@@ -11,7 +12,7 @@ from modelext.changes.changes import ChangesMixin
 from vaultier.models.tree import TreeItemMixin
 
 
-class WorkspaceManager(Manager):
+class WorkspaceManager(SoftDeleteManagerMixin, Manager):
 
     def all_for_user(self, user):
         workspaces = self.filter(
@@ -43,7 +44,7 @@ class WorkspaceManager(Manager):
         r.save()
 
 
-class Workspace(ChangesMixin, models.Model, TreeItemMixin):
+class Workspace(ChangesMixin, SoftDeleteMixin, models.Model, TreeItemMixin):
     class Meta:
         db_table = u'vaultier_workspace'
         app_label = 'vaultier'

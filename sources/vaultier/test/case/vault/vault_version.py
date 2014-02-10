@@ -6,7 +6,7 @@ from vaultier.models.version.manipulator import ACTION_CREATED, ACTION_UPDATED, 
 from vaultier.models.version.model import Version
 from vaultier.test.auth_tools import auth_api_call, register_api_call
 from vaultier.test.tools.vault_api_tools import create_vault_api_call, delete_vault_api_call, update_vault_api_call
-from vaultier.test.workspace_tools import create_workspace_api_call
+from vaultier.test.case.workspace.workspace_tools import create_workspace_api_call
 
 class VaultVersionTest(TransactionTestCase):
 

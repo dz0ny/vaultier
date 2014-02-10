@@ -5,6 +5,7 @@ from rest_framework.viewsets import ModelViewSet
 from vaultier.api.permsfield import PermsField
 from vaultier.api.member.view import RelatedMemberSerializer
 from vaultier.api.retrievebyslugmixin import RetrieveBySlugMixin
+from vaultier.api.softdeletemixin import SoftDeleteModelMixin
 from vaultier.api.user.view import RelatedUserSerializer
 from vaultier.auth.authentication import TokenAuthentication
 from vaultier.models import Workspace
@@ -54,7 +55,7 @@ class RelatedWorkspaceSerializer(WorkspaceSerializer):
         fields = ['id', 'slug','name']
 
 
-class WorkspaceViewSet(RetrieveBySlugMixin, ModelViewSet):
+class WorkspaceViewSet(RetrieveBySlugMixin, SoftDeleteModelMixin, ModelViewSet):
     """
     API endpoint that allows workspaces to be viewed or edited.
     """

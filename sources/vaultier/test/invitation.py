@@ -3,10 +3,9 @@ from django.utils import unittest
 from django.utils.unittest.suite import TestSuite
 from rest_framework.status import HTTP_200_OK
 from vaultier.test.auth_tools import register_api_call, auth_api_call
-from vaultier.test.invitation_tools import accept_invitation_api_call
 from vaultier.test.member_tools import invite_member_api_call
 from vaultier.test.tools import format_response
-from vaultier.test.workspace_tools import create_workspace_api_call
+from vaultier.test.case.workspace.workspace_tools import create_workspace_api_call
 
 
 class ApiInviteTest(TransactionTestCase):

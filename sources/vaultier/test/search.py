@@ -7,7 +7,7 @@ from vaultier.test.tools.card_api_tools import create_card_api_call
 from vaultier.test.search_tools import search_api_call
 from vaultier.test.tools import format_response
 from vaultier.test.tools.vault_api_tools import create_vault_api_call
-from vaultier.test.workspace_tools import create_workspace_api_call
+from vaultier.test.case.workspace.workspace_tools import create_workspace_api_call
 
 
 class ApiSearchTest(TransactionTestCase):

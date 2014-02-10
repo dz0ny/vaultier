@@ -9,6 +9,14 @@ from vaultier.models.tree import TreeItemMixin
 
 
 class CardManager(SoftDeleteManagerMixin, Manager):
+
+    def get_queryset(self):
+        queryset = super(CardManager, self).get_queryset()
+        return queryset.filter(
+            vault__workspace__deleted_at=None,
+            vault__deleted_at=None,
+        )
+
     def search(self, user, query, max_results=5):
         list = query.split()
         result = self.all_for_user(user).filter(

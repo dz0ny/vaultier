@@ -8,7 +8,7 @@ from vaultier.test.tools.card_api_tools import create_card_api_call
 from vaultier.test.secret_tools import create_secret_api_call, delete_secret_api_call, list_secrets_api_call, retrieve_secret_api_call
 from vaultier.test.tools import format_response
 from vaultier.test.tools.vault_api_tools import create_vault_api_call
-from vaultier.test.workspace_tools import create_workspace_api_call
+from vaultier.test.case.workspace.workspace_tools import create_workspace_api_call
 
 
 class ApiSecretTest(TransactionTestCase):

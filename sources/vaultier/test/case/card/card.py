@@ -6,7 +6,7 @@ from vaultier.test.auth_tools import auth_api_call, register_api_call
 from vaultier.test.tools.card_api_tools import create_card_api_call, list_cards_api_call, retrieve_card_api_call
 from vaultier.test.tools import format_response
 from vaultier.test.tools.vault_api_tools import create_vault_api_call, delete_vault_api_call
-from vaultier.test.workspace_tools import create_workspace_api_call
+from vaultier.test.case.workspace.workspace_tools import create_workspace_api_call
 
 
 class ApiCardTest(TransactionTestCase):

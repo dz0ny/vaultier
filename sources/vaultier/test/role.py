@@ -11,7 +11,7 @@ from vaultier.test.member_tools import invite_member_api_call
 from vaultier.test.role_tools import create_role_api_call, list_role_api_call, update_role_api_call, delete_role_api_call
 from vaultier.test.tools import format_response
 from vaultier.test.tools.vault_api_tools import create_vault_api_call
-from vaultier.test.workspace_tools import create_workspace_api_call
+from vaultier.test.case.workspace.workspace_tools import create_workspace_api_call
 
 
 class ApiRoleTest(TransactionTestCase):
