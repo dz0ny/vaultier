@@ -7,7 +7,7 @@ from vaultier.test.auth_tools import auth_api_call, register_api_call
 from vaultier.test.card_tools import create_card_api_call
 from vaultier.test.secret_tools import create_secret_api_call, delete_secret_api_call, list_secrets_api_call, retrieve_secret_api_call
 from vaultier.test.tools import format_response
-from vaultier.test.vault_tools import create_vault_api_call
+from vaultier.test.tools.vault_tools import create_vault_api_call
 from vaultier.test.workspace_tools import create_workspace_api_call
 
 

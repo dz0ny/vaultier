@@ -12,7 +12,7 @@ from vaultier.test.member_tools import invite_member_api_call
 from vaultier.test.role_tools import create_role_api_call
 from vaultier.test.secret_tools import create_secret_api_call, delete_secret_api_call, retrieve_secret_api_call
 from vaultier.test.tools import format_response
-from vaultier.test.vault_tools import create_vault_api_call, retrieve_vault_api_call
+from vaultier.test.tools.vault_tools import create_vault_api_call, retrieve_vault_api_call
 from vaultier.test.workspace_tools import create_workspace_api_call, delete_workspace_api_call, list_workspaces_api_call, retrieve_workspace_api_call
 
 
