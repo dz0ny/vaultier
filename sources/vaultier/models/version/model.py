@@ -6,7 +6,6 @@ from modelext.version.model import VersionMixin
 class VersionManager(Manager):
     pass
 
-
 class Version(VersionMixin, models.Model):
     class Meta:
         app_label = 'vaultier'

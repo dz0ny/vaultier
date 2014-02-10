@@ -18,9 +18,9 @@ slug_register_signals(Slug, Card)
 from vaultier.models.secret.model import register_signals as secret_register_signals
 secret_register_signals()
 
-# History signals
-from vaultier.models.vault.history import register_signals as vault_register_signals
-from vaultier.models.card.history import register_signals as card_register_signals
+# Versioning signals
+from vaultier.models.vault.version import register_signals as vault_register_version_signals
+from vaultier.models.card.version import register_signals as card_register_version_signals
 
-vault_register_signals()
-card_register_signals()
+vault_register_version_signals()
+card_register_version_signals()
