@@ -3,8 +3,10 @@ from django.db.models.deletion import PROTECT, CASCADE
 from django.db.models.manager import Manager
 from django.db.models import Q
 from modelext.softdelete.softdelete import SoftDeleteManagerMixin, SoftDeleteMixin
+from modelext.tree.iterator import TreeIterableModelMixin
 from vaultier.models.acl.fields import AclLevelField
 from modelext.changes.changes import ChangesMixin
+from vaultier.models.card.treeperms import CardTreeIterator
 from vaultier.models.tree import TreeItemMixin
 
 
@@ -35,12 +37,14 @@ class CardManager(SoftDeleteManagerMixin, Manager):
         return cards
 
 
-class Card(SoftDeleteMixin, ChangesMixin, models.Model, TreeItemMixin):
+class Card(SoftDeleteMixin, ChangesMixin, TreeIterableModelMixin, models.Model ):
     class Meta:
         app_label = 'vaultier'
         db_table = u'vaultier_card'
 
     objects = CardManager()
+
+    tree_iterator_class=CardTreeIterator
 
     name = models.CharField(max_length=255)
     slug = models.CharField(max_length=255, default='')
@@ -50,8 +54,3 @@ class Card(SoftDeleteMixin, ChangesMixin, models.Model, TreeItemMixin):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def get_child_objects(self):
-        return []
-
-    def get_parent_object(self):
-        return self.vault

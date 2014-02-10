@@ -1,9 +1,11 @@
 from django.db import models
 from django.db.models import Manager, Q, CASCADE, PROTECT
+from modelext.tree.iterator import TreeIterableModelMixin
 from vaultier.models.acl.fields import AclLevelField
 from modelext.softdelete.softdelete import SoftDeleteManagerMixin, SoftDeleteMixin
 from modelext.changes.changes import ChangesMixin
 from vaultier.models.tree import TreeItemMixin
+from vaultier.models.vault.treeperms import VaultTreeIterator
 
 
 class VaultManager(SoftDeleteManagerMixin, Manager):
@@ -37,13 +39,15 @@ class VaultManager(SoftDeleteManagerMixin, Manager):
         return vaults
 
 
-class Vault(SoftDeleteMixin, ChangesMixin, models.Model, TreeItemMixin):
+class Vault(SoftDeleteMixin, ChangesMixin, TreeIterableModelMixin,  models.Model):
     class Meta:
         db_table = u'vaultier_vault'
         app_label = 'vaultier'
 
     def __unicode__(self):
         return 'Vault(' + str(self.id) + '):' + self.name
+
+    tree_iterator_class=VaultTreeIterator
 
     objects = VaultManager()
 
@@ -54,10 +58,3 @@ class Vault(SoftDeleteMixin, ChangesMixin, models.Model, TreeItemMixin):
     created_by = models.ForeignKey('vaultier.User', on_delete=PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-    def get_child_objects(self):
-        return self.card_set.all()
-
-
-    def get_parent_object(self):
-        return self.workspace

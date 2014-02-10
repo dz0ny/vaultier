@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models.deletion import PROTECT
 from django.db.models.manager import Manager
 from modelext.softdelete.softdelete import SoftDeleteManagerMixin, SoftDeleteMixin
+from modelext.tree.iterator import TreeIterableModelMixin
 from vaultier.models.acl.fields import AclLevelField
 from vaultier.models.member.fields import MemberStatusField
 
@@ -10,6 +11,7 @@ from vaultier.models.role.fields import RoleLevelField
 from vaultier.models.role.model import Role
 from modelext.changes.changes import ChangesMixin
 from vaultier.models.tree import TreeItemMixin
+from vaultier.models.workspace.treeperms import WorkspaceTreeIterator
 
 
 class WorkspaceManager(SoftDeleteManagerMixin, Manager):
@@ -44,12 +46,15 @@ class WorkspaceManager(SoftDeleteManagerMixin, Manager):
         r.save()
 
 
-class Workspace(ChangesMixin, SoftDeleteMixin, models.Model, TreeItemMixin):
+class Workspace(ChangesMixin, SoftDeleteMixin, TreeIterableModelMixin,  models.Model):
     class Meta:
         db_table = u'vaultier_workspace'
         app_label = 'vaultier'
 
+    tree_iterator_class=WorkspaceTreeIterator
+
     objects = WorkspaceManager()
+
     name = models.CharField(max_length=255)
     slug = models.CharField(max_length=255, default='')
     description = models.CharField(max_length=1024, blank=True, null=True)
@@ -60,17 +65,7 @@ class Workspace(ChangesMixin, SoftDeleteMixin, models.Model, TreeItemMixin):
     def __unicode__(self):
         return 'Workspace('+str(self.id)+'):'+self.name
 
-    def get_child_objects(self):
-        return self.vault_set.all()
-
-    def get_parent_object(self):
-        return None
-
     def save(self, *args, **kwargs):
-       #
-       #if not self.slug:
-       #          self.slug = unique_slugify(self, self.name)
-
         created = self.id == None
         super(Workspace, self).save(*args, **kwargs)
         if created:

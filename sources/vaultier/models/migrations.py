@@ -1,7 +1,7 @@
 from south.modelsinspector import add_introspection_rules
 
 add_introspection_rules([], ["^modelext\.lowercasefield\.lowercasefield\.LowerCaseCharField"])
-add_introspection_rules([], ["^modelext\.version\.model\.VersionManipulatorIdrField"])
+add_introspection_rules([], ["^modelext\.version\.model\.VersionManipulatorIdField"])
 
 add_introspection_rules([], ["^vaultier\.models\.acl\.fields\.AclDirectionField"])
 add_introspection_rules([], ["^vaultier\.models\.member\.fields\.MemberStatusField"])

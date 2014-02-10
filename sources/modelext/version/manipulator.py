@@ -74,7 +74,7 @@ class VersionManipulator(object):
         return self.action_name;
 
     def determine_versioned_parent(self):
-        return self.version.versioned.get_parent_object()
+        return self.version.versioned.get_tree_iterator().get_parent_object()
 
     def determine_action_id(self):
         return self.action_id

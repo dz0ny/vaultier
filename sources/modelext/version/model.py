@@ -47,8 +47,8 @@ class VersionMixin(models.Model):
     versioned = GenericForeignKey('versioned_type', 'versioned_id')
 
     # versioned_parent object relation
-    versioned_parent_type = models.ForeignKey(ContentType, related_name='version_versioned_parent')
-    versioned_parent_id = PositiveIntegerField()
+    versioned_parent_type = models.ForeignKey(ContentType, related_name='version_versioned_parent', null=True)
+    versioned_parent_id = PositiveIntegerField(null=True)
     versioned_parent = GenericForeignKey('versioned_parent_type', 'versioned_parent_id')
 
     # timestamp and created_by

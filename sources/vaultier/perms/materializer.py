@@ -46,7 +46,7 @@ class CreateRoleMaterializer(object):
 
     def materialize_parents(self, object):
         acls = []
-        parent = object.get_parent_object()
+        parent = object.get_tree_iterator().get_parent_object()
         if parent:
             acls.extend(self.acl_for_object(parent, AclDirectionField.DIR_UP))
             acls.extend(self.materialize_parents(parent))
@@ -54,7 +54,7 @@ class CreateRoleMaterializer(object):
 
     def materialize_childs(self, object):
         acls = []
-        childs = object.get_child_objects()
+        childs = object.get_tree_iterator().get_child_objects()
         for child in childs:
             acls.extend(self.acl_for_object(child, AclDirectionField.DIR_DOWN))
             acls.extend(self.materialize_childs(child))
@@ -166,7 +166,7 @@ class InsertedObjectMaterializer(object):
 
     # adds WRITE role for object created by user which have CREATE role to parent object
     def materialize_role(self):
-        parent = self.object.get_parent_object()
+        parent = self.object.get_tree_iterator().get_parent_object()
         if parent:
             for parent_role in parent.role_set.all():
                 if (parent_role.member.user and parent_role.member.user.id == self.object.created_by.id):
@@ -180,14 +180,14 @@ class InsertedObjectMaterializer(object):
 
     # materialize roles
     def materialize(self):
-        parent = self.object.get_parent_object()
+        parent = self.object.get_tree_iterator().get_parent_object()
         roles = []
         acls = []
 
         while parent:
             for role in parent.role_set.all():
                 roles.append(role)
-            parent = parent.get_parent_object()
+            parent = parent.get_tree_iterator().get_parent_object()
 
         for role in roles:
             if not role.member.status == MemberStatusField.STATUS_INVITED:
