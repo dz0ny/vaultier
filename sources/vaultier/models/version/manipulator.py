@@ -2,20 +2,27 @@ from django.db import models
 from six import string_types
 from modelext.changes.changes import post_change, INSERT, UPDATE, SOFT_DELETE
 
-handlers = {}
+manipulators = {}
 
 
-def factory_handler(version, default_handler_cls):
-    if version.handler_cls:
-        return version.handler_cls(version)
+def factory_manipulator(version, manipulator_id):
+    if version.manipulator_id:
+        cls = get_manipulator_class(version.manipulator_id)
+        version.manipulator_id = manipulator_id
     else:
-        version.handler_cls = default_handler_cls
-        return default_handler_cls(version)
+        cls = get_manipulator_class(manipulator_id)
+        version.manipulator_id = manipulator_id
 
+    return cls(manipulator_id, version)
 
-def register_handler_signal(handler=None, required_fields=None, required_sender=None, required_event_type=None):
-    handler_cls = handlers.get(handler)
+def get_manipulator_class(id):
+    if manipulators.has_key(id):
+        cls = manipulators[id]
+    else:
+        raise AttributeError('manipulator class for "{name}" not found'.format(name=value))
+    return cls
 
+def register_manipulator_signal(manipulator_id=None, required_fields=None, required_sender=None, required_event_type=None):
     def callback(signal=None, sender=None, instance=None, event_type=None, saved_values=None, **kwargs):
         saved_keys = saved_values.keys()
 
@@ -33,66 +40,36 @@ def register_handler_signal(handler=None, required_fields=None, required_sender=
             from vaultier.models.version.model import Version
 
             version = Version(versioned=instance)
-            handler = factory_handler(version, handler_cls)
-            handler.store_state(intersection)
-            version.save()
+            manipulator = factory_manipulator(version, manipulator_id)
+            manipulator.store_state(intersection)
+            manipulator.save()
 
     post_change.connect(callback, sender=required_sender, weak=False)
 
 
-def register_handler_class(name, cls):
-    handlers[name] = cls
+def register_manipulator_class(name, cls):
+    manipulators[name] = cls
 
 
-class VersionHandlerClassField(models.CharField):
-    description = "Field representing python class"
-    __metaclass__ = models.SubfieldBase
-
+class VersionManipulatorIdField(models.CharField):
     def __init__(self, *args, **kwargs):
-        self.name = "VersionHandlerClassField",
+        self.name = "VersionManipulatorIdField",
+        self.null = False
         self.max_length = 255
         self.default = None
-        super(VersionHandlerClassField, self).__init__(*args, **kwargs)
-
-    def to_python(self, value):
-        if value in ( None, ''):
-            return None
-
-        if not isinstance(value, string_types):
-            return value
-
-        else:
-            if handlers.has_key(value):
-                cls = handlers[value]
-            else:
-                raise AttributeError('handler class for "{name}" not found'.format(name=value))
-            return cls
-
-    def get_prep_value(self, value):
-        if value:
-            for key in handlers:
-                if value == handlers[key]:
-                    return key
-        else:
-            return None
+        super(VersionManipulatorIdField, self).__init__(*args, **kwargs)
 
 
-    def get_internal_type(self):
-        return 'CharField'
-
-    def value_to_string(self, obj):
-        value = self._get_val_from_obj(obj)
-        return self.get_prep_value(value)
-
-
-class VersionHandler(object):
+class VersionManipulator(object):
     version = None
     action_name = 'action'
     action_id = 0
 
-    def __init__(self, version, **kwargs):
+    def __init__(self, id, version, **kwargs):
+        self.id = id
         self.version = version
-        super(VersionHandler, self).__init__(**kwargs);
+        self.version.manipulator_cls = self.id
+        super(VersionManipulator, self).__init__(**kwargs);
 
     def determine_action_name(self):
         return self.action_name;
@@ -124,6 +101,9 @@ class VersionHandler(object):
                 }
         return result
 
+    def save(self):
+        return self.version.save()
+
     def revert(self):
         pass
 
@@ -131,12 +111,12 @@ class VersionHandler(object):
         return True
 
 
-class ModelCreatedHandler(VersionHandler):
+class ModelCreatedManipulator(VersionManipulator):
     action_name = 'created'
     action_id = INSERT
 
     def store_state(self, data):
-        super(ModelCreatedHandler, self).store_state(data);
+        super(ModelCreatedManipulator, self).store_state(data);
         self.version.revert_fields = {}
         self.version.revert_data = {}
 
@@ -144,11 +124,11 @@ class ModelCreatedHandler(VersionHandler):
         return False
 
 
-class ModelUpdatedHandler(VersionHandler):
+class ModelUpdatedManipulator(VersionManipulator):
     action_name = 'updated'
     action_id = UPDATE
 
 
-class ModelDeletedHandler(VersionHandler):
+class ModelDeletedManipulator(VersionManipulator):
     action_name = 'deleted'
     action_id = SOFT_DELETE

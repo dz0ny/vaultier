@@ -4,6 +4,7 @@ from rest_framework.serializers import ModelSerializer
 from rest_framework.viewsets import ModelViewSet
 from vaultier.api.permsfield import PermsField
 from vaultier.api.retrievebyslugmixin import RetrieveBySlugMixin
+from vaultier.api.softdeletemixin import SoftDeleteModelMixin
 from vaultier.api.user.view import RelatedUserSerializer
 from vaultier.auth.authentication import TokenAuthentication
 from vaultier.models import Card
@@ -50,7 +51,7 @@ class CardSerializer(ModelSerializer):
         fields = ('id', 'slug', 'name', 'description','vault', 'perms', 'created_at', 'updated_at', 'created_by')
 
 
-class CardViewSet(RetrieveBySlugMixin, ModelViewSet):
+class CardViewSet(RetrieveBySlugMixin, SoftDeleteModelMixin, ModelViewSet):
     """
     API endpoint that allows cars to be viewed or edited.
     """
