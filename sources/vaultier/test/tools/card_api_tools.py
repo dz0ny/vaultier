@@ -16,11 +16,11 @@ def delete_card_api_call(token, id):
     response = client.delete(url)
     return response
 
-def update_card_api_call(token, id, data):
+def update_card_api_call(token, id, **kwargs):
     url = reverse('card-detail', args=(id,))
     client = VaultierAPIClient()
     client.token(token)
-    response = client.patch(url, data=data)
+    response = client.patch(url, data=kwargs)
     return response
 
 def retrieve_card_api_call(token, id):

@@ -3,10 +3,10 @@ from django.utils import unittest
 from django.utils.unittest.suite import TestSuite
 from rest_framework.status import HTTP_200_OK
 from vaultier.test.auth_tools import auth_api_call, register_api_call
-from vaultier.test.card_tools import create_card_api_call
+from vaultier.test.tools.card_api_tools import create_card_api_call
 from vaultier.test.search_tools import search_api_call
 from vaultier.test.tools import format_response
-from vaultier.test.tools.vault_tools import create_vault_api_call
+from vaultier.test.tools.vault_api_tools import create_vault_api_call
 from vaultier.test.workspace_tools import create_workspace_api_call
 
 
