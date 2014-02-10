@@ -28,7 +28,7 @@ class CanManageSecretPermission(BasePermission):
 
 class SecretPermsField(PermsField):
     def get_acls(self, obj, user):
-        return obj.card.acl_set.filter(
+        return obj.card.acl.filter(
             user=user
         )
 

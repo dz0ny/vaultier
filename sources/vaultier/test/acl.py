@@ -31,7 +31,7 @@ class AclTest(TransactionTestCase):
         if not o:
             raise RuntimeError('Unknown test type')
 
-        aclset = o.acl_set.all()
+        aclset = o.acl.all()
 
         if (role):
             aclset = aclset.filter(role=role)
@@ -87,6 +87,8 @@ class AclTest(TransactionTestCase):
         role.set_object(v)
         role.member = m
         role.save()
+
+        a = list(Acl.objects.all());
 
         self.assertAcl(level=AclLevelField.LEVEL_READ, count=1, workspace=w)
 
@@ -397,7 +399,7 @@ class AclTest(TransactionTestCase):
         self.assertAcl(level=AclLevelField.LEVEL_WRITE, count=1, card=c)
         self.assertAcl(level=AclLevelField.LEVEL_CREATE, count=0, card=c)
 
-        a = list(c.acl_set.all())
+        a = list(c.acl.all())
         self.assertAcl(level=AclLevelField.LEVEL_READ, count=1, card=c)
 
 

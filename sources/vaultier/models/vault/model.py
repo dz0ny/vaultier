@@ -1,3 +1,4 @@
+from django.contrib.contenttypes.generic import GenericRelation
 from django.db import models
 from django.db.models import Manager, Q, CASCADE, PROTECT
 from modelext.tree.iterator import TreeIterableModelMixin
@@ -58,3 +59,8 @@ class Vault(SoftDeleteMixin, ChangesMixin, TreeIterableModelMixin,  models.Model
     created_by = models.ForeignKey('vaultier.User', on_delete=PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    acl = GenericRelation('vaultier.Acl',
+        content_type_field='object_type',
+        object_id_field='object_id'
+    );

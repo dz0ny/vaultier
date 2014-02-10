@@ -1,3 +1,4 @@
+from django.contrib.contenttypes.generic import GenericRelation
 from django.db import models
 from django.db.models.deletion import PROTECT
 from django.db.models.manager import Manager
@@ -61,6 +62,11 @@ class Workspace(ChangesMixin, SoftDeleteMixin, TreeIterableModelMixin,  models.M
     created_by = models.ForeignKey('vaultier.User', on_delete=PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    acl = GenericRelation('vaultier.Acl',
+        content_type_field='object_type',
+        object_id_field='object_id'
+    );
 
     def __unicode__(self):
         return 'Workspace('+str(self.id)+'):'+self.name

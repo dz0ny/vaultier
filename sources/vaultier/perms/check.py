@@ -8,6 +8,6 @@ def has_object_acl(user, object, level):
         return True
 
     # existing object, check acls
-    for acl in object.acl_set.all():
+    for acl in object.acl.all():
         if (acl.level == level and acl.user == user):
             return True

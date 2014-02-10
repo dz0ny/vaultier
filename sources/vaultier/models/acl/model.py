@@ -1,5 +1,8 @@
+from django.contrib.contenttypes.generic import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.db.models.deletion import CASCADE
+from django.db.models.fields import PositiveIntegerField
 from django.db.models.manager import Manager
 from vaultier.models.acl.fields import AclDirectionField
 from vaultier.models.object_reference import ObjectReference, ObjectReferenceTypeField
@@ -16,13 +19,13 @@ class Acl(ObjectReference,models.Model):
 
     objects = AclManager()
 
-    type = ObjectReferenceTypeField()
-    to_workspace = models.ForeignKey('vaultier.Workspace', on_delete=CASCADE, null=True, blank=True)
-    to_vault = models.ForeignKey('vaultier.Vault', on_delete=CASCADE, null=True, blank=True)
-    to_card = models.ForeignKey('vaultier.Card', on_delete=CASCADE, null=True, blank=True)
+    object_type = models.ForeignKey(ContentType, default=None, null=True)
+    object_id = PositiveIntegerField(default=None, null=True)
+    object = GenericForeignKey('object_type', 'object_id')
 
     level = RoleLevelField()
     direction = AclDirectionField()
+
     role = models.ForeignKey('vaultier.Role', on_delete=CASCADE)
     user = models.ForeignKey('vaultier.User', on_delete=CASCADE)
 

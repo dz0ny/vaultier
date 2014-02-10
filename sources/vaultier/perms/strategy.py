@@ -5,7 +5,7 @@ from vaultier.models.acl.fields import AclDirectionField, AclLevelField
 class ReadAclStrategy(object):
     def construct_acl(self, role, object):
         acl = Acl()
-        acl.set_object(object)
+        acl.object = object
         acl.role = role
         acl.user = role.member.user
         return acl

@@ -1,3 +1,4 @@
+from django.contrib.contenttypes.generic import GenericRelation
 from django.db import models
 from django.db.models.deletion import PROTECT, CASCADE
 from django.db.models.manager import Manager
@@ -54,3 +55,7 @@ class Card(SoftDeleteMixin, ChangesMixin, TreeIterableModelMixin, models.Model )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    acl = GenericRelation('vaultier.Acl',
+        content_type_field='object_type',
+        object_id_field='object_id'
+    );

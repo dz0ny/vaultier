@@ -1,3 +1,4 @@
+from django.contrib.contenttypes.models import ContentType
 from vaultier.models import Acl
 from vaultier.models.acl.fields import AclDirectionField
 from vaultier.models.member.fields import MemberStatusField
@@ -94,9 +95,8 @@ class MaterializationSaver(object):
                     role=acl.role,
                     direction=acl.direction,
                     level=acl.level,
-                    to_workspace=acl.to_workspace,
-                    to_vault=acl.to_vault,
-                    to_card=acl.to_card
+                    object_type = acl.object_type,
+                    object_id = acl.object_id
                 )
 
             except Acl.DoesNotExist:
@@ -108,9 +108,8 @@ class MaterializationSaver(object):
                 # more acl returned, this should not happen, so delete them and create new
                 Acl.objects.filter(
                     role=acl.role,
-                    to_workspace=acl.to_workspace,
-                    to_vault=acl.to_vault,
-                    to_card=acl.to_card
+                    object_type = acl.object_type,
+                    object_id = acl.object_id
                 ).delete()
 
                 acl.save()
@@ -204,9 +203,9 @@ class MovedObjectMaterializer(object):
 
     def materialize(self):
         # delete all acls related to object
-        self.object.acl_set.all().delete()
+        self.object.acl.all().delete()
 
-        # delete all acls related to object roles, including acls of previous parents
+        # delete all acls which are assigned to parent and child objects by roles of current object
         Acl.objects.filter(role__in=self.object.role_set.all()).delete()
 
         # object previous acl are now cleared

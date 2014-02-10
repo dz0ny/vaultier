@@ -6,7 +6,7 @@ class PermsField(Field):
     read_only = True
 
     def get_acls(self, obj, user):
-        acls = obj.acl_set.filter(
+        acls = obj.acl.filter(
             user=user
         )
         return acls
