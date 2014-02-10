@@ -160,7 +160,7 @@ class Migration(SchemaMigration):
             'created_at': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'created_by': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['vaultier.User']", 'null': 'True', 'on_delete': 'models.PROTECT'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'manipulator_id': ('vaultier.models.version.manipulator.VersionManipulatorIdField', [], {'max_length': '255'}),
+            'manipulator_id': ('modelext.version.model.VersionManipulatorIdField', [], {'max_length': '255'}),
             'revert_data': ('jsonfield.fields.JSONField', [], {}),
             'revert_fields': ('jsonfield.fields.JSONField', [], {}),
             'revert_repr': ('django.db.models.fields.TextField', [], {}),

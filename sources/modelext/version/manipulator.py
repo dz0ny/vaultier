@@ -28,7 +28,7 @@ def get_manipulator_class(id):
         raise AttributeError('manipulator class for "{name}" not found'.format(name=id))
     return cls
 
-def register_manipulator_signal(manipulator_id=None, required_fields=None, required_sender=None, required_event_type=None):
+def register_manipulator_signal(version_cls=None, manipulator_id=None, required_fields=None, required_sender=None, required_event_type=None):
     def callback(signal=None, sender=None, instance=None, event_type=None, saved_values=None, **kwargs):
         saved_keys = saved_values.keys()
         do_save = False
@@ -48,8 +48,7 @@ def register_manipulator_signal(manipulator_id=None, required_fields=None, requi
                 intersection = saved_values
 
             if do_save:
-                from vaultier.models.version.model import Version
-                version = Version(versioned=instance)
+                version = version_cls(versioned=instance)
                 manipulator = factory_manipulator(version, manipulator_id)
                 manipulator.store_state(intersection)
                 manipulator.save()
@@ -59,16 +58,6 @@ def register_manipulator_signal(manipulator_id=None, required_fields=None, requi
 
 def register_manipulator_class(name, cls):
     manipulators[name] = cls
-
-
-class VersionManipulatorIdField(models.CharField):
-    def __init__(self, *args, **kwargs):
-        self.name = "VersionManipulatorIdField",
-        self.null = False
-        self.max_length = 255
-        self.default = None
-        super(VersionManipulatorIdField, self).__init__(*args, **kwargs)
-
 
 class VersionManipulator(object):
     version = None
