@@ -2,12 +2,13 @@ from django.db import models
 from django.db.models.deletion import PROTECT, CASCADE
 from django.db.models.manager import Manager
 from django.db.models import Q
+from modelext.softdelete.softdelete import SoftDeleteManagerMixin, SoftDeleteMixin
 from vaultier.models.acl.fields import AclLevelField
 from modelext.changes.changes import ChangesMixin
 from vaultier.models.tree import TreeItemMixin
 
 
-class CardManager(Manager):
+class CardManager(SoftDeleteManagerMixin, Manager):
     def search(self, user, query, max_results=5):
         list = query.split()
         result = self.all_for_user(user).filter(
@@ -26,7 +27,7 @@ class CardManager(Manager):
         return cards
 
 
-class Card(ChangesMixin, models.Model, TreeItemMixin):
+class Card(SoftDeleteMixin, ChangesMixin, models.Model, TreeItemMixin):
     class Meta:
         app_label = 'vaultier'
         db_table = u'vaultier_card'

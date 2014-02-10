@@ -20,4 +20,7 @@ secret_register_signals()
 
 # History signals
 from vaultier.models.vault.history import register_signals as vault_register_signals
+from vaultier.models.card.history import register_signals as card_register_signals
+
 vault_register_signals()
+card_register_signals()

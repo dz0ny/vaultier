@@ -62,7 +62,6 @@ class VersionHandlerClassField(models.CharField):
             return value
 
         else:
-            cls = None
             if handlers.has_key(value):
                 cls = handlers[value]
             else:
