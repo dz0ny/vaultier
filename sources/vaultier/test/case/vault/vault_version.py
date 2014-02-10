@@ -29,7 +29,7 @@ class VaultVersionTest(TransactionTestCase):
         user1token = auth_api_call(email=email).data.get('token')
 
         # create workspace
-        workspace = create_workspace_api_call(user1token, name='Workspace').data
+        workspace = create_workspace_api_call(user1token, name='workspace').data
 
         #create vault
         vault = create_vault_api_call(user1token,
@@ -63,7 +63,7 @@ class VaultVersionTest(TransactionTestCase):
         user1token = auth_api_call(email=email).data.get('token')
 
         # create workspace
-        workspace = create_workspace_api_call(user1token, name='Workspace').data
+        workspace = create_workspace_api_call(user1token, name='workspace').data
 
         #create vault
         vault = create_vault_api_call(user1token,
@@ -121,7 +121,7 @@ class VaultVersionTest(TransactionTestCase):
         user1token = auth_api_call(email=email).data.get('token')
 
         # create workspace
-        workspace = create_workspace_api_call(user1token, name='Workspace').data
+        workspace = create_workspace_api_call(user1token, name='workspace').data
 
         #create vault
         vault = create_vault_api_call(user1token,

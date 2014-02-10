@@ -2,7 +2,7 @@ from django.forms.models import model_to_dict
 from django.test.testcases import TransactionTestCase
 from django.utils import unittest
 from django.utils.unittest.suite import TestSuite
-from vaultier.models.version.manipulator import ACTION_CREATED, ACTION_UPDATED, ACTION_SOFTDELETED
+from vaultier.models.version.manipulator import ACTION_CREATED, ACTION_UPDATED, ACTION_SOFTDELETED, ACTION_MOVED
 from vaultier.models.version.model import Version
 from vaultier.test.auth_tools import auth_api_call, register_api_call
 from vaultier.test.tools.card_api_tools import create_card_api_call, delete_card_api_call, update_card_api_call
@@ -30,12 +30,12 @@ class CardVersionTest(TransactionTestCase):
         user1token = auth_api_call(email=email).data.get('token')
 
         # create workspace
-        workspace = create_workspace_api_call(user1token, name='Workspace').data
+        workspace = create_workspace_api_call(user1token, name='workspace').data
 
         # create vault
         vault = create_vault_api_call(user1token,
                                       workspace=workspace.get('id'),
-                                      name='Vault'
+                                      name='vault'
         ).data
 
 
@@ -71,12 +71,12 @@ class CardVersionTest(TransactionTestCase):
         user1token = auth_api_call(email=email).data.get('token')
 
         # create workspace
-        workspace = create_workspace_api_call(user1token, name='Workspace').data
+        workspace = create_workspace_api_call(user1token, name='workspace').data
 
         # create vault
         vault = create_vault_api_call(user1token,
                                       workspace=workspace.get('id'),
-                                      name='Vault'
+                                      name='vault'
         ).data
 
         #create card
@@ -136,12 +136,12 @@ class CardVersionTest(TransactionTestCase):
         user1token = auth_api_call(email=email).data.get('token')
 
         # create workspace
-        workspace = create_workspace_api_call(user1token, name='Workspace').data
+        workspace = create_workspace_api_call(user1token, name='workspace').data
 
         # create vault
         vault = create_vault_api_call(user1token,
                                       workspace=workspace.get('id'),
-                                      name='Vault'
+                                      name='vault'
         ).data
 
         #create card
@@ -174,6 +174,74 @@ class CardVersionTest(TransactionTestCase):
 
         # compare revision data
         self.assert_dict(versions[0].revert_data, {})
+
+
+    def test_card_040_move(self):
+        # create user
+        email = 'jan@rclick.cz'
+        register_api_call(email=email, nickname='Misan').data
+        user1token = auth_api_call(email=email).data.get('token')
+
+        # create workspace
+        workspace = create_workspace_api_call(user1token, name='workspace').data
+
+        # create vault
+        vault = create_vault_api_call(user1token,
+                                      workspace=workspace.get('id'),
+                                      name='vault'
+        ).data
+
+        # create second vault
+        second_vault = create_vault_api_call(user1token,
+                                      workspace=workspace.get('id'),
+                                      name='second_vault'
+        ).data
+
+        #create card
+        card = create_card_api_call(user1token,
+                                    name="card_in_vault",
+                                    vault=vault.get('id')
+        ).data
+
+        #check version
+        versions = Version.objects.filter(
+            versioned_type__model='card',
+            versioned_id=card.get('id'),
+            action_id=ACTION_CREATED
+        )
+
+        # one  versions should be there
+        self.assertEquals(versions.count(), 1)
+
+        card = update_card_api_call(user1token, card.get('id'),
+                                    vault = second_vault.get('id'),
+                                    name='renamed_card_again',
+                                    description="changed_card_description"
+        ).data
+
+
+        #check version
+        versions = Version.objects.filter(
+            versioned_type__model='card',
+            versioned_id=card.get('id'),
+        )
+
+        # 3 versions should be there, created, update and moved
+        self.assertEquals(versions.count(), 3)
+
+        #check version
+        versions = Version.objects.filter(
+            versioned_type__model='card',
+            versioned_id=card.get('id'),
+            action_id=ACTION_MOVED
+        )
+
+        # check if versioned parent was also changed
+        self.assert_model(versions[0], {'versioned_parent_id' : second_vault.get('id') })
+
+        # compare revision data
+        self.assert_dict(versions[0].revert_data, {'vault_id' : vault.get('id')})
+
 
 
 def card_version_suite():
