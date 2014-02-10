@@ -8,7 +8,6 @@ register_manipulator_class('vault_updated_manipulator', ModelUpdatedManipulator)
 register_manipulator_class('vault_deleted_manipulator', ModelDeletedManipulator)
 
 def register_signals():
-
     register_manipulator_signal(
         required_sender=Vault,
         required_fields=['deleted_at'],

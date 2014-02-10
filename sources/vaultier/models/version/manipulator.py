@@ -1,6 +1,12 @@
 from django.db import models
 from six import string_types
-from modelext.changes.changes import post_change, INSERT, UPDATE, SOFT_DELETE
+from modelext.changes.changes import post_change
+
+ACTION_CREATED = 10
+ACTION_UPDATED = 20
+ACTION_MOVED = 30
+ACTION_SOFTDELETED = 40
+ACTION_DELETED = 50
 
 manipulators = {}
 
@@ -19,30 +25,34 @@ def get_manipulator_class(id):
     if manipulators.has_key(id):
         cls = manipulators[id]
     else:
-        raise AttributeError('manipulator class for "{name}" not found'.format(name=value))
+        raise AttributeError('manipulator class for "{name}" not found'.format(name=id))
     return cls
 
 def register_manipulator_signal(manipulator_id=None, required_fields=None, required_sender=None, required_event_type=None):
     def callback(signal=None, sender=None, instance=None, event_type=None, saved_values=None, **kwargs):
         saved_keys = saved_values.keys()
+        do_save = False
 
         if event_type == required_event_type:
             intersection = {}
-            if required_fields and set(saved_keys).intersection(required_fields):
-                # required fields specified, intersection only required fields
-                for saved_key in saved_keys:
-                    if saved_key in required_fields:
-                        intersection[saved_key] = saved_values[saved_key]
+            if required_fields:
+                if set(saved_keys).intersection(required_fields):
+                    do_save = True
+                    # required fields specified, intersection only required fields
+                    for saved_key in saved_keys:
+                        if saved_key in required_fields:
+                            intersection[saved_key] = saved_values[saved_key]
             else:
                 # no required fields specifed, intersection is whole save state
+                do_save = True
                 intersection = saved_values
 
-            from vaultier.models.version.model import Version
-
-            version = Version(versioned=instance)
-            manipulator = factory_manipulator(version, manipulator_id)
-            manipulator.store_state(intersection)
-            manipulator.save()
+            if do_save:
+                from vaultier.models.version.model import Version
+                version = Version(versioned=instance)
+                manipulator = factory_manipulator(version, manipulator_id)
+                manipulator.store_state(intersection)
+                manipulator.save()
 
     post_change.connect(callback, sender=required_sender, weak=False)
 
@@ -113,7 +123,7 @@ class VersionManipulator(object):
 
 class ModelCreatedManipulator(VersionManipulator):
     action_name = 'created'
-    action_id = INSERT
+    action_id = ACTION_CREATED
 
     def store_state(self, data):
         super(ModelCreatedManipulator, self).store_state(data);
@@ -126,9 +136,13 @@ class ModelCreatedManipulator(VersionManipulator):
 
 class ModelUpdatedManipulator(VersionManipulator):
     action_name = 'updated'
-    action_id = UPDATE
+    action_id = ACTION_UPDATED
+
+class ModelMovedManipulator(VersionManipulator):
+    action_name = 'moved'
+    action_id = ACTION_MOVED
 
 
 class ModelDeletedManipulator(VersionManipulator):
-    action_name = 'deleted'
-    action_id = SOFT_DELETE
+    action_name = 'softdeleted'
+    action_id = ACTION_SOFTDELETED
