@@ -38,7 +38,7 @@ class ApiSecretTest(TransactionTestCase):
             format_response(response)
         )
 
-    def test_020_delete_card(self):
+    def test_020_delete_secret(self):
 
         # create user
         email = 'jan@rclick.cz'
