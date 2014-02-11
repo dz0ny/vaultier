@@ -1,12 +1,22 @@
 from django.db import models
 from django.db.models.deletion import PROTECT, CASCADE, SET_NULL
 from django.db.models.manager import Manager
+from modelext.softdelete.softdelete import SoftDeleteManagerMixin, SoftDeleteMixin
 from vaultier.models.acl.fields import AclLevelField
 from vaultier.models.secret.fields import  SecretTypeField
 from modelext.changes.changes import ChangesMixin, DELETE, post_change
 
 
-class SecretManager(Manager):
+class SecretManager(SoftDeleteManagerMixin,  Manager):
+
+    def get_queryset(self):
+        queryset = super(SecretManager, self).get_queryset()
+        return queryset.filter(
+            card__vault__workspace__deleted_at=None,
+            card__vault__deleted_at=None,
+            card__deleted_at=None,
+        )
+
 
     def on_model(self, signal=None, sender=None, instance=None, event_type=None, **kwargs):
         if event_type==DELETE and instance.blob:
@@ -28,7 +38,7 @@ class SecretManager(Manager):
         return secrets
 
 
-class Secret(ChangesMixin, models.Model):
+class Secret(ChangesMixin, SoftDeleteMixin, models.Model):
     class Meta:
         db_table = u'vaultier_secret'
         app_label = 'vaultier'
