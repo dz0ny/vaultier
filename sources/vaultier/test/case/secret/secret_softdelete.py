@@ -66,7 +66,7 @@ class SecretSoftDeleteTest(TransactionTestCase):
         self.assertEquals(secrets.count(), 1)
 
 
-    def test_020_softdelete_vault(self):
+    def test_030_softdelete_vault(self):
         user1token, workspace, vault, card, secret = list(self.create_secret());
 
         delete_vault_api_call(user1token, vault.get('id'))
@@ -77,7 +77,7 @@ class SecretSoftDeleteTest(TransactionTestCase):
         secrets = Secret.objects.include_deleted().filter(id=secret.get('id'))
         self.assertEquals(secrets.count(), 1)
 
-    def test_020_softdelete_workspace(self):
+    def test_040_softdelete_workspace(self):
         user1token, workspace, vault, card, secret = list(self.create_secret());
 
         delete_workspace_api_call(user1token, vault.get('id'))

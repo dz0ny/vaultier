@@ -4,12 +4,12 @@ from django.utils.unittest.suite import TestSuite
 from vaultier.models.vault.model import Vault
 from vaultier.test.auth_tools import auth_api_call, register_api_call
 from vaultier.test.tools.vault_api_tools import create_vault_api_call, delete_vault_api_call
-from vaultier.test.case.workspace.workspace_tools import create_workspace_api_call
+from vaultier.test.case.workspace.workspace_tools import create_workspace_api_call, delete_workspace_api_call
+
 
 class VaultSoftDeleteTest(TransactionTestCase):
 
-      def test_010_softdelete(self):
-
+    def create_vault(self):
         # create user
         email = 'jan@rclick.cz'
         register_api_call(email=email, nickname='Misan').data
@@ -24,14 +24,31 @@ class VaultSoftDeleteTest(TransactionTestCase):
                                       workspace=workspace.get('id')
         ).data
 
+        return (user1token, workspace, vault, )
+
+    def test_010_softdelete(self):
+        # create user
+        user1token, workspace, vault = list(self.create_vault());
+
         delete_vault_api_call(user1token, vault.get('id'))
 
-        vaults =Vault.objects.filter(id=vault.get('id'))
-        self.assertEquals(vaults.count(), 0 )
+        vaults = Vault.objects.filter(id=workspace.get('id'))
+        self.assertEquals(vaults.count(), 0)
 
-        vaults =Vault.objects.include_deleted().filter(id=vault.get('id'))
-        self.assertEquals(vaults.count(), 1 )
+        vaults = Vault.objects.include_deleted().filter(id=vault.get('id'))
+        self.assertEquals(vaults.count(), 1)
 
+    def test_020_softdelete_workspace(self):
+
+        user1token, workspace, vault = list(self.create_vault());
+
+        delete_workspace_api_call(user1token, vault.get('id'))
+
+        vaults = Vault.objects.filter(id=workspace.get('id'))
+        self.assertEquals(vaults.count(), 0)
+
+        cards = Vault.objects.include_deleted().filter(id=vault.get('id'))
+        self.assertEquals(cards.count(), 1)
 
 def vault_softdelete_suite():
     suite = TestSuite()
