@@ -5,22 +5,11 @@ from django.utils.unittest.suite import TestSuite
 from modelext.version.manipulator import ACTION_CREATED, ACTION_UPDATED, ACTION_SOFTDELETED
 from vaultier.models.version.model import Version
 from vaultier.test.auth_tools import auth_api_call, register_api_call
+from vaultier.test.tools import AssertionsMixin
 from vaultier.test.tools.vault_api_tools import create_vault_api_call, delete_vault_api_call, update_vault_api_call
 from vaultier.test.case.workspace.workspace_tools import create_workspace_api_call
 
-class VaultVersionTest(TransactionTestCase):
-
-    def assert_model(self, version, required):
-        version = model_to_dict(version);
-        return self.assert_dict(version, required)
-
-    def assert_dict(self, compared, required):
-        for key in required.keys():
-            if not compared.has_key(key):
-                raise self.failureException('Missing key "{key}"'.format(key=key))
-            if compared[key] != required[key]:
-                raise self.failureException('key "{key}" not same'.format(key=key))
-
+class VaultVersionTest(AssertionsMixin,  TransactionTestCase):
 
     def test_vault_010_create(self):
         # create user
