@@ -7,6 +7,7 @@ from vaultier.test.case.card.card_softdelete import card_softdelete_suite
 from vaultier.test.case.card.card_version import card_version_suite
 from vaultier.test.case.secret.secret_softdelete import secret_softdelete_suite
 from vaultier.test.case.secret_blob.secret_blob import secret_blob_suite
+from vaultier.test.case.secret_blob.secret_blob_softdelete import secret_blob_softdelete_suite
 from vaultier.test.case.vault.vault import vault_suite
 from vaultier.test.case.vault.vault_perms import vault_perms_suite
 from vaultier.test.case.vault.vault_softdelete import vault_softdelete_suite
@@ -69,6 +70,6 @@ def suite():
     suite.addTest(card_softdelete_suite())
     suite.addTest(workspace_softdelete_suite())
     suite.addTest(secret_softdelete_suite())
-
+    suite.addTest(secret_blob_softdelete_suite())
 
     return suite
