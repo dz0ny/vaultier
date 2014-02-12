@@ -1,4 +1,6 @@
 from django.core.exceptions import ValidationError
+from django.core.files.storage import default_storage
+from rest_framework.fields import FileField
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.serializers import ModelSerializer
@@ -9,29 +11,30 @@ from vaultier.api.user.view import RelatedUserSerializer
 from vaultier.auth.authentication import TokenAuthentication
 from vaultier.models import SecretBlob, Secret
 
+class BlobDataField(FileField):
+    def to_native(self, value):
+        return value.read()
 
-class SecretBlobFieldSerializer(ModelSerializer):
-    class Meta:
-        model = SecretBlob
-        fields = ('id', 'data', 'updated_at', 'created_at')
+    def from_native(self, data):
+        max_size = 100*1000
+        if not data:
+            raise ValidationError('At least blob_data must be specified')
 
+        if data and hasattr(data,'size') and data.size>max_size:
+            raise ValidationError('Maximum blob size is 100K encrypted')
+
+        if data and not hasattr(data, 'size') and len(data)>max_size:
+            raise ValidationError('Maximum blob size is 100K encrypted')
+
+        return super(BlobDataField, self).from_native(data)
 
 class SecretBlobSerializer(ModelSerializer):
     created_by = RelatedUserSerializer(read_only=True)
-    blob = SecretBlobFieldSerializer(required=True)
-
-    def validate_blob(self, attrs, source):
-        if not attrs.get('blob') or not attrs.get('blob').data:
-            raise ValidationError('At least blob.data must be specified')
-
-        if len(attrs.get('blob').data) > 100000:
-            raise ValidationError('Maximum blob size is 100K encrypted')
-
-        return attrs
+    blob_data = BlobDataField()
 
     class Meta:
         model = Secret
-        fields = ('id', 'blob', 'updated_at', 'created_at', 'created_by')
+        fields = ('id', 'blob_meta', 'blob_data')
 
 
 class SecretBlobViewSet(ModelViewSet):
@@ -64,11 +67,6 @@ class SecretBlobViewSet(ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         return Response(status=HTTP_405_METHOD_NOT_ALLOWED, data={'detail': 'Method \'POST\' not allowed.'})
-
-    def pre_save(self, object):
-        if object.blob and object.blob.pk is None:
-            object.blob.created_by = self.request.user;
-        return super(SecretBlobViewSet, self).pre_save(object)
 
     def get_queryset(self):
         if self.action == 'list':

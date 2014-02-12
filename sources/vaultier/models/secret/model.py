@@ -1,14 +1,15 @@
+import os
 from django.db import models
 from django.db.models.deletion import PROTECT, CASCADE, SET_NULL
 from django.db.models.manager import Manager
+from app.settings_base import MEDIA_ROOT
 from modelext.softdelete.softdelete import SoftDeleteManagerMixin, SoftDeleteMixin
 from vaultier.models.acl.fields import AclLevelField
-from vaultier.models.secret.fields import  SecretTypeField
+from vaultier.models.secret.fields import SecretTypeField
 from modelext.changes.changes import ChangesMixin, DELETE, post_change
 
 
-class SecretManager(SoftDeleteManagerMixin,  Manager):
-
+class SecretManager(SoftDeleteManagerMixin, Manager):
     def get_queryset(self):
         queryset = super(SecretManager, self).get_queryset()
         return queryset.filter(
@@ -19,7 +20,7 @@ class SecretManager(SoftDeleteManagerMixin,  Manager):
 
 
     def on_model(self, signal=None, sender=None, instance=None, event_type=None, **kwargs):
-        if event_type==DELETE and instance.blob:
+        if event_type == DELETE and instance.blob:
             instance.blob.delete()
 
 
@@ -38,6 +39,13 @@ class SecretManager(SoftDeleteManagerMixin,  Manager):
         return secrets
 
 
+def get_blob_data_filename(instance, filename):
+    path = MEDIA_ROOT
+    id = str(instance.id)
+    subpath = '/'.join(list(id))
+    fname = 'secret_'+str(instance.id)+'.encrypted.bin'
+    return os.path.join(path, subpath, fname)
+
 class Secret(ChangesMixin, SoftDeleteMixin, models.Model):
     class Meta:
         db_table = u'vaultier_secret'
@@ -48,11 +56,8 @@ class Secret(ChangesMixin, SoftDeleteMixin, models.Model):
     name = models.CharField(max_length=255, default='', blank=True, null=True)
     type = SecretTypeField()
     data = models.TextField(null=True, blank=True)
-    blob = models.OneToOneField('vaultier.SecretBlob',
-        null=True,
-        blank=True,
-        on_delete=SET_NULL
-    )
+    blob_data = models.FileField(upload_to=get_blob_data_filename, null=True, blank=True)
+    blob_meta = models.TextField(null=True, blank=True)
     card = models.ForeignKey('vaultier.Card', on_delete=CASCADE)
     created_by = models.ForeignKey('vaultier.User', on_delete=PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)

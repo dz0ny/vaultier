@@ -21,10 +21,11 @@ Vaultier.SecretTypeFileView = Ember.View.extend({
                         // Success
                         input.closest('.form-group').removeClass('has-error');
 
-                        controller.set('content.blob.plain', data);
                         controller.set('content.filename', files[0].name);
-                        controller.set('content.filesize', files[0].size);
-                        controller.set('content.filetype', files[0].type);
+                        controller.set('content.blob.plainData', data);
+                        controller.set('content.blob.plainMeta.filename', files[0].name);
+                        controller.set('content.blob.plainMeta.filesize', files[0].size);
+                        controller.set('content.blob.plainMeta.filetype', files[0].type);
                     }
 
 

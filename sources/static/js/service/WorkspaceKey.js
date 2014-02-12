@@ -137,7 +137,7 @@ Service.WorkspaceKey = Ember.Object.extend(
             var coder = this.get('coder');
             var workspace = this.get('workspace')
             if (!workspace) {
-                throw Error('Workspace not selected')
+                throw new Error('Workspace not selected')
             }
 
             if (workspace.get('membership.status') == Vaultier.Member.proto().statuses['MEMBER'].value) {
@@ -145,8 +145,7 @@ Service.WorkspaceKey = Ember.Object.extend(
                 data = JSON.stringify(data)
                 return coder.encryptWorkspaceData(data, workspaceKey)
             } else {
-                throw Error('Cannot encrypt. workspace.membership.status {status}'.replace('{status}', workspace.get('membership.status')))
-                return data
+                throw new Error('Cannot encrypt. workspace.membership.status {status}'.replace('{status}', workspace.get('membership.status')))
             }
 
         }

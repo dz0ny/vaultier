@@ -1,3 +1,4 @@
+from rest_framework.fields import CharField
 from rest_framework.permissions import IsAuthenticated, BasePermission
 from rest_framework.serializers import ModelSerializer
 from rest_framework.viewsets import ModelViewSet
@@ -37,10 +38,11 @@ class SecretPermsField(PermsField):
 class SecretSerializer(ModelSerializer):
     created_by = RelatedUserSerializer(read_only=True)
     perms = SecretPermsField()
+    blob_meta = CharField(read_only=True)
 
     class Meta:
         model = Secret
-        fields = ('id', 'type', 'name', 'data', 'card', 'perms', 'created_at', 'updated_at', 'created_by')
+        fields = ('id', 'type', 'name', 'data', 'blob_meta', 'card', 'perms', 'created_at', 'updated_at', 'created_by')
 
 
 class SecretViewSet(SoftDeleteModelMixin, ModelViewSet):

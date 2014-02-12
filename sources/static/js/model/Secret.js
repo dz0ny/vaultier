@@ -44,16 +44,15 @@ Vaultier.Secret = RL.Model.extend(
          * Used to store encrypted data, small amount which is encrypted always
          */
         data: RL.attr('string'),
-        /**
-         * Used to store large encrypted data. eg. file data. descrypted only on request
-         */
         card: RL.attr('number'),
         perms: RL.attr('object'),
 
         /**
-         * Holds cached data from blob
+         * Used to store large encrypted data. eg. file data. descrypted only on request
          */
         blob: null,
+
+        blob_meta: RL.attr('string'),
 
         emptyBlob: function () {
             this.set('blob', new Vaultier.SecretBlob({
@@ -83,13 +82,18 @@ Vaultier.Secret = RL.Model.extend(
             }.bind(this))
         },
 
+        doDecode: function () {
+            var workspacekey = this.get('workspacekey');
+            var data = this.get('data');
+            data = workspacekey.decryptWorkspaceData(data)
+            return data
+        },
+
         decode: function () {
             this.set('decoded', false);
-            var workspacekey = this.get('workspacekey');
-
-            var data = this.get('data');
+            var data;
             try {
-                data = workspacekey.decryptWorkspaceData(data)
+                data = this.doDecode()
                 this.set('decoded', true);
             } catch (e) {
                 this.set('decoded', false);
@@ -165,16 +169,41 @@ Vaultier.SecretFILEMixin = Ember.Mixin.create({
         return this.get('type') == this.types['FILE'].value;
     }.property('type'),
 
+    /**
+     * blob_meta attrs
+     */
     filename: null,
     filesize: null,
     filetype: null,
+
+    /**
+     * basic attrs
+     */
     password: null,
     username: null,
     url: null,
     note: null,
 
+    /**
+     * Overriden doDecode to also decode blob meta
+     * @param workspacekey
+     * @returns {object} properties to set on object
+     */
+    doDecode: function () {
+        var data = this._super.apply(this);
+        var workspacekey = this.get('workspacekey');
+        var blob_meta = this.get('blob_meta');
+        if (blob_meta) {
+            var blob_meta = workspacekey.decryptWorkspaceData(blob_meta);
+            data.filename = blob_meta.filename;
+            data.filesize = blob_meta.filesize;
+            data.filetype = blob_meta.filetype;
+        }
+        return data
+    },
+
     encode: function () {
-        var data = this.getProperties('filesize', 'filename', 'filetype', 'url', 'note', 'username', 'password');
+        var data = this.getProperties('url', 'note', 'username', 'password');
         data = this.get('workspacekey').encryptWorkspaceData(data)
         this.set('data', data);
     }
@@ -227,64 +256,92 @@ Vaultier.SecretBlob = RL.Model.extend(
 
         serialize: function (data) {
             var workspacekey = this.get('workspacekey');
-            var plain = this.get('plain');
-            var encrypted = workspacekey.encryptWorkspaceData(plain);
+            var plainData = this.get('plainData');
+            var plainMeta = this.get('plainMeta');
+            var encryptedData = workspacekey.encryptWorkspaceData(plainData);
+            var encryptedMeta = workspacekey.encryptWorkspaceData(plainMeta);
+
+            var formData = new FormData()
+            formData.append('blob_data', new Blob([encryptedData], { type: 'application/octet-stream'}))
+            formData.append('blob_meta', encryptedMeta);
 
 //            testing
 //            var words = CryptoJS.enc.Utf8.parse(plain);
 //            var encrypted = CryptoJS.enc.Base64.stringify(words);
 
-            return {blob: {data: encrypted}}
+            return formData
         },
 
         deserialize: function (data) {
             // put, patch and post returns no data
             // so serialization is skipped
-            if (data.blob && data.blob.data) {
+            if (data.blob_data && data.blob_meta) {
 
-                var encrypted = data.blob.data
+                var encryptedData = data.blob_data
+                var encryptedMeta = data.blob_meta
                 var workspacekey = this.get('workspacekey');
-                var data = workspacekey.decryptWorkspaceData(encrypted);
+                var plainData = workspacekey.decryptWorkspaceData(encryptedData);
+                var plainMeta = workspacekey.decryptWorkspaceData(encryptedMeta);
 
+                if (!plainMeta) {
+                    plainMeta = {}
+                }
 //            testing
 //            var words = CryptoJS.enc.Base64.parse(encrypted);
 //            var data = CryptoJS.enc.Utf8.stringify(words);
 
-                this.set('plainData', data);
-                this.set('plainDirty', false);
-                this.set('data', encrypted);
+
+                this.set('plainData', plainData);
+                this.set('plainMeta', plainMeta)
+                this.set('blob_data', encryptedData);
+                this.set('blob_meta', encryptedMeta);
             }
 
             return this
         },
 
         saveRecord: function () {
-            if (this.get('plainDirty')) {
+            if (this.get('_plainDirty')) {
                 // force saving
-                this.set('isDirty', true);
-                // call super saveRecord
-                return this._super.apply(this)
+                var params = {
+                    url: '/api/secret_blobs/' + this.get('id') + '/',
+                    type: 'PUT',
+                    data: this.serialize(),
+                    processData: false,
+                    contentType: false
+                };
+                return Utils.RSVPAjax(params)
             } else {
                 return Ember.RSVP.resolve(this);
             }
         },
 
-        decoded: false,
+        blob_data: RL.attr('string'),
+        blob_meta: RL.attr('object'),
 
-        data: RL.attr('string'),
+        _plainDirty: false,
+        _plainData: null,
+        _plainMeta: {},
 
-        plainData: null,
-        plainDirty: false,
+        plainDirty: function () {
+            return this.get('_plainDirty');
+        }.property('_plainDirty'),
 
-        plain: function (key, value) {
-            // setter
+        plainData: function (key, value) {
             if (arguments.length > 1) {
-                this.set('plainData', value);
-                this.set('plainDirty', true);
+                this.set('_plainData', value);
+                this.set('_plainDirty', true);
             }
+            return this.get('_plainData');
+        }.property('_plainData'),
 
-            // getter
-            return this.get('plainData');
-        }.property('plainData', 'plainDirty')
+        plainMeta: function (key, value) {
+            if (arguments.length > 1) {
+                this.set('_plainMeta', value);
+                this.set('_plainDirty', true);
+            }
+            return this.get('_plainMeta');
+        }.property('_plainMeta')
+
 
     });
