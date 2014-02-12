@@ -8,6 +8,9 @@ Vaultier.Secret = RL.Model.extend(
             this.set('store', Vaultier.__container__.lookup('store:main'))
             this.emptyBlob();
 
+            this.on('didLoad', this,  this.onDidLoad)
+            this.on('didReload', this, this.onDidReload)
+
             return this._super.apply(this, arguments);
 
         },
@@ -138,16 +141,14 @@ Vaultier.Secret = RL.Model.extend(
 
         }.observes('type'),
 
-        didLoad: function () {
+        onDidLoad: function () {
             this.decode();
             this.emptyBlob();
-            return this._super();
         },
 
-        didReload: function () {
+        onDidReload: function () {
             this.decode();
             this.emptyBlob();
-            return this._super();
         },
 
         saveRecord: function () {
