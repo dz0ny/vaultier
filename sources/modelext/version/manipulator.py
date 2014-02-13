@@ -88,12 +88,17 @@ class VersionManipulator(object):
         self.version.action_id = self.determine_action_id();
         self.version.versioned_parent = self.determine_versioned_parent()
 
-    def get_diff(self):
+    def get_diff(self, fields=None):
         result = {}
         version = self.version
         versioned = self.version.versioned
         if (self.can_revert()):
-            for field in version.revert_fields:
+            if (fields):
+                fields = set(version.revert_fields.keys()).intersection(fields)
+            else:
+                fields = version.revert_fields.keys()
+
+            for field in fields:
                 result[field] = {
                     'from': getattr(versioned, field),
                     'to': version.revert_data[field],
