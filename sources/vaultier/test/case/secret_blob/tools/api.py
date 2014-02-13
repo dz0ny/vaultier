@@ -31,7 +31,7 @@ def update_secret_blob_api_call(token, id, **kwargs):
     url = reverse('secret_blob-detail', args=(id,))
     client = VaultierAPIClient()
     client.token(token)
-    response = client.patch(url, dumps(kwargs), content_type="application/json")
+    response = client.patch(url, kwargs, format='multipart')
     return response
 
 

@@ -6,13 +6,13 @@ from vaultier.models.secret.fields import SecretTypeField
 from vaultier.test.auth_tools import auth_api_call, register_api_call
 from vaultier.test.case.secret_blob.tools.api import create_secret_blob_api_call, delete_secret_blob_api_call, list_secrets_blob_api_call, update_secret_blob_api_call, retrieve_secret_blob_api_call
 from vaultier.test.case.workspace.workspace_tools import create_workspace_api_call, delete_workspace_api_call
-from vaultier.test.tools import AssertionsMixin, format_response
+from vaultier.test.tools import AssertionsMixin, format_response, FileAccessMixin
 from vaultier.test.tools.card_api_tools import create_card_api_call, delete_card_api_call
 from vaultier.test.tools.secret_api_tools import create_secret_api_call
 from vaultier.test.tools.vault_api_tools import create_vault_api_call, delete_vault_api_call
 
 
-class SecretBlobTest(TransactionTestCase, AssertionsMixin):
+class SecretBlobTest(TransactionTestCase, AssertionsMixin, FileAccessMixin):
 
     def create_secret(self):
         # create user
@@ -44,6 +44,15 @@ class SecretBlobTest(TransactionTestCase, AssertionsMixin):
 
         return (user1token, workspace, vault, card, secret)
 
+    def upload_blob(self, token, secret, filename):
+        file = self.open_file(filename)
+        response = update_secret_blob_api_call(token, secret.get('id'),
+                                               blob_data=file,
+                                               blob_meta='mocked_meta'
+        )
+        file.close()
+        return response
+
 
     def test_010_create(self):
         user1token, workspace, vault, card, secret = list(self.create_secret());
@@ -66,11 +75,10 @@ class SecretBlobTest(TransactionTestCase, AssertionsMixin):
             format_response(response)
         )
 
+
     def test_020_update(self):
         user1token, workspace, vault, card, secret = list(self.create_secret());
-        response = update_secret_blob_api_call(user1token, secret.get('id'),
-                                               blob={'data': 'mocked_value'}
-        )
+        response = self.upload_blob(user1token, secret, 'upload.txt')
         self.assertEqual(
             response.status_code,
             HTTP_200_OK,
@@ -82,15 +90,13 @@ class SecretBlobTest(TransactionTestCase, AssertionsMixin):
             {'detail': 'success'}
         )
 
+
+
     def test_021_update_max_size_exceeded(self):
-        data = ''
-        for i in range(0, 100000):
-            data += 'mockup'
 
         user1token, workspace, vault, card, secret = list(self.create_secret());
-        response = update_secret_blob_api_call(user1token, secret.get('id'),
-                                               blob={'data': data}
-        )
+        response = self.upload_blob(user1token, secret, 'upload-big.txt')
+
         self.assertEqual(
             response.status_code,
             HTTP_400_BAD_REQUEST,
@@ -101,10 +107,21 @@ class SecretBlobTest(TransactionTestCase, AssertionsMixin):
 
     def test_030_retrieve(self):
         user1token, workspace, vault, card, secret = list(self.create_secret());
-
-        update_secret_blob_api_call(user1token, secret.get('id'),
-                                               blob={'data': 'mocked_value'}
+        response = self.upload_blob(user1token, secret, 'upload.txt')
+        self.assertEqual(
+            response.status_code,
+            HTTP_200_OK,
+            format_response(response)
         )
+
+        self.assert_dict(
+            response.data,
+            {'detail': 'success'}
+        )
+
+        file = self.open_file('upload.txt')
+        data = file.read()
+        file.close()
 
         response = retrieve_secret_blob_api_call(user1token, secret.get('id'))
 
@@ -114,12 +131,15 @@ class SecretBlobTest(TransactionTestCase, AssertionsMixin):
             format_response(response)
         )
 
-        self.assert_dict(
-            response.data.get('blob'),
-            {'data': 'mocked_value'}
+        self.assertEqual(
+            response.data.get('blob_data'),
+            data
         )
 
-
+        self.assertEqual(
+            response.data.get('blob_meta'),
+            'mocked_meta'
+        )
 
     def test_040_list(self):
         user1token, workspace, vault, card, secret = list(self.create_secret());

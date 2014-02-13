@@ -1,6 +1,14 @@
 from django.forms.models import model_to_dict
 from rest_framework.test import APIClient
 import json
+from app.settings_base import PROJECT_ROOT
+
+
+class FileAccessMixin(object):
+
+    def open_file(self, filename):
+        file = open(PROJECT_ROOT+'/vaultier/test/fixtures/'+filename)
+        return file
 
 class AssertionsMixin(object):
 
