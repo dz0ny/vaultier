@@ -10,6 +10,12 @@ class FileAccessMixin(object):
         file = open(PROJECT_ROOT+'/vaultier/test/fixtures/'+filename)
         return file
 
+    def read_file(self, filename):
+        file = self.open_file(filename);
+        data = file.read();
+        file.close()
+        return data
+
 class AssertionsMixin(object):
 
     def assert_model(self, version, required):

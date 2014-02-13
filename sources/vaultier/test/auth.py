@@ -1,4 +1,4 @@
-from django.test.testcases import TestCase, TransactionTestCase
+from django.test.testcases import TransactionTestCase
 from django.utils import unittest
 from django.utils.unittest.suite import TestSuite
 from rest_framework.status import HTTP_201_CREATED, HTTP_200_OK, HTTP_403_FORBIDDEN, HTTP_400_BAD_REQUEST
@@ -7,12 +7,14 @@ from vaultier.auth.authentication import Backend
 from vaultier.test.auth_tools import auth_api_call, register_api_call
 from tools import format_response
 from app.settings import PROJECT_ROOT
+from vaultier.test.tools import FileAccessMixin
 
-class SignaturesTest(TestCase):
+
+class SignaturesTest(TransactionTestCase, FileAccessMixin):
     def test_rsa(self):
         email = 'jan.misek@rclick.cz'
-        privkey = open(PROJECT_ROOT+'/vaultier/test/fixtures/vaultier.key').read()
-        pubkey = open(PROJECT_ROOT+'/vaultier/test/fixtures/vaultier.pub').read()
+        privkey = self.read_file('vaultier.key')
+        pubkey = self.read_file('vaultier.pub')
         signature = Backend.sign(privkey, email);
 
         self.assertTrue(Backend.verify(pubkey, email, signature))
