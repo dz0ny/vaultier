@@ -4,9 +4,11 @@ from django.db.models.deletion import PROTECT, CASCADE, SET_NULL
 from django.db.models.manager import Manager
 from app.settings_base import MEDIA_ROOT
 from modelext.softdelete.softdelete import SoftDeleteManagerMixin, SoftDeleteMixin
+from modelext.tree.iterator import TreeIterableModelMixin
 from vaultier.models.acl.fields import AclLevelField
 from vaultier.models.secret.fields import SecretTypeField
 from modelext.changes.changes import ChangesMixin, DELETE, post_change
+from vaultier.models.secret.tree import SecretTreeIterator
 
 
 class SecretManager(SoftDeleteManagerMixin, Manager):
@@ -17,11 +19,6 @@ class SecretManager(SoftDeleteManagerMixin, Manager):
             card__vault__deleted_at=None,
             card__deleted_at=None,
         )
-
-
-    def on_model(self, signal=None, sender=None, instance=None, event_type=None, **kwargs):
-        if event_type == DELETE and instance.blob:
-            instance.blob.delete()
 
 
     def all_for_user(self, user):
@@ -46,10 +43,12 @@ def get_blob_data_filename(instance, filename):
     fname = 'secret_'+str(instance.id)+'.encrypted.bin'
     return os.path.join(path, subpath, fname)
 
-class Secret(ChangesMixin, SoftDeleteMixin, models.Model):
+class Secret(ChangesMixin, SoftDeleteMixin, TreeIterableModelMixin, models.Model):
     class Meta:
         db_table = u'vaultier_secret'
         app_label = 'vaultier'
+
+    tree_iterator_class=SecretTreeIterator
 
     objects = SecretManager()
 
@@ -62,7 +61,3 @@ class Secret(ChangesMixin, SoftDeleteMixin, models.Model):
     created_by = models.ForeignKey('vaultier.User', on_delete=PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-
-def register_signals():
-    post_change.connect(Secret.objects.on_model, sender=Secret)

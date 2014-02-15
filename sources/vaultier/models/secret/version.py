@@ -4,6 +4,12 @@ from modelext.changes.changes import SOFT_DELETE, INSERT, UPDATE
 from modelext.version.manipulator import ModelCreatedManipulator, ModelUpdatedManipulator, ModelDeletedManipulator, register_manipulator_class
 
 class SecretBlobUpdateManipulator(ModelUpdatedManipulator):
+
+    #def store_state(self, data):
+    #    print data['blob_data'].file.name
+    #    data['blob_data'] = data['blob_data'].name
+    #    super(SecretBlobUpdateManipulator, self).store_state(data)
+
     def get_diff(self):
         return super(SecretBlobUpdateManipulator, self).get_diff(fields=['blob_meta'])
 
@@ -30,19 +36,19 @@ def register_signals():
         required_event_type=UPDATE,
         manipulator_id='secret_updated_manipulator'
     )
-
-    register_manipulator_signal(
-        version_cls=Version,
-        required_sender=Secret,
-        required_fields=['blob_meta', 'blob_data'],
-        required_event_type=UPDATE,
-        manipulator_id='secret_blob_updated_manipulator'
-    )
-
+    #
+    #register_manipulator_signal(
+    #    version_cls=Version,
+    #    required_sender=Secret,
+    #    required_fields=['blob_meta', 'blob_data'],
+    #    required_event_type=UPDATE,
+    #    manipulator_id='secret_blob_updated_manipulator'
+    #)
+    #
     register_manipulator_signal(
         version_cls=Version,
         required_sender=Secret,
         required_fields=None,
         required_event_type=INSERT,
-        manipulator_id='vault_created_manipulator'
+        manipulator_id='secret_created_manipulator'
     )

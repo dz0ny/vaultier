@@ -5,7 +5,7 @@ from vaultier.models.acl.fields import AclLevelField
 from modelext.softdelete.softdelete import SoftDeleteManagerMixin, SoftDeleteMixin
 from modelext.changes.changes import ChangesMixin
 from vaultier.models.tree import TreeItemMixin
-from vaultier.models.vault.treeperms import VaultTreeIterator
+from vaultier.models.vault.tree import VaultTreeIterator
 
 
 class VaultManager(SoftDeleteManagerMixin, Manager):

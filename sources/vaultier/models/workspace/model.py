@@ -11,7 +11,7 @@ from vaultier.models.role.fields import RoleLevelField
 from vaultier.models.role.model import Role
 from modelext.changes.changes import ChangesMixin
 from vaultier.models.tree import TreeItemMixin
-from vaultier.models.workspace.treeperms import WorkspaceTreeIterator
+from vaultier.models.workspace.tree import WorkspaceTreeIterator
 
 
 class WorkspaceManager(SoftDeleteManagerMixin, Manager):

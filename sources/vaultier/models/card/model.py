@@ -6,7 +6,7 @@ from modelext.softdelete.softdelete import SoftDeleteManagerMixin, SoftDeleteMix
 from modelext.tree.iterator import TreeIterableModelMixin
 from vaultier.models.acl.fields import AclLevelField
 from modelext.changes.changes import ChangesMixin
-from vaultier.models.card.treeperms import CardTreeIterator
+from vaultier.models.card.tree import CardTreeIterator
 from vaultier.models.tree import TreeItemMixin
 
 
