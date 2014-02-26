@@ -144,7 +144,7 @@ a:hover {
 }
 
 .notifyjs-corner {
-    margin-bottom: 40px !important;
+    margin-bottom: 100px !important;
     left: 50% !important;
 }
 
@@ -533,6 +533,10 @@ a:hover {
     background-color: #F5F5F5;
 }
 
+
+#vlt-footer .container {
+    padding: 10px;
+}
 /*************************************************************
 **************************************************************
 * navbar + branding
