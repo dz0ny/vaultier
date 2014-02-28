@@ -224,9 +224,13 @@ $(document).ready(function () {
 
     ApplicationLoader.queueFile(STATIC_URL + 'tpl/Vault/VaultsCreate.js');
     ApplicationLoader.queueFile(STATIC_URL + 'tpl/Vault/VaultEdit.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Vault/VaultHistoryIndex.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Vault/VaultIndex.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Vault/VaultEdit.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Vault/VaultMember.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'js/module/Vault/VaultHistory.js');
+
+
 
     /********************** Card **/
     ApplicationLoader.queueFile(STATIC_URL + 'tpl/Card/CardsIndex.js');
