@@ -3,11 +3,12 @@ from modelext.version.manipulator import  register_manipulator_signal
 from modelext.changes.changes import SOFT_DELETE, INSERT, UPDATE
 from modelext.version.manipulator import ModelCreatedManipulator, ModelUpdatedManipulator, ModelDeletedManipulator, register_manipulator_class
 
-register_manipulator_class('vault_created_manipulator', ModelCreatedManipulator)
-register_manipulator_class('vault_updated_manipulator', ModelUpdatedManipulator)
-register_manipulator_class('vault_deleted_manipulator', ModelDeletedManipulator)
 
 def register_signals():
+    register_manipulator_class('vault_created_manipulator', ModelCreatedManipulator)
+    register_manipulator_class('vault_updated_manipulator', ModelUpdatedManipulator)
+    register_manipulator_class('vault_deleted_manipulator', ModelDeletedManipulator)
+
     from vaultier.models.version.model import Version
 
     register_manipulator_signal(

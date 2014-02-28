@@ -1,6 +1,6 @@
 from django.utils.unittest.suite import TestSuite
-from vaultier.test.acl import acl_suite
-from vaultier.test.auth import auth_suite
+from vaultier.test.case.acl.acl import acl_suite
+from vaultier.test.case.auth.auth import auth_suite
 from vaultier.test.case.card.card import card_suite
 from vaultier.test.case.card.card_perms import card_perms_suite
 from vaultier.test.case.card.card_softdelete import card_softdelete_suite
@@ -16,14 +16,14 @@ from vaultier.test.case.vault.vault_version import vault_version_suite
 from vaultier.test.case.workspace.workspace import workspace_suite
 from vaultier.test.case.workspace.workspace_perms import workspace_perms_suite
 from vaultier.test.case.workspace.workspace_softdelete import workspace_softdelete_suite
-from vaultier.test.invitation import invitation_suite
-from vaultier.test.member import member_suite
-from vaultier.test.role import role_suite
-from vaultier.test.search import search_suite
+from vaultier.test.case.invitation.invitation import invitation_suite
+from vaultier.test.case.member.member import member_suite
+from vaultier.test.case.role.role import role_suite
+from vaultier.test.case.search.search import search_suite
 from vaultier.test.case.secret.secret import secret_suite
 from vaultier.test.case.secret.secret_perms import secret_perms_suite
-from vaultier.test.slug import slug_suite
-from vaultier.test.workspacekey import workspacekey_suite
+from vaultier.test.case.slug.slug import slug_suite
+from vaultier.test.case.workspacekey.workspacekey import workspacekey_suite
 
 
 def suite():

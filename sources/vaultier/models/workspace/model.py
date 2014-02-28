@@ -10,7 +10,6 @@ from vaultier.models.member.model import Member
 from vaultier.models.role.fields import RoleLevelField
 from vaultier.models.role.model import Role
 from modelext.changes.changes import ChangesMixin
-from vaultier.models.tree import TreeItemMixin
 from vaultier.models.workspace.tree import WorkspaceTreeIterator
 
 
@@ -61,9 +60,6 @@ class Workspace(ChangesMixin, SoftDeleteMixin, TreeIterableModelMixin,  models.M
     created_by = models.ForeignKey('vaultier.User', on_delete=PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-    def __unicode__(self):
-        return 'Workspace('+str(self.id)+'):'+self.name
 
     def save(self, *args, **kwargs):
         created = self.id == None

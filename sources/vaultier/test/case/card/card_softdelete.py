@@ -2,10 +2,10 @@ from django.test.testcases import TransactionTestCase
 from django.utils import unittest
 from django.utils.unittest.suite import TestSuite
 from vaultier.models.card.model import Card
-from vaultier.test.auth_tools import auth_api_call, register_api_call
-from vaultier.test.tools.card_api_tools import create_card_api_call, delete_card_api_call
+from vaultier.test.tools.auth.api import auth_api_call, register_api_call
+from vaultier.test.tools.card.api import create_card_api_call, delete_card_api_call
 from vaultier.test.case.workspace.workspace_tools import create_workspace_api_call, delete_workspace_api_call
-from vaultier.test.tools.vault_api_tools import create_vault_api_call, delete_vault_api_call
+from vaultier.test.tools.vault.api import create_vault_api_call, delete_vault_api_call
 
 
 class CardSoftDeleteTest(TransactionTestCase):

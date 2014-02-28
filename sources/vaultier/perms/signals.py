@@ -44,7 +44,6 @@ def on_object_inserted(signal=None, sender=None, instance=None, event_type=None,
 
 
 # when object is moved (parent id is changed)
-#@todo:disallow moving of vaults
 def on_object_moved(signal=None, sender=None, instance=None, event_type=None,saved_values=None, **kwargs):
     if (event_type == UPDATE):
         materializer = None

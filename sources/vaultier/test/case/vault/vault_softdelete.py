@@ -2,8 +2,8 @@ from django.test.testcases import TransactionTestCase
 from django.utils import unittest
 from django.utils.unittest.suite import TestSuite
 from vaultier.models.vault.model import Vault
-from vaultier.test.auth_tools import auth_api_call, register_api_call
-from vaultier.test.tools.vault_api_tools import create_vault_api_call, delete_vault_api_call
+from vaultier.test.tools.auth.api import auth_api_call, register_api_call
+from vaultier.test.tools.vault.api import create_vault_api_call, delete_vault_api_call
 from vaultier.test.case.workspace.workspace_tools import create_workspace_api_call, delete_workspace_api_call
 
 

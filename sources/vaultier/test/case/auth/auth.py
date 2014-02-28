@@ -4,10 +4,8 @@ from django.utils.unittest.suite import TestSuite
 from rest_framework.status import HTTP_201_CREATED, HTTP_200_OK, HTTP_403_FORBIDDEN, HTTP_400_BAD_REQUEST
 from vaultier.auth.authentication import Backend
 
-from vaultier.test.auth_tools import auth_api_call, register_api_call
-from tools import format_response
-from app.settings import PROJECT_ROOT
-from vaultier.test.tools import FileAccessMixin
+from vaultier.test.tools.auth.api import auth_api_call, register_api_call
+from vaultier.test.tools import FileAccessMixin, format_response
 
 
 class SignaturesTest(TransactionTestCase, FileAccessMixin):

@@ -4,7 +4,6 @@ from modelext.tree.iterator import TreeIterableModelMixin
 from vaultier.models.acl.fields import AclLevelField
 from modelext.softdelete.softdelete import SoftDeleteManagerMixin, SoftDeleteMixin
 from modelext.changes.changes import ChangesMixin
-from vaultier.models.tree import TreeItemMixin
 from vaultier.models.vault.tree import VaultTreeIterator
 
 
@@ -43,9 +42,6 @@ class Vault(SoftDeleteMixin, ChangesMixin, TreeIterableModelMixin,  models.Model
     class Meta:
         db_table = u'vaultier_vault'
         app_label = 'vaultier'
-
-    def __unicode__(self):
-        return 'Vault(' + str(self.id) + '):' + self.name
 
     tree_iterator_class=VaultTreeIterator
 

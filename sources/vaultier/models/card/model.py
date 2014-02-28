@@ -7,7 +7,6 @@ from modelext.tree.iterator import TreeIterableModelMixin
 from vaultier.models.acl.fields import AclLevelField
 from modelext.changes.changes import ChangesMixin
 from vaultier.models.card.tree import CardTreeIterator
-from vaultier.models.tree import TreeItemMixin
 
 
 class CardManager(SoftDeleteManagerMixin, Manager):

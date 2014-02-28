@@ -5,12 +5,12 @@ from rest_framework.status import HTTP_200_OK, HTTP_403_FORBIDDEN, HTTP_201_CREA
 from vaultier.models.member.model import Member
 from vaultier.models.role.fields import RoleLevelField
 from vaultier.models.role.model import Role
-from vaultier.test.auth_tools import auth_api_call, register_api_call
-from vaultier.test.invitation_tools import accept_invitation_api_call
-from vaultier.test.member_tools import invite_member_api_call
-from vaultier.test.role_tools import create_role_api_call, list_role_api_call, update_role_api_call, delete_role_api_call
+from vaultier.test.tools.auth.api import auth_api_call, register_api_call
+from vaultier.test.tools.invitation.api import accept_invitation_api_call
+from vaultier.test.tools.member.api import invite_member_api_call
+from vaultier.test.tools.role.api import create_role_api_call, list_role_api_call, update_role_api_call, delete_role_api_call
 from vaultier.test.tools import format_response
-from vaultier.test.tools.vault_api_tools import create_vault_api_call
+from vaultier.test.tools.vault.api import create_vault_api_call
 from vaultier.test.case.workspace.workspace_tools import create_workspace_api_call
 
 

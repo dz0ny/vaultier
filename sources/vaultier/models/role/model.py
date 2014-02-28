@@ -84,8 +84,6 @@ class Role(ChangesMixin,ObjectReference,models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey('vaultier.User', on_delete=PROTECT, related_name='roles_created')
 
-    def __unicode__(self):
-        return 'Role(' + str(self.id) + ') to:' + str(self.get_object()) + ' level:' + str(self.level)
 
     def save(self, *args, **kwargs):
         self.compute_type()
