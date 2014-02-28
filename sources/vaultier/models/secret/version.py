@@ -1,5 +1,5 @@
 from vaultier.models.secret.model import Secret
-from modelext.version.manipulator import  register_manipulator_signal
+from modelext.version.manipulator import  register_manipulator_signal, ModelMovedManipulator
 from modelext.changes.changes import SOFT_DELETE, INSERT, UPDATE
 from modelext.version.manipulator import ModelCreatedManipulator, ModelUpdatedManipulator, ModelDeletedManipulator, register_manipulator_class
 
@@ -15,8 +15,10 @@ class SecretBlobUpdateManipulator(ModelUpdatedManipulator):
 
 register_manipulator_class('secret_created_manipulator', ModelCreatedManipulator)
 register_manipulator_class('secret_updated_manipulator', ModelUpdatedManipulator)
-register_manipulator_class('secret_blob_updated_manipulator', SecretBlobUpdateManipulator)
 register_manipulator_class('secret_deleted_manipulator', ModelDeletedManipulator)
+register_manipulator_class('secret_moved_manipulator', ModelMovedManipulator)
+register_manipulator_class('secret_blob_updated_manipulator', SecretBlobUpdateManipulator)
+
 
 def register_signals():
     from vaultier.models.version.model import Version
@@ -35,6 +37,14 @@ def register_signals():
         required_fields=['name', 'description', 'data'],
         required_event_type=UPDATE,
         manipulator_id='secret_updated_manipulator'
+    )
+
+    register_manipulator_signal(
+        version_cls=Version,
+        required_sender=Secret,
+        required_fields=['card_id'],
+        required_event_type=UPDATE,
+        manipulator_id='secret_moved_manipulator'
     )
     #
     #register_manipulator_signal(
