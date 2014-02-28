@@ -50,16 +50,14 @@ def suite():
     suite.addTest(secret_suite())
     suite.addTest(secret_perms_suite())
 
-    # secret blob tests
+    #secret blob tests
     suite.addTest(secret_blob_suite())
-
 
     # slug tests
     suite.addTest(slug_suite())
 
     # search tests
     suite.addTest(search_suite())
-
 
     # versioning
     suite.addTest(vault_version_suite())

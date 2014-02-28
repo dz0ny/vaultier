@@ -4,7 +4,7 @@ from django.utils.unittest.suite import TestSuite
 from rest_framework.status import HTTP_405_METHOD_NOT_ALLOWED, HTTP_200_OK, HTTP_400_BAD_REQUEST
 from vaultier.models.secret.fields import SecretTypeField
 from vaultier.test.auth_tools import auth_api_call, register_api_call
-from vaultier.test.case.secret_blob.tools.api import create_secret_blob_api_call, delete_secret_blob_api_call, list_secrets_blob_api_call, update_secret_blob_api_call, retrieve_secret_blob_api_call
+from vaultier.test.tools.secret_blob.api import create_secret_blob_api_call, delete_secret_blob_api_call, list_secrets_blob_api_call, update_secret_blob_api_call, retrieve_secret_blob_api_call
 from vaultier.test.case.workspace.workspace_tools import create_workspace_api_call
 from vaultier.test.tools import AssertionsMixin, format_response, FileAccessMixin
 from vaultier.test.tools.card_api_tools import create_card_api_call
