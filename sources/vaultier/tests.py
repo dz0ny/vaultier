@@ -7,7 +7,9 @@ from vaultier.test.case.card.card_softdelete import card_softdelete_suite
 from vaultier.test.case.card.card_version import card_version_suite
 from vaultier.test.case.secret.secret_softdelete import secret_softdelete_suite
 from vaultier.test.case.secret.secret_version import secret_version_suite
+from vaultier.test.case.secret_blob import secret_blob_version
 from vaultier.test.case.secret_blob.secret_blob import secret_blob_suite
+from vaultier.test.case.secret_blob.secret_blob_version import secret_blob_version_suite
 from vaultier.test.case.vault.vault import vault_suite
 from vaultier.test.case.vault.vault_perms import vault_perms_suite
 from vaultier.test.case.vault.vault_softdelete import vault_softdelete_suite
@@ -28,29 +30,35 @@ from vaultier.test.workspacekey import workspacekey_suite
 def suite():
     suite = TestSuite()
 
+    # authentication
     suite.addTest(auth_suite())
 
+    # acl
     suite.addTest(acl_suite())
 
+    # roles
     suite.addTest(role_suite())
 
+    # membership
     suite.addTest(member_suite())
     suite.addTest(invitation_suite())
     suite.addTest(workspacekey_suite())
 
+    # workspace
     suite.addTest(workspace_suite())
     suite.addTest(workspace_perms_suite())
 
+    # vault
     suite.addTest(vault_suite())
     suite.addTest(vault_perms_suite())
 
+    # card
     suite.addTest(card_suite())
     suite.addTest(card_perms_suite())
 
+    # secret
     suite.addTest(secret_suite())
     suite.addTest(secret_perms_suite())
-
-    #secret blob tests
     suite.addTest(secret_blob_suite())
 
     # slug tests
@@ -63,6 +71,7 @@ def suite():
     suite.addTest(vault_version_suite())
     suite.addTest(card_version_suite())
     suite.addTest(secret_version_suite())
+    suite.addTest(secret_blob_version_suite());
 
     # soft delete
     suite.addTest(vault_softdelete_suite())

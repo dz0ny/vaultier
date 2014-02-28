@@ -50,7 +50,7 @@ def register_manipulator_signal(version_cls=None, manipulator_id=None, required_
             if do_save:
                 version = version_cls(versioned=instance)
                 manipulator = factory_manipulator(version, manipulator_id)
-                manipulator.store_state(intersection)
+                manipulator.store_state(intersection, instance)
                 manipulator.save()
 
     post_change.connect(callback, sender=required_sender, weak=False)
@@ -79,10 +79,10 @@ class VersionManipulator(object):
     def determine_action_id(self):
         return self.action_id
 
-    def store_state(self, data):
-        self.version.revert_data = data
+    def store_state(self, revert_data, model):
+        self.version.revert_data = revert_data
         self.version.revert_repr = str(self.version.versioned)
-        self.version.revert_fields = data.keys()
+        self.version.revert_fields = revert_data.keys()
 
         self.version.action_name = self.determine_action_name()
         self.version.action_id = self.determine_action_id();
@@ -119,8 +119,8 @@ class ModelCreatedManipulator(VersionManipulator):
     action_name = 'created'
     action_id = ACTION_CREATED
 
-    def store_state(self, data):
-        super(ModelCreatedManipulator, self).store_state(data);
+    def store_state(self, revert_data, model):
+        super(ModelCreatedManipulator, self).store_state(revert_data, model);
         self.version.revert_fields = {}
         self.version.revert_data = {}
 

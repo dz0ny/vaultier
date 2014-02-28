@@ -5,10 +5,9 @@ from modelext.version.manipulator import ModelCreatedManipulator, ModelUpdatedMa
 
 class SecretBlobUpdateManipulator(ModelUpdatedManipulator):
 
-    #def store_state(self, data):
-    #    print data['blob_data'].file.name
-    #    data['blob_data'] = data['blob_data'].name
-    #    super(SecretBlobUpdateManipulator, self).store_state(data)
+    def store_state(self, revert_data, model):
+        revert_data['blob_data'] = revert_data['blob_data'].name
+        return super(SecretBlobUpdateManipulator, self).store_state(revert_data, model)
 
     def get_diff(self):
         return super(SecretBlobUpdateManipulator, self).get_diff(fields=['blob_meta'])
@@ -46,15 +45,15 @@ def register_signals():
         required_event_type=UPDATE,
         manipulator_id='secret_moved_manipulator'
     )
-    #
-    #register_manipulator_signal(
-    #    version_cls=Version,
-    #    required_sender=Secret,
-    #    required_fields=['blob_meta', 'blob_data'],
-    #    required_event_type=UPDATE,
-    #    manipulator_id='secret_blob_updated_manipulator'
-    #)
-    #
+
+    register_manipulator_signal(
+        version_cls=Version,
+        required_sender=Secret,
+        required_fields=['blob_meta', 'blob_data'],
+        required_event_type=UPDATE,
+        manipulator_id='secret_blob_updated_manipulator'
+    )
+
     register_manipulator_signal(
         version_cls=Version,
         required_sender=Secret,
