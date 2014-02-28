@@ -81,7 +81,6 @@ class VersionManipulator(object):
 
     def store_state(self, revert_data, model):
         self.version.revert_data = revert_data
-        self.version.revert_repr = str(self.version.versioned)
         self.version.revert_fields = revert_data.keys()
 
         self.version.action_name = self.determine_action_name()
