@@ -5,7 +5,7 @@ from rest_framework.status import HTTP_200_OK
 from vaultier.test.tools.auth.api import register_api_call, auth_api_call
 from vaultier.test.tools.member.api import invite_member_api_call
 from vaultier.test.tools import format_response
-from vaultier.test.case.workspace.workspace_tools import create_workspace_api_call
+from vaultier.test.tools.workspace.api import create_workspace_api_call
 
 
 class ApiInviteTest(TransactionTestCase):

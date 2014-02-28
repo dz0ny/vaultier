@@ -6,24 +6,30 @@ from vaultier.models.version.model import Version
 from vaultier.test.tools.auth.api import auth_api_call, register_api_call
 from vaultier.test.tools import AssertionsMixin
 from vaultier.test.tools.vault.api import create_vault_api_call, delete_vault_api_call, update_vault_api_call
-from vaultier.test.case.workspace.workspace_tools import create_workspace_api_call
+from vaultier.test.tools.workspace.api import create_workspace_api_call
 
 class VaultVersionTest(AssertionsMixin,  TransactionTestCase):
 
-    def test_vault_010_create(self):
+    def create_vault(self):
         # create user
         email = 'jan@rclick.cz'
-        register_api_call(email=email, nickname='Misan').data
+        register_api_call(email=email, nickname='jan').data
         user1token = auth_api_call(email=email).data.get('token')
 
         # create workspace
         workspace = create_workspace_api_call(user1token, name='workspace').data
 
-        #create vault
+        # create vault
         vault = create_vault_api_call(user1token,
-                                      name="vault_in_workspace",
-                                      workspace=workspace.get('id')
+                                      workspace=workspace.get('id'),
+                                      name='vault'
         ).data
+
+
+        return (user1token, workspace, vault, )
+
+    def test_vault_010_create(self):
+        user1token, workspace, vault = list(self.create_vault())
 
         #check version
         versions = Version.objects.filter(
@@ -45,19 +51,7 @@ class VaultVersionTest(AssertionsMixin,  TransactionTestCase):
         self.assert_dict(versions[0].revert_data, {})
 
     def test_vault_020_update(self):
-        # create user
-        email = 'jan@rclick.cz'
-        register_api_call(email=email, nickname='Misan').data
-        user1token = auth_api_call(email=email).data.get('token')
-
-        # create workspace
-        workspace = create_workspace_api_call(user1token, name='workspace').data
-
-        #create vault
-        vault = create_vault_api_call(user1token,
-                                      name="vault_in_workspace",
-                                      workspace=workspace.get('id')
-        ).data
+        user1token, workspace, vault = list(self.create_vault())
 
         vault = update_vault_api_call(user1token, vault.get('id'),
                                       name='renamed_vault',
@@ -76,7 +70,7 @@ class VaultVersionTest(AssertionsMixin,  TransactionTestCase):
 
         # compare revision data
         self.assert_dict(versions[0].revert_data, {
-            'name': 'vault_in_workspace',
+            'name': 'vault',
             'description': None
         })
 
@@ -103,19 +97,7 @@ class VaultVersionTest(AssertionsMixin,  TransactionTestCase):
         })
 
     def test_vault_030_delete(self):
-        # create user
-        email = 'jan@rclick.cz'
-        register_api_call(email=email, nickname='Misan').data
-        user1token = auth_api_call(email=email).data.get('token')
-
-        # create workspace
-        workspace = create_workspace_api_call(user1token, name='workspace').data
-
-        #create vault
-        vault = create_vault_api_call(user1token,
-                                      name="vault_in_workspace",
-                                      workspace=workspace.get('id')
-        ).data
+        user1token, workspace, vault = list(self.create_vault())
 
         #check version
         versions = Version.objects.filter(

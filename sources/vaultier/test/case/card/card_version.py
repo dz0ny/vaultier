@@ -7,15 +7,15 @@ from vaultier.test.tools.auth.api import auth_api_call, register_api_call
 from vaultier.test.tools import AssertionsMixin
 from vaultier.test.tools.card.api import create_card_api_call, delete_card_api_call, update_card_api_call
 from vaultier.test.tools.vault.api import create_vault_api_call
-from vaultier.test.case.workspace.workspace_tools import create_workspace_api_call
+from vaultier.test.tools.workspace.api import create_workspace_api_call
 
 
 class CardVersionTest(AssertionsMixin, TransactionTestCase):
 
-    def test_card_010_create(self):
+    def create_card(self):
         # create user
         email = 'jan@rclick.cz'
-        register_api_call(email=email, nickname='Misan').data
+        register_api_call(email=email, nickname='jan').data
         user1token = auth_api_call(email=email).data.get('token')
 
         # create workspace
@@ -33,6 +33,11 @@ class CardVersionTest(AssertionsMixin, TransactionTestCase):
                                     name="card_in_vault",
                                     vault=vault.get('id')
         ).data
+
+        return (user1token, workspace, vault, card,)
+
+    def test_card_010_create(self):
+        user1token, workspace, vault, card = list(self.create_card())
 
         #check version
         versions = Version.objects.filter(
@@ -54,25 +59,7 @@ class CardVersionTest(AssertionsMixin, TransactionTestCase):
         self.assert_dict(versions[0].revert_data, {})
 
     def test_card_020_update(self):
-        # create user
-        email = 'jan@rclick.cz'
-        register_api_call(email=email, nickname='Misan').data
-        user1token = auth_api_call(email=email).data.get('token')
-
-        # create workspace
-        workspace = create_workspace_api_call(user1token, name='workspace').data
-
-        # create vault
-        vault = create_vault_api_call(user1token,
-                                      workspace=workspace.get('id'),
-                                      name='vault'
-        ).data
-
-        #create card
-        card = create_card_api_call(user1token,
-                                    name="card_in_vault",
-                                    vault=vault.get('id')
-        ).data
+        user1token, workspace, vault, card = list(self.create_card())
 
         #update card
         card = update_card_api_call(user1token, card.get('id'),
@@ -119,25 +106,7 @@ class CardVersionTest(AssertionsMixin, TransactionTestCase):
         })
 
     def test_card_030_delete(self):
-        # create user
-        email = 'jan@rclick.cz'
-        register_api_call(email=email, nickname='Misan').data
-        user1token = auth_api_call(email=email).data.get('token')
-
-        # create workspace
-        workspace = create_workspace_api_call(user1token, name='workspace').data
-
-        # create vault
-        vault = create_vault_api_call(user1token,
-                                      workspace=workspace.get('id'),
-                                      name='vault'
-        ).data
-
-        #create card
-        card = create_card_api_call(user1token,
-                                    name="card_in_vault",
-                                    vault=vault.get('id')
-        ).data
+        user1token, workspace, vault, card = list(self.create_card())
 
         #check version
         versions = Version.objects.filter(
@@ -166,30 +135,12 @@ class CardVersionTest(AssertionsMixin, TransactionTestCase):
 
 
     def test_card_040_move(self):
-        # create user
-        email = 'jan@rclick.cz'
-        register_api_call(email=email, nickname='Misan').data
-        user1token = auth_api_call(email=email).data.get('token')
-
-        # create workspace
-        workspace = create_workspace_api_call(user1token, name='workspace').data
-
-        # create vault
-        vault = create_vault_api_call(user1token,
-                                      workspace=workspace.get('id'),
-                                      name='vault'
-        ).data
+        user1token, workspace, vault, card = list(self.create_card())
 
         # create second vault
         second_vault = create_vault_api_call(user1token,
                                       workspace=workspace.get('id'),
                                       name='second_vault'
-        ).data
-
-        #create card
-        card = create_card_api_call(user1token,
-                                    name="card_in_vault",
-                                    vault=vault.get('id')
         ).data
 
         #check version

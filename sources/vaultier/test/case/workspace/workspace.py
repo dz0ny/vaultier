@@ -7,7 +7,7 @@ from vaultier.models.role.model import Role
 from vaultier.models.workspace.model import Workspace
 from vaultier.test.tools.auth.api import auth_api_call, register_api_call
 from vaultier.test.tools import format_response
-from vaultier.test.case.workspace.workspace_tools import create_workspace_api_call, delete_workspace_api_call
+from vaultier.test.tools.workspace.api import create_workspace_api_call, delete_workspace_api_call
 
 
 class ApiWorkspaceTest(TransactionTestCase):
