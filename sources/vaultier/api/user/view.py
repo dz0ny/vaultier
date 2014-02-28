@@ -28,6 +28,11 @@ class CanManageUserPermission(BasePermission):
 class UserSerializer(ModelSerializer):
     email = EmailField(required=True)
 
+    def restore_fields(self, data, files):
+        if (self.context.get('view').action != 'create'):
+            self.fields.get('public_key').read_only = True
+        return super(UserSerializer, self).restore_fields(data, files)
+
     class Meta:
         model = User
         fields = ['id', 'email', 'nickname', 'public_key']
@@ -39,7 +44,6 @@ class RelatedUserSerializer(UserSerializer):
 
 
 class MemberKeySerializer(ModelSerializer):
-
     def save_object(self, obj, **kwargs):
         return obj
 
@@ -55,9 +59,6 @@ class UserKeySerializer(ModelSerializer):
         obj.filtered_members = Member.objects.filter(user=self.object, status=MemberStatusField.STATUS_MEMBER);
         self.fields['membership'].source = 'filtered_members';
         return super(UserKeySerializer, self).to_native(obj)
-
-    #def save_object(self, obj, **kwargs):
-    #    return obj
 
     def validate_membership(self, attrs, source):
         all_modified = attrs.get('membership');
