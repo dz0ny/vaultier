@@ -1166,6 +1166,27 @@ span.vlt-user img {
     margin-left: 90px;
 }
 
+
+/*************************************************************
+**************************************************************
+* History panel
+*************************************************************
+*************************************************************/
+
+.vlt-panel-history .vlt-table .vlt-row {
+    padding: 10px 0px 10px 0px;
+    border-bottom: 2px solid #F5F5F5;
+}
+
+.vlt-panel-history .vlt-table .vlt-row:last-of-type {
+    border-bottom: 0px;
+}
+
+.vlt-panel-history .vlt-table .vlt-row .vlt-col.vlt-col-user img {
+    vertical-align: top;
+}
+
+
 /*************************************************************
 **************************************************************
 * Permissions panel
