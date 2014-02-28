@@ -19,9 +19,12 @@ slug_register_signals(Slug, Card)
 ##################################################
 # Versioning signals
 ##################################################
+from vaultier.models.workspace.version import register_signals as workspace_register_version_signals
 from vaultier.models.vault.version import register_signals as vault_register_version_signals
 from vaultier.models.card.version import register_signals as card_register_version_signals
 from vaultier.models.secret.version import register_signals as secret_register_version_signals
+
+workspace_register_version_signals()
 vault_register_version_signals()
 card_register_version_signals()
 secret_register_version_signals()

@@ -29,3 +29,10 @@ def list_workspaces_api_call(token):
     client.token(token)
     response = client.get(url)
     return response
+
+def update_workspace_api_call(token, id, **kwargs):
+    url = reverse('workspace-detail', args=(id,))
+    client = VaultierAPIClient()
+    client.token(token)
+    response = client.put(url, kwargs)
+    return response

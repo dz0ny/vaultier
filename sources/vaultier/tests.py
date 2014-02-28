@@ -23,6 +23,7 @@ from vaultier.test.case.search.search import search_suite
 from vaultier.test.case.secret.secret import secret_suite
 from vaultier.test.case.secret.secret_perms import secret_perms_suite
 from vaultier.test.case.slug.slug import slug_suite
+from vaultier.test.case.workspace.workspace_version import workspace_version_suite
 from vaultier.test.case.workspacekey.workspacekey import workspacekey_suite
 
 
@@ -66,7 +67,8 @@ def suite():
     # search tests
     suite.addTest(search_suite())
 
-    # versioning
+    versioning
+    suite.addTest(workspace_version_suite())
     suite.addTest(vault_version_suite())
     suite.addTest(card_version_suite())
     suite.addTest(secret_version_suite())
