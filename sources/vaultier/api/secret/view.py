@@ -40,6 +40,12 @@ class SecretSerializer(ModelSerializer):
     perms = SecretPermsField()
     blob_meta = CharField(read_only=True)
 
+    def restore_fields(self, data, files):
+        if (self.context.get('view').action == 'update' or self.context.get('view').action == 'partial_update' ):
+            self.fields.get('type').read_only=True
+        return super(SecretSerializer, self).restore_fields(data, files)
+
+
     class Meta:
         model = Secret
         fields = ('id', 'type', 'name', 'data', 'blob_meta', 'card', 'perms', 'created_at', 'updated_at', 'created_by')
