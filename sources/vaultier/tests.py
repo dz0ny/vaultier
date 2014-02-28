@@ -67,7 +67,7 @@ def suite():
     # search tests
     suite.addTest(search_suite())
 
-    versioning
+    # versioning
     suite.addTest(workspace_version_suite())
     suite.addTest(vault_version_suite())
     suite.addTest(card_version_suite())

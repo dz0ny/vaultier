@@ -114,7 +114,7 @@ class WorkspaceVersionTest(AssertionsMixin,  TransactionTestCase):
         self.assertEquals(versions.count(), 1)
 
         # compare revision data
-        self.assert_dict(versions[0].revert_data, {})
+        self.assert_dict(versions[0].revert_data, {'deleted_at' : None})
 
 
 def workspace_version_suite():
