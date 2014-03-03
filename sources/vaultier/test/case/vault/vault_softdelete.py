@@ -1,6 +1,7 @@
 from django.test.testcases import TransactionTestCase
 from django.utils import unittest
 from django.utils.unittest.suite import TestSuite
+from modelext.version.context import version_context_manager
 from vaultier.models.vault.model import Vault
 from vaultier.test.tools.auth.api import auth_api_call, register_api_call
 from vaultier.test.tools.vault.api import create_vault_api_call, delete_vault_api_call
@@ -8,6 +9,9 @@ from vaultier.test.tools.workspace.api import create_workspace_api_call, delete_
 
 
 class VaultSoftDeleteTest(TransactionTestCase):
+
+    def setUp(self):
+        version_context_manager.set_enabled(False)
 
     def create_vault(self):
         # create user

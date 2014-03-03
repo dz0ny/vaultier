@@ -6,27 +6,30 @@ from rest_framework.response import Response
 from rest_framework.serializers import ModelSerializer
 from rest_framework.status import HTTP_405_METHOD_NOT_ALLOWED, HTTP_200_OK
 from rest_framework.viewsets import ModelViewSet
+from modelext.version.context import VersionContextAwareApiViewMixin
 from vaultier.api.secret.view import SecretSerializer, CanManageSecretPermission
 from vaultier.api.user.view import RelatedUserSerializer
 from vaultier.auth.authentication import TokenAuthentication
 from vaultier.models import SecretBlob, Secret
+
 
 class BlobDataField(FileField):
     def to_native(self, value):
         return value.read()
 
     def from_native(self, data):
-        max_size = 100*1000
+        max_size = 100 * 1000
         if not data:
             raise ValidationError('At least blob_data must be specified')
 
-        if data and hasattr(data,'size') and data.size>max_size:
+        if data and hasattr(data, 'size') and data.size > max_size:
             raise ValidationError('Maximum blob size is 100K encrypted')
 
-        if data and not hasattr(data, 'size') and len(data)>max_size:
+        if data and not hasattr(data, 'size') and len(data) > max_size:
             raise ValidationError('Maximum blob size is 100K encrypted')
 
         return super(BlobDataField, self).from_native(data)
+
 
 class SecretBlobSerializer(ModelSerializer):
     created_by = RelatedUserSerializer(read_only=True)
@@ -37,7 +40,10 @@ class SecretBlobSerializer(ModelSerializer):
         fields = ('id', 'blob_meta', 'blob_data')
 
 
-class SecretBlobViewSet(ModelViewSet):
+class SecretBlobViewSet(
+    VersionContextAwareApiViewMixin,
+    ModelViewSet
+):
     """
     API endpoint that allows secret blobs to be viewed or edited.
     """

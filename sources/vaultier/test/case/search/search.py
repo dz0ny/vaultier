@@ -2,6 +2,7 @@ from django.test.testcases import TransactionTestCase
 from django.utils import unittest
 from django.utils.unittest.suite import TestSuite
 from rest_framework.status import HTTP_200_OK
+from modelext.version.context import version_context_manager
 from vaultier.test.tools.auth.api import auth_api_call, register_api_call
 from vaultier.test.tools.card.api import create_card_api_call
 from vaultier.test.tools.search.api import search_api_call
@@ -12,6 +13,8 @@ from vaultier.test.tools.workspace.api import create_workspace_api_call
 
 class ApiSearchTest(TransactionTestCase):
 
+    def setUp(self):
+        version_context_manager.set_enabled(False)
 
     def test_010_search_vault_case_insensitive(self):
 

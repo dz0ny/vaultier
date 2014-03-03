@@ -2,6 +2,7 @@ from rest_framework.fields import CharField
 from rest_framework.permissions import IsAuthenticated, BasePermission
 from rest_framework.serializers import ModelSerializer
 from rest_framework.viewsets import ModelViewSet
+from modelext.version.context import VersionContextAwareApiViewMixin
 from vaultier.api.permsfield import PermsField
 from vaultier.api.softdeletemixin import SoftDeleteModelMixin
 from vaultier.api.user.view import RelatedUserSerializer
@@ -51,7 +52,10 @@ class SecretSerializer(ModelSerializer):
         fields = ('id', 'type', 'name', 'data', 'blob_meta', 'card', 'perms', 'created_at', 'updated_at', 'created_by')
 
 
-class SecretViewSet(SoftDeleteModelMixin, ModelViewSet):
+class SecretViewSet(
+    SoftDeleteModelMixin,
+    VersionContextAwareApiViewMixin,
+    ModelViewSet):
     """
     API endpoint that allows secrets to be viewed or edited.
     """

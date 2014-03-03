@@ -1,6 +1,7 @@
 from django.test.testcases import TransactionTestCase
 from django.utils import unittest
 from django.utils.unittest.suite import TestSuite
+from modelext.version.context import version_context_manager
 from vaultier.models.card.model import Card
 from vaultier.models.slug.model import Slug
 from vaultier.models.user.model import User
@@ -9,6 +10,9 @@ from vaultier.models.workspace.model import Workspace
 
 
 class SlugTest(TransactionTestCase):
+
+    def setUp(self):
+        version_context_manager.set_enabled(False)
 
     def test_010_workspace_slug(self):
         u = User(email="jan@rclick.cz")

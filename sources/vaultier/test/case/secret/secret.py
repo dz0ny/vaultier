@@ -2,6 +2,7 @@ from django.test.testcases import TransactionTestCase
 from django.utils import unittest
 from django.utils.unittest.suite import TestSuite
 from rest_framework.status import HTTP_201_CREATED, HTTP_200_OK, HTTP_204_NO_CONTENT
+from modelext.version.context import version_context_manager
 from vaultier.models.secret.fields import SecretTypeField
 from vaultier.test.tools.auth.api import auth_api_call, register_api_call
 from vaultier.test.tools.card.api import create_card_api_call
@@ -12,6 +13,11 @@ from vaultier.test.tools.workspace.api import create_workspace_api_call
 
 
 class ApiSecretTest(TransactionTestCase):
+
+    def setUp(self):
+        version_context_manager.set_enabled(False)
+
+
     def create_secret(self):
         # create user
         email = 'jan@rclick.cz'

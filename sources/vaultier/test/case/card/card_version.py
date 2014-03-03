@@ -1,6 +1,7 @@
 from django.test.testcases import TransactionTestCase
 from django.utils import unittest
 from django.utils.unittest.suite import TestSuite
+from modelext.version.context import version_context_manager
 from modelext.version.manipulator import ACTION_CREATED, ACTION_UPDATED, ACTION_SOFTDELETED, ACTION_MOVED
 from vaultier.models.version.model import Version
 from vaultier.test.tools.auth.api import auth_api_call, register_api_call
@@ -12,10 +13,13 @@ from vaultier.test.tools.workspace.api import create_workspace_api_call
 
 class CardVersionTest(AssertionsMixin, TransactionTestCase):
 
+    def setUp(self):
+        version_context_manager.set_enabled(True)
+
     def create_card(self):
         # create user
         email = 'jan@rclick.cz'
-        register_api_call(email=email, nickname='jan').data
+        user1 = register_api_call(email=email, nickname='jan').data
         user1token = auth_api_call(email=email).data.get('token')
 
         # create workspace
@@ -34,10 +38,10 @@ class CardVersionTest(AssertionsMixin, TransactionTestCase):
                                     vault=vault.get('id')
         ).data
 
-        return (user1token, workspace, vault, card,)
+        return (user1, user1token, workspace, vault, card,)
 
     def test_card_010_create(self):
-        user1token, workspace, vault, card = list(self.create_card())
+        user1, user1token, workspace, vault, card = list(self.create_card())
 
         #check version
         versions = Version.objects.filter(
@@ -58,8 +62,12 @@ class CardVersionTest(AssertionsMixin, TransactionTestCase):
         # compare revision data
         self.assert_dict(versions[0].revert_data, {})
 
+        # assert user has been stored with version
+        self.assertEqual(versions[0].created_by.id, user1.get('id'));
+
+
     def test_card_020_update(self):
-        user1token, workspace, vault, card = list(self.create_card())
+        user1, user1token, workspace, vault, card = list(self.create_card())
 
         #update card
         card = update_card_api_call(user1token, card.get('id'),
@@ -106,7 +114,7 @@ class CardVersionTest(AssertionsMixin, TransactionTestCase):
         })
 
     def test_card_030_delete(self):
-        user1token, workspace, vault, card = list(self.create_card())
+        user1, user1token, workspace, vault, card = list(self.create_card())
 
         #check version
         versions = Version.objects.filter(
@@ -135,7 +143,7 @@ class CardVersionTest(AssertionsMixin, TransactionTestCase):
 
 
     def test_card_040_move(self):
-        user1token, workspace, vault, card = list(self.create_card())
+        user1, user1token, workspace, vault, card = list(self.create_card())
 
         # create second vault
         second_vault = create_vault_api_call(user1token,

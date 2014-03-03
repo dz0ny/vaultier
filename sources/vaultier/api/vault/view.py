@@ -2,6 +2,7 @@ from rest_framework.fields import SlugField
 from rest_framework.permissions import IsAuthenticated, BasePermission
 from rest_framework.serializers import ModelSerializer
 from rest_framework.viewsets import ModelViewSet
+from modelext.version.context import VersionContextAwareApiViewMixin
 from vaultier.api.permsfield import PermsField
 from vaultier.api.retrievebyslugmixin import RetrieveBySlugMixin
 from vaultier.api.softdeletemixin import SoftDeleteModelMixin
@@ -67,7 +68,11 @@ class RelatedVaultSerializer(VaultSerializer):
         fields = ['id', 'slug', 'name']
 
 
-class VaultViewSet(RetrieveBySlugMixin, SoftDeleteModelMixin, ModelViewSet):
+class VaultViewSet(
+    RetrieveBySlugMixin,
+    SoftDeleteModelMixin,
+    VersionContextAwareApiViewMixin,
+    ModelViewSet):
     """
     API endpoint that allows vaults to be viewed or edited.
     """

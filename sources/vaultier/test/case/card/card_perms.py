@@ -2,6 +2,7 @@ from django.test.testcases import TransactionTestCase
 from django.utils import unittest
 from django.utils.unittest.suite import TestSuite
 from rest_framework.status import HTTP_403_FORBIDDEN, HTTP_200_OK, HTTP_204_NO_CONTENT
+from modelext.version.context import version_context_manager
 from vaultier.models.member.model import Member
 from vaultier.models.role.fields import RoleLevelField
 from vaultier.test.tools.auth.api import auth_api_call, register_api_call
@@ -22,6 +23,9 @@ class ApiCardPermsTest(TransactionTestCase):
             HTTP_403_FORBIDDEN,
             format_response(response)
         )
+
+    def setUp(self):
+        version_context_manager.set_enabled(False)
 
     def test_001_create_delete_card_as_anonymous(self):
 

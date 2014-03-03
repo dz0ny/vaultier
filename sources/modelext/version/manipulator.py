@@ -1,6 +1,5 @@
-from django.db import models
-from six import string_types
 from modelext.changes.changes import post_change
+from modelext.version.context import version_context_manager
 
 ACTION_CREATED = 10
 ACTION_UPDATED = 20
@@ -9,7 +8,6 @@ ACTION_SOFTDELETED = 40
 ACTION_DELETED = 50
 
 manipulators = {}
-
 
 def factory_manipulator(version, manipulator_id):
     if version.manipulator_id:
@@ -30,28 +28,29 @@ def get_manipulator_class(id):
 
 def register_manipulator_signal(version_cls=None, manipulator_id=None, required_fields=None, required_sender=None, required_event_type=None):
     def callback(signal=None, sender=None, instance=None, event_type=None, saved_values=None, **kwargs):
-        saved_keys = saved_values.keys()
-        do_save = False
+        if version_context_manager.get_enabled():
+            saved_keys = saved_values.keys()
+            do_save = False
 
-        if event_type == required_event_type:
-            intersection = {}
-            if required_fields:
-                if set(saved_keys).intersection(required_fields):
+            if event_type == required_event_type:
+                intersection = {}
+                if required_fields:
+                    if set(saved_keys).intersection(required_fields):
+                        do_save = True
+                        # required fields specified, intersection only required fields
+                        for saved_key in saved_keys:
+                            if saved_key in required_fields:
+                                intersection[saved_key] = saved_values[saved_key]
+                else:
+                    # no required fields specifed, intersection is whole save state
                     do_save = True
-                    # required fields specified, intersection only required fields
-                    for saved_key in saved_keys:
-                        if saved_key in required_fields:
-                            intersection[saved_key] = saved_values[saved_key]
-            else:
-                # no required fields specifed, intersection is whole save state
-                do_save = True
-                intersection = saved_values
+                    intersection = saved_values
 
-            if do_save:
-                version = version_cls(versioned=instance)
-                manipulator = factory_manipulator(version, manipulator_id)
-                manipulator.store_state(intersection, instance)
-                manipulator.save()
+                if do_save:
+                    version = version_cls(versioned=instance)
+                    manipulator = factory_manipulator(version, manipulator_id)
+                    manipulator.store_state(intersection, instance)
+                    manipulator.save()
 
     post_change.connect(callback, sender=required_sender, weak=False)
 
@@ -86,6 +85,7 @@ class VersionManipulator(object):
         self.version.action_name = self.determine_action_name()
         self.version.action_id = self.determine_action_id();
         self.version.versioned_parent = self.determine_versioned_parent()
+        self.version.created_by = version_context_manager.get_user()
 
     def get_diff(self, fields=None):
         result = {}

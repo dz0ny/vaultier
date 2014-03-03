@@ -2,6 +2,7 @@ from rest_framework.fields import SerializerMethodField, SlugField
 from rest_framework.permissions import IsAuthenticated, BasePermission
 from rest_framework.serializers import ModelSerializer
 from rest_framework.viewsets import ModelViewSet
+from modelext.version.context import version_context_manager, VersionContextAwareApiViewMixin
 from vaultier.api.permsfield import PermsField
 from vaultier.api.member.view import RelatedMemberSerializer
 from vaultier.api.retrievebyslugmixin import RetrieveBySlugMixin
@@ -17,7 +18,7 @@ from vaultier.perms.check import has_object_acl
 class CanManageWorkspace(BasePermission):
     def has_object_permission(self, request, view, obj):
 
-        if view.action == 'retrieve' or view.action == 'list' :
+        if view.action == 'retrieve' or view.action == 'list':
             required_level = AclLevelField.LEVEL_READ
         else:
             required_level = AclLevelField.LEVEL_WRITE
@@ -26,6 +27,7 @@ class CanManageWorkspace(BasePermission):
             return True
         else:
             return has_object_acl(request.user, obj, required_level)
+
 
 class WorkspaceMembershipSerializer(RelatedMemberSerializer):
     class Meta(RelatedMemberSerializer.Meta):
@@ -52,10 +54,15 @@ class WorkspaceSerializer(ModelSerializer):
 
 class RelatedWorkspaceSerializer(WorkspaceSerializer):
     class Meta(WorkspaceSerializer.Meta):
-        fields = ['id', 'slug','name']
+        fields = ['id', 'slug', 'name']
 
 
-class WorkspaceViewSet(RetrieveBySlugMixin, SoftDeleteModelMixin, ModelViewSet):
+class WorkspaceViewSet(
+    RetrieveBySlugMixin,
+    SoftDeleteModelMixin,
+    VersionContextAwareApiViewMixin,
+    ModelViewSet
+):
     """
     API endpoint that allows workspaces to be viewed or edited.
     """

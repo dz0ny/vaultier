@@ -2,6 +2,7 @@ from rest_framework.fields import SlugField
 from rest_framework.permissions import IsAuthenticated, BasePermission
 from rest_framework.serializers import ModelSerializer
 from rest_framework.viewsets import ModelViewSet
+from modelext.version.context import VersionContextAwareApiViewMixin
 from vaultier.api.permsfield import PermsField
 from vaultier.api.retrievebyslugmixin import RetrieveBySlugMixin
 from vaultier.api.softdeletemixin import SoftDeleteModelMixin
@@ -51,7 +52,11 @@ class CardSerializer(ModelSerializer):
         fields = ('id', 'slug', 'name', 'description','vault', 'perms', 'created_at', 'updated_at', 'created_by')
 
 
-class CardViewSet(RetrieveBySlugMixin, SoftDeleteModelMixin, ModelViewSet):
+class CardViewSet(
+    RetrieveBySlugMixin,
+    SoftDeleteModelMixin,
+    VersionContextAwareApiViewMixin,
+    ModelViewSet):
     """
     API endpoint that allows cars to be viewed or edited.
     """

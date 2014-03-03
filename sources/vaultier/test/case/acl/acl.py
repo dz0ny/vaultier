@@ -1,6 +1,7 @@
 from django.test.testcases import TransactionTestCase
 from django.utils import unittest
 from django.utils.unittest.suite import TestSuite
+from modelext.version.context import version_context_manager
 from vaultier.models.acl.fields import AclLevelField
 from vaultier.models.acl.model import Acl
 from vaultier.models.card.model import Card
@@ -44,6 +45,8 @@ class AclTest(TransactionTestCase):
         else:
             self.assertEquals(aclset.count(), count)
 
+    def setUp(self):
+        version_context_manager.set_enabled(False)
 
     def test_010_create_role(self):
         u = User()

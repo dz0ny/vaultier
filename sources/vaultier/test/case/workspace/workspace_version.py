@@ -1,6 +1,7 @@
 from django.test.testcases import TransactionTestCase
 from django.utils import unittest
 from django.utils.unittest.suite import TestSuite
+from modelext.version.context import version_context_manager
 from modelext.version.manipulator import ACTION_CREATED, ACTION_UPDATED, ACTION_SOFTDELETED
 from vaultier.models.version.model import Version
 from vaultier.test.tools.auth.api import auth_api_call, register_api_call
@@ -10,19 +11,22 @@ from vaultier.test.tools.workspace.api import create_workspace_api_call
 
 class WorkspaceVersionTest(AssertionsMixin,  TransactionTestCase):
 
+    def setUp(self):
+        version_context_manager.set_enabled(True)
+
     def create_workspace(self):
         # create user
         email = 'jan@rclick.cz'
-        register_api_call(email=email, nickname='jan').data
+        user1 = register_api_call(email=email, nickname='jan').data
         user1token = auth_api_call(email=email).data.get('token')
 
         # create workspace
-        workspace = create_workspace_api_call(user1token, name='workspace').data
+        workspace = create_workspace_api_call(user1token,  name='workspace').data
 
-        return (user1token, workspace,)
+        return (user1, user1token, workspace,)
 
     def test_workspace_010_create(self):
-        user1token,  workspace = list(self.create_workspace())
+        user1, user1token,  workspace = list(self.create_workspace())
 
         #check version
         versions = Version.objects.filter(
@@ -36,14 +40,19 @@ class WorkspaceVersionTest(AssertionsMixin,  TransactionTestCase):
         # compare version
         self.assert_model(versions[0], {
             'versioned_id': workspace.get('id'),
-            'action_id': ACTION_CREATED
+            'action_id': ACTION_CREATED,
         })
+
+        # assert user has been stored with version
+        self.assertEqual(versions[0].created_by.id, user1.get('id'));
+
+
 
         # compare revision data
         self.assert_dict(versions[0].revert_data, {})
 
     def test_workspace_020_update(self):
-        user1token,  workspace = list(self.create_workspace())
+        user1, user1token,  workspace = list(self.create_workspace())
 
         workspace = update_workspace_api_call(user1token, workspace.get('id'),
                                       name='renamed_workspace',
@@ -89,7 +98,7 @@ class WorkspaceVersionTest(AssertionsMixin,  TransactionTestCase):
         })
 
     def test_workspace_030_delete(self):
-        user1token,  workspace = list(self.create_workspace())
+        user1, user1token,  workspace = list(self.create_workspace())
 
         #check version
         versions = Version.objects.filter(

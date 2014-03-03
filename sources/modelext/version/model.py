@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.contenttypes.generic import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
@@ -53,6 +54,9 @@ class VersionMixin(models.Model):
     # timestamp and created_by
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    created_by = models.ForeignKey('vaultier.User', on_delete=PROTECT, null=True)
+    created_by = models.ForeignKey(
+        getattr(settings, 'AUTH_USER_MODEL', 'auth.User'),
+        on_delete=PROTECT,
+        null=True)
 
 

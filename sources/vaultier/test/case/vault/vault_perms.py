@@ -2,6 +2,7 @@ from django.test.testcases import TransactionTestCase
 from django.utils import unittest
 from django.utils.unittest.suite import TestSuite
 from rest_framework.status import HTTP_403_FORBIDDEN, HTTP_200_OK, HTTP_204_NO_CONTENT
+from modelext.version.context import version_context_manager
 from vaultier.models.member.model import Member
 from vaultier.models.role.fields import RoleLevelField
 from vaultier.test.tools.auth.api import auth_api_call, register_api_call
@@ -14,6 +15,9 @@ from vaultier.test.tools.workspace.api import create_workspace_api_call, delete_
 
 
 class ApiVaultPermsTest(TransactionTestCase):
+
+    def setUp(self):
+        version_context_manager.set_enabled(False)
 
     def test_000_vault_anonymous_access(self):
         response = create_vault_api_call(None, name="vault_in_workspace", workspace=None)

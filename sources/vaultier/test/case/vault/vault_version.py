@@ -1,6 +1,7 @@
 from django.test.testcases import TransactionTestCase
 from django.utils import unittest
 from django.utils.unittest.suite import TestSuite
+from modelext.version.context import version_context_manager
 from modelext.version.manipulator import ACTION_CREATED, ACTION_UPDATED, ACTION_SOFTDELETED
 from vaultier.models.version.model import Version
 from vaultier.test.tools.auth.api import auth_api_call, register_api_call
@@ -10,10 +11,13 @@ from vaultier.test.tools.workspace.api import create_workspace_api_call
 
 class VaultVersionTest(AssertionsMixin,  TransactionTestCase):
 
+    def setUp(self):
+        version_context_manager.set_enabled(True)
+
     def create_vault(self):
         # create user
         email = 'jan@rclick.cz'
-        register_api_call(email=email, nickname='jan').data
+        user1 =register_api_call(email=email, nickname='jan').data
         user1token = auth_api_call(email=email).data.get('token')
 
         # create workspace
@@ -26,10 +30,10 @@ class VaultVersionTest(AssertionsMixin,  TransactionTestCase):
         ).data
 
 
-        return (user1token, workspace, vault, )
+        return (user1, user1token, workspace, vault, )
 
     def test_vault_010_create(self):
-        user1token, workspace, vault = list(self.create_vault())
+        user1, user1token, workspace, vault = list(self.create_vault())
 
         #check version
         versions = Version.objects.filter(
@@ -47,11 +51,14 @@ class VaultVersionTest(AssertionsMixin,  TransactionTestCase):
             'action_id': ACTION_CREATED
         })
 
+        # assert user has been stored with version
+        self.assertEqual(versions[0].created_by.id, user1.get('id'));
+
         # compare revision data
         self.assert_dict(versions[0].revert_data, {})
 
     def test_vault_020_update(self):
-        user1token, workspace, vault = list(self.create_vault())
+        user1, user1token, workspace, vault = list(self.create_vault())
 
         vault = update_vault_api_call(user1token, vault.get('id'),
                                       name='renamed_vault',
@@ -97,7 +104,7 @@ class VaultVersionTest(AssertionsMixin,  TransactionTestCase):
         })
 
     def test_vault_030_delete(self):
-        user1token, workspace, vault = list(self.create_vault())
+        user1, user1token, workspace, vault = list(self.create_vault())
 
         #check version
         versions = Version.objects.filter(

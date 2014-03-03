@@ -1,6 +1,7 @@
 from django.test.testcases import TransactionTestCase
 from django.utils import unittest
 from django.utils.unittest.suite import TestSuite
+from modelext.version.context import version_context_manager
 from modelext.version.manipulator import ACTION_CREATED, ACTION_UPDATED, ACTION_SOFTDELETED, ACTION_MOVED
 from vaultier.models.secret.fields import SecretTypeField
 from vaultier.models.version.model import Version
@@ -13,10 +14,14 @@ from vaultier.test.tools.workspace.api import create_workspace_api_call
 
 
 class SecretVersionTest(AssertionsMixin, TransactionTestCase):
+
+    def setUp(self):
+        version_context_manager.set_enabled(True)
+
     def create_secret(self):
         # create user
         email = 'jan@rclick.cz'
-        register_api_call(email=email, nickname='Misan').data
+        user1 = register_api_call(email=email, nickname='Misan').data
         user1token = auth_api_call(email=email).data.get('token')
 
         # create workspace
@@ -42,10 +47,10 @@ class SecretVersionTest(AssertionsMixin, TransactionTestCase):
                                         data="mocked_data"
         ).data
 
-        return (user1token, workspace, vault, card, secret,)
+        return (user1, user1token, workspace, vault, card, secret,)
 
     def test_secret_010_create(self):
-        user1token, workspace, vault, card, secret = list(self.create_secret())
+        user1, user1token, workspace, vault, card, secret = list(self.create_secret())
 
         #check version
         versions = Version.objects.filter(
@@ -63,11 +68,15 @@ class SecretVersionTest(AssertionsMixin, TransactionTestCase):
             'action_id': ACTION_CREATED
         })
 
+
+        # assert user has been stored with version
+        self.assertEqual(versions[0].created_by.id, user1.get('id'));
+
         # compare revision data
         self.assert_dict(versions[0].revert_data, {})
 
     def test_secret_020_update(self):
-        user1token, workspace, vault, card, secret = list(self.create_secret())
+        user1, user1token, workspace, vault, card, secret = list(self.create_secret())
 
         #update secret
         secret = update_secret_api_call(user1token, secret.get('id'),
@@ -115,7 +124,7 @@ class SecretVersionTest(AssertionsMixin, TransactionTestCase):
         })
 
     def test_secret_030_delete(self):
-        user1token, workspace, vault, card, secret = list(self.create_secret())
+        user1, user1token, workspace, vault, card, secret = list(self.create_secret())
 
         #check version
         versions = Version.objects.filter(
@@ -146,7 +155,7 @@ class SecretVersionTest(AssertionsMixin, TransactionTestCase):
 
 
     def test_secret_040_move(self):
-        user1token, workspace, vault, card, secret = list(self.create_secret())
+        user1, user1token, workspace, vault, card, secret = list(self.create_secret())
 
         # create second vault
         second_card = create_card_api_call(user1token,

@@ -2,6 +2,7 @@ from django.test.testcases import TransactionTestCase
 from django.utils import unittest
 from django.utils.unittest.suite import TestSuite
 from rest_framework.status import HTTP_200_OK, HTTP_403_FORBIDDEN, HTTP_201_CREATED, HTTP_400_BAD_REQUEST
+from modelext.version.context import version_context_manager
 from vaultier.models.member.model import Member
 from vaultier.models.role.fields import RoleLevelField
 from vaultier.models.role.model import Role
@@ -15,6 +16,9 @@ from vaultier.test.tools.workspace.api import create_workspace_api_call
 
 
 class ApiRoleTest(TransactionTestCase):
+
+    def setUp(self):
+        version_context_manager.set_enabled(False)
 
     def test_010_permissions_to_manage_roles(self):
         # create first user

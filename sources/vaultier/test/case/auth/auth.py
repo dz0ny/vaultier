@@ -2,6 +2,7 @@ from django.test.testcases import TransactionTestCase
 from django.utils import unittest
 from django.utils.unittest.suite import TestSuite
 from rest_framework.status import HTTP_201_CREATED, HTTP_200_OK, HTTP_403_FORBIDDEN, HTTP_400_BAD_REQUEST
+from modelext.version.context import version_context_manager
 from vaultier.auth.authentication import Backend
 
 from vaultier.test.tools.auth.api import auth_api_call, register_api_call
@@ -20,6 +21,9 @@ class SignaturesTest(TransactionTestCase, FileAccessMixin):
 
 
 class ApiRegisterTest(TransactionTestCase):
+
+    def setUp(self):
+        version_context_manager.set_enabled(False)
 
     def test_010_register(self):
 

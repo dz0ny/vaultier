@@ -2,6 +2,7 @@ from django.test.testcases import TransactionTestCase
 from django.utils import unittest
 from django.utils.unittest.suite import TestSuite
 from rest_framework.status import HTTP_200_OK
+from modelext.version.context import version_context_manager
 from modelext.version.manipulator import ACTION_UPDATED
 from vaultier.models.secret.fields import SecretTypeField
 from vaultier.models.version.model import Version
@@ -16,10 +17,13 @@ from vaultier.test.tools.vault.api import create_vault_api_call
 
 class SecretBlobVersionTest(TransactionTestCase, AssertionsMixin, FileAccessMixin):
 
+    def setUp(self):
+        version_context_manager.set_enabled(True)
+
     def create_secret(self):
         # create user
         email = 'jan@rclick.cz'
-        register_api_call(email=email, nickname='jan').data
+        user1  = register_api_call(email=email, nickname='jan').data
         user1token = auth_api_call(email=email).data.get('token')
 
         # create workspace
@@ -44,7 +48,7 @@ class SecretBlobVersionTest(TransactionTestCase, AssertionsMixin, FileAccessMixi
                                         type=SecretTypeField.SECRET_TYPE_PASSWORD
         ).data
 
-        return (user1token, workspace, vault, card, secret)
+        return (user1, user1token, workspace, vault, card, secret)
 
     def upload_blob(self, token, secret, filename, meta='blob_meta'):
         file = self.open_file(filename)
@@ -56,7 +60,7 @@ class SecretBlobVersionTest(TransactionTestCase, AssertionsMixin, FileAccessMixi
         return response
 
     def test_020_upload_and_versioning(self):
-        user1token, workspace, vault, card, secret = list(self.create_secret());
+        user1, user1token, workspace, vault, card, secret = list(self.create_secret());
 
         response = self.upload_blob(user1token, secret, 'upload.txt', 'mocked_meta')
         self.assertEqual(
@@ -87,6 +91,9 @@ class SecretBlobVersionTest(TransactionTestCase, AssertionsMixin, FileAccessMixi
             versioned_type__model='secret',
             versioned_id=secret.get('id')
         )
+
+        # assert user has been stored with version
+        self.assertEqual(versions[0].created_by.id, user1.get('id'));
 
          # 3 versions should be there, create, upload1 and upload2
         self.assertEquals(versions.count(), 3)
