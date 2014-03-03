@@ -1,3 +1,4 @@
+from modelext.version.condition import RequiredFieldEventCondition
 from vaultier.models.secret.model import Secret
 from modelext.version.manipulator import register_manipulator_signal, ModelMovedManipulator
 from modelext.changes.changes import SOFT_DELETE, INSERT, UPDATE
@@ -24,40 +25,52 @@ def register_signals():
 
     register_manipulator_signal(
         version_cls=Version,
-        required_sender=Secret,
-        required_fields=['deleted_at'],
-        required_event_type=SOFT_DELETE,
-        manipulator_id='secret_deleted_manipulator'
+        manipulator_id='secret_deleted_manipulator',
+        condition=RequiredFieldEventCondition(
+            required_sender=Secret,
+            required_fields=['deleted_at'],
+            required_event=SOFT_DELETE,
+        )
     )
 
     register_manipulator_signal(
         version_cls=Version,
-        required_sender=Secret,
-        required_fields=['name', 'description', 'data'],
-        required_event_type=UPDATE,
-        manipulator_id='secret_updated_manipulator'
+        manipulator_id='secret_updated_manipulator',
+        condition=RequiredFieldEventCondition(
+            required_sender=Secret,
+            required_fields=['name', 'description', 'data'],
+            required_event=UPDATE,
+
+        )
     )
 
     register_manipulator_signal(
         version_cls=Version,
-        required_sender=Secret,
-        required_fields=['card_id'],
-        required_event_type=UPDATE,
-        manipulator_id='secret_moved_manipulator'
+        manipulator_id='secret_moved_manipulator',
+        condition=RequiredFieldEventCondition(
+            required_sender=Secret,
+            required_fields=['card_id'],
+            required_event=UPDATE,
+
+        )
     )
 
     register_manipulator_signal(
         version_cls=Version,
-        required_sender=Secret,
-        required_fields=['blob_meta', 'blob_data'],
-        required_event_type=UPDATE,
-        manipulator_id='secret_blob_updated_manipulator'
+        manipulator_id='secret_blob_updated_manipulator',
+        condition=RequiredFieldEventCondition(
+            required_sender=Secret,
+            required_fields=['blob_meta', 'blob_data'],
+            required_event=UPDATE,
+        )
     )
 
     register_manipulator_signal(
         version_cls=Version,
-        required_sender=Secret,
-        required_fields=None,
-        required_event_type=INSERT,
-        manipulator_id='secret_created_manipulator'
+        manipulator_id='secret_created_manipulator',
+        condition=RequiredFieldEventCondition(
+            required_sender=Secret,
+            required_fields=None,
+            required_event=INSERT,
+        )
     )

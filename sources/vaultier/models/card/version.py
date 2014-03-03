@@ -1,6 +1,7 @@
+from modelext.version.condition import RequiredFieldEventCondition
 from vaultier.models.card.model import Card
 from modelext.changes.changes import SOFT_DELETE, INSERT, UPDATE
-from modelext.version.manipulator import  register_manipulator_signal, ModelCreatedManipulator, ModelUpdatedManipulator, ModelDeletedManipulator, register_manipulator_class, ModelMovedManipulator
+from modelext.version.manipulator import register_manipulator_signal, ModelCreatedManipulator, ModelUpdatedManipulator, ModelDeletedManipulator, register_manipulator_class, ModelMovedManipulator
 
 
 def register_signals():
@@ -13,34 +14,42 @@ def register_signals():
 
     register_manipulator_signal(
         version_cls=Version,
-        required_sender=Card,
-        required_fields=['deleted_at'],
-        required_event_type=SOFT_DELETE,
-        manipulator_id='card_deleted_manipulator'
+        manipulator_id='card_deleted_manipulator',
+        condition=RequiredFieldEventCondition(
+            required_sender=Card,
+            required_fields=['deleted_at'],
+            required_event=SOFT_DELETE,
+        )
     )
 
     register_manipulator_signal(
         version_cls=Version,
-        required_sender=Card,
-        required_fields=['name', 'description'],
-        required_event_type=UPDATE,
-        manipulator_id='card_updated_manipulator'
+        manipulator_id='card_updated_manipulator',
+        condition=RequiredFieldEventCondition(
+            required_sender=Card,
+            required_fields=['name', 'description'],
+            required_event=UPDATE,
+        )
     )
 
     register_manipulator_signal(
         version_cls=Version,
-        required_sender=Card,
-        required_fields=None,
-        required_event_type=INSERT,
-        manipulator_id='card_created_manipulator'
+        manipulator_id='card_created_manipulator',
+        condition=RequiredFieldEventCondition(
+            required_sender=Card,
+            required_fields=None,
+            required_event=INSERT,
+        )
     )
 
     register_manipulator_signal(
         version_cls=Version,
-        required_sender=Card,
-        required_fields=['vault_id'],
-        required_event_type=UPDATE,
-        manipulator_id='card_moved_manipulator'
+        manipulator_id='card_moved_manipulator',
+        condition=RequiredFieldEventCondition(
+            required_sender=Card,
+            required_fields=['vault_id'],
+            required_event=UPDATE,
+        )
     )
 
 

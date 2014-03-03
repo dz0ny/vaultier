@@ -9,6 +9,7 @@ ACTION_DELETED = 50
 
 manipulators = {}
 
+
 def factory_manipulator(version, manipulator_id):
     if version.manipulator_id:
         cls = get_manipulator_class(version.manipulator_id)
@@ -19,6 +20,7 @@ def factory_manipulator(version, manipulator_id):
 
     return cls(manipulator_id, version)
 
+
 def get_manipulator_class(id):
     if manipulators.has_key(id):
         cls = manipulators[id]
@@ -26,37 +28,34 @@ def get_manipulator_class(id):
         raise AttributeError('manipulator class for "{name}" not found'.format(name=id))
     return cls
 
-def register_manipulator_signal(version_cls=None, manipulator_id=None, required_fields=None, required_sender=None, required_event_type=None):
+
+def register_manipulator_signal(version_cls=None,manipulator_id=None,condition=None):
+    if not condition:
+        raise AttributeError('condition kwarg is required')
+
     def callback(signal=None, sender=None, instance=None, event_type=None, saved_values=None, **kwargs):
-        if version_context_manager.get_enabled():
-            saved_keys = saved_values.keys()
-            do_save = False
 
-            if event_type == required_event_type:
-                intersection = {}
-                if required_fields:
-                    if set(saved_keys).intersection(required_fields):
-                        do_save = True
-                        # required fields specified, intersection only required fields
-                        for saved_key in saved_keys:
-                            if saved_key in required_fields:
-                                intersection[saved_key] = saved_values[saved_key]
-                else:
-                    # no required fields specifed, intersection is whole save state
-                    do_save = True
-                    intersection = saved_values
+        saved_values = condition.will_do_version(
+            signal=signal,
+            sender=sender,
+            instance=instance,
+            event_type=event_type,
+            saved_values=saved_values,
+            **kwargs
+        );
 
-                if do_save:
-                    version = version_cls(versioned=instance)
-                    manipulator = factory_manipulator(version, manipulator_id)
-                    manipulator.store_state(intersection, instance)
-                    manipulator.save()
+        if (saved_values):
+            version = version_cls(versioned=instance)
+            manipulator = factory_manipulator(version, manipulator_id)
+            manipulator.store_state(saved_values, instance)
+            manipulator.save()
 
-    post_change.connect(callback, sender=required_sender, weak=False)
+    post_change.connect(callback, sender=condition.required_sender, weak=False)
 
 
 def register_manipulator_class(name, cls):
     manipulators[name] = cls
+
 
 class VersionManipulator(object):
     version = None
@@ -130,6 +129,7 @@ class ModelCreatedManipulator(VersionManipulator):
 class ModelUpdatedManipulator(VersionManipulator):
     action_name = 'updated'
     action_id = ACTION_UPDATED
+
 
 class ModelMovedManipulator(VersionManipulator):
     action_name = 'moved'
