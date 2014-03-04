@@ -60,7 +60,7 @@ def send_granted_access(role):
     template = 'mailer/granted_access'
     context = build_context(role.get_object())
 
-    to = [role.member.user]
+    to = [role.member.user.email]
     from_email = 'info@rclick.cz'
     subject = '[Vaultier] You have been granted access to {type}'\
         .replace('{type}', context.get('type'))
