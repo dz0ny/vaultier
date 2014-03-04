@@ -13,7 +13,9 @@ from vaultier.tools.changes import ChangesMixin, post_change, INSERT
 class RoleManager(Manager):
 
     def on_model(self, signal=None, sender=None, instance=None, event_type=None, **kwargs):
-        if event_type==INSERT and instance.member.status != MemberStatusField.STATUS_INVITED:
+        if event_type == INSERT and \
+                ( instance.member.status == MemberStatusField.STATUS_MEMBER or
+                      instance.member.status == MemberStatusField.STATUS_MEMBER_WITHOUT_WORKSPACE_KEY ):
             send_granted_access(instance);
 
     def all_for_user(self, user):
