@@ -46,10 +46,12 @@ class WorkspaceVersionTest(AssertionsMixin,  TransactionTestCase):
         # assert user has been stored with version
         self.assertEqual(versions[0].created_by.id, user1.get('id'));
 
-
-
         # compare revision data
         self.assert_dict(versions[0].revert_data, {})
+
+        # assert related id
+        self.assertEqual(versions[0].versioned_related_type.model, 'workspace')
+        self.assertEqual(versions[0].versioned_related_id, workspace.get('id'))
 
     def test_workspace_020_update(self):
         user1, user1token,  workspace = list(self.create_workspace())
@@ -97,6 +99,10 @@ class WorkspaceVersionTest(AssertionsMixin,  TransactionTestCase):
             'description': 'added_workspace_description'
         })
 
+        # assert related id
+        self.assertEqual(versions[0].versioned_related_type.model, 'workspace')
+        self.assertEqual(versions[0].versioned_related_id, workspace.get('id'))
+
     def test_workspace_030_delete(self):
         user1, user1token,  workspace = list(self.create_workspace())
 
@@ -125,6 +131,9 @@ class WorkspaceVersionTest(AssertionsMixin,  TransactionTestCase):
         # compare revision data
         self.assert_dict(versions[0].revert_data, {'deleted_at' : None})
 
+        # assert related id
+        self.assertEqual(versions[0].versioned_related_type.model, 'workspace')
+        self.assertEqual(versions[0].versioned_related_id, workspace.get('id'))
 
 def workspace_version_suite():
     suite = TestSuite()

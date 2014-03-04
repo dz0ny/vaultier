@@ -55,7 +55,7 @@ class CardVersionTest(AssertionsMixin, TransactionTestCase):
         # compare version
         self.assert_model(versions[0], {
             'versioned_id': card.get('id'),
-            'versioned_parent_id': workspace.get('id'),
+            'versioned_related_id': workspace.get('id'),
             'action_id': ACTION_CREATED
         })
 
@@ -64,6 +64,10 @@ class CardVersionTest(AssertionsMixin, TransactionTestCase):
 
         # assert user has been stored with version
         self.assertEqual(versions[0].created_by.id, user1.get('id'));
+
+        # assert related id
+        self.assertEqual(versions[0].versioned_related_type.model, 'card')
+        self.assertEqual(versions[0].versioned_related_id, card.get('id'))
 
 
     def test_card_020_update(self):
@@ -113,6 +117,10 @@ class CardVersionTest(AssertionsMixin, TransactionTestCase):
             'description': 'added_card_description'
         })
 
+        # assert related id
+        self.assertEqual(versions[0].versioned_related_type.model, 'card')
+        self.assertEqual(versions[0].versioned_related_id, card.get('id'))
+
     def test_card_030_delete(self):
         user1, user1token, workspace, vault, card = list(self.create_card())
 
@@ -140,6 +148,10 @@ class CardVersionTest(AssertionsMixin, TransactionTestCase):
 
         # compare revision data
         self.assert_dict(versions[0].revert_data, {'deleted_at' : None})
+
+        # assert related id
+        self.assertEqual(versions[0].versioned_related_type.model, 'vault')
+        self.assertEqual(versions[0].versioned_related_id, vault.get('id'))
 
 
     def test_card_040_move(self):
@@ -184,12 +196,12 @@ class CardVersionTest(AssertionsMixin, TransactionTestCase):
             action_id=ACTION_MOVED
         )
 
-        # check if versioned parent was also changed
-        self.assert_model(versions[0], {'versioned_parent_id' : second_vault.get('id') })
-
         # compare revision data
         self.assert_dict(versions[0].revert_data, {'vault_id' : vault.get('id')})
 
+        # assert related id
+        self.assertEqual(versions[0].versioned_related_type.model, 'card')
+        self.assertEqual(versions[0].versioned_related_id, card.get('id'))
 
 
 def card_version_suite():

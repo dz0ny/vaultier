@@ -21,8 +21,8 @@ class Migration(SchemaMigration):
             ('revert_fields', self.gf('jsonfield.fields.JSONField')()),
             ('versioned_type', self.gf('django.db.models.fields.related.ForeignKey')(related_name='version_versioned', to=orm['contenttypes.ContentType'])),
             ('versioned_id', self.gf('django.db.models.fields.PositiveIntegerField')()),
-            ('versioned_parent_type', self.gf('django.db.models.fields.related.ForeignKey')(related_name='version_versioned_parent', null=True, to=orm['contenttypes.ContentType'])),
-            ('versioned_parent_id', self.gf('django.db.models.fields.PositiveIntegerField')(null=True)),
+            ('versioned_related_type', self.gf('django.db.models.fields.related.ForeignKey')(related_name='version_versioned_related', null=True, to=orm['contenttypes.ContentType'])),
+            ('versioned_related_id', self.gf('django.db.models.fields.PositiveIntegerField')(null=True)),
             ('created_at', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
             ('updated_at', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
             ('created_by', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['vaultier.User'], null=True, on_delete=models.PROTECT)),
@@ -268,8 +268,8 @@ class Migration(SchemaMigration):
             'revert_fields': ('jsonfield.fields.JSONField', [], {}),
             'updated_at': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'versioned_id': ('django.db.models.fields.PositiveIntegerField', [], {}),
-            'versioned_parent_id': ('django.db.models.fields.PositiveIntegerField', [], {'null': 'True'}),
-            'versioned_parent_type': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'version_versioned_parent'", 'null': 'True', 'to': u"orm['contenttypes.ContentType']"}),
+            'versioned_related_id': ('django.db.models.fields.PositiveIntegerField', [], {'null': 'True'}),
+            'versioned_related_type': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'version_versioned_related'", 'null': 'True', 'to': u"orm['contenttypes.ContentType']"}),
             'versioned_type': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'version_versioned'", 'to': u"orm['contenttypes.ContentType']"})
         },
         'vaultier.workspace': {

@@ -47,7 +47,7 @@ class VaultVersionTest(AssertionsMixin,  TransactionTestCase):
         # compare version
         self.assert_model(versions[0], {
             'versioned_id': vault.get('id'),
-            'versioned_parent_id': workspace.get('id'),
+            'versioned_related_id': workspace.get('id'),
             'action_id': ACTION_CREATED
         })
 
@@ -56,6 +56,11 @@ class VaultVersionTest(AssertionsMixin,  TransactionTestCase):
 
         # compare revision data
         self.assert_dict(versions[0].revert_data, {})
+
+        # assert related id
+        self.assertEqual(versions[0].versioned_related_type.model, 'vault')
+        self.assertEqual(versions[0].versioned_related_id, vault.get('id'))
+
 
     def test_vault_020_update(self):
         user1, user1token, workspace, vault = list(self.create_vault())
@@ -103,6 +108,10 @@ class VaultVersionTest(AssertionsMixin,  TransactionTestCase):
             'description': 'added_vault_description'
         })
 
+        # assert related id
+        self.assertEqual(versions[0].versioned_related_type.model, 'vault')
+        self.assertEqual(versions[0].versioned_related_id, vault.get('id'))
+
     def test_vault_030_delete(self):
         user1, user1token, workspace, vault = list(self.create_vault())
 
@@ -131,6 +140,9 @@ class VaultVersionTest(AssertionsMixin,  TransactionTestCase):
         # compare revision data
         self.assert_dict(versions[0].revert_data, {'deleted_at' : None})
 
+        # assert related id
+        self.assertEqual(versions[0].versioned_related_type.model, 'workspace')
+        self.assertEqual(versions[0].versioned_related_id, workspace.get('id'))
 
 def vault_version_suite():
     suite = TestSuite()

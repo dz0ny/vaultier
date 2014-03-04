@@ -71,8 +71,8 @@ class VersionManipulator(object):
     def determine_action_name(self):
         return self.action_name;
 
-    def determine_versioned_parent(self):
-        return self.version.versioned.get_tree_iterator().get_parent_object()
+    def determine_versioned_related(self):
+        return self.version.versioned
 
     def determine_action_id(self):
         return self.action_id
@@ -83,7 +83,7 @@ class VersionManipulator(object):
 
         self.version.action_name = self.determine_action_name()
         self.version.action_id = self.determine_action_id();
-        self.version.versioned_parent = self.determine_versioned_parent()
+        self.version.versioned_related = self.determine_versioned_related()
         self.version.created_by = version_context_manager.get_user()
 
     def get_diff(self, fields=None):
@@ -136,6 +136,9 @@ class ModelMovedManipulator(VersionManipulator):
     action_id = ACTION_MOVED
 
 
-class ModelDeletedManipulator(VersionManipulator):
+class ModelSoftDeletedManipulator(VersionManipulator):
     action_name = 'softdeleted'
     action_id = ACTION_SOFTDELETED
+
+    def determine_versioned_related(self):
+        return self.version.versioned.get_tree_iterator().get_parent_object()

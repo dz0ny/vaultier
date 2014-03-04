@@ -46,10 +46,10 @@ class VersionMixin(models.Model):
     versioned_id = PositiveIntegerField()
     versioned = GenericForeignKey('versioned_type', 'versioned_id')
 
-    # versioned_parent object relation
-    versioned_parent_type = models.ForeignKey(ContentType, related_name='version_versioned_parent', null=True)
-    versioned_parent_id = PositiveIntegerField(null=True)
-    versioned_parent = GenericForeignKey('versioned_parent_type', 'versioned_parent_id')
+    # versioned_related object relation
+    versioned_related_type = models.ForeignKey(ContentType, related_name='version_versioned_related', null=True)
+    versioned_related_id = PositiveIntegerField(null=True)
+    versioned_related = GenericForeignKey('versioned_related_type', 'versioned_related_id')
 
     # timestamp and created_by
     created_at = models.DateTimeField(auto_now_add=True)
