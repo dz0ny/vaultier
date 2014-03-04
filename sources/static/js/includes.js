@@ -162,6 +162,7 @@ $(document).ready(function () {
     ApplicationLoader.queueFile(STATIC_URL + 'tpl/Layout/Breadcrumbs.js');
     ApplicationLoader.queueFile(STATIC_URL + 'tpl/Layout/LayoutStandard.js');
     ApplicationLoader.queueFile(STATIC_URL + 'tpl/Layout/Confirm.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Layout/Footer.js');
 
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Layout/LayoutStandard.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Layout/SecurityBox.js');

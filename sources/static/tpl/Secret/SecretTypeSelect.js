@@ -18,7 +18,7 @@ function program3(depth0,data) {
 function program5(depth0,data) {
   
   
-  data.buffer.push("\r\n        <div class=\"list-item vlt-select-secret-item\">\r\n            <div class=\"vlt-visual\">\r\n                <div class=\"vlt-icon file\"></div>\r\n            </div>\r\n            <div class=\"vlt-desc\">\r\n                <h4>Secret file</h4>\r\n\r\n                <p class=\"help-block\">\r\n                    Store file up to 25KB filesize, you can also anotate file with username,\r\n                    password and note\r\n                </p>\r\n\r\n                <div class=\"clearfix\"></div>\r\n            </div>\r\n        </div>\r\n    ");
+  data.buffer.push("\r\n            <div class=\"list-item vlt-select-secret-item\">\r\n                <div class=\"vlt-visual\">\r\n                    <div class=\"vlt-icon file\"></div>\r\n                </div>\r\n                <div class=\"vlt-desc\">\r\n                    <h4>Secret file</h4>\r\n\r\n                    <p class=\"help-block\">\r\n                        Store file up to 25KB filesize, you can also anotate file with username,\r\n                        password and note\r\n                    </p>\r\n\r\n                    <div class=\"clearfix\"></div>\r\n                </div>\r\n            </div>\r\n        ");
   }
 
   data.buffer.push("<div class=\"vlt-create-secret col-md-10 col-md-offset-1\">\r\n\r\n    <h4>Please select type of secret you would like to create</h4>\r\n\r\n    ");
@@ -33,13 +33,13 @@ function program5(depth0,data) {
   options = {hash:{},inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0,depth0],types:["STRING","STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
   stack2 = ((stack1 = helpers['link-to'] || depth0['link-to']),stack1 ? stack1.call(depth0, "Secret.createSubmit", "note", options) : helperMissing.call(depth0, "link-to", "Secret.createSubmit", "note", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("\r\n\r\n    ");
+  data.buffer.push("\r\n\r\n    <div style=\"display: none\">\r\n        ");
   hashTypes = {};
   hashContexts = {};
   options = {hash:{},inverse:self.noop,fn:self.program(5, program5, data),contexts:[depth0,depth0],types:["STRING","STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
   stack2 = ((stack1 = helpers['link-to'] || depth0['link-to']),stack1 ? stack1.call(depth0, "Secret.createSubmit", "file", options) : helperMissing.call(depth0, "link-to", "Secret.createSubmit", "file", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("\r\n\r\n</div>\r\n<div class=\"clearfix\"></div>\r\n");
+  data.buffer.push("\r\n    </div>\r\n\r\n</div>\r\n<div class=\"clearfix\"></div>\r\n");
   return buffer;
   
 });

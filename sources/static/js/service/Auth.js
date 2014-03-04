@@ -102,6 +102,11 @@ Service.Auth = Ember.Object.extend({
      * @returns {Ember.RSVP.Promise}
      */
     login: function (email, privateKey, transitionAfterLogin) {
+        // ensure  email is not undefined
+        // lowercase email (btw: lowercase done also by server)
+        if (!email) {
+            email = ''
+        }
         email = email.toLowerCase();
 
         return this.promises.login(email, privateKey)

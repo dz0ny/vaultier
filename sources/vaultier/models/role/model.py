@@ -4,33 +4,40 @@ from django.db.models.manager import Manager
 from django.db.models.query_utils import Q
 from vaultier.models.acl.fields import AclLevelField
 from vaultier.models.card.model import Card
-from vaultier.models.object_reference import ObjectReference, ObjectReferenceTypeField
+from vaultier.models.member.fields import MemberStatusField
 from vaultier.models.role.fields import RoleLevelField
 from vaultier.models.vault.model import Vault
-from modelext.changes.changes import ChangesMixin
+from modelext.changes.changes import ChangesMixin, INSERT, post_change
+from vaultier.mailer.granted_access import send_granted_access
+from vaultier.models.object_reference import ObjectReference, ObjectReferenceTypeField
 
 
 class RoleManager(Manager):
+    def on_model(self, signal=None, sender=None, instance=None, event_type=None, **kwargs):
+        if event_type == INSERT and \
+                ( instance.member.status == MemberStatusField.STATUS_MEMBER or
+                      instance.member.status == MemberStatusField.STATUS_MEMBER_WITHOUT_WORKSPACE_KEY ):
+            send_granted_access(instance);
 
     def all_for_user(self, user):
         from vaultier.models.workspace.model import Workspace
 
         # all workspaces user has permission write
         workspaces = Workspace.objects.filter(
-            acl__level = AclLevelField.LEVEL_READ,
-            acl__user = user
+            acl__level=AclLevelField.LEVEL_READ,
+            acl__user=user
         ).distinct()
 
         # all vaults user has permission read
         vaults = Vault.objects.filter(
-            acl__level = AclLevelField.LEVEL_READ,
-            acl__user = user
+            acl__level=AclLevelField.LEVEL_READ,
+            acl__user=user
         ).distinct()
 
         # all cards user has permission read
         cards = Card.objects.filter(
-            acl__level = AclLevelField.LEVEL_READ,
-            acl__user = user
+            acl__level=AclLevelField.LEVEL_READ,
+            acl__user=user
         ).distinct()
 
 
@@ -65,8 +72,7 @@ class RoleManager(Manager):
             return existing
 
 
-class Role(ChangesMixin,ObjectReference,models.Model):
-
+class Role(ChangesMixin, ObjectReference, models.Model):
     class Meta:
         db_table = u'vaultier_role'
         app_label = 'vaultier'
@@ -88,3 +94,7 @@ class Role(ChangesMixin,ObjectReference,models.Model):
     def save(self, *args, **kwargs):
         self.compute_type()
         return super(Role, self).save(*args, **kwargs)
+
+
+def register_signals():
+    post_change.connect(Role.objects.on_model, sender=Role)

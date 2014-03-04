@@ -11,6 +11,8 @@ Vaultier.registerDI = function (app) {
     app.register('store:main', Vaultier.Client, {instantiate: false})
     app.inject('route', 'store', 'store:main');
     app.inject('controller', 'store', 'store:main');
+    //also there lazy loading does not work properly with ember initialize:
+    RESTless.set('client', Vaultier.Client);
 
     // service:errors
     app.register('service:errors', Service.Errors)

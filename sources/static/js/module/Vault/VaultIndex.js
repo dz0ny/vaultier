@@ -41,7 +41,6 @@ Vaultier.VaultRoute = Ember.Route.extend(
                                 this.transitionTo('Vaults.index', this.get('workspace'));
                             }.bind(this),
                             function (error) {
-                                card.rollback();
                                 $.notify('Oooups! Something went wrong.', 'error');
                             }.bind(this)
                         );
