@@ -1,5 +1,4 @@
 from django.core.exceptions import ValidationError
-from django.core.files.storage import default_storage
 from rest_framework.fields import FileField
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -7,10 +6,10 @@ from rest_framework.serializers import ModelSerializer
 from rest_framework.status import HTTP_405_METHOD_NOT_ALLOWED, HTTP_200_OK
 from rest_framework.viewsets import ModelViewSet
 from modelext.version.context import VersionContextAwareApiViewMixin
-from vaultier.api.secret.view import SecretSerializer, CanManageSecretPermission
+from vaultier.api.secret.view import CanManageSecretPermission
 from vaultier.api.user.view import RelatedUserSerializer
 from vaultier.auth.authentication import TokenAuthentication
-from vaultier.models import SecretBlob, Secret
+from vaultier.models import Secret
 
 
 class BlobDataField(FileField):

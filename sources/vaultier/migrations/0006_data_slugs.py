@@ -1,16 +1,18 @@
 # -*- coding: utf-8 -*-
 from south.v2 import DataMigration
+from vaultier.models.slug.model import Slug
+
 
 class Migration(DataMigration):
     def forwards(self, orm):
         from modelext.slugify.model import SlugMixin
 
         for workspace in orm.Workspace.objects.all():
-            orm.Slug.objects.create_slug_for_model(workspace)
+            Slug.objects.create_slug_for_model(workspace)
         for vault in orm.Vault.objects.all():
-            orm.Slug.objects.create_slug_for_model(vault)
+            Slug.objects.create_slug_for_model(vault)
         for card in orm.Card.objects.all():
-            orm.Slug.objects.create_slug_for_model(card)
+            Slug.objects.create_slug_for_model(card)
 
 
     def backwards(self, orm):

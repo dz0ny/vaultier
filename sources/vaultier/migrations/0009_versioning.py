@@ -8,6 +8,65 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
+        # Deleting model 'SecretBlob'
+        db.delete_table(u'vaultier_secret_blob')
+
+        # Adding model 'Version'
+        db.create_table(u'vaultier_version', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('action_id', self.gf('django.db.models.fields.PositiveIntegerField')(null=True)),
+            ('action_name', self.gf('django.db.models.fields.CharField')(max_length=16, null=True)),
+            ('manipulator_id', self.gf('modelext.version.model.VersionManipulatorIdField')(max_length=255)),
+            ('revert_data', self.gf('jsonfield.fields.JSONField')()),
+            ('revert_fields', self.gf('jsonfield.fields.JSONField')()),
+            ('versioned_type', self.gf('django.db.models.fields.related.ForeignKey')(related_name='version_versioned', to=orm['contenttypes.ContentType'])),
+            ('versioned_id', self.gf('django.db.models.fields.PositiveIntegerField')()),
+            ('versioned_parent_type', self.gf('django.db.models.fields.related.ForeignKey')(related_name='version_versioned_parent', null=True, to=orm['contenttypes.ContentType'])),
+            ('versioned_parent_id', self.gf('django.db.models.fields.PositiveIntegerField')(null=True)),
+            ('created_at', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
+            ('updated_at', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
+            ('created_by', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['vaultier.User'], null=True, on_delete=models.PROTECT)),
+        ))
+        db.send_create_signal('vaultier', ['Version'])
+
+        # Adding field 'Vault.deleted_at'
+        db.add_column(u'vaultier_vault', 'deleted_at',
+                      self.gf('django.db.models.fields.DateTimeField')(null=True),
+                      keep_default=False)
+
+        # Adding field 'Card.deleted_at'
+        db.add_column(u'vaultier_card', 'deleted_at',
+                      self.gf('django.db.models.fields.DateTimeField')(null=True),
+                      keep_default=False)
+
+        # Deleting field 'Secret.blob'
+        db.delete_column(u'vaultier_secret', 'blob_id')
+
+        # Adding field 'Secret.deleted_at'
+        db.add_column(u'vaultier_secret', 'deleted_at',
+                      self.gf('django.db.models.fields.DateTimeField')(null=True),
+                      keep_default=False)
+
+        # Adding field 'Secret.data_hash'
+        db.add_column(u'vaultier_secret', 'data_hash',
+                      self.gf('django.db.models.fields.CharField')(max_length=32, null=True, blank=True),
+                      keep_default=False)
+
+        # Adding field 'Secret.blob_data'
+        db.add_column(u'vaultier_secret', 'blob_data',
+                      self.gf('django.db.models.fields.files.FileField')(max_length=100, null=True, blank=True),
+                      keep_default=False)
+
+        # Adding field 'Secret.blob_meta'
+        db.add_column(u'vaultier_secret', 'blob_meta',
+                      self.gf('django.db.models.fields.TextField')(null=True, blank=True),
+                      keep_default=False)
+
+        # Adding field 'Secret.blob_hash'
+        db.add_column(u'vaultier_secret', 'blob_hash',
+                      self.gf('django.db.models.fields.CharField')(max_length=32, null=True, blank=True),
+                      keep_default=False)
+
         # Adding field 'Workspace.deleted_at'
         db.add_column(u'vaultier_workspace', 'deleted_at',
                       self.gf('django.db.models.fields.DateTimeField')(null=True),
@@ -15,6 +74,45 @@ class Migration(SchemaMigration):
 
 
     def backwards(self, orm):
+        # Adding model 'SecretBlob'
+        db.create_table(u'vaultier_secret_blob', (
+            ('created_at', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
+            ('updated_at', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
+            ('created_by', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['vaultier.User'], on_delete=models.PROTECT)),
+            ('data', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+        ))
+        db.send_create_signal('vaultier', ['SecretBlob'])
+
+        # Deleting model 'Version'
+        db.delete_table(u'vaultier_version')
+
+        # Deleting field 'Vault.deleted_at'
+        db.delete_column(u'vaultier_vault', 'deleted_at')
+
+        # Deleting field 'Card.deleted_at'
+        db.delete_column(u'vaultier_card', 'deleted_at')
+
+        # Adding field 'Secret.blob'
+        db.add_column(u'vaultier_secret', 'blob',
+                      self.gf('django.db.models.fields.related.OneToOneField')(to=orm['vaultier.SecretBlob'], unique=True, null=True, on_delete=models.SET_NULL, blank=True),
+                      keep_default=False)
+
+        # Deleting field 'Secret.deleted_at'
+        db.delete_column(u'vaultier_secret', 'deleted_at')
+
+        # Deleting field 'Secret.data_hash'
+        db.delete_column(u'vaultier_secret', 'data_hash')
+
+        # Deleting field 'Secret.blob_data'
+        db.delete_column(u'vaultier_secret', 'blob_data')
+
+        # Deleting field 'Secret.blob_meta'
+        db.delete_column(u'vaultier_secret', 'blob_meta')
+
+        # Deleting field 'Secret.blob_hash'
+        db.delete_column(u'vaultier_secret', 'blob_hash')
+
         # Deleting field 'Workspace.deleted_at'
         db.delete_column(u'vaultier_workspace', 'deleted_at')
 
@@ -92,22 +190,18 @@ class Migration(SchemaMigration):
         },
         'vaultier.secret': {
             'Meta': {'object_name': 'Secret'},
-            'blob': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['vaultier.SecretBlob']", 'unique': 'True', 'null': 'True', 'on_delete': 'models.SET_NULL', 'blank': 'True'}),
+            'blob_data': ('django.db.models.fields.files.FileField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
+            'blob_hash': ('django.db.models.fields.CharField', [], {'max_length': '32', 'null': 'True', 'blank': 'True'}),
+            'blob_meta': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'card': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['vaultier.Card']"}),
             'created_at': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'created_by': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['vaultier.User']", 'on_delete': 'models.PROTECT'}),
             'data': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            'data_hash': ('django.db.models.fields.CharField', [], {'max_length': '32', 'null': 'True', 'blank': 'True'}),
+            'deleted_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'type': ('vaultier.models.secret.fields.SecretTypeField', [], {}),
-            'updated_at': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'})
-        },
-        'vaultier.secretblob': {
-            'Meta': {'object_name': 'SecretBlob', 'db_table': "u'vaultier_secret_blob'"},
-            'created_at': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'created_by': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['vaultier.User']", 'on_delete': 'models.PROTECT'}),
-            'data': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'updated_at': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'})
         },
         'vaultier.slug': {
@@ -163,11 +257,10 @@ class Migration(SchemaMigration):
             'manipulator_id': ('modelext.version.model.VersionManipulatorIdField', [], {'max_length': '255'}),
             'revert_data': ('jsonfield.fields.JSONField', [], {}),
             'revert_fields': ('jsonfield.fields.JSONField', [], {}),
-            'revert_repr': ('django.db.models.fields.TextField', [], {}),
             'updated_at': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'versioned_id': ('django.db.models.fields.PositiveIntegerField', [], {}),
-            'versioned_parent_id': ('django.db.models.fields.PositiveIntegerField', [], {}),
-            'versioned_parent_type': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'version_versioned_parent'", 'to': u"orm['contenttypes.ContentType']"}),
+            'versioned_parent_id': ('django.db.models.fields.PositiveIntegerField', [], {'null': 'True'}),
+            'versioned_parent_type': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'version_versioned_parent'", 'null': 'True', 'to': u"orm['contenttypes.ContentType']"}),
             'versioned_type': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'version_versioned'", 'to': u"orm['contenttypes.ContentType']"})
         },
         'vaultier.workspace': {
