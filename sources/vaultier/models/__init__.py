@@ -28,6 +28,10 @@ slug_register_signals(Workspace)
 slug_register_signals(Vault)
 slug_register_signals(Card)
 
+#Role signals registration
+from vaultier.models.role import register_signals as role_register_signals
+role_register_signals()
+
 #Secret signals registration
 from vaultier.models.secret import register_signals as secret_register_signals
 secret_register_signals()

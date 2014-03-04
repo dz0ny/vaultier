@@ -1,0 +1,18 @@
+{% extends 'mailer/layout.html' %}
+
+{% block content %}
+
+  <h1>
+      You have been granted access to {{ type }} {%if name %}"{{name}}"{% endif %}
+  </h1>
+
+  <p>
+      Please use following url to access {{type}} :
+  </p>
+
+    <p>
+       <a href="{{ url }}">{{ url }}</a>
+    </p>
+
+  <p>Thanks, you rock!</p>
+{% endblock %}
