@@ -2,14 +2,19 @@ from django.db import models
 from django.db.models.deletion import PROTECT, CASCADE
 from django.db.models.manager import Manager
 from django.db.models.query_utils import Q
+from vaultier.mailer.granted_access import send_granted_access
 from vaultier.models.card import Card
-from vaultier.models.fields import AclLevelField, RoleLevelField
+from vaultier.models.fields import AclLevelField, RoleLevelField, MemberStatusField
 from vaultier.models.object_reference import ObjectReference, ObjectReferenceTypeField
 from vaultier.models.vault import Vault
-from vaultier.tools.changes import ChangesMixin
+from vaultier.tools.changes import ChangesMixin, post_change, INSERT
 
 
 class RoleManager(Manager):
+
+    def on_model(self, signal=None, sender=None, instance=None, event_type=None, **kwargs):
+        if event_type==INSERT and instance.member.status != MemberStatusField.STATUS_INVITED:
+            send_granted_access(instance);
 
     def all_for_user(self, user):
         from vaultier.models.workspace import Workspace
@@ -89,3 +94,6 @@ class Role(ChangesMixin,ObjectReference,models.Model):
     def save(self, *args, **kwargs):
         self.compute_type()
         return super(Role, self).save(*args, **kwargs)
+
+def register_signals():
+    post_change.connect(Role.objects.on_model, sender=Role)

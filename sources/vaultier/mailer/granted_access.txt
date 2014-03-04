@@ -1,0 +1,7 @@
+You have been granted access to {{ type }} {%if name %}"{{name}}"{% endif %}
+
+Please use following url to access {{type}} :
+
+{{ url }}
+
+Thanks, you rock!
