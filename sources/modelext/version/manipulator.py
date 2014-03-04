@@ -33,21 +33,21 @@ def register_manipulator_signal(version_cls=None,manipulator_id=None,condition=N
     if not condition:
         raise AttributeError('condition kwarg is required')
 
-    def callback(signal=None, sender=None, instance=None, event_type=None, saved_values=None, **kwargs):
+    def callback(signal=None, sender=None, instance=None, event_type=None, overwritten_values=None, **kwargs):
 
-        saved_values = condition.will_do_version(
+        overwritten_values = condition.will_do_version(
             signal=signal,
             sender=sender,
             instance=instance,
             event_type=event_type,
-            saved_values=saved_values,
+            overwritten_values=overwritten_values,
             **kwargs
         );
 
-        if (saved_values):
+        if (overwritten_values):
             version = version_cls(versioned=instance)
             manipulator = factory_manipulator(version, manipulator_id)
-            manipulator.store_state(saved_values, instance)
+            manipulator.store_state(overwritten_values, instance)
             manipulator.save()
 
     post_change.connect(callback, sender=condition.required_sender, weak=False)

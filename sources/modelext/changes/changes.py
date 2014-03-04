@@ -16,7 +16,7 @@ SOFT_DELETE = 40
 
 
 class ChangesMixin(object):
-    _saved_values = {}
+    _overwritten_values = {}
     _previous_values = {}
     _clean_values = {}
     _post_change_signal_disabled = 0
@@ -52,19 +52,18 @@ class ChangesMixin(object):
             dispatch_uid='django-changes-%s' % self.__class__.__name__
         )
 
-    def _compute_changed_field(self, current, previous):
+    def _compute_changed_fields(self, current, previous):
         result = {}
         for key in current.keys():
             if (previous.has_key(key) and previous[key] != current[key]):
                 result[key] = previous[key]
 
         return result
-        #return dict([(key, (was, current[key])) for key, was in previous.iteritems() if was != current[key]])
 
     def _save_state(self):
         self._previous_values = self._clean_values
         self._clean_values = self._current_values()
-        self._saved_values = self._compute_changed_field(self._clean_values, self._previous_values)
+        self._overwritten_values = self._compute_changed_fields(self._clean_values, self._previous_values)
 
     def _current_values(self):
         """
@@ -84,7 +83,7 @@ class ChangesMixin(object):
         return dict
 
     def _post_delete(self, **kwargs):
-        saved_values = self._current_values();
+        overwritten_values = self._current_values();
         self._save_state();
 
         if self._post_change_signal_disabled==0:
@@ -92,7 +91,7 @@ class ChangesMixin(object):
                 sender=self.__class__,
                 instance=self,
                 event_type=DELETE,
-                saved_values=saved_values,
+                overwritten_values=overwritten_values,
             )
 
     def _post_save(self, **kwargs):
@@ -109,14 +108,14 @@ class ChangesMixin(object):
                 sender=self.__class__,
                 instance=self,
                 event_type=event_type,
-                saved_values=self._saved_values,
+                overwritten_values=self._overwritten_values,
             )
 
     def dirty_values(self):
         return self._compute_changed_field(self._current_values(), self._clean_values)
 
-    def saved_values(self):
-        return self._saved_values
+    def overwritten_values(self):
+        return self._overwritten_values
 
     def previous_values(self):
         return self._previous_values

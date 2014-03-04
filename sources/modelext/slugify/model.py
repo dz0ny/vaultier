@@ -7,7 +7,7 @@ from modelext.slugify.slugify import unique_slugify
 
 
 class SlugManagerMixin(object):
-    def on_model(self, signal=None, sender=None, instance=None, event_type=None, saved_values=None, **kwargs):
+    def on_model(self, signal=None, sender=None, instance=None, event_type=None, overwritten_values=None, **kwargs):
         try:
             instance.set_post_change_signal_enabled(False)
 
@@ -16,7 +16,7 @@ class SlugManagerMixin(object):
                 self.create_slug_for_model(instance)
 
             # create slug when name of instance changed. Slugs are not deleted (permalink pattern)
-            if event_type == UPDATE and saved_values.has_key('name'):
+            if event_type == UPDATE and overwritten_values.has_key('name'):
                 self.create_slug_for_model(instance)
         finally:
             instance.set_post_change_signal_enabled(True)

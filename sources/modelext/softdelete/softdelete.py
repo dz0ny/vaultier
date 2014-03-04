@@ -35,7 +35,7 @@ class SoftDeleteMixin(models.Model):
                 sender=self.__class__,
                 instance=self,
                 event_type=SOFT_DELETE,
-                saved_values=self.saved_values()
+                overwritten_values=self.overwritten_values()
             )
 
 

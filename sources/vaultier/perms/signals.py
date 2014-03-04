@@ -14,20 +14,20 @@ def on_role_created(signal=None, sender=None, instance=None, event_type=None, **
         materializer.materialize(instance.get_object())
 
 # when role level is updated
-def on_role_level_updated(signal=None, sender=None, instance=None, event_type=None,saved_values=None, **kwargs):
-    if event_type == UPDATE and saved_values.has_key('level'):
+def on_role_level_updated(signal=None, sender=None, instance=None, event_type=None,overwritten_values=None, **kwargs):
+    if event_type == UPDATE and overwritten_values.has_key('level'):
         materializer = UpdateRoleLevelMaterializer(instance)
         materializer.materialize()
 
 # when member of role is updated
-def on_role_member_updated(signal=None, sender=None, instance=None, event_type=None,saved_values=None, **kwargs):
-    if event_type == UPDATE and saved_values.has_key('member') and instance.member.user:
+def on_role_member_updated(signal=None, sender=None, instance=None, event_type=None,overwritten_values=None, **kwargs):
+    if event_type == UPDATE and overwritten_values.has_key('member') and instance.member.user:
         materializer = UpdateRoleMemberMaterializer(instance)
         materializer.materialize()
 
 # when invited member becames regular member
-def on_member_is_regular(signal=None, sender=None, instance=None, event_type=None, saved_values=None, **kwargs):
-    if event_type == UPDATE and saved_values.has_key('user') and instance.user:
+def on_member_is_regular(signal=None, sender=None, instance=None, event_type=None, overwritten_values=None, **kwargs):
+    if event_type == UPDATE and overwritten_values.has_key('user') and instance.user:
         materializer = UpdateMemberUserMaterializer(instance)
         materializer.materialize()
 
@@ -44,13 +44,13 @@ def on_object_inserted(signal=None, sender=None, instance=None, event_type=None,
 
 
 # when object is moved (parent id is changed)
-def on_object_moved(signal=None, sender=None, instance=None, event_type=None,saved_values=None, **kwargs):
+def on_object_moved(signal=None, sender=None, instance=None, event_type=None,overwritten_values=None, **kwargs):
     if (event_type == UPDATE):
         materializer = None
 
-        if ( instance.__class__.__name__ == 'Card' and saved_values.has_key('vault')):
+        if ( instance.__class__.__name__ == 'Card' and overwritten_values.has_key('vault')):
             materializer = MovedObjectMaterializer(instance);
-        if (instance.__class__.__name__ == 'Secret' and saved_values.has_key('card')):
+        if (instance.__class__.__name__ == 'Secret' and overwritten_values.has_key('card')):
             materializer = MovedObjectMaterializer(instance.card);
 
         if materializer:

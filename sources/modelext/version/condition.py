@@ -6,7 +6,7 @@ class BasicCondition(object):
                         sender=None,
                         instance=None,
                         event_type=None,
-                        saved_values=None,
+                        overwritten_values=None,
                         **kwargs
     ):
         return version_context_manager.get_enabled()
@@ -27,7 +27,7 @@ class RequiredFieldEventCondition(BasicCondition):
                         sender=None,
                         instance=None,
                         event_type=None,
-                        saved_values=None,
+                        overwritten_values=None,
                         **kwargs
     ):
         basic = super(RequiredFieldEventCondition, self).will_do_version(
@@ -35,7 +35,7 @@ class RequiredFieldEventCondition(BasicCondition):
             sender=sender,
             instance=instance,
             event_type=event_type,
-            saved_values=saved_values,
+            overwritten_values=overwritten_values,
             **kwargs
         )
 
@@ -43,7 +43,7 @@ class RequiredFieldEventCondition(BasicCondition):
             and event_type == self.required_event \
             and sender == self.required_sender:
 
-            saved_keys = saved_values.keys()
+            saved_keys = overwritten_values.keys()
             do_save = False
             intersection = {}
             if self.required_fields:
@@ -52,11 +52,11 @@ class RequiredFieldEventCondition(BasicCondition):
                     # required fields specified, intersection only required fields
                     for saved_key in saved_keys:
                         if saved_key in self.required_fields:
-                            intersection[saved_key] = saved_values[saved_key]
+                            intersection[saved_key] = overwritten_values[saved_key]
             else:
                 # no required fields specifed, intersection is whole save state
                 do_save = True
-                intersection = saved_values
+                intersection = overwritten_values
 
             if do_save:
                 return intersection
