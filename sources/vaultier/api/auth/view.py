@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import serializers
 
-from vaultier.api import ApiException
+from vaultier.api.exceptions import CustomAPIException
 from vaultier.auth.authentication import TokenAuthentication
 from vaultier.models import Token
 
@@ -32,9 +32,9 @@ class AuthView(APIView):
                 else:
                     return Response({'result': False}, status=HTTP_403_FORBIDDEN)
             except Exception as e:
-                raise ApiException(exception=e)
+                raise CustomAPIException(exception=e)
 
-        raise ApiException(detail=serializer.errors)
+        raise CustomAPIException(detail=serializer.errors)
 
     def post(self, request):
         return self.auth(request)
@@ -50,7 +50,7 @@ class LogoutView(APIView):
             response.delete_cookie('sessionid', '/', '.')
             return response
         except Exception as e:
-            raise ApiException(exception=e)
+            raise CustomAPIException(exception=e)
 
     def post(self, request):
         return self.logout(request)

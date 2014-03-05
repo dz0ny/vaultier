@@ -3,8 +3,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import serializers
-from vaultier.api import ApiException
 from vaultier.api.card.view import CardSerializer
+from vaultier.api.exceptions import CustomAPIException
 from vaultier.api.vault.view  import VaultSerializer, RelatedVaultSerializer
 from vaultier.api.workspace.view import RelatedWorkspaceSerializer
 from vaultier.auth.authentication import TokenAuthentication
@@ -83,8 +83,8 @@ class SearchView(APIView):
                 return Response(data=results.data)
 
             except Exception as e:
-                raise ApiException(exception=e)
+                raise CustomAPIException(exception=e)
 
-        raise ApiException(detail=serializer.errors)
+        raise CustomAPIException(detail=serializer.errors)
 
 

@@ -39,6 +39,9 @@ class UserSerializer(ModelSerializer):
 
 
 class RelatedUserSerializer(UserSerializer):
+
+    read_only = True
+
     class Meta(UserSerializer.Meta):
         fields = ['id', 'nickname', 'email']
 
