@@ -1,5 +1,4 @@
 from django.contrib.contenttypes.models import ContentType
-from rest_framework.decorators import permission_classes
 from rest_framework.filters import DjangoFilterBackend
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
