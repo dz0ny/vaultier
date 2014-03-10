@@ -5,20 +5,16 @@ from rest_framework.status import HTTP_201_CREATED, HTTP_200_OK, HTTP_204_NO_CON
 from modelext.version.context import version_context_manager
 from vaultier.test.tools.auth.api import auth_api_call, register_api_call
 from vaultier.test.tools import format_response
-from vaultier.test.tools.vault.api import create_vault_api_call, delete_vault_api_call, list_vaults_api_call, retrieve_vault_api_call
+from vaultier.test.tools.vault.api import create_vault_api_call, delete_vault_api_call, list_vaults_api_call, retrieve_vault_api_call, update_vault_api_call
 from vaultier.test.tools.workspace.api import create_workspace_api_call
 
 
 class ApiVaultTest(TransactionTestCase):
 
-    def setUp(self):
-        version_context_manager.set_enabled(False)
-
-    def test_010_create_vault(self):
-
+    def create_vault(self):
         # create user
-        email = 'jan.misek@rclick.cz'
-        register_api_call(email=email, nickname='Misan').data
+        email = 'jan@rclick.cz'
+        user1 = register_api_call(email=email, nickname='Misan').data
         user1token = auth_api_call(email=email).data.get('token')
 
         # create workspace
@@ -31,19 +27,19 @@ class ApiVaultTest(TransactionTestCase):
             HTTP_201_CREATED,
             format_response(response)
         )
+        vault = response.data
+
+        return (user1, user1token, workspace, vault)
+
+
+    def setUp(self):
+        version_context_manager.set_enabled(False)
+
+    def test_010_create_vault(self):
+        self.create_vault()
 
     def test_020_delete_vault(self):
-
-        # create user
-        email = 'jan.misek@rclick.cz'
-        register_api_call(email=email, nickname='Misan').data
-        user1token = auth_api_call(email=email).data.get('token')
-
-        # create workspace
-        workspace = create_workspace_api_call(user1token, name='Workspace').data
-
-        # create vault
-        vault = create_vault_api_call(user1token, name="vault_in_workspace", workspace=workspace.get('id')).data
+        user1, user1token, workspace, vault = list(self.create_vault())
 
         #delete vault
         response = delete_vault_api_call(user1token, vault.get('id'))
@@ -54,17 +50,7 @@ class ApiVaultTest(TransactionTestCase):
         )
 
     def test_030_list_vault(self):
-
-        # create user
-        email = 'jan.misek@rclick.cz'
-        register_api_call(email=email, nickname='Misan').data
-        user1token = auth_api_call(email=email).data.get('token')
-
-        # create workspace
-        workspace = create_workspace_api_call(user1token, name='Workspace').data
-
-        #create vault
-        response = create_vault_api_call(user1token, name="vault_in_workspace", workspace=workspace.get('id'))
+        user1, user1token, workspace, vault = list(self.create_vault())
 
         #list vaults
         response = list_vaults_api_call(user1token, workspace=workspace.get('id'))
@@ -75,17 +61,7 @@ class ApiVaultTest(TransactionTestCase):
         )
 
     def test_040_retrieve_vault(self):
-
-        # create user
-        email = 'jan.misek@rclick.cz'
-        register_api_call(email=email, nickname='Misan').data
-        user1token = auth_api_call(email=email).data.get('token')
-
-        # create workspace
-        workspace = create_workspace_api_call(user1token, name='Workspace').data
-
-        #create vault
-        vault = create_vault_api_call(user1token, name="vault_in_workspace", workspace=workspace.get('id')).data
+        user1, user1token, workspace, vault = list(self.create_vault())
 
         #list vaults
         response = retrieve_vault_api_call(user1token, vault.get('id'))
@@ -94,6 +70,24 @@ class ApiVaultTest(TransactionTestCase):
             HTTP_200_OK,
             format_response(response)
         )
+
+
+    def test_050_move_vault_should_not_be_allowed(self):
+        user1, user1token, workspace, vault = list(self.create_vault())
+        response = update_vault_api_call(user1token, vault.get('id'), workspace=2, name="changed_name")
+        self.assertEqual(
+            response.status_code,
+            HTTP_200_OK,
+            format_response(response)
+        )
+
+        # workspace should be unchanged
+        self.assertEqual(
+            response.data.get('workspace'),
+            1,
+            format_response(response)
+        )
+
 
 
 def vault_suite():
