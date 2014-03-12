@@ -80,15 +80,39 @@ Vaultier.EncryptedModel.Mixin = Ember.Mixin.create({
         return map;
     },
 
+    areDecryptedDataDirty: function (decryptedData) {
+        var dataKeys = Ember.keys(decryptedData['data']);
+        var cleanDataKeys = Ember.keys(decryptedData['cleanData']);
+        if (dataKeys.length !== cleanDataKeys.length) {
+            return true;
+        }
+        for (var i = 0; i < dataKeys.length; i++) {
+            var key = dataKeys[i];
+            if (Ember.get(decryptedData, 'data.' + key) != Ember.get(decryptedData, 'cleanData.' + key)) {
+                return true;
+            }
+        }
+        return false;
+    },
 
-    setDecryptedData: function (encryptedField, data, isDirty) {
-        var data = data || {};
-        var isDirty = isDirty || false;
+    setDecryptedData: function (encryptedField, data, initial) {
         var key = getEncryptedDataKey(encryptedField);
-        this.set(key, {
+        var data = data || {};
+
+        var decryptedData = {
+            cleanData: data.cleanData || {},
             data: data,
-            isDirty: isDirty
-        })
+            isDirty: null
+        }
+
+        if (initial) {
+            decryptedData.cleanData = Ember.merge({}, data)
+            decryptedData.isDirty = false;
+        } else {
+            decryptedData['isDirty'] = this.areDecryptedDataDirty(decryptedData)
+        }
+
+        this.set(key, decryptedData)
     },
 
     clearDecryptedData: function () {
@@ -119,7 +143,7 @@ Vaultier.EncryptedModel.Mixin = Ember.Mixin.create({
         else {
             data = null
         }
-        this.setDecryptedData(encryptedField, data, false);
+        this.setDecryptedData(encryptedField, data, true);
     },
 
     decryptFields: function () {
@@ -159,7 +183,6 @@ Vaultier.EncryptedModel.Mixin = Ember.Mixin.create({
             if (e instanceof Service.WorkspaceKeyDecryptSoftError) {
                 var workspacekey = this.get('workspacekey');
                 workspacekey.one('keyTransfered', function () {
-                    console.log('retry');
                     decrypt();
                 });
             }
@@ -207,7 +230,7 @@ Vaultier.EncryptedModel.decryptedField = function (encryptedField, decryptedFiel
         // Setter
         else {
             Ember.set(data, 'data.' + key, value);
-            Ember.set(data, 'isDirty', true);
+            Ember.set(data, 'isDirty', this.areDecryptedDataDirty(data));
             this.set('isDirty', true);
             return this
         }
