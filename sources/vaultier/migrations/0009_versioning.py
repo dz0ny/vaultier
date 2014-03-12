@@ -47,29 +47,14 @@ class Migration(SchemaMigration):
                       self.gf('django.db.models.fields.DateTimeField')(null=True),
                       keep_default=False)
 
-        # Adding field 'Secret.data_checksum'
-        db.add_column(u'vaultier_secret', 'data_checksum',
-                      self.gf('django.db.models.fields.CharField')(max_length=32, null=True, blank=True),
-                      keep_default=False)
-
         # Adding field 'Secret.blob_data'
         db.add_column(u'vaultier_secret', 'blob_data',
                       self.gf('django.db.models.fields.files.FileField')(max_length=100, null=True, blank=True),
                       keep_default=False)
 
-        # Adding field 'Secret.blob_data_checksum'
-        db.add_column(u'vaultier_secret', 'blob_data_checksum',
-                      self.gf('django.db.models.fields.CharField')(max_length=32, null=True, blank=True),
-                      keep_default=False)
-
         # Adding field 'Secret.blob_meta'
         db.add_column(u'vaultier_secret', 'blob_meta',
                       self.gf('django.db.models.fields.TextField')(null=True, blank=True),
-                      keep_default=False)
-
-        # Adding field 'Secret.blob_meta_checksum'
-        db.add_column(u'vaultier_secret', 'blob_meta_checksum',
-                      self.gf('django.db.models.fields.CharField')(max_length=32, null=True, blank=True),
                       keep_default=False)
 
         # Adding field 'Workspace.deleted_at'
@@ -106,20 +91,11 @@ class Migration(SchemaMigration):
         # Deleting field 'Secret.deleted_at'
         db.delete_column(u'vaultier_secret', 'deleted_at')
 
-        # Deleting field 'Secret.data_checksum'
-        db.delete_column(u'vaultier_secret', 'data_checksum')
-
         # Deleting field 'Secret.blob_data'
         db.delete_column(u'vaultier_secret', 'blob_data')
 
-        # Deleting field 'Secret.blob_data_checksum'
-        db.delete_column(u'vaultier_secret', 'blob_data_checksum')
-
         # Deleting field 'Secret.blob_meta'
         db.delete_column(u'vaultier_secret', 'blob_meta')
-
-        # Deleting field 'Secret.blob_meta_checksum'
-        db.delete_column(u'vaultier_secret', 'blob_meta_checksum')
 
         # Deleting field 'Workspace.deleted_at'
         db.delete_column(u'vaultier_workspace', 'deleted_at')
@@ -199,14 +175,11 @@ class Migration(SchemaMigration):
         'vaultier.secret': {
             'Meta': {'object_name': 'Secret'},
             'blob_data': ('django.db.models.fields.files.FileField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
-            'blob_data_checksum': ('django.db.models.fields.CharField', [], {'max_length': '32', 'null': 'True', 'blank': 'True'}),
             'blob_meta': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'blob_meta_checksum': ('django.db.models.fields.CharField', [], {'max_length': '32', 'null': 'True', 'blank': 'True'}),
             'card': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['vaultier.Card']"}),
             'created_at': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'created_by': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['vaultier.User']", 'on_delete': 'models.PROTECT'}),
             'data': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'data_checksum': ('django.db.models.fields.CharField', [], {'max_length': '32', 'null': 'True', 'blank': 'True'}),
             'deleted_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '255', 'null': 'True', 'blank': 'True'}),

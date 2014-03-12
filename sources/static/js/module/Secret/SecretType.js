@@ -20,33 +20,14 @@ Vaultier.SecretTypeFileView = Ember.View.extend({
                     } else {
                         // Success
                         input.closest('.form-group').removeClass('has-error');
+                        controller.set('content.blob.filedata', data);
+                        controller.set('content.blob.filename', files[0].name);
+                        controller.set('content.blob.filesize', files[0].size);
+                        controller.set('content.blob.filetype', files[0].type);
 
-                        controller.set('content.filename', files[0].name);
-                        controller.set('content.blob.plainData', data);
-                        controller.set('content.blob.plainMeta.filename', files[0].name);
-                        controller.set('content.blob.plainMeta.filesize', files[0].size);
-                        controller.set('content.blob.plainMeta.filetype', files[0].type);
+                        $(el).find('.vlt-filename').attr('value', files[0].name);
+
                     }
-
-
-// testing
-//                    var byteArray = []
-//                    var hex = []
-//                    for (var offset = 0; offset < data.length; offset++) {
-//                        byteArray[offset] = data.charCodeAt(offset);
-//                        hex[offset] = byteArray[offset].toString(16)
-//                    }
-//                    console.log(byteArray);
-//                    console.log(hex);
-//
-//                    var byteArray = new Uint8Array(data.length);
-//                    for (var i = 0; i < data.length; i++) {
-//                        byteArray[i] = data.charCodeAt(i) & 0xff;
-//                    }
-//                    var blob = new Blob([byteArray.buffer], {type: 'application/octet-binary'});
-//                    saveAs(blob, name);
-
-
                 }
             })
         })
