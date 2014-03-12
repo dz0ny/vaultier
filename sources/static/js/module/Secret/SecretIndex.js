@@ -46,9 +46,9 @@ Vaultier.SecretIndexRoute = Ember.Route.extend({
                     ApplicationLoader.hideLoader();
                 })
                 .then(function () {
-                    var data = secret.get('blob.plainData');
-                    var type = secret.get('blob.plainMeta.filetype');
-                    var name = secret.get('blob.plainMeta.filename');
+                    var data = secret.get('blob.filedata');
+                    var type = secret.get('blob.filetype');
+                    var name = secret.get('blob.filename');
 
                     var byteArray = new Uint8Array(data.length);
                     for (var i = 0; i < data.length; i++) {

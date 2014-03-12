@@ -89,12 +89,12 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   data.buffer.push(escapeExpression(((stack1 = helpers['bind-attr'] || depth0['bind-attr']),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "bind-attr", options))));
   data.buffer.push(">\r\n        <label for=\"secret-file\" class=\"control-label\">Secret file</label>\r\n\r\n        <div class=\"input-group\">\r\n            <input ");
   hashContexts = {'value': depth0};
-  hashTypes = {'value': "ID"};
+  hashTypes = {'value': "STRING"};
   options = {hash:{
     'value': ("content.filename")
   },contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
   data.buffer.push(escapeExpression(((stack1 = helpers['bind-attr'] || depth0['bind-attr']),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "bind-attr", options))));
-  data.buffer.push("\r\n                    type=\"text\"\r\n                    class=\"form-control\"\r\n                    readonly=\"\"\r\n                    placeholder=\"Select your key\">\r\n\r\n                        <span class=\"vlt-secret-type-file input-group-btn btn btn-default btn-file\">\r\n                            Browse <input type=\"file\">\r\n                        </span>\r\n        </div>\r\n        <div class=\"help-block\">\r\n             Store file up to 25KB filesize\r\n        </div>\r\n    </div>\r\n\r\n\r\n    <div class=\"form-group\" ");
+  data.buffer.push("\r\n                    type=\"text\"\r\n                    class=\"form-control vlt-filename\"\r\n                    readonly=\"\"\r\n                    placeholder=\"Select your key\">\r\n\r\n            <span class=\"vlt-secret-type-file input-group-btn btn btn-default btn-file\">\r\n                Browse <input type=\"file\">\r\n            </span>\r\n\r\n        </div>\r\n        <div class=\"help-block\">\r\n            Store file up to 25KB filesize\r\n        </div>\r\n    </div>\r\n\r\n\r\n    <div class=\"form-group\" ");
   hashContexts = {'class': depth0};
   hashTypes = {'class': "STRING"};
   options = {hash:{

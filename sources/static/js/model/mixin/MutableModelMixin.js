@@ -15,7 +15,7 @@ Vaultier.MutableModel.Mixin = Ember.Mixin.create({
             throw new Error('mutableModelMapping has to be specified ')
         }
 
-        this.addObserver(typeField, this, function() {
+        this.addObserver(typeField, this, function () {
             this.applyMutableMixin(this.getMutableType());
         })
 
@@ -23,7 +23,7 @@ Vaultier.MutableModel.Mixin = Ember.Mixin.create({
 
     getMutableType: function () {
         var typeField = this.get('mutableModelTypeField');
-         return this.get(typeField);
+        return this.get(typeField);
     },
 
     getMutableClass: function (type) {
@@ -54,6 +54,11 @@ Vaultier.MutableModel.Mixin = Ember.Mixin.create({
 
 
         cls.apply(this);
+        cls.mixins.forEach(function (mixin) {
+            if (mixin.properties.init) {
+                mixin.properties.init.apply(this);
+            }
+        }.bind(this));
         this.set('mutableMixinApplied', clsName);
 
     }
