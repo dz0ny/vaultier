@@ -10,7 +10,6 @@ from vaultier.api.secret.view import SecretViewSet
 from vaultier.api.secret_blob.view import SecretBlobViewSet
 from vaultier.api.user.view import UserViewSet
 from vaultier.api.vault.view import VaultViewSet
-from vaultier.api.version.view import VersionViewSet
 from vaultier.api.workspace.view import WorkspaceViewSet
 from vaultier.api.workspace_key.view import WorkspaceKeyViewSet
 from vaultier.api.invitation.view import InvitationViewSet
@@ -27,7 +26,6 @@ router.register(r'workspace_keys', WorkspaceKeyViewSet, base_name='workspace_key
 router.register(r'members', MemberViewSet, base_name='member')
 router.register(r'invitations', InvitationViewSet, base_name='invitation')
 router.register(r'roles', RoleViewSet, base_name='role')
-router.register(r'versions', VersionViewSet, base_name='version')
 
 urlpatterns = router.urls
 

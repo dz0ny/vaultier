@@ -82,9 +82,6 @@ var router = Vaultier.Router.map(function () {
                     this.route('memberIndex', { path: '/team'});
                     this.route('memberInvite', { path: '/team/invite'});
 
-                    // versions
-                    this.route('historyIndex', { path: '/history'});
-
                     /************************************************************
                      * Cards
                      ************************************************************/
