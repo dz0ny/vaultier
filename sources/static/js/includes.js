@@ -138,6 +138,8 @@ $(document).ready(function () {
 
     /********************** model **/
     ApplicationLoader.queueFile(STATIC_URL + 'js/model/mixin/CreatedUpdatedMixin.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'js/model/mixin/MutableModelMixin.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'js/model/mixin/EncryptedModelMixin.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/model/mixin/RollbackMixin.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/model/adapter/Adapter.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/model/User.js');
@@ -228,6 +230,8 @@ $(document).ready(function () {
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Vault/VaultIndex.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Vault/VaultEdit.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Vault/VaultMember.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'js/module/Vault/VaultHistory.js');
+
 
     /********************** Card **/
     ApplicationLoader.queueFile(STATIC_URL + 'tpl/Card/CardsIndex.js');

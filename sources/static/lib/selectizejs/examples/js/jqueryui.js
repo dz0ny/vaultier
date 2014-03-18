@@ -6897,7 +6897,7 @@ $.widget( "ui.autocomplete", {
 			.insertBefore( this.element );
 
 		// turning off autocomplete prevents the browser from remembering the
-		// value when navigating through history, so we re-enable autocomplete
+		// value when navigating through version, so we re-enable autocomplete
 		// if the page is unloaded before the widget is destroyed. #7790
 		this._on( this.window, {
 			beforeunload: function() {
@@ -13352,7 +13352,7 @@ $.widget( "ui.spinner", {
 		this._refresh();
 
 		// turning off autocomplete prevents the browser from remembering the
-		// value when navigating through history, so we re-enable autocomplete
+		// value when navigating through version, so we re-enable autocomplete
 		// if the page is unloaded before the widget is destroyed. #7790
 		this._on( this.window, {
 			beforeunload: function() {

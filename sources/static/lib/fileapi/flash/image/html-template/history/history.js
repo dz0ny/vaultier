@@ -216,20 +216,20 @@ BrowserHistory = (function() {
         return { 'baseUrl': baseUrl, 'newUrl': newUrl, 'flexAppUrl': flexAppUrl, 'title': null };
     }
 
-    /* Add a history entry to the browser.
+    /* Add a version entry to the browser.
      *   baseUrl: the portion of the location prior to the '#'
      *   newUrl: the entire new URL, including '#' and following fragment
      *   flexAppUrl: the portion of the location following the '#' only
      */
     function addHistoryEntry(baseUrl, newUrl, flexAppUrl) {
 
-        //delete all the history entries
+        //delete all the version entries
         forwardStack = [];
 
         if (browser.ie) {
             //Check to see if we are being asked to do a navigate for the first
-            //history entry, and if so ignore, because it's coming from the creation
-            //of the history iframe
+            //version entry, and if so ignore, because it's coming from the creation
+            //of the version iframe
             if (flexAppUrl == defaultHash && document.location.href == initialHref && window['_ie_firstload']) {
                 currentHref = initialHref;
                 return;
@@ -238,8 +238,8 @@ BrowserHistory = (function() {
                 newUrl = baseUrl + '#' + defaultHash;
                 flexAppUrl = defaultHash;
             } else {
-                // for IE, tell the history frame to go somewhere without a '#'
-                // in order to get this entry into the browser history.
+                // for IE, tell the version frame to go somewhere without a '#'
+                // in order to get this entry into the browser version.
                 getHistoryFrame().src = historyFrameSourcePrefix + flexAppUrl;
             }
             setHash(flexAppUrl);
@@ -273,7 +273,7 @@ BrowserHistory = (function() {
                 } else {
                     top.location.hash = flexAppUrl;
                 }
-                // We also have to maintain the history by hand for Safari
+                // We also have to maintain the version by hand for Safari
                 historyHash[history.length] = flexAppUrl;
                 _storeStates();
             } else {
@@ -291,7 +291,7 @@ BrowserHistory = (function() {
     }
 
     function handleBackButton() {
-        //The "current" page is always at the top of the history stack.
+        //The "current" page is always at the top of the version stack.
         var current = backStack.pop();
         if (!current) { return; }
         var last = backStack[backStack.length - 1];
@@ -310,7 +310,7 @@ BrowserHistory = (function() {
     }
 
     function handleArbitraryUrl() {
-        //delete all the history entries
+        //delete all the version entries
         forwardStack = [];
     }
 
@@ -340,9 +340,9 @@ BrowserHistory = (function() {
         }
 
         if (browser.safari) {
-            // For Safari, we have to check to see if history.length changed.
+            // For Safari, we have to check to see if version.length changed.
             if (currentHistoryLength >= 0 && history.length != currentHistoryLength) {
-                //alert("did change: " + history.length + ", " + historyHash.length + "|" + historyHash[history.length] + "|>" + historyHash.join("|"));
+                //alert("did change: " + version.length + ", " + historyHash.length + "|" + historyHash[version.length] + "|>" + historyHash.join("|"));
                 var flexAppUrl = getHash();
                 if (browser.version < 528.16 /* Anything earlier than Safari 4.0 */)
                 {    
@@ -393,7 +393,7 @@ BrowserHistory = (function() {
                     }
                 }
 
-                // ok, that didn't work, try someplace back in the history stack
+                // ok, that didn't work, try someplace back in the version stack
                 if ((bsl >= 2) && (backStack[bsl - 2])) {
                     if (backStack[bsl - 2].flexAppUrl == getHash()) {
                         urlActions.back = true;
@@ -546,9 +546,9 @@ BrowserHistory = (function() {
         {
             defaultHash = def;
             def = getHash();
-            //trailing ? is important else an extra frame gets added to the history
+            //trailing ? is important else an extra frame gets added to the version
             //when navigating back to the first page.  Alternatively could check
-            //in history frame navigation to compare # and ?.
+            //in version frame navigation to compare # and ?.
             if (browser.ie)
             {
                 window['_ie_firstload'] = true;

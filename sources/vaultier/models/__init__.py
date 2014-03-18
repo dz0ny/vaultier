@@ -1,37 +1,14 @@
-from user import User
-from vaultier.models.secret_blob import SecretBlob
-from workspace import Workspace
-from secret import Secret
-from role import Role
-from token import Token
-from member import Member
-from vault import Vault
-from card import Card
-from acl import Acl
+from vaultier.models.user.model import User
+from vaultier.models.slug.model import Slug
+from vaultier.models.workspace.model import Workspace
+from vaultier.models.vault.model import Vault
+from vaultier.models.card.model import Card
+from vaultier.models.secret.model import Secret
+from vaultier.models.role.model import Role
+from vaultier.models.token.model import Token
+from vaultier.models.member.model import Member
+from vaultier.models.acl.model import Acl
+from version.model import Version
 
-# South introspections
-from south.modelsinspector import add_introspection_rules
-add_introspection_rules([], ["^vaultier\.models\.fields\.AclDirectionField"])
-add_introspection_rules([], ["^vaultier\.models\.fields\.MemberStatusField"])
-add_introspection_rules([], ["^vaultier\.models\.fields\.RoleLevelField"])
-add_introspection_rules([], ["^vaultier\.models\.fields\.SecretTypeField"])
-add_introspection_rules([], ["^vaultier\.models\.fields\.LowerCaseCharField"])
-add_introspection_rules([], ["^vaultier\.models\.object_reference\.ObjectReferenceTypeField"])
-
-# Perms signals registration
-from vaultier.perms.signals import register_signals as perm_register_signals
-perm_register_signals()
-
-#Slugs signals registration
-from vaultier.models.slug import register_signals as slug_register_signals
-slug_register_signals(Workspace)
-slug_register_signals(Vault)
-slug_register_signals(Card)
-
-#Role signals registration
-from vaultier.models.role import register_signals as role_register_signals
-role_register_signals()
-
-#Secret signals registration
-from vaultier.models.secret import register_signals as secret_register_signals
-secret_register_signals()
+import migrations
+import signals

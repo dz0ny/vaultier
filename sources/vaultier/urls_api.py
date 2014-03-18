@@ -1,18 +1,18 @@
 from django.conf.urls import patterns, url
 
 from rest_framework import routers
-from vaultier.api.auth import AuthView, LogoutView
-from vaultier.api.card import CardViewSet
-from vaultier.api.member import MemberViewSet
-from vaultier.api.role import RoleViewSet
-from vaultier.api.search import SearchView
-from vaultier.api.secret import SecretViewSet
-from vaultier.api.secret_blob import SecretBlobViewSet
-from vaultier.api.user import UserViewSet
-from vaultier.api.vault import VaultViewSet
-from vaultier.api.workspace import WorkspaceViewSet
-from vaultier.api.workspace_key import WorkspaceKeyViewSet
-from vaultier.api.invitation import InvitationViewSet
+from vaultier.api.auth.view import AuthView, LogoutView
+from vaultier.api.card.view import CardViewSet
+from vaultier.api.member.view import MemberViewSet
+from vaultier.api.role.view import RoleViewSet
+from vaultier.api.search.view import SearchView
+from vaultier.api.secret.view import SecretViewSet
+from vaultier.api.secret_blob.view import SecretBlobViewSet
+from vaultier.api.user.view import UserViewSet
+from vaultier.api.vault.view import VaultViewSet
+from vaultier.api.workspace.view import WorkspaceViewSet
+from vaultier.api.workspace_key.view import WorkspaceKeyViewSet
+from vaultier.api.invitation.view import InvitationViewSet
 
 
 router = routers.DefaultRouter()

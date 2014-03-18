@@ -32426,7 +32426,7 @@ Ember.Route = Ember.Object.extend(Ember.ActionHandler, {
 
   /**
     Transition into another route while replacing the current URL, if possible.
-    This will replace the current history entry instead of adding a new one.
+    This will replace the current version entry instead of adding a new one.
     Beside that, it is identical to `transitionTo` in all other respects. See
     'transitionTo' for additional information regarding multiple models.
 
@@ -34835,7 +34835,7 @@ Ember.ControllerMixin.reopen({
 
   /**
     Transition into another route while replacing the current URL, if possible.
-    This will replace the current history entry instead of adding a new one. 
+    This will replace the current version entry instead of adding a new one.
     Beside that, it is identical to `transitionToRoute` in all other respects.
 
     ```javascript
@@ -35088,7 +35088,7 @@ var get = Ember.get, set = Ember.set;
   Ember.Location returns an instance of the correct implementation of
   the `location` API.
 
-  You can pass it a `implementation` ('hash', 'history', 'none') to force a
+  You can pass it a `implementation` ('hash', 'version', 'none') to force a
   particular implementation.
 
   @class Location
@@ -35104,7 +35104,7 @@ Ember.Location = {
 
    ```javascript
    var hashLocation = Ember.Location.create({implementation: 'hash'});
-   var historyLocation = Ember.Location.create({implementation: 'history'});
+   var historyLocation = Ember.Location.create({implementation: 'version'});
    var noneLocation = Ember.Location.create({implementation: 'none'});
    ```
 
@@ -35130,10 +35130,10 @@ Ember.Location = {
    Example
 
    ```javascript
-   Ember.Location.registerImplementation('history', Ember.HistoryLocation);
+   Ember.Location.registerImplementation('version', Ember.HistoryLocation);
 
    App.Router.reopen({
-     location: 'history'
+     location: 'version'
    });
    ```
 
@@ -35306,7 +35306,7 @@ Ember.HashLocation = Ember.Object.extend({
     @private
 
     Uses location.replace to update the url without a page reload
-    or history modification.
+    or version modification.
 
     @method replaceURL
     @param path {String}
@@ -35389,7 +35389,7 @@ var supportsHistoryState = window.history && 'state' in window.history;
 
 /**
   Ember.HistoryLocation implements the location API using the browser's
-  history.pushState API.
+  version.pushState API.
 
   @class HistoryLocation
   @namespace Ember
@@ -35445,7 +35445,7 @@ Ember.HistoryLocation = Ember.Object.extend({
   /**
     @private
 
-    Uses `history.pushState` to update the url without a page reload.
+    Uses `version.pushState` to update the url without a page reload.
 
     @method setURL
     @param path {String}
@@ -35462,8 +35462,8 @@ Ember.HistoryLocation = Ember.Object.extend({
   /**
     @private
 
-    Uses `history.replaceState` to update the url without a page reload
-    or history modification.
+    Uses `version.replaceState` to update the url without a page reload
+    or version modification.
 
     @method replaceURL
     @param path {String}
@@ -35480,7 +35480,7 @@ Ember.HistoryLocation = Ember.Object.extend({
   /**
    @private
 
-   Get the current `history.state`
+   Get the current `version.state`
    Polyfill checks for native browser support and falls back to retrieving
    from a private _historyState variable
 
@@ -35504,7 +35504,7 @@ Ember.HistoryLocation = Ember.Object.extend({
 
     get(this, 'history').pushState(state, null, path);
 
-    // store state if browser doesn't support `history.state`
+    // store state if browser doesn't support `version.state`
     if (!supportsHistoryState) {
       this._historyState = state;
     }
@@ -35526,7 +35526,7 @@ Ember.HistoryLocation = Ember.Object.extend({
 
     get(this, 'history').replaceState(state, null, path);
 
-    // store state if browser doesn't support `history.state`
+    // store state if browser doesn't support `version.state`
     if (!supportsHistoryState) {
       this._historyState = state;
     }
@@ -35539,7 +35539,7 @@ Ember.HistoryLocation = Ember.Object.extend({
     @private
 
     Register a callback to be invoked whenever the browser
-    history changes, including using forward and back buttons.
+    version changes, including using forward and back buttons.
 
     @method onUpdateURL
     @param callback {Function}

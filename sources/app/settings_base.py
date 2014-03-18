@@ -57,7 +57,7 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
-MEDIA_ROOT = ''
+MEDIA_ROOT = PROJECT_ROOT+'/media/'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -140,6 +140,13 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
        'rest_framework.permissions.AllowAny',
     ),
+
+    'EXCEPTION_HANDLER': 'rest_framework.views.exception_handler',
+
+    'TEST_REQUEST_RENDERER_CLASSES': (
+        'rest_framework.renderers.MultiPartRenderer',
+        'rest_framework.renderers.JSONRenderer',
+    ),
 }
 
 #
@@ -162,6 +169,7 @@ INSTALLED_APPS = (
     'south',
     'rest_framework',
     'django_extensions',
+    'modelext',
 )
 
 # A sample logging configuration. The only tangible logging

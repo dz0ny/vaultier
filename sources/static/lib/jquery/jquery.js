@@ -5746,7 +5746,7 @@ jQuery.extend({
 			}
 		}
 
-		// Preserve script evaluation history
+		// Preserve script evaluation version
 		destElements = getAll( clone, "script" );
 		if ( destElements.length > 0 ) {
 			setGlobalEval( destElements, !inPage && getAll( elem, "script" ) );
@@ -5824,7 +5824,7 @@ jQuery.extend({
 			// Append to fragment
 			tmp = getAll( fragment.appendChild( elem ), "script" );
 
-			// Preserve script evaluation history
+			// Preserve script evaluation version
 			if ( contains ) {
 				setGlobalEval( tmp );
 			}

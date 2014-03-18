@@ -5,13 +5,16 @@ from base64 import b64decode
 from django.contrib.auth.backends import ModelBackend
 from rest_framework.authentication import BaseAuthentication
 from rest_framework.exceptions import AuthenticationFailed
-from vaultier.models import Token, User
+
 
 class TokenAuthentication(BaseAuthentication):
     def authenticate(self, request):
+
+        from vaultier.models import Token
+
         token = request.META.get('HTTP_X_VAULTIER_TOKEN')
 
-        if token == None or token == '' or token=='null':
+        if token == None or token == '' or token == 'null':
             return (None)
 
         try:
@@ -26,7 +29,6 @@ class TokenAuthentication(BaseAuthentication):
 
 
 class Backend(ModelBackend):
-
     @classmethod
     def verify(self, public_key, content, signature):
         signature = b64decode(signature)
@@ -45,6 +47,8 @@ class Backend(ModelBackend):
         return sig.encode('base64')
 
     def authenticate(self, email=None, signature=None):
+        from vaultier.models import Token, User
+
         try:
             user = User.objects.get(email=email.lower())
         except User.DoesNotExist:
@@ -58,6 +62,8 @@ class Backend(ModelBackend):
 
 
     def get_user(self, user_id):
+        from vaultier.models import User
+
         try:
             return User.objects.get(pk=user_id)
         except User.DoesNotExist:

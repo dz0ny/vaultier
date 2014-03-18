@@ -90,7 +90,7 @@ Service.WorkspaceKey = Ember.Object.extend(
                 var workspaceKey = null;
                 workspace.set('keyError', false);
 
-                if (workspace.get('membership.status') == Vaultier.Member.proto().statuses['MEMBER'].value) {
+                if (this.hasValidWorkspaceKey()) {
                     try {
                         workspaceKey = this.get('keytransfer').decryptWorkspaceKey(cryptedKey)
                     } catch (error) {
@@ -107,21 +107,42 @@ Service.WorkspaceKey = Ember.Object.extend(
             }
         },
 
+        /**
+         * Returns whether current user has valid key on current selected workspace
+         * @return bool
+         */
+        hasValidWorkspaceKey: function () {
+            var workspace = this.get('workspace');
+            return workspace.get('membership.status') == Vaultier.Member.proto().statuses['MEMBER'].value;
+        },
+
         transferKeyToCreatedWorkspace: function (workspace) {
             var keytransfer = this.get('keytransfer');
             var decryptedKey = keytransfer.generateWorkspaceKey();
             return keytransfer.transferKeyToMember(workspace.get('membership.id'), decryptedKey)
         },
 
-
         decryptWorkspaceData: function (data) {
             var coder = this.get('coder');
             var workspace = this.get('workspace')
+
+            // this is code for test mocking
+            // to be used later in mocks
+//            if (!this.get('test')) {
+//                Ember.run.later(function () {
+//                    console.log('trigger');
+//                    this.trigger('keyTransfered', workspace)
+//                }.bind(this), 1000)
+//                this.set('test', true);
+//                throw new Service.WorkspaceKeyDecryptSoftError('Cannot decrypt: workspace.membership.status {status}'.replace('{status}', workspace.get('membership.status')))
+//            }
+
+
             if (!workspace) {
-                throw Error('Workspace not selected')
+                throw new Error('Workspace not selected')
             }
 
-            if (workspace.get('membership.status') == Vaultier.Member.proto().statuses['MEMBER'].value) {
+            if (this.hasValidWorkspaceKey) {
                 var workspaceKey = this.get('workspaceKey');
                 data = coder.decryptWorkspaceData(data, workspaceKey)
                 data = JSON.parse(data)
@@ -130,23 +151,21 @@ Service.WorkspaceKey = Ember.Object.extend(
                 throw new Service.WorkspaceKeyDecryptSoftError('Cannot decrypt: workspace.membership.status {status}'.replace('{status}', workspace.get('membership.status')))
                 return null
             }
-
         },
 
         encryptWorkspaceData: function (data) {
             var coder = this.get('coder');
             var workspace = this.get('workspace')
             if (!workspace) {
-                throw Error('Workspace not selected')
+                throw new Error('Workspace not selected')
             }
 
-            if (workspace.get('membership.status') == Vaultier.Member.proto().statuses['MEMBER'].value) {
+            if (this.hasValidWorkspaceKey) {
                 var workspaceKey = this.get('workspaceKey');
                 data = JSON.stringify(data)
                 return coder.encryptWorkspaceData(data, workspaceKey)
             } else {
-                throw Error('Cannot encrypt. workspace.membership.status {status}'.replace('{status}', workspace.get('membership.status')))
-                return data
+                throw new Error('Cannot encrypt. workspace.membership.status {status}'.replace('{status}', workspace.get('membership.status')))
             }
 
         }

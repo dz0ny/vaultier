@@ -1,10 +1,10 @@
-from vaultier.models.card import Card
-from vaultier.models.member import Member
-from vaultier.models.role import Role
-from vaultier.models.secret import Secret
-from vaultier.models.vault import Vault
+from vaultier.models.card.model import Card
+from vaultier.models.member.model import Member
+from vaultier.models.role.model import Role
+from vaultier.models.secret.model import Secret
+from vaultier.models.vault.model import Vault
 from vaultier.perms.materializer import CreateRoleMaterializer, UpdateRoleLevelMaterializer, UpdateRoleMemberMaterializer, UpdateMemberUserMaterializer, InsertedObjectMaterializer, MovedObjectMaterializer
-from vaultier.tools.changes import post_change, INSERT, UPDATE
+from modelext.changes.changes import post_change, INSERT, UPDATE
 
 
 # when role is created and member has related user
@@ -14,20 +14,20 @@ def on_role_created(signal=None, sender=None, instance=None, event_type=None, **
         materializer.materialize(instance.get_object())
 
 # when role level is updated
-def on_role_level_updated(signal=None, sender=None, instance=None, event_type=None, **kwargs):
-    if event_type == UPDATE and instance.old_changes().get('level'):
+def on_role_level_updated(signal=None, sender=None, instance=None, event_type=None,overwritten_values=None, **kwargs):
+    if event_type == UPDATE and overwritten_values.has_key('level'):
         materializer = UpdateRoleLevelMaterializer(instance)
         materializer.materialize()
 
 # when member of role is updated
-def on_role_member_updated(signal=None, sender=None, instance=None, event_type=None, **kwargs):
-    if event_type == UPDATE and instance.old_changes().get('member') and instance.member.user:
+def on_role_member_updated(signal=None, sender=None, instance=None, event_type=None,overwritten_values=None, **kwargs):
+    if event_type == UPDATE and overwritten_values.has_key('member') and instance.member.user:
         materializer = UpdateRoleMemberMaterializer(instance)
         materializer.materialize()
 
 # when invited member becames regular member
-def on_member_is_regular(signal=None, sender=None, instance=None, event_type=None, **kwargs):
-    if event_type == UPDATE and instance.old_changes().get('user') and instance.user:
+def on_member_is_regular(signal=None, sender=None, instance=None, event_type=None, overwritten_values=None, **kwargs):
+    if event_type == UPDATE and overwritten_values.has_key('user') and instance.user:
         materializer = UpdateMemberUserMaterializer(instance)
         materializer.materialize()
 
@@ -44,20 +44,13 @@ def on_object_inserted(signal=None, sender=None, instance=None, event_type=None,
 
 
 # when object is moved (parent id is changed)
-#@todo:disallow moving of vaults
-def on_object_moved(signal=None, sender=None, instance=None, event_type=None, **kwargs):
+def on_object_moved(signal=None, sender=None, instance=None, event_type=None,overwritten_values=None, **kwargs):
     if (event_type == UPDATE):
         materializer = None
-        n = instance.__class__.__name__
-        c = instance.changes()
-        o = instance.old_changes()
-        p = instance.previous_changes()
-        os = instance.old_state()
-        ps = instance.previous_state()
 
-        if ( instance.__class__.__name__ == 'Card' and instance.old_changes().get('vault')):
+        if ( instance.__class__.__name__ == 'Card' and overwritten_values.has_key('vault')):
             materializer = MovedObjectMaterializer(instance);
-        if (instance.__class__.__name__ == 'Secret' and instance.old_changes().get('card')):
+        if (instance.__class__.__name__ == 'Secret' and overwritten_values.has_key('card')):
             materializer = MovedObjectMaterializer(instance.card);
 
         if materializer:

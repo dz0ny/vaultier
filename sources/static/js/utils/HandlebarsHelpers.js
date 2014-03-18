@@ -55,6 +55,13 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
     },
 
     printUser: function (user, options) {
+        if (!user) {
+            user = {
+                email: 'deleteduser@vaultier.org',
+                nickname: 'Deleted user'
+            }
+        }
+
         var email = user.email || user.get('email');
         var nickname = user.nickname || user.get('nickname');
         var size = options.hash.size || 25;

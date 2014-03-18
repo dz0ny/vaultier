@@ -1,5 +1,5 @@
 from vaultier.models import Acl
-from vaultier.models.fields import AclDirectionField, AclLevelField
+from vaultier.models.acl.fields import AclDirectionField, AclLevelField
 
 
 class ReadAclStrategy(object):
