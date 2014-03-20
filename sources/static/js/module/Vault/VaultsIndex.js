@@ -1,32 +1,36 @@
-Vaultier.VaultsIndexRoute = Ember.Route.extend({
+Vaultier.VaultsIndexRoute = Ember.Route.extend(
+    Vaultier.WorkspaceKeysMixin,
+    {
 
-    workspace: null,
+        beforeModel: function () {
+            this.checkWorkspaceKeys();
+        },
 
-    model: function (params, queryParams) {
-        var workspace = this.modelFor('Workspace');
+        model: function (params, queryParams) {
+            var workspace = this.modelFor('Workspace');
 
-        // retrieve vaults
-        var store = this.get('store');
-        return store.find('Vault', {workspace: workspace.get('id')});
-    },
+            // retrieve vaults
+            var store = this.get('store');
+            return store.find('Vault', {workspace: workspace.get('id')});
+        },
 
-    setupController: function (ctrl, vaults) {
-        ctrl.set('content', vaults);
+        setupController: function (ctrl, vaults) {
+            ctrl.set('content', vaults);
 
-        // retrieve workspace
-        var workspace = this.modelFor('Workspace');
-        this.set('workspace', workspace);
-        ctrl.set('workspace', workspace);
+            // retrieve workspace
+            var workspace = this.modelFor('Workspace');
+            this.set('workspace', workspace);
+            ctrl.set('workspace', workspace);
 
-        // set breadcrumbs
-        ctrl.set('breadcrumbs',
-            Vaultier.Breadcrumbs.create({router: this.get('router')})
-                .addHome()
-                .addWorkspace()
-        )
-    }
+            // set breadcrumbs
+            ctrl.set('breadcrumbs',
+                Vaultier.Breadcrumbs.create({router: this.get('router')})
+                    .addHome()
+                    .addWorkspace()
+            )
+        }
 
-});
+    });
 
 Vaultier.VaultsIndexController = Ember.ArrayController.extend({
     breadcrumbs: null

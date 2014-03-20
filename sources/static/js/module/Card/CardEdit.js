@@ -1,5 +1,9 @@
 Vaultier.CardEditRoute = Ember.Route.extend(
+    Vaultier.WorkspaceKeysMixin,
     {
+        beforeModel: function () {
+            this.checkWorkspaceKeys();
+        },
 
         model: function (params, transition) {
             var card = this.modelFor('Card');
@@ -39,7 +43,7 @@ Vaultier.CardEditRoute = Ember.Route.extend(
                         $.notify('Oooups! Something went wrong.', 'error');
                     }
                 )
-                
+
                 ApplicationLoader.promise(promise)
 
             }

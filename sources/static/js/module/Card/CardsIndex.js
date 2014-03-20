@@ -1,35 +1,40 @@
-Vaultier.CardsIndexRoute = Ember.Route.extend({
+Vaultier.CardsIndexRoute = Ember.Route.extend(
+    Vaultier.WorkspaceKeysMixin,
+    {
+        beforeModel: function () {
+            this.checkWorkspaceKeys();
+        },
 
-    model: function (params, transition) {
-        var vault = this.modelFor('Vault');
-        var store = this.get('store');
-        return store.find('Card', {vault: vault.get('id')});
-    },
+        model: function (params, transition) {
+            var vault = this.modelFor('Vault');
+            var store = this.get('store');
+            return store.find('Card', {vault: vault.get('id')});
+        },
 
-    setupController: function (ctrl, model) {
-        ctrl.set('content', model);
+        setupController: function (ctrl, model) {
+            ctrl.set('content', model);
 
-        // retrieve workspace
-        var workspace = this.modelFor('Workspace');
-        this.set('workspace', workspace);
-        ctrl.set('workspace', workspace);
+            // retrieve workspace
+            var workspace = this.modelFor('Workspace');
+            this.set('workspace', workspace);
+            ctrl.set('workspace', workspace);
 
-        // retrieve vault
-        var vault = this.modelFor('Vault');
-        this.set('vault', vault);
-        ctrl.set('vault', vault);
+            // retrieve vault
+            var vault = this.modelFor('Vault');
+            this.set('vault', vault);
+            ctrl.set('vault', vault);
 
-        // set breadcrumbs
-        ctrl.set('breadcrumbs',
-            Vaultier.Breadcrumbs.create({router: this.get('router')})
-                .addHome()
-                .addWorkspace()
-                .addVault()
-        )
-    }
+            // set breadcrumbs
+            ctrl.set('breadcrumbs',
+                Vaultier.Breadcrumbs.create({router: this.get('router')})
+                    .addHome()
+                    .addWorkspace()
+                    .addVault()
+            )
+        }
 
 
-});
+    });
 
 
 Vaultier.CardsIndexController = Ember.ArrayController.extend({

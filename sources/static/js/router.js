@@ -58,6 +58,9 @@ var router = Vaultier.Router.map(function () {
             // edit
             this.route('edit', { path: '/edit'});
 
+            // no keys
+            this.route('noKeys', { path: '/waiting-for-keys'});
+
             // member
             this.route('memberIndex', { path: '/team'});
             this.route('memberInvite', { path: '/team/invite'});

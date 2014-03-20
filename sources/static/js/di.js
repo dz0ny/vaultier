@@ -67,6 +67,7 @@ Vaultier.registerDI = function (app) {
 
     app.inject('route:WorkspacesCreate', 'workspacekey', 'service:workspacekey')
     app.inject('route:Workspace', 'workspacekey', 'service:workspacekey')
+    app.inject('route:WorkspaceNoKeys', 'workspacekey', 'service:workspacekey')
     app.inject('route:WorkspaceMemberApprove', 'workspacekey', 'service:workspacekey')
 
     // service:changekey

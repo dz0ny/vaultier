@@ -21,7 +21,11 @@ Vaultier.SecretCreateView = Ember.View.extend({
 });
 
 Vaultier.SecretCreateSelectRoute = Ember.Route.extend(
+    Vaultier.WorkspaceKeysMixin,
     {
+        beforeModel: function () {
+            this.checkWorkspaceKeys();
+        },
 
         model: function (params, transition) {
             // check workspace keys
@@ -70,7 +74,11 @@ Vaultier.SecretCreateSubmitController = Ember.ObjectController.extend({
 
 
 Vaultier.SecretCreateSubmitRoute = Ember.Route.extend(
+    Vaultier.WorkspaceKeysMixin,
     {
+        beforeModel: function () {
+            this.checkWorkspaceKeys();
+        },
 
         model: function (params, transition) {
             // check workspace keys

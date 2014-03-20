@@ -224,7 +224,7 @@ function program26(depth0,data) {
 function program28(depth0,data) {
   
   var buffer = '', stack1, hashTypes, hashContexts;
-  data.buffer.push("\r\n\r\n                    <div class=\"jumbotron vlt-empty vlt-secret col-md-8 col-md-offset-2\">\r\n                        <div class=\"vlt-header\">\r\n                            <div class=\"vlt-icon\">\r\n\r\n                            </div>\r\n                            <div class=\"vlt-title\">\r\n                                <h1>You do not have any secret yet</h1>\r\n                            </div>\r\n                        </div>\r\n\r\n                        ");
+  data.buffer.push("\r\n\r\n                    <div class=\"jumbotron vlt-bigbox vlt-secret col-md-8 col-md-offset-2\">\r\n                        <div class=\"vlt-header\">\r\n                            <div class=\"vlt-icon\">\r\n\r\n                            </div>\r\n                            <div class=\"vlt-title\">\r\n                                <h1>You do not have any secret yet</h1>\r\n                            </div>\r\n                        </div>\r\n\r\n                        ");
   hashTypes = {};
   hashContexts = {};
   stack1 = helpers['if'].call(depth0, "card.perms.create", {hash:{},inverse:self.noop,fn:self.program(29, program29, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
@@ -255,7 +255,7 @@ function program30(depth0,data) {
 function program32(depth0,data) {
   
   
-  data.buffer.push("\r\n\r\n                <div class=\"jumbotron vlt-empty vlt-secret col-md-8 col-md-offset-2\">\r\n                    <div class=\"vlt-header\">\r\n                        <div class=\"vlt-icon\">\r\n\r\n                        </div>\r\n                        <div class=\"vlt-title\">\r\n                            <h1>Secrets are hidden</h1>\r\n                        </div>\r\n                    </div>\r\n\r\n                    <p>\r\n                        <b>Workspace key has not been transfered to you yet.</b>\r\n                        Secrets will be accessible once you receive workspace key.\r\n                        Key will be transfered to you automatically\r\n                        once some workspace team member will go online.\r\n                    </p>\r\n\r\n                </div>\r\n            ");
+  data.buffer.push("\r\n\r\n                <div class=\"jumbotron vlt-bigbox vlt-secret col-md-8 col-md-offset-2\">\r\n                    <div class=\"vlt-header\">\r\n                        <div class=\"vlt-icon\">\r\n\r\n                        </div>\r\n                        <div class=\"vlt-title\">\r\n                            <h1>Secrets are hidden</h1>\r\n                        </div>\r\n                    </div>\r\n\r\n                    <p>\r\n                        <b>Workspace key has not been transfered to you yet.</b>\r\n                        Secrets will be accessible once you receive workspace key.\r\n                        Key will be transfered to you automatically\r\n                        once some workspace team member will go online.\r\n                    </p>\r\n\r\n                </div>\r\n            ");
   }
 
   data.buffer.push("<div class=\"vlt-page-nav\">\r\n\r\n    ");
