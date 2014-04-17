@@ -14,7 +14,11 @@ Vaultier.CardVaultNodeView = Ember.Tree.TreeNodeView.extend({
 });
 
 Vaultier.CardMoveRoute = Ember.Route.extend(
+    Vaultier.WorkspaceKeysMixin,
     {
+        beforeModel: function () {
+            this.checkWorkspaceKeys();
+        },
 
         model: function (params, transition) {
             var store = this.get('store');
@@ -73,7 +77,7 @@ Vaultier.CardMoveRoute = Ember.Route.extend(
                         $.notify('Oooups! Something went wrong.', 'error');
                     }
                 )
-                
+
                 ApplicationLoader.promise(promise)
             }
         }

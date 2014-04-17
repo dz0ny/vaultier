@@ -36,7 +36,11 @@ Vaultier.SecretVaultNodeView = Ember.Tree.TreeNodeView.extend({
 });
 
 Vaultier.SecretMoveRoute = Ember.Route.extend(
+    Vaultier.WorkspaceKeysMixin,
     {
+        beforeModel: function () {
+            this.checkWorkspaceKeys();
+        },
 
         serialize: function (secret) {
             return {

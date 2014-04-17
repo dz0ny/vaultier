@@ -678,6 +678,7 @@ span.vlt-user img {
     text-align: right;
 }
 
+
 /*************************************************************
 **************************************************************
 * search box in navbar
@@ -1099,15 +1100,15 @@ span.vlt-user img {
 
 /*************************************************************
 **************************************************************
-* empty jumbotrons
+* bigbox jumbotrons
 *************************************************************
 *************************************************************/
-.vlt-empty.jumbotron .vlt-header {
+.vlt-bigbox.jumbotron .vlt-header {
     position: relative;
     padding-bottom: 20px;
 }
 
-.vlt-empty.jumbotron .vlt-header .vlt-icon {
+.vlt-bigbox.jumbotron .vlt-header .vlt-icon {
     position: absolute;
     left: 0px;
     top: 0px;
@@ -1116,34 +1117,41 @@ span.vlt-user img {
     background-size: 100% 100%;
 }
 
-.vlt-empty.jumbotron .vlt-header .vlt-title {
+.vlt-bigbox.jumbotron .vlt-header .vlt-title {
     margin-left: 120px;
     min-height: 100px;
 }
 
-.vlt-empty.jumbotron .vlt-header .vlt-title h1 {
+.vlt-bigbox.jumbotron .vlt-header .vlt-title h1 {
     font-size: 40px
 }
 
-.vlt-empty.jumbotron.vlt-vault .vlt-header .vlt-icon {
+.vlt-bigbox.jumbotron.vlt-vault .vlt-header .vlt-icon {
     margin-top: -5px;
     background-image: url('../images/icon-vault-grey.png')
 }
 
-.vlt-empty.jumbotron.vlt-workspace .vlt-header .vlt-icon {
+.vlt-bigbox.jumbotron.vlt-workspace .vlt-header .vlt-icon {
     margin-top: -8px;
     background-image: url('../images/icon-workspace-grey.png')
 }
 
-.vlt-empty.jumbotron.vlt-card .vlt-header .vlt-icon {
+.vlt-bigbox.jumbotron.vlt-card .vlt-header .vlt-icon {
     margin-top: -12px;
     background-image: url('../images/icon-card-grey.png')
 }
 
-.vlt-empty.jumbotron.vlt-secret .vlt-header .vlt-icon {
+.vlt-bigbox.jumbotron.vlt-secret .vlt-header .vlt-icon {
     margin-top: -4px;
     background-image: url('../images/icon-secret-grey.png')
 }
+
+.vlt-bigbox.jumbotron.vlt-no-keys .vlt-header .vlt-icon {
+    margin-top: -4px;
+    width: 80px;
+    background-image: url('../images/icon-locked-grey.png')
+}
+
 
 /*************************************************************
 **************************************************************

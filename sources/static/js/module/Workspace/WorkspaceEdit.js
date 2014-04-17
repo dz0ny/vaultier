@@ -1,5 +1,11 @@
 Vaultier.WorkspaceEditRoute = Ember.Route.extend(
+    Vaultier.WorkspaceKeysMixin,
     {
+
+        beforeModel: function() {
+            this.checkWorkspaceKeys();
+        },
+
         model: function (params, transition) {
             var workspace = this.modelFor('Workspace');
 

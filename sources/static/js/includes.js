@@ -215,6 +215,7 @@ $(document).ready(function () {
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Workspace/WorkspacesCreate.js');
 
     ApplicationLoader.queueFile(STATIC_URL + 'tpl/Workspace/WorkspaceEdit.js');
+    ApplicationLoader.queueFile(STATIC_URL + 'tpl/Workspace/WorkspaceNoKeys.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Workspace/WorkspaceIndex.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Workspace/WorkspaceEdit.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Workspace/WorkspaceMember.js');
@@ -230,7 +231,6 @@ $(document).ready(function () {
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Vault/VaultIndex.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Vault/VaultEdit.js');
     ApplicationLoader.queueFile(STATIC_URL + 'js/module/Vault/VaultMember.js');
-    ApplicationLoader.queueFile(STATIC_URL + 'js/module/Vault/VaultHistory.js');
 
 
     /********************** Card **/

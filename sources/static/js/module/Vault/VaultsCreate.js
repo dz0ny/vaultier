@@ -1,5 +1,10 @@
 Vaultier.VaultsCreateRoute = Ember.Route.extend(
+    Vaultier.WorkspaceKeysMixin,
     {
+
+        beforeModel: function () {
+            this.checkWorkspaceKeys();
+        },
 
         model: function (params, transition) {
 
@@ -31,7 +36,7 @@ Vaultier.VaultsCreateRoute = Ember.Route.extend(
                         this.get('errors').logError(error);
                     }.bind(this))
 
-                 ApplicationLoader.promise(promise);
+                ApplicationLoader.promise(promise);
             }
         },
 

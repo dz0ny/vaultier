@@ -1,5 +1,9 @@
 Vaultier.SecretEditRoute = Ember.Route.extend(
+    Vaultier.WorkspaceKeysMixin,
     {
+        beforeModel: function () {
+            this.checkWorkspaceKeys();
+        },
 
         serialize: function (secret) {
             return {

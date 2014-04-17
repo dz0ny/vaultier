@@ -162,30 +162,15 @@ Vaultier.EncryptedModel.Mixin = Ember.Mixin.create({
         var deserialized = this._super.apply(this, arguments);
         deserialized.clearDecryptedData();
 
-        // anonymous function to be possiblly run deferred
-        var decrypt = function () {
-            this.set('decrypted', false);
-            try {
-                deserialized.decryptFields();
-                this.set('decrypted', true);
-            } catch (e) {
-                this.set('decrypted', false);
-                console.error('Secret decryption failed');
-                console.error(e.stack);
-                throw e
-            }
-        }.bind(this);
-
-        // run decryption
+        this.set('decrypted', false);
         try {
-            decrypt()
+            deserialized.decryptFields();
+            this.set('decrypted', true);
         } catch (e) {
-            if (e instanceof Service.WorkspaceKeyDecryptSoftError) {
-                var workspacekey = this.get('workspacekey');
-                workspacekey.one('keyTransfered', function () {
-                    decrypt();
-                });
-            }
+            this.set('decrypted', false);
+            console.error('Secret decryption failed');
+            console.error(e.stack);
+            throw e
         }
 
         return deserialized;

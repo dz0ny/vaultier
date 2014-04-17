@@ -135,7 +135,7 @@ function program15(depth0,data) {
 function program17(depth0,data) {
   
   var buffer = '', stack1, hashTypes, hashContexts;
-  data.buffer.push("\n            <div class=\"jumbotron vlt-empty vlt-vault col-md-8 col-md-offset-2\">\n                <div class=\"vlt-header\">\n                    <div class=\"vlt-icon\">\n\n                    </div>\n                    <div class=\"vlt-title\">\n                        <h1>You do not have any vault yet</h1>\n                    </div>\n                </div>\n\n\n                ");
+  data.buffer.push("\n            <div class=\"jumbotron vlt-bigbox vlt-vault col-md-8 col-md-offset-2\">\n                <div class=\"vlt-header\">\n                    <div class=\"vlt-icon\">\n\n                    </div>\n                    <div class=\"vlt-title\">\n                        <h1>You do not have any vault yet</h1>\n                    </div>\n                </div>\n\n\n                ");
   hashTypes = {};
   hashContexts = {};
   stack1 = helpers['if'].call(depth0, "workspace.perms.create", {hash:{},inverse:self.noop,fn:self.program(18, program18, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});

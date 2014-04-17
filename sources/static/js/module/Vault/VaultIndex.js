@@ -1,4 +1,5 @@
 Vaultier.VaultRoute = Ember.Route.extend(
+    Vaultier.WorkspaceKeysMixin,
     {
         model: function (params, transition) {
             workspace = this.modelFor('Workspace');
@@ -17,6 +18,7 @@ Vaultier.VaultRoute = Ember.Route.extend(
 
         afterModel: function (vault) {
             Service.Environment.current().set('vault', vault);
+            this.checkWorkspaceKeys();
         },
 
         serialize: function (model) {
@@ -55,8 +57,12 @@ Vaultier.VaultRoute = Ember.Route.extend(
 
     });
 
-Vaultier.VaultIndexRoute = Ember.Route.extend({
-    beforeModel: function () {
-        this.transitionTo('Cards.index')
-    }
-})
+Vaultier.VaultIndexRoute = Ember.Route.extend(
+    Vaultier.WorkspaceKeysMixin,
+    {
+        beforeModel: function () {
+            if (this.checkWorkspaceKeys()) {
+                this.transitionTo('Cards.index')
+            }
+        }
+    })
