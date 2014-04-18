@@ -334,7 +334,7 @@ class AclTest(TransactionTestCase):
         # there should be no acls
         self.assertEquals(Acl.objects.count(), 0);
 
-    def test_080_create_role_test(self):
+    def test_080_create_role(self):
         u = User()
         u.email = 'misan'
         u.save()
@@ -402,6 +402,53 @@ class AclTest(TransactionTestCase):
 
         a = list(c.acl_set.all())
         self.assertAcl(level=AclLevelField.LEVEL_READ, count=1, card=c)
+
+
+    def test_080_create_role_multiple_inheritance(self):
+        u = User()
+        u.email = 'misan'
+        u.save()
+
+        w = Workspace()
+        w._user = u
+        w.name = 'workspace'
+        w.created_by = u
+        w.save()
+
+        v = Vault()
+        v._user = u
+        v.name = 'vault'
+        v.workspace = w
+        v.created_by = u
+        v.save()
+
+        m = Member()
+        m.user = u
+        m.status = MemberStatusField.STATUS_MEMBER
+        m.workspace = w
+        m.created_by = u
+        m.save()
+
+        # already materialized roles should be deleted
+        Acl.objects.all().delete()
+        Role.objects.all().delete()
+
+        role = Role()
+        role.level = RoleLevelField.LEVEL_CREATE
+        role.created_by = u
+        role.set_object(w)
+        role.member = m
+        role.save()
+
+        c = Card()
+        c.name = 'vault'
+        c.vault = v
+        c.created_by = u
+        c.save()
+
+        # write permission to card because created by user with permission create on workspace
+        self.assertEquals(c.role_set.count() , 1)
+        self.assertEquals(c.role_set.all()[0].level, RoleLevelField.LEVEL_WRITE)
 
 
 def acl_suite():

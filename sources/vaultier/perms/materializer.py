@@ -161,13 +161,18 @@ class UpdateMemberUserMaterializer(object):
 
 
 class InsertedObjectMaterializer(object):
+    """
+    Materializes acl for just inserted object
+    """
     def __init__(self, object):
         self.object = object
 
-    # adds WRITE role for object created by user which have CREATE role to parent object
     def materialize_role(self):
+        """
+        adds WRITE role for objects created by user based of parent CREATE roles
+        """
         parent = self.object.get_tree_iterator().get_parent_object()
-        if parent:
+        while (parent):
             for parent_role in parent.role_set.all():
                 if (parent_role.member.user and parent_role.member.user.id == self.object.created_by.id):
                     if (parent_role.level == RoleLevelField.LEVEL_CREATE):
@@ -177,6 +182,9 @@ class InsertedObjectMaterializer(object):
                         role.level = RoleLevelField.LEVEL_WRITE
                         role.set_object(self.object)
                         role.save()
+                        return
+
+            parent = parent.get_tree_iterator().get_parent_object()
 
     # materialize roles
     def materialize(self):
@@ -184,11 +192,14 @@ class InsertedObjectMaterializer(object):
         roles = []
         acls = []
 
+        # collect all parent roles
         while parent:
             for role in parent.role_set.all():
                 roles.append(role)
             parent = parent.get_tree_iterator().get_parent_object()
 
+
+        # rematerialize all childs roles including rematerialization on current child
         for role in roles:
             if not role.member.status == MemberStatusField.STATUS_INVITED:
                 rm = CreateRoleMaterializer(role);
@@ -197,6 +208,12 @@ class InsertedObjectMaterializer(object):
         # save materialized
         saver = MaterializationSaver()
         saver.save_materialized(acls)
+
+        # rematerialize roles in role_set of object
+        for role in self.object.role_set.all():
+            rm = CreateRoleMaterializer(role);
+            rm.materialize(self.object)
+
 
 class MovedObjectMaterializer(object):
     def __init__(self, object):
@@ -210,6 +227,7 @@ class MovedObjectMaterializer(object):
         Acl.objects.filter(role__in=self.object.role_set.all()).delete()
 
         # object previous acl are now cleared
-        # rematerialize object as inserted
+        # rematerialize object as newly created
         m = InsertedObjectMaterializer(self.object)
         m.materialize()
+
