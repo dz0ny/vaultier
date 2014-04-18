@@ -263,6 +263,33 @@ class ApiCardPermsTest(TransactionTestCase):
             format_response(response)
         )
 
+        # user2 is granted access directly to card
+        user2role = create_role_api_call(
+            user1token,
+            member=user2member.get('id'),
+            to_card=card1.get('id'),
+            level=RoleLevelField.LEVEL_READ
+        )
+
+        # user1 moves card back to vault1
+        update_card_api_call(user1token, card1.get('id'),
+                             vault=vault1.get('id')
+        ).data
+
+        # user2 should be able to access vault and card
+        response = retrieve_card_api_call(user2token, vault1.get('id'))
+        self.assertEqual(
+            response.status_code,
+            HTTP_200_OK,
+            format_response(response)
+        )
+        response = retrieve_card_api_call(user2token, card1.get('id'))
+        self.assertEqual(
+            response.status_code,
+            HTTP_200_OK,
+            format_response(response)
+        )
+
 
 def card_perms_suite():
     suite = TestSuite()
