@@ -30,8 +30,8 @@ Service.Errors = Ember.Object.extend({
             error: error
         }
 
-        if (error && error.message) {
-            data.message = error.message
+        if (error && (error.message || error.detail)) {
+            data.message = error.message || error.detail
         }
 
         if (error && error.title) {

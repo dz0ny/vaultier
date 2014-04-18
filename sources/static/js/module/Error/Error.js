@@ -1,5 +1,9 @@
 Vaultier.ErrorGenericRoute = Ember.Route.extend({
 
+    setupController: function(ctrl) {
+        return ctrl;
+    },
+
     renderTemplate: function() {
         var tpl = this.get('controller.content.template');
         if (tpl) {
