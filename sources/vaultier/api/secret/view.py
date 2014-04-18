@@ -5,6 +5,7 @@ from rest_framework.viewsets import ModelViewSet
 from modelext.version.context import VersionContextAwareApiViewMixin
 from vaultier.api.permsfield import PermsField
 from vaultier.api.softdeletemixin import SoftDeleteModelMixin
+from vaultier.api.transactionmixin import AtomicTransactionMixin
 from vaultier.api.user.view import RelatedUserSerializer
 from vaultier.auth.authentication import TokenAuthentication
 from vaultier.models import Secret
@@ -53,6 +54,7 @@ class SecretSerializer(ModelSerializer):
 
 
 class SecretViewSet(
+    AtomicTransactionMixin,
     SoftDeleteModelMixin,
     VersionContextAwareApiViewMixin,
     ModelViewSet):

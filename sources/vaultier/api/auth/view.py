@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, logout
+from django.db.transaction import atomic
 from rest_framework.fields import EmailField, CharField
 from rest_framework.serializers import ModelSerializer
 from rest_framework.status import HTTP_403_FORBIDDEN
@@ -21,6 +22,8 @@ class TokenSerializer(ModelSerializer):
         fields = ('token','user')
 
 class AuthView(APIView):
+
+    @atomic
     def auth(self, request):
         serializer = AuthSerializer(data=request.DATA)
         if serializer.is_valid():
@@ -52,6 +55,7 @@ class LogoutView(APIView):
         except Exception as e:
             raise CustomAPIException(exception=e)
 
+    @atomic
     def post(self, request):
         return self.logout(request)
 

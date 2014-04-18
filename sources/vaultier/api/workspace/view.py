@@ -7,6 +7,7 @@ from vaultier.api.permsfield import PermsField
 from vaultier.api.member.view import RelatedMemberSerializer
 from vaultier.api.retrievebyslugmixin import RetrieveBySlugMixin
 from vaultier.api.softdeletemixin import SoftDeleteModelMixin
+from vaultier.api.transactionmixin import AtomicTransactionMixin
 from vaultier.api.user.view import RelatedUserSerializer
 from vaultier.auth.authentication import TokenAuthentication
 from vaultier.models import Workspace
@@ -58,6 +59,7 @@ class RelatedWorkspaceSerializer(WorkspaceSerializer):
 
 
 class WorkspaceViewSet(
+    AtomicTransactionMixin,
     RetrieveBySlugMixin,
     SoftDeleteModelMixin,
     VersionContextAwareApiViewMixin,

@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework.serializers import ModelSerializer
 from rest_framework.status import HTTP_405_METHOD_NOT_ALLOWED, HTTP_200_OK, HTTP_400_BAD_REQUEST
 from rest_framework.viewsets import ModelViewSet
+from vaultier.api.transactionmixin import AtomicTransactionMixin
 from vaultier.auth.authentication import TokenAuthentication
 from vaultier.models import User
 from vaultier.models.member.fields import MemberStatusField
@@ -87,7 +88,9 @@ class UserKeySerializer(ModelSerializer):
 
 
 
-class UserViewSet(ModelViewSet):
+class UserViewSet(
+    AtomicTransactionMixin,
+    ModelViewSet):
     serializer_class = UserSerializer
     authentication_classes = (TokenAuthentication,)
     permission_classes = (CanManageUserPermission,)

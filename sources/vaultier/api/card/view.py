@@ -6,6 +6,7 @@ from modelext.version.context import VersionContextAwareApiViewMixin
 from vaultier.api.permsfield import PermsField
 from vaultier.api.retrievebyslugmixin import RetrieveBySlugMixin
 from vaultier.api.softdeletemixin import SoftDeleteModelMixin
+from vaultier.api.transactionmixin import AtomicTransactionMixin
 from vaultier.api.user.view import RelatedUserSerializer
 from vaultier.auth.authentication import TokenAuthentication
 from vaultier.models import Card
@@ -53,6 +54,7 @@ class CardSerializer(ModelSerializer):
 
 
 class CardViewSet(
+    AtomicTransactionMixin,
     RetrieveBySlugMixin,
     SoftDeleteModelMixin,
     VersionContextAwareApiViewMixin,

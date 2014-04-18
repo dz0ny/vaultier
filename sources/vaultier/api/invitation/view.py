@@ -5,6 +5,7 @@ from rest_framework.serializers import ModelSerializer
 from rest_framework.status import HTTP_405_METHOD_NOT_ALLOWED, HTTP_200_OK
 from rest_framework.viewsets import ModelViewSet
 from vaultier.api.member.view import MemberSerializer
+from vaultier.api.transactionmixin import AtomicTransactionMixin
 from vaultier.api.user.view import RelatedUserSerializer
 from vaultier.auth.authentication import TokenAuthentication
 from vaultier.models.member.fields import MemberStatusField
@@ -44,7 +45,9 @@ class InvitationSerializer(ModelSerializer):
         fields = ('id', 'status','invitation_email', 'invitation_hash', 'roles', 'created_by', 'created_at', 'updated_at')
 
 
-class InvitationViewSet(ModelViewSet):
+class InvitationViewSet(
+    AtomicTransactionMixin,
+    ModelViewSet):
     model = Member
     serializer_class = InvitationSerializer
     authentication_classes = (TokenAuthentication, )

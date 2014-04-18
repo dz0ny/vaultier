@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework.serializers import ModelSerializer
 from rest_framework.status import HTTP_405_METHOD_NOT_ALLOWED
 from rest_framework.viewsets import ModelViewSet
+from vaultier.api.transactionmixin import AtomicTransactionMixin
 from vaultier.api.user.view import RelatedUserSerializer
 from vaultier.api.workspace.view import RelatedWorkspaceSerializer
 from vaultier.auth.authentication import TokenAuthentication
@@ -40,7 +41,9 @@ class ShortenedWorkspaceKeySerializer(ModelSerializer):
         fields = ('id','workspace', 'status', 'user', 'created_at', 'updated_at')
 
 
-class WorkspaceKeyViewSet(ModelViewSet):
+class WorkspaceKeyViewSet(
+        AtomicTransactionMixin,
+        ModelViewSet):
     model = Member
     authentication_classes = (TokenAuthentication, )
     permission_classes = (IsAuthenticated, CanManageWorkspaceKey)

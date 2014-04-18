@@ -7,6 +7,7 @@ from rest_framework.status import HTTP_405_METHOD_NOT_ALLOWED, HTTP_200_OK
 from rest_framework.viewsets import ModelViewSet
 from modelext.version.context import VersionContextAwareApiViewMixin
 from vaultier.api.secret.view import CanManageSecretPermission
+from vaultier.api.transactionmixin import AtomicTransactionMixin
 from vaultier.api.user.view import RelatedUserSerializer
 from vaultier.auth.authentication import TokenAuthentication
 from vaultier.models import Secret
@@ -40,6 +41,7 @@ class SecretBlobSerializer(ModelSerializer):
 
 
 class SecretBlobViewSet(
+    AtomicTransactionMixin,
     VersionContextAwareApiViewMixin,
     ModelViewSet
 ):

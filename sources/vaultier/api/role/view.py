@@ -4,6 +4,7 @@ from rest_framework.serializers import ModelSerializer, NestedValidationError,Va
 from rest_framework.viewsets import ModelViewSet
 from vaultier.api.relatednestedfield import RelatedNestedField
 from vaultier.api.member.view import RelatedMemberSerializer
+from vaultier.api.transactionmixin import AtomicTransactionMixin
 from vaultier.api.user.view import RelatedUserSerializer
 from vaultier.auth.authentication import TokenAuthentication
 from vaultier.models.acl.fields import AclLevelField
@@ -55,7 +56,9 @@ class RoleUpdateSerializer(RoleSerializer):
                 fields[field].read_only = True
         return fields
 
-class RoleViewSet(ModelViewSet):
+class RoleViewSet(
+    AtomicTransactionMixin,
+    ModelViewSet):
     model = Role
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated, CanManageRolePermission )

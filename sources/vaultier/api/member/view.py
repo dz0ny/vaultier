@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework.serializers import ModelSerializer, Serializer
 from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_200_OK
 from rest_framework.viewsets import ModelViewSet
+from vaultier.api.transactionmixin import AtomicTransactionMixin
 from vaultier.api.user.view import RelatedUserSerializer
 from vaultier.auth.authentication import TokenAuthentication
 from vaultier.mailer.invitation import resend_invitation
@@ -108,7 +109,9 @@ class MemberWorkspaceKeySerializer(ModelSerializer):
         fields = ('id', 'public_key', 'workspace_key', 'status')
 
 
-class MemberViewSet(ModelViewSet):
+class MemberViewSet(
+    AtomicTransactionMixin,
+    ModelViewSet):
     model = Member
     serializer_class = MemberSerializer
     authentication_classes = (TokenAuthentication, )

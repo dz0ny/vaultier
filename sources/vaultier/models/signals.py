@@ -1,10 +1,4 @@
 ##################################################
-#Role custom singals
-##################################################
-from vaultier.models.role.model import register_signals as role_register_signals
-role_register_signals()
-
-##################################################
 #Perms signals registration
 ##################################################
 from vaultier.perms.signals import register_signals as perm_register_signals
@@ -34,3 +28,9 @@ workspace_register_version_signals()
 vault_register_version_signals()
 card_register_version_signals()
 secret_register_version_signals()
+
+##################################################
+#Role custom singals
+##################################################
+from vaultier.models.role.model import register_signals as role_register_signals
+role_register_signals()
