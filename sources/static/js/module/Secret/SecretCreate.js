@@ -105,7 +105,7 @@ Vaultier.SecretCreateSubmitRoute = Ember.Route.extend(
             secret.set('card', this.modelFor('Card').get('id'));
 
             var SecretClass = Vaultier.Secret.proto();
-            switch (transition.params.type.toUpperCase()) {
+            switch (transition.params['Secret.createSubmit'].type.toUpperCase()) {
 
                 case SecretClass.types['FILE'].text :
                     this.template = 'SecretTypeFile';
@@ -167,9 +167,9 @@ Vaultier.SecretCreateSubmitRoute = Ember.Route.extend(
                 try {
                     var promise = record
                         .saveRecord()
-                        .then(function () {
+                        .then(function (response) {
                             $.notify('Your secret has been successfully created.', 'success');
-                            this.transitionTo('Secret.index', this.get('Card'));
+                            this.transitionTo('Secret.index', this.get('card'));
                         }.bind(this))
                         .catch(notifyError)
 
