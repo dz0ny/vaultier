@@ -1,0 +1,32 @@
+{
+  "name": "pidcrypt",
+  "version": "0.3.0",
+  "description": "Crypto library for JavaScript",
+  "keywords": [
+    "crypto",
+    "sha",
+    "aes",
+    "rsa"
+  ],
+  "authors": [
+    "Versaneo GmbH"
+  ],
+  "license": "GPLv3",
+  "homepage": "http://www.pidder.de/pidcrypt/",
+  "ignore": [
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "_release": "0.3.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.3.0",
+    "commit": "a1e7e83af49dfd5bbde39dd93398efe17f7ecc4a"
+  },
+  "_source": "git://github.com/karolmajta/pidcrypt.git",
+  "_target": "~0.3.0",
+  "_originalSource": "pidcrypt",
+  "_direct": true
+}

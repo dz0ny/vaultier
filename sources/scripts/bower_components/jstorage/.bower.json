@@ -1,0 +1,18 @@
+{
+  "name": "jStorage",
+  "version": "0.4.8",
+  "main": "./jstorage.js",
+  "author": "Andris Reinman <andris.reinman@gmail.com>",
+  "dependencies": {},
+  "homepage": "https://github.com/andris9/jStorage",
+  "_release": "0.4.8",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.4.8",
+    "commit": "1511189a213bf727af9177b9f6774bcd0cb60a93"
+  },
+  "_source": "git://github.com/andris9/jStorage.git",
+  "_target": "~0.4.8",
+  "_originalSource": "jstorage",
+  "_direct": true
+}

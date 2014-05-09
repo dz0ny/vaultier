@@ -1,0 +1,803 @@
+
+
+
+
+
+<!DOCTYPE html>
+<html class="   ">
+  <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# object: http://ogp.me/ns/object# article: http://ogp.me/ns/article# profile: http://ogp.me/ns/profile#">
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    
+    <title>jpillora/notifyjs · GitHub</title>
+    <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="GitHub" />
+    <link rel="fluid-icon" href="https://github.com/fluidicon.png" title="GitHub" />
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-114.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-144.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144.png" />
+    <meta property="fb:app_id" content="1401488693436528"/>
+
+      <meta content="@github" name="twitter:site" /><meta content="summary" name="twitter:card" /><meta content="jpillora/notifyjs" name="twitter:title" /><meta content="notifyjs - Notify.js - A simple, versatile notification library" name="twitter:description" /><meta content="https://avatars0.githubusercontent.com/u/633843?s=400" name="twitter:image:src" />
+<meta content="GitHub" property="og:site_name" /><meta content="object" property="og:type" /><meta content="https://avatars0.githubusercontent.com/u/633843?s=400" property="og:image" /><meta content="jpillora/notifyjs" property="og:title" /><meta content="https://github.com/jpillora/notifyjs" property="og:url" /><meta content="notifyjs - Notify.js - A simple, versatile notification library" property="og:description" />
+
+    <link rel="assets" href="https://github.global.ssl.fastly.net/">
+    <link rel="conduit-xhr" href="https://ghconduit.com:25035/">
+    <link rel="xhr-socket" href="/_sockets" />
+
+    <meta name="msapplication-TileImage" content="/windows-tile.png" />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta name="selected-link" value="repo_source" data-pjax-transient />
+    <meta content="collector.githubapp.com" name="octolytics-host" /><meta content="collector-cdn.github.com" name="octolytics-script-host" /><meta content="github" name="octolytics-app-id" /><meta content="C1569491:2A02:80A057A:536C845A" name="octolytics-dimension-request_id" />
+    
+
+    
+    
+    <link rel="icon" type="image/x-icon" href="https://github.global.ssl.fastly.net/favicon.ico" />
+
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="suDYLFrbRwbA+OdF5vuhtPuDXDHEzYKxGW7o1I1Z1vdlMVmBvwo7YOQmuN/jqPBAOdbbLrIVwdC2tLyX6g9dew==" name="csrf-token" />
+
+    <link href="https://github.global.ssl.fastly.net/assets/github-342dc1ceccdbd5139c1adebf91586840a05f4b28.css" media="all" rel="stylesheet" type="text/css" />
+    <link href="https://github.global.ssl.fastly.net/assets/github2-f50c09aa92f8858777f3f33225ec6b65051ac3de.css" media="all" rel="stylesheet" type="text/css" />
+    
+
+
+        <script crossorigin="anonymous" src="https://github.global.ssl.fastly.net/assets/frameworks-a6f92b4988ace11684156397e69ddb85024b3d5a.js" type="text/javascript"></script>
+        <script async="async" crossorigin="anonymous" src="https://github.global.ssl.fastly.net/assets/github-468c700ee1e80a69f14729d4a18b047a3825d380.js" type="text/javascript"></script>
+        
+        
+      <meta http-equiv="x-pjax-version" content="c801f0117ed3c05e0276529f3bce450d">
+
+      
+  <meta name="description" content="notifyjs - Notify.js - A simple, versatile notification library" />
+
+  <meta content="633843" name="octolytics-dimension-user_id" /><meta content="jpillora" name="octolytics-dimension-user_login" /><meta content="9050463" name="octolytics-dimension-repository_id" /><meta content="jpillora/notifyjs" name="octolytics-dimension-repository_nwo" /><meta content="true" name="octolytics-dimension-repository_public" /><meta content="false" name="octolytics-dimension-repository_is_fork" /><meta content="9050463" name="octolytics-dimension-repository_network_root_id" /><meta content="jpillora/notifyjs" name="octolytics-dimension-repository_network_root_nwo" />
+  <link href="https://github.com/jpillora/notifyjs/commits/gh-pages.atom" rel="alternate" title="Recent Commits to notifyjs:gh-pages" type="application/atom+xml" />
+
+  </head>
+
+
+  <body class="logged_out  env-production  vis-public">
+    <a href="#start-of-content" tabindex="1" class="accessibility-aid js-skip-to-content">Skip to content</a>
+    <div class="wrapper">
+      
+      
+      
+      
+
+
+      
+      <div class="header header-logged-out">
+  <div class="container clearfix">
+
+    <a class="header-logo-wordmark" href="https://github.com/">
+      <span class="mega-octicon octicon-logo-github"></span>
+    </a>
+
+    <div class="header-actions">
+        <a class="button primary" href="/join">Sign up</a>
+      <a class="button signin" href="/login?return_to=%2Fjpillora%2Fnotifyjs">Sign in</a>
+    </div>
+
+    <div class="command-bar js-command-bar  in-repository">
+
+      <ul class="top-nav">
+          <li class="explore"><a href="/explore">Explore</a></li>
+        <li class="features"><a href="/features">Features</a></li>
+          <li class="enterprise"><a href="https://enterprise.github.com/">Enterprise</a></li>
+          <li class="blog"><a href="/blog">Blog</a></li>
+      </ul>
+        <form accept-charset="UTF-8" action="/search" class="command-bar-form" id="top_search_form" method="get">
+
+<div class="commandbar">
+  <span class="message"></span>
+  <input type="text" data-hotkey="s, /" name="q" id="js-command-bar-field" placeholder="Search or type a command" tabindex="1" autocapitalize="off"
+    
+    
+      data-repo="jpillora/notifyjs"
+      data-branch="gh-pages"
+      data-sha="a74200d9878768137e3d85e516dd5647325a92fb"
+  >
+  <div class="display hidden"></div>
+</div>
+
+    <input type="hidden" name="nwo" value="jpillora/notifyjs" />
+
+    <div class="select-menu js-menu-container js-select-menu search-context-select-menu">
+      <span class="minibutton select-menu-button js-menu-target" role="button" aria-haspopup="true">
+        <span class="js-select-button">This repository</span>
+      </span>
+
+      <div class="select-menu-modal-holder js-menu-content js-navigation-container" aria-hidden="true">
+        <div class="select-menu-modal">
+
+          <div class="select-menu-item js-navigation-item js-this-repository-navigation-item selected">
+            <span class="select-menu-item-icon octicon octicon-check"></span>
+            <input type="radio" class="js-search-this-repository" name="search_target" value="repository" checked="checked" />
+            <div class="select-menu-item-text js-select-button-text">This repository</div>
+          </div> <!-- /.select-menu-item -->
+
+          <div class="select-menu-item js-navigation-item js-all-repositories-navigation-item">
+            <span class="select-menu-item-icon octicon octicon-check"></span>
+            <input type="radio" name="search_target" value="global" />
+            <div class="select-menu-item-text js-select-button-text">All repositories</div>
+          </div> <!-- /.select-menu-item -->
+
+        </div>
+      </div>
+    </div>
+
+  <span class="help tooltipped tooltipped-s" aria-label="Show command bar help">
+    <span class="octicon octicon-question"></span>
+  </span>
+
+
+  <input type="hidden" name="ref" value="cmdform">
+
+</form>
+    </div>
+
+  </div>
+</div>
+
+
+
+      <div id="start-of-content" class="accessibility-aid"></div>
+          <div class="site" itemscope itemtype="http://schema.org/WebPage">
+    <div id="js-flash-container">
+      
+    </div>
+    <div class="pagehead repohead instapaper_ignore readability-menu">
+      <div class="container">
+        
+
+<ul class="pagehead-actions">
+
+
+  <li>
+    <a href="/login?return_to=%2Fjpillora%2Fnotifyjs"
+    class="minibutton with-count star-button tooltipped tooltipped-n"
+    aria-label="You must be signed in to star a repository" rel="nofollow">
+    <span class="octicon octicon-star"></span>Star
+  </a>
+
+    <a class="social-count js-social-count" href="/jpillora/notifyjs/stargazers">
+      137
+    </a>
+
+  </li>
+
+    <li>
+      <a href="/login?return_to=%2Fjpillora%2Fnotifyjs"
+        class="minibutton with-count js-toggler-target fork-button tooltipped tooltipped-n"
+        aria-label="You must be signed in to fork a repository" rel="nofollow">
+        <span class="octicon octicon-git-branch"></span>Fork
+      </a>
+      <a href="/jpillora/notifyjs/network" class="social-count">
+        35
+      </a>
+    </li>
+</ul>
+
+        <h1 itemscope itemtype="http://data-vocabulary.org/Breadcrumb" class="entry-title public">
+          <span class="repo-label"><span>public</span></span>
+          <span class="mega-octicon octicon-repo"></span>
+          <span class="author"><a href="/jpillora" class="url fn" itemprop="url" rel="author"><span itemprop="title">jpillora</span></a></span><!--
+       --><span class="path-divider">/</span><!--
+       --><strong><a href="/jpillora/notifyjs" class="js-current-repository js-repo-home-link">notifyjs</a></strong>
+
+          <span class="page-context-loader">
+            <img alt="Octocat-spinner-32" height="16" src="https://github.global.ssl.fastly.net/images/spinners/octocat-spinner-32.gif" width="16" />
+          </span>
+
+        </h1>
+      </div><!-- /.container -->
+    </div><!-- /.repohead -->
+
+    <div class="container">
+      <div class="repository-with-sidebar repo-container new-discussion-timeline js-new-discussion-timeline with-full-navigation ">
+        <div class="repository-sidebar clearfix">
+            
+
+<div class="sunken-menu vertical-right repo-nav js-repo-nav js-repository-container-pjax js-octicon-loaders">
+  <div class="sunken-menu-contents">
+    <ul class="sunken-menu-group">
+      <li class="tooltipped tooltipped-w" aria-label="Code">
+        <a href="/jpillora/notifyjs" aria-label="Code" class="selected js-selected-navigation-item sunken-menu-item" data-hotkey="g c" data-pjax="true" data-selected-links="repo_source repo_downloads repo_commits repo_releases repo_tags repo_branches /jpillora/notifyjs">
+          <span class="octicon octicon-code"></span> <span class="full-word">Code</span>
+          <img alt="Octocat-spinner-32" class="mini-loader" height="16" src="https://github.global.ssl.fastly.net/images/spinners/octocat-spinner-32.gif" width="16" />
+</a>      </li>
+
+        <li class="tooltipped tooltipped-w" aria-label="Issues">
+          <a href="/jpillora/notifyjs/issues" aria-label="Issues" class="js-selected-navigation-item sunken-menu-item js-disable-pjax" data-hotkey="g i" data-selected-links="repo_issues /jpillora/notifyjs/issues">
+            <span class="octicon octicon-issue-opened"></span> <span class="full-word">Issues</span>
+            <span class='counter'>11</span>
+            <img alt="Octocat-spinner-32" class="mini-loader" height="16" src="https://github.global.ssl.fastly.net/images/spinners/octocat-spinner-32.gif" width="16" />
+</a>        </li>
+
+      <li class="tooltipped tooltipped-w" aria-label="Pull Requests">
+        <a href="/jpillora/notifyjs/pulls" aria-label="Pull Requests" class="js-selected-navigation-item sunken-menu-item js-disable-pjax" data-hotkey="g p" data-selected-links="repo_pulls /jpillora/notifyjs/pulls">
+            <span class="octicon octicon-git-pull-request"></span> <span class="full-word">Pull Requests</span>
+            <span class='counter'>2</span>
+            <img alt="Octocat-spinner-32" class="mini-loader" height="16" src="https://github.global.ssl.fastly.net/images/spinners/octocat-spinner-32.gif" width="16" />
+</a>      </li>
+
+
+    </ul>
+    <div class="sunken-menu-separator"></div>
+    <ul class="sunken-menu-group">
+
+      <li class="tooltipped tooltipped-w" aria-label="Pulse">
+        <a href="/jpillora/notifyjs/pulse" aria-label="Pulse" class="js-selected-navigation-item sunken-menu-item" data-pjax="true" data-selected-links="pulse /jpillora/notifyjs/pulse">
+          <span class="octicon octicon-pulse"></span> <span class="full-word">Pulse</span>
+          <img alt="Octocat-spinner-32" class="mini-loader" height="16" src="https://github.global.ssl.fastly.net/images/spinners/octocat-spinner-32.gif" width="16" />
+</a>      </li>
+
+      <li class="tooltipped tooltipped-w" aria-label="Graphs">
+        <a href="/jpillora/notifyjs/graphs" aria-label="Graphs" class="js-selected-navigation-item sunken-menu-item" data-pjax="true" data-selected-links="repo_graphs repo_contributors /jpillora/notifyjs/graphs">
+          <span class="octicon octicon-graph"></span> <span class="full-word">Graphs</span>
+          <img alt="Octocat-spinner-32" class="mini-loader" height="16" src="https://github.global.ssl.fastly.net/images/spinners/octocat-spinner-32.gif" width="16" />
+</a>      </li>
+
+      <li class="tooltipped tooltipped-w" aria-label="Network">
+        <a href="/jpillora/notifyjs/network" aria-label="Network" class="js-selected-navigation-item sunken-menu-item js-disable-pjax" data-selected-links="repo_network /jpillora/notifyjs/network">
+          <span class="octicon octicon-git-branch"></span> <span class="full-word">Network</span>
+          <img alt="Octocat-spinner-32" class="mini-loader" height="16" src="https://github.global.ssl.fastly.net/images/spinners/octocat-spinner-32.gif" width="16" />
+</a>      </li>
+    </ul>
+
+
+  </div>
+</div>
+
+              <div class="only-with-full-nav">
+                
+
+  
+
+<div class="clone-url open"
+  data-protocol-type="http"
+  data-url="/users/set_protocol?protocol_selector=http&amp;protocol_type=clone">
+  <h3><strong>HTTPS</strong> clone URL</h3>
+  <div class="clone-url-box">
+    <input type="text" class="clone js-url-field"
+           value="https://github.com/jpillora/notifyjs.git" readonly="readonly">
+    <span class="url-box-clippy">
+    <button aria-label="copy to clipboard" class="js-zeroclipboard minibutton zeroclipboard-button" data-clipboard-text="https://github.com/jpillora/notifyjs.git" data-copied-hint="copied!" type="button"><span class="octicon octicon-clippy"></span></button>
+    </span>
+  </div>
+</div>
+
+  
+
+<div class="clone-url "
+  data-protocol-type="subversion"
+  data-url="/users/set_protocol?protocol_selector=subversion&amp;protocol_type=clone">
+  <h3><strong>Subversion</strong> checkout URL</h3>
+  <div class="clone-url-box">
+    <input type="text" class="clone js-url-field"
+           value="https://github.com/jpillora/notifyjs" readonly="readonly">
+    <span class="url-box-clippy">
+    <button aria-label="copy to clipboard" class="js-zeroclipboard minibutton zeroclipboard-button" data-clipboard-text="https://github.com/jpillora/notifyjs" data-copied-hint="copied!" type="button"><span class="octicon octicon-clippy"></span></button>
+    </span>
+  </div>
+</div>
+
+
+<p class="clone-options">You can clone with
+      <a href="#" class="js-clone-selector" data-protocol="http">HTTPS</a>
+      or <a href="#" class="js-clone-selector" data-protocol="subversion">Subversion</a>.
+  <span class="help tooltipped tooltipped-n" aria-label="Get help on which URL is right for you.">
+    <a href="https://help.github.com/articles/which-remote-url-should-i-use">
+    <span class="octicon octicon-question"></span>
+    </a>
+  </span>
+</p>
+
+
+
+                <a href="/jpillora/notifyjs/archive/gh-pages.zip"
+                   class="minibutton sidebar-button"
+                   aria-label="Download jpillora/notifyjs as a zip file"
+                   title="Download jpillora/notifyjs as a zip file"
+                   rel="nofollow">
+                  <span class="octicon octicon-cloud-download"></span>
+                  Download ZIP
+                </a>
+              </div>
+        </div><!-- /.repository-sidebar -->
+
+        <div id="js-repo-pjax-container" class="repository-content context-loader-container" data-pjax-container>
+          
+
+<span id="js-show-full-navigation"></span>
+
+<div class="repository-meta js-details-container ">
+    <div class="repository-description js-details-show">
+      <p>Notify.js - A simple, versatile notification library</p>
+    </div>
+
+    <div class="repository-website js-details-show">
+      <p><a href="http://notifyjs.com" rel="nofollow">http://notifyjs.com</a></p>
+    </div>
+
+
+</div>
+
+<div class="capped-box overall-summary ">
+
+  <div class="stats-switcher-viewport js-stats-switcher-viewport">
+    <div class="stats-switcher-wrapper">
+    <ul class="numbers-summary">
+      <li class="commits">
+        <a data-pjax href="/jpillora/notifyjs/commits/gh-pages">
+            <span class="num">
+              <span class="octicon octicon-history"></span>
+              42
+            </span>
+            commits
+        </a>
+      </li>
+      <li>
+        <a data-pjax href="/jpillora/notifyjs/branches">
+          <span class="num">
+            <span class="octicon octicon-git-branch"></span>
+            1
+          </span>
+          branch
+        </a>
+      </li>
+
+      <li>
+        <a data-pjax href="/jpillora/notifyjs/releases">
+          <span class="num">
+            <span class="octicon octicon-tag"></span>
+            1
+          </span>
+          release
+        </a>
+      </li>
+
+      <li>
+        
+  <a href="/jpillora/notifyjs/graphs/contributors">
+    <span class="num">
+      <span class="octicon octicon-organization"></span>
+      3
+    </span>
+    contributors
+  </a>
+      </li>
+    </ul>
+
+      <div class="repository-lang-stats">
+        <ol class="repository-lang-stats-numbers">
+          <li>
+              <a href="/jpillora/notifyjs/search?l=javascript">
+                <span class="color-block language-color" style="background-color:#f7df1e;"></span>
+                <span class="lang">JavaScript</span>
+                <span class="percent">50.0%</span>
+              </a>
+          </li>
+          <li>
+              <a href="/jpillora/notifyjs/search?l=css">
+                <span class="color-block language-color" style="background-color:#563d7c;"></span>
+                <span class="lang">CSS</span>
+                <span class="percent">33.5%</span>
+              </a>
+          </li>
+          <li>
+              <a href="/jpillora/notifyjs/search?l=coffeescript">
+                <span class="color-block language-color" style="background-color:#244776;"></span>
+                <span class="lang">CoffeeScript</span>
+                <span class="percent">16.5%</span>
+              </a>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+  <div class="tooltipped tooltipped-s" aria-label="Show language statistics">
+    <a href="#"
+     class="repository-lang-stats-graph js-toggle-lang-stats"
+     style="background-color:#244776">
+  <span class="language-color" style="width:50.0%; background-color:#f7df1e;" itemprop="keywords">JavaScript</span><span class="language-color" style="width:33.5%; background-color:#563d7c;" itemprop="keywords">CSS</span><span class="language-color" style="width:16.5%; background-color:#244776;" itemprop="keywords">CoffeeScript</span>
+    </a>
+  </div>
+
+
+
+<div class="file-navigation in-mid-page">
+    <a href="/jpillora/notifyjs/compare" aria-label="Compare, review, create a pull request" class="minibutton compact primary tooltipped tooltipped-s" aria-label="Compare &amp; review" data-pjax>
+      <span class="octicon octicon-git-compare"></span>
+    </a>
+
+  
+
+<div class="select-menu js-menu-container js-select-menu" >
+  <span class="minibutton select-menu-button js-menu-target" data-hotkey="w"
+    data-master-branch="gh-pages"
+    data-ref="gh-pages"
+    role="button" aria-label="Switch branches or tags" tabindex="0" aria-haspopup="true">
+    <span class="octicon octicon-git-branch"></span>
+    <i>branch:</i>
+    <span class="js-select-button">gh-pages</span>
+  </span>
+
+  <div class="select-menu-modal-holder js-menu-content js-navigation-container" data-pjax aria-hidden="true">
+
+    <div class="select-menu-modal">
+      <div class="select-menu-header">
+        <span class="select-menu-title">Switch branches/tags</span>
+        <span class="octicon octicon-remove-close js-menu-close"></span>
+      </div> <!-- /.select-menu-header -->
+
+      <div class="select-menu-filters">
+        <div class="select-menu-text-filter">
+          <input type="text" aria-label="Filter branches/tags" id="context-commitish-filter-field" class="js-filterable-field js-navigation-enable" placeholder="Filter branches/tags">
+        </div>
+        <div class="select-menu-tabs">
+          <ul>
+            <li class="select-menu-tab">
+              <a href="#" data-tab-filter="branches" class="js-select-menu-tab">Branches</a>
+            </li>
+            <li class="select-menu-tab">
+              <a href="#" data-tab-filter="tags" class="js-select-menu-tab">Tags</a>
+            </li>
+          </ul>
+        </div><!-- /.select-menu-tabs -->
+      </div><!-- /.select-menu-filters -->
+
+      <div class="select-menu-list select-menu-tab-bucket js-select-menu-tab-bucket" data-tab-filter="branches">
+
+        <div data-filterable-for="context-commitish-filter-field" data-filterable-type="substring">
+
+
+            <div class="select-menu-item js-navigation-item selected">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/jpillora/notifyjs/tree/gh-pages"
+                 data-name="gh-pages"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target"
+                 title="gh-pages">gh-pages</a>
+            </div> <!-- /.select-menu-item -->
+        </div>
+
+          <div class="select-menu-no-results">Nothing to show</div>
+      </div> <!-- /.select-menu-list -->
+
+      <div class="select-menu-list select-menu-tab-bucket js-select-menu-tab-bucket" data-tab-filter="tags">
+        <div data-filterable-for="context-commitish-filter-field" data-filterable-type="substring">
+
+
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/jpillora/notifyjs/tree/0.3.1"
+                 data-name="0.3.1"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text js-select-button-text css-truncate-target"
+                 title="0.3.1">0.3.1</a>
+            </div> <!-- /.select-menu-item -->
+        </div>
+
+        <div class="select-menu-no-results">Nothing to show</div>
+      </div> <!-- /.select-menu-list -->
+
+    </div> <!-- /.select-menu-modal -->
+  </div> <!-- /.select-menu-modal-holder -->
+</div> <!-- /.select-menu -->
+
+
+  <div class="breadcrumb"><span class='repo-root js-repo-root'><span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="/jpillora/notifyjs" data-branch="gh-pages" data-direction="back" data-pjax="true" itemscope="url"><span itemprop="title">notifyjs</span></a></span></span><span class="separator"> / </span><form action="/login?return_to=%2Fjpillora%2Fnotifyjs" aria-label="Sign in to make or propose changes" class="js-new-blob-form tooltipped tooltipped-e new-file-link" method="post"><span aria-label="Sign in to make or propose changes" class="js-new-blob-submit octicon octicon-file-add" data-test-id="create-new-git-file" role="button"></span></form></div>
+</div>
+
+
+
+<a href="/jpillora/notifyjs/find/gh-pages"
+  data-hotkey="t" class="js-show-file-finder" style="display:none" data-pjax>Show File Finder</a>
+
+
+  
+  <div class="commit commit-tease js-details-container" >
+    <p class="commit-title ">
+        <a href="/jpillora/notifyjs/commit/d5a49073ec1597eb549d5fa477d7539525dbc102" class="message" data-pjax="true" title="fixed className shortcut on element notification - closes #11">fixed className shortcut on element notification - closes</a> <a href="https://github.com/jpillora/notifyjs/issues/11" class="issue-link" title="Persistent style instead of changing accordinaly to parameter">#11</a>
+        
+    </p>
+    <div class="commit-meta">
+      <button aria-label="Copy SHA" class="js-zeroclipboard zeroclipboard-link" data-clipboard-text="d5a49073ec1597eb549d5fa477d7539525dbc102" data-copied-hint="copied!" type="button"><span class="octicon octicon-clippy"></span></button>
+      <a href="/jpillora/notifyjs/commit/d5a49073ec1597eb549d5fa477d7539525dbc102" class="sha-block" data-pjax>latest commit <span class="sha">d5a49073ec</span></a>
+
+      <div class="authorship">
+        <img alt="Jaime Pillora" class="gravatar js-avatar" data-user="633843" height="20" src="https://avatars3.githubusercontent.com/u/633843?s=140" width="20" />
+        <span class="author-name"><a href="/jpillora" data-skip-pjax="true" rel="author">jpillora</a></span>
+        authored <local-time class="updated" datetime="2014-02-06T00:30:03+11:00" from="now" title-format="%Y-%m-%d %H:%M:%S %z" title="2014-02-06 00:30:03 +1100">February 06, 2014</local-time>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="file-wrap">
+    <table class="files" data-pjax>
+
+      
+<tbody class=""
+  data-url="/jpillora/notifyjs/file-list/gh-pages">
+    <tr>
+      <td class="icon">
+        <span class="octicon octicon-file-directory"></span>
+        <img alt="Octocat-spinner-32" class="spinner" height="16" src="https://github.global.ssl.fastly.net/images/spinners/octocat-spinner-32.gif" width="16" />
+      </td>
+      <td class="content">
+        <span class="css-truncate css-truncate-target"><a href="/jpillora/notifyjs/tree/gh-pages/dist" class="js-directory-link" id="2a6d07eef8b10b84129b42424ed99327-177655ee03059b5dbd2764ecc5d673b4654dce6e" title="dist">dist</a></span>
+      </td>
+      <td class="message">
+        <span class="css-truncate css-truncate-target"><a href="/jpillora/notifyjs/commit/d5a49073ec1597eb549d5fa477d7539525dbc102" class="message" data-pjax="true" title="fixed className shortcut on element notification - closes #11">fixed className shortcut on element notification - closes</a> <a href="https://github.com/jpillora/notifyjs/issues/11" class="issue-link" title="Persistent style instead of changing accordinaly to parameter">#11</a></span>
+      </td>
+      <td class="age"><span class="css-truncate css-truncate-target"><local-time datetime="2014-02-06T00:30:03+11:00" from="now" title-format="%Y-%m-%d %H:%M:%S %z" title="2014-02-06 00:30:03 +1100">February 06, 2014</local-time></span></td>
+    </tr>
+    <tr>
+      <td class="icon">
+        <span class="octicon octicon-file-directory"></span>
+        <img alt="Octocat-spinner-32" class="spinner" height="16" src="https://github.global.ssl.fastly.net/images/spinners/octocat-spinner-32.gif" width="16" />
+      </td>
+      <td class="content">
+        <span class="css-truncate css-truncate-target"><a href="/jpillora/notifyjs/tree/gh-pages/docs" class="js-directory-link" id="e3e2a9bfd88566b05001b02a3f51d286-8ff614db70801cb6f0c42448dcf508cb501f6f31" title="docs">docs</a></span>
+      </td>
+      <td class="message">
+        <span class="css-truncate css-truncate-target"><a href="/jpillora/notifyjs/commit/d5a49073ec1597eb549d5fa477d7539525dbc102" class="message" data-pjax="true" title="fixed className shortcut on element notification - closes #11">fixed className shortcut on element notification - closes</a> <a href="https://github.com/jpillora/notifyjs/issues/11" class="issue-link" title="Persistent style instead of changing accordinaly to parameter">#11</a></span>
+      </td>
+      <td class="age"><span class="css-truncate css-truncate-target"><local-time datetime="2014-02-06T00:30:03+11:00" from="now" title-format="%Y-%m-%d %H:%M:%S %z" title="2014-02-06 00:30:03 +1100">February 06, 2014</local-time></span></td>
+    </tr>
+    <tr>
+      <td class="icon">
+        <span class="octicon octicon-file-directory"></span>
+        <img alt="Octocat-spinner-32" class="spinner" height="16" src="https://github.global.ssl.fastly.net/images/spinners/octocat-spinner-32.gif" width="16" />
+      </td>
+      <td class="content">
+        <span class="css-truncate css-truncate-target"><a href="/jpillora/notifyjs/tree/gh-pages/examples" class="js-directory-link" id="bfebe34154a0dfd9fc7b447fc9ed74e9-f6e6945d7038bbee966f4e9b67f33bbeff845297" title="examples">examples</a></span>
+      </td>
+      <td class="message">
+        <span class="css-truncate css-truncate-target"><a href="/jpillora/notifyjs/commit/1b111dfcfa4f5cd4f55d9f16ac06c00823a56c87" class="message" data-pjax="true" title="Created Metro style">Created Metro style</a></span>
+      </td>
+      <td class="age"><span class="css-truncate css-truncate-target"><local-time datetime="2014-01-17T13:15:09-02:00" from="now" title-format="%Y-%m-%d %H:%M:%S %z" title="2014-01-17 13:15:09 -0200">January 17, 2014</local-time></span></td>
+    </tr>
+    <tr>
+      <td class="icon">
+        <span class="octicon octicon-file-directory"></span>
+        <img alt="Octocat-spinner-32" class="spinner" height="16" src="https://github.global.ssl.fastly.net/images/spinners/octocat-spinner-32.gif" width="16" />
+      </td>
+      <td class="content">
+        <span class="css-truncate css-truncate-target"><a href="/jpillora/notifyjs/tree/gh-pages/src" class="js-directory-link" id="25d902c24283ab8cfbac54dfa101ad31-19577cfd6a11f639df04c1abe2b6429b2802fe7a" title="src">src</a></span>
+      </td>
+      <td class="message">
+        <span class="css-truncate css-truncate-target"><a href="/jpillora/notifyjs/commit/d5a49073ec1597eb549d5fa477d7539525dbc102" class="message" data-pjax="true" title="fixed className shortcut on element notification - closes #11">fixed className shortcut on element notification - closes</a> <a href="https://github.com/jpillora/notifyjs/issues/11" class="issue-link" title="Persistent style instead of changing accordinaly to parameter">#11</a></span>
+      </td>
+      <td class="age"><span class="css-truncate css-truncate-target"><local-time datetime="2014-02-06T00:30:03+11:00" from="now" title-format="%Y-%m-%d %H:%M:%S %z" title="2014-02-06 00:30:03 +1100">February 06, 2014</local-time></span></td>
+    </tr>
+    <tr>
+      <td class="icon">
+        <span class="octicon octicon-file-text"></span>
+        <img alt="Octocat-spinner-32" class="spinner" height="16" src="https://github.global.ssl.fastly.net/images/spinners/octocat-spinner-32.gif" width="16" />
+      </td>
+      <td class="content">
+        <span class="css-truncate css-truncate-target"><a href="/jpillora/notifyjs/blob/gh-pages/.gitignore" class="js-directory-link" id="a084b794bc0759e7a6b77810e01874f2-3c3629e647f5ddf82548912e337bea9826b434af" title=".gitignore">.gitignore</a></span>
+      </td>
+      <td class="message">
+        <span class="css-truncate css-truncate-target"><a href="/jpillora/notifyjs/commit/8c0917498fa2d081a6e975efd31ba219593328fd" class="message" data-pjax="true" title="renamed jquery.prompt">renamed jquery.prompt</a></span>
+      </td>
+      <td class="age"><span class="css-truncate css-truncate-target"><local-time datetime="2013-04-04T13:13:08+11:00" from="now" title-format="%Y-%m-%d %H:%M:%S %z" title="2013-04-04 13:13:08 +1100">April 04, 2013</local-time></span></td>
+    </tr>
+    <tr>
+      <td class="icon">
+        <span class="octicon octicon-file-text"></span>
+        <img alt="Octocat-spinner-32" class="spinner" height="16" src="https://github.global.ssl.fastly.net/images/spinners/octocat-spinner-32.gif" width="16" />
+      </td>
+      <td class="content">
+        <span class="css-truncate css-truncate-target"><a href="/jpillora/notifyjs/blob/gh-pages/CNAME" class="js-directory-link" id="adc4bfdb0829dae99e3699393e3fbaa4-31a91ae0cd359ccf94838ed1a099861fffad0e5a" title="CNAME">CNAME</a></span>
+      </td>
+      <td class="message">
+        <span class="css-truncate css-truncate-target"><a href="/jpillora/notifyjs/commit/0b830a7040de62cdce06deddd2b3eb006df1f572" class="message" data-pjax="true" title="merged docs repo into main repo">merged docs repo into main repo</a></span>
+      </td>
+      <td class="age"><span class="css-truncate css-truncate-target"><local-time datetime="2014-01-18T20:51:42+11:00" from="now" title-format="%Y-%m-%d %H:%M:%S %z" title="2014-01-18 20:51:42 +1100">January 18, 2014</local-time></span></td>
+    </tr>
+    <tr>
+      <td class="icon">
+        <span class="octicon octicon-file-text"></span>
+        <img alt="Octocat-spinner-32" class="spinner" height="16" src="https://github.global.ssl.fastly.net/images/spinners/octocat-spinner-32.gif" width="16" />
+      </td>
+      <td class="content">
+        <span class="css-truncate css-truncate-target"><a href="/jpillora/notifyjs/blob/gh-pages/Gruntfile.coffee" class="js-directory-link" id="a35864fcc4749a3b904641b4be9feacf-2d0b051497d1f12518865a13e7d976aefdee0f2d" title="Gruntfile.coffee">Gruntfile.coffee</a></span>
+      </td>
+      <td class="message">
+        <span class="css-truncate css-truncate-target"><a href="/jpillora/notifyjs/commit/d5a49073ec1597eb549d5fa477d7539525dbc102" class="message" data-pjax="true" title="fixed className shortcut on element notification - closes #11">fixed className shortcut on element notification - closes</a> <a href="https://github.com/jpillora/notifyjs/issues/11" class="issue-link" title="Persistent style instead of changing accordinaly to parameter">#11</a></span>
+      </td>
+      <td class="age"><span class="css-truncate css-truncate-target"><local-time datetime="2014-02-06T00:30:03+11:00" from="now" title-format="%Y-%m-%d %H:%M:%S %z" title="2014-02-06 00:30:03 +1100">February 06, 2014</local-time></span></td>
+    </tr>
+    <tr>
+      <td class="icon">
+        <span class="octicon octicon-file-text"></span>
+        <img alt="Octocat-spinner-32" class="spinner" height="16" src="https://github.global.ssl.fastly.net/images/spinners/octocat-spinner-32.gif" width="16" />
+      </td>
+      <td class="content">
+        <span class="css-truncate css-truncate-target"><a href="/jpillora/notifyjs/blob/gh-pages/README.md" class="js-directory-link" id="04c6e90faac2675aa89e2176d2eec7d8-2e5bea56cb3ebfe692e533a9207ad5b231ea8d27" title="README.md">README.md</a></span>
+      </td>
+      <td class="message">
+        <span class="css-truncate css-truncate-target"><a href="/jpillora/notifyjs/commit/74c55d476e9667d8871ef518f9a38e8d74717d81" class="message" data-pjax="true" title="updated tagline">updated tagline</a></span>
+      </td>
+      <td class="age"><span class="css-truncate css-truncate-target"><local-time datetime="2013-06-20T12:38:46+10:00" from="now" title-format="%Y-%m-%d %H:%M:%S %z" title="2013-06-20 12:38:46 +1000">June 20, 2013</local-time></span></td>
+    </tr>
+    <tr>
+      <td class="icon">
+        <span class="octicon octicon-file-text"></span>
+        <img alt="Octocat-spinner-32" class="spinner" height="16" src="https://github.global.ssl.fastly.net/images/spinners/octocat-spinner-32.gif" width="16" />
+      </td>
+      <td class="content">
+        <span class="css-truncate css-truncate-target"><a href="/jpillora/notifyjs/blob/gh-pages/bower.json" class="js-directory-link" id="0a08a7565aba4405282251491979bb6b-7ba01a47dcb69424c06e87f0fab2b2b38b99a437" title="bower.json">bower.json</a></span>
+      </td>
+      <td class="message">
+        <span class="css-truncate css-truncate-target"><a href="/jpillora/notifyjs/commit/554615ba4b40c9521f75f3e6064f0c63d37585a6" class="message" data-pjax="true" title="Basic bower package file">Basic bower package file</a></span>
+      </td>
+      <td class="age"><span class="css-truncate css-truncate-target"><local-time datetime="2013-09-27T13:17:06+02:00" from="now" title-format="%Y-%m-%d %H:%M:%S %z" title="2013-09-27 13:17:06 +0200">September 27, 2013</local-time></span></td>
+    </tr>
+    <tr>
+      <td class="icon">
+        <span class="octicon octicon-file-text"></span>
+        <img alt="Octocat-spinner-32" class="spinner" height="16" src="https://github.global.ssl.fastly.net/images/spinners/octocat-spinner-32.gif" width="16" />
+      </td>
+      <td class="content">
+        <span class="css-truncate css-truncate-target"><a href="/jpillora/notifyjs/blob/gh-pages/index.html" class="js-directory-link" id="eacf331f0ffc35d4b482f1d15a887d3b-79e771edf83552ab510beca2025b813d39eee3b1" title="index.html">index.html</a></span>
+      </td>
+      <td class="message">
+        <span class="css-truncate css-truncate-target"><a href="/jpillora/notifyjs/commit/d5a49073ec1597eb549d5fa477d7539525dbc102" class="message" data-pjax="true" title="fixed className shortcut on element notification - closes #11">fixed className shortcut on element notification - closes</a> <a href="https://github.com/jpillora/notifyjs/issues/11" class="issue-link" title="Persistent style instead of changing accordinaly to parameter">#11</a></span>
+      </td>
+      <td class="age"><span class="css-truncate css-truncate-target"><local-time datetime="2014-02-06T00:30:03+11:00" from="now" title-format="%Y-%m-%d %H:%M:%S %z" title="2014-02-06 00:30:03 +1100">February 06, 2014</local-time></span></td>
+    </tr>
+    <tr>
+      <td class="icon">
+        <span class="octicon octicon-file-text"></span>
+        <img alt="Octocat-spinner-32" class="spinner" height="16" src="https://github.global.ssl.fastly.net/images/spinners/octocat-spinner-32.gif" width="16" />
+      </td>
+      <td class="content">
+        <span class="css-truncate css-truncate-target"><a href="/jpillora/notifyjs/blob/gh-pages/notify.jquery.json" class="js-directory-link" id="b8fc52298ad7333ef2572f5736a0c831-9058eddfe492d523da89d2e94f989a5c79c9d61c" title="notify.jquery.json">notify.jquery.json</a></span>
+      </td>
+      <td class="message">
+        <span class="css-truncate css-truncate-target"><a href="/jpillora/notifyjs/commit/4fb1a1b42cb3ef9861cbde87e5d88f8d7e62cadd" class="message" data-pjax="true" title="added multiple inputs">added multiple inputs</a></span>
+      </td>
+      <td class="age"><span class="css-truncate css-truncate-target"><local-time datetime="2013-07-05T12:04:05+10:00" from="now" title-format="%Y-%m-%d %H:%M:%S %z" title="2013-07-05 12:04:05 +1000">July 05, 2013</local-time></span></td>
+    </tr>
+    <tr>
+      <td class="icon">
+        <span class="octicon octicon-file-text"></span>
+        <img alt="Octocat-spinner-32" class="spinner" height="16" src="https://github.global.ssl.fastly.net/images/spinners/octocat-spinner-32.gif" width="16" />
+      </td>
+      <td class="content">
+        <span class="css-truncate css-truncate-target"><a href="/jpillora/notifyjs/blob/gh-pages/package.json" class="js-directory-link" id="b9cfc7f2cdf78a7f4b91a753d10865a2-15edb849fc8240d75f5436d8ca3f20fdc513f81c" title="package.json">package.json</a></span>
+      </td>
+      <td class="message">
+        <span class="css-truncate css-truncate-target"><a href="/jpillora/notifyjs/commit/4fb1a1b42cb3ef9861cbde87e5d88f8d7e62cadd" class="message" data-pjax="true" title="added multiple inputs">added multiple inputs</a></span>
+      </td>
+      <td class="age"><span class="css-truncate css-truncate-target"><local-time datetime="2013-07-05T12:04:05+10:00" from="now" title-format="%Y-%m-%d %H:%M:%S %z" title="2013-07-05 12:04:05 +1000">July 05, 2013</local-time></span></td>
+    </tr>
+</tbody>
+
+    </table>
+  </div>
+
+
+  <div id="readme" class="clearfix announce instapaper_body md">
+    <span class="name">
+      <span class="octicon octicon-book"></span>
+      README.md
+    </span>
+
+    <article class="markdown-body entry-content" itemprop="mainContentOfPage"><h1>
+<a name="notifyjs" class="anchor" href="#notifyjs"><span class="octicon octicon-link"></span></a>Notify.js</h1>
+
+<blockquote>
+<p>A simple, yet fully customizable notification library</p>
+</blockquote>
+
+<p>See demos and full documentation at:</p>
+
+<h2>
+<a name="httpnotifyjscom" class="anchor" href="#httpnotifyjscom"><span class="octicon octicon-link"></span></a><a href="http://notifyjs.com/">http://notifyjs.com/</a>
+</h2>
+
+<h4>
+<a name="mit-license" class="anchor" href="#mit-license"><span class="octicon octicon-link"></span></a>MIT License</h4>
+
+<p>Copyright © 2013 Jaime Pillora &lt;<a href="mailto:dev@jpillora.com">dev@jpillora.com</a>&gt;</p>
+
+<p>Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+'Software'), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:</p>
+
+<p>The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.</p>
+
+<p>THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p></article>
+  </div>
+
+
+        </div>
+
+      </div><!-- /.repo-container -->
+      <div class="modal-backdrop"></div>
+    </div><!-- /.container -->
+  </div><!-- /.site -->
+
+
+    </div><!-- /.wrapper -->
+
+      <div class="container">
+  <div class="site-footer">
+    <ul class="site-footer-links right">
+      <li><a href="https://status.github.com/">Status</a></li>
+      <li><a href="http://developer.github.com">API</a></li>
+      <li><a href="http://training.github.com">Training</a></li>
+      <li><a href="http://shop.github.com">Shop</a></li>
+      <li><a href="/blog">Blog</a></li>
+      <li><a href="/about">About</a></li>
+
+    </ul>
+
+    <a href="/">
+      <span class="mega-octicon octicon-mark-github" title="GitHub"></span>
+    </a>
+
+    <ul class="site-footer-links">
+      <li>&copy; 2014 <span title="0.03858s from github-fe122-cp1-prd.iad.github.net">GitHub</span>, Inc.</li>
+        <li><a href="/site/terms">Terms</a></li>
+        <li><a href="/site/privacy">Privacy</a></li>
+        <li><a href="/security">Security</a></li>
+        <li><a href="/contact">Contact</a></li>
+    </ul>
+  </div><!-- /.site-footer -->
+</div><!-- /.container -->
+
+
+    <div class="fullscreen-overlay js-fullscreen-overlay" id="fullscreen_overlay">
+  <div class="fullscreen-container js-fullscreen-container">
+    <div class="textarea-wrap">
+      <textarea name="fullscreen-contents" id="fullscreen-contents" class="fullscreen-contents js-fullscreen-contents" placeholder="" data-suggester="fullscreen_suggester"></textarea>
+    </div>
+  </div>
+  <div class="fullscreen-sidebar">
+    <a href="#" class="exit-fullscreen js-exit-fullscreen tooltipped tooltipped-w" aria-label="Exit Zen Mode">
+      <span class="mega-octicon octicon-screen-normal"></span>
+    </a>
+    <a href="#" class="theme-switcher js-theme-switcher tooltipped tooltipped-w"
+      aria-label="Switch themes">
+      <span class="octicon octicon-color-mode"></span>
+    </a>
+  </div>
+</div>
+
+
+
+    <div id="ajax-error-message" class="flash flash-error">
+      <span class="octicon octicon-alert"></span>
+      <a href="#" class="octicon octicon-remove-close close js-ajax-error-dismiss"></a>
+      Something went wrong with that request. Please try again.
+    </div>
+
+  </body>
+</html>
+

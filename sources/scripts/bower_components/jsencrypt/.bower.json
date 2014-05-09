@@ -1,0 +1,21 @@
+{
+  "name": "travist/jsencrypt",
+  "version": "2.0.0",
+  "main": "bin/jsencrypt.min.js",
+  "description": "Provides a simple wrapper around the fantastic work done by Tom Wu for RSA Encryption in JavaScript",
+  "license": "MIT",
+  "ignore": [],
+  "dependencies": {},
+  "devDependencies": {},
+  "homepage": "https://github.com/travist/jsencrypt",
+  "_release": "2.0.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "2.0.0",
+    "commit": "dacd9a724e664b9b7c1882108f3d54ed439df7b0"
+  },
+  "_source": "git://github.com/travist/jsencrypt.git",
+  "_target": "~2.0.0",
+  "_originalSource": "jsencrypt",
+  "_direct": true
+}

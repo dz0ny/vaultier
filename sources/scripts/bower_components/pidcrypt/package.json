@@ -1,0 +1,31 @@
+{
+  "name": "pidcrypt",
+  "version": "0.3.0",
+  "description": "Crypto library for JavaScript",
+  "main": "Gruntfile.js",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/karolmajta/pidcrypt.git"
+  },
+  "keywords": [
+    "crypto",
+    "sha",
+    "sha256",
+    "aes",
+    "rsa"
+  ],
+  "author": "Versaneo GmbH",
+  "license": "GPLv3",
+  "bugs": {
+    "url": "https://github.com/karolmajta/pidcrypt/issues"
+  },
+  "homepage": "https://github.com/karolmajta/pidcrypt",
+  "devDependencies": {
+    "grunt-cli": "~0.1.13",
+    "grunt": "~0.4.2",
+    "bower": "~1.2.8"
+  }
+}
