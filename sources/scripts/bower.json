@@ -24,7 +24,7 @@
   "dependencies": {
     "FileAPI": "~2.0.3",
     "FileSaver": "*",
-    "Keypress": "https://dmauro.github.io/Keypress",
+    "Keypress": "https://github.com/dmauro/Keypress.git#~2.0.2",
     "TraceKit": "https://github.com/getsentry/TraceKit",
     "bootstrap": "~3.1.1",
     "cryptojs": "*",
@@ -33,17 +33,22 @@
     "jquery-cookie": "~1.4.1",
     "jquery.sessionstorage": "*",
     "jsencrypt": "~2.0.0",
-    "jsrsasign": "https://kjur.github.com/jsrsasign",
+    "jsrsasign": "https://github.com/kjur/jsrsasign.git#~4.2.2",
     "jstorage": "~0.4.8",
     "lgtm": "~0.3.5",
     "marked": "~0.3.2",
     "momentjs": "~2.6.0",
-    "notifyjs": "https://github.com/jpillora/notifyjs",
+    "notifyjs": "https://github.com/jpillora/notifyjs.git#~0.3.1",
     "pidcrypt": "~0.3.0",
     "requirejs": "~2.1.11",
     "requirejs-text": "~2.0.12",
     "select2": "~3.4.8",
     "selectize": "~0.9.1",
-    "headjs": "~1.0.3"
+    "headjs": "~1.0.3",
+    "notify.js": "~1.2.0",
+    "jsep": "https://github.com/soney/jsep.git#0.2.0",
+    "bootswatch": "https://github.com/thomaspark/bootswatch.git#3.0.3",
+    "raven-js": "~1.1.15",
+    "CryptoJS": "~3.1.12"
   }
 }

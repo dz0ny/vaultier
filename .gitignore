@@ -21,3 +21,9 @@ nbproject/
 .idea/
 
 sources/app/settings.py
+
+# ignore node modules
+sources/scripts/node_modules/
+
+#ignore bower componets
+sources/scripts/bower_components/
