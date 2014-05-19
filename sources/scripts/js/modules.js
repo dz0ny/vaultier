@@ -30,13 +30,13 @@ var vaultierModulesConfig = {
         "cyphering-core": {
             "scripts": [
                 "./bower_components/CryptoJS/build/components/core.js",
-                "./bower_components/CryptoJS/build/componnets/enc-base64.js",
-                "./bower_components/CryptoJS/build/componnets/md5.js",
-                "./bower_components/CryptoJS/build/componnets/sha1.js",
-                "./bower_components/CryptoJS/build/componnets/sha256.js",
-                "./bower_components/CryptoJS/build/componnets/ripemd160.js",
-                "./bower_components/CryptoJS/build/componnets/x64-core.js",
-                "./bower_components/CryptoJS/build/componnets/sha512.js",
+                "./bower_components/CryptoJS/build/components/enc-base64.js",
+                "./bower_components/CryptoJS/build/components/md5.js",
+                "./bower_components/CryptoJS/build/components/sha1.js",
+                "./bower_components/CryptoJS/build/components/sha256.js",
+                "./bower_components/CryptoJS/build/components/ripemd160.js",
+                "./bower_components/CryptoJS/build/components/x64-core.js",
+                "./bower_components/CryptoJS/build/components/sha512.js",
                 "./bower_components/CryptoJS/build/rollups/aes.js"
             ]
         },
@@ -88,7 +88,7 @@ var vaultierModulesConfig = {
             ],
             "styles": [
                 "./bower_components/bootstrap/dist/css/bootstrap.css",
-                "./bower_components/bootswatch/assets/css/bootwatch.min.css",
+                "./bower_components/bootswatch/assets/css/bootswatch.min.css",
                 "./bower_components/select2/select2.css",
                 "./bower_components/select2-bootstrap.css",
                 "./bower_components/selectize/dist/css/selectize.bootstrap3.css"

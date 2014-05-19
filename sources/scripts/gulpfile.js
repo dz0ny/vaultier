@@ -8,7 +8,6 @@ var gulp = require('gulp'),
     livereload = require('gulp-livereload'),
     connect = require('connect'),
     jshint = require('gulp-jshint'),
-    //EnviromentFactory = require('./js/enviromentBuilder'),
     EnviromentFactory = require('rclick-ember-enviroment'),
     vaultierConfig = require('./js/modules');
 
@@ -63,7 +62,7 @@ gulp.task('server', function (next) {
 
 gulp.task('watch', ['fonts', 'builder:dev', 'server'], function () {
     var server = livereload();
-    gulp.watch(paths.dev.scripts, [jshint_watcher]);
+    //gulp.watch(paths.dev.scripts, jshint_watcher);
 
     gulp.src(['./js/**/*.js', './css/**/*.css', './js/**/*.hbs'])
         .on('change', function (file) {
