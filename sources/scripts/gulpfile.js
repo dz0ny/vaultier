@@ -8,7 +8,8 @@ var gulp = require('gulp'),
     livereload = require('gulp-livereload'),
     connect = require('connect'),
     jshint = require('gulp-jshint'),
-    EnviromentFactory = require('./js/enviromentBuilder'),
+    //EnviromentFactory = require('./js/enviromentBuilder'),
+    EnviromentFactory = require('rclick-ember-enviroment'),
     vaultierConfig = require('./js/modules');
 
 var paths = {
@@ -36,7 +37,7 @@ var enviroment = new EnviromentFactory(paths, APPLICATION_NAME);
 function jshint_watcher() {
     return gulp.src(paths.dev.scripts)
         .pipe(jshint())
-        .pipe(gulp.dest(paths.build.scripts));
+        .pipe(jshint.reporter());
 }
 
 function devBuilder() {
@@ -47,24 +48,22 @@ function devBuilder() {
     enviroment.createIncludesFile();
 }
 
-gulp.task('dev-builder', function () {
+gulp.task('builder:dev', function () {
     devBuilder();
 });
 
 gulp.task('fonts', function () {
-    gulp.src(paths.dev.fonts).pipe(gulp.dest(paths.build.fonts));
+    return gulp.src(paths.dev.fonts).pipe(gulp.dest(paths.build.fonts));
 });
 
 gulp.task('server', function (next) {
     var server = connect();
-
     server.use(connect.static('/var/www/vaultier/sources')).listen(8001, next);
 });
 
-gulp.task('watch', ['fonts', 'dev-builder', 'server'], function () {
-    var server = livereload('0.0.0.0:8000');
-    gulp.src(paths.dev.scripts).pipe(watch()).pipe(jshint());
-    gulp.watch(paths.dev.scripts, jshint_watcher);
+gulp.task('watch', ['fonts', 'builder:dev', 'server'], function () {
+    var server = livereload();
+    gulp.watch(paths.dev.scripts, [jshint_watcher]);
 
     gulp.src(['./js/**/*.js', './css/**/*.css', './js/**/*.hbs'])
         .on('change', function (file) {
