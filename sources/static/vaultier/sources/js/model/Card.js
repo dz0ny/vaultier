@@ -8,4 +8,3 @@ Vaultier.Card = RL.Model.extend(
         vault: RL.attr('number'),
         perms: RL.attr('object')
     });
-

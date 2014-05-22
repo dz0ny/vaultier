@@ -14,12 +14,9 @@
   "author": "rclick",
   "license": "MIT",
   "devDependencies": {
-    "connect": "^2.15.0",
     "event-stream": "^3.1.5",
     "gulp": "^3.6.2",
-    "gulp-clean": "^0.2.4",
     "gulp-concat-sourcemap": "^1.2.3",
-    "gulp-connect": "^2.0.5",
     "gulp-ember-handlebars": "git://github.com/rclick-cz/gulp-ember-handlebars.git",
     "gulp-if": "^1.2.0",
     "gulp-imagemin": "^0.5.0",
@@ -31,7 +28,6 @@
     "gulp-plumber": "^0.6.1",
     "gulp-uglify": "^0.2.1",
     "gulp-watch": "^0.6.4",
-    "streamqueue": "0.0.7",
-    "vhost": "^1.0.0"
+    "q": "^1.0.1"
   }
 }

@@ -24,9 +24,9 @@
   "dependencies": {
     "FileAPI": "~2.0.3",
     "FileSaver": "*",
-    "Keypress": "https://github.com/dmauro/Keypress.git#~2.0.2",
+    "Keypress": "https://github.com/dmauro/Keypress.git#1.0.9",
     "TraceKit": "https://github.com/getsentry/TraceKit",
-    "bootstrap": "~3.1.1",
+    "bootstrap": "3.0.0",
     "cryptojs": "*",
     "ember-restless": "~0.5.1",
     "ember": "~1.5.1",

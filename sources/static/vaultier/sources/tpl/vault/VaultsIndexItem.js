@@ -18,7 +18,7 @@ function program1(depth0,data) {
 function program2(depth0,data) {
   
   var buffer = '', stack1, helper, options;
-  data.buffer.push("\n        <div class=\"vlt-header\">\n            <div class=\"vlt-icon\">\n                <img src=\"/static/images/icon-vault-dark-blue.png\">\n            </div>\n            <div class=\"vlt-title\">\n                <h3>\n                    ");
+  data.buffer.push("\n        <div class=\"vlt-header\">\n            <div class=\"vlt-icon\">\n                <img src=\"/static/vaultier/images/icon-vault-dark-blue.png\">\n            </div>\n            <div class=\"vlt-title\">\n                <h3>\n                    ");
   data.buffer.push(escapeExpression((helper = helpers.ellipsis || (depth0 && depth0.ellipsis),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["ID","INTEGER"],data:data},helper ? helper.call(depth0, "name", 35, options) : helperMissing.call(depth0, "ellipsis", "name", 35, options))));
   data.buffer.push("\n                </h3>\n\n            </div>\n        </div>\n        <div class=\"vlt-body\">\n            ");
   stack1 = helpers['if'].call(depth0, "description", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(5, program5, data),fn:self.program(3, program3, data),contexts:[depth0],types:["ID"],data:data});

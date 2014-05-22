@@ -205,14 +205,14 @@ Vaultier.AuthRegisterCredsRoute = Ember.Route.extend({
     },
 
     setupController: function (ctrl) {
-        this._super(arguments);
+        this._super.apply(this, arguments);
 
         ctrl.set('props.loginButtonHidden', true);
         ctrl.set('props.nextButtonDisabled', false);
         ctrl.set('props.nextButtonTitle', 'Sumit your credentials');
 
         // prepare user model
-        var user = this.modelFor('AuthRegister')
+        var user = this.modelFor('AuthRegister');
 
         // testing
 //        var u = 'jan' + Math.round(Math.random() * 100000) + '@rclick.cz';

@@ -20,7 +20,7 @@ ApplicationLoader = {
                     'line-height': ' 300px',
                     'margin-left': ' -150px',
                     'margin-top': ' -150px',
-                    'background-image': " url('/static/images/preloader_250x250.gif')",
+                    'background-image': " url('/static/vaultier/images/preloader_250x250.gif')",
                     'background-repeat': 'no-repeat',
                     'background-size': ' 150px 150px',
                     'background-position': ' 50% 50%',
@@ -120,7 +120,7 @@ ApplicationLoader = {
 }
 
 $(document).ready(function(){
-    $.getJSON('/static/js/includes.json', function(jsonData){
+    $.getJSON('/static/vaultier/includes.json', function(jsonData){
         $.each(jsonData.modules, function(index, obj){
             ApplicationLoader.queueFile(obj['file']);
         });

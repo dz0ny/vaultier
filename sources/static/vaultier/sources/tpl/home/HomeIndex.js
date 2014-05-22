@@ -10,7 +10,7 @@ function program1(depth0,data) {
   data.buffer.push("Get started today <b> for\r\n                        free </b>");
   }
 
-  data.buffer.push("<div class=\"vlt-hp\">\r\n    <div class=\"jumbotron\">\r\n        <div class=\"vlt-message\">\r\n            <div class=\"vlt-visual col-md-4 text-center\">\r\n                <img src=\"/static/images/logo-hp.png\">\r\n            </div>\r\n            <div class=\"vlt-text  col-md-8 text-center\">\r\n                <h1>\r\n                    Vaultier\r\n                </h1>\r\n\r\n                <p class=\"lead\">\r\n                    Easy and secure password and credentials sharing across teams.\r\n                </p>\r\n\r\n                <p>\r\n                    ");
+  data.buffer.push("<div class=\"vlt-hp\">\r\n    <div class=\"jumbotron\">\r\n        <div class=\"vlt-message\">\r\n            <div class=\"vlt-visual col-md-4 text-center\">\r\n                <img src=\"/static/vaultier/images/logo-hp.png\">\r\n            </div>\r\n            <div class=\"vlt-text  col-md-8 text-center\">\r\n                <h1>\r\n                    Vaultier\r\n                </h1>\r\n\r\n                <p class=\"lead\">\r\n                    Easy and secure password and credentials sharing across teams.\r\n                </p>\r\n\r\n                <p>\r\n                    ");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{
     'class': ("btn btn-lg btn-success")
   },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "AuthRegister", options) : helperMissing.call(depth0, "link-to", "AuthRegister", options));

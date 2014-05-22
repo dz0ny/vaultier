@@ -1,73 +1,86 @@
 'use strict';
 
-var APPLICATION_NAME = "vaultier";
+var APPLICATION_NAME = 'vaultier';
 var gulp = require('gulp'),
-    vhost = require('vhost'),
-    watch = require('gulp-watch'),
-    newer = require('gulp-newer'),
-    livereload = require('gulp-livereload'),
-    connect = require('connect'),
+    gLivereload = require('gulp-livereload'),
+    util = require('util'),
+    Q = require('q'),
     jshint = require('gulp-jshint'),
-    EnviromentFactory = require('rclick-ember-enviroment'),
-    vaultierConfig = require('./js/modules');
+    vaultierConfig = require('./js/modules'),
+    EnviromentFactory = require('./js/builder');
 
 var paths = {
     dev: {
-        scripts: ['./js/**/*js', './local_components/**/*.js'],
-        images: './images/**/*',
-        styles: './css/*.css',
-        templates: ['./js/**/*.hbs'],
-        vendors: ['./bower_components/', './local_components/'],
-        config: './js/modules.json',
-        fonts: './bower_components/bootstrap/dist/fonts/*{.eot,.svg,.ttf,.woff}'
-    },
-    build: {
-        scripts: '../static/js/',
-        images: '../static/images/',
-        styles: '../static/css/',
-        templates: '../static/tpl/',
-        vendors: '../static/lib/',
-        fonts: '../static/fonts/'
+        scripts: ["./js/**/*.js", "./local_components/**/*.js"],
+        styles: "./css/**/*.css",
+        templates: "./js/**/*.hbs"
     }
-};
+}
 
-var enviroment = new EnviromentFactory(paths, APPLICATION_NAME);
-
+/**
+ * Check for poor coding styles
+ * @returns {Stream|promise}
+ */
 function jshint_watcher() {
     return gulp.src(paths.dev.scripts)
         .pipe(jshint())
         .pipe(jshint.reporter());
 }
 
-function devBuilder() {
-    var context = vaultierConfig.dev;
+/**
+ * Loop through each module inside the configuration json development environment
+ */
+function builder(context) {
+    var environment = new EnviromentFactory(APPLICATION_NAME);
+    var streams = [];
     for (var module in context) {
-        enviroment.parseModule(context[module], module);
+        try {
+            streams.push(environment.build(context[module], module));
+        } catch (error) {
+            console.error(error, "devBuilder");
+            throw error;
+        }
     }
-    enviroment.createIncludesFile();
+    environment.createIncludesFile();
+    return Q.all(streams);
 }
 
 gulp.task('builder:dev', function () {
-    devBuilder();
+    return builder(vaultierConfig.dev);
 });
 
-gulp.task('fonts', function () {
-    return gulp.src(paths.dev.fonts).pipe(gulp.dest(paths.build.fonts));
+/**
+ * Run before deploy
+ * use the minified version of the vendor
+ */
+gulp.task('builder:prod', function () {
+    var context = vaultierConfig.dev;
+    return builder(context.concat(vaultierConfig.prod));
+});
+
+gulp.task('jshint', function () {
+    return jshint_watcher();
 });
 
 gulp.task('server', function (next) {
+    var connect = require('connect');
     var server = connect();
-    server.use(connect.static('/var/www/vaultier/sources')).listen(8001, next);
+    server.use(connect.static(process.cwd() + '/../' )).listen(process.env.PORT || 8005, next);
 });
 
-gulp.task('watch', ['fonts', 'builder:dev', 'server'], function () {
-    var server = livereload();
-    //gulp.watch(paths.dev.scripts, jshint_watcher);
 
-    gulp.src(['./js/**/*.js', './css/**/*.css', './js/**/*.hbs'])
-        .on('change', function (file) {
-            devBuilder();
+gulp.task('watch', ['builder:dev'], function () {
+    var glob = paths.dev.scripts;
+    var server = gLivereload();
+    glob.push(paths.dev.styles);
+    glob.push(paths.dev.templates);
+
+    try {
+        gulp.watch(glob, ['builder:dev']).on('change', function (file) {
             server.changed(file.path);
         });
+    } catch (err) {
+        console.error(err);
+    }
 });
 

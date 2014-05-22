@@ -87,10 +87,10 @@ var vaultierModulesConfig = {
                 "./bower_components/selectize/dist/js/standalone/selectize.js"
             ],
             "styles": [
-                "./bower_components/bootstrap/dist/css/bootstrap.css",
-                "./bower_components/bootswatch/assets/css/bootswatch.min.css",
+                "./local_components/bootswatch/css/bootstrap.css",
+                "./local_components/bootswatch/css/bootwatch.min.css",
                 "./bower_components/select2/select2.css",
-                "./bower_components/select2-bootstrap.css",
+                "./bower_components/select2/select2-bootstrap.css",
                 "./bower_components/selectize/dist/css/selectize.bootstrap3.css"
             ]
         },
@@ -101,9 +101,15 @@ var vaultierModulesConfig = {
                 "./bower_components/headjs/dist/1.0.0/head.js",
                 "./js/loader.js"
             ],
-            "styles": [
-                "./css/application.css",
-                "./css/home.css"
+            // assets must be reference here so that we skip it from loader
+            "fonts": [
+                './local_components/bootswatch/fonts/glyphicons-halflings-regular.eot',
+                './local_components/bootswatch/fonts/glyphicons-halflings-regular.svg',
+                './local_components/bootswatch/fonts/glyphicons-halflings-regular.ttf',
+                './local_components/bootswatch/fonts/glyphicons-halflings-regular.woff'
+            ],
+            "images": [
+                './images/**/*'
             ]
         },
         "core": {
@@ -166,7 +172,9 @@ var vaultierModulesConfig = {
                 "./js/module/Layout/Breadcrumbs.js",
                 "./js/module/Layout/WorkspaceBox.js",
                 "./js/module/Layout/Confirm.js"
-            ],
+            ]
+        },
+        "assets": {
             "styles": [
                 "./css/application.css",
                 "./css/home.css"
@@ -212,6 +220,7 @@ var vaultierModulesConfig = {
                 "./js/module/Member/MemberInvite.js"
             ],
             "templates": [
+                "./js/module/Member/MemberIndex.hbs",
                 "./js/module/Invitation/InvitationAnonymous.hbs",
                 "./js/module/Invitation/InvitationAccept.hbs"
             ]

@@ -27,3 +27,8 @@ sources/scripts/node_modules/
 
 #ignore bower componets
 sources/scripts/bower_components/
+
+# we can ignore builded handlebar templates
+sources/scripts/tpl/
+
+sources/media/

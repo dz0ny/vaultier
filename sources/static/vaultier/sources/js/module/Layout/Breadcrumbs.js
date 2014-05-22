@@ -25,7 +25,7 @@ Vaultier.Breadcrumbs = Ember.Object.extend({
         title = Utils.HandlebarsHelpers.current().ellipsis(title, 25)
 
         if (!icon) {
-            icon = '/static/images/icon-wrench-grey.png'
+            icon = '/static/vaultier/images/icon-wrench-grey.png'
         }
 
         this.items.push({
@@ -54,17 +54,17 @@ Vaultier.Breadcrumbs = Ember.Object.extend({
     },
 
     addCollaboratorsIndex: function(route) {
-        return this.addLink(route, 'Collaborators', null, '/static/images/icon-user-grey.png')
+        return this.addLink(route, 'Collaborators', null, '/static/vaultier/images/icon-user-grey.png')
     },
 
     addCollaboratorsInvite : function(route) {
-        return this.addLink(route, 'Invite', null, '/static/images/icon-plus-grey.png')
+        return this.addLink(route, 'Invite', null, '/static/vaultier/images/icon-plus-grey.png')
     },
 
     addVault: function () {
         var vault = Service.Environment.current().vault;
         if (vault) {
-            this.addLink('Vault.index', vault.get('name'), vault,'/static/images/icon-vault-grey.png')
+            this.addLink('Vault.index', vault.get('name'), vault,'/static/vaultier/images/icon-vault-grey.png')
         }
         return this;
     },
@@ -72,7 +72,7 @@ Vaultier.Breadcrumbs = Ember.Object.extend({
     addCard: function () {
         var card = Service.Environment.current().card;
         if (card) {
-            this.addLink('Card.index', card.get('name'), card,'/static/images/icon-card-grey.png')
+            this.addLink('Card.index', card.get('name'), card,'/static/vaultier/images/icon-card-grey.png')
         }
         return this;
     },
@@ -81,7 +81,7 @@ Vaultier.Breadcrumbs = Ember.Object.extend({
     addWorkspace: function () {
         var workspace = Service.Environment.current().workspace;
         if (workspace) {
-            this.addLink('Workspace.index', workspace.get('name'), workspace, '/static/images/icon-workspace-grey.png')
+            this.addLink('Workspace.index', workspace.get('name'), workspace, '/static/vaultier/images/icon-workspace-grey.png')
         }
         return this;
     }

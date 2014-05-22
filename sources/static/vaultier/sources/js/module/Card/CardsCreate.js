@@ -15,6 +15,7 @@ Vaultier.CardsCreateRoute = Ember.Route.extend(
 
             var store = this.get('store');
             var record = store.createRecord('Card');
+            console.log(record, "Record");
             return record;
         },
 

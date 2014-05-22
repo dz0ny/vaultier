@@ -44,7 +44,7 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
         var server = window.location.protocol + '//' + window.location.host;
         var img = 'identicon';
         if (server.indexOf(':') === -1) {
-            img = encodeURIComponent(server + '/static/images/icon-avatar-grey.png');
+            img = encodeURIComponent(server + '/static/vaultier/images/icon-avatar-grey.png');
         }
 
         var size = ( typeof(options.hash.size) === "undefined") ? 32 : options.hash.size;

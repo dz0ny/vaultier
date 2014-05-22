@@ -77,7 +77,6 @@ Vaultier.AuthLoginRoute = Ember.Route.extend({
             var privateKey = ctrl.get('privateKey');
 
             var auth = this.get('auth');
-            console.log(auth);
             var promise = auth
                 .login(email, privateKey, true)
                 .then(function (user) {
