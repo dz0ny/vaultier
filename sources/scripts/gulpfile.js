@@ -62,13 +62,6 @@ gulp.task('jshint', function () {
     return jshint_watcher();
 });
 
-gulp.task('server', function (next) {
-    var connect = require('connect');
-    var server = connect();
-    server.use(connect.static(process.cwd() + '/../' )).listen(process.env.PORT || 8005, next);
-});
-
-
 gulp.task('watch', ['builder:dev'], function () {
     var glob = paths.dev.scripts;
     var server = gLivereload();

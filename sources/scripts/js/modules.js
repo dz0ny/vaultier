@@ -11,6 +11,7 @@ var vaultierModulesConfig = {
         "jquery-plugins": {
             "scripts": [
                 "./bower_components/notifyjs/dist/notify.js",
+                "./bower_components/notifyjs/dist/styles/bootstrap/notify-bootstrap.js",
                 "./bower_components/jstorage/jstorage.js",
                 "./bower_components/jquery-cookie/jquery.cookie.js",
                 "./bower_components/jquery.sessionstorage/jquery.sessionStorage.js"
@@ -338,7 +339,8 @@ var vaultierModulesConfig = {
             "scripts": [
                 "./bower_components/raven-js/dist/raven.min.js",
 
-                "./bower_components/notify.js/notify.js",
+                "./bower_components/notifyjs/dist/notify.js",
+                "./bower_components/notifyjs/dist/styles/bootstrap/notify-bootstrap.js",
                 "./bower_components/jstorage/jstorage.min.js",
                 ".bower_components/jquery-cookie/jquery.cookie.js",
                 ".bower_components/jquery.sessionistorage/jquery.sessionStorage.js",

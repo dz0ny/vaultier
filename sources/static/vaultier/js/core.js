@@ -2776,7 +2776,7 @@ Vaultier.RollbackMixin = Ember.Mixin.create({
             this.set(field, this.get('cleanValues.' + field));
         }.bind(this));
         this.set('isDirty', false);
-    },
+    }
 
 });
 

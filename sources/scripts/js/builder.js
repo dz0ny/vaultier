@@ -244,7 +244,7 @@ Builder.prototype.processStream = function (stream, destination, sourcesRootPath
                     }
                 )
             ))
-        .pipe(gulp.dest(destination + '/' + extension.slice(1)));
+        .pipe(gulpif([this.STYLES_KEY, 'fonts'].indexOf(type) < 0, gulp.dest(destination + '/' + extension.slice(1))));
 };
 
 /**

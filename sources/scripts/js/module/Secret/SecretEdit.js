@@ -8,12 +8,12 @@ Vaultier.SecretEditRoute = Ember.Route.extend(
         serialize: function (secret) {
             return {
                 secret: secret.id
-            }
+            };
         },
 
         model: function (params, transition) {
             // check workspace keys
-            var workspace = this.modelFor('Workspace')
+            var workspace = this.modelFor('Workspace');
             if (!workspace.get('hasValidKey')) {
                 throw Error('Cannot edit secret without valid workspace key');
             }
@@ -23,8 +23,8 @@ Vaultier.SecretEditRoute = Ember.Route.extend(
             promise
                 .then(this.get('auth').checkPermissions(transition, function (model) {
                     perms = model.get('perms.update');
-                    return perms
-                }))
+                    return perms;
+                }));
 
             return promise;
         },
@@ -40,14 +40,14 @@ Vaultier.SecretEditRoute = Ember.Route.extend(
                     .addVault()
                     .addCard()
                     .addText('Edit secret')
-            )
+            );
         },
 
         actions: {
             save: function () {
                 var notifyError = function (error) {
                     $.notify('Oooups! Something went wrong.', 'error');
-                    throw error
+                    throw error;
                 }
 
                 try {
@@ -58,11 +58,11 @@ Vaultier.SecretEditRoute = Ember.Route.extend(
                             $.notify('Your changes has been successfully saved.', 'success');
                             history.go(-1);
                         }.bind(this))
-                        .catch(notifyError)
+                        .catch(notifyError);
 
-                    ApplicationLoader.promise(promise)
+                    ApplicationLoader.promise(promise);
                 } catch (e) {
-                    ApplicationLoader.hideLoader()
+                    ApplicationLoader.hideLoader();
                     notifyError(e);
                 }
             }
