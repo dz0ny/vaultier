@@ -1,0 +1,33 @@
+{
+  "name": "vaultier",
+  "version": "0.0.1",
+  "description": "Tool for keep privacy of any thing you want to hide from others",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "vaultier",
+    "rclick",
+    "privacy"
+  ],
+  "author": "rclick",
+  "license": "MIT",
+  "devDependencies": {
+    "event-stream": "^3.1.5",
+    "gulp": "^3.6.2",
+    "gulp-concat-sourcemap": "^1.2.3",
+    "gulp-ember-handlebars": "git://github.com/rclick-cz/gulp-ember-handlebars.git",
+    "gulp-if": "^1.2.0",
+    "gulp-imagemin": "^0.5.0",
+    "gulp-jshint": "^1.5.5",
+    "gulp-livereload": "^1.5.0",
+    "gulp-minify-css": "^0.3.4",
+    "gulp-newer": "^0.3.0",
+    "gulp-notify": "^1.2.5",
+    "gulp-plumber": "^0.6.1",
+    "gulp-uglify": "^0.2.1",
+    "gulp-watch": "^0.6.4",
+    "q": "^1.0.1"
+  }
+}

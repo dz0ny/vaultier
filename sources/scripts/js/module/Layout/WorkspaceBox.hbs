@@ -1,0 +1,35 @@
+{{#if env.workspace }}
+    <div class="vlt-wspace-box dropdown">
+
+        <img class="vlt-wspaceimg" src="/static/vaultier/images/icon-workspace-white.png ">
+
+        <a href="#" class="vlt-wspacename dropdown-toggle" data-toggle="dropdown">
+            {{ellipsis env.workspace.cleanValues.name 20 }}
+        </a>
+
+        <ul class="dropdown-menu caret-right">
+            <li>
+                {{#link-to 'Workspace.index' env.workspace }}
+                    Go to workspace dashboard
+                {{/link-to}}
+            </li>
+
+            {{#if env.workspace.perms.update }}
+            <li>
+                {{#link-to 'Workspace.edit' env.workspace }}
+                    Setup workspace
+                {{/link-to}}
+            </li>
+            {{/if}}
+
+            <li class="divider"></li>
+
+            <li>
+                {{#link-to 'Workspaces.select'}}
+                    Switch to another workspace
+                {{/link-to}}
+            </li>
+
+        </ul>
+    </div>
+{{/if}}
