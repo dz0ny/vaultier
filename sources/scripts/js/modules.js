@@ -222,6 +222,7 @@ var vaultierModulesConfig = {
             ],
             "templates": [
                 "./js/module/Member/MemberIndex.hbs",
+                "./js/module/Member/MemberInvite.hbs",
                 "./js/module/Invitation/InvitationAnonymous.hbs",
                 "./js/module/Invitation/InvitationAccept.hbs"
             ]
