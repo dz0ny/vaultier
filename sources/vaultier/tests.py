@@ -25,7 +25,7 @@ from vaultier.test.case.secret.secret_perms import secret_perms_suite
 from vaultier.test.case.slug.slug import slug_suite
 from vaultier.test.case.workspace.workspace_version import workspace_version_suite
 from vaultier.test.case.workspacekey.workspacekey import workspacekey_suite
-
+from vaultier.test.case.lostkey.lostkey import lost_keys_suite
 
 def suite():
     suite = TestSuite()
@@ -79,5 +79,8 @@ def suite():
     suite.addTest(card_softdelete_suite())
     suite.addTest(workspace_softdelete_suite())
     suite.addTest(secret_softdelete_suite())
+
+    # security/lost-keys
+    suite.addTest(lost_keys_suite())
 
     return suite

@@ -46,7 +46,7 @@ function compileHandlebarsTemplates(target, name) {
     return gulp.src(target)
         .pipe(gEmberHandlebars({
             outputType: 'browser',
-            processTemplateName: function (file) {
+            processTemplatePath: function (file) {
                 var path = file.path;
                 var dirs = path.split('/');
                 return dirs.slice(-2).join('/');

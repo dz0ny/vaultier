@@ -34,3 +34,9 @@ secret_register_version_signals()
 ##################################################
 from vaultier.models.role.model import register_signals as role_register_signals
 role_register_signals()
+
+##################################################
+#LostKey custom singals
+##################################################
+from vaultier.models.lostkey.model import register_signals as lostkey_register_signals
+lostkey_register_signals()
