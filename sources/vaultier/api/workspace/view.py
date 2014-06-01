@@ -81,7 +81,7 @@ class WorkspaceViewSet(
     def pre_save(self, object):
         if object.pk is None:
             object._user = self.request.user
-            object.created_by = self.request.user;
+            object.created_by = self.request.user
         return super(WorkspaceViewSet, self).pre_save(object)
 
     def get_queryset(self):

@@ -1,0 +1,15 @@
+{% extends 'mailer/layout.html' %}
+
+{% block content %}
+  <h1>You can rebuild your key on the url bellow</h1>
+
+  <p>
+      Please do not follow the link it was not you
+  </p>
+
+    <p>
+       <a href="{{ url }}">{{ url }}</a>
+    </p>
+
+  <p>Thanks, you rock!</p>
+{% endblock %}

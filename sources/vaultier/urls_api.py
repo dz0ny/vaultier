@@ -13,12 +13,12 @@ from vaultier.api.vault.view import VaultViewSet
 from vaultier.api.workspace.view import WorkspaceViewSet
 from vaultier.api.workspace_key.view import WorkspaceKeyViewSet
 from vaultier.api.invitation.view import InvitationViewSet
-
+from vaultier.api.lostkey.view import LostKeyViewSet
 
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet, base_name='user')
-router.register(r'workspaces', WorkspaceViewSet,base_name='workspace')
-router.register(r'vaults', VaultViewSet,base_name='vault')
+router.register(r'workspaces', WorkspaceViewSet, base_name='workspace')
+router.register(r'vaults', VaultViewSet, base_name='vault')
 router.register(r'cards', CardViewSet, base_name='card')
 router.register(r'secrets', SecretViewSet, base_name='secret')
 router.register(r'secret_blobs', SecretBlobViewSet, base_name='secret_blob')
@@ -26,6 +26,7 @@ router.register(r'workspace_keys', WorkspaceKeyViewSet, base_name='workspace_key
 router.register(r'members', MemberViewSet, base_name='member')
 router.register(r'invitations', InvitationViewSet, base_name='invitation')
 router.register(r'roles', RoleViewSet, base_name='role')
+router.register(r'lost_keys', LostKeyViewSet, base_name='lost_keys')
 
 urlpatterns = router.urls
 
