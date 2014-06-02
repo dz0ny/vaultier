@@ -33,7 +33,6 @@ Vaultier.CardsIndexRoute = Ember.Route.extend(
             );
         }
 
-
     });
 
 

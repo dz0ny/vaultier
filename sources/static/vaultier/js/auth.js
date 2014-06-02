@@ -522,6 +522,58 @@ Vaultier.AuthRegisterSumView = Ember.View.extend({
 });
 
 
+/**
+ * Created by rauluccocm on 5/28/14.
+ */
+'use strict';
+
+Vaultier.AuthLostKeyResetRoute = Ember.Route.extend({
+
+
+    model: function (params, transition) {
+        var lostkey = this.modelFor('AuthLostKey');
+        var store = this.get('store');
+        return store.find('AuthLostKey', {lostkey: lostkey.get('id') + '/?hash=' + lostkey.get('hash') });
+    },
+
+    actions: {
+        sendRebuildKeyRequest: function () {
+            var model = this.get('controller.content');
+            var record = Vaultier.AuthLostKey.create({email: model.email});
+            record.saveRecord()
+                .then(function (R) {
+                    $.notify('An email was send to you with the link to recover your key', 'success');
+                }.bind(this)
+            ).catch(function (E) {
+                    $.notify('An error just happened please try again', 'error');
+                }.bind(this));
+        },
+        sendDisableCurrentKeyRequest: function () {
+            var model = this.get('controller.model');
+            var record = Vaultier.AuthLostKey.create({email: model.email});
+            record.saveRecord()
+                .then(function (R) {
+                    $.notify('An email was send to you with the link to recover your key', 'success');
+                }.bind(this)
+            ).catch(function (E) {
+                    $.notify('An error just happened please try again', 'error');
+                }.bind(this));
+        }
+
+    }
+
+});
+
+Vaultier.AuthLostKeyResetController = Ember.Controller.extend({
+});
+
+Vaultier.AuthLostKeyResetView = Ember.View.extend({
+    templateName: 'Auth/AuthLostKeyReset',
+    layoutName: 'Layout/LayoutStandard'
+});
+
+
+
 Ember.TEMPLATES["Auth/AuthLogin"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
 /**/) {
 this.compilerInfo = [4,'>= 1.0.0'];
@@ -900,6 +952,37 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   data.buffer.push("\r\n            </div>\r\n\r\n        </div>\r\n\r\n        <div class=\"row top-15\">\r\n            <div class=\"col-md-5 col-md-offset-1\">\r\n                <b>\r\n                    Your private key\r\n                </b>\r\n                <br/>\r\n                    <span class=\"help-block\">\r\n                        Used instead of password. Please save if you did not yet.\r\n                    </span>\r\n            </div>\r\n            <div class=\"col-md-4\">\r\n                <a\r\n                    ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "downloadKey", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data})));
   data.buffer.push("\r\n                        data-toggle=\"tooltip\"\r\n                        title=\"\r\n                            Private key is used instead of password to log into Vaultier.\r\n                            Please keep private key safe and do not give it to anybody.\r\n                            Without private key you will not be able to log into Vaultier\r\n                            and your data will be rendered unreadable.\r\n                            \"\r\n                        class=\"btn btn-default btn-sm\"\r\n                        >\r\n                    <span class=\"glyphicon glyphicon-save\"></span>\r\n                    Save your file\r\n\r\n                </a>\r\n            </div>\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"clearfix\"></div>\r\n\r\n</div>\r\n");
+  return buffer;
+  
+});
+
+Ember.TEMPLATES["Auth/AuthLostKeyReset"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
+/**/) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', stack1, self=this, escapeExpression=this.escapeExpression;
+
+function program1(depth0,data) {
+  
+  var buffer = '', stack1;
+  data.buffer.push("\n\n                            <div class=\"row\">\n                                <div class=\"col-md-5\">\n                                    ");
+  stack1 = helpers._triageMustache.call(depth0, "workspace_name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n                                </div>\n                                <div class=\"col-md-5\">\n                                    ");
+  stack1 = helpers._triageMustache.call(depth0, "is_recoverable", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n                                </div>\n                            </div>\n\n                        ");
+  return buffer;
+  }
+
+  data.buffer.push("<div class=\"vlt-dialog  vlt-login col-md-8 col-md-offset-2 col-xs-12 top-50\">\n    <div class=\"vlt-dialog-content\">\n        <form class=\"form-horizontal\" role=\"form\">\n\n            <div class=\"vlt-dialog-header\">\n                <h2>Rebuild your lost key</h2>\n            </div>\n            <div class=\"vlt-dialog-body\">\n                <div class=\"row\">\n\n                    <div class=\"col-md-10\">\n                        <h4>Workspace encrypted data recovery</h4>\n\n                        <p>\n                            After you rebuild your private key access to encrypted workspace data has to be recovered.\n                        </p>\n\n                        <p>\n                            Recovery is possible only to workspaces where more than one member exists. Your access will\n                            be recovered once at least one of your workspace collaborators goes online.\n                        </p>\n                    </div>\n                </div>\n                <div class=\"row\">\n                    <div class=\"col-md-10\">\n                        <div class=\"row\">\n                            <div class=\"col-md-5\">\n                                <h6>workspace</h6>\n                            </div>\n                            <div class=\"col-md-5\">\n                                <h6>Possible recovery</h6>\n                            </div>\n                        </div>\n\n                        <hr>\n                        ");
+  stack1 = helpers.each.call(depth0, "workspace", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n\n                    </div>\n                </div>\n            </div>\n\n            <div class=\"vlt-dialog-footer\">\n\n                <div class=\"pull-right vlt-right-buttons\">\n                    <button type=\"submit\" class=\"btn btn-primary ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "sendRebuildKeyRequest", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data})));
+  data.buffer.push("\">\n                        Dissable current lost key\n                    </button>\n                    <button type=\"submit\" class=\"btn btn-primary ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "sendDisableCurrentKeyRequest", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data})));
+  data.buffer.push("\">\n                        Rebuild your lost key\n                    </button>\n                </div>\n\n                <div class=\"clearfix\"></div>\n\n            </div>\n        </form>\n    </div>\n</div>\n");
   return buffer;
   
 });

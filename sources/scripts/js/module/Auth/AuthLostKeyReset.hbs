@@ -1,0 +1,69 @@
+<div class="vlt-dialog  vlt-login col-md-8 col-md-offset-2 col-xs-12 top-50">
+    <div class="vlt-dialog-content">
+        <form class="form-horizontal" role="form">
+
+            <div class="vlt-dialog-header">
+                <h2>Rebuild your lost key</h2>
+            </div>
+            <div class="vlt-dialog-body">
+                <div class="row">
+
+                    <div class="col-md-10">
+                        <h4>Workspace encrypted data recovery</h4>
+
+                        <p>
+                            After you rebuild your private key access to encrypted workspace data has to be recovered.
+                        </p>
+
+                        <p>
+                            Recovery is possible only to workspaces where more than one member exists. Your access will
+                            be recovered once at least one of your workspace collaborators goes online.
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <h6>workspace</h6>
+                            </div>
+                            <div class="col-md-5">
+                                <h6>Possible recovery</h6>
+                            </div>
+                        </div>
+
+                        <hr>
+                        {{#each workspace }}
+
+                            <div class="row">
+                                <div class="col-md-5">
+                                    {{ workspace_name }}
+                                </div>
+                                <div class="col-md-5">
+                                    {{ is_recoverable }}
+                                </div>
+                            </div>
+
+                        {{/each}}
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="vlt-dialog-footer">
+
+                <div class="pull-right vlt-right-buttons">
+                    <button type="submit" class="btn btn-primary {{action sendRebuildKeyRequest}}">
+                        Dissable current lost key
+                    </button>
+                    <button type="submit" class="btn btn-primary {{action sendDisableCurrentKeyRequest}}">
+                        Rebuild your lost key
+                    </button>
+                </div>
+
+                <div class="clearfix"></div>
+
+            </div>
+        </form>
+    </div>
+</div>
