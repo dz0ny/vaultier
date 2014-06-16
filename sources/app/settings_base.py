@@ -5,28 +5,26 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-# ('Your Name', 'your_email@example.com'),
+    # ('Your Name', 'your_email@example.com'),
 )
 
 MANAGERS = ADMINS
 
-
-PROJECT_ROOT =  os.path.realpath(os.path.join(os.path.dirname(__file__), '..').replace('\\', '/'))
-
+PROJECT_ROOT = os.path.realpath(os.path.join(os.path.dirname(__file__), '..').replace('\\', '/'))
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        #'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'vaultier', # Or path to database file if using sqlite3.
+        'ENGINE': 'django.db.backends.mysql',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'vaultier',  # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         'USER': 'root',
         'PASSWORD': 'password',
-        'HOST': '', # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': '', # Set to empty string for default.
+        'HOST': '',  # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+        'PORT': '',  # Set to empty string for default.
     }
 }
-if 'test' in sys.argv or 'test_coverage' in sys.argv: #Covers regular testing and django-coverage
+if 'test' in sys.argv or 'test_coverage' in sys.argv:  # Covers regular testing and django-coverage
     DATABASES['default']['ENGINE'] = 'django.db.backends.sqlite3'
 
 
@@ -57,7 +55,7 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
-MEDIA_ROOT = PROJECT_ROOT+'/media/'
+MEDIA_ROOT = PROJECT_ROOT + '/media/'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -89,7 +87,7 @@ SITE_URL = 'http://localhost:8000/'
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
     'compressor.finders.CompressorFinder',
 )
 
@@ -100,7 +98,7 @@ SECRET_KEY = '4*1g_d$&2ur&i0$bp^yh!16@$6nq#e^5_=isv9h2!ud8+3%grm'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-    #     'django.template.loaders.eggs.Loader',
+    # 'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -134,13 +132,12 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
-         #'rest_framework.renderers.BrowsableAPIRenderer',
+        # 'rest_framework.renderers.BrowsableAPIRenderer',
     ),
     # 'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
     'DEFAULT_PERMISSION_CLASSES': (
-       'rest_framework.permissions.AllowAny',
+        'rest_framework.permissions.AllowAny',
     ),
-
     'EXCEPTION_HANDLER': 'rest_framework.views.exception_handler',
 
     'TEST_REQUEST_RENDERER_CLASSES': (
@@ -161,7 +158,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-     'django.contrib.admin',
+    'django.contrib.admin',
     # Uncomment the next line to enable the admin:
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
@@ -219,11 +216,15 @@ EMBER_TPL_MASK = "\w+.hbs$"
 
 # Indicates options for frontend
 FT_FEATURES = {
-    'dev_shared_key': False # True to use/generate same key for all users
+    'dev_shared_key': False  # True to use/generate same key for all users
 }
 
 # Indicates options for backed
 BK_FEATURES = {
-    'dev_mail_to': False, # 'email@example.com' to send all emails to this address
-    'dev_shared_key':False # True to use/generate same key for all users
+    'dev_mail_to': False,  # 'email@example.com' to send all emails to this address
+    'dev_shared_key': False,  # True to use/generate same key for all users
+    # 10 minutes in milliseconds used to calculate the expiration time on api.lostkey module
+    'lostkey_hash_expiration_time': 600000,
+    # Template to create the front end lostkey url to be send by mail
+    'lostkey_url_template': '#/lostkey/{hash}'
 }
