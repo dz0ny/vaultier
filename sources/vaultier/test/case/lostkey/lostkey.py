@@ -24,10 +24,6 @@ class ApiLostKeyTest(TransactionTestCase):
     """
 
     def setUp(self):
-        """
-        Creates a valid user
-        :return:
-        """
         version_context_manager.set_enabled(False)
 
     def create_user(self, email, nickname):
@@ -130,7 +126,7 @@ class ApiLostKeyTest(TransactionTestCase):
         response = accept_invitation_api_call(user2token, user2member.get('id'), user2invitation)
 
         # create lost key resource
-        response = create_lost_keys_api_call(email=user_1.email, force_auth=True)
+        response = create_lost_keys_api_call(email=user_1.email)
         # get the created lost key resource so that we can use the write hash
         lost_key = LostKey.objects.get(pk=response.data.get('id'))
 

@@ -141,6 +141,11 @@ var router = Vaultier.Router.map(function () {
     this.route("ErrorGeneric", { path: "/errors/"});
     this.route("Error404", { path: "*path"}); //also referred as /errors/error-404
 
+    /*************************************************************
+     * Recovery Key
+     *************************************************************/
+
+    this.resource('AuthLostKey', {path: '/lostkey'}, function () {/*This route will have other sub routes*/});
 });
 
 Ember.Route.reopen({

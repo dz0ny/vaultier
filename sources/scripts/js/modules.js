@@ -10,6 +10,7 @@ var vaultierModulesConfig = {
         },
         "jquery-plugins": {
             "scripts": [
+                // "./bower_components/jquery-mockjax/jquery.mockjax.js", // just for testing purposes
                 "./bower_components/notifyjs/dist/notify.js",
                 "./bower_components/notifyjs/dist/styles/bootstrap/notify-bootstrap.js",
                 "./bower_components/jstorage/jstorage.js",
@@ -154,7 +155,8 @@ var vaultierModulesConfig = {
                 "./js/model/Role.js",
                 "./js/model/Vault.js",
                 "./js/model/Card.js",
-                "./js/model/Secret.js"
+                "./js/model/Secret.js",
+                "./js/model/LostKey.js"
             ]
         },
         "layout": {
@@ -203,6 +205,7 @@ var vaultierModulesConfig = {
         "auth": {
             "scripts": [
                 "./js/module/Auth/AuthLogin.js",
+                "./js/module/Auth/AuthLostKeyIndex.js",
                 "./js/module/Auth/AuthRegister.js"
             ],
             "templates": [
@@ -211,6 +214,7 @@ var vaultierModulesConfig = {
                 "./js/module/Auth/AuthRegisterBefore.hbs",
                 "./js/module/Auth/AuthRegisterKeys.hbs",
                 "./js/module/Auth/AuthRegisterCreds.hbs",
+                "./js/module/Auth/AuthLostKeyIndex.hbs",
                 "./js/module/Auth/AuthRegisterSum.hbs"
             ]
         },

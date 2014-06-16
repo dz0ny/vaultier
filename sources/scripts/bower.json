@@ -50,5 +50,8 @@
     "bootswatch": "https://github.com/thomaspark/bootswatch.git#3.0.3",
     "raven-js": "~1.1.15",
     "CryptoJS": "~3.1.12"
+  },
+  "devDependencies": {
+    "jquery-mockjax": "~1.5.3"
   }
 }

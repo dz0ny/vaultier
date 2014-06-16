@@ -35,12 +35,12 @@ Vaultier.AuthLoginView = Ember.View.extend({
 Vaultier.AuthLoginRoute = Ember.Route.extend({
     setupController: function (ctrl) {
         //   testing
-        if (this.get('config.FT_FEATURES.dev_shared_key')) {
+        if (this.get('config.FT_FEATURES.dev_shared_key') ) {
             var auth = this.get('auth');
             var keys = auth.generateKeys();
-            var pkey = keys.privateKey;
+            var pkey = keys.privateKey
             ctrl.set('email', this.get('config.FT_FEATURES.dev_email'));
-            ctrl.set('privateKey', pkey);
+            ctrl.set('privateKey', pkey)
         }
 
         // remembering

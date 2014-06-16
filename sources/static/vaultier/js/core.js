@@ -994,6 +994,11 @@ var router = Vaultier.Router.map(function () {
     this.route("ErrorGeneric", { path: "/errors/"});
     this.route("Error404", { path: "*path"}); //also referred as /errors/error-404
 
+    /*************************************************************
+     * Recovery Key
+     *************************************************************/
+
+    this.resource('AuthLostKey', {path: '/lostkey'}, function () {/*This route will have other sub routes*/});
 });
 
 Ember.Route.reopen({
@@ -3359,6 +3364,26 @@ Vaultier.SecretBlob = RL.Model.extend(
             }
         }
     });
+
+
+'use strict';
+
+
+Vaultier.LostKey = RL.Model.extend(
+    Vaultier.CreatedUpdatedMixin,
+    {
+        email: RL.attr('string', {required: true}),
+        recoverType: RL.attr('recoverType'), // enumeration - disable or recover
+        hash: RL.attr('key'),
+        public_key: RL.attr('key'),
+        memberships: RL.hasMany('Vaultier.LostKeyMembership', {readOnly: true})
+    });
+
+
+Vaultier.LostKeyMembership = RL.Model.extend({
+    workspaceName: RL.attr('string'),
+    isRecoverable: RL.attr('boolean')
+});
 
 
 //# sourceMappingURL=core.js.map

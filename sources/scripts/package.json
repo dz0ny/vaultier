@@ -26,6 +26,7 @@
     "gulp-newer": "^0.3.0",
     "gulp-notify": "^1.2.5",
     "gulp-plumber": "^0.6.1",
+    "gulp-qunit": "^0.3.3",
     "gulp-uglify": "^0.2.1",
     "gulp-watch": "^0.6.4",
     "q": "^1.0.1"
