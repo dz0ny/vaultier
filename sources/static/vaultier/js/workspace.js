@@ -593,17 +593,6 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   
 });
 
-Ember.TEMPLATES["Workspace/WorkspaceNoKeys"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
-/**/) {
-this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  
-
-
-  data.buffer.push("<div class=\"row top-30\">\n    <div class=\"col-md-12\">\n        <div class=\"jumbotron vlt-bigbox vlt-no-keys col-md-8 col-md-offset-2\">\n            <div class=\"vlt-header\">\n                <div class=\"vlt-icon\">\n\n                </div>\n                <div class=\"vlt-title\">\n                    <h1>You do not have keys to workspace yet </h1>\n                </div>\n            </div>\n            <p>\n                Please wait till keys will be automatically transfered to you\n                when somebody of team goes online. You will get email once keys received.\n                <br/>\n                <br/>\n                Keys are used to encrypt and decrypt workspace data\n\n            </p>\n        </div>\n    </div>\n</div>\n\n");
-  
-});
-
 Ember.TEMPLATES["Workspace/WorkspaceEdit"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
 /**/) {
 this.compilerInfo = [4,'>= 1.0.0'];
@@ -646,6 +635,17 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   },hashTypes:{'disabled': "ID"},hashContexts:{'disabled': depth0},contexts:[],types:[],data:data})));
   data.buffer.push(" class=\"btn btn-primary\">\r\n                    <span class=\"glyphicon glyphicon-ok\"></span>\r\n                    Save changes\r\n                </button>\r\n            </div>\r\n\r\n        </div>\r\n    </form>\r\n</div>\r\n\r\n\r\n");
   return buffer;
+  
+});
+
+Ember.TEMPLATES["Workspace/WorkspaceNoKeys"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
+/**/) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  
+
+
+  data.buffer.push("<div class=\"row top-30\">\n    <div class=\"col-md-12\">\n        <div class=\"jumbotron vlt-bigbox vlt-no-keys col-md-8 col-md-offset-2\">\n            <div class=\"vlt-header\">\n                <div class=\"vlt-icon\">\n\n                </div>\n                <div class=\"vlt-title\">\n                    <h1>You do not have keys to workspace yet </h1>\n                </div>\n            </div>\n            <p>\n                Please wait till keys will be automatically transfered to you\n                when somebody of team goes online. You will get email once keys received.\n                <br/>\n                <br/>\n                Keys are used to encrypt and decrypt workspace data\n\n            </p>\n        </div>\n    </div>\n</div>\n\n");
   
 });
 

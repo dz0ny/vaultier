@@ -1,0 +1,51 @@
+<div class="vlt-dialog col-md-8 col-md-offset-2 col-xs-12 top-50">
+    <div class="vlt-dialog-content">
+        <div class="vlt-dialog-header">
+            <h2>Private key</h2>
+        </div>
+        <div class="vlt-dialog-body">
+
+            <div class="col-md-8 col-md-offset-2">
+                {{#if stepInfo}}
+                    <div class="vlt-dialog-body">
+                        <div class="text-center">
+                            You are about to generate a new private key.
+                            Click the bottom bellow and follow the instructions.
+                            <br/>
+                            <br/>
+                            <a {{action generate}} class="btn btn-primary">Generate new private key</a>
+                        </div>
+                    </div>
+                {{/if}}
+
+                {{#if stepKeys }}
+                    {{change-key action="save"}}
+                {{/if}}
+
+                {{#if stepSuccess }}
+                    <div class="top-30 bottom-30">
+
+                        <div class=" alert alert-success">
+                            <b>
+                                Your private key has been successfully changed.
+                            </b>
+                        </div>
+
+                        <div class=" bottom-30 text-center top-30">
+                            <span class="help-block">
+                                From now use new private key generated. Please be sure you have saved your private key.
+                            </span>
+
+                            <a class="btn btn-default" {{ action savePrivateKey }}>Save your new private key</a>
+                        </div>
+
+                        <div class="clearfix"></div>
+                    </div>
+
+                {{/if}}
+
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>

@@ -1,37 +1,57 @@
-/**
- * Created by rauluccocm on 5/28/14.
- */
 'use strict';
+
 
 Vaultier.AuthLostKeyResetRoute = Ember.Route.extend({
 
+    hash: null,
 
     model: function (params, transition) {
-        var lostkey = this.modelFor('AuthLostKey');
-        var store = this.get('store');
-        return store.find('AuthLostKey', {lostkey: lostkey.get('id') + '/?hash=' + lostkey.get('hash') });
+        var hash = params.hash;
+        this.set('hash', hash);
+        var lostkey = this.get('store')
+            .find('LostKey', {id: params.id, hash: hash});
+
+        return lostkey;
+    },
+
+    setupController: function (ctrl, model) {
+        this._super.apply(this, arguments);
+        ctrl.set('content', model);
+    },
+
+    generateKey: function () {
+        var ctrl = this.get('controller');
+        var blob = new Blob([ctrl.get('props.keys.privateKey')], {type: "text/plain;charset=utf-8"});
+        saveAs(blob, "vaultier.key");
     },
 
     actions: {
-        sendRebuildKeyRequest: function () {
-            var model = this.get('controller.content');
-            var record = Vaultier.AuthLostKey.create({email: model.email});
+
+        rebuildKey: function () {
+            console.log('sendRebuildKeyRequest', this.get('hash'));
+            var ctrl = this.get('controller');
+            var record = ctrl.get('content');
+            this.generateKey();
+
+            record.set('public_key', ctrl.get('props.keys.publicKey'));
+
             record.saveRecord()
-                .then(function (R) {
+                .then(function (response) {
                     $.notify('An email was send to you with the link to recover your key', 'success');
                 }.bind(this)
-            ).catch(function (E) {
+            ).catch(function (error) {
                     $.notify('An error just happened please try again', 'error');
                 }.bind(this));
         },
-        sendDisableCurrentKeyRequest: function () {
-            var model = this.get('controller.model');
-            var record = Vaultier.AuthLostKey.create({email: model.email});
+        disableKey: function () {
+            console.log('sendDisableCurrentKeyRequest', this.get('hash'));
+            var record = this.get('controller.content');
+            record.set('isDirty', true);
             record.saveRecord()
-                .then(function (R) {
+                .then(function (response) {
                     $.notify('An email was send to you with the link to recover your key', 'success');
                 }.bind(this)
-            ).catch(function (E) {
+            ).catch(function (error) {
                     $.notify('An error just happened please try again', 'error');
                 }.bind(this));
         }
@@ -41,7 +61,13 @@ Vaultier.AuthLostKeyResetRoute = Ember.Route.extend({
 });
 
 Vaultier.AuthLostKeyResetController = Ember.Controller.extend({
-});
+        needs: ['application'],
+        id: null,
+        memberships: [],
+        created_by: null,
+        public_key: null
+    }
+);
 
 Vaultier.AuthLostKeyResetView = Ember.View.extend({
     templateName: 'Auth/AuthLostKeyReset',

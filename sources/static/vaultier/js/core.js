@@ -831,11 +831,13 @@ Vaultier.registerDI = function (app) {
     app.inject('route:WorkspaceMemberApprove', 'workspacekey', 'service:workspacekey')
 
     // service:changekey
-    app.register('service:changekey', Service.ChangeKey)
-    app.inject('route:SettingsKeys', 'changekey', 'service:changekey')
+    app.register('service:changekey', Service.ChangeKey);
+    app.inject('route:SettingsKeys', 'changekey', 'service:changekey');
+    app.inject('route:AuthLostKeyRecoveryRebuild', 'changekey', 'service:changekey');
     app.inject('service:changekey', 'store', 'store:main');
     app.inject('service:changekey', 'auth', 'service:auth');
     app.inject('service:changekey', 'coder', 'service:coder');
+    app.inject('route:AuthLostKeyRecoveryRebuild', 'changekey', 'service:changekey');
 
     // service:newuserinit
     app.register('service:newuserinit', Service.NewUserInit)
@@ -869,7 +871,21 @@ var router = Vaultier.Router.map(function () {
      * Login
      ************************************************************/
 
-    this.route('AuthLogin', {path: '/auth/login'})
+    this.route('AuthLogin', {path: '/auth/login'});
+
+    /*************************************************************
+     * Recovery Key
+     *************************************************************/
+
+    this.resource('AuthLostKey', {path: '/lostkey'}, function () {
+        this.route('success', {path: 'success'});
+
+        this.resource('AuthLostKeyRecovery', {path: '/:id/:hash'}, function () {
+            this.route('reset', {path: 'reset'});
+            this.route('rebuild', {path: 'rebuild'});
+            this.route('disable', {path: 'disable'});
+        });
+    });
 
     /************************************************************
      * invitations
@@ -992,14 +1008,6 @@ var router = Vaultier.Router.map(function () {
 
     this.route("ErrorGeneric", { path: "/errors/"});
     this.route("Error404", { path: "*path"}); //also referred as /errors/error-404
-
-    /*************************************************************
-     * Recovery Key
-     *************************************************************/
-
-    this.resource('AuthLostKey', {path: '/lostkey'}, function () {
-        this.route('reset', {path: '/:id/:hash'});
-    });
 
 });
 
@@ -3374,16 +3382,26 @@ Vaultier.SecretBlob = RL.Model.extend(
 Vaultier.LostKey = RL.Model.extend(
     Vaultier.CreatedUpdatedMixin,
     {
-        email: RL.attr('string', {required: true}),
-        recoverType: RL.attr('recoverType'), // enumeration - disable or recover
-        hash: RL.attr('key'),
+        email: RL.attr('string'),
+        recover_type: RL.attr('integer'),
+        hash: RL.attr('string'),
         public_key: RL.attr('key'),
-        memberships: RL.hasMany('Vaultier.LostKeyMembership', {readOnly: true})
+        memberships: RL.hasMany('Vaultier.LostKeyMemberships'),
+        recoverType: new Utils.ConstantList({
+            'REBUILD': {
+                value: 1,
+                text: 'REBUILD'
+            },
+            'DISABLE': {
+                value: 2,
+                text: 'DISABLE'
+            }
+        })
     });
 
-Vaultier.LostKeyMembership = RL.Model.extend({
-    workspaceName: RL.attr('string'),
-    isRecoverable: RL.attr('boolean')
+Vaultier.LostKeyMemberships = RL.Model.extend({
+    workspace_name: RL.attr('string'),
+    is_recoverable: RL.attr('boolean')
 });
 
 

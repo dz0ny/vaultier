@@ -1,7 +1,6 @@
 from django.db import models
 from django.db.models.deletion import PROTECT
 from django.db.models.manager import Manager
-from django.db.models.query_utils import Q
 from modelext.softdelete.softdelete import SoftDeleteManagerMixin, SoftDeleteMixin
 from modelext.tree.iterator import TreeIterableModelMixin
 from vaultier.models.acl.fields import AclLevelField
@@ -35,7 +34,8 @@ class WorkspaceManager(SoftDeleteManagerMixin, Manager):
             pk__in=Member.objects.filter(user=user).values_list('workspace_id', flat=True)) \
             .annotate(is_recoverable=Count('membership'))
 
-        return annotated_workspaces | self.filter(membership__user=user, membership__status=MemberStatusField.STATUS_MEMBER_WITHOUT_WORKSPACE_KEY)
+        return annotated_workspaces | self.filter(membership__user=user,
+                                                  membership__status=MemberStatusField.STATUS_MEMBER_WITHOUT_WORKSPACE_KEY)
 
     def create_member_with_workspace(self, workspace):
         attrs_needed = ['_user', ]

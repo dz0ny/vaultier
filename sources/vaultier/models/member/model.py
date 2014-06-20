@@ -1,20 +1,19 @@
 import hmac
 import uuid
 from hashlib import sha1
-
 from django.db import models
 from django.db.models.deletion import PROTECT, CASCADE
 from django.db.models.manager import Manager
 from django.db.models.query_utils import Q
 from modelext.lowercasefield.lowercasefield import LowerCaseCharField
-
 from vaultier.mailer.invitation import resend_invitation
 from modelext.changes.changes import ChangesMixin
 from vaultier.models.member.fields import MemberStatusField
+#from vaultier.models.workspace.model import Workspace
 
 
 class MemberManager(Manager):
-    #from members where member.workspace in (select
+    # from members where member.workspace in (select
 
     def all_for_user(self, user):
         from vaultier.models.workspace.model import Workspace
@@ -133,10 +132,24 @@ class MemberManager(Manager):
             if send:
                 resend_invitation(member)
 
-        #todo: Member.MultipleObjectsFound
+        # todo: Member.MultipleObjectsFound
 
         return member
 
+    # def set_broken_mebership(self, user):
+    #     # unrecoverable_workspaces = self._get_unrecoverable_workspaces(user)
+    #
+    #     self.filter(user=user,
+    #                 workspace_id__in=self.get_unrecoverable_workspaces(user).values_list('pk', flat=True)) \
+    #         .update(status=MemberStatusField.STATUS_MEMBER_BROKEN)
+    #
+    # def set_status_member_without_workspace_key(self, user):
+    #     self.filter(user=user) \
+    #         .exclude(workspace_id__in=self.get_unrecoverable_workspaces(user).values_list('pk', flat=True)) \
+    #         .update(status=MemberStatusField.STATUS_MEMBER_WITHOUT_WORKSPACE_KEY, workspace_key='')
+    #
+    # def get_unrecoverable_workspaces(self, user):
+    #     return self.filter().values
 
 class Member(ChangesMixin, models.Model):
     objects = MemberManager()

@@ -16,7 +16,21 @@ var router = Vaultier.Router.map(function () {
      * Login
      ************************************************************/
 
-    this.route('AuthLogin', {path: '/auth/login'})
+    this.route('AuthLogin', {path: '/auth/login'});
+
+    /*************************************************************
+     * Recovery Key
+     *************************************************************/
+
+    this.resource('AuthLostKey', {path: '/lostkey'}, function () {
+        this.route('success', {path: 'success'});
+
+        this.resource('AuthLostKeyRecovery', {path: '/:id/:hash'}, function () {
+            this.route('reset', {path: 'reset'});
+            this.route('rebuild', {path: 'rebuild'});
+            this.route('disable', {path: 'disable'});
+        });
+    });
 
     /************************************************************
      * invitations
@@ -139,14 +153,6 @@ var router = Vaultier.Router.map(function () {
 
     this.route("ErrorGeneric", { path: "/errors/"});
     this.route("Error404", { path: "*path"}); //also referred as /errors/error-404
-
-    /*************************************************************
-     * Recovery Key
-     *************************************************************/
-
-    this.resource('AuthLostKey', {path: '/lostkey'}, function () {
-        this.route('reset', {path: '/:id/:hash'});
-    });
 
 });
 

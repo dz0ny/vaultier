@@ -1,4 +1,3 @@
-from django.db.models.aggregates import Max
 from django.utils.datetime_safe import datetime
 from django.utils.timezone import utc
 from rest_framework.authentication import BaseAuthentication
@@ -7,11 +6,10 @@ from rest_framework.fields import DateTimeField, CharField, EmailField, IntegerF
 from rest_framework.serializers import ModelSerializer, Serializer, ValidationError
 from vaultier.api.transactionmixin import AtomicTransactionMixin
 from vaultier.api.user.view import RelatedUserSerializer
+from vaultier.models.lostkey.fields import RecoverTypeField
 from vaultier.models.lostkey.model import LostKey
 from rest_framework import viewsets, mixins
 from rest_framework.fields import SerializerMethodField
-from vaultier.models.member.fields import MemberStatusField
-from vaultier.models.member.model import Member
 from vaultier.models.user.model import User
 from vaultier.models.workspace.model import Workspace
 
@@ -53,25 +51,31 @@ class LostKeyCreateSerializer(Serializer):
 
 class LostKeySerializer(ModelSerializer):
     """
-    This serializeer is used for all the LostKeyViewSet supported methods but POST
+    This serializer is used for all the LostKeyViewSet supported methods but POST
     """
 
     class Meta:
         model = LostKey
-        fields = ('id', 'created_by', 'created_at', 'updated_at', 'expires_at', 'memberships', 'public_key',)
+        fields = ('id', 'created_by', 'created_at', 'updated_at',
+                  'expires_at', 'memberships', 'public_key', 'recover_type',)
 
     created_by = RelatedUserSerializer(read_only=True)
     expires_at = DateTimeField(read_only=True)
     hash = CharField(read_only=True)
     memberships = SerializerMethodField('get_memberships')
-    public_key = CharField(max_length=255, required=True, write_only=True)
+    public_key = CharField(max_length=1024, required=True, write_only=True)
+    recover_type = RecoverTypeField(required=True, write_only=True)
 
     def restore_object(self, attrs, instance=None):
         """
         Remove attributes that not belongs to the model before assignment
         """
-        attrs.pop('public_key', None)
-        return super(LostKeySerializer, self).restore_object(attrs, instance)
+        public_key = attrs.pop('public_key', None)
+        recover_type = attrs.pop('recover_type')
+        obj = super(LostKeySerializer, self).restore_object(attrs, instance)
+        obj.public_key = public_key
+        obj.recover_type = recover_type
+        return obj
 
     def get_memberships(self, obj):
         """
@@ -89,12 +93,19 @@ class LostKeySerializer(ModelSerializer):
         """
         Bind current authorised user to created_by field before saving
         """
-        obj.created_by.public_key = self.init_data.get('public_key')
-        obj.created_by.save()
-        Member.objects.filter(user=obj.created_by).update(
-            status=MemberStatusField.STATUS_MEMBER_WITHOUT_WORKSPACE_KEY,
-            workspace_key='')
+        recovery_type = obj.recover_type
+
+        if recovery_type == RecoverTypeField.DISABLE:
+            LostKey.objects.disable_lost_key(obj.created_by)
+            obj.created_by.public_key = ''
+        elif recovery_type == RecoverTypeField.REBUILD:
+            LostKey.objects.rebuild_lost_key(obj.created_by)
+            obj.created_by.public_key = obj.public_key
+        else:
+            raise Exception('Unsupported recovery type')
         obj.used = True
+        obj.created_by.save()
+
         super(LostKeySerializer, self).save_object(obj, **kwargs)
 
 
@@ -126,7 +137,10 @@ class HashAuthentication(BaseAuthentication):
         """
         Validates a lost_key request by hash, id, and expiration time
         """
-        user_hash = request.QUERY_PARAMS.get('hash')
+        user_hash = request.QUERY_PARAMS.get('hash', None)
+        if user_hash == None:
+            user_hash = request.DATA.get('hash')
+
         lost_key_id = request.parser_context.get('view').kwargs.get('pk')
         try:
             lost_key = LostKey.objects.get(hash=user_hash,

@@ -7,7 +7,7 @@ Vaultier.AuthLostKeyIndexRoute = Ember.Route.extend({
      * because of the different name
      */
     model: function () {
-        return Vaultier.LostKey.create();
+        return this.get('store').createRecord('LostKey');
     },
 
     beforeModel: function(model, transition) {
