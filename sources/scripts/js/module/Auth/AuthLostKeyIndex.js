@@ -4,7 +4,7 @@ Vaultier.AuthLostKeyIndexRoute = Ember.Route.extend({
 
     /**
      * Creates a new LostKey model instance, must be done by hand
-     * because of the diffrent name
+     * because of the different name
      */
     model: function () {
         return Vaultier.LostKey.create();
@@ -43,5 +43,9 @@ Vaultier.AuthLostKeyIndexController = Ember.Controller.extend({
 
 Vaultier.AuthLostKeyIndexView = Ember.View.extend({
     templateName: 'Auth/AuthLostKeyIndex',
+    layoutName: 'Layout/LayoutStandard'
+});
+Vaultier.AuthLostKeySuccessView = Ember.View.extend({
+    templateName: 'Auth/AuthLostKeySuccess',
     layoutName: 'Layout/LayoutStandard'
 });

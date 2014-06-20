@@ -205,8 +205,10 @@ var vaultierModulesConfig = {
         "auth": {
             "scripts": [
                 "./js/module/Auth/AuthLogin.js",
+                "./js/model/LostKey.js",
                 "./js/module/Auth/AuthLostKeyIndex.js",
-                "./js/module/Auth/AuthRegister.js"
+                "./js/module/Auth/AuthRegister.js",
+                "./js/module/Auth/AuthLostKeyReset.js"
             ],
             "templates": [
                 "./js/module/Auth/AuthLogin.hbs",
@@ -215,7 +217,9 @@ var vaultierModulesConfig = {
                 "./js/module/Auth/AuthRegisterKeys.hbs",
                 "./js/module/Auth/AuthRegisterCreds.hbs",
                 "./js/module/Auth/AuthLostKeyIndex.hbs",
-                "./js/module/Auth/AuthRegisterSum.hbs"
+                "./js/module/Auth/AuthLostKeySuccess.hbs",
+                "./js/module/Auth/AuthRegisterSum.hbs",
+                "./js/module/Auth/AuthLostKeyReset.hbs"
             ]
         },
         "membership": {

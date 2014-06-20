@@ -56,7 +56,7 @@ function program4(depth0,data) {
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
     'disabled': ("emailWasSuccessfullySend")
   },hashTypes:{'disabled': "STRING"},hashContexts:{'disabled': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push("\r\n                            class=\"btn btn-primary\">\r\n                        Send\r\n                    </button>\r\n                </div>\r\n\r\n                <div class=\"clearfix\"></div>\r\n\r\n            </div>\r\n        </form>\r\n    </div>\r\n</div>");
+  data.buffer.push("\r\n                            class=\"btn btn-primary\">\r\n                        Send\r\n                    </button>\r\n                </div>\r\n\r\n                <div class=\"clearfix\"></div>\r\n\r\n            </div>\r\n        </form>\r\n    </div>\r\n</div>\n");
   return buffer;
   
 });

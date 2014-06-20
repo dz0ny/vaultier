@@ -862,7 +862,7 @@ var router = Vaultier.Router.map(function () {
         this.route('keys', { path: 'generate-keys' });
         this.route('creds', { path: 'submit-credentials' });
         this.route('sum', { path: '/registration-done' });
-    })
+    });
 
 
     /************************************************************
@@ -880,7 +880,7 @@ var router = Vaultier.Router.map(function () {
         this.route('use', { path: '/use/:invitation/:hash' });
         this.route('anonymous', { path: '/anonymous' });
         this.route('accept', { path: '/accept' });
-    })
+    });
 
     /************************************************************
      * Settings
@@ -891,7 +891,7 @@ var router = Vaultier.Router.map(function () {
         this.route('personal', { path: '/personal' });
         this.route('keys', { path: '/keys' });
 
-    })
+    });
 
 
     /************************************************************
@@ -969,17 +969,16 @@ var router = Vaultier.Router.map(function () {
                                 this.route('createSubmit', { path: '/create/submit/:type'});
                                 this.route('edit', { path: '/edit/:secret'});
                                 this.route('move', { path: '/move/:secret'});
-                            })
-                        })
-
+                            });
+                        });
 
                     });
 
-                })
+                });
 
-            })
+            });
 
-        })
+        });
 
     });
 
@@ -989,7 +988,7 @@ var router = Vaultier.Router.map(function () {
 
     this.resource('Home', {path: '/home'}, function () {
         //this.route('about', { path: '/about'});
-    })
+    });
 
     this.route("ErrorGeneric", { path: "/errors/"});
     this.route("Error404", { path: "*path"}); //also referred as /errors/error-404
@@ -998,7 +997,10 @@ var router = Vaultier.Router.map(function () {
      * Recovery Key
      *************************************************************/
 
-    this.resource('AuthLostKey', {path: '/lostkey'}, function () {/*This route will have other sub routes*/});
+    this.resource('AuthLostKey', {path: '/lostkey'}, function () {
+        this.route('reset', {path: '/:id/:hash'});
+    });
+
 });
 
 Ember.Route.reopen({
@@ -2542,7 +2544,7 @@ Vaultier.MutableModel.Mixin = Ember.Mixin.create({
 })
 
 
-Vaultier.EncryptedModel = Vaultier.EncryptedModel || {}
+Vaultier.EncryptedModel = Vaultier.EncryptedModel || {};
 
 var getEncryptedDataKey = function (encryptedField) {
     return '_decrypted-data-' + encryptedField;
@@ -2653,10 +2655,10 @@ Vaultier.EncryptedModel.Mixin = Ember.Mixin.create({
             decryptedData.cleanData = Ember.merge({}, data)
             decryptedData.isDirty = false;
         } else {
-            decryptedData['isDirty'] = this.areDecryptedDataDirty(decryptedData)
+            decryptedData['isDirty'] = this.areDecryptedDataDirty(decryptedData);
         }
 
-        this.set(key, decryptedData)
+        this.set(key, decryptedData);
     },
 
     clearDecryptedData: function () {
@@ -2685,7 +2687,7 @@ Vaultier.EncryptedModel.Mixin = Ember.Mixin.create({
             data = this.workspacekey.decryptWorkspaceData(encryptedData) || {};
         }
         else {
-            data = null
+            data = null;
         }
         this.setDecryptedData(encryptedField, data, true);
     },
@@ -2714,7 +2716,7 @@ Vaultier.EncryptedModel.Mixin = Ember.Mixin.create({
             this.set('decrypted', false);
             console.error('Secret decryption failed');
             console.error(e.stack);
-            throw e
+            throw e;
         }
 
         return deserialized;
@@ -2752,7 +2754,7 @@ Vaultier.EncryptedModel.decryptedField = function (encryptedField, decryptedFiel
             if (data) {
                 return Ember.get(data, 'data.' + key);
             } else {
-                return undefined
+                return undefined;
             }
         }
 
@@ -2761,7 +2763,7 @@ Vaultier.EncryptedModel.decryptedField = function (encryptedField, decryptedFiel
             Ember.set(data, 'data.' + key, value);
             Ember.set(data, 'isDirty', this.areDecryptedDataDirty(data));
             this.set('isDirty', true);
-            return this
+            return this;
         }
 
 
@@ -2941,7 +2943,7 @@ Vaultier.Workspace = RL.Model.extend(
     Vaultier.RollbackMixin,
     {
         init: function () {
-            this.set('workspacekey', Vaultier.__container__.lookup('service:workspacekey'))
+            this.set('workspacekey', Vaultier.__container__.lookup('service:workspacekey'));
             return this._super.apply(this, arguments);
         },
 
@@ -2966,26 +2968,26 @@ Vaultier.Workspace = RL.Model.extend(
          * Returns if user given by membership has workspacekey
          */
         hasValidKey: function () {
-            return this.get('membership.status') == Vaultier.Member.proto().statuses['MEMBER'].value
+            return this.get('membership.status') == Vaultier.Member.proto().statuses['MEMBER'].value;
         }.property('membership.status'),
 
 
         saveRecord: function () {
             var isNew = this.get('isNew');
-            var promise = this._super.apply(this, arguments)
+            var promise = this._super.apply(this, arguments);
             var workspace = this;
             if (isNew) {
                 // after save, approve workspace
                 promise = promise
                     .then(function () {
-                        return this.get('workspacekey').transferKeyToCreatedWorkspace(workspace)
+                        return this.get('workspacekey').transferKeyToCreatedWorkspace(workspace);
                     }.bind(this))
                     .then(function () {
-                        return workspace.reloadRecord()
+                        return workspace.reloadRecord();
                     }.bind(this))
             }
 
-            return promise
+            return promise;
         }
 
 
@@ -3002,7 +3004,7 @@ Vaultier.WorkspaceKey = RL.Model.extend(
         status: RL.attr('string'),
         workspace: RL.attr('object'),
         user: RL.attr('object')
-    })
+    });
 
 
 
@@ -3378,7 +3380,6 @@ Vaultier.LostKey = RL.Model.extend(
         public_key: RL.attr('key'),
         memberships: RL.hasMany('Vaultier.LostKeyMembership', {readOnly: true})
     });
-
 
 Vaultier.LostKeyMembership = RL.Model.extend({
     workspaceName: RL.attr('string'),

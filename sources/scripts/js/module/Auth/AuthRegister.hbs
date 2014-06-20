@@ -54,12 +54,20 @@
             </div>
 
             <div class="vlt-left-buttons pull-left">
-                {{#unless props.loginButtonHidden}}
-                    Do you have account already?
-                    {{#link-to 'AuthLogin' class="btn btn-default btn-sm" }}
-                        Login to your account here
+                <div>
+                    {{#unless props.loginButtonHidden}}
+                        Do you have account already?
+                        {{#link-to 'AuthLogin' class="btn btn-default btn-sm" }}
+                            Login to your account here
+                        {{/link-to}}
+                    {{/unless}}
+                </div>
+                <div >
+                    Did you lost your key?
+                    {{#link-to 'AuthLostKey' class="vlt-left-buttons pull-left"}}
+                        click here.
                     {{/link-to}}
-                {{/unless}}
+                </div>
             </div>
 
             <div class="clearfix"></div>

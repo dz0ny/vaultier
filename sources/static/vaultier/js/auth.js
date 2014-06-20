@@ -100,11 +100,30 @@ Vaultier.AuthLoginRoute = Ember.Route.extend({
 
 'use strict';
 
+
+Vaultier.LostKey = RL.Model.extend(
+    Vaultier.CreatedUpdatedMixin,
+    {
+        email: RL.attr('string', {required: true}),
+        recoverType: RL.attr('recoverType'), // enumeration - disable or recover
+        hash: RL.attr('key'),
+        public_key: RL.attr('key'),
+        memberships: RL.hasMany('Vaultier.LostKeyMembership', {readOnly: true})
+    });
+
+Vaultier.LostKeyMembership = RL.Model.extend({
+    workspaceName: RL.attr('string'),
+    isRecoverable: RL.attr('boolean')
+});
+
+
+'use strict';
+
 Vaultier.AuthLostKeyIndexRoute = Ember.Route.extend({
 
     /**
      * Creates a new LostKey model instance, must be done by hand
-     * because of the diffrent name
+     * because of the different name
      */
     model: function () {
         return Vaultier.LostKey.create();
@@ -145,6 +164,11 @@ Vaultier.AuthLostKeyIndexView = Ember.View.extend({
     templateName: 'Auth/AuthLostKeyIndex',
     layoutName: 'Layout/LayoutStandard'
 });
+Vaultier.AuthLostKeySuccessView = Ember.View.extend({
+    templateName: 'Auth/AuthLostKeySuccess',
+    layoutName: 'Layout/LayoutStandard'
+});
+
 
 /////////////////////////////////////////////////////////////////
 //// Shared classes
@@ -170,6 +194,7 @@ var RegisterProps = Ember.Object.extend({
     defaultVault: false
 
 });
+
 RegisterProps.reopenClass(Utils.Singleton);
 
 var BaseRegisterController = Ember.Controller.extend({
@@ -419,23 +444,23 @@ Vaultier.AuthRegisterCredsRoute = Ember.Route.extend({
 
                 // create default user environment
                 .then(function () {
-                    return this.get('newuserinit').initializeUser()
+                    return this.get('newuserinit').initializeUser();
                 }.bind(this))
 
                 // save transition and created workspace and vault
                 .then(function (newuservalues) {
-                    ctrl.get('props').setProperties(newuservalues)
-                }.bind(this))
+                    ctrl.get('props').setProperties(newuservalues);
+                }.bind(this));
 
-            ApplicationLoader.promise(promise)
+            ApplicationLoader.promise(promise);
         }
     }
 });
 
 Vaultier.AuthRegisterCredsController = BaseRegisterController.extend({
     init: function () {
-        this._super(arguments)
-        this.set('props.nextButtonTitle', 'Create your account')
+        this._super(arguments);
+        this.set('props.nextButtonTitle', 'Create your account');
     }
 
 });
@@ -452,7 +477,7 @@ Vaultier.AuthRegisterSumRoute = Ember.Route.extend({
     step: 'AuthRegisterSum',
 
     renderTemplate: function () {
-        this.render(this.step, { outlet: 'AuthRegister'})
+        this.render(this.step, { outlet: 'AuthRegister'});
     },
 
     setupController: function (ctrl) {
@@ -462,7 +487,7 @@ Vaultier.AuthRegisterSumRoute = Ember.Route.extend({
 
         ctrl.set('props.loginButtonHidden', true);
         ctrl.set('props.nextButtonDisabled', false);
-        ctrl.set('props.nextButtonTitle', 'Start using vaultier')
+        ctrl.set('props.nextButtonTitle', 'Start using vaultier');
     },
 
     actions: {
@@ -478,7 +503,7 @@ Vaultier.AuthRegisterSumRoute = Ember.Route.extend({
             // in case user refreshes the page transition is not available anymore, in that case user is redirected to index
             var transition = this.get('controller.props.transitionAfterRegister');
             if (transition) {
-                transition()
+                transition();
             } else {
                 this.transitionTo('index');
             }
@@ -495,7 +520,6 @@ Vaultier.AuthRegisterSumController = BaseRegisterController.extend({
 Vaultier.AuthRegisterSumView = Ember.View.extend({
     templateName: 'Auth/AuthRegisterSum'
 });
-
 
 
 Ember.TEMPLATES["Auth/AuthLogin"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
@@ -653,18 +677,24 @@ function program11(depth0,data) {
 function program13(depth0,data) {
   
   var buffer = '', stack1, helper, options;
-  data.buffer.push("\r\n                    Do you have account already?\r\n                    ");
+  data.buffer.push("\r\n                        Do you have account already?\r\n                        ");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{
     'class': ("btn btn-default btn-sm")
   },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(14, program14, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "AuthLogin", options) : helperMissing.call(depth0, "link-to", "AuthLogin", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\r\n                ");
+  data.buffer.push("\r\n                    ");
   return buffer;
   }
 function program14(depth0,data) {
   
   
-  data.buffer.push("\r\n                        Login to your account here\r\n                    ");
+  data.buffer.push("\r\n                            Login to your account here\r\n                        ");
+  }
+
+function program16(depth0,data) {
+  
+  
+  data.buffer.push("\r\n                        click here.\r\n                    ");
   }
 
   data.buffer.push("<div class=\"vlt-dialog vlt-register col-xs-12 col-md-10 col-md-offset-1 top-50\">\r\n    <div class=\"vlt-dialog-content\">\r\n        <div class=\"vlt-dialog-header\">\r\n            <h2>Register to Vaultier</h2>\r\n\r\n            <ul class=\"nav nav-pills nav-justified vlt-wizard-steps\">\r\n                ");
@@ -698,10 +728,15 @@ function program14(depth0,data) {
   data.buffer.push(" class=\"btn btn-primary\">\r\n                    <span class=\"glyphicon glyphicon glyphicon-chevron-right\"></span>\r\n                    ");
   stack1 = helpers['if'].call(depth0, "props.nextButtonTitle", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(11, program11, data),fn:self.program(9, program9, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\r\n                </button>\r\n            </div>\r\n\r\n            <div class=\"vlt-left-buttons pull-left\">\r\n                ");
+  data.buffer.push("\r\n                </button>\r\n            </div>\r\n\r\n            <div class=\"vlt-left-buttons pull-left\">\r\n                <div>\r\n                    ");
   stack1 = helpers.unless.call(depth0, "props.loginButtonHidden", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(13, program13, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\r\n            </div>\r\n\r\n            <div class=\"clearfix\"></div>\r\n\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n\r\n\r\n\r\n");
+  data.buffer.push("\r\n                </div>\r\n                <div >\r\n                    Did you lost your key?\r\n                    ");
+  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{
+    'class': ("vlt-left-buttons pull-left")
+  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(16, program16, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "AuthLostKey", options) : helperMissing.call(depth0, "link-to", "AuthLostKey", options));
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"clearfix\"></div>\r\n\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n\r\n\r\n\r\n");
   return buffer;
   
 });
@@ -844,7 +879,7 @@ function program4(depth0,data) {
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
     'disabled': ("emailWasSuccessfullySend")
   },hashTypes:{'disabled': "STRING"},hashContexts:{'disabled': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push("\r\n                            class=\"btn btn-primary\">\r\n                        Send\r\n                    </button>\r\n                </div>\r\n\r\n                <div class=\"clearfix\"></div>\r\n\r\n            </div>\r\n        </form>\r\n    </div>\r\n</div>");
+  data.buffer.push("\r\n                            class=\"btn btn-primary\">\r\n                        Send\r\n                    </button>\r\n                </div>\r\n\r\n                <div class=\"clearfix\"></div>\r\n\r\n            </div>\r\n        </form>\r\n    </div>\r\n</div>\n");
   return buffer;
   
 });

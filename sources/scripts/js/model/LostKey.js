@@ -11,7 +11,6 @@ Vaultier.LostKey = RL.Model.extend(
         memberships: RL.hasMany('Vaultier.LostKeyMembership', {readOnly: true})
     });
 
-
 Vaultier.LostKeyMembership = RL.Model.extend({
     workspaceName: RL.attr('string'),
     isRecoverable: RL.attr('boolean')

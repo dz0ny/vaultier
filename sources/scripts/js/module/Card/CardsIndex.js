@@ -30,7 +30,7 @@ Vaultier.CardsIndexRoute = Ember.Route.extend(
                     .addHome()
                     .addWorkspace()
                     .addVault()
-            )
+            );
         }
 
 

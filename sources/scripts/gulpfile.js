@@ -70,11 +70,14 @@ gulp.task('watch', ['builder:dev'], function () {
     glob.push(paths.dev.styles);
     glob.push(paths.dev.templates);
 
-    gulp.watch(glob, ['builder:dev']).on('change', function (file) {
-        setTimeout(function () {
-            server.changed(file.path);
-        }, 140);
-    });
-
+    try {
+        gulp.watch(glob, ['builder:dev']).on('change', function (file) {
+            setTimeout(function () {
+                server.changed(file.path);
+            }, 140);
+        });
+    } catch (err) {
+        console.error(err);
+    }
 });
 

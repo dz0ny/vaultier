@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+=======
+/**
+ * Created by rauluccocm on 5/23/14.
+ */
+>>>>>>> Create email dialog on AuthLostKeyIndex #177
 'use strict';
 
 Vaultier.AuthLostKeyRoute = Ember.Route.extend({
