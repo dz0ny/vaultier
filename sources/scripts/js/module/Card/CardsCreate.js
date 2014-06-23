@@ -8,14 +8,13 @@ Vaultier.CardsCreateRoute = Ember.Route.extend(
         model: function (params, transition) {
             // check permissions
             if (!this.get('auth').checkPermissions(transition, function () {
-                return this.modelFor('Vault').get('perms.create')
+                return this.modelFor('Vault').get('perms.create');
             }.bind(this), true)) {
                 return;
             }
 
             var store = this.get('store');
             var record = store.createRecord('Card');
-            console.log(record, "Record");
             return record;
         },
 
@@ -25,7 +24,7 @@ Vaultier.CardsCreateRoute = Ember.Route.extend(
                 var vault = this.get('vault');
 
                 var record = this.get('controller.content');
-                record.set('vault', vault.get('id'))
+                record.set('vault', vault.get('id'));
 
                 var promise = record
                     .saveRecord()
@@ -39,7 +38,7 @@ Vaultier.CardsCreateRoute = Ember.Route.extend(
                     }
                 )
 
-                ApplicationLoader.promise(promise)
+                ApplicationLoader.promise(promise);
             }
         },
 

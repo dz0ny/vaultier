@@ -1,16 +1,16 @@
 Vaultier.SettingsKeysRoute = Ember.Route.extend(
     {
         renderTemplate: function () {
-            this.render('SettingsKeys', {outlet: 'Settings'})
+            this.render('SettingsKeys', {outlet: 'Settings'});
         },
 
         setupController: function (ctrl) {
             ctrl.set('stepInfo', true);
             ctrl.set('stepSuccess', false);
-            ctrl.set('stepKeys', false)
+            ctrl.set('stepKeys', false);
 
             // set breadcrumbs
-            ctrl.controllerFor('Settings').set('breadcrumbs',
+            ctrl.get('controllers.Settings').set('breadcrumbs',
                 Vaultier.Breadcrumbs.create({router: this.get('router')})
                     .addHome()
                     .addSettings()
