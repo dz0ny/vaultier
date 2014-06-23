@@ -240,6 +240,7 @@ var vaultierModulesConfig = {
                 "./js/module/Workspace/WorkspacesIndexItem.hbs",
                 "./js/module/Workspace/WorkspacesIndexWithoutKeys.hbs",
                 "./js/module/Workspace/WorkspacesCreate.hbs",
+                "./js/module/Workspace/WorkspaceNoKeys.hbs",
                 "./js/module/Workspace/WorkspaceEdit.hbs"
             ]
         },
