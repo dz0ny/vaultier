@@ -12,19 +12,24 @@ def unique_slugify(
         slug_separator='-'):
 
     # trim slug before
-    value = str(value).strip()
+    try:
+        value = value.strip()
+    except:
+        # cast to str only if value is not a unicode
+        value = str(value).strip()
+
 
     # disallow empty slugs
-    if value=='':
+    if value == '':
         value = default_slug
 
     # Sort out the initial slug, limiting its length if necessary.
     slug = slugify(value)
 
     # disable non numeric slug, not to confuse with pks
-    num = unicode(slug).replace('-','')
+    num = unicode(slug).replace('-', '')
     if num.isnumeric():
-        slug='n'+num
+        slug = 'n' + num
 
     if max_length:
         slug = slug[:max_length]
