@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.test.testcases import TransactionTestCase
 from django.utils import unittest
 from django.utils.unittest.suite import TestSuite
@@ -24,7 +25,7 @@ class SlugTest(TransactionTestCase):
         w1._user = u
         w1.save()
         self.assertEquals(w1.slug, 'workspace')
-        self.assertEquals(Slug.objects.all().count(),1)
+        self.assertEquals(Slug.objects.all().count(), 1)
 
         # create 2
         # on create new slug should be created
@@ -32,20 +33,20 @@ class SlugTest(TransactionTestCase):
         w2._user = u
         w2.save()
         self.assertEquals(w2.slug, 'workspace-2')
-        self.assertEquals(Slug.objects.all().count(),2)
+        self.assertEquals(Slug.objects.all().count(), 2)
 
         # rename 2
         # on update new slug should be created
         w2.name = 'New Workspace Name'
         w2.save()
         self.assertEquals(w2.slug, 'new-workspace-name')
-        self.assertEquals(Slug.objects.all().count(),3)
+        self.assertEquals(Slug.objects.all().count(), 3)
 
 
         # delete all
         # we preserve permalinks
         Workspace.objects.all().delete()
-        self.assertEquals(Slug.objects.all().count(),3)
+        self.assertEquals(Slug.objects.all().count(), 3)
 
 
     def test_020_vault_slug(self):
@@ -196,12 +197,54 @@ class SlugTest(TransactionTestCase):
         w1.name = 'renamed'
         w1.save()
         self.assertEquals(w1.slug, 'renamed')
-        self.assertEquals(Slug.objects.all().count(),2)
+        self.assertEquals(Slug.objects.all().count(), 2)
 
         w1.name = 'original'
         w1.save()
         self.assertEquals(w1.slug, 'original')
-        self.assertEquals(Slug.objects.all().count(),2)
+        self.assertEquals(Slug.objects.all().count(), 2)
+
+    def test_060_slug_can_be_processed_from_mb_characters(self):
+        u = User(email="jan@rclick.cz")
+        u.save()
+
+        # create 1
+        # on create new slug should be created
+        w1 = Workspace(name=u"ÁČĎÉĚÍŇÓŘŠŤÚŮÝŽ", created_by=u)
+        w1._user = u
+        w1.save()
+        self.assertEquals(w1.slug, 'acdeeinorstuuyz')
+        self.assertEquals(Slug.objects.all().count(), 1)
+
+        prereqs_slug_count = 1
+
+        v1 = Vault(name=u"Vault ÁČĎÉĚÍŇÓŘŠŤÚŮÝŽ", created_by=u)
+        v1.workspace = w1
+        v1._user = u
+        v1.save()
+        self.assertEquals(v1.slug, 'vault-acdeeinorstuuyz')
+        self.assertEquals(Slug.objects.all().count(), prereqs_slug_count + 1)
+
+    def test_070_slug_can_be_processed_from_numeric_values(self):
+        u = User(email="jan@rclick.cz")
+        u.save()
+
+        # create 1
+        # on create new slug should be created
+        w1 = Workspace(name=125, created_by=u)
+        w1._user = u
+        w1.save()
+        self.assertEquals(w1.slug, u'n125')
+        self.assertEquals(Slug.objects.all().count(), 1)
+
+        prereqs_slug_count = 1
+
+        v1 = Vault(name="Vault 125", created_by=u)
+        v1.workspace = w1
+        v1._user = u
+        v1.save()
+        self.assertEquals(v1.slug, 'vault-125')
+        self.assertEquals(Slug.objects.all().count(), prereqs_slug_count + 1)
 
 
 def slug_suite():
