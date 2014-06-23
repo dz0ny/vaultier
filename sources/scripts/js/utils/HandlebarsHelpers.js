@@ -99,7 +99,6 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
         var a;
 
         try {
-            console.log(moment, t, 'js/utils/HandlebarsHelpers.js');
             a = moment(t).fromNow();
         } catch (e) {
             console.error(e.stack)
