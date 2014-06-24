@@ -7,7 +7,9 @@ ApplicationLoader = {
     loaderElQueue: null,
 
     showLoader: function () {
+
         if (!this.loaderEl) {
+
             var text = $('<div />')
                 .addClass("vlt-text")
                 .css({
@@ -28,8 +30,8 @@ ApplicationLoader = {
                     'top': ' 50%',
                     'left': ' 50%',
                     'text-align': 'center',
-                    'vertical-align': ' bottom',
-                })
+                    'vertical-align': ' bottom'
+                });
 
             var overlay = $('<div />')
                 .addClass('vlt-loading-overlay')
@@ -42,17 +44,19 @@ ApplicationLoader = {
                     'left': '0',
                     'width': '100%',
                     'height': '100%'
-                })
+                });
 
             this.loaderEl = overlay
                 .append(text)
-                .appendTo('body')
+                .appendTo('body');
 
-            this.loaderElQueue = this.loaderEl.fadeIn(100)
+            this.loaderElQueue = this.loaderEl.fadeIn(100);
         }
+        $('.vlt-loading-overlay').trigger('ApplicationLoaderShow');
     },
 
     hideLoader: function (duration) {
+
         if (this.loaderEl) {
             if (!duration) {
                 duration = 100
@@ -62,9 +66,10 @@ ApplicationLoader = {
                 .queue(function () {
                     this.loaderElQueue = null;
                     this.loaderEl.remove();
-                    this.loaderEl = null
+                    this.loaderEl = null;
+                    $('.vlt-loading-overlay').trigger('ApplicationLoaderHide');
                 }.bind(this))
-        }
+        };
     },
 
     promise: function (promise) {
@@ -77,7 +82,7 @@ ApplicationLoader = {
             .catch(function(error) {
                 this.hideLoader()
                 return Ember.RSVP.reject(error);
-            }.bind(this))
+            }.bind(this));
     },
 
     showLoaderText: function (text) {
@@ -117,7 +122,7 @@ ApplicationLoader = {
             }.bind(this));
         }.bind(this));
     }
-}
+};
 
 $(document).ready(function(){
     $.getJSON('/static/vaultier/includes.json', function(jsonData){

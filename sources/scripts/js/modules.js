@@ -124,6 +124,7 @@ var vaultierModulesConfig = {
                 "./js/utils/MutableAdapterMixin.js",
             /**************** App **/
                 "./js/application.js",
+                "./js/keypressBindings.js",
                 "./js/di.js",
                 "./js/router.js",
             /**************** Services **/
