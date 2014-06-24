@@ -837,7 +837,6 @@ Vaultier.registerDI = function (app) {
     app.inject('service:changekey', 'store', 'store:main');
     app.inject('service:changekey', 'auth', 'service:auth');
     app.inject('service:changekey', 'coder', 'service:coder');
-    app.inject('route:AuthLostKeyRecoveryRebuild', 'changekey', 'service:changekey');
 
     // service:newuserinit
     app.register('service:newuserinit', Service.NewUserInit)
