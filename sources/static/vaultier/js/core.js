@@ -714,7 +714,11 @@ Vaultier = Ember.Application.create({
                 "keys": "alt s",
                 "is_exclusive": true,
                 "on_keydown": function () {
-                    $('.vlt-search-box select')[0].selectize.focus()
+                    var $searchbox = $('.vlt-search-box select');
+                    if ($searchbox.length) {
+                        $searchbox[0].selectize.focus();
+                    }
+
                     return false;
                 },
                 "on_keyup": function (e) {
@@ -723,10 +727,24 @@ Vaultier = Ember.Application.create({
                 "this": window
             }
         ];
-        console
-        keypress.register_many(keypressBindings);
+        var setKeypressBindings = function () {
+            keypress.register_many(keypressBindings);
+        };
 
-        this.registerDI(this)
+        var unsetKeypressBindings = function () {
+            keypress.unregister_many(keypressBindings);
+        };
+
+        $(document).on('ApplicationLoaderShow', function (event) {
+            setKeypressBindings();
+        });
+        $(document).on('ApplicationLoaderHide', function (event) {
+            unsetKeypressBindings();
+        });
+
+        setKeypressBindings();
+
+        this.registerDI(this);
 
     }
 });
