@@ -68,6 +68,7 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
         var length = options.hash.ellipsis || 60;
         var prefix = options.hash.prefix || '';
         var disableTooltip = options.hash.disableTooltip || false;
+        var disableName = options.hash.disableName || false
 
         var avatar = this.gravatarImg(email, {hash: {size: size}});
 
@@ -78,6 +79,11 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
             name = this.ucfirst(nickname);
         }
         var short = this.ellipsis(name, length);
+
+        if (disableName) {
+            short = '';
+            name ='';
+        }
 
         if (!disableTooltip) {
             var tooltip = 'data-toggle="tooltip" title="{prefix} {name} ({email})"'
