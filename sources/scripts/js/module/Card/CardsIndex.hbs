@@ -1,226 +1,172 @@
-<div class="vlt-page vlt-page-with-sidebar">
+<div class="container">
+    <div class="vlt-page vlt-page-with-sidebar">
 
-<div class="vlt-page-content">
-    <div class="col-md-12">
+        <div class="vlt-page-content">
+            <div class="col-md-12">
 
-        {{view Vaultier.WorkspacesIndexWithoutKeysView workspace=workspace }}
+                {{view Vaultier.WorkspacesIndexWithoutKeysView workspace=workspace }}
 
-        {{#if length}}
+                {{#if length}}
 
-            {{#each}}
-                {{view Vaultier.CardsIndexItemView}}
-            {{/each}}
-        {{else}}
-
-            <div class="jumbotron vlt-bigbox vlt-card col-md-8 col-md-offset-2">
-
-                <div class="vlt-header">
-                    <div class="vlt-icon">
-
-                    </div>
-                    <div class="vlt-title">
-                        <h1>You do not have any card yet</h1>
-                    </div>
-                </div>
-
-                {{#if vault.perms.create }}
-                    <p>
-                        Card is analogy to sheet in folder. Card lets you organize your secrets into groups.
-                        You can also collaborate with team over a card.
-                    </p>
-
-                    <p class="top-30">
-                        {{#link-to "Cards.create" class="btn btn-lg btn-primary" }}
-                            <span class="glyphicon glyphicon-plus"></span>
-                            New Card
-                        {{/link-to}}
-                    </p>
-                {{/if}}
-            </div>
-        {{/if}}
-
-    </div>
-</div>
-
-<div class="vlt-page-sidebar">
-    <div class="vlt-sidebar-block">
-        <div class="vlt-sidebar-block-heading">
-            <div class="vlt-header">
-                <img src="/static/vaultier/images/icon-vault-grey.png" class="vlt-icon">
-
-                <h3 class="vlt-title">
-                    {{vault.name}}
-                </h3>
-            </div>
-            <div class="vlt-body">
-                {{#if vault.description}}
-                    {{vault.description}}
+                    {{#each}}
+                        {{view Vaultier.CardsIndexItemView}}
+                    {{/each}}
                 {{else}}
-                    No description given
-                {{/if}}
-            </div>
-            <div class="vlt-controls">
-                <div>
 
-                    {{#if vault.perms.create}}
-                        <div
-                                class="vlt-button-wrapper"
-                                data-toggle="tooltip"
-                                title=
-                                        "
+                    <div class="jumbotron vlt-bigbox vlt-card col-md-8 col-md-offset-2 top-30">
+
+                        <div class="vlt-header">
+                            <div class="vlt-icon">
+
+                            </div>
+                            <div class="vlt-title">
+                                <h1>You do not have any card yet</h1>
+                            </div>
+                        </div>
+
+                        {{#if vault.perms.create }}
+                            <p>
+                                Card is analogy to sheet in folder. Card lets you organize your secrets into groups.
+                                You can also collaborate with team over a card.
+                            </p>
+
+                            <p class="top-30">
+                                {{#link-to "Cards.create" class="btn btn-lg btn-primary" }}
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                    New Card
+                                {{/link-to}}
+                            </p>
+                        {{/if}}
+                    </div>
+                {{/if}}
+
+            </div>
+        </div>
+
+        <div class="vlt-page-sidebar">
+            <div class="vlt-sidebar-block">
+                <div class="vlt-sidebar-block-heading">
+                    <div class="vlt-header">
+                        <img src="/static/vaultier/images/icon-vault-grey.png" class="vlt-icon">
+
+                        <h3 class="vlt-title">
+                            {{vault.name}}
+                        </h3>
+                    </div>
+                    <div class="vlt-body">
+                        {{#if vault.description}}
+                            {{vault.description}}
+                        {{else}}
+                            No description given
+                        {{/if}}
+                    </div>
+                    <div class="vlt-controls">
+                        <div>
+
+                            {{#if vault.perms.create}}
+                                <div
+                                        class="vlt-button-wrapper"
+                                        data-toggle="tooltip"
+                                        title=
+                                                "
                                     Card is analogy to sheet in folder. Card lets you organize your secrets into groups.
                                     You can also collaborate with team over a card.
                                     "
-                                data-placement="bottom"
-                                >
-                            {{#link-to "Cards.create" class="btn btn-primary"}}
-                                <span class="glyphicon glyphicon-plus"></span>
-                                New Card
-                            {{/link-to}}
+                                        data-placement="bottom"
+                                        >
+                                    {{#link-to "Cards.create" class="btn btn-primary"}}
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                        New Card
+                                    {{/link-to}}
+                                </div>
+                            {{/if}}
+
+                            {{#exp  "( vault.perms.update || vault.perms.delete)"}}
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default dropdown-toggle"
+                                            data-toggle="dropdown">
+                                        <span class="glyphicon glyphicon-cog"></span>
+                                        Edit vault
+                                    </button>
+                                    <ul class="dropdown-menu caret-left">
+
+                                        {{#if vault.perms.update}}
+                                            <li>
+                                                {{#link-to "Vault.edit" vault.slug}}
+                                                    Edit vault
+                                                {{/link-to}}
+                                            </li>
+                                        {{/if}}
+
+                                        {{#if vault.perms.delete}}
+                                            <li>
+                                                <a href="#" {{action deleteVault vault}}>Delete vault</a>
+                                            </li>
+                                        {{/if}}
+
+                                    </ul>
+                                </div>
+                            {{/exp}}
+
                         </div>
-                    {{/if}}
 
-                    {{#exp  "( vault.perms.update || vault.perms.delete)"}}
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                <span class="glyphicon glyphicon-cog"></span>
-                                Edit vault
-                            </button>
-                            <ul class="dropdown-menu caret-left">
-
-                                {{#if vault.perms.update}}
-                                    <li>
-                                        {{#link-to "Vault.edit" vault.slug}}
-                                            Edit vault
-                                        {{/link-to}}
-                                    </li>
-                                {{/if}}
-
-                                {{#if vault.perms.delete}}
-                                    <li>
-                                        <a href="#" {{action deleteVault vault}}>Delete vault</a>
-                                    </li>
-                                {{/if}}
-
-                            </ul>
-                        </div>
-                    {{/exp}}
-
+                        <div class="clearfix"></div>
+                    </div>
                 </div>
 
-                <div class="clearfix"></div>
-            </div>
-        </div>
+                <div class="vlt-sidebar-block-sharing">
+                    <div class="vlt-header">
+                        <img src="/static/vaultier/images/icon-team-grey.png" class="vlt-icon">
 
-        <div class="vlt-sidebar-block-sharing">
-            <div class="vlt-header">
-                <img src="/static/vaultier/images/icon-team-grey.png" class="vlt-icon">
-
-                <h3 class="vlt-title">
-                    Sharing
-                </h3>
-            </div>
-            <div class="vlt-body">
-                <div class="vlt-perms-section">
-                    Users able to manage
-                </div>
-                    <span class="vlt-user" data-toggle="tooltip" title=""
-                          data-original-title="Created by: Misan (jan.misek@rclick.cz)">
-                        <img style="width:50px; height:50px;" class=""
-                             src="http://www.gravatar.com/avatar/a02ac562683e9ff16474cf727bfa7661?s=50&amp;d=identicon"/>
-                    </span>
-                    <span class="vlt-user" data-toggle="tooltip" title=""
-                          data-original-title="Created by: Misan (jan.misek@rclick.cz)">
-                        <img style="width:50px; height:50px;" class=""
-                             src="http://www.gravatar.com/avatar/a02ac562683e9ff16474cf727bfa76611?s=50&amp;d=identicon"/>
-                    </span>
-                    <span class="vlt-user" data-toggle="tooltip" title=""
-                          data-original-title="Created by: Misan (jan.misek@rclick.cz)">
-                        <img style="width:50px; height:50px;" class=""
-                             src="http://www.gravatar.com/avatar/a02ac562683e9ff16474cf727bfa7661?s=50&amp;d=identicon"/>
-                    </span>
-
-                <div class="vlt-perms-section">
-                    Users able to read
-                </div>
-                    <span class="vlt-user" data-toggle="tooltip" title=""
-                          data-original-title="Created by: Misan (jan.misek@rclick.cz)">
-                        <img style="width:50px; height:50px;" class=""
-                             src="http://www.gravatar.com/avatar/a02ac562683e9ff16474cf727bfa7661?s=50&amp;d=identicon"/>
-                    </span>
-                    <span class="vlt-user" data-toggle="tooltip" title=""
-                          data-original-title="Created by: Misan (jan.misek@rclick.cz)">
-                        <img style="width:50px; height:50px;" class=""
-                             src="http://www.gravatar.com/avatar/a02ac562683e9ff16474cf727bfa7662?s=50&amp;d=identicon"/>
-                    </span>
-                    <span class="vlt-user" data-toggle="tooltip" title=""
-                          data-original-title="Created by: Misan (jan.misek@rclick.cz)">
-                        <img style="width:50px; height:50px;" class=""
-                             src="http://www.gravatar.com/avatar/a02ac562683e9ff16474cf727bfa7661?s=50&amp;d=identicon"/>
-                    </span>
-
-                <div class="vlt-perms-section">
-                    Users able to create
-                </div>
-                    <span class="vlt-user" data-toggle="tooltip" title=""
-                          data-original-title="Created by: Misan (jan.misek@rclick.cz)">
-                        <img style="width:50px; height:50px;" class=""
-                             src="http://www.gravatar.com/avatar/a02ac562683e9ff16474cf727bfa7662?s=50&amp;d=identicon"/>
-                    </span>
-                    <span class="vlt-user" data-toggle="tooltip" title=""
-                          data-original-title="Created by: Misan (jan.misek@rclick.cz)">
-                        <img style="width:50px; height:50px;" class=""
-                             src="http://www.gravatar.com/avatar/a02ac562683e9ff16474cf727bfa7663?s=50&amp;d=identicon"/>
-                    </span>
-                    <span class="vlt-user" data-toggle="tooltip" title=""
-                          data-original-title="Created by: Misan (jan.misek@rclick.cz)">
-                        <img style="width:50px; height:50px;" class=""
-                             src="http://www.gravatar.com/avatar/a02ac562683e9ff16474cf727bfa7664?s=50&amp;d=identicon"/>
-                    </span>
-
-            </div>
-            <div class="vlt-controls">
-                <div>
-                    {{#if vault.perms.invite}}
-                            <div
-                                    class="vlt-button-wrapper"
-                                    data-toggle="tooltip"
-                                    title=
-                                            "
+                        <h3 class="vlt-title">
+                            Sharing
+                        </h3>
+                    </div>
+                    <div class="vlt-body">
+                        {{member-box}}
+                    </div>
+                    <div class="vlt-controls">
+                        <div>
+                            {{#if vault.perms.invite}}
+                                <div
+                                        class="vlt-button-wrapper"
+                                        data-toggle="tooltip"
+                                        title=
+                                                "
                              Invite new team members to collaborate over this vault
                              or  grant access permission to current team members
                              "
-                                    data-placement="bottom"
-                                    >
-                                {{#link-to "Vault.memberInvite" vault class="btn btn-default"}}
-                                    <span class="glyphicon glyphicon-plus"></span>
-                                    Invite
-                                {{/link-to}}
-                            </div>
+                                        data-placement="bottom"
+                                        >
+                                    {{#link-to "Vault.memberInvite" vault class="btn btn-default"}}
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                        Invite
+                                    {{/link-to}}
+                                </div>
 
-                            <div
-                                    class="vlt-button-wrapper"
-                                    data-toggle="tooltip"
-                                    title=
-                                            "
+                                <div
+                                        class="vlt-button-wrapper"
+                                        data-toggle="tooltip"
+                                        title=
+                                                "
                              Invite new team members to collaborate over this vault
                              or  grant access permission to current team members
                              "
-                                    data-placement="bottom"
-                                    >
-                                {{#link-to "Vault.memberIndex" vault class="btn btn-default"}}
-                                    <span class="glyphicon glyphicon-user"></span>
-                                    Team
-                                {{/link-to}}
+                                        data-placement="bottom"
+                                        >
+                                    {{#link-to "Vault.memberIndex" vault class="btn btn-default"}}
+                                        <span class="glyphicon glyphicon-user"></span>
+                                        Team
+                                    {{/link-to}}
+                                </div>
+                            {{/if}}
                         </div>
-                    {{/if}}
+                    </div>
                 </div>
             </div>
+
         </div>
+
     </div>
-
-</div>
-
-</div>
 
 </div>
