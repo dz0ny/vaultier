@@ -1,7 +1,9 @@
-import hashlib
 import datetime
-from django.utils.timezone import utc, now
-from django.db.models.aggregates import Max, Count
+import uuid
+import hmac
+from hashlib import sha1
+from django.utils.timezone import utc
+from django.db.models.aggregates import Count
 from django.utils import timezone
 from django.db import models
 from django.db.models.deletion import PROTECT
@@ -20,9 +22,8 @@ class LostKeyManager(Manager):
         self._generate_expiration_time(instance=instance)
 
     def _generate_hash(self, instance=None):
-        hash_key = instance.created_by.email + instance.created_by.nickname
-        hash = hashlib.sha1(hash_key)
-        instance.hash = hash.hexdigest()
+        unique_hash = uuid.uuid4()
+        instance.hash = hmac.new(unique_hash.bytes, digestmod=sha1).hexdigest()
 
     def _generate_expiration_time(self, instance=None):
         expiration_time = settings.BK_FEATURES.get('lostkey_hash_expiration_time')

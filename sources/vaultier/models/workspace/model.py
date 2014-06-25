@@ -1,6 +1,8 @@
+from itertools import imap
 from django.db import models
 from django.db.models.deletion import PROTECT
 from django.db.models.manager import Manager
+from django.db.models.query import QuerySet
 from modelext.softdelete.softdelete import SoftDeleteManagerMixin, SoftDeleteMixin
 from modelext.tree.iterator import TreeIterableModelMixin
 from vaultier.models.acl.fields import AclLevelField
@@ -10,7 +12,6 @@ from vaultier.models.role.fields import RoleLevelField
 from vaultier.models.role.model import Role
 from modelext.changes.changes import ChangesMixin
 from vaultier.models.workspace.tree import WorkspaceTreeIterator
-from django.db.models.aggregates import Count
 
 
 class WorkspaceManager(SoftDeleteManagerMixin, Manager):
@@ -22,20 +23,22 @@ class WorkspaceManager(SoftDeleteManagerMixin, Manager):
 
         return workspaces
 
-    def get_workspaces_with_recoverable_info(self, user):
+    @classmethod
+    def serialize_recoverability(cls, workspaces):
         """
-        Add an extra column with the number of members to the result set from
-        filtering the workspaces where the user is a member
-        :param user:
-        :return: QuerySet
+        For a given queryset return an iterable of objects
+        containing the workspace name and if it is recoverable
+        A workspace is recoverable if it is share among any user
+        and its membership status is MemberStatusField.STATUS_MEMBER
+        :param workspaces:
+        :return: iterable
         """
-        annotated_workspaces = self.filter(
-            membership__status=MemberStatusField.STATUS_MEMBER,
-            pk__in=Member.objects.filter(user=user).values_list('workspace_id', flat=True)) \
-            .annotate(is_recoverable=Count('membership'))
-
-        return annotated_workspaces | self.filter(membership__user=user,
-                                                  membership__status=MemberStatusField.STATUS_MEMBER_WITHOUT_WORKSPACE_KEY)
+        assert isinstance(workspaces, QuerySet)
+        return imap(lambda workspace: {
+            'workspace_name': workspace.name,
+            'is_recoverable': Member.objects.filter(workspace_id=workspace.id,
+                                                    status=MemberStatusField.STATUS_MEMBER).count() > 1},
+                    workspaces)
 
     def create_member_with_workspace(self, workspace):
         attrs_needed = ['_user', ]

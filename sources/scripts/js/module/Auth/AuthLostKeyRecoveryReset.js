@@ -10,8 +10,21 @@ Vaultier.AuthLostKeyRecoveryResetRoute = Ember.Route.extend({
             }.bind(this));
         },
         disableKey: function () {
+            var model = this.modelFor('AuthLostKeyRecoveryReset');
             Vaultier.confirmModal(this, 'This action can not be undone. Are you sure that you want to continue?', function () {
-                this.transitionTo('AuthLostKeyRecovery.disable');
+
+                model.set('public_key', '-'); // This can't be an empty string
+                model.set('recover_type', Vaultier.LostKey.proto().recoverType['DISABLE'].value);
+
+                var promise = model.saveRecord()
+                    .then(function (response) {
+                        this.transitionTo('AuthLostKeyRecovery.disable');
+                    }.bind(this))
+                    .catch(function (error) {
+                        $.notify('How embarrassing! There was an error, please try again later', 'error');
+                        this.get('errors').consoleError(error);
+                    }.bind(this));
+                ApplicationLoader.promise(promise);
             }.bind(this));
         }
 

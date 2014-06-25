@@ -14,7 +14,6 @@ from vaultier.models.user.model import User
 from vaultier.models.workspace.model import Workspace
 
 CREATE_END_POINT = 'create'
-UPDATE_METHODS = ('PUT', 'PATCH',)
 
 
 class LostKeyCreateSerializer(Serializer):
@@ -82,11 +81,8 @@ class LostKeySerializer(ModelSerializer):
         Retrieve all workspaces where user is a member
         :return :dict {'workspace_name': string, 'is_recoverable': boolean}
         """
-        workspaces = Workspace.objects.get_workspaces_with_recoverable_info(obj.created_by)
-
-        return [{'workspace_name': record.name,
-                 'is_recoverable': record.is_recoverable > 1}
-                for record in workspaces]
+        workspaces = Workspace.objects.all_for_user(obj.created_by)
+        return Workspace.objects.serialize_recoverability(workspaces)
 
 
     def save_object(self, obj, **kwargs):
@@ -138,7 +134,7 @@ class HashAuthentication(BaseAuthentication):
         Validates a lost_key request by hash, id, and expiration time
         """
         user_hash = request.QUERY_PARAMS.get('hash', None)
-        if user_hash == None:
+        if not user_hash:
             user_hash = request.DATA.get('hash')
 
         lost_key_id = request.parser_context.get('view').kwargs.get('pk')

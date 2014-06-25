@@ -9,9 +9,7 @@
                 <div class="col-md-8 col-md-offset-2">
                     <div class="vlt-dialog-body">
                         <div class="text-center">
-                            You are about to disable all your workspaces and your key.
-                            If you continue no one will access them, not even you.
-                            Please take a minute into consideration.
+                            Your key was disabled.
                         </div>
                     </div>
 
@@ -21,7 +19,9 @@
             <div class="vlt-dialog-footer">
 
                 <div class="pull-right vlt-right-buttons">
-                    <a {{action disable}} class="btn btn-primary">Disable</a>
+                    {{#link-to 'AuthRegister' class="btn btn-primary"}}
+                        Register
+                    {{/link-to}}
                 </div>
 
                 <div class="clearfix"></div>
