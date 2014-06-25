@@ -228,3 +228,6 @@ BK_FEATURES = {
     # Template to create the front end lostkey url to be send by mail
     'lostkey_url_template': '#/lostkey/{hash}'
 }
+
+# code for google analytics
+GA_CREATE_CODE = 'UA-17830772-11'

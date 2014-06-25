@@ -1,3 +1,4 @@
+from app.settings_base import GA_CREATE_CODE
 from django.http.response import HttpResponse
 from django.shortcuts import render
 from django.template.context import Context
@@ -7,7 +8,8 @@ import json
 def index(request):
     return render(request, 'index.html', Context({
         'FT_FEATURES' : FT_FEATURES,
-        'BK_FEATURES' : BK_FEATURES
+        'BK_FEATURES' : BK_FEATURES,
+        'GA_CREATE_CODE' : GA_CREATE_CODE
     }))
 
 def config(request):
