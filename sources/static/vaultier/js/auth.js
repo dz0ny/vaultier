@@ -139,9 +139,9 @@ Vaultier.AuthLostKeyIndexRoute = Ember.Route.extend({
         return this.get('store').createRecord('LostKey');
     },
 
-    beforeModel: function(model, transition) {
-        var ctrl = this.controllerFor('AuthLostKeyIndex');
-        ctrl.set('emailWasSuccessfullySend', false);
+    setupController: function(ctrl, model) {
+        ctrl.set('content', model);
+        ctrl.set('error', false);
     },
 
     actions: {
@@ -151,11 +151,10 @@ Vaultier.AuthLostKeyIndexRoute = Ember.Route.extend({
 
             var promise = record.saveRecord()
                 .then(function (response) {
-                    ctrl.set('emailWasSuccessfullySend', true);
+                    this.transitionTo('AuthLostKey.success');
                 }.bind(this)
             ).catch(function (error) {
                     ctrl.set('error', true);
-                    ctrl.set('emailSuccess', false);
                     $.notify('An error just happened please try again', 'error');
                 }.bind(this));
             ApplicationLoader.promise(promise);
@@ -165,20 +164,18 @@ Vaultier.AuthLostKeyIndexRoute = Ember.Route.extend({
 
 Vaultier.AuthLostKeyIndexController = Ember.Controller.extend({
     email: null,
-    emailSuccess: false,
-    error: false,
-    emailWasSuccessfullySend: false
+    error: false
 });
 
 Vaultier.AuthLostKeyIndexView = Ember.View.extend({
     templateName: 'Auth/AuthLostKeyIndex',
     layoutName: 'Layout/LayoutStandard'
 });
+
 Vaultier.AuthLostKeySuccessView = Ember.View.extend({
     templateName: 'Auth/AuthLostKeySuccess',
     layoutName: 'Layout/LayoutStandard'
 });
-
 
 /////////////////////////////////////////////////////////////////
 //// Shared classes
@@ -608,10 +605,6 @@ Vaultier.AuthLostKeyRecoveryResetView = Ember.View.extend({
 Vaultier.AuthLostKeyRecoveryRebuildRoute = Ember.Route.extend({
 
     actions: {
-        generate: function () {
-            this.set('controller.stepInfo', false);
-            this.set('controller.stepKeys', true);
-        },
 
         savePrivateKey: function () {
             // start download
@@ -629,9 +622,9 @@ Vaultier.AuthLostKeyRecoveryRebuildRoute = Ember.Route.extend({
 
             var promise = content.saveRecord()
                 .then(function (response) {
-                    this.set('controller.stepKeys', false);
-                    this.get('auth').login(response.created_by.email, keys.privateKey, true);
-                     $.notify('You have successfully rebuild your new private key', 'success');
+                    this.get('auth').login(response.created_by.email, keys.privateKey, false);
+                    $.notify('You have successfully rebuild your new private key', 'success');
+                    this.transitionTo('AuthLostKeyRecovery.success');
                 }.bind(this))
                 .catch(function (error) {
                     $.notify('There was an error during update of your key, please try again later', 'error');
@@ -645,8 +638,6 @@ Vaultier.AuthLostKeyRecoveryRebuildRoute = Ember.Route.extend({
 
 Vaultier.AuthLostKeyRecoveryRebuildController = Ember.Controller.extend({
     needs: ['AuthLostKeyRecovery'],
-    stepInfo: true,
-    stepKeys: false,
     keys: null
 });
 
@@ -655,6 +646,10 @@ Vaultier.AuthLostKeyRecoveryRebuildView = Ember.View.extend({
     layoutName: 'Layout/LayoutStandard'
 });
 
+Vaultier.AuthLostKeyRecoverySuccessView = Ember.View.extend({
+    templateName: 'Auth/AuthLostKeyRecoverySuccess',
+    layoutName: 'Layout/LayoutStandard'
+});
 
 'use strict';
 
@@ -981,37 +976,14 @@ Ember.TEMPLATES["Auth/AuthLostKeyIndex"] = Ember.Handlebars.template(function an
 /**/) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  var buffer = '', stack1, self=this, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
+  var buffer = '', stack1, helper, options, escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing;
 
-function program1(depth0,data) {
-  
-  var buffer = '', stack1, helper, options;
-  data.buffer.push("\r\n                        <div class=\"col-md-12 center text-center\">\r\n                            <h2 class=\"text-success\">Your request was successfully send</h2>\r\n\r\n                            <p>\r\n                                We have send you an email with the instructions to recover your\r\n                                private key.\r\n                            </p>\r\n\r\n                            <p>\r\n                                ");
-  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{
-    'class': ("btn btn-default btn-sm")
-  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(2, program2, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "AuthLogin", options) : helperMissing.call(depth0, "link-to", "AuthLogin", options));
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\r\n                            </p>\r\n                        </div>\r\n                    ");
-  return buffer;
-  }
-function program2(depth0,data) {
-  
-  
-  data.buffer.push("\r\n                                    Return to login\r\n                                ");
-  }
 
-function program4(depth0,data) {
-  
-  var buffer = '', stack1, helper, options;
-  data.buffer.push("\r\n                        <div class=\"col-md-12 bottom-15\">\r\n\r\n                            <div class=\"callout callout-info\">\r\n                                <p>\r\n                                    You have forgotten your key, we are ready to renew your access key. Please enter\r\n                                    your email below and we will send email to you with further instructions.\r\n                                </p>\r\n                            </div>\r\n                        </div>\r\n\r\n                        <div class=\"col-md-8\">\r\n\r\n                            <div class=\"form-group\" ");
+  data.buffer.push("<div class=\"vlt-dialog col-md-8 col-md-offset-2 col-xs-12 top-50\">\r\n    <div class=\"vlt-dialog-content\">\r\n        <form class=\"form-horizontal\" role=\"form\">\r\n\r\n            <div class=\"vlt-dialog-header text-center\">\r\n                <h2>Retrieve your lost key</h2>\r\n            </div>\r\n            <div class=\"vlt-dialog-body\">\r\n                <div class=\"row\">\r\n                    <div class=\"col-md-12 bottom-15\">\r\n\r\n                        <div class=\"callout callout-info\">\r\n                            <p>\r\n                                You have forgotten your key, we are ready to renew your access key. Please enter\r\n                                your email below and we will send email to you with further instructions.\r\n                            </p>\r\n                        </div>\r\n                    </div>\r\n\r\n                    <div class=\"col-md-8\">\r\n\r\n                        <div class=\"form-group\" ");
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
     'class': ("error:has-error")
   },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push(" ");
-  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
-    'class': ("emailSuccess:has-success")
-  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push(">\r\n                                <label for=\"login-form-email\" class=\"col-lg-4 control-label pull-left\">Email</label>\r\n\r\n                                <div class=\"col-lg-8\">\r\n                                    ");
+  data.buffer.push(">\r\n                            <label for=\"login-form-email\" class=\"col-lg-4 control-label pull-left\">Email</label>\r\n\r\n                            <div class=\"col-lg-8\">\r\n                                ");
   data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
     'id': ("email"),
     'valueBinding': ("content.email"),
@@ -1019,23 +991,12 @@ function program4(depth0,data) {
     'placeholder': ("Enter your email"),
     'require': ("true")
   },hashTypes:{'id': "STRING",'valueBinding': "STRING",'class': "STRING",'placeholder': "STRING",'require': "STRING"},hashContexts:{'id': depth0,'valueBinding': depth0,'class': depth0,'placeholder': depth0,'require': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
-  data.buffer.push("\r\n                                    <span class=\"error\">\r\n                                        ");
+  data.buffer.push("\r\n                                <span class=\"error\">\r\n                                    ");
   stack1 = helpers._triageMustache.call(depth0, "content.errors.email", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\r\n                                    </span>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n                    ");
-  return buffer;
-  }
-
-  data.buffer.push("<div class=\"vlt-dialog col-md-8 col-md-offset-2 col-xs-12 top-50\">\r\n    <div class=\"vlt-dialog-content\">\r\n        <form class=\"form-horizontal\" role=\"form\">\r\n\r\n            <div class=\"vlt-dialog-header text-center\">\r\n                <h4>Retrieve your lost key</h4>\r\n            </div>\r\n            <div class=\"vlt-dialog-body\">\r\n                <div class=\"row\">\r\n                    ");
-  stack1 = helpers['if'].call(depth0, "emailWasSuccessfullySend", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(4, program4, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\r\n                </div>\r\n\r\n            </div>\r\n            <div class=\"vlt-dialog-footer\">\r\n\r\n                <div class=\"pull-right vlt-right-buttons\">\r\n                    <button type=\"submit\"\r\n                        ");
+  data.buffer.push("\r\n                                </span>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n\r\n            </div>\r\n            <div class=\"vlt-dialog-footer\">\r\n\r\n                <div class=\"pull-right vlt-right-buttons\">\r\n                    <button type=\"submit\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "sendRecoveryKeyRequest", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data})));
-  data.buffer.push("\r\n                        ");
-  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
-    'disabled': ("emailWasSuccessfullySend")
-  },hashTypes:{'disabled': "STRING"},hashContexts:{'disabled': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push("\r\n                            class=\"btn btn-primary\">\r\n                        Send\r\n                    </button>\r\n                </div>\r\n\r\n                <div class=\"clearfix\"></div>\r\n\r\n            </div>\r\n        </form>\r\n    </div>\r\n</div>\n");
+  data.buffer.push(" class=\"btn btn-primary\">\r\n                        Send\r\n                    </button>\r\n                </div>\r\n\r\n                <div class=\"clearfix\"></div>\r\n\r\n            </div>\r\n        </form>\r\n    </div>\r\n</div>");
   return buffer;
   
 });
@@ -1128,35 +1089,14 @@ Ember.TEMPLATES["Auth/AuthLostKeyRecoveryRebuild"] = Ember.Handlebars.template(f
 /**/) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  var buffer = '', stack1, escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, self=this;
+  var buffer = '', helper, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
 
-function program1(depth0,data) {
-  
-  var buffer = '';
-  data.buffer.push("\n                    <div class=\"vlt-dialog-body\">\n                        <div class=\"text-center\">\n                            You are about to generate a new private key.\n                            Click the bottom bellow and follow the instructions.\n                            <br/>\n                            <br/>\n                            <a ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "generate", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data})));
-  data.buffer.push(" class=\"btn btn-primary\">Generate new private key</a>\n                        </div>\n                    </div>\n                ");
-  return buffer;
-  }
 
-function program3(depth0,data) {
-  
-  var buffer = '', helper, options;
-  data.buffer.push("\n                    ");
+  data.buffer.push("<div class=\"vlt-dialog col-md-8 col-md-offset-2 col-xs-12 top-50\">\n    <div class=\"vlt-dialog-content\">\n        <div class=\"vlt-dialog-header\">\n            <h2>Private key</h2>\n        </div>\n        <div class=\"vlt-dialog-body\">\n\n            <div class=\"col-md-8 col-md-offset-2\">\n                ");
   data.buffer.push(escapeExpression((helper = helpers['change-key'] || (depth0 && depth0['change-key']),options={hash:{
     'action': ("save")
   },hashTypes:{'action': "STRING"},hashContexts:{'action': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "change-key", options))));
-  data.buffer.push("\n                ");
-  return buffer;
-  }
-
-  data.buffer.push("<div class=\"vlt-dialog col-md-8 col-md-offset-2 col-xs-12 top-50\">\n    <div class=\"vlt-dialog-content\">\n        <div class=\"vlt-dialog-header\">\n            <h2>Private key</h2>\n        </div>\n        <div class=\"vlt-dialog-body\">\n\n            <div class=\"col-md-8 col-md-offset-2\">\n                ");
-  stack1 = helpers['if'].call(depth0, "stepInfo", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n\n                ");
-  stack1 = helpers['if'].call(depth0, "stepKeys", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0],types:["ID"],data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n\n            </div>\n            <div class=\"clearfix\"></div>\n        </div>\n    </div>\n</div>\n");
+  data.buffer.push("\n            </div>\n            <div class=\"clearfix\"></div>\n        </div>\n    </div>\n</div>\n");
   return buffer;
   
 });
@@ -1179,6 +1119,28 @@ function program1(depth0,data) {
   },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "AuthRegister", options) : helperMissing.call(depth0, "link-to", "AuthRegister", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n                </div>\n\n                <div class=\"clearfix\"></div>\n\n            </div>\n        </form>\n    </div>\n</div>\n");
+  return buffer;
+  
+});
+
+Ember.TEMPLATES["Auth/AuthLostKeyRecoverySuccess"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
+/**/) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', stack1, helper, options, self=this, helperMissing=helpers.helperMissing;
+
+function program1(depth0,data) {
+  
+  
+  data.buffer.push("\n                    Go to your workspaces dashboard\n                ");
+  }
+
+  data.buffer.push("<div class=\"vlt-dialog col-md-6 col-md-offset-3 col-xs-12 top-50\">\n    <div class=\"vlt-dialog-content\">\n        <form class=\"form-horizontal\" role=\"form\">\n\n            <div class=\"vlt-dialog-header\">\n                <h2>Your private key was successfully reset.</h2>\n            </div>\n            <div class=\"vlt-dialog-body\">\n                <div class=\"row\">\n                        <div class=\"col-md-12 text-center bottom-15\">\n                            <p>\n                                We rebuild your private key and set your environment to use it.\n                            </p>\n                        </div>\n                </div>\n\n            </div>\n            <div class=\"vlt-dialog-footer\">\n\n                ");
+  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{
+    'class': ("btn btn-primary")
+  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "Workspaces", options) : helperMissing.call(depth0, "link-to", "Workspaces", options));
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n            </div>\n        </form>\n    </div>\n</div>\n");
   return buffer;
   
 });

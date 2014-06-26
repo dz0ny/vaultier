@@ -10,6 +10,7 @@ from vaultier.models.member.model import Member
 from vaultier.models.role.fields import RoleLevelField
 from vaultier.models.user.model import User
 from vaultier.models.workspace.model import Workspace
+from vaultier.test.tools import AssertionsMixin
 from vaultier.test.tools.auth.api import register_api_call, auth_api_call
 from vaultier.test.tools.invitation.api import accept_invitation_api_call
 from vaultier.test.tools.lostkey.api import create_lost_keys_api_call, update_lost_key_api_rebuild_call, \
@@ -20,7 +21,7 @@ from vaultier.test.tools.workspace.api import create_workspace_api_call
 from vaultier.test.tools.workspacekey.api import set_workspace_key_api_call
 
 
-class ApiLostKeyTest(TransactionTestCase):
+class ApiLostKeyTest(TransactionTestCase, AssertionsMixin):
     """
     Exercise the lost_key API
     """
@@ -65,7 +66,6 @@ class ApiLostKeyTest(TransactionTestCase):
         self.assertNotEqual(lost_key_1.hash, lost_key_2.hash,
                             "Different lost keys should contain different hash even for the same user")
 
-
     def test_020_should_create_a_new_lostkey_resource(self):
         """
         Exercise the creation of a lost key resource
@@ -80,7 +80,7 @@ class ApiLostKeyTest(TransactionTestCase):
     def test_030_should_not_retrieve_user_without_hash(self):
         """
         Check authentication base on hash
-        :param kwargs:
+        :param
         :return:
         """
         user, token = self.create_user('test30@rclick.com', 'test_30')
@@ -156,15 +156,16 @@ class ApiLostKeyTest(TransactionTestCase):
         self.assertTrue(len(memberships) == 2,
                         "Should return the current number of workspaces where the user is a member")
 
-        self.assertEqual(memberships,
-                         [{'workspace_name': workspace_1.get('name'), 'is_recoverable': False},
-                          {'workspace_name': workspace_2.get('name'), 'is_recoverable': False}],
-                         "Workspaces must be shared with an user that has status " \
-                         "MemberStatusField.STATUS_MEMBER to be recoverable")
+        workspaces_fixture = [{'workspace_name': workspace_1.get('name'), 'is_recoverable': False},
+                              {'workspace_name': workspace_2.get('name'), 'is_recoverable': False}]
+        index = 0
+        for membership in memberships:
+            # Workspaces must be shared with an user that has status
+            # MemberStatusField.STATUS_MEMBER to be recoverable"
+            self.assert_dict(membership, workspaces_fixture[index])
+            index += 1
 
         set_workspace_key_api_call(user1token, user2member.get('id'), workspace_key)
-
-
 
         response = retrieve_lost_key_api_call(lost_key.id, lost_key.hash)
 
@@ -173,19 +174,21 @@ class ApiLostKeyTest(TransactionTestCase):
                         "Should return the current number of workspaces where the user is a member")
         members = list(Member.objects.filter(workspace_id=workspace_1.get('id')))
 
-        self.assertEqual(memberships,
-                         [{'workspace_name': workspace_1.get('name'), 'is_recoverable': True},
-                          {'workspace_name': workspace_2.get('name'), 'is_recoverable': False}],
-                         "The API can count individually the members for each workspace and differentiate by status")
+        workspaces_fixture = [{'workspace_name': workspace_1.get('name'), 'is_recoverable': True},
+                          {'workspace_name': workspace_2.get('name'), 'is_recoverable': False}]
+        index = 0
+        for membership in memberships:
+            # The API can count individually the members for each workspace and differentiate by status
+            self.assert_dict(membership, workspaces_fixture[index])
+            index += 1
 
         update_response = update_lost_key_api_rebuild_call(lost_key.id, lost_key.hash, public_key='Some new key')
 
         user1_total_memberships_different_200 = Member.objects.filter(user=lost_key.created_by).exclude(
             status=MemberStatusField.STATUS_MEMBER_WITHOUT_WORKSPACE_KEY).count()
         self.assertEqual(user1_total_memberships_different_200, 1,
-                         "There should not be any membership with status differente than " \
+                         "There should not be any membership with status different than "
                          "MemberStatusField.STATUS_MEMBER_WITHOUT_WORKSPACE_KEY")
-
 
     def test_065_membership_should_not_contain_duplicate_workspaces(self):
         workspace_key = "Maybe blue, but is the bomb"
@@ -263,7 +266,7 @@ class ApiLostKeyTest(TransactionTestCase):
         user2invitation = Member.objects.get(pk=user2member.get('id')).invitation_hash
         user2role = create_role_api_call(user1token, user2member.get('id'), to_workspace=workspace_1.get('id'),
                                          level=RoleLevelField.LEVEL_READ)
-        # acccept invitation
+        # accept invitation
         response = accept_invitation_api_call(user2token, user2member.get('id'), user2invitation)
         # create lost key resource
         response = create_lost_keys_api_call(email=user_1.email)
@@ -276,18 +279,18 @@ class ApiLostKeyTest(TransactionTestCase):
         # disable key
         disable_response = update_lost_key_api_disable_call(lost_key.id, lost_key.hash, public_key='-')
 
-        # get workpaces
+        # get workspaces
         active_workspace = Workspace.objects.filter(membership__user=user_1)
         self.assertEquals(active_workspace.count(), 1, "Unshared workspace was deleted")
 
         all_workspaces = Workspace.objects.include_deleted().filter(membership__user=user_1)
         self.assertEquals(all_workspaces.count(), 2, "The workspace where just soft deleted")
 
-        broken_status_workspaces = Workspace.objects.include_deleted().filter(membership__user=user_1,
-                                                                              membership__status=MemberStatusField.STATUS_MEMBER_BROKEN)
+        broken_status_workspaces = Workspace.objects \
+            .include_deleted().filter(membership__user=user_1,
+                                      membership__status=MemberStatusField.STATUS_MEMBER_BROKEN)
         self.assertEquals(broken_status_workspaces.count(), all_workspaces.count(),
                           "All membership has status broken when user disable his lost key")
-
 
         def test_090_should_disable_just_unrecoverable_workspaces(self):
             workspace_key = '!-@#$%.*'
@@ -306,7 +309,7 @@ class ApiLostKeyTest(TransactionTestCase):
             user2invitation = Member.objects.get(pk=user2member.get('id')).invitation_hash
             user2role = create_role_api_call(user1token, user2member.get('id'), to_workspace=workspace_1.get('id'),
                                              level=RoleLevelField.LEVEL_READ)
-            # acccept invitation
+            # accept invitation
             response = accept_invitation_api_call(user2token, user2member.get('id'), user2invitation)
             # create lost key resource
             response = create_lost_keys_api_call(email=user_1.email)
@@ -320,15 +323,16 @@ class ApiLostKeyTest(TransactionTestCase):
             disable_response = update_lost_key_api_rebuild_call(lost_key.id, lost_key.hash,
                                                                 public_key='Meine neu public key')
 
-            # get workpaces
+            # get workspaces
             active_workspace = Workspace.objects.filter(membership__user=user_1)
             self.assertEquals(active_workspace.count(), 1, "Unshared workspace was deleted")
 
             all_workspaces = Workspace.objects.include_deleted().filter(membership__user=user_1)
             self.assertEquals(all_workspaces.count(), 2, "The workspace where just soft deleted")
 
-            broken_status_workspaces = Workspace.objects.include_deleted().filter(membership__user=user_1,
-                                                                                  membership__status=MemberStatusField.STATUS_MEMBER_BROKEN)
+            broken_status_workspaces = Workspace.objects \
+                .include_deleted().filter(membership__user=user_1,
+                                          membership__status=MemberStatusField.STATUS_MEMBER_BROKEN)
             self.assertTrue(broken_status_workspaces.count() < all_workspaces.count(),
                             "Shared workspaces has status MembershipStatusField.STATUS_MEMBER_WITHOUT_WORKSPACE_KEY")
 

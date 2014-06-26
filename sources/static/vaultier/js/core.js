@@ -883,6 +883,7 @@ var router = Vaultier.Router.map(function () {
             this.route('reset', {path: 'reset'});
             this.route('rebuild', {path: 'rebuild'});
             this.route('disable', {path: 'disable'});
+            this.route('success', {path: 'success'});
         });
     });
 

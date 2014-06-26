@@ -3,65 +3,45 @@
         <form class="form-horizontal" role="form">
 
             <div class="vlt-dialog-header text-center">
-                <h4>Retrieve your lost key</h4>
+                <h2>Retrieve your lost key</h2>
             </div>
             <div class="vlt-dialog-body">
                 <div class="row">
-                    {{#if emailWasSuccessfullySend}}
-                        <div class="col-md-12 center text-center">
-                            <h2 class="text-success">Your request was successfully send</h2>
+                    <div class="col-md-12 bottom-15">
 
+                        <div class="callout callout-info">
                             <p>
-                                We have send you an email with the instructions to recover your
-                                private key.
-                            </p>
-
-                            <p>
-                                {{#link-to 'AuthLogin' class="btn btn-default btn-sm" }}
-                                    Return to login
-                                {{/link-to}}
+                                You have forgotten your key, we are ready to renew your access key. Please enter
+                                your email below and we will send email to you with further instructions.
                             </p>
                         </div>
-                    {{else}}
-                        <div class="col-md-12 bottom-15">
+                    </div>
 
-                            <div class="callout callout-info">
-                                <p>
-                                    You have forgotten your key, we are ready to renew your access key. Please enter
-                                    your email below and we will send email to you with further instructions.
-                                </p>
+                    <div class="col-md-8">
+
+                        <div class="form-group" {{bind-attr class='error:has-error'}}>
+                            <label for="login-form-email" class="col-lg-4 control-label pull-left">Email</label>
+
+                            <div class="col-lg-8">
+                                {{input id="email"
+                                valueBinding="content.email"
+                                class="form-control"
+                                placeholder="Enter your email"
+                                require="true"
+                                }}
+                                <span class="error">
+                                    {{content.errors.email}}
+                                </span>
                             </div>
                         </div>
-
-                        <div class="col-md-8">
-
-                            <div class="form-group" {{bind-attr class='error:has-error'}} {{bind-attr class='emailSuccess:has-success'}}>
-                                <label for="login-form-email" class="col-lg-4 control-label pull-left">Email</label>
-
-                                <div class="col-lg-8">
-                                    {{input id="email"
-                                    valueBinding="content.email"
-                                    class="form-control"
-                                    placeholder="Enter your email"
-                                    require="true"
-                                    }}
-                                    <span class="error">
-                                        {{content.errors.email}}
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    {{/if}}
+                    </div>
                 </div>
 
             </div>
             <div class="vlt-dialog-footer">
 
                 <div class="pull-right vlt-right-buttons">
-                    <button type="submit"
-                        {{ action sendRecoveryKeyRequest}}
-                        {{bind-attr disabled="emailWasSuccessfullySend"}}
-                            class="btn btn-primary">
+                    <button type="submit" {{ action sendRecoveryKeyRequest}} class="btn btn-primary">
                         Send
                     </button>
                 </div>

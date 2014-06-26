@@ -23,24 +23,6 @@ class WorkspaceManager(SoftDeleteManagerMixin, Manager):
 
         return workspaces
 
-    @classmethod
-    def serialize_recoverability(cls, workspaces):
-        """
-        For a given queryset return an iterable of objects
-        containing the workspace name and if it is recoverable
-        A workspace is recoverable if it is share among any user
-        and its membership status is MemberStatusField.STATUS_MEMBER
-        :param workspaces:
-        :return: iterable
-        """
-        assert isinstance(workspaces, QuerySet)
-        return imap(lambda workspace: {
-            'id' : workspace.id,
-            'workspace_name': workspace.name,
-            'is_recoverable': Member.objects.filter(workspace_id=workspace.id,
-                                                    status=MemberStatusField.STATUS_MEMBER).count() > 1},
-                    workspaces)
-
     def create_member_with_workspace(self, workspace):
         attrs_needed = ['_user', ]
         if not all(hasattr(workspace, attr) for attr in attrs_needed):

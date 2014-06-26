@@ -1,3 +1,4 @@
+from itertools import imap
 from django.utils.datetime_safe import datetime
 from django.utils.timezone import utc
 from rest_framework.authentication import BaseAuthentication
@@ -10,6 +11,8 @@ from vaultier.models.lostkey.fields import RecoverTypeField
 from vaultier.models.lostkey.model import LostKey
 from rest_framework import viewsets, mixins
 from rest_framework.fields import SerializerMethodField
+from vaultier.models.member.fields import MemberStatusField
+from vaultier.models.member.model import Member
 from vaultier.models.user.model import User
 from vaultier.models.workspace.model import Workspace
 
@@ -78,12 +81,20 @@ class LostKeySerializer(ModelSerializer):
 
     def get_memberships(self, obj):
         """
-        Retrieve all workspaces where user is a member
-        :return :dict {'workspace_name': string, 'is_recoverable': boolean}
+        Retrieve all workspaces where user is a member.
+        Returns an iterable of objects containing the name and id,
+        plus a custom field is_recoverable for each workspace.
+        A workspace is recoverable if it is share among any other user
+        and its membership status is MemberStatusField.STATUS_MEMBER
+        :return :dict {'workspace_id': int, 'workspace_name': str, 'is_recoverable': bool}
         """
         workspaces = Workspace.objects.all_for_user(obj.created_by)
-        return Workspace.objects.serialize_recoverability(workspaces)
-
+        return imap(lambda workspace: {
+            'workspace_id': workspace.id,
+            'workspace_name': workspace.name,
+            'is_recoverable': Member.objects.filter(workspace_id=workspace.id,
+                                                    status=MemberStatusField.STATUS_MEMBER) \
+                    .exclude(user=obj.created_by).count() > 0}, workspaces)
 
     def save_object(self, obj, **kwargs):
         """

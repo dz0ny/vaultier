@@ -6,22 +6,7 @@
         <div class="vlt-dialog-body">
 
             <div class="col-md-8 col-md-offset-2">
-                {{#if stepInfo}}
-                    <div class="vlt-dialog-body">
-                        <div class="text-center">
-                            You are about to generate a new private key.
-                            Click the bottom bellow and follow the instructions.
-                            <br/>
-                            <br/>
-                            <a {{action generate}} class="btn btn-primary">Generate new private key</a>
-                        </div>
-                    </div>
-                {{/if}}
-
-                {{#if stepKeys }}
-                    {{change-key action="save"}}
-                {{/if}}
-
+                {{change-key action="save"}}
             </div>
             <div class="clearfix"></div>
         </div>

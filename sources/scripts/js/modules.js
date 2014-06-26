@@ -224,8 +224,8 @@ var vaultierModulesConfig = {
                 "./js/module/Auth/AuthRegisterSum.hbs",
                 "./js/module/Auth/AuthLostKeyRecoveryReset.hbs",
                 "./js/module/Auth/AuthLostKeyRecoveryRebuild.hbs",
-                "./js/module/Auth/AuthLostKeyRecoveryDisable.hbs"
-
+                "./js/module/Auth/AuthLostKeyRecoveryDisable.hbs",
+                "./js/module/Auth/AuthLostKeyRecoverySuccess.hbs"
             ]
         },
         "membership": {

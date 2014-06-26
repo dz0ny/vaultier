@@ -18,8 +18,9 @@ from vaultier.models.workspace.model import Workspace
 
 class LostKeyManager(Manager):
     def on_pre_save(self, sender, instance=None, *args, **kwargs):
-        self._generate_hash(instance=instance)
-        self._generate_expiration_time(instance=instance)
+        if not instance.id:
+            self._generate_hash(instance=instance)
+            self._generate_expiration_time(instance=instance)
 
     def _generate_hash(self, instance=None):
         unique_hash = uuid.uuid4()
@@ -27,8 +28,7 @@ class LostKeyManager(Manager):
 
     def _generate_expiration_time(self, instance=None):
         expiration_time = settings.BK_FEATURES.get('lostkey_hash_expiration_time')
-        instance.expires_at = timezone.now().replace(tzinfo=utc) + \
-                              datetime.timedelta(milliseconds=expiration_time)
+        instance.expires_at = timezone.now().replace(tzinfo=utc) + datetime.timedelta(milliseconds=expiration_time)
 
     def send_notification(self, sender, instance=None, *args, **kwargs):
         """
@@ -39,7 +39,8 @@ class LostKeyManager(Manager):
         :param kwargs:
         :return:
         """
-        send_lost_key_notification(instance)
+        if not instance.used:
+            send_lost_key_notification(instance)
 
     def disable_lost_key(self, user):
         """

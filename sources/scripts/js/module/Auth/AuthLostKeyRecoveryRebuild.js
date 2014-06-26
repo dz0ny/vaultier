@@ -3,10 +3,6 @@
 Vaultier.AuthLostKeyRecoveryRebuildRoute = Ember.Route.extend({
 
     actions: {
-        generate: function () {
-            this.set('controller.stepInfo', false);
-            this.set('controller.stepKeys', true);
-        },
 
         savePrivateKey: function () {
             // start download
@@ -24,9 +20,9 @@ Vaultier.AuthLostKeyRecoveryRebuildRoute = Ember.Route.extend({
 
             var promise = content.saveRecord()
                 .then(function (response) {
-                    this.set('controller.stepKeys', false);
-                    this.get('auth').login(response.created_by.email, keys.privateKey, true);
-                     $.notify('You have successfully rebuild your new private key', 'success');
+                    this.get('auth').login(response.created_by.email, keys.privateKey, false);
+                    $.notify('You have successfully rebuild your new private key', 'success');
+                    this.transitionTo('AuthLostKeyRecovery.success');
                 }.bind(this))
                 .catch(function (error) {
                     $.notify('There was an error during update of your key, please try again later', 'error');
@@ -40,12 +36,15 @@ Vaultier.AuthLostKeyRecoveryRebuildRoute = Ember.Route.extend({
 
 Vaultier.AuthLostKeyRecoveryRebuildController = Ember.Controller.extend({
     needs: ['AuthLostKeyRecovery'],
-    stepInfo: true,
-    stepKeys: false,
     keys: null
 });
 
 Vaultier.AuthLostKeyRecoveryRebuildView = Ember.View.extend({
     templateName: 'Auth/AuthLostKeyRecoveryRebuild',
+    layoutName: 'Layout/LayoutStandard'
+});
+
+Vaultier.AuthLostKeyRecoverySuccessView = Ember.View.extend({
+    templateName: 'Auth/AuthLostKeyRecoverySuccess',
     layoutName: 'Layout/LayoutStandard'
 });

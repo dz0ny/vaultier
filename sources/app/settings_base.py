@@ -233,8 +233,8 @@ FT_FEATURES = {
 BK_FEATURES = {
     'dev_mail_to': False,  # 'email@example.com' to send all emails to this address
     'dev_shared_key': False,  # True to use/generate same key for all users
-    # 10 minutes in milliseconds used to calculate the expiration time on api.lostkey module
-    'lostkey_hash_expiration_time': 600000,
+    # 1 hour in milliseconds used to calculate the expiration time on api.lostkey module
+    'lostkey_hash_expiration_time': 3600000,
     # Template to create the front end lostkey url to be send by mail
     'lostkey_url_template': '#/lostkey/{hash}',
     'ga_create_code': 'UA-17830772-11' # code for google analytics

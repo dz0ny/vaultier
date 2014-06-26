@@ -1,17 +1,17 @@
 Vaultier.ChangeKeyComponent = Ember.Component.extend({
-    templateName: 'Settings/ChangeKey',
+    layoutName: 'Settings/ChangeKey',
 
     keys: null,
     privateKeySaved: false,
     publicKeySaved: false,
 
     publicButtonDisabled: function () {
-        return this.get('publicKeySaved') || !this.get('privateKeySaved')
+        return this.get('publicKeySaved') || !this.get('privateKeySaved');
     }.property('privateKeySaved', 'publicKeySaved'),
 
     didInsertElement: function () {
         if (!this.get('changekey')) {
-            throw Error('service:changekey has to be injected into changekey component')
+            throw Error('service:changekey has to be injected into changekey component');
         }
         if (!this.get('keys')) {
             this.generate();
@@ -19,10 +19,10 @@ Vaultier.ChangeKeyComponent = Ember.Component.extend({
     },
 
     generate: function () {
-        var chk = this.get('changekey')
+        var chk = this.get('changekey');
         chk.generateKeys(function (keys) {
-            this.set('keys', keys)
-        }.bind(this))
+            this.set('keys', keys);
+        }.bind(this));
     },
 
     actions: {
@@ -36,13 +36,13 @@ Vaultier.ChangeKeyComponent = Ember.Component.extend({
 
         savePublicKey: function () {
             this.set('publicKeySaved', true);
-            var result = {}
-            this.sendAction('action', this.get('keys'), result)
+            var result = {};
+            this.sendAction('action', this.get('keys'), result);
             if (result.promise) {
                 result.promise
                     .catch(function (error) {
                         this.set('publicKeySaved', false);
-                        throw error
+                        throw error;
                     }.bind(this));
             }
         }
