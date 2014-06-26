@@ -4,6 +4,51 @@
         <div class="vlt-page-content">
             <div class="col-md-12">
 
+                <div class="vlt-page-content-responsive-header">
+                    <div class="row-fluid">
+                        <div class="col-xs-3">
+                            {{#exp  "( vault.perms.update || vault.perms.delete || vault.perms.create || vault.perms.invite )"}}
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default dropdown-toggle"
+                                            data-toggle="dropdown">
+                                        <span class="glyphicon glyphicon-cog"></span>
+                                        Manage
+                                    </button>
+                                    <ul class="dropdown-menu caret-left">
+                                        {{#if vault.perms.update}}
+
+                                            <li>
+                                                {{#link-to "Vault.edit" vault}}
+                                                    Edit vault
+                                                {{/link-to}}
+                                            </li>
+
+                                            <li>
+                                                <a href="#" {{action deleteVault vault }} >Delete vault</a>
+                                            </li>
+                                        {{/if}}
+
+                                        {{#if vault.perms.invite}}
+                                            <li>
+                                                {{#link-to "Vault.memberIndex" vault}}
+                                                    Share
+                                                {{/link-to}}
+                                            </li>
+                                        {{/if}}
+
+                                    </ul>
+                                </div>
+                            {{/exp}}
+                        </div>
+
+                        <div class="col-xs-9">
+                            <h2>Vault: {{vault.name}} </h2>
+                        </div>
+
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+
                 {{view Vaultier.WorkspacesIndexWithoutKeysView workspace=workspace }}
 
                 {{#if length}}

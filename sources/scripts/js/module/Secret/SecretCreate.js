@@ -65,7 +65,6 @@ Vaultier.SecretCreateSelectController = Ember.Controller.extend({
 });
 
 Vaultier.SecretCreateSubmitController = Ember.ObjectController.extend({
-    needs: ['SecretCreate']
 });
 
 
