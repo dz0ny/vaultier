@@ -35,6 +35,14 @@
                                         </li>
                                     {{/if}}
 
+                                    {{#if workspace.perms.create}}
+                                        <li>
+                                            {{#link-to "Vaults.create" }}
+                                                Add vault
+                                            {{/link-to}}
+                                        </li>
+                                    {{/if}}
+
                                 </ul>
                             </div>
                         {{/exp}}

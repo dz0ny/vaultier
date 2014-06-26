@@ -420,7 +420,7 @@ a:hover {
 .vlt-page.vlt-page-plain {
     border-radius: 6px;
     border: 1px solid #dbedfc;
-    border-top: 0px;
+    border-top-color: transparent;
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
     background-color: #f0f7fd;

@@ -251,6 +251,11 @@ a:hover {
 *************************************************************
 *************************************************************/
 
+.container-full {
+    margin: 0 auto;
+    width: 90%;
+}
+
 .padding-0 {
     padding: 0px;
 }
@@ -407,29 +412,35 @@ a:hover {
 *************************************************************/
 
 .vlt-page {
+
+}
+
+/* Plain page */
+
+.vlt-page.vlt-page-plain {
     border-radius: 6px;
     border: 1px solid #dbedfc;
-    border-top: 0px;
+    border-top-color: transparent;
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
     background-color: #f0f7fd;
-    padding: 0px 30px 30px 30px;
+    padding: 0px 30px 100px 30px;
     margin-bottom: 200px;
 }
 
-.vlt-page > .vlt-page-nav {
+.vlt-page.vlt-page-plain > .vlt-page-nav {
     margin-bottom: 20px;
 }
 
-.vlt-page > .vlt-page-nav h2 {
+.vlt-page.vlt-page-plain > .vlt-page-nav h2 {
     margin-right: 20px;
 }
 
-.vlt-page > .vlt-page-nav .vlt-page-tabs {
+.vlt-page.vlt-page-plain > .vlt-page-nav .vlt-page-tabs {
     margin-top: 20px;
 }
 
-.vlt-page > .vlt-page-nav .vlt-page-toolbar {
+.vlt-page.vlt-page-plain > .vlt-page-nav .vlt-page-toolbar {
     margin-top: -1px;
     padding: 10px;
     background-color: #F5F5F5;
@@ -438,8 +449,126 @@ a:hover {
     border-top-width: 0px;
 }
 
-.vlt-section {
-    margin-top: 25px;
+/* Sidebared page */
+
+.vlt-page.vlt-page-with-sidebar {
+    margin-top: -1px;
+    display: table;
+    width: 100%;
+    padding-bottom: 100px;
+}
+
+.vlt-page.vlt-page-with-sidebar > .vlt-page-sidebar {
+    float: none;
+    display: table-cell;
+    position: relative;
+    vertical-align: top;
+    width: 250px;
+    max-width: 250px;
+    background-color: #F5F5F5;
+    border: 1px solid #E0DBDB;
+    border-top: 0px;
+    border-radius: 0px 0px 6px 0px;
+    padding: 0px;
+}
+
+.vlt-page.vlt-page-with-sidebar > .vlt-page-content {
+    float: none;
+    display: table-cell;
+    position: relative;
+    vertical-align: top;
+    margin-left: 249px;
+    border: 1px solid #dbedfc;
+    border-top: 1px solid #E0DBDB;
+    border-left: 0px;
+    border-radius: 0px 0px 0px 6px;
+    background-color: #f0f7fd;
+    padding: 0px 30px 30px 30px;
+}
+
+/* Sidebar css */
+
+.vlt-page.vlt-page-with-sidebar .vlt-page-sidebar .vlt-sidebar-block {
+    display: block;
+}
+
+.vlt-page.vlt-page-with-sidebar .vlt-page-sidebar .vlt-sidebar-block .vlt-header,
+.vlt-page.vlt-page-with-sidebar .vlt-page-sidebar .vlt-sidebar-block .vlt-body,
+.vlt-page.vlt-page-with-sidebar .vlt-page-sidebar .vlt-sidebar-block .vlt-controls {
+    padding: 10px;
+}
+
+.vlt-page.vlt-page-with-sidebar .vlt-page-sidebar .vlt-sidebar-block .vlt-body {
+    text-align: left;
+}
+
+.vlt-page.vlt-page-with-sidebar .vlt-page-sidebar .vlt-sidebar-block .vlt-controls {
+    text-align: left;
+    padding-bottom: 25px;
+}
+
+.vlt-page.vlt-page-with-sidebar .vlt-page-sidebar .vlt-sidebar-block .vlt-header {
+    padding: 10px;
+    position: relative;
+    background-color: #eeeeee;
+    border-bottom: 1px solid #E0DBDB;
+}
+
+.vlt-page.vlt-page-with-sidebar .vlt-page-sidebar .vlt-sidebar-block .vlt-header .vlt-icon {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+}
+
+.vlt-page.vlt-page-with-sidebar .vlt-page-sidebar .vlt-sidebar-block .vlt-header .vlt-title {
+    margin: 4px 0px 0px 40px;
+    min-height: 32px;
+    color: #555555;
+}
+
+.vlt-member-box .vlt-user {
+    display: block;
+    float: left;
+}
+
+.vlt-member-box .vlt-user img {
+    margin-right: 2px;
+    margin-bottom: 2px;
+}
+
+/* Sidebar responsibility */
+
+ .vlt-page.vlt-page-with-sidebar .vlt-page-content-responsive-header {
+     margin: 0px;
+     padding: 30px 5px 5px 5px;
+     background-color: #eeeeee;
+     border: 1px solid #E0DBDB;
+     border-top: 0px;
+     border-radius: 0px 0px 6px 6px;
+     margin-bottom: 30px;
+ }
+
+.vlt-page.vlt-page-with-sidebar .vlt-page-content-responsive-header h2{
+     margin: 0px;
+     padding: 0px;
+ }
+
+@media (min-width: 850px) {
+   .vlt-page.vlt-page-with-sidebar .vlt-page-content-responsive-header {
+       display: none;
+   }
+}
+
+@media (max-width: 850px) {
+    .vlt-page.vlt-page-with-sidebar .vlt-page-sidebar {
+        display: none;
+    }
+
+    .vlt-page.vlt-page-with-sidebar > .vlt-page-content {
+        border-radius: 0px 0px 6px 6px;
+    }
+
+
 }
 
 /*************************************************************
@@ -538,10 +667,10 @@ a:hover {
     background-color: #F5F5F5;
 }
 
-
 #vlt-footer .container {
     padding: 10px;
 }
+
 /*************************************************************
 **************************************************************
 * navbar + branding
@@ -682,7 +811,6 @@ span.vlt-user img {
 .vlt-security-box .dropdown-menu {
     text-align: right;
 }
-
 
 /*************************************************************
 **************************************************************
@@ -1157,7 +1285,6 @@ span.vlt-user img {
     background-image: url('../images/icon-locked-grey.png')
 }
 
-
 /*************************************************************
 **************************************************************
 * Workspace item
@@ -1183,7 +1310,6 @@ span.vlt-user img {
     margin-left: 90px;
 }
 
-
 /*************************************************************
 **************************************************************
 * Permissions panel
@@ -1202,7 +1328,6 @@ span.vlt-user img {
 .vlt-panel-permissions .vlt-table .vlt-row:last-of-type {
     border-bottom: 0px;
 }
-
 
 .vlt-panel-permissions .vlt-table .vlt-row .vlt-user img {
     vertical-align: top;

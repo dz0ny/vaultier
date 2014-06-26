@@ -1,5 +1,4 @@
-Ember.TEMPLATES["Workspace/WorkspacesIndex"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
-/**/) {
+Ember.TEMPLATES["Workspace/WorkspacesIndex"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, self=this, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
@@ -56,13 +55,13 @@ function program8(depth0,data) {
   data.buffer.push("\n                        <span class=\"glyphicon glyphicon-plus\"></span>\n                        Create new workspace\n                    ");
   }
 
-  data.buffer.push("<div class=\"vlt-page-nav\">\n\n    ");
+  data.buffer.push("<div class=\"container\">\n    <div class=\"vlt-page vlt-page-plain\">\n\n<div class=\"vlt-page-nav\">\n\n    ");
   stack1 = helpers['if'].call(depth0, "length", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n\n    <div class=\"clearfix\"></div>\n\n</div>\n\n<div class=\"row\">\n    <div class=\"col-md-12\">\n\n        ");
   stack1 = helpers['if'].call(depth0, "length", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(7, program7, data),fn:self.program(4, program4, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n\n    </div>\n</div>\n");
+  data.buffer.push("\n\n    </div>\n</div>\n</div>\n    </div>");
   return buffer;
   
 });

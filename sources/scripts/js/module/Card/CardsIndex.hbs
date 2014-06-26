@@ -36,6 +36,14 @@
                                             </li>
                                         {{/if}}
 
+                                        {{#if vault.perms.create}}
+                                            <li>
+                                                {{#link-to "Cards.create" }}
+                                                    Add card
+                                                {{/link-to}}
+                                            </li>
+                                        {{/if}}
+
                                     </ul>
                                 </div>
                             {{/exp}}

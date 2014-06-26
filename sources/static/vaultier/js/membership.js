@@ -623,8 +623,102 @@ Vaultier.MemberInviteView = Ember.View.extend({
     Select: Vaultier.MemberSelectRoleView
 });
 
-Ember.TEMPLATES["Member/MemberIndex"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
-/**/) {
+Vaultier.MemberBoxComponent = Ember.Component.extend({
+    layoutName: 'Member/MemberBox',
+
+    init: function () {
+        this._super.apply(this, arguments);
+        this.checkParameters();
+    },
+
+    checkParameters: function () {
+        var roles = this.get('roles');
+        var user = this.get('user');
+        if (Object.prototype.toString.call(roles) != '[object Array]') {
+            throw new Error('Roles array has to be passed as roles=[Vaultier.Role] parameter');
+        }
+
+        if (!user || user.constructor != Vaultier.User) {
+            throw new Error('Current user has to be passed as user=Vaultier.User')
+        }
+
+    },
+
+
+    processedRoles: function () {
+        // remove me from roles
+        var roles = this.get('roles').filter(function (role) {
+            if (role.get('member.user') != this.get('user.id')) {
+                return role;
+            }
+        }.bind(this))
+
+        // sort by permission level
+        roles = roles.sort(function (a, b) {
+            return b.get('level') - a.get('level');
+        });
+
+        // unique array
+        var foundRoles = []
+        roles = roles.filter(function (role) {
+            var id = role.get('member.id');
+            if (foundRoles.indexOf(id) == -1) {
+                foundRoles.push(id);
+                return role;
+            }
+        })
+
+        return roles;
+    }.property('roles'),
+
+    hasAny: function () {
+        if (this.get('processedRoles').length > 0) {
+            return true;
+        }
+        return false;
+    }.property('processedRoles'),
+
+    hasRead: function () {
+        return this.get('rolesRead').length != 0
+    }.property('rolesRead'),
+
+    rolesRead: function () {
+        return this.get('processedRoles').filter(function (role) {
+            if (role.get('level') == Vaultier.Role.proto().roles['READ'].value) {
+                return role;
+            }
+        });
+    }.property('processedRoles'),
+
+    hasCreate: function () {
+        return this.get('rolesCreate').length != 0
+    }.property('rolesCreate'),
+
+    rolesCreate: function () {
+        return this.get('processedRoles').filter(function (role) {
+            if (role.get('level') == Vaultier.Role.proto().roles['CREATE'].value) {
+                return role;
+            }
+        });
+    }.property('processedRoles'),
+
+
+    hasWrite: function () {
+        return this.get('rolesWrite').length != 0
+    }.property('rolesWrite'),
+
+    rolesWrite: function () {
+        return this.get('processedRoles').filter(function (role) {
+            if (role.get('level') == Vaultier.Role.proto().roles['WRITE'].value) {
+                return role;
+            }
+        });
+    }.property('processedRoles')
+
+});
+
+
+Ember.TEMPLATES["Member/MemberIndex"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, helper, options, self=this, escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing;
@@ -831,7 +925,7 @@ function program26(depth0,data) {
   data.buffer.push("\r\n                                        <span class=\"label label-warning\">\r\n                                        It's you\r\n                                        </span>\r\n                                    ");
   }
 
-  data.buffer.push("<div class=\"vlt-page-nav\">\r\n\r\n    <div class=\"vlt-page-toolbar pull-right\">\r\n        <div>\r\n\r\n            <a href=\"javascript:window.history.go(-1)\" class=\"btn btn-default\">\r\n                <span class=\"glyphicon glyphicon-chevron-left\"></span>\r\n                Back\r\n            </a>\r\n\r\n            <div style=\"display: none\">\r\n                <a href=\"#\" class=\"btn btn-default\">\r\n                    <span class=\"glyphicon glyphicon-question-sign\"></span>\r\n                    Permissions\r\n                </a>\r\n            </div>\r\n\r\n            ");
+  data.buffer.push("<div class=\"container\">\r\n<div class=\"vlt-page vlt-page-plain\">\r\n<div class=\"vlt-page-nav\">\r\n\r\n    <div class=\"vlt-page-toolbar pull-right\">\r\n        <div>\r\n\r\n            <a href=\"javascript:window.history.go(-1)\" class=\"btn btn-default\">\r\n                <span class=\"glyphicon glyphicon-chevron-left\"></span>\r\n                Back\r\n            </a>\r\n\r\n            <div style=\"display: none\">\r\n                <a href=\"#\" class=\"btn btn-default\">\r\n                    <span class=\"glyphicon glyphicon-question-sign\"></span>\r\n                    Permissions\r\n                </a>\r\n            </div>\r\n\r\n            ");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{
     'class': ("btn btn-primary")
   },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "inviteRouteName", options) : helperMissing.call(depth0, "link-to", "inviteRouteName", options));
@@ -839,19 +933,18 @@ function program26(depth0,data) {
   data.buffer.push("\r\n\r\n\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"pull-left\">\r\n        <h2>Collaborators</h2>\r\n    </div>\r\n\r\n    <div class=\"clearfix\"></div>\r\n</div>\r\n\r\n<div class=\"vlt-page-invitations\">\r\n\r\n    ");
   stack1 = helpers.each.call(depth0, "block", "in", "blocks", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\r\n\r\n\r\n\r\n</div>");
+  data.buffer.push("\r\n\r\n\r\n\r\n</div>\r\n<div class=\"clearfix\"></div>\r\n</div>\r\n</div>");
   return buffer;
   
 });
 
-Ember.TEMPLATES["Member/MemberInvite"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
-/**/) {
+Ember.TEMPLATES["Member/MemberInvite"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', helper, options, escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing;
 
 
-  data.buffer.push("<div class=\"vlt-dialog col-md-8 col-md-offset-2 top-50\">\r\n    <form>\r\n        <div class=\"vlt-dialog-content\">\r\n            <div class=\"vlt-dialog-header\">\r\n                <h2>Invite collaborators</h2>\r\n            </div>\r\n            <div class=\"vlt-dialog-body\">\r\n\r\n                <div class=\"col-md-10 col-md-offset-1\">\r\n\r\n                    <div class=\"form-group\">\r\n                        <label for=\"invite-form-invited\">Select users</label>\r\n\r\n                        ");
+  data.buffer.push("<div class=\"vlt-page vlt-page-plain\">\r\n<div class=\"vlt-dialog col-md-8 col-md-offset-2 top-50\">\r\n    <form>\r\n        <div class=\"vlt-dialog-content\">\r\n            <div class=\"vlt-dialog-header\">\r\n                <h2>Invite collaborators</h2>\r\n            </div>\r\n            <div class=\"vlt-dialog-body\">\r\n\r\n                <div class=\"col-md-10 col-md-offset-1\">\r\n\r\n                    <div class=\"form-group\">\r\n                        <label for=\"invite-form-invited\">Select users</label>\r\n\r\n                        ");
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "Vaultier.MemberInviteInput", {hash:{
     'store': ("store"),
     'workspace': ("workspace"),
@@ -881,13 +974,81 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   },hashTypes:{'disabled': "ID"},hashContexts:{'disabled': depth0},contexts:[],types:[],data:data})));
   data.buffer.push(" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "save", "invited", "role", "resend", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0,depth0,depth0],types:["ID","ID","ID","ID"],data:data})));
-  data.buffer.push("\r\n                        class=\"btn btn-primary\">\r\n                    <span class=\"glyphicon glyphicon-ok\"></span>\r\n                    Submit\r\n                </button>\r\n            </div>\r\n        </div>\r\n    </form>\r\n</div>\r\n\r\n");
+  data.buffer.push("\r\n                        class=\"btn btn-primary\">\r\n                    <span class=\"glyphicon glyphicon-ok\"></span>\r\n                    Submit\r\n                </button>\r\n            </div>\r\n        </div>\r\n    </form>\r\n</div>\r\n<div class=\"clearfix\"></div>\r\n</div>\r\n");
   return buffer;
   
 });
 
-Ember.TEMPLATES["Invitation/InvitationAnonymous"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
-/**/) {
+Ember.TEMPLATES["Member/MemberBox"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', stack1, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, self=this;
+
+function program1(depth0,data) {
+  
+  
+  data.buffer.push("\n        Not shared with anybody yet\n    ");
+  }
+
+function program3(depth0,data) {
+  
+  var buffer = '', stack1;
+  data.buffer.push("\n        <div class=\"vlt-perms-section\">\n            Users able to manage\n        </div>\n        <div class=\"vlt-perms-roles\">\n            ");
+  stack1 = helpers.each.call(depth0, "role", "in", "rolesWrite", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(4, program4, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n        </div>\n        <div class=\"clearfix\"></div>\n    ");
+  return buffer;
+  }
+function program4(depth0,data) {
+  
+  var buffer = '', helper, options;
+  data.buffer.push("\n                ");
+  data.buffer.push(escapeExpression((helper = helpers.printUser || (depth0 && depth0.printUser),options={hash:{
+    'size': (50),
+    'disableName': (1)
+  },hashTypes:{'size': "INTEGER",'disableName': "INTEGER"},hashContexts:{'size': depth0,'disableName': depth0},contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "role.member", options) : helperMissing.call(depth0, "printUser", "role.member", options))));
+  data.buffer.push("\n            ");
+  return buffer;
+  }
+
+function program6(depth0,data) {
+  
+  var buffer = '', stack1;
+  data.buffer.push("\n        <div class=\"vlt-perms-section\">\n            Users able to read\n        </div>\n        <div class=\"vlt-perms-roles\">\n            ");
+  stack1 = helpers.each.call(depth0, "role", "in", "rolesRead", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(4, program4, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n        </div>\n        <div class=\"clearfix\"></div>\n    ");
+  return buffer;
+  }
+
+function program8(depth0,data) {
+  
+  var buffer = '', stack1;
+  data.buffer.push("\n        <div class=\"vlt-perms-section\">\n            Users able to create only\n        </div>\n        <div class=\"vlt-perms-roles\">\n            ");
+  stack1 = helpers.each.call(depth0, "role", "in", "rolesCreate", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(4, program4, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n        </div>\n        <div class=\"clearfix\"></div>\n    ");
+  return buffer;
+  }
+
+  data.buffer.push("<div class=\"vlt-member-box\">\n    ");
+  stack1 = helpers.unless.call(depth0, "hasAny", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n\n\n    ");
+  stack1 = helpers['if'].call(depth0, "hasWrite", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n\n    ");
+  stack1 = helpers['if'].call(depth0, "hasRead", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(6, program6, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n\n    ");
+  stack1 = helpers['if'].call(depth0, "hasCreate", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(8, program8, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n\n</div>");
+  return buffer;
+  
+});
+
+Ember.TEMPLATES["Invitation/InvitationAnonymous"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, helper, options, self=this, helperMissing=helpers.helperMissing;
@@ -919,8 +1080,7 @@ function program3(depth0,data) {
   
 });
 
-Ember.TEMPLATES["Invitation/InvitationAccept"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
-/**/) {
+Ember.TEMPLATES["Invitation/InvitationAccept"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, self=this;
