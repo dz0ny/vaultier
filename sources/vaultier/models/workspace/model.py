@@ -35,6 +35,7 @@ class WorkspaceManager(SoftDeleteManagerMixin, Manager):
         """
         assert isinstance(workspaces, QuerySet)
         return imap(lambda workspace: {
+            'id' : workspace.id,
             'workspace_name': workspace.name,
             'is_recoverable': Member.objects.filter(workspace_id=workspace.id,
                                                     status=MemberStatusField.STATUS_MEMBER).count() > 1},
