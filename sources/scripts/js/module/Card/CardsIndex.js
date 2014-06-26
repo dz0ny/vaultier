@@ -23,6 +23,7 @@ Vaultier.CardsIndexRoute = Ember.Route.extend(
                     return [].concat(memberships.to_workspace.toArray(), memberships.to_vault.toArray())
                 });
 
+             // return promise for all requests
             return Ember.RSVP.hash({
                 cards: cards,
                 memberships: memberships
@@ -30,6 +31,7 @@ Vaultier.CardsIndexRoute = Ember.Route.extend(
         },
 
         setupController: function (ctrl, model) {
+            // set model
             ctrl.set('content', model.cards);
             ctrl.set('memberships', model.memberships);
 

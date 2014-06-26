@@ -28,15 +28,11 @@ Vaultier.SecretCreateSelectRoute = Ember.Route.extend(
         },
 
         model: function (params, transition) {
-            // check workspace keys
-            var workspace = this.modelFor('Workspace')
-            if (!workspace.get('hasValidKey')) {
-                throw Error('Cannot edit secret without valid workspace key');
-            }
+            var card = this.modelFor('Card');
 
             // check permissions
             if (!this.get('auth').checkPermissions(transition, function () {
-                return this.modelFor('Card').get('perms.create')
+                return card.get('perms.create')
             }.bind(this), true)) {
                 return;
             }
@@ -81,11 +77,11 @@ Vaultier.SecretCreateSubmitRoute = Ember.Route.extend(
         },
 
         model: function (params, transition) {
-            // check workspace keys
-            var workspace = this.modelFor('Workspace')
-            if (!workspace.get('hasValidKey')) {
-                throw Error('Cannot edit secret without valid workspace key');
-            }
+            var store = this.get('store');
+            var vault = this.modelFor('Vault');
+            var workspace = this.modelFor('Workspace');
+            var card = this.modelFor('Card');
+
 
             // check permissions
             if (!this.get('auth').checkPermissions(transition, function () {
@@ -94,14 +90,29 @@ Vaultier.SecretCreateSubmitRoute = Ember.Route.extend(
                 return;
             }
 
+            // load memberships
+            var memberships = Ember.RSVP
+                .hash({
+                    to_workspace: store.find('Role', {to_workspace: workspace.get('id') }),
+                    to_vault: store.find('Role', {to_vault: vault.get('id')}),
+                    to_card: store.find('Role', {to_card: card.get('id')})
+                })
+                .then(function (memberships) {
+                    return [].concat(memberships.to_workspace.toArray(), memberships.to_vault.toArray(), memberships.to_card.toArray())
+                });
+
             // retrieve model
-            var store = this.get('store');
-            var record = store.createRecord('Secret');
-            return record;
+            var secret = store.createRecord('Secret');
+
+            // return promise for all requests
+            return Ember.RSVP.hash({
+                secret: secret,
+                memberships: memberships
+            });
         },
 
-        afterModel: function (secret, transition) {
-
+        afterModel: function (model, transition) {
+            var secret = model.secret;
             secret.set('card', this.modelFor('Card').get('id'));
 
             var SecretClass = Vaultier.Secret.proto();
@@ -124,7 +135,8 @@ Vaultier.SecretCreateSubmitRoute = Ember.Route.extend(
         },
 
         setupController: function (ctrl, model) {
-            ctrl.set('content', model);
+            ctrl.set('content', model.secret);
+            ctrl.set('memberships', model.memberships);
 
             ctrl.set('controllers.SecretCreate.submitButtonShown', true);
 

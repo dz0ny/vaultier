@@ -10,7 +10,7 @@ Ember.Tree.TreeNodeView = Ember.View.extend({
     loadedData: false,
     tagName: 'li',
     // class names that determine what icons are used beside the node
-    classNameBindings: ['opened: tree-branch-open', 'branch:tree-branch-icon:tree-node-icon'],
+    classNameBindings: ['opened:tree-branch-open', 'branch:tree-branch-icon:tree-node-icon'],
     templateName: 'Shared/Tree/EmberTreeNode',
 
     collapse: function () {

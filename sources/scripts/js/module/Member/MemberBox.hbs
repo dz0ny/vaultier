@@ -1,4 +1,9 @@
 <div class="vlt-member-box">
+    {{#unless hasAny}}
+        Not shared with anybody yet
+    {{/unless}}
+
+
     {{#if hasWrite}}
         <div class="vlt-perms-section">
             Users able to manage
@@ -21,7 +26,7 @@
         </div>
     {{/if}}
 
-        {{#if hasCreate}}
+    {{#if hasCreate}}
         <div class="vlt-perms-section">
             Users able to create only
         </div>

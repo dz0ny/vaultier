@@ -425,7 +425,7 @@ a:hover {
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
     background-color: #f0f7fd;
-    padding: 0px 30px 30px 30px;
+    padding: 0px 30px 100px 30px;
     margin-bottom: 200px;
 }
 
@@ -499,9 +499,12 @@ a:hover {
 .vlt-page.vlt-page-with-sidebar  .vlt-page-sidebar .vlt-sidebar-block .vlt-controls  {
     padding: 10px;
 }
+.vlt-page.vlt-page-with-sidebar  .vlt-page-sidebar .vlt-sidebar-block .vlt-body {
+    text-align: left;
+}
 
 .vlt-page.vlt-page-with-sidebar  .vlt-page-sidebar .vlt-sidebar-block .vlt-controls  {
-    text-align: right;
+    text-align: left;
     padding-bottom: 25px;
 }
 
