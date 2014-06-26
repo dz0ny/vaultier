@@ -50,7 +50,7 @@ class CardSerializer(ModelSerializer):
 
     class Meta:
         model = Card
-        fields = ('id', 'slug', 'name', 'description','vault', 'perms', 'created_at', 'updated_at', 'created_by')
+        fields = ('id', 'slug', 'name', 'description', 'vault', 'perms', 'created_at', 'updated_at', 'created_by',)
 
 
 class CardViewSet(
@@ -71,7 +71,7 @@ class CardViewSet(
     def pre_save(self, object):
         if object.pk is None:
             self.check_object_permissions(self.request, object)
-            object.created_by = self.request.user;
+            object.created_by = self.request.user
         return super(CardViewSet, self).pre_save(object)
 
     def get_queryset(self):
@@ -80,4 +80,4 @@ class CardViewSet(
         else:
             queryset = Card.objects.all()
         return queryset
-    
+

@@ -219,31 +219,33 @@ Vaultier.CardRoute = Ember.Route.extend(
                 .then(function (model) {
                     if (model.get('vault') != vault.get('id')) {
                         var error = new Error();
-                        error.status = 404
-                        throw error
+                        error.status = 404;
+                        throw error;
                     }
-                    return model
-                })
+                    return model;
+                });
 
             return model;
         },
 
         actions: {
             deleteCard: function (card) {
+                var parentVault = this.modelFor('Vault');
                 Vaultier.confirmModal(this, 'Are you sure?', function () {
                     var promise = card
                         .deleteRecord()
                         .then(
                             function () {
                                 $.notify('Your card has been successfully deleted.', 'success');
-                                this.transitionTo('Cards.index', this.get('vault'));
+
+                                this.transitionTo('Cards.index', parentVault);
                             }.bind(this),
                             function (error) {
                                 card.rollback();
                                 $.notify('Oooups! Something went wrong.', 'error');
                             }.bind(this)
                         );
-                    ApplicationLoader.promise(promise)
+                    ApplicationLoader.promise(promise);
                 }.bind(this));
             }
         },
