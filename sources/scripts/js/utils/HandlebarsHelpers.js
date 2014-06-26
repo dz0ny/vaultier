@@ -95,7 +95,7 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
             name = '';
         }
 
-        return '<span class="vlt-user" {tooltip} >{avatar} {name}</span>'
+        return '<span class="vlt-user" {tooltip} >{avatar}{name}</span>'
             .replace('{tooltip}', tooltip)
             .replace('{name}', short)
             .replace('{avatar}', avatar)

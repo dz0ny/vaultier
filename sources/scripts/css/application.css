@@ -527,8 +527,14 @@ a:hover {
     color: #555555;
 }
 
-.vlt-page.vlt-page-with-sidebar  .vlt-page-sidebar .vlt-sidebar-block .vlt-sidebar-block-sharing .vlt-user {
+.vlt-page.vlt-page-with-sidebar  .vlt-page-sidebar .vlt-sidebar-block .vlt-sidebar-block-sharing .vlt-user  {
+    display: block;
+    float: left;
+}
 
+.vlt-page.vlt-page-with-sidebar  .vlt-page-sidebar .vlt-sidebar-block .vlt-sidebar-block-sharing .vlt-user img {
+    margin-right: 2px;
+    margin-bottom: 2px;
 }
 
 
