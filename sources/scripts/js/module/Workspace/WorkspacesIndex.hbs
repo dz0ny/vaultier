@@ -1,70 +1,72 @@
 <div class="container">
     <div class="vlt-page vlt-page-plain">
 
-<div class="vlt-page-nav">
+        <div class="vlt-page-nav">
 
-    {{#if length}}
-        <div class="vlt-page-toolbar pull-right">
+            {{#if length}}
+                <div class="vlt-page-toolbar pull-right">
 
-            <div
-                    title="
-                    Workspaces are used to organize your secrets. All your vaults, cards and secrets are
-                    stored inside workspace. You can also collaborate with your team at the workspace
-                    "
-                    data-toggle="tooltip"
-                    data-placement="bottom"
-                    >
-                {{#link-to 'Workspaces.create' class="btn btn-primary" }}
-                    <span class="glyphicon glyphicon-plus"></span>
-                Create new workspace
-                {{/link-to}}
-            </div>
-        </div>
-    {{/if}}
-
-    <div class="clearfix"></div>
-
-</div>
-
-<div class="row">
-    <div class="col-md-12">
-
-        {{#if length}}
-            <div class="col-md-8 col-md-offset-2">
-                <h4>Please select workspace you want to work with</h4>
-
-                <div class="list-group">
-                    {{#each}}
-                        {{view Vaultier.WorkspacesIndexItemView}}
-                    {{/each}}
-                </div>
-            </div>
-        {{else}}
-            <div class="jumbotron vlt-bigbox vlt-workspace col-md-8 col-md-offset-2">
-                <div class="vlt-header">
-                    <div class="vlt-icon">
-
-                    </div>
-                    <div class="vlt-title">
-                        <h1>You do not have any workspace yet</h1>
-                    </div>
-                </div>
-
-                <p>
-                    Workspaces are used to organize your secrets. All your vaults, cards and secrets are
-                    stored inside workspace. You can also collaborate with your team at the workspace
-                </p>
-
-                <p class="top-30">
-                    {{#link-to 'Workspaces.create' class="btn btn-lg btn-primary" }}
-                        <span class="glyphicon glyphicon-plus"></span>
+                    <div
+                            title="
+                            Workspaces are used to organize your secrets. All your vaults, cards and secrets are
+                            stored inside workspace. You can also collaborate with your team at the workspace
+                            "
+                            data-toggle="tooltip"
+                            data-placement="bottom"
+                            >
+                        {{#link-to 'Workspaces.create' class="btn btn-primary" }}
+                            <span class="glyphicon glyphicon-plus"></span>
                         Create new workspace
-                    {{/link-to}}
-                </p>
-            </div>
-        {{/if}}
+                        {{/link-to}}
+                    </div>
+                </div>
+            {{/if}}
 
-    </div>
+            <div class="clearfix"></div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+
+                {{#if length}}
+                    <div class="col-md-8 col-md-offset-2">
+                        <h4>Please select workspace you want to work with</h4>
+
+                        <div class="list-group">
+                            {{#each}}
+                                {{view Vaultier.WorkspacesIndexItemView}}
+                            {{/each}}
+                        </div>
+                    </div>
+                {{else}}
+                    <div class="top-50">
+                        <div class="jumbotron vlt-bigbox vlt-workspace">
+                            <div class="vlt-header">
+                                <div class="vlt-icon">
+
+                                </div>
+                                <div class="vlt-title">
+                                    <h1>You do not have any workspace yet</h1>
+                                </div>
+                            </div>
+
+                            <p>
+                                Workspaces are used to organize your secrets. All your vaults, cards and secrets are
+                                stored inside workspace. You can also collaborate with your team at the workspace
+                            </p>
+
+                            <p class="top-30">
+                                {{#link-to 'Workspaces.create' class="btn btn-lg btn-primary" }}
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                    Create new workspace
+                                {{/link-to}}
+                            </p>
+                        </div>
+                    </div>
+                {{/if}}
+
+            </div>
 </div>
 </div>
-    </div>
+</div>

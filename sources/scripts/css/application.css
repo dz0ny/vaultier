@@ -253,7 +253,7 @@ a:hover {
 
 .container-full {
     margin: 0 auto;
-    width: 90%;
+    width: 80%;
 }
 
 .padding-0 {
@@ -538,25 +538,25 @@ a:hover {
 
 /* Sidebar responsibility */
 
- .vlt-page.vlt-page-with-sidebar .vlt-page-content-responsive-header {
-     margin: 0px;
-     padding: 30px 5px 5px 5px;
-     background-color: #eeeeee;
-     border: 1px solid #E0DBDB;
-     border-top: 0px;
-     border-radius: 0px 0px 6px 6px;
-     margin-bottom: 30px;
- }
+.vlt-page.vlt-page-with-sidebar .vlt-page-content-responsive-header {
+    margin: 0px;
+    padding: 30px 5px 5px 5px;
+    background-color: #eeeeee;
+    border: 1px solid #E0DBDB;
+    border-top: 0px;
+    border-radius: 0px 0px 6px 6px;
+    margin-bottom: 30px;
+}
 
-.vlt-page.vlt-page-with-sidebar .vlt-page-content-responsive-header h2{
-     margin: 0px;
-     padding: 0px;
- }
+.vlt-page.vlt-page-with-sidebar .vlt-page-content-responsive-header h2 {
+    margin: 0px;
+    padding: 0px;
+}
 
 @media (min-width: 850px) {
-   .vlt-page.vlt-page-with-sidebar .vlt-page-content-responsive-header {
-       display: none;
-   }
+    .vlt-page.vlt-page-with-sidebar .vlt-page-content-responsive-header {
+        display: none;
+    }
 }
 
 @media (max-width: 850px) {
@@ -567,7 +567,6 @@ a:hover {
     .vlt-page.vlt-page-with-sidebar > .vlt-page-content {
         border-radius: 0px 0px 6px 6px;
     }
-
 
 }
 
@@ -1236,9 +1235,17 @@ span.vlt-user img {
 * bigbox jumbotrons
 *************************************************************
 *************************************************************/
+.vlt-bigbox.jumbotron {
+    max-width: 500px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .vlt-bigbox.jumbotron .vlt-header {
     position: relative;
     padding-bottom: 20px;
+
 }
 
 .vlt-bigbox.jumbotron .vlt-header .vlt-icon {
