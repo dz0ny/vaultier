@@ -16,6 +16,7 @@ DATABASES = {
 FT_FEATURES = {
     'dev_shared_key': True,  # for all users same private key is used
     'dev_show_token': True,  # Token is available to copy/paste in user profile box
+    'raven_key': 'http://df6466226ad14775b23818b42df3a5c8@sentry.rclick.cz/5'
 }
 
 # Indicates options for backend
