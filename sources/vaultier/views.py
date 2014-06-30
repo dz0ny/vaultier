@@ -1,4 +1,3 @@
-from app.settings_base import GA_CREATE_CODE
 from django.http.response import HttpResponse
 from django.shortcuts import render
 from django.template.context import Context
@@ -8,14 +7,13 @@ import json
 def index(request):
     return render(request, 'index.html', Context({
         'FT_FEATURES' : FT_FEATURES,
-        'BK_FEATURES' : BK_FEATURES,
-        'GA_CREATE_CODE' : GA_CREATE_CODE
+        'BK_FEATURES' : BK_FEATURES
     }))
 
 def config(request):
     script = json.dumps({
         'FT_FEATURES': FT_FEATURES
-    });
+    })
     script = 'InitializeConfig = function(app) {  app.Config = Ember.Object.extend('+script+'); }'
 
     return HttpResponse(script, mimetype='text/javascript')
