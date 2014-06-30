@@ -1,5 +1,4 @@
 {% load staticfiles %}
-{% load custom_filters %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -45,7 +44,7 @@
 {% endif %}
 
 </body>
-{% if BK_FEATURES|get_by_key:'ga_create_code' %}
+{% if BK_FEATURES.ga_create_code %}
 <script type="text/javascript">
 
     (function (i, s, o, g, r, a, m) {
@@ -59,7 +58,7 @@
         m.parentNode.insertBefore(a, m)
     })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
-    ga('create', '{{ BK_FEATURES|get_by_key:'ga_create_code' }}');
+    ga('create', '{{ BK_FEATURES.ga_create_code }}');
     ga('send', 'pageview');
 
 </script>
