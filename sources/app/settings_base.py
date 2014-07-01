@@ -159,6 +159,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admin',
+    'raven.contrib.django.raven_compat',
     # Uncomment the next line to enable the admin:
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
@@ -168,6 +169,13 @@ INSTALLED_APPS = (
     'django_extensions',
     'modelext',
 )
+
+RAVEN_CONFIG = {
+    'dsn': 'http://4865dc1aa3e941eaa5f5fe8282e66a5b:628a6f4819264c8fa459e69a8b860b60@sentry.rclick.cz/4'
+}
+
+# Sentry site_id
+SITE_ID = 1
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
@@ -216,7 +224,9 @@ EMBER_TPL_MASK = "\w+.hbs$"
 
 # Indicates options for frontend
 FT_FEATURES = {
-    'dev_shared_key': False  # True to use/generate same key for all users
+    'dev_shared_key': False,  # True to use/generate same key for all users
+    # sentry key to be used for loggin errors on the frontend
+    'raven_key': 'http://df6466226ad14775b23818b42df3a5c8@sentry.rclick.cz/5'
 }
 
 # Indicates options for backed
