@@ -13,7 +13,7 @@ def index(request):
 def config(request):
     script = json.dumps({
         'FT_FEATURES': FT_FEATURES
-    });
+    })
     script = 'InitializeConfig = function(app) {  app.Config = Ember.Object.extend('+script+'); }'
 
     return HttpResponse(script, mimetype='text/javascript')

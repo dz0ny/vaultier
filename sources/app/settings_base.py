@@ -236,5 +236,6 @@ BK_FEATURES = {
     # 10 minutes in milliseconds used to calculate the expiration time on api.lostkey module
     'lostkey_hash_expiration_time': 600000,
     # Template to create the front end lostkey url to be send by mail
-    'lostkey_url_template': '#/lostkey/{hash}'
+    'lostkey_url_template': '#/lostkey/{hash}',
+    'ga_create_code': 'UA-17830772-11' # code for google analytics
 }
