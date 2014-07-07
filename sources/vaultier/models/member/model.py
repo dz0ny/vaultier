@@ -9,11 +9,9 @@ from modelext.lowercasefield.lowercasefield import LowerCaseCharField
 from vaultier.mailer.invitation import resend_invitation
 from modelext.changes.changes import ChangesMixin
 from vaultier.models.member.fields import MemberStatusField
-#from vaultier.models.workspace.model import Workspace
 
 
 class MemberManager(Manager):
-    # from members where member.workspace in (select
 
     def all_for_user(self, user):
         from vaultier.models.workspace.model import Workspace
@@ -48,7 +46,6 @@ class MemberManager(Manager):
 
         return query
 
-
     def generate_invitation_hash(self):
         def get_unique():
             unique = uuid.uuid4()
@@ -60,7 +57,7 @@ class MemberManager(Manager):
 
         return hash
 
-    def get_conrete_member_to_workspace(self, workspace, user):
+    def get_concrete_member_to_workspace(self, workspace, user):
         member = None
         try:
             member = self.filter(
@@ -94,7 +91,7 @@ class MemberManager(Manager):
 
     def accept_invitation(self, member, user):
         workspace = member.workspace
-        existing_member = self.get_conrete_member_to_workspace(workspace, user)
+        existing_member = self.get_concrete_member_to_workspace(workspace, user)
 
         # user membership does not exists, or it is only invite
         if not existing_member:
@@ -136,20 +133,6 @@ class MemberManager(Manager):
 
         return member
 
-    # def set_broken_mebership(self, user):
-    #     # unrecoverable_workspaces = self._get_unrecoverable_workspaces(user)
-    #
-    #     self.filter(user=user,
-    #                 workspace_id__in=self.get_unrecoverable_workspaces(user).values_list('pk', flat=True)) \
-    #         .update(status=MemberStatusField.STATUS_MEMBER_BROKEN)
-    #
-    # def set_status_member_without_workspace_key(self, user):
-    #     self.filter(user=user) \
-    #         .exclude(workspace_id__in=self.get_unrecoverable_workspaces(user).values_list('pk', flat=True)) \
-    #         .update(status=MemberStatusField.STATUS_MEMBER_WITHOUT_WORKSPACE_KEY, workspace_key='')
-    #
-    # def get_unrecoverable_workspaces(self, user):
-    #     return self.filter().values
 
 class Member(ChangesMixin, models.Model):
     objects = MemberManager()
@@ -167,7 +150,6 @@ class Member(ChangesMixin, models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey('vaultier.User', on_delete=PROTECT, related_name='members_created')
-
 
     def is_invitation(self):
         if self.status == MemberStatusField.STATUS_INVITED:

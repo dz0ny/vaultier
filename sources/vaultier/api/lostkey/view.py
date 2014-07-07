@@ -11,8 +11,6 @@ from vaultier.models.lostkey.fields import RecoverTypeField
 from vaultier.models.lostkey.model import LostKey
 from rest_framework import viewsets, mixins
 from rest_framework.fields import SerializerMethodField
-from vaultier.models.member.fields import MemberStatusField
-from vaultier.models.member.model import Member
 from vaultier.models.user.model import User
 from vaultier.models.workspace.model import Workspace
 
@@ -92,9 +90,8 @@ class LostKeySerializer(ModelSerializer):
         return imap(lambda workspace: {
             'workspace_id': workspace.id,
             'workspace_name': workspace.name,
-            'is_recoverable': Member.objects.filter(workspace_id=workspace.id,
-                                                    status=MemberStatusField.STATUS_MEMBER) \
-                    .exclude(user=obj.created_by).count() > 0}, workspaces)
+            'is_recoverable': LostKey.objects.find_workspace_is_recoverable(workspace.id, obj.created_by),
+        }, workspaces)
 
     def save_object(self, obj, **kwargs):
         """

@@ -61,6 +61,21 @@ class LostKeyManager(Manager):
         Member.objects.filter(user=user) \
             .update(status=MemberStatusField.STATUS_MEMBER_BROKEN)
 
+    @classmethod
+    def find_workspace_is_recoverable(cls, workspace_id, user):
+        """
+        Return True if the workspace is recoverable.
+        A work space is recoverable when it share among any user and those users have
+        the status set to MemberStatusField.STATUS_MEMBER
+        :param workspace_id: int
+        :param user: vaultier.models.user.model.User
+        :return: bool
+        """
+        return Member.objects.filter(workspace_id=workspace_id,
+                                     status=MemberStatusField.STATUS_MEMBER) \
+                   .exclude(user=user).count() > 0
+
+
     def rebuild_lost_key(self, user):
         """
         :param user:

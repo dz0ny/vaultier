@@ -2,7 +2,7 @@ from rest_framework.fields import SerializerMethodField, SlugField
 from rest_framework.permissions import IsAuthenticated, BasePermission
 from rest_framework.serializers import ModelSerializer
 from rest_framework.viewsets import ModelViewSet
-from modelext.version.context import version_context_manager, VersionContextAwareApiViewMixin
+from modelext.version.context import VersionContextAwareApiViewMixin
 from vaultier.api.permsfield import PermsField
 from vaultier.api.member.view import RelatedMemberSerializer
 from vaultier.api.retrievebyslugmixin import RetrieveBySlugMixin
@@ -42,7 +42,7 @@ class WorkspaceSerializer(ModelSerializer):
     membership = SerializerMethodField('get_membership')
 
     def get_membership(self, obj):
-        member = Member.objects.get_conrete_member_to_workspace(obj, self.user)
+        member = Member.objects.get_concrete_member_to_workspace(obj, self.user)
         if (member):
             return WorkspaceMembershipSerializer(member).data
         else:

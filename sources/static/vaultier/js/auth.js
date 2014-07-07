@@ -606,14 +606,6 @@ Vaultier.AuthLostKeyRecoveryRebuildRoute = Ember.Route.extend({
 
     actions: {
 
-        savePrivateKey: function () {
-            // start download
-            var raw = this.get('controller.keys.privateKey');
-            var blob = new Blob([raw], {type: "text/plain;charset=utf-8"});
-            saveAs(blob, "vaultier.key");
-            this.set('privateKeySaved', true);
-        },
-
         save: function (keys, result) {
             this.set('controller.keys', keys);
             var content = this.modelFor('AuthLostKeyRecoveryRebuild');
