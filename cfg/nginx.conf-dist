@@ -1,5 +1,5 @@
 upstream vaultier_server {
-  server unix:/www/vaultier/run/vaultier.sock;
+  server unix:/opt/vaultier/run/vaultier.sock;
 }
 
 server {
@@ -9,12 +9,11 @@ server {
 
     client_max_body_size 4G;
 
-    access_log /www/vaultier/logs/nginx-access.log;
-    error_log /www/vaultier/logs/nginx-error.log;
+    access_log /opt/vaultier/logs/nginx-access.log;
+    error_log /opt/vaultier/logs/nginx-error.log;
 
-    location /static/ {
-        autoindex on;
-        root   /www/vaultier/sources/;
+    location /static {
+        alias /opt/vaultier/sources/static;
     }
 
     location / {
