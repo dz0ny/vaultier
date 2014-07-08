@@ -20,8 +20,6 @@ SOCKET="$MY_PATH/../run/vaultier.sock"
 LOGSDIR="$MY_PATH/../logs"
 VENV="$1"
 NAME="Vaultier"
-USER=www-data
-GROUP=www-data
 NUM_WORKERS=4
 DJANGO_SETTINGS_MODULE=app.settings
 DJANGO_WSGI_MODULE=app.wsgi
@@ -41,13 +39,11 @@ test -d $RUNDIR || mkdir -p $RUNDIR
 # Create the logs directory if it doesn't exist
 test -d $LOGSDIR || mkdir -p $LOGSDIR
 
-
 # Start your Django Unicorn
 # Programs meant to be run under supervisor should not daemonize themselves (do not use --daemon)
 exec gunicorn ${DJANGO_WSGI_MODULE}:application \
   --name $NAME \
   --workers $NUM_WORKERS \
-  --user=$USER --group=$GROUP \
   --log-level=debug \
   --bind=unix:$SOCKET
 
