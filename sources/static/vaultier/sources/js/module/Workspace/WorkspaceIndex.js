@@ -1,7 +1,7 @@
 Vaultier.WorkspaceKeysMixin = Ember.Mixin.create({
 
     checkWorkspaceKeys: function () {
-        workspace = this.modelFor('Workspace');
+        var workspace = this.modelFor('Workspace');
         if (workspace.get('membership.status') != Vaultier.Member.proto().statuses['MEMBER'].value) {
             this.transitionTo('Workspace.noKeys');
             return false;

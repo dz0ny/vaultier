@@ -40,7 +40,7 @@ Vaultier.VaultRoute = Ember.Route.extend(
                         .then(
                             function () {
                                 $.notify('Your vault has been successfully deleted.', 'success');
-                                this.transitionTo('Vaults.index', this.get('workspace'));
+                                this.transitionTo('Workspace.index');
                             }.bind(this),
                             function (error) {
                                 $.notify('Oooups! Something went wrong.', 'error');

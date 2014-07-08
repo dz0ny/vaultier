@@ -8,14 +8,29 @@ Vaultier.VaultsIndexRoute = Ember.Route.extend(
 
         model: function (params, queryParams) {
             var workspace = this.modelFor('Workspace');
+            var store = this.get('store');
 
             // retrieve vaults
-            var store = this.get('store');
-            return store.find('Vault', {workspace: workspace.get('id')});
+            var vaults = store.find('Vault', {workspace: workspace.get('id')});
+
+            // load memberships
+            var memberships = store
+                .find('Role', {to_workspace: workspace.get('id') })
+                .then(function (memberships) {
+                    return memberships.toArray()
+                });
+
+            // return promise for all requests
+            return Ember.RSVP.hash({
+                vaults: vaults,
+                memberships: memberships
+            });
         },
 
-        setupController: function (ctrl, vaults) {
-            ctrl.set('content', vaults);
+        setupController: function (ctrl, model) {
+            // set model
+            ctrl.set('content', model.vaults);
+            ctrl.set('memberships', model.memberships);
 
             // retrieve workspace
             var workspace = this.modelFor('Workspace');

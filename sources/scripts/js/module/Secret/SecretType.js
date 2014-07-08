@@ -1,4 +1,14 @@
-Vaultier.SecretTypeFileView = Ember.View.extend({
+Vaultier.SecretTypeBaseView = Ember.View.extend({
+
+    isCreateAction: function() {
+        var r =  !(this.get('controller.content.id') > 0);
+        console.log(r);
+        return r;
+    }.property('controller.content.id')
+
+});
+
+Vaultier.SecretTypeFileView = Vaultier.SecretTypeBaseView.extend ({
     templateName: 'Secret/SecretTypeFile',
 
     didInsertElement: function () {
@@ -36,14 +46,14 @@ Vaultier.SecretTypeFileView = Ember.View.extend({
 
 });
 
-Vaultier.SecretTypeNoteView = Ember.View.extend({
+Vaultier.SecretTypeNoteView =Vaultier.SecretTypeBaseView.extend ({
     templateName: 'Secret/SecretTypeNote'
 });
 
-Vaultier.SecretTypePasswordView = Ember.View.extend({
+Vaultier.SecretTypePasswordView = Vaultier.SecretTypeBaseView.extend ({
     templateName: 'Secret/SecretTypePassword'
 });
 
-Vaultier.SecretTypeSelectView = Ember.View.extend({
+Vaultier.SecretTypeSelectView = Vaultier.SecretTypeBaseView.extend ({
     templateName: 'Secret/SecretTypeSelect'
 });

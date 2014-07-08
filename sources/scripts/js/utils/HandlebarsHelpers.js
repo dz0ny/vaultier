@@ -42,7 +42,7 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
     gravatarImg: function (email, options) {
         var cls = options.hash.class || '';
         var server = window.location.protocol + '//' + window.location.host;
-        var img = 'identicon';
+        var img = 'mm';
         if (server.indexOf(':') === -1) {
             img = encodeURIComponent(server + '/static/vaultier/images/icon-avatar-grey.png');
         }
@@ -68,6 +68,7 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
         var length = options.hash.ellipsis || 60;
         var prefix = options.hash.prefix || '';
         var disableTooltip = options.hash.disableTooltip || false;
+        var disableName = options.hash.disableName || false
 
         var avatar = this.gravatarImg(email, {hash: {size: size}});
 
@@ -79,6 +80,7 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
         }
         var short = this.ellipsis(name, length);
 
+
         if (!disableTooltip) {
             var tooltip = 'data-toggle="tooltip" title="{prefix} {name} ({email})"'
                 .replace('{prefix}', prefix)
@@ -88,7 +90,12 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
             tooltip = ''
         }
 
-        return '<span class="vlt-user" {tooltip} >{avatar} {name}</span>'
+        if (disableName) {
+            short = '';
+            name = '';
+        }
+
+        return '<span class="vlt-user" {tooltip} >{avatar}{name}</span>'
             .replace('{tooltip}', tooltip)
             .replace('{name}', short)
             .replace('{avatar}', avatar)
@@ -99,7 +106,6 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
         var a;
 
         try {
-            console.log(moment, t, 'js/utils/HandlebarsHelpers.js');
             a = moment(t).fromNow();
         } catch (e) {
             console.error(e.stack)

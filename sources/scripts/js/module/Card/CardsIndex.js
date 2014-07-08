@@ -7,12 +7,33 @@ Vaultier.CardsIndexRoute = Ember.Route.extend(
 
         model: function (params, transition) {
             var vault = this.modelFor('Vault');
+            var workspace = this.modelFor('Workspace')
             var store = this.get('store');
-            return store.find('Card', {vault: vault.get('id')});
+
+            // load cards
+            var cards = store.find('Card', {vault: vault.get('id')});
+
+            // load memberships
+            var memberships = Ember.RSVP
+                .hash({
+                    to_workspace: store.find('Role', {to_workspace: workspace.get('id') }),
+                    to_vault: store.find('Role', {to_vault: vault.get('id')})
+                })
+                .then(function (memberships) {
+                    return [].concat(memberships.to_workspace.toArray(), memberships.to_vault.toArray())
+                });
+
+             // return promise for all requests
+            return Ember.RSVP.hash({
+                cards: cards,
+                memberships: memberships
+            });
         },
 
         setupController: function (ctrl, model) {
-            ctrl.set('content', model);
+            // set model
+            ctrl.set('content', model.cards);
+            ctrl.set('memberships', model.memberships);
 
             // retrieve workspace
             var workspace = this.modelFor('Workspace');

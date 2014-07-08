@@ -8,15 +8,31 @@ Vaultier.VaultsCreateRoute = Ember.Route.extend(
 
         model: function (params, transition) {
 
+            var store = this.get('store');
+            var workspace = this.modelFor('Workspace');
+
             if (!this.get('auth').checkPermissions(transition, function () {
-                return this.modelFor('Workspace').get('perms.create')
+                return workspace.get('perms.create')
             }.bind(this), true)) {
                 return;
             }
 
-            store = this.get('store');
-            var record = store.createRecord('Vault');
-            return record;
+            // create record
+            var vault = store.createRecord('Vault');
+
+                    // load memberships
+            var memberships = store
+                .find('Role', {to_workspace: workspace.get('id') })
+                .then(function (memberships) {
+                    return memberships.toArray()
+                });
+
+            // return promise for all requests
+            return Ember.RSVP.hash({
+                vault: vault,
+                memberships: memberships
+            });
+
         },
 
         actions: {
@@ -41,7 +57,9 @@ Vaultier.VaultsCreateRoute = Ember.Route.extend(
         },
 
         setupController: function (ctrl, model) {
-            this._super(ctrl, model);
+             // set model
+            ctrl.set('content', model.vault);
+            ctrl.set('memberships', model.memberships);
 
             // retrieve workspace
             var workspace = this.modelFor('Workspace');

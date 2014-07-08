@@ -233,11 +233,13 @@ var vaultierModulesConfig = {
                 "./js/module/Invitation/Invitation.js",
                 "./js/module/Member/MemberInviteInput.js",
                 "./js/module/Member/MemberIndex.js",
-                "./js/module/Member/MemberInvite.js"
+                "./js/module/Member/MemberInvite.js",
+                "./js/module/Member/MemberBox.js"
             ],
             "templates": [
                 "./js/module/Member/MemberIndex.hbs",
                 "./js/module/Member/MemberInvite.hbs",
+                "./js/module/Member/MemberBox.hbs",
                 "./js/module/Invitation/InvitationAnonymous.hbs",
                 "./js/module/Invitation/InvitationAccept.hbs"
             ]

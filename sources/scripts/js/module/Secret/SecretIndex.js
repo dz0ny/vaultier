@@ -6,15 +6,37 @@ Vaultier.SecretIndexRoute = Ember.Route.extend(
         },
 
         model: function (params, queryParams) {
+            var vault = this.modelFor('Vault');
+            var workspace = this.modelFor('Workspace')
             var card = this.modelFor('Card');
             var store = this.get('store');
 
-            return store.find('Secret', {card: card.get('id')})
+            // load secrets
+            var secrets = store.find('Secret', {card: card.get('id')})
+
+            // load memberships
+            var memberships = Ember.RSVP
+                .hash({
+                    to_workspace: store.find('Role', {to_workspace: workspace.get('id') }),
+                    to_vault: store.find('Role', {to_vault: vault.get('id')}),
+                    to_card: store.find('Role', {to_card: card.get('id')})
+                })
+                .then(function (memberships) {
+                    return [].concat(memberships.to_workspace.toArray(), memberships.to_vault.toArray(), memberships.to_card.toArray())
+                });
+
+            // return promise for all requests
+            return Ember.RSVP.hash({
+                secrets: secrets,
+                memberships: memberships
+            });
         },
 
 
         setupController: function (ctrl, model) {
-            ctrl.set('content', model);
+            // set model
+            ctrl.set('content', model.secrets);
+            ctrl.set('memberships', model.memberships);
 
             // retrieve workspace
             var workspace = this.modelFor('Workspace');

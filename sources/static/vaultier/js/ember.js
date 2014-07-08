@@ -47019,8 +47019,8 @@ Ember.State = generateRemovedClass("Ember.State");
  * ember-restless
  * A lightweight data persistence library for Ember.js
  *
- * version: 0.5.1
- * last modifed: 2014-04-22
+ * version: 0.5.2
+ * last modifed: 2014-06-05
  *
  * Garth Poitras <garth22@gmail.com>
  * Copyright (c) 2013-2014 Endless, Inc.
@@ -47045,7 +47045,7 @@ if ('undefined' === typeof RESTless) {
     @static
    */
   RESTless = Ember.Namespace.create({
-    VERSION: '0.5.1'
+    VERSION: '0.5.2'
   });
 
   /*
@@ -47424,7 +47424,7 @@ RESTless.JSONSerializer = RESTless.Serializer.extend({
       opts = resource.constructor.metaForProperty(prop);
     }
     if (opts && opts.hasMany) {
-      return this.serializeMany(value.get('content'), opts.type);
+      return this.serializeMany(value, opts.type);
     } else if(opts.belongsTo) {
       return this.serialize(value, { nonEmbedded: true });
     }
@@ -47445,10 +47445,11 @@ RESTless.JSONSerializer = RESTless.Serializer.extend({
   */
   serializeMany: function(recordArray, type) {
     var key = this._keyForResourceType(type),
-        len = recordArray.length,
+        array = recordArray.get('content'),
+        len = array.length,
         result = [], i, item;
     for(i=0; i<len; i++) {
-      item = recordArray[i];
+      item = array[i];
       if(RESTless.Model.detectInstance(item)) {
         item = item.serialize();
       }
@@ -47545,7 +47546,7 @@ RESTless.JSONSerializer = RESTless.Serializer.extend({
   */
   _keyForResourceType: function(type) {
     var klass = this.modelFor(type);
-    return klass ? this.keyForResourceName(get(klass, 'resourceName')) : null;
+    return klass ? this.keyForResourceName(get(klass, 'resourceName')) : 'model';
   },
   /**
     @method _keyPluralForResourceType
@@ -48663,7 +48664,7 @@ RESTless.Model.reopenClass({
     @return RESTless.RecordArray
    */
   loadMany: function(data) {
-    var array = RESTless.RecordArray.createWithContent().deserializeMany(this.toString(), data);
+    var array = RESTless.RecordArray.create().deserializeMany(this, data);
     array.onLoaded();
     return array;
   }
@@ -48710,6 +48711,8 @@ RESTless.RecordArray = Ember.ArrayProxy.extend( RESTless.State, {
     @returns RESTless.RecordArray
    */
   deserializeMany: function(type, data) {
+    this._initContent();
+    type = type || this.typeOfContent();
     return get(this, 'adapter.serializer').deserializeMany(this, type, data);
   },
 
@@ -48720,6 +48723,7 @@ RESTless.RecordArray = Ember.ArrayProxy.extend( RESTless.State, {
     @returns RESTless.RecordArray
    */
   serializeMany: function(type) {
+    type = type || this.typeOfContent();
     return get(this, 'adapter.serializer').serializeMany(this, type);
   },
 
@@ -48735,6 +48739,29 @@ RESTless.RecordArray = Ember.ArrayProxy.extend( RESTless.State, {
     if (this.get('isLoaded')) {
       this.set('isDirty', true);
     }
+  },
+
+  /**
+    Returns the Class of records the RecordArray contains
+    @method typeOfContent
+    @returns Object type
+   */
+  typeOfContent: function() {
+    var firstObj = this.objectAt(0);
+    return firstObj && firstObj.constructor || null;
+  },
+
+  /**
+    Helper to initialize the content property of the RecordArray if not present.
+    @private
+    @method _initContent
+    @returns RecordArray this
+   */
+  _initContent: function() {
+    if(!this.content) { 
+      this.set('content', Ember.A());
+    }
+    return this;
   },
 
   /**
@@ -48783,8 +48810,7 @@ RESTless.RecordArray.reopenClass({
    */
   createWithContent: function() {
     var arr = this.create.apply(this, arguments);
-    if(!arr.content) { arr.set('content', Ember.A()); }
-    return arr;
+    return arr._initContent();
   }
 });
 
@@ -49510,7 +49536,7 @@ Ember.Tree.TreeNodeView = Ember.View.extend({
     loadedData: false,
     tagName: 'li',
     // class names that determine what icons are used beside the node
-    classNameBindings: ['opened: tree-branch-open', 'branch:tree-branch-icon:tree-node-icon'],
+    classNameBindings: ['opened:tree-branch-open', 'branch:tree-branch-icon:tree-node-icon'],
     templateName: 'Shared/Tree/EmberTreeNode',
 
     collapse: function () {
