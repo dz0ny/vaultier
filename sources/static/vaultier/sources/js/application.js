@@ -42,7 +42,9 @@ Vaultier = Ember.Application.create({
         $.notify.defaults({
             className: 'success',
             style: 'bootstrap',
-            position: 'bottom center'
+            position: 'bottom center',
+            autoHideDelay: 7000,
+            css: "vlt-notification"
         })
 
         /**************************************************

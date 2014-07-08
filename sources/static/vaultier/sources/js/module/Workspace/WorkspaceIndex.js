@@ -101,7 +101,7 @@ Vaultier.WorkspaceNoKeysRoute = Ember.Route.extend({
     /**
      * Method is automatically called when workspace key is transfered
      */
-    keysTransfered : function() {
+    keysTransfered: function () {
         this.transitionTo('Workspace.index', workspace);
     },
 
@@ -109,7 +109,7 @@ Vaultier.WorkspaceNoKeysRoute = Ember.Route.extend({
      * When route is activated bind to workspacekey service keyTransfered event to
      * redirect to workspace index
      */
-    activate: function() {
+    activate: function () {
         var workspacekey = this.get('workspacekey');
         workspacekey.on('keyTransfered', this, this.keysTransfered);
     },
@@ -117,13 +117,43 @@ Vaultier.WorkspaceNoKeysRoute = Ember.Route.extend({
     /**
      * Detach from keyTransfered event
      */
-    deactivate: function() {
+    deactivate: function () {
         var workspacekey = this.get('workspacekey');
         workspacekey.off('keyTransfered', this, this.keysTransfered);
     },
 
+    model: function (params, queryParams) {
+        var workspace = this.modelFor('Workspace');
+        var store = this.get('store');
+
+        // load memberships
+        var memberships = store
+            .find('Role', {to_workspace: workspace.get('id') })
+            .then(function (memberships) {
+                return memberships.toArray()
+            });
+
+        // return promise for all requests
+        return Ember.RSVP.hash({
+            workspace: workspace,
+            memberships: memberships
+        });
+    },
+
+    afterModel: function(model, transition) {
+        if (model.workspace.get('membership.status') == Vaultier.Member.proto().statuses.MEMBER.value) {
+            transition.abort();
+            this.transitionTo('Workspace.index');
+            $.notify('Your already have valid workspace keys.', 'success');
+        }
+    },
+
     setupController: function (ctrl, model) {
         this._super.apply(this, arguments);
+
+        // set model
+        ctrl.set('memberships', model.memberships);
+        ctrl.set('workspace', model.workspace);
 
         // set breadcrumbs
         ctrl.set('breadcrumbs',

@@ -137,11 +137,14 @@ a:hover {
 */
 
 .notifyjs-bootstrap-base {
-    width: 400px;
+    min-width: 400px;
+    max-width: 800px;
     white-space: normal !important;
     padding-left: 14px !important;
     background-image: none !important;
     text-align: center;
+    font-size: 25px;
+    border-width: 10px !important;
 }
 
 .notifyjs-container {
@@ -1259,6 +1262,7 @@ span.vlt-user img {
     width: 90%;
     margin-left: auto;
     margin-right: auto;
+    border-radius: 6px;
 }
 
 .vlt-bigbox.jumbotron .vlt-header {
