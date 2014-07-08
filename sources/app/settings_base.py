@@ -177,6 +177,12 @@ RAVEN_CONFIG = {
 # Sentry site_id
 SITE_ID = 1
 
+# SCM dealer to provide git revision
+DEALER_TYPE = 'git'
+
+# SCM dealer path to git
+DEALER_PATH =  './../'
+
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error when DEBUG=False.
