@@ -243,5 +243,8 @@ BK_FEATURES = {
     'lostkey_hash_expiration_time': 3600000,
     # Template to create the front end lostkey url to be send by mail
     'lostkey_url_template': r'#/lostkey/{id}/{hash}',
-    'ga_create_code': 'UA-17830772-11' # code for google analytics
+    'ga_create_code': 'UA-17830772-11', # code for google analytics
+    # Templete to generate the invitation url that will be send by email
+    'invitation_url_template': '#/invitations/use/{member}/{hash}/',
+    'info_email': 'info@rclick.com', # Default email address from which we send emails
 }

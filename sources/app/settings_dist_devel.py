@@ -28,4 +28,6 @@ BK_FEATURES = {
     'ga_create_code': None, # code for google analytics, on devel we don't want to track anything
     # 1 hour in milliseconds, used to calculate the expiration date of a lostkey resource
     'lostkey_hash_expiration_time': 3600000,
+    'invitation_url_template': '#/invitations/use/{member}/{hash}/',
+    'info_email': 'info@rclick.com', # Default email address from which we send emails
 }

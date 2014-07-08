@@ -6,7 +6,7 @@ from django.db.models.deletion import PROTECT, CASCADE
 from django.db.models.manager import Manager
 from django.db.models.query_utils import Q
 from modelext.lowercasefield.lowercasefield import LowerCaseCharField
-from vaultier.mailer.invitation import resend_invitation
+from vaultier.mailer.invitation.sender import InvitationEmailSender
 from modelext.changes.changes import ChangesMixin
 from vaultier.models.member.fields import MemberStatusField
 
@@ -119,7 +119,7 @@ class MemberManager(Manager):
                 workspace=member.workspace
             )
             if resend:
-                resend_invitation(member)
+                self.send_invitation(member)
 
         # invitation not found so create new
         except Member.DoesNotExist:
@@ -127,11 +127,23 @@ class MemberManager(Manager):
             member.status = MemberStatusField.STATUS_INVITED
             member.save()
             if send:
-                resend_invitation(member)
+                self.send_invitation(member)
 
         # todo: Member.MultipleObjectsFound
 
         return member
+
+    @classmethod
+    def send_invitation(cls, member):
+        """
+        Sends an invitation email
+        :param member: Member
+        :return: None
+        """
+        invitation_sender = InvitationEmailSender()
+        email_recipients = invitation_sender.get_raw_recipients()
+        email_recipients['to'] = [member.invitation_email]
+        invitation_sender.send(recipients=email_recipients, template='mailer/invitation/invitation', context=member)
 
 
 class Member(ChangesMixin, models.Model):

@@ -12,6 +12,7 @@ from vaultier.models.member.fields import MemberStatusField
 from vaultier.models.member.model import Member
 from vaultier.models.role.model import Role
 
+
 class InvitationRoleSerializer(ModelSerializer):
     created_by = SerializerMethodField('get_created_by')
     to_type = SerializerMethodField('get_to_type')
@@ -30,6 +31,7 @@ class InvitationRoleSerializer(ModelSerializer):
     class Meta:
         model = Role
         fields = ('id', 'to_type', 'to_name', 'created_by', 'created_at', 'updated_at')
+
 
 class InvitationSerializer(ModelSerializer):
     roles = SerializerMethodField('get_roles')

@@ -10,10 +10,10 @@ from django.db.models.deletion import PROTECT
 from django.db.models.manager import Manager
 from django.db.models.signals import pre_save, post_save
 from django.conf import settings
-from vaultier.mailer.lostkey import send_lost_key_notification
 from vaultier.models.member.fields import MemberStatusField
 from vaultier.models.member.model import Member
 from vaultier.models.workspace.model import Workspace
+from vaultier.mailer.lostkey.sender import LostKeyEmailSender
 
 
 class LostKeyManager(Manager):
@@ -37,10 +37,13 @@ class LostKeyManager(Manager):
         :param instance:
         :param args:
         :param kwargs:
-        :return:
+        :return: None
         """
         if not instance.used:
-            send_lost_key_notification(instance)
+            sender = LostKeyEmailSender()
+            email_recipients = sender.get_raw_recipients()
+            email_recipients['to'] = [instance.created_by.email]
+            sender.send(email_recipients, 'mailer/lostkey/lostkey', instance)
 
     def disable_lost_key(self, user):
         """
