@@ -5,5 +5,5 @@ Vaultier.WorkspaceKey = RL.Model.extend(
         status: RL.attr('string'),
         workspace: RL.attr('object'),
         user: RL.attr('object')
-    })
+    });
 

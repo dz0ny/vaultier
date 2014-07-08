@@ -1,20 +1,17 @@
 import hmac
 import uuid
 from hashlib import sha1
-
 from django.db import models
 from django.db.models.deletion import PROTECT, CASCADE
 from django.db.models.manager import Manager
 from django.db.models.query_utils import Q
 from modelext.lowercasefield.lowercasefield import LowerCaseCharField
-
 from vaultier.mailer.invitation import resend_invitation
 from modelext.changes.changes import ChangesMixin
 from vaultier.models.member.fields import MemberStatusField
 
 
 class MemberManager(Manager):
-    #from members where member.workspace in (select
 
     def all_for_user(self, user):
         from vaultier.models.workspace.model import Workspace
@@ -49,7 +46,6 @@ class MemberManager(Manager):
 
         return query
 
-
     def generate_invitation_hash(self):
         def get_unique():
             unique = uuid.uuid4()
@@ -61,7 +57,7 @@ class MemberManager(Manager):
 
         return hash
 
-    def get_conrete_member_to_workspace(self, workspace, user):
+    def get_concrete_member_to_workspace(self, workspace, user):
         member = None
         try:
             member = self.filter(
@@ -95,7 +91,7 @@ class MemberManager(Manager):
 
     def accept_invitation(self, member, user):
         workspace = member.workspace
-        existing_member = self.get_conrete_member_to_workspace(workspace, user)
+        existing_member = self.get_concrete_member_to_workspace(workspace, user)
 
         # user membership does not exists, or it is only invite
         if not existing_member:
@@ -133,7 +129,7 @@ class MemberManager(Manager):
             if send:
                 resend_invitation(member)
 
-        #todo: Member.MultipleObjectsFound
+        # todo: Member.MultipleObjectsFound
 
         return member
 
@@ -154,7 +150,6 @@ class Member(ChangesMixin, models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey('vaultier.User', on_delete=PROTECT, related_name='members_created')
-
 
     def is_invitation(self):
         if self.status == MemberStatusField.STATUS_INVITED:

@@ -1,4 +1,4 @@
-Vaultier.EncryptedModel = Vaultier.EncryptedModel || {}
+Vaultier.EncryptedModel = Vaultier.EncryptedModel || {};
 
 var getEncryptedDataKey = function (encryptedField) {
     return '_decrypted-data-' + encryptedField;
@@ -109,10 +109,10 @@ Vaultier.EncryptedModel.Mixin = Ember.Mixin.create({
             decryptedData.cleanData = Ember.merge({}, data)
             decryptedData.isDirty = false;
         } else {
-            decryptedData['isDirty'] = this.areDecryptedDataDirty(decryptedData)
+            decryptedData['isDirty'] = this.areDecryptedDataDirty(decryptedData);
         }
 
-        this.set(key, decryptedData)
+        this.set(key, decryptedData);
     },
 
     clearDecryptedData: function () {
@@ -141,7 +141,7 @@ Vaultier.EncryptedModel.Mixin = Ember.Mixin.create({
             data = this.workspacekey.decryptWorkspaceData(encryptedData) || {};
         }
         else {
-            data = null
+            data = null;
         }
         this.setDecryptedData(encryptedField, data, true);
     },
@@ -170,7 +170,7 @@ Vaultier.EncryptedModel.Mixin = Ember.Mixin.create({
             this.set('decrypted', false);
             console.error('Secret decryption failed');
             console.error(e.stack);
-            throw e
+            throw e;
         }
 
         return deserialized;
@@ -208,7 +208,7 @@ Vaultier.EncryptedModel.decryptedField = function (encryptedField, decryptedFiel
             if (data) {
                 return Ember.get(data, 'data.' + key);
             } else {
-                return undefined
+                return undefined;
             }
         }
 
@@ -217,7 +217,7 @@ Vaultier.EncryptedModel.decryptedField = function (encryptedField, decryptedFiel
             Ember.set(data, 'data.' + key, value);
             Ember.set(data, 'isDirty', this.areDecryptedDataDirty(data));
             this.set('isDirty', true);
-            return this
+            return this;
         }
 
 

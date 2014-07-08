@@ -13,13 +13,24 @@ class SoftDeleteManagerMixin(object):
         return QuerySet(self.model, using=self._db).filter(deleted_at=None)
 
     def include_deleted(self):
-          return QuerySet(self.model, using=self._db)
+        return QuerySet(self.model, using=self._db)
+
 
 class SoftDeleteMixin(models.Model):
     class Meta:
         abstract = True
 
     deleted_at = models.DateTimeField(null=True)
+
+    @classmethod
+    def bulk_delete(cls, queryset):
+        """
+        Soft delete a query select
+        :param queryset: QuerySet
+        :return:
+        """
+        queryset.values('pk').update(deleted_at=now())
+
 
     def softdelete(self, using=None):
 

@@ -10,6 +10,7 @@ var vaultierModulesConfig = {
         },
         "jquery-plugins": {
             "scripts": [
+                // "./bower_components/jquery-mockjax/jquery.mockjax.js", // just for testing purposes
                 "./bower_components/notifyjs/dist/notify.js",
                 "./bower_components/notifyjs/dist/styles/bootstrap/notify-bootstrap.js",
                 "./bower_components/jstorage/jstorage.js",
@@ -154,7 +155,8 @@ var vaultierModulesConfig = {
                 "./js/model/Role.js",
                 "./js/model/Vault.js",
                 "./js/model/Card.js",
-                "./js/model/Secret.js"
+                "./js/model/Secret.js",
+                "./js/model/LostKey.js"
             ]
         },
         "layout": {
@@ -203,7 +205,13 @@ var vaultierModulesConfig = {
         "auth": {
             "scripts": [
                 "./js/module/Auth/AuthLogin.js",
-                "./js/module/Auth/AuthRegister.js"
+                "./js/model/LostKey.js",
+                "./js/module/Auth/AuthLostKeyIndex.js",
+                "./js/module/Auth/AuthRegister.js",
+                "./js/module/Auth/AuthLostKeyRecoveryIndex.js",
+                "./js/module/Auth/AuthLostKeyRecoveryReset.js",
+                "./js/module/Auth/AuthLostKeyRecoveryRebuild.js",
+                "./js/module/Auth/AuthLostKeyRecoveryDisable.js"
             ],
             "templates": [
                 "./js/module/Auth/AuthLogin.hbs",
@@ -211,7 +219,13 @@ var vaultierModulesConfig = {
                 "./js/module/Auth/AuthRegisterBefore.hbs",
                 "./js/module/Auth/AuthRegisterKeys.hbs",
                 "./js/module/Auth/AuthRegisterCreds.hbs",
-                "./js/module/Auth/AuthRegisterSum.hbs"
+                "./js/module/Auth/AuthLostKeyIndex.hbs",
+                "./js/module/Auth/AuthLostKeySuccess.hbs",
+                "./js/module/Auth/AuthRegisterSum.hbs",
+                "./js/module/Auth/AuthLostKeyRecoveryReset.hbs",
+                "./js/module/Auth/AuthLostKeyRecoveryRebuild.hbs",
+                "./js/module/Auth/AuthLostKeyRecoveryDisable.hbs",
+                "./js/module/Auth/AuthLostKeyRecoverySuccess.hbs"
             ]
         },
         "membership": {
@@ -235,14 +249,15 @@ var vaultierModulesConfig = {
                 "./js/module/Workspace/WorkspaceIndex.js",
                 "./js/module/Workspace/WorkspaceEdit.js",
                 "./js/module/Workspace/WorkspaceMember.js"
+
             ],
             "templates": [
                 "./js/module/Workspace/WorkspacesIndex.hbs",
                 "./js/module/Workspace/WorkspacesIndexItem.hbs",
                 "./js/module/Workspace/WorkspacesIndexWithoutKeys.hbs",
                 "./js/module/Workspace/WorkspacesCreate.hbs",
-                "./js/module/Workspace/WorkspaceNoKeys.hbs",
-                "./js/module/Workspace/WorkspaceEdit.hbs"
+                "./js/module/Workspace/WorkspaceEdit.hbs",
+                "./js/module/Workspace/WorkspaceNoKeys.hbs"
             ]
         },
         "vault": {

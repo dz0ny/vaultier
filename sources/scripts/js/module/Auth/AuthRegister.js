@@ -22,6 +22,7 @@ var RegisterProps = Ember.Object.extend({
     defaultVault: false
 
 });
+
 RegisterProps.reopenClass(Utils.Singleton);
 
 var BaseRegisterController = Ember.Controller.extend({
@@ -271,23 +272,23 @@ Vaultier.AuthRegisterCredsRoute = Ember.Route.extend({
 
                 // create default user environment
                 .then(function () {
-                    return this.get('newuserinit').initializeUser()
+                    return this.get('newuserinit').initializeUser();
                 }.bind(this))
 
                 // save transition and created workspace and vault
                 .then(function (newuservalues) {
-                    ctrl.get('props').setProperties(newuservalues)
-                }.bind(this))
+                    ctrl.get('props').setProperties(newuservalues);
+                }.bind(this));
 
-            ApplicationLoader.promise(promise)
+            ApplicationLoader.promise(promise);
         }
     }
 });
 
 Vaultier.AuthRegisterCredsController = BaseRegisterController.extend({
     init: function () {
-        this._super(arguments)
-        this.set('props.nextButtonTitle', 'Create your account')
+        this._super(arguments);
+        this.set('props.nextButtonTitle', 'Create your account');
     }
 
 });
@@ -304,7 +305,7 @@ Vaultier.AuthRegisterSumRoute = Ember.Route.extend({
     step: 'AuthRegisterSum',
 
     renderTemplate: function () {
-        this.render(this.step, { outlet: 'AuthRegister'})
+        this.render(this.step, { outlet: 'AuthRegister'});
     },
 
     setupController: function (ctrl) {
@@ -314,7 +315,7 @@ Vaultier.AuthRegisterSumRoute = Ember.Route.extend({
 
         ctrl.set('props.loginButtonHidden', true);
         ctrl.set('props.nextButtonDisabled', false);
-        ctrl.set('props.nextButtonTitle', 'Start using vaultier')
+        ctrl.set('props.nextButtonTitle', 'Start using vaultier');
     },
 
     actions: {
@@ -330,7 +331,7 @@ Vaultier.AuthRegisterSumRoute = Ember.Route.extend({
             // in case user refreshes the page transition is not available anymore, in that case user is redirected to index
             var transition = this.get('controller.props.transitionAfterRegister');
             if (transition) {
-                transition()
+                transition();
             } else {
                 this.transitionTo('index');
             }
@@ -347,4 +348,3 @@ Vaultier.AuthRegisterSumController = BaseRegisterController.extend({
 Vaultier.AuthRegisterSumView = Ember.View.extend({
     templateName: 'Auth/AuthRegisterSum'
 });
-

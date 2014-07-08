@@ -9,14 +9,33 @@ var router = Vaultier.Router.map(function () {
         this.route('keys', { path: 'generate-keys' });
         this.route('creds', { path: 'submit-credentials' });
         this.route('sum', { path: '/registration-done' });
-    })
+    });
 
 
     /************************************************************
      * Login
      ************************************************************/
 
+<<<<<<< HEAD
     this.route('AuthLogin', {path: '/auth/login'})
+=======
+    this.route('AuthLogin', {path: '/auth/login'});
+
+    /*************************************************************
+     * Recovery Key
+     *************************************************************/
+
+    this.resource('AuthLostKey', {path: '/lostkey'}, function () {
+        this.route('success', {path: 'success'});
+
+        this.resource('AuthLostKeyRecovery', {path: '/:id/:hash'}, function () {
+            this.route('reset', {path: 'reset'});
+            this.route('rebuild', {path: 'rebuild'});
+            this.route('disable', {path: 'disable'});
+            this.route('success', {path: 'success'});
+        });
+    });
+>>>>>>> Add front-end pages for rebuild and disable lost keys #178
 
     /************************************************************
      * invitations
@@ -27,7 +46,7 @@ var router = Vaultier.Router.map(function () {
         this.route('use', { path: '/use/:invitation/:hash' });
         this.route('anonymous', { path: '/anonymous' });
         this.route('accept', { path: '/accept' });
-    })
+    });
 
     /************************************************************
      * Settings
@@ -38,7 +57,7 @@ var router = Vaultier.Router.map(function () {
         this.route('personal', { path: '/personal' });
         this.route('keys', { path: '/keys' });
 
-    })
+    });
 
 
     /************************************************************
@@ -116,17 +135,16 @@ var router = Vaultier.Router.map(function () {
                                 this.route('createSubmit', { path: '/create/submit/:type'});
                                 this.route('edit', { path: '/edit/:secret'});
                                 this.route('move', { path: '/move/:secret'});
-                            })
-                        })
-
+                            });
+                        });
 
                     });
 
-                })
+                });
 
-            })
+            });
 
-        })
+        });
 
     });
 
@@ -136,7 +154,7 @@ var router = Vaultier.Router.map(function () {
 
     this.resource('Home', {path: '/home'}, function () {
         //this.route('about', { path: '/about'});
-    })
+    });
 
     this.route("ErrorGeneric", { path: "/errors/"});
     this.route("Error404", { path: "*path"}); //also referred as /errors/error-404

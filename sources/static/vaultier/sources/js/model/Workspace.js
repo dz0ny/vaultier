@@ -3,7 +3,7 @@ Vaultier.Workspace = RL.Model.extend(
     Vaultier.RollbackMixin,
     {
         init: function () {
-            this.set('workspacekey', Vaultier.__container__.lookup('service:workspacekey'))
+            this.set('workspacekey', Vaultier.__container__.lookup('service:workspacekey'));
             return this._super.apply(this, arguments);
         },
 
@@ -28,26 +28,26 @@ Vaultier.Workspace = RL.Model.extend(
          * Returns if user given by membership has workspacekey
          */
         hasValidKey: function () {
-            return this.get('membership.status') == Vaultier.Member.proto().statuses['MEMBER'].value
+            return this.get('membership.status') == Vaultier.Member.proto().statuses['MEMBER'].value;
         }.property('membership.status'),
 
 
         saveRecord: function () {
             var isNew = this.get('isNew');
-            var promise = this._super.apply(this, arguments)
+            var promise = this._super.apply(this, arguments);
             var workspace = this;
             if (isNew) {
                 // after save, approve workspace
                 promise = promise
                     .then(function () {
-                        return this.get('workspacekey').transferKeyToCreatedWorkspace(workspace)
+                        return this.get('workspacekey').transferKeyToCreatedWorkspace(workspace);
                     }.bind(this))
                     .then(function () {
-                        return workspace.reloadRecord()
+                        return workspace.reloadRecord();
                     }.bind(this))
             }
 
-            return promise
+            return promise;
         }
 
 

@@ -71,8 +71,9 @@ Vaultier.registerDI = function (app) {
     app.inject('route:WorkspaceMemberApprove', 'workspacekey', 'service:workspacekey')
 
     // service:changekey
-    app.register('service:changekey', Service.ChangeKey)
-    app.inject('route:SettingsKeys', 'changekey', 'service:changekey')
+    app.register('service:changekey', Service.ChangeKey);
+    app.inject('route:SettingsKeys', 'changekey', 'service:changekey');
+    app.inject('route:AuthLostKeyRecoveryRebuild', 'changekey', 'service:changekey');
     app.inject('service:changekey', 'store', 'store:main');
     app.inject('service:changekey', 'auth', 'service:auth');
     app.inject('service:changekey', 'coder', 'service:coder');

@@ -831,8 +831,9 @@ Vaultier.registerDI = function (app) {
     app.inject('route:WorkspaceMemberApprove', 'workspacekey', 'service:workspacekey')
 
     // service:changekey
-    app.register('service:changekey', Service.ChangeKey)
-    app.inject('route:SettingsKeys', 'changekey', 'service:changekey')
+    app.register('service:changekey', Service.ChangeKey);
+    app.inject('route:SettingsKeys', 'changekey', 'service:changekey');
+    app.inject('route:AuthLostKeyRecoveryRebuild', 'changekey', 'service:changekey');
     app.inject('service:changekey', 'store', 'store:main');
     app.inject('service:changekey', 'auth', 'service:auth');
     app.inject('service:changekey', 'coder', 'service:coder');
@@ -862,14 +863,29 @@ var router = Vaultier.Router.map(function () {
         this.route('keys', { path: 'generate-keys' });
         this.route('creds', { path: 'submit-credentials' });
         this.route('sum', { path: '/registration-done' });
-    })
+    });
 
 
     /************************************************************
      * Login
      ************************************************************/
 
-    this.route('AuthLogin', {path: '/auth/login'})
+    this.route('AuthLogin', {path: '/auth/login'});
+
+    /*************************************************************
+     * Recovery Key
+     *************************************************************/
+
+    this.resource('AuthLostKey', {path: '/lostkey'}, function () {
+        this.route('success', {path: 'success'});
+
+        this.resource('AuthLostKeyRecovery', {path: '/:id/:hash'}, function () {
+            this.route('reset', {path: 'reset'});
+            this.route('rebuild', {path: 'rebuild'});
+            this.route('disable', {path: 'disable'});
+            this.route('success', {path: 'success'});
+        });
+    });
 
     /************************************************************
      * invitations
@@ -880,7 +896,7 @@ var router = Vaultier.Router.map(function () {
         this.route('use', { path: '/use/:invitation/:hash' });
         this.route('anonymous', { path: '/anonymous' });
         this.route('accept', { path: '/accept' });
-    })
+    });
 
     /************************************************************
      * Settings
@@ -891,7 +907,7 @@ var router = Vaultier.Router.map(function () {
         this.route('personal', { path: '/personal' });
         this.route('keys', { path: '/keys' });
 
-    })
+    });
 
 
     /************************************************************
@@ -969,17 +985,16 @@ var router = Vaultier.Router.map(function () {
                                 this.route('createSubmit', { path: '/create/submit/:type'});
                                 this.route('edit', { path: '/edit/:secret'});
                                 this.route('move', { path: '/move/:secret'});
-                            })
-                        })
-
+                            });
+                        });
 
                     });
 
-                })
+                });
 
-            })
+            });
 
-        })
+        });
 
     });
 
@@ -989,7 +1004,7 @@ var router = Vaultier.Router.map(function () {
 
     this.resource('Home', {path: '/home'}, function () {
         //this.route('about', { path: '/about'});
-    })
+    });
 
     this.route("ErrorGeneric", { path: "/errors/"});
     this.route("Error404", { path: "*path"}); //also referred as /errors/error-404
@@ -2537,7 +2552,7 @@ Vaultier.MutableModel.Mixin = Ember.Mixin.create({
 })
 
 
-Vaultier.EncryptedModel = Vaultier.EncryptedModel || {}
+Vaultier.EncryptedModel = Vaultier.EncryptedModel || {};
 
 var getEncryptedDataKey = function (encryptedField) {
     return '_decrypted-data-' + encryptedField;
@@ -2648,10 +2663,10 @@ Vaultier.EncryptedModel.Mixin = Ember.Mixin.create({
             decryptedData.cleanData = Ember.merge({}, data)
             decryptedData.isDirty = false;
         } else {
-            decryptedData['isDirty'] = this.areDecryptedDataDirty(decryptedData)
+            decryptedData['isDirty'] = this.areDecryptedDataDirty(decryptedData);
         }
 
-        this.set(key, decryptedData)
+        this.set(key, decryptedData);
     },
 
     clearDecryptedData: function () {
@@ -2680,7 +2695,7 @@ Vaultier.EncryptedModel.Mixin = Ember.Mixin.create({
             data = this.workspacekey.decryptWorkspaceData(encryptedData) || {};
         }
         else {
-            data = null
+            data = null;
         }
         this.setDecryptedData(encryptedField, data, true);
     },
@@ -2709,7 +2724,7 @@ Vaultier.EncryptedModel.Mixin = Ember.Mixin.create({
             this.set('decrypted', false);
             console.error('Secret decryption failed');
             console.error(e.stack);
-            throw e
+            throw e;
         }
 
         return deserialized;
@@ -2747,7 +2762,7 @@ Vaultier.EncryptedModel.decryptedField = function (encryptedField, decryptedFiel
             if (data) {
                 return Ember.get(data, 'data.' + key);
             } else {
-                return undefined
+                return undefined;
             }
         }
 
@@ -2756,7 +2771,7 @@ Vaultier.EncryptedModel.decryptedField = function (encryptedField, decryptedFiel
             Ember.set(data, 'data.' + key, value);
             Ember.set(data, 'isDirty', this.areDecryptedDataDirty(data));
             this.set('isDirty', true);
-            return this
+            return this;
         }
 
 
@@ -2936,7 +2951,7 @@ Vaultier.Workspace = RL.Model.extend(
     Vaultier.RollbackMixin,
     {
         init: function () {
-            this.set('workspacekey', Vaultier.__container__.lookup('service:workspacekey'))
+            this.set('workspacekey', Vaultier.__container__.lookup('service:workspacekey'));
             return this._super.apply(this, arguments);
         },
 
@@ -2961,26 +2976,26 @@ Vaultier.Workspace = RL.Model.extend(
          * Returns if user given by membership has workspacekey
          */
         hasValidKey: function () {
-            return this.get('membership.status') == Vaultier.Member.proto().statuses['MEMBER'].value
+            return this.get('membership.status') == Vaultier.Member.proto().statuses['MEMBER'].value;
         }.property('membership.status'),
 
 
         saveRecord: function () {
             var isNew = this.get('isNew');
-            var promise = this._super.apply(this, arguments)
+            var promise = this._super.apply(this, arguments);
             var workspace = this;
             if (isNew) {
                 // after save, approve workspace
                 promise = promise
                     .then(function () {
-                        return this.get('workspacekey').transferKeyToCreatedWorkspace(workspace)
+                        return this.get('workspacekey').transferKeyToCreatedWorkspace(workspace);
                     }.bind(this))
                     .then(function () {
-                        return workspace.reloadRecord()
+                        return workspace.reloadRecord();
                     }.bind(this))
             }
 
-            return promise
+            return promise;
         }
 
 
@@ -2997,7 +3012,7 @@ Vaultier.WorkspaceKey = RL.Model.extend(
         status: RL.attr('string'),
         workspace: RL.attr('object'),
         user: RL.attr('object')
-    })
+    });
 
 
 
@@ -3359,6 +3374,35 @@ Vaultier.SecretBlob = RL.Model.extend(
             }
         }
     });
+
+
+'use strict';
+
+
+Vaultier.LostKey = RL.Model.extend(
+    Vaultier.CreatedUpdatedMixin,
+    {
+        email: RL.attr('string'),
+        recover_type: RL.attr('integer'),
+        hash: RL.attr('string'),
+        public_key: RL.attr('key'),
+        memberships: RL.hasMany('Vaultier.LostKeyMemberships'),
+        recoverType: new Utils.ConstantList({
+            'REBUILD': {
+                value: 1,
+                text: 'REBUILD'
+            },
+            'DISABLE': {
+                value: 2,
+                text: 'DISABLE'
+            }
+        })
+    });
+
+Vaultier.LostKeyMemberships = RL.Model.extend({
+    workspace_name: RL.attr('string'),
+    is_recoverable: RL.attr('boolean')
+});
 
 
 //# sourceMappingURL=core.js.map

@@ -1,7 +1,8 @@
+from itertools import imap
 from django.db import models
 from django.db.models.deletion import PROTECT
 from django.db.models.manager import Manager
-from django.db.models.query_utils import Q
+from django.db.models.query import QuerySet
 from modelext.softdelete.softdelete import SoftDeleteManagerMixin, SoftDeleteMixin
 from modelext.tree.iterator import TreeIterableModelMixin
 from vaultier.models.acl.fields import AclLevelField
@@ -11,7 +12,6 @@ from vaultier.models.role.fields import RoleLevelField
 from vaultier.models.role.model import Role
 from modelext.changes.changes import ChangesMixin
 from vaultier.models.workspace.tree import WorkspaceTreeIterator
-from django.db.models.aggregates import Count
 
 
 class WorkspaceManager(SoftDeleteManagerMixin, Manager):
@@ -22,20 +22,6 @@ class WorkspaceManager(SoftDeleteManagerMixin, Manager):
         ).distinct()
 
         return workspaces
-
-    def get_workspaces_with_recoverable_info(self, user):
-        """
-        Add an extra column with the number of members to the result set from
-        filtering the workspaces where the user is a member
-        :param user:
-        :return: QuerySet
-        """
-        annotated_workspaces = self.filter(
-            membership__status=MemberStatusField.STATUS_MEMBER,
-            pk__in=Member.objects.filter(user=user).values_list('workspace_id', flat=True)) \
-            .annotate(is_recoverable=Count('membership'))
-
-        return annotated_workspaces | self.filter(membership__user=user, membership__status=MemberStatusField.STATUS_MEMBER_WITHOUT_WORKSPACE_KEY)
 
     def create_member_with_workspace(self, workspace):
         attrs_needed = ['_user', ]

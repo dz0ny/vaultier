@@ -5,6 +5,7 @@ var gulp = require('gulp'),
     gLivereload = require('gulp-livereload'),
     util = require('util'),
     Q = require('q'),
+    gQunit = require('gulp-qunit'),
     jshint = require('gulp-jshint'),
     vaultierConfig = require('./js/modules'),
     EnviromentFactory = require('./js/builder');
@@ -13,7 +14,8 @@ var paths = {
     dev: {
         scripts: ["./js/**/*.js", "./local_components/**/*.js"],
         styles: "./css/**/*.css",
-        templates: "./js/**/*.hbs"
+        templates: "./js/**/*.hbs",
+        tests: "./js/tests/test-runner.html"
     }
 }
 
@@ -68,12 +70,10 @@ gulp.task('watch', ['builder:dev'], function () {
     glob.push(paths.dev.styles);
     glob.push(paths.dev.templates);
 
-    try {
-        gulp.watch(glob, ['builder:dev']).on('change', function (file) {
+    gulp.watch(glob, ['builder:dev']).on('change', function (file) {
+        setTimeout(function () {
             server.changed(file.path);
-        });
-    } catch (err) {
-        console.error(err);
-    }
+        }, 140);
+    });
 });
 
