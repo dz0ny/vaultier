@@ -71,6 +71,7 @@ Vaultier.SecretCreateSelectController = Ember.Controller.extend({
 });
 
 Vaultier.SecretCreateSubmitController = Ember.ObjectController.extend({
+    needs: ['SecretCreate']
 });
 
 
@@ -290,7 +291,6 @@ Vaultier.SecretTypeBaseView = Ember.View.extend({
 
     isCreateAction: function() {
         var r =  !(this.get('controller.content.id') > 0);
-        console.log(r);
         return r;
     }.property('controller.content.id')
 
@@ -738,7 +738,7 @@ function program15(depth0,data) {
   var buffer = '';
   data.buffer.push("\r\n                            ");
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "Vaultier.SecretIndexItemNoteView", {hash:{
-    'class': ("vlt-secret vlt-note")
+    'class': ("vlt-secret-item vlt-note")
   },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[depth0],types:["ID"],data:data})));
   data.buffer.push("\r\n                        ");
   return buffer;
@@ -749,7 +749,7 @@ function program17(depth0,data) {
   var buffer = '';
   data.buffer.push("\r\n                            ");
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "Vaultier.SecretIndexItemPasswordView", {hash:{
-    'class': ("vlt-secret vlt-password")
+    'class': ("vlt-secret-item vlt-password")
   },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[depth0],types:["ID"],data:data})));
   data.buffer.push("\r\n                        ");
   return buffer;
@@ -760,7 +760,7 @@ function program19(depth0,data) {
   var buffer = '';
   data.buffer.push("\r\n                            ");
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "Vaultier.SecretIndexItemFileView", {hash:{
-    'class': ("vlt-secret vlt-file")
+    'class': ("vlt-secret-item vlt-file")
   },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[depth0],types:["ID"],data:data})));
   data.buffer.push("\r\n                        ");
   return buffer;
@@ -899,7 +899,7 @@ function program41(depth0,data) {
   data.buffer.push("\r\n                    </div>\r\n\r\n                    <div class=\"col-xs-9\">\r\n                        <h2>Card: ");
   stack1 = helpers._triageMustache.call(depth0, "card.name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push(" </h2>\r\n                    </div>\r\n\r\n                    <div class=\"clearfix\"></div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"top-30\">\r\n                ");
+  data.buffer.push(" </h2>\r\n                    </div>\r\n\r\n                    <div class=\"clearfix\"></div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"top-30 vlt-items\">\r\n                ");
   stack1 = helpers['if'].call(depth0, "length", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(21, program21, data),fn:self.program(13, program13, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n            </div>\r\n\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"vlt-page-sidebar\">\r\n        <div class=\"vlt-sidebar-block\">\r\n            <div class=\"vlt-sidebar-block-heading\">\r\n                <div class=\"vlt-header\">\r\n                    <img src=\"/static/vaultier/images/icon-vault-grey.png\" class=\"vlt-icon\">\r\n\r\n                    <h3 class=\"vlt-title\">\r\n                        ");

@@ -2,7 +2,6 @@ Vaultier.SecretTypeBaseView = Ember.View.extend({
 
     isCreateAction: function() {
         var r =  !(this.get('controller.content.id') > 0);
-        console.log(r);
         return r;
     }.property('controller.content.id')
 
