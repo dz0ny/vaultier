@@ -2,6 +2,7 @@ from django.http.response import HttpResponse
 from django.shortcuts import render
 from django.template.context import Context
 from app.settings import FT_FEATURES, BK_FEATURES
+from dealer.git import git
 import json
 
 def index(request):
@@ -12,7 +13,8 @@ def index(request):
 
 def config(request):
     script = json.dumps({
-        'FT_FEATURES': FT_FEATURES
+        'FT_FEATURES': FT_FEATURES,
+        'VERSION' : git.tag
     })
     script = 'InitializeConfig = function(app) {  app.Config = Ember.Object.extend('+script+'); }'
 

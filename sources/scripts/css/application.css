@@ -682,6 +682,18 @@ a:hover {
     padding: 10px;
 }
 
+#vlt-footer .vlt-version {
+    color: #cec9c9;
+    padding: 8px 30px 0px 8px;
+}
+
+#vlt-footer .vlt-rclick img {
+    border-radius: 3px;
+    display: block;
+    padding: 2px;
+    background-color: #FDFDFD;
+}
+
 /*************************************************************
 **************************************************************
 * navbar + branding
