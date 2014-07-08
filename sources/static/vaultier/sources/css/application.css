@@ -1104,56 +1104,67 @@ span.vlt-user img {
 * Secret items - detail
 *************************************************************
 *************************************************************/
-.vlt-secret {
+.vlt-secret-item {
     position: relative;
     border: 1px solid #e0dbdb;
     border-top-width: 0px;
     background-color: #EEEEEE;
 }
 
-.vlt-secret:first-of-type {
+.vlt-secret-item:first-of-type {
     border-top-width: 1px;
-    border-radius: 6px 6px 0px 0px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
 }
 
-.vlt-secret:last-of-type {
-    border-radius: 0px 0px 6px 6px;
-
+.vlt-secret-item:first-of-type .vlt-inner  {
+    border-top-right-radius: 6px;
 }
 
-.vlt-secret .vlt-visual {
+
+.vlt-secret-item:last-of-type  {
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+.vlt-secret-item:last-of-type .vlt-inner {
+    border-bottom-right-radius: 6px;
+}
+
+
+.vlt-secret-item .vlt-visual {
     position: absolute;
     left: 0px;
     top: 0px;
     padding: 10px;
 }
 
-.vlt-secret .vlt-visual .vlt-icon {
+.vlt-secret-item .vlt-visual .vlt-icon {
     background-size: 100% 100%;
     height: 100px;
     width: 100px;
 }
 
-.vlt-secret.vlt-password .vlt-visual .vlt-icon {
+.vlt-secret-item.vlt-password .vlt-visual .vlt-icon {
     background-image: url('../images/icon-password-white.png');
 }
 
-.vlt-secret.vlt-note .vlt-visual .vlt-icon {
+.vlt-secret-item.vlt-note .vlt-visual .vlt-icon {
     background-image: url('../images/icon-note-white.png');
 }
 
-.vlt-secret.vlt-file .vlt-visual .vlt-icon {
+.vlt-secret-item.vlt-file .vlt-visual .vlt-icon {
     background-image: url('../images/icon-file-white.png');
 }
 
-.vlt-secret .vlt-visual .vlt-type {
+.vlt-secret-item .vlt-visual .vlt-type {
     color: #ffffff;
     font-size: 20px;
     text-align: center;
     font-weight: bold;
 }
 
-.vlt-secret .vlt-inner {
+.vlt-secret-item .vlt-inner {
     position: relative;
     padding: 20px;
     padding-bottom: 40px;
@@ -1162,31 +1173,31 @@ span.vlt-user img {
     min-height: 150px;
 }
 
-.vlt-secret .vlt-inner .vlt-attr-name {
+.vlt-secret-item .vlt-inner .vlt-attr-name {
     background-color: #F5F5F5;
 }
 
-.vlt-secret .vlt-inner .vlt-attrs {
+.vlt-secret-item .vlt-inner .vlt-attrs {
     min-height: 100px;
 }
 
-.vlt-secret .vlt-inner .vlt-controls .vlt-buttons {
+.vlt-secret-item .vlt-inner .vlt-controls .vlt-buttons {
     padding: 0px;
 }
 
-.vlt-secret .vlt-inner .vlt-controls .vlt-author {
+.vlt-secret-item.vlt-inner .vlt-controls .vlt-author {
     padding: 0px;
 }
 
-.vlt-secret .vlt-inner .vlt-controls .vlt-buttons .btn-group {
+.vlt-secret-item .vlt-inner .vlt-controls .vlt-buttons .btn-group {
     float: right;
 }
 
-.vlt-secret .vlt-inner .vlt-attr-name:after {
+.vlt-secret-item .vlt-inner .vlt-attr-name:after {
     __content: ':'
 }
 
-.vlt-secret {
+.vlt-secret-item {
     border-top-width: 4px;
 }
 
