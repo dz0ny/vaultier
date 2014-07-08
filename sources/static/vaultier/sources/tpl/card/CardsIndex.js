@@ -86,7 +86,7 @@ function program12(depth0,data) {
 function program14(depth0,data) {
   
   var buffer = '', stack1;
-  data.buffer.push("\n\n                    <div class=\"jumbotron vlt-bigbox vlt-card col-md-8 col-md-offset-2 top-50\">\n\n                        <div class=\"vlt-header\">\n                            <div class=\"vlt-icon\">\n\n                            </div>\n                            <div class=\"vlt-title\">\n                                <h1>You do not have any card yet</h1>\n                            </div>\n                        </div>\n\n                        ");
+  data.buffer.push("\n\n                    <div class=\"jumbotron vlt-bigbox vlt-card top-50\">\n\n                        <div class=\"vlt-header\">\n                            <div class=\"vlt-icon\">\n\n                            </div>\n                            <div class=\"vlt-title\">\n                                <h1>You do not have any card yet</h1>\n                            </div>\n                        </div>\n\n                        ");
   stack1 = helpers['if'].call(depth0, "vault.perms.create", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(15, program15, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n                    </div>\n                ");

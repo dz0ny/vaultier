@@ -441,7 +441,7 @@ a:hover {
 }
 
 .vlt-page.vlt-page-plain > .vlt-page-nav .vlt-page-toolbar {
-    margin-top: -1px;
+    margin-top: -2px;
     padding: 10px;
     background-color: #F5F5F5;
     border-radius: 0px 0px 8px 8px;

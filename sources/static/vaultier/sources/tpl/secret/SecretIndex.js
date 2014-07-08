@@ -134,10 +134,10 @@ function program19(depth0,data) {
 function program21(depth0,data) {
   
   var buffer = '', stack1;
-  data.buffer.push("\r\n\r\n                    <div class=\"container\">\r\n                        <div class=\"jumbotron vlt-bigbox vlt-secret col-md-8 col-md-offset-2\">\r\n                            <div class=\"vlt-header\">\r\n                                <div class=\"vlt-icon\">\r\n\r\n                                </div>\r\n                                <div class=\"vlt-title\">\r\n                                    <h1>You do not have any secret yet</h1>\r\n                                </div>\r\n                            </div>\r\n\r\n                            ");
+  data.buffer.push("\r\n\r\n                        <div class=\"jumbotron vlt-bigbox vlt-secret\">\r\n                            <div class=\"vlt-header\">\r\n                                <div class=\"vlt-icon\">\r\n\r\n                                </div>\r\n                                <div class=\"vlt-title\">\r\n                                    <h1>You do not have any secret yet</h1>\r\n                                </div>\r\n                            </div>\r\n\r\n                            ");
   stack1 = helpers['if'].call(depth0, "card.perms.create", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(22, program22, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\r\n\r\n                        </div>\r\n                    </div>\r\n\r\n\r\n                ");
+  data.buffer.push("\r\n\r\n                    </div>\r\n\r\n\r\n                ");
   return buffer;
   }
 function program22(depth0,data) {

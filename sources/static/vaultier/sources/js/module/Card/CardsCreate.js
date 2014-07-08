@@ -6,16 +6,35 @@ Vaultier.CardsCreateRoute = Ember.Route.extend(
         },
 
         model: function (params, transition) {
+            var store = this.get('store');
+            var workspace = this.modelFor('Workspace');
+            var vault = this.modelFor('Vault');
+
             // check permissions
             if (!this.get('auth').checkPermissions(transition, function () {
-                return this.modelFor('Vault').get('perms.create');
+                return vault.get('perms.create')
             }.bind(this), true)) {
                 return;
             }
 
-            var store = this.get('store');
-            var record = store.createRecord('Card');
-            return record;
+            // create record
+            var card = store.createRecord('Card');
+
+            // load memberships
+            var memberships = Ember.RSVP
+                .hash({
+                    to_workspace: store.find('Role', {to_workspace: workspace.get('id') }),
+                    to_vault: store.find('Role', {to_vault: vault.get('id')})
+                })
+                .then(function (memberships) {
+                    return [].concat(memberships.to_workspace.toArray(), memberships.to_vault.toArray())
+                });
+
+            // return promise for all requests
+            return Ember.RSVP.hash({
+                card: card,
+                memberships: memberships
+            });
         },
 
         actions: {
@@ -43,7 +62,9 @@ Vaultier.CardsCreateRoute = Ember.Route.extend(
         },
 
         setupController: function (ctrl, model) {
-            ctrl.set('content', model);
+            // set model
+            ctrl.set('content', model.card);
+            ctrl.set('memberships', model.memberships);
 
             // retrieve workspace
             var workspace = this.modelFor('Workspace');
