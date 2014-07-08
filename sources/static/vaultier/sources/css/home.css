@@ -1,5 +1,9 @@
+.vlt-hp {
+    margin-top: -10px;
+}
+
 .vlt-hp .jumbotron {
-    padding-top: 20px;
+    padding-top: 30px;
 }
 .vlt-hp .vlt-message {
     position: relative;

@@ -567,7 +567,16 @@ a:hover {
     .vlt-page.vlt-page-with-sidebar > .vlt-page-content {
         border-radius: 0px 0px 6px 6px;
     }
+}
 
+@media (min-width: 1500px) {
+    .vlt-page.vlt-page-with-sidebar > .vlt-page-sidebar {
+        width: 400px;
+    }
+
+    .vlt-page.vlt-page-with-sidebar > .vlt-page-content {
+        margin-left: 399px;
+    }
 }
 
 /*************************************************************
