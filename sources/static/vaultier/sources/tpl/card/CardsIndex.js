@@ -208,10 +208,6 @@ function program33(depth0,data) {
   stack1 = helpers._triageMustache.call(depth0, "vault.name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push(" </h2>\n                        </div>\n\n                        <div class=\"clearfix\"></div>\n                    </div>\n                </div>\n\n                ");
-  data.buffer.push(escapeExpression(helpers.view.call(depth0, "Vaultier.WorkspacesIndexWithoutKeysView", {hash:{
-    'workspace': ("workspace")
-  },hashTypes:{'workspace': "ID"},hashContexts:{'workspace': depth0},contexts:[depth0],types:["ID"],data:data})));
-  data.buffer.push("\n\n                ");
   stack1 = helpers['if'].call(depth0, "length", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(14, program14, data),fn:self.program(11, program11, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n\n            </div>\n        </div>\n\n        <div class=\"vlt-page-sidebar\">\n            <div class=\"vlt-sidebar-block\">\n                <div class=\"vlt-sidebar-block-heading\">\n                    <div class=\"vlt-header\">\n                        <img src=\"/static/vaultier/images/icon-vault-grey.png\" class=\"vlt-icon\">\n\n                        <h3 class=\"vlt-title\">\n                            ");

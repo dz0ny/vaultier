@@ -235,7 +235,7 @@ Vaultier.WorkspaceNoKeysRoute = Ember.Route.extend({
     /**
      * Method is automatically called when workspace key is transfered
      */
-    keysTransfered : function() {
+    keysTransfered: function () {
         this.transitionTo('Workspace.index', workspace);
     },
 
@@ -243,7 +243,7 @@ Vaultier.WorkspaceNoKeysRoute = Ember.Route.extend({
      * When route is activated bind to workspacekey service keyTransfered event to
      * redirect to workspace index
      */
-    activate: function() {
+    activate: function () {
         var workspacekey = this.get('workspacekey');
         workspacekey.on('keyTransfered', this, this.keysTransfered);
     },
@@ -251,13 +251,43 @@ Vaultier.WorkspaceNoKeysRoute = Ember.Route.extend({
     /**
      * Detach from keyTransfered event
      */
-    deactivate: function() {
+    deactivate: function () {
         var workspacekey = this.get('workspacekey');
         workspacekey.off('keyTransfered', this, this.keysTransfered);
     },
 
+    model: function (params, queryParams) {
+        var workspace = this.modelFor('Workspace');
+        var store = this.get('store');
+
+        // load memberships
+        var memberships = store
+            .find('Role', {to_workspace: workspace.get('id') })
+            .then(function (memberships) {
+                return memberships.toArray()
+            });
+
+        // return promise for all requests
+        return Ember.RSVP.hash({
+            workspace: workspace,
+            memberships: memberships
+        });
+    },
+
+    afterModel: function(model, transition) {
+        if (model.workspace.get('membership.status') == Vaultier.Member.proto().statuses.MEMBER.value) {
+            transition.abort();
+            this.transitionTo('Workspace.index');
+            $.notify('Your already have valid workspace keys.', 'success');
+        }
+    },
+
     setupController: function (ctrl, model) {
         this._super.apply(this, arguments);
+
+        // set model
+        ctrl.set('memberships', model.memberships);
+        ctrl.set('workspace', model.workspace);
 
         // set breadcrumbs
         ctrl.set('breadcrumbs',
@@ -636,10 +666,40 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 Ember.TEMPLATES["Workspace/WorkspaceNoKeys"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', stack1, helper, options, self=this, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
+
+function program1(depth0,data) {
   
+  var buffer = '', stack1;
+  data.buffer.push("\n                            ");
+  stack1 = helpers._triageMustache.call(depth0, "workspace.description", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n                        ");
+  return buffer;
+  }
 
+function program3(depth0,data) {
+  
+  
+  data.buffer.push("\n                            No description given\n                        ");
+  }
 
-  data.buffer.push("<div class=\"container\">\n    <div class=\"vlt-page vlt-page-plain\">\n        <div class=\"row\">\n            <div class=\"col-md-12 top-50\">\n                <div class=\"jumbotron vlt-bigbox vlt-no-keys col-md-8 col-md-offset-2\">\n                    <div class=\"vlt-header\">\n                        <div class=\"vlt-icon\">\n\n                        </div>\n                        <div class=\"vlt-title\">\n                            <h1>You do not have keys to workspace yet </h1>\n                        </div>\n                    </div>\n                    <p>\n                        Please wait till keys will be automatically transfered to you\n                        when somebody of team goes online. You will get email once keys received.\n                        <br/>\n                        <br/>\n                        Keys are used to encrypt and decrypt workspace data\n\n                    </p>\n                </div>\n            </div>\n        </div>\n        <div class=\"clearfix\"></div>\n    </div>\n</div>\n");
+  data.buffer.push("<div class=\"container-full\">\n    <div class=\"vlt-page vlt-page-with-sidebar\">\n        <div class=\"vlt-page-content\">\n            <div class=\"col-md-12\">\n\n                <div class=\"vlt-page-content-responsive-header\">\n                    <div class=\"row-fluid\">\n                        <div class=\"col-xs-12 text-center\">\n                            <h2>Workspace: ");
+  stack1 = helpers._triageMustache.call(depth0, "workspace.name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push(" </h2>\n                        </div>\n                        <div class=\"clearfix\"></div>\n                    </div>\n                </div>\n\n                <div class=\"top-50\">\n                    <div class=\"jumbotron vlt-bigbox vlt-no-keys\">\n                        <div class=\"vlt-header\">\n                            <div class=\"vlt-icon\">\n\n                            </div>\n                            <div class=\"vlt-title\">\n                                <h1>You do not have keys to workspace yet </h1>\n                            </div>\n                        </div>\n                        <p>\n                            Please wait till keys will be automatically transfered to you\n                            when somebody of team goes online. You will get email once keys received.\n                            <br/>\n                            <br/>\n                            Keys are used to encrypt and decrypt workspace data\n\n                        </p>\n                    </div>\n\n                </div>\n\n            </div>\n        </div>\n\n        <div class=\"vlt-page-sidebar\">\n            <div class=\"vlt-sidebar-block\">\n                <div class=\"vlt-sidebar-block-heading\">\n                    <div class=\"vlt-header\">\n                        <img src=\"/static/vaultier/images/icon-workspace-grey.png\" class=\"vlt-icon\">\n\n                        <h3 class=\"vlt-title\">\n                            ");
+  stack1 = helpers._triageMustache.call(depth0, "workspace.name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n                        </h3>\n                    </div>\n                    <div class=\"vlt-body\">\n                        ");
+  stack1 = helpers['if'].call(depth0, "workspace.description", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n                    </div>\n                </div>\n\n                <div class=\"vlt-sidebar-block-sharing\">\n                    <div class=\"vlt-header\">\n                        <img src=\"/static/vaultier/images/icon-team-grey.png\" class=\"vlt-icon\">\n\n                        <h3 class=\"vlt-title\">\n                            Sharing with\n                        </h3>\n                    </div>\n                    <div class=\"vlt-body\">\n                         ");
+  data.buffer.push(escapeExpression((helper = helpers['member-box'] || (depth0 && depth0['member-box']),options={hash:{
+    'roles': ("memberships"),
+    'user': ("auth.user")
+  },hashTypes:{'roles': "ID",'user': "ID"},hashContexts:{'roles': depth0,'user': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "member-box", options))));
+  data.buffer.push("\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n\n");
+  return buffer;
   
 });
 
