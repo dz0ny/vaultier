@@ -4,6 +4,7 @@ Changelog
 Release 0.6.3
 -------------
 * [hotfix] fix transition between WorkspaceNoKeysRoute to WorkspaceIndexRoute
+* [hotfix] malformed template on secrets index
 
 Release 0.6.2
 -------------
