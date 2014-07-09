@@ -27,6 +27,7 @@ from vaultier.test.case.workspace.workspace_version import workspace_version_sui
 from vaultier.test.case.workspacekey.workspacekey import workspacekey_suite
 from vaultier.test.case.lostkey.lostkey import lost_keys_suite
 
+
 def suite():
     suite = TestSuite()
 
@@ -72,7 +73,7 @@ def suite():
     suite.addTest(vault_version_suite())
     suite.addTest(card_version_suite())
     suite.addTest(secret_version_suite())
-    suite.addTest(secret_blob_version_suite());
+    suite.addTest(secret_blob_version_suite())
 
     # soft delete
     suite.addTest(vault_softdelete_suite())
