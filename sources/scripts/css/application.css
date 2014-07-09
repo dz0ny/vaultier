@@ -1181,7 +1181,6 @@ span.vlt-user img {
 .vlt-secret-item .vlt-inner {
     position: relative;
     padding: 20px;
-    padding-bottom: 40px;
     background-color: #ffffff;
     margin-left: 120px;
     min-height: 150px;
@@ -1213,6 +1212,11 @@ span.vlt-user img {
 
 .vlt-secret-item {
     border-top-width: 4px;
+}
+
+.vlt-secret-item .vlt-footer-item.help-block {
+    margin-bottom: 0px;
+    margin-top: 0px;
 }
 
 /*************************************************************
