@@ -5,9 +5,11 @@ from django.db import models
 from django.db.models.deletion import PROTECT, CASCADE
 from django.db.models.manager import Manager
 from django.db.models.query_utils import Q
+from django.db.models.signals import post_save
 from modelext.lowercasefield.lowercasefield import LowerCaseCharField
 from vaultier.mailer.invitation.sender import InvitationEmailSender
 from modelext.changes.changes import ChangesMixin
+from vaultier.mailer.transfer_workspace_key.sender import WorkspaceKeyTransferEmailSender
 from vaultier.models.member.fields import MemberStatusField
 
 
@@ -145,6 +147,22 @@ class MemberManager(Manager):
         email_recipients['to'] = [member.invitation_email]
         invitation_sender.send(recipients=email_recipients, template='mailer/invitation/invitation', context=member)
 
+    def send_transfer_workspace_key_info(self, sender, instance=None, *args, **kwargs):
+        """
+
+        :param sender:
+        :param instance:
+        :param args:
+        :param kwargs:
+        :return:
+        """
+        if instance.status == MemberStatusField.STATUS_MEMBER and instance.invitation_email and instance.invitation_hash:
+            # the user has been invited and the workspace_key was set
+            sender = WorkspaceKeyTransferEmailSender()
+            email_recipients = sender.get_raw_recipients()
+            email_recipients['to'] = [instance.user.email]
+            sender.send(email_recipients, 'mailer/transfer_workspace_key/transfer_workspace_key', instance)
+
 
 class Member(ChangesMixin, models.Model):
     objects = MemberManager()
@@ -174,3 +192,5 @@ class Member(ChangesMixin, models.Model):
         return super(Member, self).save(*args, **kwargs)
 
 
+def register_signals():
+    post_save.connect(Member.objects.send_transfer_workspace_key_info, sender=Member)

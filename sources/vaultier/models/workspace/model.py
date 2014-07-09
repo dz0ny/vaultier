@@ -1,8 +1,6 @@
-from itertools import imap
 from django.db import models
 from django.db.models.deletion import PROTECT
 from django.db.models.manager import Manager
-from django.db.models.query import QuerySet
 from modelext.softdelete.softdelete import SoftDeleteManagerMixin, SoftDeleteMixin
 from modelext.tree.iterator import TreeIterableModelMixin
 from vaultier.models.acl.fields import AclLevelField

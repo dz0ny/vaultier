@@ -30,13 +30,19 @@ card_register_version_signals()
 secret_register_version_signals()
 
 ##################################################
-#Role custom singals
+#Role custom signals
 ##################################################
 from vaultier.models.role.model import register_signals as role_register_signals
 role_register_signals()
 
 ##################################################
-#LostKey custom singals
+#LostKey custom signals
 ##################################################
 from vaultier.models.lostkey.model import register_signals as lostkey_register_signals
 lostkey_register_signals()
+
+##################################################
+#Member post_save signals
+##################################################
+from vaultier.models.member.model import register_signals as member_register_signals
+member_register_signals()

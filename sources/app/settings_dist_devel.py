@@ -30,4 +30,5 @@ BK_FEATURES = {
     'lostkey_hash_expiration_time': 3600000,
     'invitation_url_template': '#/invitations/use/{member}/{hash}/',
     'info_email': 'info@rclick.com', # Default email address from which we send emails
+    'workspace_url_template': '#/workspaces/w/{workspace_slug}/',  # Template for build the workspace url send by email
 }

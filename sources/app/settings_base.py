@@ -201,7 +201,7 @@ LOGGING = {
             'level': 'ERROR',
             'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler'
-        }
+        },
     },
     'loggers': {
         'django.request': {
@@ -246,5 +246,6 @@ BK_FEATURES = {
     'ga_create_code': 'UA-17830772-11', # code for google analytics
     # Templete to generate the invitation url that will be send by email
     'invitation_url_template': '#/invitations/use/{member}/{hash}/',
-    'info_email': 'info@rclick.com', # Default email address from which we send emails
+    'info_email': 'info@rclick.com',  # Default email address from which we send emails
+    'workspace_url_template': '#/workspaces/w/{workspace_slug}/',  # Template for build the workspace url send by email
 }
