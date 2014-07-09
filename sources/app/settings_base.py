@@ -165,6 +165,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'vaultier',
     'south',
+    'mptt',
     'rest_framework',
     'django_extensions',
     'modelext',

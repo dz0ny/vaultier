@@ -8,6 +8,8 @@ from vaultier.models.role.model import Role
 from vaultier.models.token.model import Token
 from vaultier.models.member.model import Member
 from vaultier.models.acl.model import Acl
+from vaultier.models.tree.model import Tree
+
 from version.model import Version
 
 import migrations

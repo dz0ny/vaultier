@@ -1,4 +1,5 @@
 from itertools import imap
+from django.contrib.contenttypes.generic import GenericRelation
 from django.db import models
 from django.db.models.deletion import PROTECT
 from django.db.models.manager import Manager
@@ -11,6 +12,7 @@ from vaultier.models.member.model import Member
 from vaultier.models.role.fields import RoleLevelField
 from vaultier.models.role.model import Role
 from modelext.changes.changes import ChangesMixin
+from vaultier.models.tree.model import Tree
 from vaultier.models.workspace.tree import WorkspaceTreeIterator
 
 
@@ -60,6 +62,8 @@ class Workspace(ChangesMixin, SoftDeleteMixin, TreeIterableModelMixin, models.Mo
     created_by = models.ForeignKey('vaultier.User', on_delete=PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    trees = GenericRelation(Tree,content_type_field='data_content_type', object_id_field='data_id')
 
     def save(self, *args, **kwargs):
         created = self.id == None
