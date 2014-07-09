@@ -140,7 +140,7 @@ Vaultier.WorkspaceKeysMixin = Ember.Mixin.create({
             this.transitionTo('Workspace.noKeys');
             return false;
         }
-        return true
+        return true;
     }
 
 });
@@ -162,7 +162,7 @@ Vaultier.WorkspaceRoute = Ember.Route.extend(
 
         afterModel: function (workspace, transition) {
             // select working workspace
-            this.get('workspacekey').selectWorkspace(workspace)
+            this.get('workspacekey').selectWorkspace(workspace);
 
             // set environments
             // @deprecated
@@ -178,12 +178,12 @@ Vaultier.WorkspaceRoute = Ember.Route.extend(
         serialize: function (model) {
             // primitives
             if (typeof model == 'string' || typeof model == 'number') {
-                return model
+                return model;
             }
 
             return {
                 workspace: model.get('slug')
-            }
+            };
         },
 
         actions: {
@@ -198,8 +198,8 @@ Vaultier.WorkspaceRoute = Ember.Route.extend(
                             }.bind(this))
                         .catch(function (error) {
                             $.notify('Oooups! Something went wrong.', 'error');
-                            throw error
-                        }.bind(this))
+                            throw error;
+                        }.bind(this));
 
                     ApplicationLoader.promise(promise);
 
@@ -214,10 +214,10 @@ Vaultier.WorkspaceIndexRoute = Ember.Route.extend(
     {
         beforeModel: function () {
             if (this.checkWorkspaceKeys()) {
-                this.transitionTo('Vaults.index')
+                this.transitionTo('Vaults.index');
             }
         }
-    })
+    });
 
 /**
  * Class represents route when user has no workspacekey. User is redirected to here when he has no workspace key
@@ -233,9 +233,10 @@ Vaultier.WorkspaceNoKeysRoute = Ember.Route.extend({
     workspacekey: null,
 
     /**
-     * Method is automatically called when workspace key is transfered
+     * Method is automatically called when workspace key is transferred
      */
     keysTransfered: function () {
+        var workspace = this.get('controller.workspace');
         this.transitionTo('Workspace.index', workspace);
     },
 
@@ -264,7 +265,7 @@ Vaultier.WorkspaceNoKeysRoute = Ember.Route.extend({
         var memberships = store
             .find('Role', {to_workspace: workspace.get('id') })
             .then(function (memberships) {
-                return memberships.toArray()
+                return memberships.toArray();
             });
 
         // return promise for all requests
@@ -295,9 +296,9 @@ Vaultier.WorkspaceNoKeysRoute = Ember.Route.extend({
                 .addHome()
                 .addWorkspace()
                 .addText('Waiting for keys')
-        )
+        );
     }
-})
+});
 
 Vaultier.WorkspaceNoKeysView = Ember.View.extend({
     templateName: 'Workspace/WorkspaceNoKeys',
@@ -440,7 +441,8 @@ Vaultier.WorkspaceMemberInviteController = Vaultier.MemberInviteController.exten
 });
 
 
-Ember.TEMPLATES["Workspace/WorkspacesIndex"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["Workspace/WorkspacesIndex"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
+/**/) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, self=this, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
@@ -508,7 +510,8 @@ function program8(depth0,data) {
   
 });
 
-Ember.TEMPLATES["Workspace/WorkspacesIndexItem"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["Workspace/WorkspacesIndexItem"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
+/**/) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, helper, options, escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, self=this;
@@ -548,7 +551,8 @@ function program1(depth0,data) {
   
 });
 
-Ember.TEMPLATES["Workspace/WorkspacesIndexWithoutKeys"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["Workspace/WorkspacesIndexWithoutKeys"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
+/**/) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, self=this;
@@ -575,7 +579,8 @@ function program3(depth0,data) {
   
 });
 
-Ember.TEMPLATES["Workspace/WorkspacesCreate"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["Workspace/WorkspacesCreate"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
+/**/) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, escapeExpression=this.escapeExpression;
@@ -619,7 +624,8 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   
 });
 
-Ember.TEMPLATES["Workspace/WorkspaceEdit"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["Workspace/WorkspaceEdit"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
+/**/) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, escapeExpression=this.escapeExpression;
@@ -663,7 +669,8 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   
 });
 
-Ember.TEMPLATES["Workspace/WorkspaceNoKeys"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["Workspace/WorkspaceNoKeys"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
+/**/) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, helper, options, self=this, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
