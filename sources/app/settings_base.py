@@ -241,11 +241,6 @@ BK_FEATURES = {
     'dev_shared_key': False,  # True to use/generate same key for all users
     # 1 hour in milliseconds used to calculate the expiration time on api.lostkey module
     'lostkey_hash_expiration_time': 3600000,
-    # Template to create the front end lostkey url to be send by mail
-    'lostkey_url_template': r'#/lostkey/{id}/{hash}',
     'ga_create_code': 'UA-17830772-11', # code for google analytics
-    # Templete to generate the invitation url that will be send by email
-    'invitation_url_template': '#/invitations/use/{member}/{hash}/',
-    'info_email': 'info@rclick.com',  # Default email address from which we send emails
-    'workspace_url_template': '#/workspaces/w/{workspace_slug}/',  # Template for build the workspace url send by email
+    'from_email': 'info@rclick.com',  # Default email address from which we send emails
 }

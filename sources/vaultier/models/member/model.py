@@ -135,17 +135,14 @@ class MemberManager(Manager):
 
         return member
 
-    @classmethod
-    def send_invitation(cls, member):
+    def send_invitation(self, member):
         """
         Sends an invitation email
         :param member: Member
         :return: None
         """
-        invitation_sender = InvitationEmailSender()
-        email_recipients = invitation_sender.get_raw_recipients()
-        email_recipients['to'] = [member.invitation_email]
-        invitation_sender.send(recipients=email_recipients, template='mailer/invitation/invitation', context=member)
+        invitation_sender = InvitationEmailSender(member)
+        invitation_sender.send()
 
     def send_transfer_workspace_key_info(self, sender, instance=None, *args, **kwargs):
         """
@@ -158,10 +155,8 @@ class MemberManager(Manager):
         """
         if instance.status == MemberStatusField.STATUS_MEMBER and instance.invitation_email and instance.invitation_hash:
             # the user has been invited and the workspace_key was set
-            sender = WorkspaceKeyTransferEmailSender()
-            email_recipients = sender.get_raw_recipients()
-            email_recipients['to'] = [instance.user.email]
-            sender.send(email_recipients, 'mailer/transfer_workspace_key/transfer_workspace_key', instance)
+            sender = WorkspaceKeyTransferEmailSender(instance)
+            sender.send()
 
 
 class Member(ChangesMixin, models.Model):

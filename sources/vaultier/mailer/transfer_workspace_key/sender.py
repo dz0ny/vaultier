@@ -1,30 +1,27 @@
 import urlparse
 from django.template import Context
 from vaultier.mailer.sender import VaultierEmailSender
-from app.settings import BK_FEATURES, SITE_URL
+from app.settings import SITE_URL
 
 
 class WorkspaceKeyTransferEmailSender(VaultierEmailSender):
 
-    def get_raw_recipients(self):
-        return {
-            'to': '',
-            'from_email': BK_FEATURES.get('info_email'),
-            'subject': '[Vaultier] You can access the workspace: {workspace}',
-        }
+    TEMPLATE_NAME = 'mailer/transfer_workspace_key/transfer_workspace_key'
+    SUBJECT = '[Vaultier] You can access the workspace: {workspace}'
+    URL_TEMPLATE = '#/workspaces/w/{workspace_slug}/'
 
-    def send(self, recipients, template, context):
-        recipients['subject'] = recipients.get('subject')\
-            .replace('{workspace}', context.workspace.name)
-        super(WorkspaceKeyTransferEmailSender, self).send(recipients, template, context)
-
-    def build_context(self, data):
-        url = urlparse.urljoin(SITE_URL, BK_FEATURES.get('workspace_url_template'))
-        url = url.replace('{workspace_slug}', data.workspace.slug)
-
-        context = Context({
-            'granted_workspace': data.workspace.name,
-            'url': url,
+    def build_context(self):
+        return Context({
+            'granted_workspace': self.instance.workspace.name,
+            'url': self.build_url(),
         })
 
-        return context
+    def build_to(self):
+        return [self.instance.user.email]
+
+    def build_subject(self):
+        return self.SUBJECT.replace('{workspace}', self.instance.workspace.name)
+
+    def build_url(self):
+        return urlparse.urljoin(SITE_URL, self.URL_TEMPLATE) \
+            .replace('{workspace_slug}', self.instance.workspace.slug)

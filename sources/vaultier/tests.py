@@ -36,7 +36,7 @@ def suite():
     # acl
     suite.addTest(acl_suite())
 
-    # roles
+    # # roles
     suite.addTest(role_suite())
 
     # membership
@@ -72,7 +72,7 @@ def suite():
     suite.addTest(vault_version_suite())
     suite.addTest(card_version_suite())
     suite.addTest(secret_version_suite())
-    suite.addTest(secret_blob_version_suite());
+    suite.addTest(secret_blob_version_suite())
 
     # soft delete
     suite.addTest(vault_softdelete_suite())

@@ -5,22 +5,20 @@ from app.settings import BK_FEATURES, SITE_URL
 
 
 class InvitationEmailSender(VaultierEmailSender):
+    TEMPLATE_NAME = 'mailer/invitation/invitation'
+    SUBJECT = '[Vaultier] You have been invited'
+    URL_TEMPLATE = '#/invitations/use/{member}/{hash}/'
 
-    def get_raw_recipients(self):
-        return {
-            'to': '',
-            'from_email': BK_FEATURES.get('info_email'),
-            'subject': '[Vaultier] You have been invited',
-        }
-
-    def build_context(self, data):
-        url = urlparse.urljoin(SITE_URL, BK_FEATURES.get('invitation_url_template'))
-        url = url.replace('{member}', str(data.id))
-        url = url.replace('{hash}', str(data.invitation_hash))
-
-        context = Context({
+    def build_context(self):
+        return Context({
             'SITE_URL': SITE_URL,
-            'url': url
+            'url': self.build_url()
         })
 
-        return context
+    def build_to(self):
+        return [self.instance.invitation_email]
+
+    def build_url(self):
+        return urlparse.urljoin(SITE_URL, self.URL_TEMPLATE) \
+            .replace('{member}', str(self.instance.id)) \
+            .replace('{hash}', str(self.instance.invitation_hash))

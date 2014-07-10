@@ -40,10 +40,8 @@ class LostKeyManager(Manager):
         :return: None
         """
         if not instance.used:
-            sender = LostKeyEmailSender()
-            email_recipients = sender.get_raw_recipients()
-            email_recipients['to'] = [instance.created_by.email]
-            sender.send(email_recipients, 'mailer/lostkey/lostkey', instance)
+            sender = LostKeyEmailSender(instance)
+            sender.send()
 
     def disable_lost_key(self, user):
         """
@@ -61,8 +59,7 @@ class LostKeyManager(Manager):
         :param user:
         :return:
         """
-        Member.objects.filter(user=user) \
-            .update(status=MemberStatusField.STATUS_MEMBER_BROKEN)
+        Member.objects.filter(user=user).update(status=MemberStatusField.STATUS_MEMBER_BROKEN)
 
     @classmethod
     def find_workspace_is_recoverable(cls, workspace_id, user):
@@ -74,9 +71,9 @@ class LostKeyManager(Manager):
         :param user: vaultier.models.user.model.User
         :return: bool
         """
-        return Member.objects.filter(workspace_id=workspace_id,
-                                     status=MemberStatusField.STATUS_MEMBER) \
-                   .exclude(user=user).count() > 0
+        return 0 < Member.objects.filter(workspace_id=workspace_id,
+                                         status=MemberStatusField.STATUS_MEMBER) \
+            .exclude(user=user).count()
 
 
     def rebuild_lost_key(self, user):

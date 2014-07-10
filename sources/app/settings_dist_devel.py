@@ -16,19 +16,15 @@ DATABASES = {
 FT_FEATURES = {
     'dev_shared_key': True,  # for all users same private key is used
     'dev_show_token': True,  # Token is available to copy/paste in user profile box
-    'dev_email': 'jan.misek@rclick.cz', # current developer email used for default logging when developing
+    'dev_email': 'jan.misek@rclick.cz',  # current developer email used for default logging when developing
 }
 
 # Indicates options for backend
 BK_FEATURES = {
     'dev_mail_to': 'jan.misek@rclick.cz',  # all emails goes to only this user
     'dev_shared_key': True,  # for all users same private key is used
-    # url template used for build the front-end url for a concrete lostkey resource
-    'lostkey_url_template': r'#/lostkey/{id}/{hash}',
-    'ga_create_code': None, # code for google analytics, on devel we don't want to track anything
+    'ga_create_code': None,  # code for google analytics, on devel we don't want to track anything
     # 1 hour in milliseconds, used to calculate the expiration date of a lostkey resource
     'lostkey_hash_expiration_time': 3600000,
-    'invitation_url_template': '#/invitations/use/{member}/{hash}/',
-    'info_email': 'info@rclick.com', # Default email address from which we send emails
-    'workspace_url_template': '#/workspaces/w/{workspace_slug}/',  # Template for build the workspace url send by email
+    'from_email': 'info@rclick.com',  # Default email address from which we send emails
 }

@@ -1,20 +1,23 @@
 import urlparse
 from django.template import Context
 from vaultier.mailer.sender import VaultierEmailSender
-from app.settings import BK_FEATURES, SITE_URL
+from app.settings import SITE_URL
 
 
 class LostKeyEmailSender(VaultierEmailSender):
-    def get_raw_recipients(self):
-        return {
-            'to': '',
-            'from_email': BK_FEATURES.get('info_email'),
-            'subject': '[Vaultier] lost key request',
-        }
 
-    def build_context(self, data):
-        url_template = BK_FEATURES.get('lostkey_url_template').replace('{hash}', data.hash)
-        url_template = url_template.replace('{id}', str(data.id))
+    SUBJECT = '[Vaultier] lost key request'
+    TEMPLATE_NAME = 'mailer/lostkey/lostkey'
+    URL_TEMPLATE = '#/lostkey/{id}/{hash}/'
+
+    def build_context(self):
+        return Context({'url': self.build_url()})
+
+    def build_to(self):
+        return [self.instance.created_by.email]
+
+    def build_url(self):
+        url_template = self.URL_TEMPLATE.replace('{hash}', self.instance.hash)
+        url_template = url_template.replace('{id}', str(self.instance.id))
         site_url = SITE_URL
-        url = urlparse.urljoin(site_url, url_template)
-        return Context({'url': url})
+        return urlparse.urljoin(site_url, url_template)

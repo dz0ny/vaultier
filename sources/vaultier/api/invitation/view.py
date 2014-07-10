@@ -69,7 +69,7 @@ class InvitationViewSet(
         return Response(status=HTTP_405_METHOD_NOT_ALLOWED, data={'detail': 'Partial update not provided'})
 
     def update(self, request, *args, **kwargs):
-        member = self.get_object();
+        member = self.get_object()
         Member.objects.accept_invitation(member, request.user)
         return Response(status=HTTP_200_OK, data=InvitationSerializer(instance=member).data)
 
