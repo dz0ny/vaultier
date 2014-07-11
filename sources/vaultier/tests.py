@@ -37,7 +37,7 @@ def suite():
     # acl
     suite.addTest(acl_suite())
 
-    # roles
+    # # roles
     suite.addTest(role_suite())
 
     # membership

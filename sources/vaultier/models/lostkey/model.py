@@ -10,10 +10,10 @@ from django.db.models.deletion import PROTECT
 from django.db.models.manager import Manager
 from django.db.models.signals import pre_save, post_save
 from django.conf import settings
-from vaultier.mailer.lostkey import send_lost_key_notification
 from vaultier.models.member.fields import MemberStatusField
 from vaultier.models.member.model import Member
 from vaultier.models.workspace.model import Workspace
+from vaultier.mailer.lostkey.sender import LostKeyEmailSender
 
 
 class LostKeyManager(Manager):
@@ -37,10 +37,11 @@ class LostKeyManager(Manager):
         :param instance:
         :param args:
         :param kwargs:
-        :return:
+        :return: None
         """
         if not instance.used:
-            send_lost_key_notification(instance)
+            sender = LostKeyEmailSender(instance)
+            sender.send()
 
     def disable_lost_key(self, user):
         """
@@ -58,8 +59,7 @@ class LostKeyManager(Manager):
         :param user:
         :return:
         """
-        Member.objects.filter(user=user) \
-            .update(status=MemberStatusField.STATUS_MEMBER_BROKEN)
+        Member.objects.filter(user=user).update(status=MemberStatusField.STATUS_MEMBER_BROKEN)
 
     @classmethod
     def find_workspace_is_recoverable(cls, workspace_id, user):
@@ -71,9 +71,9 @@ class LostKeyManager(Manager):
         :param user: vaultier.models.user.model.User
         :return: bool
         """
-        return Member.objects.filter(workspace_id=workspace_id,
-                                     status=MemberStatusField.STATUS_MEMBER) \
-                   .exclude(user=user).count() > 0
+        return 0 < Member.objects.filter(workspace_id=workspace_id,
+                                         status=MemberStatusField.STATUS_MEMBER) \
+            .exclude(user=user).count()
 
 
     def rebuild_lost_key(self, user):

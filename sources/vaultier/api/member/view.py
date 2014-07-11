@@ -9,13 +9,13 @@ from rest_framework.viewsets import ModelViewSet
 from vaultier.api.transactionmixin import AtomicTransactionMixin
 from vaultier.api.user.view import RelatedUserSerializer
 from vaultier.auth.authentication import TokenAuthentication
-from vaultier.mailer.invitation import resend_invitation
 from vaultier.models.acl.fields import AclLevelField
 from vaultier.models.member.fields import MemberStatusField
 from vaultier.models.member.model import Member
 from vaultier.models.role.model import Role
 from vaultier.models.workspace.model import Workspace
 from vaultier.perms.check import has_object_acl
+
 
 class CanManageMemberPermission(BasePermission):
     def has_object_permission(self, request, view, obj):
@@ -32,6 +32,7 @@ class CanDeleteMember(BasePermission):
 
         result = is_manager
         return result
+
 
 class MemberSerializer(ModelSerializer):
     email = SerializerMethodField('get_email')
@@ -156,7 +157,8 @@ class MemberViewSet(
 
             self.check_object_permissions(request, member)
 
-            resend_invitation(member)
+            Member.objects.send_invitation(member)
+
             return Response(
                 MemberSerializer(member).data,
                 status=HTTP_200_OK,

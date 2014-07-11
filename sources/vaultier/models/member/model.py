@@ -5,9 +5,11 @@ from django.db import models
 from django.db.models.deletion import PROTECT, CASCADE
 from django.db.models.manager import Manager
 from django.db.models.query_utils import Q
+from django.db.models.signals import post_save
 from modelext.lowercasefield.lowercasefield import LowerCaseCharField
-from vaultier.mailer.invitation import resend_invitation
+from vaultier.mailer.invitation.sender import InvitationEmailSender
 from modelext.changes.changes import ChangesMixin
+from vaultier.mailer.transfer_workspace_key.sender import WorkspaceKeyTransferEmailSender
 from vaultier.models.member.fields import MemberStatusField
 
 
@@ -119,7 +121,7 @@ class MemberManager(Manager):
                 workspace=member.workspace
             )
             if resend:
-                resend_invitation(member)
+                self.send_invitation(member)
 
         # invitation not found so create new
         except Member.DoesNotExist:
@@ -127,11 +129,34 @@ class MemberManager(Manager):
             member.status = MemberStatusField.STATUS_INVITED
             member.save()
             if send:
-                resend_invitation(member)
+                self.send_invitation(member)
 
         # todo: Member.MultipleObjectsFound
 
         return member
+
+    def send_invitation(self, member):
+        """
+        Sends an invitation email
+        :param member: Member
+        :return: None
+        """
+        invitation_sender = InvitationEmailSender(member)
+        invitation_sender.send()
+
+    def send_transfer_workspace_key_info(self, sender, instance=None, *args, **kwargs):
+        """
+
+        :param sender:
+        :param instance:
+        :param args:
+        :param kwargs:
+        :return:
+        """
+        if instance.status == MemberStatusField.STATUS_MEMBER and instance.invitation_email and instance.invitation_hash:
+            # the user has been invited and the workspace_key was set
+            sender = WorkspaceKeyTransferEmailSender(instance)
+            sender.send()
 
 
 class Member(ChangesMixin, models.Model):
@@ -162,3 +187,5 @@ class Member(ChangesMixin, models.Model):
         return super(Member, self).save(*args, **kwargs)
 
 
+def register_signals():
+    post_save.connect(Member.objects.send_transfer_workspace_key_info, sender=Member)

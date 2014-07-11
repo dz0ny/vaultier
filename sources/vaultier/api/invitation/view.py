@@ -12,6 +12,7 @@ from vaultier.models.member.fields import MemberStatusField
 from vaultier.models.member.model import Member
 from vaultier.models.role.model import Role
 
+
 class InvitationRoleSerializer(ModelSerializer):
     created_by = SerializerMethodField('get_created_by')
     to_type = SerializerMethodField('get_to_type')
@@ -30,6 +31,7 @@ class InvitationRoleSerializer(ModelSerializer):
     class Meta:
         model = Role
         fields = ('id', 'to_type', 'to_name', 'created_by', 'created_at', 'updated_at')
+
 
 class InvitationSerializer(ModelSerializer):
     roles = SerializerMethodField('get_roles')
@@ -67,7 +69,7 @@ class InvitationViewSet(
         return Response(status=HTTP_405_METHOD_NOT_ALLOWED, data={'detail': 'Partial update not provided'})
 
     def update(self, request, *args, **kwargs):
-        member = self.get_object();
+        member = self.get_object()
         Member.objects.accept_invitation(member, request.user)
         return Response(status=HTTP_200_OK, data=InvitationSerializer(instance=member).data)
 

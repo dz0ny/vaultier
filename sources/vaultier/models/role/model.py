@@ -8,16 +8,20 @@ from vaultier.models.member.fields import MemberStatusField
 from vaultier.models.role.fields import RoleLevelField
 from vaultier.models.vault.model import Vault
 from modelext.changes.changes import ChangesMixin, INSERT, post_change
-from vaultier.mailer.granted_access import send_granted_access
+from vaultier.mailer.granted_access.sender import GrantedAccessEmailSender
 from vaultier.models.object_reference import ObjectReference, ObjectReferenceTypeField
 
 
 class RoleManager(Manager):
     def on_model(self, signal=None, sender=None, instance=None, event_type=None, **kwargs):
         if event_type == INSERT and \
-                ( instance.member.status == MemberStatusField.STATUS_MEMBER or
-                      instance.member.status == MemberStatusField.STATUS_MEMBER_WITHOUT_WORKSPACE_KEY ):
-            send_granted_access(instance);
+                (instance.member.status == MemberStatusField.STATUS_MEMBER or
+                 instance.member.status == MemberStatusField.STATUS_MEMBER_WITHOUT_WORKSPACE_KEY):
+            self.send_granted_access(instance)
+
+    def send_granted_access(self, instance):
+        sender = GrantedAccessEmailSender(instance.get_object())
+        sender.send()
 
     def all_for_user(self, user):
         from vaultier.models.workspace.model import Workspace
@@ -47,7 +51,6 @@ class RoleManager(Manager):
         ).distinct()
 
         return roles
-
 
     def create_or_update_role(self, role):
         existing = None
@@ -89,7 +92,6 @@ class Role(ChangesMixin, ObjectReference, models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey('vaultier.User', on_delete=PROTECT, related_name='roles_created')
-
 
     def save(self, *args, **kwargs):
         self.compute_type()
