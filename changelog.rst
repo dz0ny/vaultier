@@ -3,7 +3,7 @@ Changelog
 
 Release 0.7.0
 -------------
-  [feature] Refactored mailer module and added email notificion on workspacekey acquired
+* [feature] Refactored mailer module and added email notificion on workspacekey acquired
 
 Release 0.6.2
 -------------
