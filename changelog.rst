@@ -6,6 +6,7 @@ Release 0.7.0
 -------------
 * [feature] Refactored mailer module and added email notification on workspacekey acquired
 * [bugfix] Display message "No matches found" when search box contains no results
+* [bugfix] Search box remembered old names.
 
 Release 0.6.5
 -------------

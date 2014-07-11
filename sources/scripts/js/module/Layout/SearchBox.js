@@ -82,41 +82,45 @@ Vaultier.LayoutSearchBoxView = Ember.View.extend({
             },
             load: function (query, callback) {
                 if (!query.length) return callback();
-                $.ajax({
-                    url: '/api/search/search',
-                    type: 'GET',
-                    data: {
-                        query: query
-                    },
-                    error: function () {
-                        callback();
-                    },
-                    success: function (data) {
-                        result = []
+                (function(){
+                    "use strict";
 
-                        data.cards.forEach(function (card) {
-                            sort++;
-                            card.id = card.slug
-                            card.sort = sort
-                            card.type = 'card';
-                            card.uid = 'c-' + card.id
-                            result.push(Ember.Object.create(card))
-                        });
+                    $.ajax({
+                        url: '/api/search/search',
+                        type: 'GET',
+                        data: {
+                            query: query
+                        },
+                        error: function () {
+                            callback();
+                        },
+                        success: function (data) {
+                            var result = [];
 
-                        data.vaults.forEach(function (vault) {
-                            sort++;
-                            vault.id = vault.slug;
-                            vault.sort = sort;
-                            vault.type = 'vault';
-                            vault.uid = 'v-' + vault.id
-                            result.push(Ember.Object.create(vault))
-                        });
+                            data.cards.forEach(function (card) {
+                                sort++;
+                                card.id = card.slug;
+                                card.sort = sort;
+                                card.type = 'card';
+                                card.uid = 'c-' + card.id;
+                                result.push(Ember.Object.create(card));
+                            });
 
-                        callback(result)
-                    }
-                });
+                            data.vaults.forEach(function (vault) {
+                                sort++;
+                                vault.id = vault.slug;
+                                vault.sort = sort;
+                                vault.type = 'vault';
+                                vault.uid = 'v-' + vault.id;
+                                result.push(Ember.Object.create(vault));
+                            });
+
+                            callback(result);
+                        }
+                    });
+                })();
             }
-        })
+        });
 
         var selectize = input[0].selectize;
 
