@@ -8,15 +8,8 @@ class GrantedAccessEmailSender(VaultierEmailSender):
     """
     Sends an email when the user has granted access to a any workspace
     """
-    SUBJECT = '[Vaultier] You have been granted access to {type}'
+    SUBJECT = '[Vaultier] You have been granted access to {{ type }}'
     TEMPLATE_NAME = 'mailer/granted_access/granted_access'
-
-    def build_subject(self):
-        """
-        Replace the variable type from with it value
-        :return: str
-        """
-        return self.SUBJECT.replace('{type}', self.instance.__class__.__name__.lower())
 
     def build_to(self):
         """

@@ -1,5 +1,6 @@
 from app.settings import BK_FEATURES
 from django.core.mail.message import EmailMultiAlternatives
+from django.template.base import Template
 from django.template.context import Context
 from django.template.loader import get_template
 from pynliner import Pynliner
@@ -42,7 +43,7 @@ class VaultierEmailSender(object):
         msg = EmailMultiAlternatives(from_email=self.build_from_email(),
                                      to=self.build_to(),
                                      body=plain,
-                                     subject=self.build_subject())
+                                     subject=self.build_subject(context))
         msg.attach_alternative(html, 'text/html')
         msg.send(fail_silently=False)
 
@@ -73,13 +74,14 @@ class VaultierEmailSender(object):
         """
         raise NotImplemented
 
-    def build_subject(self):
+    def build_subject(self, context):
         """
         It should be implemented if the child class subject contains any variable
         By default it returns the instance property SUBJECT
         :return:
         """
-        return self.SUBJECT
+        template = Template(self.SUBJECT)
+        return template.render(context)
 
     def build_url(self):
         """
