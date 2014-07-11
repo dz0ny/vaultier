@@ -241,6 +241,6 @@ BK_FEATURES = {
     'dev_shared_key': False,  # True to use/generate same key for all users
     # 1 hour in milliseconds used to calculate the expiration time on api.lostkey module
     'lostkey_hash_expiration_time': 3600000,
-    'ga_create_code': 'UA-17830772-11', # code for google analytics
     'from_email': 'info@rclick.com',  # Default email address from which we send emails
+    'ga_create_code': 'UA-17830772-11' # code for google analytics
 }
