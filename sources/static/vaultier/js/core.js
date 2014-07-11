@@ -1782,12 +1782,12 @@ Service.Invitations = Ember.Object.extend({
 
     init: function () {
         this._super();
-        this.env = Service.Environment.current()
+        this.env = Service.Environment.current();
     },
 
 
     _memberPromise: function (workspace, emailOrId, send, resend) {
-        var id = parseInt(emailOrId)
+        var id = emailOrId.indexOf('@') < 0 ? parseInt(emailOrId) : null;
 
         if (id) {
             // do get - resend invitation
@@ -1806,7 +1806,7 @@ Service.Invitations = Ember.Object.extend({
                     send: send,
                     resend: resend
                 }
-            })
+            });
         }
 
 
@@ -1835,13 +1835,13 @@ Service.Invitations = Ember.Object.extend({
         return Ember.RSVP.resolve()
             .then(
                 function () {
-                    return this._memberPromise(workspace, emailOrId, send, resend)
+                    return this._memberPromise(workspace, emailOrId, send, resend);
                 }.bind(this))
 
             .then(
                 function (member) {
                     return this._invitePromise(member, role, params);
-                }.bind(this))
+                }.bind(this));
     },
 
     _storeInvitationToSession: function (id, hash, data) {
@@ -1868,7 +1868,7 @@ Service.Invitations = Ember.Object.extend({
 
     acceptInvitationsInSession: function (invitations) {
         if (invitations) {
-            invitations = Ember.RSVP.resolve(invitations)
+            invitations = Ember.RSVP.resolve(invitations);
         } else {
             invitations = this.fetchInvitationsInSession();
         }
@@ -1878,11 +1878,11 @@ Service.Invitations = Ember.Object.extend({
                 var promises = [];
                 invitations.forEach(function (invitation) {
                     invitation.set('status', 200);
-                    promises.push(invitation.saveRecord())
-                })
-                return Ember.RSVP.all(promises)
+                    promises.push(invitation.saveRecord());
+                });
+                return Ember.RSVP.all(promises);
             });
-        return promise
+        return promise;
     },
 
     clearInvitationsInSession: function () {
@@ -1900,7 +1900,7 @@ Service.Invitations = Ember.Object.extend({
      */
     fetchInvitationsInSession: function () {
         var invitations = this.session.get(this.SESSION_KEY, {});
-        var promises = []
+        var promises = [];
         var store = this.get('store');
 
         for (i in invitations) {
@@ -1909,7 +1909,7 @@ Service.Invitations = Ember.Object.extend({
             }
         }
 
-        return Ember.RSVP.all(promises)
+        return Ember.RSVP.all(promises);
     },
 
 
@@ -1941,16 +1941,16 @@ Service.Invitations = Ember.Object.extend({
 
             .then(function () {
                 if (this.get('auth').get('isAuthenticated')) {
-                    return this.get('router').transitionTo('Invitation.accept')
+                    return this.get('router').transitionTo('Invitation.accept');
                 } else {
-                    return this.get('router').transitionTo('Invitation.anonymous')
+                    return this.get('router').transitionTo('Invitation.anonymous');
                 }
-            }.bind(this))
+            }.bind(this));
 
     }
 
 
-})
+});
 
 
 Po.NS('Service');

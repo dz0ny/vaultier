@@ -1,6 +1,10 @@
 Changelog
 =========
 
+Release 0.6.4
+-------------
+* [hotfix] Allow invitation to user that have an email that begins with a number
+
 Release 0.6.3
 -------------
 * [hotfix] fix transition between WorkspaceNoKeysRoute to WorkspaceIndexRoute
