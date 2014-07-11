@@ -1,6 +1,10 @@
 Changelog
 =========
 
+Release 0.6.5
+-------------
+* [hotfix] #185 When secret file created, after return to secret list file to download is missing
+
 Release 0.6.4
 -------------
 * [hotfix] Allow invitation to user that have an email that begins with a number
