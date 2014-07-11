@@ -28,7 +28,7 @@ class ApiRegisterTest(TransactionTestCase):
     def test_010_register(self):
 
         # register user
-        email = email='jan.misek@rclick.cz'
+        email = 'jan.misek@rclick.cz'
         response = register_api_call(email=email, nickname='Misan')
         self.id = response.data.get('id')
         self.assertEqual(response.status_code, HTTP_201_CREATED, msg=format_response(response))
@@ -41,7 +41,7 @@ class ApiRegisterTest(TransactionTestCase):
 
     def test_020_auth(self):
          # register user
-        email = email='jan.misek@rclick.cz'
+        email = 'jan.misek@rclick.cz'
         response = register_api_call(email=email, nickname='Misan')
         self.id = response.data.get('id')
         self.assertEqual(response.status_code, HTTP_201_CREATED, msg=format_response(response))
@@ -53,6 +53,64 @@ class ApiRegisterTest(TransactionTestCase):
         # try to login, check wrong signature
         response = auth_api_call(email=email, signature='WrongSignature')
         self.assertEqual(response.status_code, HTTP_403_FORBIDDEN, msg=format_response(response))
+
+    def test_030_registration_should_be_case_insensitive(self):
+         # register user
+        email = 'TeSt.CaSe.InSeSiTiVe@rclick.cz'
+        response = register_api_call(email=email, nickname='case_insensitive')
+        self.id = response.data.get('id')
+        self.assertEqual(response.status_code, HTTP_201_CREATED, msg=format_response(response))
+
+        # login with the email to lower case
+        response = auth_api_call(email=email.lower())
+        self.assertEqual(response.status_code, HTTP_200_OK, msg=format_response(response))
+        self.assertEqual(response.data.get('user'), self.id,
+                         'User could be logged with the LOWER case version of the email')
+
+        response = auth_api_call(email=email.upper())
+        self.assertEqual(response.status_code, HTTP_200_OK, msg=format_response(response))
+        self.assertEqual(response.data.get('user'), self.id,
+                         'User could be logged with the UPPER case version of the email')
+
+         # register user
+        email = 'TEST_UPPERCASE_REGISTRATION@rclick.cz'
+        response = register_api_call(email=email, nickname='UPPERCASE_REGISTRATION')
+        self.id = response.data.get('id')
+        self.assertEqual(response.status_code, HTTP_201_CREATED, msg=format_response(response))
+
+        # login with the email to lower case
+        response = auth_api_call(email=email.lower())
+        self.assertEqual(response.status_code, HTTP_200_OK, msg=format_response(response))
+
+
+    def test_040_email_cannot_be_registered_more_than_once(self):
+        # register user
+        email = 'test.040@rclick.cz'
+        response = register_api_call(email=email, nickname='test040')
+        self.id = response.data.get('id')
+        self.assertEqual(response.status_code, HTTP_201_CREATED, msg=format_response(response))
+
+        email = 'TEST.040@rclick.cz'
+        response = register_api_call(email=email, nickname='test040')
+        self.id = response.data.get('id')
+        self.assertEqual(response.status_code, HTTP_400_BAD_REQUEST, msg=format_response(response))
+        self.assertEqual(response.data.get('email'), [u'User with this Email already exists.'],
+                         'The email was already registered')
+        # register user
+        email = 'TEST_040@rclick.cz'
+        response = register_api_call(email=email, nickname='test040')
+        self.id = response.data.get('id')
+        self.assertEqual(response.status_code, HTTP_201_CREATED, msg=format_response(response))
+
+        email = 'test_040@rclick.cz'
+        response = register_api_call(email=email, nickname='test040')
+        self.id = response.data.get('id')
+        self.assertEqual(response.status_code, HTTP_400_BAD_REQUEST, msg=format_response(response))
+        self.assertEqual(response.data.get('email'), [u'User with this Email already exists.'],
+                         'The email was already registered')
+
+
+
 
 def auth_suite():
     suite = TestSuite()
