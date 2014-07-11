@@ -3336,7 +3336,7 @@ Vaultier.SecretFileMixin = Ember.Mixin.create({
             ._super.apply(this, arguments)
             .then(function () {
                 blob.set('id', this.get('id'))
-                blob.saveRecord();
+                return blob.saveRecord();
             }.bind(this))
             .then(this.emptyBlob.bind(this))
     }
