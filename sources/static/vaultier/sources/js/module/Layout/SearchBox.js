@@ -22,9 +22,9 @@ Vaultier.LayoutSearchBoxView = Ember.View.extend({
     ].join(''),
 
     init: function () {
-        this._super.apply(this, arguments)
-        Vaultier.LayoutSearchBoxViewVaultTpl = this.vaultTpl = Vaultier.LayoutSearchBoxViewVaultTpl || Handlebars.compile(this.vaultTpl)
-        Vaultier.LayoutSearchBoxViewCardTpl = this.cardTpl = Vaultier.LayoutSearchBoxViewCardTpl || Handlebars.compile(this.cardTpl)
+        this._super.apply(this, arguments);
+        Vaultier.LayoutSearchBoxViewVaultTpl = this.vaultTpl = Vaultier.LayoutSearchBoxViewVaultTpl || Handlebars.compile(this.vaultTpl);
+        Vaultier.LayoutSearchBoxViewCardTpl = this.cardTpl = Vaultier.LayoutSearchBoxViewCardTpl || Handlebars.compile(this.cardTpl);
     },
 
     willDestroyElement: function () {
@@ -58,6 +58,10 @@ Vaultier.LayoutSearchBoxView = Ember.View.extend({
             highlight: false,
             options: [],
             create: false,
+            onChange: function(){
+                "use strict";
+                this.clearCache();
+            },
             // onType and score rewriten to leave search on remote
             onType: function (s) {
                 this.clearOptions();
@@ -92,15 +96,14 @@ Vaultier.LayoutSearchBoxView = Ember.View.extend({
                         callback();
                     },
                     success: function (data) {
-                        result = []
-
+                        var result = [];
                         data.cards.forEach(function (card) {
                             sort++;
-                            card.id = card.slug
-                            card.sort = sort
+                            card.id = card.slug;
+                            card.sort = sort;
                             card.type = 'card';
-                            card.uid = 'c-' + card.id
-                            result.push(Ember.Object.create(card))
+                            card.uid = 'c-' + card.id;
+                            result.push(Ember.Object.create(card));
                         });
 
                         data.vaults.forEach(function (vault) {
@@ -108,15 +111,15 @@ Vaultier.LayoutSearchBoxView = Ember.View.extend({
                             vault.id = vault.slug;
                             vault.sort = sort;
                             vault.type = 'vault';
-                            vault.uid = 'v-' + vault.id
-                            result.push(Ember.Object.create(vault))
+                            vault.uid = 'v-' + vault.id;
+                            result.push(Ember.Object.create(vault));
                         });
 
-                        callback(result)
+                        callback(result);
                     }
                 });
             }
-        })
+        });
 
         var selectize = input[0].selectize;
 
