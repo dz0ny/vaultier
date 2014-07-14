@@ -147,9 +147,9 @@ Vaultier.LayoutSearchBoxView = Ember.View.extend({
     ].join(''),
 
     init: function () {
-        this._super.apply(this, arguments)
-        Vaultier.LayoutSearchBoxViewVaultTpl = this.vaultTpl = Vaultier.LayoutSearchBoxViewVaultTpl || Handlebars.compile(this.vaultTpl)
-        Vaultier.LayoutSearchBoxViewCardTpl = this.cardTpl = Vaultier.LayoutSearchBoxViewCardTpl || Handlebars.compile(this.cardTpl)
+        this._super.apply(this, arguments);
+        Vaultier.LayoutSearchBoxViewVaultTpl = this.vaultTpl = Vaultier.LayoutSearchBoxViewVaultTpl || Handlebars.compile(this.vaultTpl);
+        Vaultier.LayoutSearchBoxViewCardTpl = this.cardTpl = Vaultier.LayoutSearchBoxViewCardTpl || Handlebars.compile(this.cardTpl);
     },
 
     willDestroyElement: function () {
@@ -183,6 +183,10 @@ Vaultier.LayoutSearchBoxView = Ember.View.extend({
             highlight: false,
             options: [],
             create: false,
+            onChange: function(){
+                "use strict";
+                this.clearCache();
+            },
             // onType and score rewriten to leave search on remote
             onType: function (s) {
                 this.clearOptions();
@@ -207,43 +211,38 @@ Vaultier.LayoutSearchBoxView = Ember.View.extend({
             },
             load: function (query, callback) {
                 if (!query.length) return callback();
-                (function(){
-                    "use strict";
+                $.ajax({
+                    url: '/api/search/search',
+                    type: 'GET',
+                    data: {
+                        query: query
+                    },
+                    error: function () {
+                        callback();
+                    },
+                    success: function (data) {
+                        var result = [];
+                        data.cards.forEach(function (card) {
+                            sort++;
+                            card.id = card.slug;
+                            card.sort = sort;
+                            card.type = 'card';
+                            card.uid = 'c-' + card.id;
+                            result.push(Ember.Object.create(card));
+                        });
 
-                    $.ajax({
-                        url: '/api/search/search',
-                        type: 'GET',
-                        data: {
-                            query: query
-                        },
-                        error: function () {
-                            callback();
-                        },
-                        success: function (data) {
-                            var result = [];
+                        data.vaults.forEach(function (vault) {
+                            sort++;
+                            vault.id = vault.slug;
+                            vault.sort = sort;
+                            vault.type = 'vault';
+                            vault.uid = 'v-' + vault.id;
+                            result.push(Ember.Object.create(vault));
+                        });
 
-                            data.cards.forEach(function (card) {
-                                sort++;
-                                card.id = card.slug;
-                                card.sort = sort;
-                                card.type = 'card';
-                                card.uid = 'c-' + card.id;
-                                result.push(Ember.Object.create(card));
-                            });
-
-                            data.vaults.forEach(function (vault) {
-                                sort++;
-                                vault.id = vault.slug;
-                                vault.sort = sort;
-                                vault.type = 'vault';
-                                vault.uid = 'v-' + vault.id;
-                                result.push(Ember.Object.create(vault));
-                            });
-
-                            callback(result);
-                        }
-                    });
-                })();
+                        callback(result);
+                    }
+                });
             }
         });
 
@@ -454,66 +453,6 @@ Vaultier.LayoutWorkspaceBoxView = Ember.View.extend({
     templateName: 'Layout/WorkspaceBox'
 });
 
-
-<<<<<<< HEAD
-Vaultier.LayoutConfirmView = Ember.View.extend({
-    templateName: 'Layout/Confirm',
-
-    didInsertElement: function () {
-        var el = Ember.$(this.get('element')).find('.modal');
-        el.modal('show');
-
-        el.one('hidden.bs.modal', function () {
-            this.get('controller.route').disconnectOutlet({
-                parent: 'application',
-                outlet: 'modal'
-            });
-        }.bind(this));
-    },
-
-    show: function (options) {
-        var ctrl = options.route.get('container').lookup('controller:LayoutConfirm');
-        ctrl.setProperties(options);
-
-        options.route.render('LayoutConfirm', {
-            into: 'application',
-            outlet: 'modal',
-            controller: 'LayoutConfirm'
-        });
-    },
-
-    actions: {
-        ok: function () {
-            var fn = this.get('controller.fn');
-            var el = Ember.$(this.get('element')).find('.modal');
-            el.one('hidden.bs.modal', fn);
-            el.modal('hide');
-        }
-
-    }
-});
-
-Vaultier.LayoutConfirmController = Ember.Controller.extend({
-    text: null,
-    fn: null,
-    route: null,
-    fn: null
-})
-
-Vaultier.confirmModal = function (route, text, fn) {
-    var view = route.container.lookup('view:LayoutConfirm');
-    view.show({
-        title: 'Confirmation',
-        text: text,
-        route: route,
-        fn: fn
-    });
-}
-
-
-
-=======
->>>>>>> Make sure that the search box executes a new ajax request each time #158
 Ember.TEMPLATES["Layout/Breadcrumbs"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
 /**/) {
 this.compilerInfo = [4,'>= 1.0.0'];
@@ -593,65 +532,6 @@ function program8(depth0,data) {
   
 });
 
-<<<<<<< HEAD
-=======
-Vaultier.LayoutConfirmView = Ember.View.extend({
-    templateName: 'Layout/Confirm',
-
-    didInsertElement: function () {
-        var el = Ember.$(this.get('element')).find('.modal');
-        el.modal('show');
-
-        el.one('hidden.bs.modal', function () {
-            this.get('controller.route').disconnectOutlet({
-                parent: 'application',
-                outlet: 'modal'
-            });
-        }.bind(this));
-    },
-
-    show: function (options) {
-        var ctrl = options.route.get('container').lookup('controller:LayoutConfirm');
-        ctrl.setProperties(options);
-
-        options.route.render('LayoutConfirm', {
-            into: 'application',
-            outlet: 'modal',
-            controller: 'LayoutConfirm'
-        });
-    },
-
-    actions: {
-        ok: function () {
-            var fn = this.get('controller.fn');
-            var el = Ember.$(this.get('element')).find('.modal');
-            el.one('hidden.bs.modal', fn);
-            el.modal('hide');
-        }
-
-    }
-});
-
-Vaultier.LayoutConfirmController = Ember.Controller.extend({
-    text: null,
-    fn: null,
-    route: null,
-    fn: null
-})
-
-Vaultier.confirmModal = function (route, text, fn) {
-    var view = route.container.lookup('view:LayoutConfirm');
-    view.show({
-        title: 'Confirmation',
-        text: text,
-        route: route,
-        fn: fn
-    });
-}
-
-
-
->>>>>>> Make sure that the search box executes a new ajax request each time #158
 Ember.TEMPLATES["Layout/LayoutStandard"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
 /**/) {
 this.compilerInfo = [4,'>= 1.0.0'];

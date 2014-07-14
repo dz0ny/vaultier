@@ -1,10 +1,10 @@
-/* FileSaver.js
+/*! FileSaver.js
  *  A saveAs() FileSaver implementation.
- *  2014-05-27
+ *  2014-01-24
  *
  *  By Eli Grey, http://eligrey.com
  *  License: X11/MIT
- *    See https://github.com/eligrey/FileSaver.js/blob/master/LICENSE.md
+ *    See LICENSE.md
  */
 
 /*global self */
@@ -26,10 +26,11 @@ var saveAs = saveAs
 	}
 	var
 		  doc = view.document
-		  // only get URL when necessary in case Blob.js hasn't overridden it yet
+		  // only get URL when necessary in case BlobBuilder.js hasn't overridden it yet
 		, get_URL = function() {
 			return view.URL || view.webkitURL || view;
 		}
+		, URL = view.URL || view.webkitURL || view
 		, save_link = doc.createElementNS("http://www.w3.org/1999/xhtml", "a")
 		, can_use_save_link = !view.externalHost && "download" in save_link
 		, click = function(node) {
@@ -55,7 +56,7 @@ var saveAs = saveAs
 			while (i--) {
 				var file = deletion_queue[i];
 				if (typeof file === "string") { // file is an object URL
-					get_URL().revokeObjectURL(file);
+					URL.revokeObjectURL(file);
 				} else { // file is a File
 					file.remove();
 				}
@@ -122,9 +123,20 @@ var saveAs = saveAs
 			}
 			if (can_use_save_link) {
 				object_url = get_object_url(blob);
+				// FF for Android has a nasty garbage collection mechanism
+				// that turns all objects that are not pure javascript into 'deadObject'
+				// this means `doc` and `save_link` are unusable and need to be recreated
+				// `view` is usable though:
+				doc = view.document;
+				save_link = doc.createElementNS("http://www.w3.org/1999/xhtml", "a");
 				save_link.href = object_url;
 				save_link.download = name;
-				click(save_link);
+				var event = doc.createEvent("MouseEvents");
+				event.initMouseEvent(
+					"click", true, false, view, 0, 0, 0, 0, 0
+					, false, false, false, false, 0, null
+				);
+				save_link.dispatchEvent(event);
 				filesaver.readyState = filesaver.DONE;
 				dispatch_all();
 				return;
