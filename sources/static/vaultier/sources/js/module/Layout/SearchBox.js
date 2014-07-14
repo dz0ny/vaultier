@@ -129,7 +129,18 @@ Vaultier.LayoutSearchBoxView = Ember.View.extend({
             selectize.blur();
 
             navigate(item);
-        })
+        });
+
+        selectize.on('load', function(result){
+            "use strict";
+            var $control = selectize.$control;
+            if (!result || result.length) {
+                $control.removeClass('has-error');
+            } else {
+                $.notify('No matches found', 'error');
+                $control.addClass('has-error');
+            }
+        });
 
 
     }

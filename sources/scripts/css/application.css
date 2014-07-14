@@ -206,6 +206,7 @@ a:hover {
 /*
 *Selectize
 */
+
 .selectize-control {
     text-align: left;
 }
@@ -859,6 +860,10 @@ span.vlt-user img {
 
 .vlt-search-box .selectize-input {
     border: 2px solid #E0DBDB;
+}
+
+.vlt-search-box .selectize-input.has-error {
+    border-color: #C84A48;
 }
 
 .vlt-search-box .selectize-input:after {
