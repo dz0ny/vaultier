@@ -97,8 +97,14 @@ Vaultier.MemberInviteInput = Ember.Component.extend({
             }.bind(this),
 
             formatResult: function (member) {
-                var str = Utils.HandlebarsHelpers.current().printUser(member, {hash: {disableTooltip: true}})
+                var str = Utils.HandlebarsHelpers.current().printUser(member, {
+                    hash: {
+                        disableTooltip: true,
+                        displayEmailInsideBrackets: !member.invitation
+                    }
+                });
                 if (member.invitation) {
+
                     str = 'Invite <b>' + str + '</b>'
                 } else {
                     str = 'grant to <b>' + str + '</b>'
@@ -107,7 +113,7 @@ Vaultier.MemberInviteInput = Ember.Component.extend({
             },
 
             formatSelection: function (member) {
-                var str = Utils.HandlebarsHelpers.current().printUser(member, {hash: {disableTooltip: true}})
+                var str = Utils.HandlebarsHelpers.current().printUser(member, {hash: {disableTooltip: true}});
                 if (member.invitation) {
                     str = 'Invite <b>' + str + '</b>'
                 } else {
