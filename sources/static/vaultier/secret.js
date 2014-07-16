@@ -38,7 +38,7 @@ Vaultier.SecretCreateSelectRoute = Ember.Route.extend(
 
             // check permissions
             if (!this.get('auth').checkPermissions(transition, function () {
-                return card.get('perms.create')
+                return card.get('perms.create');
             }.bind(this), true)) {
                 return;
             }
@@ -50,8 +50,9 @@ Vaultier.SecretCreateSelectRoute = Ember.Route.extend(
             ctrl.set('controllers.SecretCreate.submitButtonShown', false);
 
             // set breadcrumbs
+            var environment = this.get('environment');
             ctrl.get('controllers.SecretCreate').set('breadcrumbs',
-                Vaultier.Breadcrumbs.create({router: this.get('router')})
+                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: environment})
                     .addHome()
                     .addWorkspace()
                     .addVault()
@@ -104,7 +105,7 @@ Vaultier.SecretCreateSubmitRoute = Ember.Route.extend(
                     to_card: store.find('Role', {to_card: card.get('id')})
                 })
                 .then(function (memberships) {
-                    return [].concat(memberships.to_workspace.toArray(), memberships.to_vault.toArray(), memberships.to_card.toArray())
+                    return [].concat(memberships.to_workspace.toArray(), memberships.to_vault.toArray(), memberships.to_card.toArray());
                 });
 
             // retrieve model
@@ -141,6 +142,7 @@ Vaultier.SecretCreateSubmitRoute = Ember.Route.extend(
         },
 
         setupController: function (ctrl, model) {
+            var environment = this.get('environment');
             ctrl.set('content', model.secret);
             ctrl.set('memberships', model.memberships);
 
@@ -149,24 +151,27 @@ Vaultier.SecretCreateSubmitRoute = Ember.Route.extend(
             // retrieve workspace
             var workspace = this.modelFor('Workspace');
             this.set('workspace', workspace);
+            environment.set('workspace', workspace);
 
             // retrieve vault
             var vault = this.modelFor('Vault');
             this.set('vault', vault);
+            environment.set('vault', vault);
 
             // retrieve vault
             var card = this.modelFor('Card');
             this.set('card', card);
+            environment.set('card', card);
 
             // set breadcrumbs
             ctrl.set('breadcrumbs',
-                Vaultier.Breadcrumbs.create({router: this.get('router')})
+                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: environment})
                     .addHome()
                     .addWorkspace()
                     .addVault()
                     .addCard()
                     .addText('Create new secret')
-            )
+            );
         },
 
         renderTemplate: function () {
@@ -179,8 +184,8 @@ Vaultier.SecretCreateSubmitRoute = Ember.Route.extend(
                 var record = this.get('controller.content');
                 var notifyError = function (error) {
                     $.notify('Oooups! Something went wrong.', 'error');
-                    throw error
-                }
+                    throw error;
+                };
 
                 try {
                     var promise = record
@@ -189,12 +194,12 @@ Vaultier.SecretCreateSubmitRoute = Ember.Route.extend(
                             $.notify('Your secret has been successfully created.', 'success');
                             this.transitionTo('Secret.index', this.get('card'));
                         }.bind(this))
-                        .catch(notifyError)
+                        .catch(notifyError);
 
-                    ApplicationLoader.promise(promise)
+                    ApplicationLoader.promise(promise);
                 } catch (e) {
                     ApplicationLoader.hideLoader();
-                    notifyError(e)
+                    notifyError(e);
                 }
             }
         }
@@ -241,8 +246,10 @@ Vaultier.SecretEditRoute = Ember.Route.extend(
             this._super(ctrl, model);
 
             // set breadcrumbs
+            var environment = this.get('environment');
+
             ctrl.set('breadcrumbs',
-                Vaultier.Breadcrumbs.create({router: this.get('router')})
+                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: environment})
                     .addHome()
                     .addWorkspace()
                     .addVault()
@@ -256,7 +263,7 @@ Vaultier.SecretEditRoute = Ember.Route.extend(
                 var notifyError = function (error) {
                     $.notify('Oooups! Something went wrong.', 'error');
                     throw error;
-                }
+                };
 
                 try {
                     var record = this.get('controller.content');
@@ -355,12 +362,12 @@ Vaultier.SecretIndexRoute = Ember.Route.extend(
 
         model: function (params, queryParams) {
             var vault = this.modelFor('Vault');
-            var workspace = this.modelFor('Workspace')
+            var workspace = this.modelFor('Workspace');
             var card = this.modelFor('Card');
             var store = this.get('store');
 
             // load secrets
-            var secrets = store.find('Secret', {card: card.get('id')})
+            var secrets = store.find('Secret', {card: card.get('id')});
 
             // load memberships
             var memberships = Ember.RSVP
@@ -370,7 +377,7 @@ Vaultier.SecretIndexRoute = Ember.Route.extend(
                     to_card: store.find('Role', {to_card: card.get('id')})
                 })
                 .then(function (memberships) {
-                    return [].concat(memberships.to_workspace.toArray(), memberships.to_vault.toArray(), memberships.to_card.toArray())
+                    return [].concat(memberships.to_workspace.toArray(), memberships.to_vault.toArray(), memberships.to_card.toArray());
                 });
 
             // return promise for all requests
@@ -382,6 +389,7 @@ Vaultier.SecretIndexRoute = Ember.Route.extend(
 
 
         setupController: function (ctrl, model) {
+            var environment = this.get('environment');
             // set model
             ctrl.set('content', model.secrets);
             ctrl.set('memberships', model.memberships);
@@ -390,25 +398,28 @@ Vaultier.SecretIndexRoute = Ember.Route.extend(
             var workspace = this.modelFor('Workspace');
             this.set('workspace', workspace);
             ctrl.set('workspace', workspace);
+            environment.set('workspace', workspace);
 
             // retrieve vault
             var vault = this.modelFor('Vault');
             this.set('vault', vault);
             ctrl.set('vault', vault);
+            environment.set('vault', vault);
 
             // retrieve card
             var card = this.modelFor('Card');
             this.set('card', card);
             ctrl.set('card', card);
+            environment.set('card', card);
 
             // set breadcrumbs
             ctrl.set('breadcrumbs',
-                Vaultier.Breadcrumbs.create({router: this.get('router')})
+                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: environment})
                     .addHome()
                     .addWorkspace()
                     .addVault()
                     .addCard()
-            )
+            );
         },
 
         actions: {
@@ -440,7 +451,7 @@ Vaultier.SecretIndexRoute = Ember.Route.extend(
             deleteSecret: function (secret) {
                 Vaultier.confirmModal(this, 'Are you sure?', function () {
 
-                    this.get('controller.content').removeObject(secret)
+                    this.get('controller.content').removeObject(secret);
                     var promise = secret
                         .deleteRecord()
                         .then(
@@ -453,7 +464,7 @@ Vaultier.SecretIndexRoute = Ember.Route.extend(
                                 $.notify('Oooups! Something went wrong.', 'error');
                             }.bind(this)
                         );
-                    ApplicationLoader.promise(promise)
+                    ApplicationLoader.promise(promise);
                 }.bind(this));
             }
 
@@ -509,8 +520,8 @@ Vaultier.SecretCardNodeView = Ember.Tree.TreeNodeView.extend({
         }
     }),
     loadData: function () {
-        return []
-    },
+        return [];
+    }
 });
 
 Vaultier.SecretVaultNodeView = Ember.Tree.TreeNodeView.extend({
@@ -527,11 +538,11 @@ Vaultier.SecretVaultNodeView = Ember.Tree.TreeNodeView.extend({
             .find('Card', {vault: id})
             .then(function (model) {
                 model.forEach(function (item) {
-                    item.set('branch', true)
-                })
-                return model
-            })
-        return nodes
+                    item.set('branch', true);
+                });
+                return model;
+            });
+        return nodes;
     }
 });
 
@@ -545,7 +556,7 @@ Vaultier.SecretMoveRoute = Ember.Route.extend(
         serialize: function (secret) {
             return {
                 secret: secret.id
-            }
+            };
         },
 
         model: function (params, transition) {
@@ -557,22 +568,22 @@ Vaultier.SecretMoveRoute = Ember.Route.extend(
                 .then(this.get('auth').checkPermissions(transition, function (model) {
                     perms = model.get('perms.update');
                     return perms
-                }))
+                }));
 
             var vaults =
                 store.
                     find('Vault', {workspace: workspace.get('id')})
                     .then(function (model) {
                         model.forEach(function (item) {
-                            item.set('branch', true)
-                        })
-                        return model
-                    })
+                            item.set('branch', true);
+                        });
+                        return model;
+                    });
 
             return Ember.RSVP.hash({
                 secret: secret,
                 vaults: vaults
-            })
+            });
         },
 
         setupController: function (ctrl, model) {
@@ -581,20 +592,20 @@ Vaultier.SecretMoveRoute = Ember.Route.extend(
 
             // set breadcrumbs
             ctrl.set('breadcrumbs',
-                Vaultier.Breadcrumbs.create({router: this.get('router')})
+                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
                     .addHome()
                     .addWorkspace()
                     .addVault()
                     .addCard()
                     .addText('Move secret')
-            )
+            );
         },
 
         actions: {
 
             save: function () {
                 var record = this.get('controller.content');
-                record.set('card', this.get('controller.selected'))
+                record.set('card', this.get('controller.selected'));
                 record
                     .saveRecord()
                     .then(

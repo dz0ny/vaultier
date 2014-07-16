@@ -789,6 +789,7 @@ Vaultier.keypressBindings = function () {
 };
 
 
+
 Vaultier.registerDI = function (app) {
 
     // service:config
@@ -799,21 +800,21 @@ Vaultier.registerDI = function (app) {
     app.inject('service', 'config', 'config:main');
 
     // service:store
-    app.register('store:main', Vaultier.Client, {instantiate: false})
+    app.register('store:main', Vaultier.Client, {instantiate: false});
     app.inject('route', 'store', 'store:main');
     app.inject('controller', 'store', 'store:main');
     //also there lazy loading does not work properly with ember initialize:
     RESTless.set('client', Vaultier.Client);
 
     // service:errors
-    app.register('service:errors', Service.Errors)
+    app.register('service:errors', Service.Errors);
     app.inject('route', 'errors', 'service:errors');
-    app.inject('service:errors', 'errorController', 'controller:ErrorGeneric')
+    app.inject('service:errors', 'errorController', 'controller:ErrorGeneric');
     app.inject('service:errors', 'router', 'router:main')
 
     // service:session and service:storage
-    app.register('service:session', Service.Session)
-    app.register('service:storage', Service.Storage)
+    app.register('service:session', Service.Session);
+    app.register('service:storage', Service.Storage);
 
     // service:auth
     app.register('service:auth', Service.Auth)
@@ -840,8 +841,8 @@ Vaultier.registerDI = function (app) {
     app.inject('route:InvitationAccept', 'invitations', 'service:invitations')
     app.inject('route:WorkspaceMemberInvite', 'invitations', 'service:invitations')
     app.inject('route:VaultMemberInvite', 'invitations', 'service:invitations')
-    app.inject('route:CardMemberInvite', 'invitations', 'service:invitations')
-    app.inject('route:Workspaces', 'invitations', 'service:invitations')
+    app.inject('route:CardMemberInvite', 'invitations', 'service:invitations');
+    app.inject('route:Workspaces', 'invitations', 'service:invitations');
 
     // service:keytransfer
     app.register('service:keytransfer', Service.KeyTransfer)
@@ -850,16 +851,16 @@ Vaultier.registerDI = function (app) {
     app.inject('service:keytransfer', 'coder', 'service:coder');
 
     // service:workspacekey
-    app.register('service:workspacekey', Service.WorkspaceKey)
-    app.inject('service:workspacekey', 'auth', 'service:auth')
+    app.register('service:workspacekey', Service.WorkspaceKey);
+    app.inject('service:workspacekey', 'auth', 'service:auth');
     app.inject('service:workspacekey', 'store', 'store:main');
-    app.inject('service:workspacekey', 'coder', 'service:coder')
-    app.inject('service:workspacekey', 'keytransfer', 'service:keytransfer')
+    app.inject('service:workspacekey', 'coder', 'service:coder');
+    app.inject('service:workspacekey', 'keytransfer', 'service:keytransfer');
 
-    app.inject('route:WorkspacesCreate', 'workspacekey', 'service:workspacekey')
-    app.inject('route:Workspace', 'workspacekey', 'service:workspacekey')
-    app.inject('route:WorkspaceNoKeys', 'workspacekey', 'service:workspacekey')
-    app.inject('route:WorkspaceMemberApprove', 'workspacekey', 'service:workspacekey')
+    app.inject('route:WorkspacesCreate', 'workspacekey', 'service:workspacekey');
+    app.inject('route:Workspace', 'workspacekey', 'service:workspacekey');
+    app.inject('route:WorkspaceNoKeys', 'workspacekey', 'service:workspacekey');
+    app.inject('route:WorkspaceMemberApprove', 'workspacekey', 'service:workspacekey');
 
     // service:changekey
     app.register('service:changekey', Service.ChangeKey);
@@ -870,7 +871,7 @@ Vaultier.registerDI = function (app) {
     app.inject('service:changekey', 'coder', 'service:coder');
 
     // service:newuserinit
-    app.register('service:newuserinit', Service.NewUserInit)
+    app.register('service:newuserinit', Service.NewUserInit);
     app.inject('service:newuserinit', 'auth', 'service:auth');
     app.inject('service:newuserinit', 'router', 'router:main');
     app.inject('service:newuserinit', 'invitations', 'service:invitations');
@@ -880,7 +881,15 @@ Vaultier.registerDI = function (app) {
     // components injections
     app.inject('component:change-key', 'changekey', 'service:changekey');
 
+<<<<<<< HEAD
     app.inject('component:member-manager-accordion', 'store', 'store:main');
+=======
+    // service:environment
+    app.register('service:environment', Service.Environment);
+    app.inject('route', 'environment', 'service:environment');
+    app.inject('controller:LayoutWorkspaceBox', 'environment', 'service:environment');
+    app.inject('service:invitations', 'env', 'service:environment');
+>>>>>>> refactor environment service #92
 
     // model injections - it is done in model inits
 }
@@ -1224,7 +1233,9 @@ Service.Errors = Ember.Object.extend({
 
 });
 
-Po.NS('Service');
+'use strict';
+
+var Service = Po.NS('Service');
 
 Service.Environment = Ember.Object.extend({
 
@@ -1235,7 +1246,6 @@ Service.Environment = Ember.Object.extend({
     router: null
 
 });
-Service.Environment.reopenClass(Utils.Singleton);
 
 Po.NS('Service');
 
@@ -1808,7 +1818,6 @@ Service.Invitations = Ember.Object.extend({
 
     init: function () {
         this._super();
-        this.env = Service.Environment.current();
     },
 
 

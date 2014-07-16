@@ -12,7 +12,7 @@ Vaultier.CardsCreateRoute = Ember.Route.extend(
 
             // check permissions
             if (!this.get('auth').checkPermissions(transition, function () {
-                return vault.get('perms.create')
+                return vault.get('perms.create');
             }.bind(this), true)) {
                 return;
             }
@@ -27,7 +27,7 @@ Vaultier.CardsCreateRoute = Ember.Route.extend(
                     to_vault: store.find('Role', {to_vault: vault.get('id')})
                 })
                 .then(function (memberships) {
-                    return [].concat(memberships.to_workspace.toArray(), memberships.to_vault.toArray())
+                    return [].concat(memberships.to_workspace.toArray(), memberships.to_vault.toArray());
                 });
 
             // return promise for all requests
@@ -55,13 +55,14 @@ Vaultier.CardsCreateRoute = Ember.Route.extend(
                     function () {
                         $.notify('Oooups! Something went wrong.', 'error');
                     }
-                )
+                );
 
                 ApplicationLoader.promise(promise);
             }
         },
 
         setupController: function (ctrl, model) {
+            var environment = this.get('environment');
             // set model
             ctrl.set('content', model.card);
             ctrl.set('memberships', model.memberships);
@@ -70,21 +71,22 @@ Vaultier.CardsCreateRoute = Ember.Route.extend(
             var workspace = this.modelFor('Workspace');
             this.set('workspace', workspace);
             ctrl.set('workspace', workspace);
+            environment.set('workspace', workspace);
 
             // retrieve vault
             var vault = this.modelFor('Vault');
             this.set('vault', vault);
             ctrl.set('vault', vault);
+            environment.set('vault', vault);
 
             // set breadcrumbs
             ctrl.set('breadcrumbs',
-                Vaultier.Breadcrumbs.create({router: this.get('router')})
+                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: environment})
                     .addHome()
                     .addWorkspace()
                     .addVault()
                     .addText('Create new card')
-            )
-
+            );
 
         }
 

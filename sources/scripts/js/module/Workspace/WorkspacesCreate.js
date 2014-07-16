@@ -12,11 +12,11 @@ Vaultier.WorkspacesCreateRoute = Ember.Route.extend({
                 .catch(function (error) {
                     $.notify('Oooups! Something went wrong.', 'error');
                     this.get('errors').logError(error);
-                }.bind(this))
+                }.bind(this));
 
             ApplicationLoader.promise(promise);
 
-            return promise
+            return promise;
         }
     },
 
@@ -25,10 +25,10 @@ Vaultier.WorkspacesCreateRoute = Ember.Route.extend({
 
         // set breadcrumbs
         ctrl.set('breadcrumbs',
-            Vaultier.Breadcrumbs.create({router: this.get('router')})
+            Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
                 .addHome()
                 .addText('Create new workspace')
-        )
+        );
     },
 
     model: function (params) {

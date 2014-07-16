@@ -4,10 +4,10 @@ Vaultier.LayoutWorkspaceBoxController = Ember.Controller.extend({
 
     init: function () {
         this._super();
-        this.env = Service.Environment.current();
+        this.env = this.get('environment');
     }
 
-})
+});
 
 Vaultier.LayoutWorkspaceBoxView = Ember.View.extend({
     tagName: 'span',

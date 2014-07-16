@@ -7,7 +7,7 @@ Vaultier.CardsIndexRoute = Ember.Route.extend(
 
         model: function (params, transition) {
             var vault = this.modelFor('Vault');
-            var workspace = this.modelFor('Workspace')
+            var workspace = this.modelFor('Workspace');
             var store = this.get('store');
 
             // load cards
@@ -20,7 +20,7 @@ Vaultier.CardsIndexRoute = Ember.Route.extend(
                     to_vault: store.find('Role', {to_vault: vault.get('id')})
                 })
                 .then(function (memberships) {
-                    return [].concat(memberships.to_workspace.toArray(), memberships.to_vault.toArray())
+                    return [].concat(memberships.to_workspace.toArray(), memberships.to_vault.toArray());
                 });
 
              // return promise for all requests
@@ -31,6 +31,7 @@ Vaultier.CardsIndexRoute = Ember.Route.extend(
         },
 
         setupController: function (ctrl, model) {
+            var environment = this.get('environment');
             // set model
             ctrl.set('content', model.cards);
             ctrl.set('memberships', model.memberships);
@@ -39,15 +40,17 @@ Vaultier.CardsIndexRoute = Ember.Route.extend(
             var workspace = this.modelFor('Workspace');
             this.set('workspace', workspace);
             ctrl.set('workspace', workspace);
+            environment.set('workspace', workspace);
 
             // retrieve vault
             var vault = this.modelFor('Vault');
             this.set('vault', vault);
             ctrl.set('vault', vault);
+            environment.set('vault', vault);
 
             // set breadcrumbs
             ctrl.set('breadcrumbs',
-                Vaultier.Breadcrumbs.create({router: this.get('router')})
+                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: environment})
                     .addHome()
                     .addWorkspace()
                     .addVault()
@@ -95,7 +98,7 @@ Vaultier.CardsCreateRoute = Ember.Route.extend(
 
             // check permissions
             if (!this.get('auth').checkPermissions(transition, function () {
-                return vault.get('perms.create')
+                return vault.get('perms.create');
             }.bind(this), true)) {
                 return;
             }
@@ -110,7 +113,7 @@ Vaultier.CardsCreateRoute = Ember.Route.extend(
                     to_vault: store.find('Role', {to_vault: vault.get('id')})
                 })
                 .then(function (memberships) {
-                    return [].concat(memberships.to_workspace.toArray(), memberships.to_vault.toArray())
+                    return [].concat(memberships.to_workspace.toArray(), memberships.to_vault.toArray());
                 });
 
             // return promise for all requests
@@ -138,13 +141,14 @@ Vaultier.CardsCreateRoute = Ember.Route.extend(
                     function () {
                         $.notify('Oooups! Something went wrong.', 'error');
                     }
-                )
+                );
 
                 ApplicationLoader.promise(promise);
             }
         },
 
         setupController: function (ctrl, model) {
+            var environment = this.get('environment');
             // set model
             ctrl.set('content', model.card);
             ctrl.set('memberships', model.memberships);
@@ -153,21 +157,22 @@ Vaultier.CardsCreateRoute = Ember.Route.extend(
             var workspace = this.modelFor('Workspace');
             this.set('workspace', workspace);
             ctrl.set('workspace', workspace);
+            environment.set('workspace', workspace);
 
             // retrieve vault
             var vault = this.modelFor('Vault');
             this.set('vault', vault);
             ctrl.set('vault', vault);
+            environment.set('vault', vault);
 
             // set breadcrumbs
             ctrl.set('breadcrumbs',
-                Vaultier.Breadcrumbs.create({router: this.get('router')})
+                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: environment})
                     .addHome()
                     .addWorkspace()
                     .addVault()
                     .addText('Create new card')
-            )
-
+            );
 
         }
 
@@ -205,16 +210,17 @@ Vaultier.CardEditRoute = Ember.Route.extend(
 
         setupController: function (ctrl, model) {
             this._super(ctrl, model);
-
+            var environment = this.get('environment');
+            environment.set('card', model);
             // set breadcrumbs
             ctrl.set('breadcrumbs',
-                Vaultier.Breadcrumbs.create({router: this.get('router')})
+                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: environment})
                     .addHome()
                     .addWorkspace()
                     .addVault()
                     .addCard()
                     .addText('Edit card')
-            )
+            );
         },
 
         actions: {
@@ -228,9 +234,9 @@ Vaultier.CardEditRoute = Ember.Route.extend(
                     function () {
                         $.notify('Oooups! Something went wrong.', 'error');
                     }
-                )
+                );
 
-                ApplicationLoader.promise(promise)
+                ApplicationLoader.promise(promise);
 
             }
         }
@@ -292,26 +298,26 @@ Vaultier.CardRoute = Ember.Route.extend(
         },
 
         afterModel: function (card) {
-            Service.Environment.current().set('card', card);
+            this.get('environment').set('card', card);
         },
 
         serialize: function (model) {
             // primitives
             if (typeof model == 'string' || typeof model == 'number') {
-                return model
+                return model;
             }
 
             return {
                 card: model.get('slug')
-            }
+            };
         }
     });
 
 Vaultier.CardIndexRoute = Ember.Route.extend({
     beforeModel: function () {
-        this.transitionTo('Secret.index')
+        this.transitionTo('Secret.index');
     }
-})
+});
 
 
 Vaultier.CardMemberIndexRoute = Vaultier.MemberIndexRoute.extend(
@@ -325,15 +331,15 @@ Vaultier.CardMemberIndexRoute = Vaultier.MemberIndexRoute.extend(
             var card = this.modelFor('Card');
             return {
                 inviteObject: card
-            }
+            };
         },
 
         setupBlocks: function () {
-            return {workspace: true, vault: true, card: true}
+            return {workspace: true, vault: true, card: true};
         },
 
         setupBreadcrumbs: function () {
-            return Vaultier.Breadcrumbs.create({router: this.get('router')})
+            return Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
                 .addHome()
                 .addWorkspace()
                 .addVault()
@@ -344,15 +350,15 @@ Vaultier.CardMemberIndexRoute = Vaultier.MemberIndexRoute.extend(
         setupInviteRoute: function (models) {
             return {
                 inviteRouteName: 'Card.memberInvite'
-            }
+            };
         },
 
         setupRoleLevels: function () {
             var levels = Vaultier.Role.proto().roles.toArray().filter(function (item, index) {
                 if (item.id == 'CREATE') {
-                    return false
+                    return false;
                 }
-                return item
+                return item;
             });
             return levels;
         }
@@ -382,7 +388,7 @@ Vaultier.CardMemberInviteRoute = Vaultier.MemberInviteRoute.extend(
         },
 
         setupBreadcrumbs: function () {
-            return Vaultier.Breadcrumbs.create({router: this.get('router')})
+            return Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
                 .addHome()
                 .addWorkspace()
                 .addVault()
@@ -394,9 +400,9 @@ Vaultier.CardMemberInviteRoute = Vaultier.MemberInviteRoute.extend(
         setupRoleLevels: function () {
             var levels = Vaultier.Role.proto().roles.toArray().filter(function (item, index) {
                 if (item.id == 'CREATE') {
-                    return false
+                    return false;
                 }
-                return item
+                return item;
             });
             return levels;
         }

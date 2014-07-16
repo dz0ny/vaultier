@@ -17,7 +17,8 @@ Vaultier.VaultRoute = Ember.Route.extend(
         },
 
         afterModel: function (vault) {
-            Service.Environment.current().set('vault', vault);
+            var environment = this.get('environment');
+            environment.set('vault', vault);
             this.checkWorkspaceKeys();
         },
 

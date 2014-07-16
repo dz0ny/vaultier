@@ -21,7 +21,7 @@ Vaultier.WorkspaceRoute = Ember.Route.extend(
         workspacekey: null,
 
         model: function (params, transition) {
-            var promise = this.get('store').find('Workspace', params.workspace)
+            var promise = this.get('store').find('Workspace', params.workspace);
 
             return promise;
         },
@@ -30,15 +30,14 @@ Vaultier.WorkspaceRoute = Ember.Route.extend(
             // select working workspace
             this.get('workspacekey').selectWorkspace(workspace);
 
-            // set environments
-            // @deprecated
-            Service.Environment.current().set('workspace', workspace);
+            // set environment
+            this.get('environment').set('workspace', workspace);
 
-            this.checkWorkspaceKeys()
+            this.checkWorkspaceKeys();
         },
 
         deactivate: function () {
-            Service.Environment.current().set('workspace', null);
+            this.get('environment').set('workspace', null);
         },
 
         serialize: function (model) {
@@ -151,14 +150,15 @@ Vaultier.WorkspaceNoKeysRoute = Ember.Route.extend({
 
     setupController: function (ctrl, model) {
         this._super.apply(this, arguments);
-
+        var environment = this.get('environment');
         // set model
         ctrl.set('memberships', model.memberships);
         ctrl.set('workspace', model.workspace);
+        environment.set('workspace', model.workspace);
 
         // set breadcrumbs
         ctrl.set('breadcrumbs',
-            Vaultier.Breadcrumbs.create({router: this.get('router')})
+            Vaultier.Breadcrumbs.create({router: this.get('router'), environment: environment})
                 .addHome()
                 .addWorkspace()
                 .addText('Waiting for keys')

@@ -34,9 +34,9 @@ Vaultier.WorkspacesIndexRoute = Ember.Route.extend(
                     } else {
                         this.transitionTo('Workspaces.select');
                     }
-                }.bind(this))
+                }.bind(this));
 
-            return promise
+            return promise;
         }
 
     });
@@ -47,7 +47,7 @@ Vaultier.WorkspacesSelectRoute = Ember.Route.extend(
 
         model: function () {
             var store = this.get('store');
-            var promise = store.find('Workspace')
+            var promise = store.find('Workspace');
             return promise;
         },
 
@@ -55,7 +55,7 @@ Vaultier.WorkspacesSelectRoute = Ember.Route.extend(
             this._super(ctrl, model);
 
             ctrl.set('breadcrumbs',
-                Vaultier.Breadcrumbs.create({router: this.get('router')})
+                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
                     .addHome()
                     .addText('List of workspaces', '/static/vaultier/images/icon-home-grey.png')
             );
@@ -95,11 +95,11 @@ Vaultier.WorkspacesCreateRoute = Ember.Route.extend({
                 .catch(function (error) {
                     $.notify('Oooups! Something went wrong.', 'error');
                     this.get('errors').logError(error);
-                }.bind(this))
+                }.bind(this));
 
             ApplicationLoader.promise(promise);
 
-            return promise
+            return promise;
         }
     },
 
@@ -108,10 +108,10 @@ Vaultier.WorkspacesCreateRoute = Ember.Route.extend({
 
         // set breadcrumbs
         ctrl.set('breadcrumbs',
-            Vaultier.Breadcrumbs.create({router: this.get('router')})
+            Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
                 .addHome()
                 .addText('Create new workspace')
-        )
+        );
     },
 
     model: function (params) {
@@ -155,7 +155,7 @@ Vaultier.WorkspaceRoute = Ember.Route.extend(
         workspacekey: null,
 
         model: function (params, transition) {
-            var promise = this.get('store').find('Workspace', params.workspace)
+            var promise = this.get('store').find('Workspace', params.workspace);
 
             return promise;
         },
@@ -164,15 +164,14 @@ Vaultier.WorkspaceRoute = Ember.Route.extend(
             // select working workspace
             this.get('workspacekey').selectWorkspace(workspace);
 
-            // set environments
-            // @deprecated
-            Service.Environment.current().set('workspace', workspace);
+            // set environment
+            this.get('environment').set('workspace', workspace);
 
-            this.checkWorkspaceKeys()
+            this.checkWorkspaceKeys();
         },
 
         deactivate: function () {
-            Service.Environment.current().set('workspace', null);
+            this.get('environment').set('workspace', null);
         },
 
         serialize: function (model) {
@@ -285,14 +284,15 @@ Vaultier.WorkspaceNoKeysRoute = Ember.Route.extend({
 
     setupController: function (ctrl, model) {
         this._super.apply(this, arguments);
-
+        var environment = this.get('environment');
         // set model
         ctrl.set('memberships', model.memberships);
         ctrl.set('workspace', model.workspace);
+        environment.set('workspace', model.workspace);
 
         // set breadcrumbs
         ctrl.set('breadcrumbs',
-            Vaultier.Breadcrumbs.create({router: this.get('router')})
+            Vaultier.Breadcrumbs.create({router: this.get('router'), environment: environment})
                 .addHome()
                 .addWorkspace()
                 .addText('Waiting for keys')
@@ -323,7 +323,7 @@ Vaultier.WorkspaceEditRoute = Ember.Route.extend(
                 return;
             }
 
-            return workspace
+            return workspace;
         },
 
         setupController: function (ctrl, model) {
@@ -331,7 +331,7 @@ Vaultier.WorkspaceEditRoute = Ember.Route.extend(
 
             // set breadcrumbs
             ctrl.set('breadcrumbs',
-                Vaultier.Breadcrumbs.create({router: this.get('router')})
+                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
                     .addHome()
                     .addWorkspace()
                     .addText('Edit workspace')
@@ -351,7 +351,7 @@ Vaultier.WorkspaceEditRoute = Ember.Route.extend(
                     .catch(function (error) {
                         $.notify('Oooups! Something went wrong.', 'error');
                         this.get('errors').logError(error);
-                    }.bind(this))
+                    }.bind(this));
 
                 ApplicationLoader.promise(promise);
             }
@@ -380,7 +380,7 @@ Vaultier.WorkspaceMixin = Em.Mixin.create({
             var workspace = this.modelFor('Workspace');
             return {
                 inviteObject: workspace
-            }
+            };
         },
 
         setupBlocks: function () {
@@ -388,7 +388,7 @@ Vaultier.WorkspaceMixin = Em.Mixin.create({
         },
 
         setupBreadcrumbs: function () {
-            return Vaultier.Breadcrumbs.create({router: this.get('router')})
+            return Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
                 .addHome()
                 .addWorkspace()
                 .addCollaboratorsIndex('Workspace.memberIndex');
@@ -397,7 +397,7 @@ Vaultier.WorkspaceMixin = Em.Mixin.create({
         setupInviteRoute: function (models) {
             return {
                 inviteRouteName: 'Workspace.memberInvite'
-            }
+            };
         }
     });
 
@@ -429,7 +429,7 @@ Vaultier.WorkspaceMemberInviteRoute = Vaultier.MemberInviteRoute.extend(
         },
 
         setupBreadcrumbs: function () {
-            return Vaultier.Breadcrumbs.create({router: this.get('router')})
+            return Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
                 .addHome()
                 .addWorkspace()
                 .addCollaboratorsIndex('Workspace.memberIndex')

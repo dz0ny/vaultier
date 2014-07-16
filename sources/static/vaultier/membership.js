@@ -8,7 +8,7 @@ Vaultier.InvitationUseRoute = Ember.Route.extend(
 
         model: function (params, transition) {
             transition.abort();
-            return this.get('invitations').useInvitation(params.invitation, params.hash, params.data)
+            return this.get('invitations').useInvitation(params.invitation, params.hash, params.data);
         }
     });
 
@@ -27,30 +27,31 @@ Vaultier.InvitationAcceptRoute = Ember.Route.extend(
                 .fetchInvitationsInSession()
                 .catch(function (error) {
                     transition.abort();
-                    invitations.clearInvitationsInSession()
+                    invitations.clearInvitationsInSession();
 
                     if (
                         (error && error.status == 400 && error.errors && error.errors.hash) // already accepted
-                            || (error && error.status == 404) // not found
+                        || (error && error.status == 404) // not found
                         ) {
                         this.get('errors').consoleError(error)
                         this.get('errors').renderError({
                             title: 'Invalid invitation.',
                             message: 'this invitation cannot be used. Not found or it was already used by other member'
-                        })
+                        });
                     } else {
                         throw new Error('Invalid invitation');
                     }
 
-                }.bind(this))
+                }.bind(this));
 
             return promise;
         },
 
         setupController: function (ctrl, model) {
-            ctrl.set('content', model)
+            ctrl.set('content', model);
+            var environment = this.get('environment');
             ctrl.set('breadcrumbs',
-                Vaultier.Breadcrumbs.create({router: this.get('router')})
+                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: environment})
                     .addHome()
                     .addText('List of invitations to accept')
             );
@@ -58,16 +59,16 @@ Vaultier.InvitationAcceptRoute = Ember.Route.extend(
 
         actions: {
             acceptInvitations: function () {
-                var invitations = this.get('controller.content')
-                var service = this.get('invitations')
+                var invitations = this.get('controller.content');
+                var service = this.get('invitations');
                 var promise = service.acceptInvitationsInSession(invitations).
                     then(function () {
-                        service.clearInvitationsInSession()
+                        service.clearInvitationsInSession();
                         $.notify('You have accepted your invitations', 'success');
                         this.transitionTo('index')
-                    }.bind(this))
+                    }.bind(this));
 
-                ApplicationLoader.promise(promise)
+                ApplicationLoader.promise(promise);
             },
 
             rejectInvitations: function () {
@@ -82,13 +83,14 @@ Vaultier.InvitationAcceptRoute = Ember.Route.extend(
 Vaultier.InvitationAnonymousRoute = Ember.Route.extend(
     {
         setupController: function (ctrl, model) {
-            ctrl.set('content', model)
+            ctrl.set('content', model);
+            var environment = this.get('environment');
             ctrl.set('breadcrumbs',
-                Vaultier.Breadcrumbs.create({router: this.get('router')})
+                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: environment})
                     .addHome()
                     .addText('Accept invitation')
             );
-        },
+        }
     });
 
 

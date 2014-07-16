@@ -10,7 +10,7 @@ Vaultier.WorkspaceMixin = Em.Mixin.create({
             var workspace = this.modelFor('Workspace');
             return {
                 inviteObject: workspace
-            }
+            };
         },
 
         setupBlocks: function () {
@@ -18,7 +18,7 @@ Vaultier.WorkspaceMixin = Em.Mixin.create({
         },
 
         setupBreadcrumbs: function () {
-            return Vaultier.Breadcrumbs.create({router: this.get('router')})
+            return Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
                 .addHome()
                 .addWorkspace()
                 .addCollaboratorsIndex('Workspace.memberIndex');
@@ -27,7 +27,7 @@ Vaultier.WorkspaceMixin = Em.Mixin.create({
         setupInviteRoute: function (models) {
             return {
                 inviteRouteName: 'Workspace.memberInvite'
-            }
+            };
         }
     });
 
@@ -59,7 +59,7 @@ Vaultier.WorkspaceMemberInviteRoute = Vaultier.MemberInviteRoute.extend(
         },
 
         setupBreadcrumbs: function () {
-            return Vaultier.Breadcrumbs.create({router: this.get('router')})
+            return Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
                 .addHome()
                 .addWorkspace()
                 .addCollaboratorsIndex('Workspace.memberIndex')

@@ -44,23 +44,23 @@ Vaultier.CardRoute = Ember.Route.extend(
         },
 
         afterModel: function (card) {
-            Service.Environment.current().set('card', card);
+            this.get('environment').set('card', card);
         },
 
         serialize: function (model) {
             // primitives
             if (typeof model == 'string' || typeof model == 'number') {
-                return model
+                return model;
             }
 
             return {
                 card: model.get('slug')
-            }
+            };
         }
     });
 
 Vaultier.CardIndexRoute = Ember.Route.extend({
     beforeModel: function () {
-        this.transitionTo('Secret.index')
+        this.transitionTo('Secret.index');
     }
-})
+});

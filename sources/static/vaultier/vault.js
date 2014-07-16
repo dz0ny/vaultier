@@ -37,9 +37,12 @@ Vaultier.VaultsIndexRoute = Ember.Route.extend(
             this.set('workspace', workspace);
             ctrl.set('workspace', workspace);
 
+            var environment = this.get('environment');
+            environment.set('workspace', workspace);
+
             // set breadcrumbs
             ctrl.set('breadcrumbs',
-                Vaultier.Breadcrumbs.create({router: this.get('router')})
+                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: environment})
                     .addHome()
                     .addWorkspace()
             )
@@ -104,7 +107,7 @@ Vaultier.VaultsCreateRoute = Ember.Route.extend(
             save: function () {
                 var workspace = this.get('workspace');
                 var record = this.get('controller.content');
-                record.set('workspace', this.get('workspace.id'))
+                record.set('workspace', this.get('workspace.id'));
 
                 var promise = record
                     .saveRecord()
@@ -115,7 +118,7 @@ Vaultier.VaultsCreateRoute = Ember.Route.extend(
                     .catch(function (error) {
                         $.notify('Oooups! Something went wrong.', 'error');
                         this.get('errors').logError(error);
-                    }.bind(this))
+                    }.bind(this));
 
                 ApplicationLoader.promise(promise);
             }
@@ -131,13 +134,15 @@ Vaultier.VaultsCreateRoute = Ember.Route.extend(
             this.set('workspace', workspace);
             this.get('controller').set('workspace', workspace);
 
+            var environment = this.get('environment');
+            environment.set('workspace', workspace);
             // set breadcrumbs
             ctrl.set('breadcrumbs',
-                Vaultier.Breadcrumbs.create({router: this.get('router')})
+                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: environment})
                     .addHome()
                     .addWorkspace()
                     .addText('Create new vault')
-            )
+            );
 
         }
     });
@@ -173,7 +178,8 @@ Vaultier.VaultRoute = Ember.Route.extend(
         },
 
         afterModel: function (vault) {
-            Service.Environment.current().set('vault', vault);
+            var environment = this.get('environment');
+            environment.set('vault', vault);
             this.checkWorkspaceKeys();
         },
 
@@ -247,9 +253,11 @@ Vaultier.VaultEditRoute = Ember.Route.extend(
         setupController: function (ctrl, model) {
             this._super(ctrl, model);
 
+            var environment = this.get('environment');
+            environment.set('vault', model);
             // set breadcrumbs
             ctrl.set('breadcrumbs',
-                Vaultier.Breadcrumbs.create({router: this.get('router')})
+                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: environment})
                     .addHome()
                     .addWorkspace()
                     .addVault()
@@ -306,7 +314,7 @@ Vaultier.VaultMemberIndexRoute = Vaultier.MemberIndexRoute.extend(
         },
 
         setupBreadcrumbs: function () {
-            return Vaultier.Breadcrumbs.create({router: this.get('router')})
+            return Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
                 .addHome()
                 .addWorkspace()
                 .addVault()
@@ -316,7 +324,7 @@ Vaultier.VaultMemberIndexRoute = Vaultier.MemberIndexRoute.extend(
         setupInviteRoute: function (models) {
             return {
                 inviteRouteName: 'Vault.memberInvite'
-            }
+            };
         }
 
     });
@@ -348,7 +356,7 @@ Vaultier.VaultMemberInviteRoute = Vaultier.MemberInviteRoute.extend(
         },
 
         setupBreadcrumbs: function () {
-            return Vaultier.Breadcrumbs.create({router: this.get('router')})
+            return Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
                 .addHome()
                 .addWorkspace()
                 .addVault()
