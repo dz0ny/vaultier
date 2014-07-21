@@ -188,6 +188,14 @@ a:hover {
     display: block;
 }
 
+/*
+* Modal dialog fix
+*/
+
+.modal-dialog {
+    left: 0;
+}
+
 /*************************************************************
 **************************************************************
 * Components restiling
@@ -257,7 +265,7 @@ a:hover {
 
 .container-full {
     margin: 0 auto;
-    width: 80%;
+    width: 90%;
 }
 
 .padding-0 {
@@ -342,6 +350,7 @@ a:hover {
     padding: 10px 10px 10px 0px;
     border-bottom: 1px solid #E0DBDB;
     background-color: #F5F5F5;
+    font-size: 25px;
 }
 
 .vlt-breads .vlt-bread {
@@ -349,7 +358,7 @@ a:hover {
 }
 
 .vlt-breads .vlt-separator {
-    margin-top: -7px;
+    margin-top: 2px;
     padding: 2px 5px 2px 5px;
     font-size: 25px;
     font-weight: bold;
@@ -379,7 +388,7 @@ a:hover {
 }
 
 .vlt-breads .vlt-bread .vlt-bread-inner .vlt-icon {
-    margin: -2px 2px 0px 0px;
+    margin: -3px 2px 0px 0px;
     width: 20px;
     height: 20px;
 }
@@ -585,83 +594,229 @@ a:hover {
 
 /*************************************************************
 **************************************************************
-* item
+* vault item
 *************************************************************
 *************************************************************/
 
-.vlt-item {
-    width: 315px;
-    float: left;
-    display: block;
-    border: 1px solid #E0DBDB;
-    transition: border-color 500ms;
+.vlt-vault-item {
+    overflow: hidden;
+    position: relative;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #1686C6;
+    box-shadow: 0px 0px 10px 1px #c1c1c1;
     border-radius: 6px;
-    position: relative;
-    margin: 30px 0px 0px 30px;
+    width: 410px;
+    margin-top: 20px;
+    margin-right: 20px;
+    background-color: #ffffff;
+    height: 200px;
 }
 
-.vlt-item:hover {
-    border-color: #317EB2;
-    transition: border-color 500ms;
-    text-decoration: none;
-}
-
-.vlt-item .vlt-header {
-    border-radius: 6px 6px 0px 0px;
-    padding: 10px;
-    height: 90px;
-    position: relative;
-    background-color: #F5F5F5;
-}
-
-.vlt-item .vlt-header .vlt-icon {
+.vlt-vault-item .vlt-visual {
+    height: 100%;
+    left: 0;
+    top: 0;
     position: absolute;
-    left: 10px;
-    top: 10px;
-    width: 50px;
-    height: 50px;
+    width: 100px;
+    background-size: 90px 90px;
+    background-position: 5px -10px;
+    background-repeat: no-repeat;
+    background-image: url('/static/vaultier/images/visual-vault.png');
+    background-color: #1686C6;
 }
 
-.vlt-item .vlt-header .vlt-icon img {
-    width: 100%;
+.vlt-vault-item .vlt-content {
+    margin-left: 100px;
+    padding: 10px;
+    color: #888888;
     height: 100%;
 }
 
-.vlt-item .vlt-header .vlt-title {
-    margin-left: 60px;
+.vlt-vault-item .vlt-content .vlt-header {
+    margin-right: 60px;
 }
 
-.vlt-item .vlt-header .vlt-title h3 {
-    margin: 0px;
+.vlt-vault-item .vlt-content .vlt-header .vlt-icon {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    width: 60px;
+    height: 60px;
+    border: 2px solid #1686C6;
+    border-right-width: 0px;
+    border-top-width: 0px;
+    border-bottom-left-radius: 6px;
+}
+
+.vlt-vault-item .vlt-content .vlt-header .vlt-icon img {
+    width: 100%;
+    height: 100%;
+    border-radius: 6px;
+}
+
+.vlt-vault-item .vlt-content .vlt-header h4 {
+    color: #1686C6;
     padding: 0px;
-    word-wrap: break-word;
+    padding-bottom: 10px;
+    margin: 0px;
 }
 
-.vlt-item .vlt-body {
-    word-wrap: break-word;
-    color: #1971A3;
-    padding: 10px;
-    height: 200px;
-    background-color: #ffffff;
+.vlt-vault-item .vlt-content .vlt-header h4 > span {
+    _display: table-cell;
+    _vertical-align: middle;
 }
 
-.vlt-item .vlt-footer {
-    border-radius: 0px 0px 6px 6px;
-    padding: 0px 10px 0px 10px;
+.vlt-vault-item .vlt-content .vlt-description {
+    margin-right: 60px;
+    height: 65px;
+}
+
+.vlt-vault-item .vlt-content .vlt-footer {
+    position: absolute;
+    bottom: 0px;
+    left: 100px;
+    padding: 5px;
+    width: 100%;
     background-color: #F5F5F5;
-    font-size: 13px;
 }
 
-.vlt-item .vlt-footer > .vlt-footer-item {
-    min-height: 20px;
-    float: right;
+.vlt-vault-item .vlt-content .vlt-header h4,
+.vlt-vault-item:hover  .vlt-content .vlt-header h4  {
+    transition: color 500ms;
 }
+
+.vlt-vault-item:hover,
+.vlt-vault-item:hover .vlt-content .vlt-header .vlt-icon,
+.vlt-vault-item:hover .vlt-visual {
+    transition: border 500ms, background-color 500ms, box-shadow 500ms;
+}
+
+.vlt-vault-item,
+.vlt-vault-item .vlt-content .vlt-header .vlt-icon,
+.vlt-vault-item .vlt-visual {
+    transition: border 500ms, background-color 500ms, box-shadow 500ms;
+}
+
+.vlt-vault-item:hover  .vlt-content .vlt-header h4 {
+    color: #50B2EA;
+}
+
+.vlt-vault-item:hover {
+    box-shadow: 0px 0px 20px 1px #b4b4b4;
+}
+
+.vlt-vault-item:hover,
+.vlt-vault-item:hover .vlt-content .vlt-header .vlt-icon {
+    cursor: pointer;
+    border-color: #50B2EA;
+}
+
+.vlt-vault-item:hover .vlt-visual {
+    background-color: #50B2EA;
+}
+
 
 /*************************************************************
 **************************************************************
-* Vault item
+* card item
 *************************************************************
 *************************************************************/
+
+.vlt-card-item {
+    position: relative;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #1686C6;
+    box-shadow: 0px 0px 10px 1px #c1c1c1;
+    border-radius: 6px;
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 0px;
+    border-left: 0px;
+    width: 230px;
+    margin-left: 70px;
+    margin-top: 20px;
+    margin-right: 20px;
+    background-color: transparent;
+    height: 350px;
+}
+
+.vlt-card-item .vlt-visual {
+    height: 350px;
+    left: -60px;
+    top: -2px;
+    position: absolute;
+    width: 60px;
+    background-size: 100% 100%;
+    background-position: 0px 0px;
+    background-repeat: no-repeat;
+    background-image: url('/static/vaultier/images/visual-card.png');
+}
+
+.vlt-card-item .vlt-content .vlt-header h4 {
+    padding: 0px;
+    padding-bottom: 10px;
+    margin: 0px;
+}
+
+
+.vlt-card-item .vlt-content {
+    color: #1686C6;
+    border-radius: 6px;
+    height: 100%;
+    padding: 10px;
+    background-color: #ffffff;
+    overflow: hidden;
+}
+
+.vlt-card-item .vlt-content .vlt-footer {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    padding: 5px;
+    width: 100%;
+    background-color: #F5F5F5;
+    border-bottom-right-radius: 6px;
+}
+
+.vlt-card-item .vlt-content .vlt-footer,
+.vlt-card-item .vlt-content .vlt-description {
+ color: #888888;
+}
+
+.vlt-card-item .vlt-content .vlt-header {
+}
+
+.vlt-card-item,
+.vlt-card-item:hover {
+    transition: border 500ms, box-shadow 500ms;
+}
+
+.vlt-card-item .vlt-content .vlt-header h4,
+.vlt-card-item:hover .vlt-content .vlt-header h4 {
+    transition: color 500ms;
+}
+
+.vlt-card-item .vlt-visual,
+.vlt-card-item:hover .vlt-visual {
+    transition: background-image 500ms;
+}
+
+
+.vlt-card-item:hover .vlt-content .vlt-header h4 {
+    color:  #50B2EA;
+}
+
+.vlt-card-item:hover {
+    box-shadow: 0px 0px 20px 1px #b4b4b4;
+    border-color: #50B2EA;
+}
+
+.vlt-card-item:hover .vlt-visual {
+    background-image: url('/static/vaultier/images/visual-card-light.png');
+}
+
+
 
 /*************************************************************
 **************************************************************
@@ -670,12 +825,13 @@ a:hover {
 *************************************************************/
 
 #vlt-footer {
+    min-height: 100px;
     border-top: 1px solid #E0DBDB;
     position: fixed;
     bottom: 0px;
     width: 100%;
     text-align: right;
-    padding: 5px 0px 0px 0px;
+    padding: 30px 0px 0px 0px;
     background-color: #F5F5F5;
 }
 
@@ -885,7 +1041,7 @@ span.vlt-user img {
     }
 }
 
-@media  (min-width: 1024px) {
+@media (min-width: 1024px) {
     .vlt-search-box .selectize-control.single {
         width: 320px;
     }
@@ -901,7 +1057,6 @@ span.vlt-user img {
     margin-top: 12px;
     min-width: 350px;
 }
-
 
 .vlt-search-box .selectize-dropdown-content {
     max-height: 300px;
@@ -957,25 +1112,25 @@ span.vlt-user img {
 @media (max-width: 768px) {
 
     .vlt-search-box .selectize-dropdown {
-        width: 280px!important;
+        width: 280px !important;
     }
 }
 
-@media (min-width : 864px) and (max-width : 1024px) {
+@media (min-width: 864px) and (max-width: 1024px) {
     .vlt-search-box .selectize-dropdown {
-        width: 460px!important;
+        width: 460px !important;
     }
 }
 
-@media (min-width : 864px) and (min-width : 1024px) {
+@media (min-width: 864px) and (min-width: 1024px) {
     .vlt-search-box .selectize-dropdown {
-        width: 550px!important;
+        width: 550px !important;
     }
 }
 
 @media (min-width: 1224px) {
     .vlt-search-box .selectize-dropdown {
-        width: 620px!important;
+        width: 620px !important;
     }
 }
 
@@ -1176,6 +1331,26 @@ span.vlt-user img {
 * Secret items - detail
 *************************************************************
 *************************************************************/
+
+.vlt-secret-box {
+    position: relative;
+    margin-top: 100px;
+    padding: 60px 20px 20px 20px;
+    background-color: #1686c6;
+}
+
+.vlt-secret-box > .vlt-visual {
+    position: absolute;
+    top: -75px;
+    left: 50%;
+    height: 118px;
+    width: 200px;
+    margin-left: -80px;
+    background-image: url('/static/vaultier/images/visual-secret.png');
+    background-repeat: no-repeat;
+
+}
+
 .vlt-secret-item {
     position: relative;
     border: 1px solid #e0dbdb;
@@ -1189,11 +1364,12 @@ span.vlt-user img {
     border-top-right-radius: 6px;
 }
 
-.vlt-secret-item:first-of-type .vlt-inner  {
+.vlt-secret-item:first-of-type .vlt-inner {
     border-top-right-radius: 6px;
+    border-top-left-radius: 6px;
 }
 
-.vlt-secret-item:last-of-type  {
+.vlt-secret-item:last-of-type {
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
 }
@@ -1201,7 +1377,6 @@ span.vlt-user img {
 .vlt-secret-item:last-of-type .vlt-inner {
     border-bottom-right-radius: 6px;
 }
-
 
 .vlt-secret-item .vlt-visual {
     position: absolute;
@@ -1566,4 +1741,19 @@ span.vlt-user img {
 
 .vlt-tree li .vlt-node.vlt-card {
     __background-image: url('../images/icon-card-grey.png');
+}
+
+.vlt-inline * {
+    display: inline;
+}
+
+.vlt-divider {
+    height: 1px;
+    margin: 9px 1px;
+    overflow: hidden;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+div.vlt-divider:last-of-type {
+    display: none;
 }

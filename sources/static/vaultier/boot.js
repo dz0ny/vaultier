@@ -12567,7 +12567,7 @@ ApplicationLoader = {
 
         if (this.loaderEl) {
             if (!duration) {
-                duration = 100
+                duration = 500
             }
             this.loaderElQueue
                 .fadeOut(duration)

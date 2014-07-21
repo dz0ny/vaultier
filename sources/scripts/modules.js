@@ -24,6 +24,7 @@ var vaultierModulesConfig = {
                 "./bower_components/notifyjs/dist/styles/bootstrap/notify-bootstrap.js",
                 "./bower_components/jstorage/jstorage.js",
                 "./bower_components/jquery-cookie/jquery.cookie.js",
+                "./bower_components/jquery.dotdotdot/src/js/jquery.dotdotdot.js",
                 "./bower_components/jquery.sessionstorage/jquery.sessionStorage.js",
 
                 /**************** pohon library (@deprecated to be removed) **/
@@ -183,6 +184,7 @@ var vaultierModulesConfig = {
                 "./js/module/Layout/LayoutStandard.js",
                 "./js/module/Layout/SecurityBox.js",
                 "./js/module/Layout/SearchBox.js",
+                "./js/module/Layout/DotDotDot.js",
                 "./js/module/Layout/Breadcrumbs.js",
                 "./js/module/Layout/WorkspaceBox.js",
                 "./js/module/Layout/Confirm.js"
@@ -245,9 +247,12 @@ var vaultierModulesConfig = {
                 "./js/module/Member/MemberInviteInput.js",
                 "./js/module/Member/MemberIndex.js",
                 "./js/module/Member/MemberInvite.js",
-                "./js/module/Member/MemberBox.js"
+                "./js/module/Member/MemberBox.js",
+                "./js/module/Member/MemberManagement.js"
             ],
             "templates": [
+                "./js/module/Member/MemberManagerAccordion.hbs",
+                "./js/module/Member/MemberManagement.hbs",
                 "./js/module/Member/MemberIndex.hbs",
                 "./js/module/Member/MemberInvite.hbs",
                 "./js/module/Member/MemberBox.hbs",
@@ -261,8 +266,8 @@ var vaultierModulesConfig = {
                 "./js/module/Workspace/WorkspacesCreate.js",
                 "./js/module/Workspace/WorkspaceIndex.js",
                 "./js/module/Workspace/WorkspaceEdit.js",
-                "./js/module/Workspace/WorkspaceMember.js"
-
+                "./js/module/Workspace/WorkspaceMember.js",
+                "./js/module/Workspace/WorkspaceMemberManagement.js"
             ],
             "templates": [
                 "./js/module/Workspace/WorkspacesIndex.hbs",

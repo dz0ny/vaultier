@@ -13,6 +13,7 @@ from vaultier.models import Card
 from vaultier.models.acl.fields import AclLevelField
 from vaultier.perms.check import has_object_acl
 
+
 class CanManageCardPermission(BasePermission):
 
     def has_object_permission(self, request, view, obj):
@@ -43,6 +44,7 @@ class CanManageCardPermission(BasePermission):
 
         return False
 
+
 class CardSerializer(ModelSerializer):
     slug = SlugField(read_only=True)
     created_by = RelatedUserSerializer(read_only=True)
@@ -51,6 +53,11 @@ class CardSerializer(ModelSerializer):
     class Meta:
         model = Card
         fields = ('id', 'slug', 'name', 'description', 'vault', 'perms', 'created_at', 'updated_at', 'created_by',)
+
+
+class RelatedCardSerializer(CardSerializer):
+    class Meta(CardSerializer.Meta):
+        fields = ['id', 'slug', 'name']
 
 
 class CardViewSet(

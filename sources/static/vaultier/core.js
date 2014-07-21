@@ -174,12 +174,14 @@ Utils.Singleton = Ember.Mixin.create({
 Po.NS('Utils')
 
 Utils.HandlebarsHelpers = Ember.Object.extend({
-
-
     /////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////
+    debug: function (value) {
+        "use strict";
+        console.log(value);
+    },
 
     ucfirst: function (value) {
         if (value) {
@@ -389,7 +391,8 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
         /////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////
-
+        var debug = this.debug.bind(this);
+        Ember.Handlebars.registerBoundHelper('debug', debug);
 
         var ucfirst = this.ucfirst.bind(this);
         Ember.Handlebars.registerBoundHelper('ucfirst', ucfirst);
@@ -452,6 +455,7 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
         /////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////
+
 
         var ifIndex = this.ifIndex;
         Ember.Handlebars.registerHelper('ifIndex', ifIndex);
@@ -694,7 +698,7 @@ Vaultier = Ember.Application.create({
 
         /**************************************************
          **************************************************
-         * Tooltiops
+         * Tooltips
          **************************************************
          **************************************************
          */
@@ -702,6 +706,24 @@ Vaultier = Ember.Application.create({
         $('body').tooltip({
             selector: '[data-toggle=tooltip]'
         });
+
+        /**************************************************
+         **************************************************
+         * Sticky footer
+         **************************************************
+         **************************************************
+         */
+
+        setInterval(function() {
+            var body = $('body').height();
+            var win = $(window).height();
+            var footer = $('#vlt-footer').height();
+            if ( body + footer < win)  {
+                $('#vlt-footer').css({position: 'fixed'})
+            } else {
+                $('#vlt-footer').css({position: 'relative'})
+            }
+        }, 500)
 
         /**************************************************
          **************************************************
@@ -722,6 +744,7 @@ Vaultier = Ember.Application.create({
 
     }
 });
+
 Vaultier.deferReadiness();
 
 
@@ -857,6 +880,8 @@ Vaultier.registerDI = function (app) {
     // components injections
     app.inject('component:change-key', 'changekey', 'service:changekey');
 
+    app.inject('component:member-manager-accordion', 'store', 'store:main');
+
     // model injections - it is done in model inits
 }
 
@@ -941,6 +966,7 @@ var router = Vaultier.Router.map(function () {
             // member
             this.route('memberIndex', { path: '/team'});
             this.route('memberInvite', { path: '/team/invite'});
+            this.route('memberManagement', {path: '/team/management'});
 
             /************************************************************
              * Vaults
@@ -1050,7 +1076,7 @@ Vaultier.ApplicationRoute = Ember.Route.extend(
         beforeModel: function (params, transition) {
             // reload authenticated user from server
             var auth = this.get('auth');
-            var status = auth.reload()
+            var status = auth.reload();
             return status;
 
         }

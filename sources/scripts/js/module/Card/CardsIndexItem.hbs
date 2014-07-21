@@ -1,32 +1,23 @@
-{{#if id}}
-    {{#link-to 'Card.index' this class="vlt-item vlt-card-item" }}
-        <div class="vlt-header">
-            <div class="vlt-icon">
-                <img src="/static/vaultier/images/icon-card-dark-blue.png">
-            </div>
-            <div class="vlt-title">
-                <h3>
-                    {{ellipsis name 35}}
-                </h3>
+<div class="vlt-card-item pull-left">
+    {{#link-to 'Card.index' this }}
 
+        <div class="vlt-visual">
+        </div>
+        <div class="vlt-content">
+            <div class="vlt-header">
+                <h4>{{dot-dot-dot value=name height=60}}</h4>
             </div>
-        </div>
-        <div class="vlt-body">
-            {{#if description}}
-                {{ellipsis description 250  }}
-            {{else}}
-                No description given
-            {{/if}}
-        </div>
-        <div class="vlt-footer">
-            <div class="vlt-footer-item help-block pull-left">
+            <div class="vlt-description">
+                {{#if description}}
+                    {{dot-dot-dot value=description height=200}}
+                {{else}}
+                    No description given
+                {{/if}}
+            </div>
+            <div class="vlt-footer">
                 {{printUser created_by  ellipsis=12 prefix='Created by:'}}
-            </div>
-            <div class="vlt-footer-item help-block pull-right">
                 {{printAgo updated_at prefix='Latest modification at:' }}
             </div>
-            <div class="clearfix"></div>
         </div>
-        <div class="clearfix"></div>
     {{/link-to}}
-{{/if}}
+</div>

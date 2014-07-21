@@ -77,10 +77,10 @@ function program11(depth0,data) {
 function program13(depth0,data) {
   
   var buffer = '', stack1;
-  data.buffer.push("\r\n                        ");
+  data.buffer.push("\r\n                    <div class=\"vlt-secret-box\">\r\n                        <span class=\"vlt-visual\">\r\n                        </span>\r\n                        ");
   stack1 = helpers.each.call(depth0, {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(14, program14, data),contexts:[],types:[],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\r\n                    ");
+  data.buffer.push("\r\n                    </div>\r\n\r\n                    ");
   return buffer;
   }
 function program14(depth0,data) {
