@@ -36,12 +36,6 @@ Vaultier.CardsIndexRoute = Ember.Route.extend(
             ctrl.set('content', model.cards);
             ctrl.set('memberships', model.memberships);
 
-            // retrieve workspace
-            var workspace = this.modelFor('Workspace');
-            this.set('workspace', workspace);
-            ctrl.set('workspace', workspace);
-            environment.set('workspace', workspace);
-
             // retrieve vault
             var vault = this.modelFor('Vault');
             this.set('vault', vault);
@@ -148,7 +142,6 @@ Vaultier.CardsCreateRoute = Ember.Route.extend(
         },
 
         setupController: function (ctrl, model) {
-            var environment = this.get('environment');
             // set model
             ctrl.set('content', model.card);
             ctrl.set('memberships', model.memberships);
@@ -157,17 +150,15 @@ Vaultier.CardsCreateRoute = Ember.Route.extend(
             var workspace = this.modelFor('Workspace');
             this.set('workspace', workspace);
             ctrl.set('workspace', workspace);
-            environment.set('workspace', workspace);
 
             // retrieve vault
             var vault = this.modelFor('Vault');
             this.set('vault', vault);
             ctrl.set('vault', vault);
-            environment.set('vault', vault);
 
             // set breadcrumbs
             ctrl.set('breadcrumbs',
-                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: environment})
+                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
                     .addHome()
                     .addWorkspace()
                     .addVault()

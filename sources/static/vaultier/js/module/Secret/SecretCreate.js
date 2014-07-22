@@ -1,7 +1,7 @@
 Vaultier.SecretCreateController = Ember.Controller.extend({
     submitButtonShown: false,
     needs: ['application']
-})
+});
 
 Vaultier.SecretCreateView = Ember.View.extend({
     templateName: 'Secret/SecretCreate',
@@ -44,9 +44,8 @@ Vaultier.SecretCreateSelectRoute = Ember.Route.extend(
             ctrl.set('controllers.SecretCreate.submitButtonShown', false);
 
             // set breadcrumbs
-            var environment = this.get('environment');
             ctrl.get('controllers.SecretCreate').set('breadcrumbs',
-                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: environment})
+                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
                     .addHome()
                     .addWorkspace()
                     .addVault()
@@ -86,7 +85,7 @@ Vaultier.SecretCreateSubmitRoute = Ember.Route.extend(
 
             // check permissions
             if (!this.get('auth').checkPermissions(transition, function () {
-                return this.modelFor('Card').get('perms.create')
+                return this.modelFor('Card').get('perms.create');
             }.bind(this), true)) {
                 return;
             }
@@ -136,7 +135,6 @@ Vaultier.SecretCreateSubmitRoute = Ember.Route.extend(
         },
 
         setupController: function (ctrl, model) {
-            var environment = this.get('environment');
             ctrl.set('content', model.secret);
             ctrl.set('memberships', model.memberships);
 
@@ -145,21 +143,18 @@ Vaultier.SecretCreateSubmitRoute = Ember.Route.extend(
             // retrieve workspace
             var workspace = this.modelFor('Workspace');
             this.set('workspace', workspace);
-            environment.set('workspace', workspace);
 
             // retrieve vault
             var vault = this.modelFor('Vault');
             this.set('vault', vault);
-            environment.set('vault', vault);
 
             // retrieve vault
             var card = this.modelFor('Card');
             this.set('card', card);
-            environment.set('card', card);
 
             // set breadcrumbs
             ctrl.set('breadcrumbs',
-                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: environment})
+                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
                     .addHome()
                     .addWorkspace()
                     .addVault()

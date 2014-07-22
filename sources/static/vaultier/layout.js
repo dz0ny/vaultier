@@ -289,7 +289,7 @@ Vaultier.Breadcrumbs = Ember.Object.extend({
     },
 
     addVault: function () {
-        var vault = this.environment.vault;
+        var vault = this.get('environment.vault');
         if (vault) {
             this.addLink('Vault.index', vault.get('name'), vault,'/static/vaultier/images/icon-vault-grey.png')
         }
@@ -297,7 +297,7 @@ Vaultier.Breadcrumbs = Ember.Object.extend({
     },
 
     addCard: function () {
-        var card = this.environment.card;
+        var card = this.get('environment.card');
         if (card) {
             this.addLink('Card.index', card.get('name'), card,'/static/vaultier/images/icon-card-grey.png')
         }
@@ -306,7 +306,7 @@ Vaultier.Breadcrumbs = Ember.Object.extend({
 
 
     addWorkspace: function () {
-        var workspace = this.environment.workspace;
+        var workspace = this.get('environment.workspace');
         if (workspace) {
             this.addLink('Workspace.index', workspace.get('name'), workspace, '/static/vaultier/images/icon-workspace-grey.png')
         }

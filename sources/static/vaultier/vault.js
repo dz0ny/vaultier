@@ -37,15 +37,12 @@ Vaultier.VaultsIndexRoute = Ember.Route.extend(
             this.set('workspace', workspace);
             ctrl.set('workspace', workspace);
 
-            var environment = this.get('environment');
-            environment.set('workspace', workspace);
-
             // set breadcrumbs
             ctrl.set('breadcrumbs',
-                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: environment})
+                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
                     .addHome()
                     .addWorkspace()
-            )
+            );
         }
 
     });
@@ -134,11 +131,9 @@ Vaultier.VaultsCreateRoute = Ember.Route.extend(
             this.set('workspace', workspace);
             this.get('controller').set('workspace', workspace);
 
-            var environment = this.get('environment');
-            environment.set('workspace', workspace);
             // set breadcrumbs
             ctrl.set('breadcrumbs',
-                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: environment})
+                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
                     .addHome()
                     .addWorkspace()
                     .addText('Create new vault')
@@ -169,11 +164,11 @@ Vaultier.VaultRoute = Ember.Route.extend(
                 .then(function (model) {
                     if (model.get('workspace') != workspace.get('id')) {
                         var error = new Error();
-                        error.status = 404
-                        throw error
+                        error.status = 404;
+                        throw error;
                     }
-                    return model
-                })
+                    return model;
+                });
             return model;
         },
 
@@ -186,12 +181,12 @@ Vaultier.VaultRoute = Ember.Route.extend(
         serialize: function (model) {
             // primitives
             if (typeof model == 'string' || typeof model == 'number') {
-                return model
+                return model;
             }
 
             return {
                 vault: model.get('slug')
-            }
+            };
         },
 
         actions: {
@@ -212,7 +207,6 @@ Vaultier.VaultRoute = Ember.Route.extend(
 
                 }.bind(this));
 
-
             }
 
         }
@@ -224,10 +218,10 @@ Vaultier.VaultIndexRoute = Ember.Route.extend(
     {
         beforeModel: function () {
             if (this.checkWorkspaceKeys()) {
-                this.transitionTo('Cards.index')
+                this.transitionTo('Cards.index');
             }
         }
-    })
+    });
 
 
 Vaultier.VaultEditRoute = Ember.Route.extend(

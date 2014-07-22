@@ -34,7 +34,6 @@ Vaultier.SecretIndexRoute = Ember.Route.extend(
 
 
         setupController: function (ctrl, model) {
-            var environment = this.get('environment');
             // set model
             ctrl.set('content', model.secrets);
             ctrl.set('memberships', model.memberships);
@@ -43,23 +42,20 @@ Vaultier.SecretIndexRoute = Ember.Route.extend(
             var workspace = this.modelFor('Workspace');
             this.set('workspace', workspace);
             ctrl.set('workspace', workspace);
-            environment.set('workspace', workspace);
 
             // retrieve vault
             var vault = this.modelFor('Vault');
             this.set('vault', vault);
             ctrl.set('vault', vault);
-            environment.set('vault', vault);
 
             // retrieve card
             var card = this.modelFor('Card');
             this.set('card', card);
             ctrl.set('card', card);
-            environment.set('card', card);
 
             // set breadcrumbs
             ctrl.set('breadcrumbs',
-                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: environment})
+                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
                     .addHome()
                     .addWorkspace()
                     .addVault()

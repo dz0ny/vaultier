@@ -8,11 +8,11 @@ Vaultier.VaultRoute = Ember.Route.extend(
                 .then(function (model) {
                     if (model.get('workspace') != workspace.get('id')) {
                         var error = new Error();
-                        error.status = 404
-                        throw error
+                        error.status = 404;
+                        throw error;
                     }
-                    return model
-                })
+                    return model;
+                });
             return model;
         },
 
@@ -25,12 +25,12 @@ Vaultier.VaultRoute = Ember.Route.extend(
         serialize: function (model) {
             // primitives
             if (typeof model == 'string' || typeof model == 'number') {
-                return model
+                return model;
             }
 
             return {
                 vault: model.get('slug')
-            }
+            };
         },
 
         actions: {
@@ -51,7 +51,6 @@ Vaultier.VaultRoute = Ember.Route.extend(
 
                 }.bind(this));
 
-
             }
 
         }
@@ -63,7 +62,7 @@ Vaultier.VaultIndexRoute = Ember.Route.extend(
     {
         beforeModel: function () {
             if (this.checkWorkspaceKeys()) {
-                this.transitionTo('Cards.index')
+                this.transitionTo('Cards.index');
             }
         }
-    })
+    });
