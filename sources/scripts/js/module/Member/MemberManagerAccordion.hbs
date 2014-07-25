@@ -1,0 +1,94 @@
+<div class="table vlt-table">
+
+    <div class="vlt-row">
+        <div class="vlt-col col-md-1" role="button">
+            <button type="button" class="btn btn-default" {{action "deleteMember" member target=view}}>
+                <span class="glyphicon glyphicon-remove"></span>
+            </button>
+        </div>
+        <div class="vlt-col  col-md-6 col-md-offset-3"><span
+                class="lead">{{printUser member}}</span>
+        </div>
+        <div class="vlt-col col-md-2 pull-right">
+
+            <a class="btn btn-default accordion-toggle" type="button" data-toggle="collapse"
+                {{bind-attr href=targetElement}} {{action "loadRoles" target=view}}>
+                Display permissions
+                <span class="caret vlt-caret"></span>
+            </a>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+    <div class="vlt-row collapse" {{ bind-attr id="id"}}>
+        <div class="list-group well-lg">
+            {{#ifCond roles '&&' roles.length}}
+                {{#each role in roles itemController=role}}
+                    <div class="list-group-item">
+                        <div class="col-md-3">
+                             <span data-toggle="tooltip" data-placement="top" title="type">
+                                 {{#if role.to_card}}
+                                     Card
+                                 {{else}}
+                                     {{#if role.to_vault}}
+                                         Vault
+                                     {{else}}
+                                         {{#if role.to_workspace}}
+                                             Workspace
+                                         {{/if}}
+                                     {{/if}}
+                                 {{/if}}
+                             </span>
+                        </div>
+                        <div class="col-md-3">
+                            <span data-toggle="tooltip" data-placement="top" title="name">
+                                {{#if role.to_card}}
+                                    {{role.to_card.name}}
+                                {{else}}
+                                    {{#if role.to_vault}}
+                                        {{role.to_vault.name}}
+                                    {{else}}
+                                        {{#if role.to_workspace}}
+                                            {{role.to_workspace.name}}
+                                        {{/if}}
+                                    {{/if}}
+                                {{/if}}
+                            </span>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="col-md-8 vlt-edit-perms">
+                                {{#if role.isMemberWithoutKeys}}
+                                    <span class="label label-warning">
+                                        Does not have workspace key yet
+                                    </span>
+                                {{/if}}
+                                {{#if role.isInvited}}
+                                    <span class="label label-warning">
+                                        Invited only. Did not show up yet!
+                                    </span>
+                                {{/if}}
+                                <span data-toggle='tooltip'
+                                      class="label label-warning" {{bind-attr title=role.printableDesc}}>
+                                    {{role.printableName}}
+                                </span>
+                            </div>
+                            <div class="col-md-4">
+                                <a class="vlt-delete btn btn-default btn-sm">
+                                    <span class="glyphicon glyphicon-trash" {{action "deleteRole" role target=view}}></span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                {{/each}}
+            {{/ifCond}}
+
+        </div>
+        <!-- End list-group -->
+
+    </div>
+    <!-- End vlt-row collapse -->
+
+</div>
+<!-- end table -->
+<div class="vlt-divider">&nbsp;</div>

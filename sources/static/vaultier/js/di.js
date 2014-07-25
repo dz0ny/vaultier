@@ -89,5 +89,7 @@ Vaultier.registerDI = function (app) {
     // components injections
     app.inject('component:change-key', 'changekey', 'service:changekey');
 
+    app.inject('component:member-manager-accordion', 'store', 'store:main');
+
     // model injections - it is done in model inits
 }

@@ -65,7 +65,7 @@ Vaultier = Ember.Application.create({
 
         /**************************************************
          **************************************************
-         * Tooltiops
+         * Tooltips
          **************************************************
          **************************************************
          */
@@ -73,6 +73,24 @@ Vaultier = Ember.Application.create({
         $('body').tooltip({
             selector: '[data-toggle=tooltip]'
         });
+
+        /**************************************************
+         **************************************************
+         * Sticky footer
+         **************************************************
+         **************************************************
+         */
+
+        setInterval(function() {
+            var body = $('body').height();
+            var win = $(window).height();
+            var footer = $('#vlt-footer').height();
+            if ( body + footer < win)  {
+                $('#vlt-footer').css({position: 'fixed'})
+            } else {
+                $('#vlt-footer').css({position: 'relative'})
+            }
+        }, 500)
 
         /**************************************************
          **************************************************
@@ -93,4 +111,5 @@ Vaultier = Ember.Application.create({
 
     }
 });
+
 Vaultier.deferReadiness();

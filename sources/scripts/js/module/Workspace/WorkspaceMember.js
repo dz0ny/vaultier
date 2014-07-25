@@ -1,9 +1,7 @@
 /**
  * Workspace memberships, because of nested routing in namespace of vault
  */
-Vaultier.WorkspaceMemberIndexRoute = Vaultier.MemberIndexRoute.extend(
-    Vaultier.WorkspaceKeysMixin,
-    {
+Vaultier.WorkspaceMixin = Em.Mixin.create({
         beforeModel: function () {
             this.checkWorkspaceKeys();
         },
@@ -31,9 +29,12 @@ Vaultier.WorkspaceMemberIndexRoute = Vaultier.MemberIndexRoute.extend(
                 inviteRouteName: 'Workspace.memberInvite'
             }
         }
-    }
-)
-;
+    });
+
+Vaultier.WorkspaceMemberIndexRoute = Vaultier.MemberIndexRoute.extend(
+    Vaultier.WorkspaceKeysMixin,
+    Vaultier.WorkspaceMixin
+);
 
 
 Vaultier.WorkspaceMemberIndexController = Vaultier.MemberIndexController.extend({

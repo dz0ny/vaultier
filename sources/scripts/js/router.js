@@ -79,6 +79,7 @@ var router = Vaultier.Router.map(function () {
             // member
             this.route('memberIndex', { path: '/team'});
             this.route('memberInvite', { path: '/team/invite'});
+            this.route('memberManagement', {path: '/team/management'});
 
             /************************************************************
              * Vaults
@@ -188,7 +189,7 @@ Vaultier.ApplicationRoute = Ember.Route.extend(
         beforeModel: function (params, transition) {
             // reload authenticated user from server
             var auth = this.get('auth');
-            var status = auth.reload()
+            var status = auth.reload();
             return status;
 
         }
