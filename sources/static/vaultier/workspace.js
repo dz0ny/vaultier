@@ -371,9 +371,7 @@ Vaultier.WorkspaceEditView = Ember.View.extend({
 /**
  * Workspace memberships, because of nested routing in namespace of vault
  */
-Vaultier.WorkspaceMemberIndexRoute = Vaultier.MemberIndexRoute.extend(
-    Vaultier.WorkspaceKeysMixin,
-    {
+Vaultier.WorkspaceMixin = Em.Mixin.create({
         beforeModel: function () {
             this.checkWorkspaceKeys();
         },
@@ -401,9 +399,12 @@ Vaultier.WorkspaceMemberIndexRoute = Vaultier.MemberIndexRoute.extend(
                 inviteRouteName: 'Workspace.memberInvite'
             }
         }
-    }
-)
-;
+    });
+
+Vaultier.WorkspaceMemberIndexRoute = Vaultier.MemberIndexRoute.extend(
+    Vaultier.WorkspaceKeysMixin,
+    Vaultier.WorkspaceMixin
+);
 
 
 Vaultier.WorkspaceMemberIndexController = Vaultier.MemberIndexController.extend({
@@ -440,5 +441,13 @@ Vaultier.WorkspaceMemberInviteRoute = Vaultier.MemberInviteRoute.extend(
 Vaultier.WorkspaceMemberInviteController = Vaultier.MemberInviteController.extend({
 });
 
+
+'use strict';
+
+Vaultier.WorkspaceMemberManagementRoute = Vaultier.MemberManagementRoute.extend(
+    Vaultier.WorkspaceKeysMixin,
+    Vaultier.WorkspaceMixin);
+
+Vaultier.WorkspaceMemberManagementController = Vaultier.MemberManagementController.extend({});
 
 //# sourceMappingURL=workspace.js.map
