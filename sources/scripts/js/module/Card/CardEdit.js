@@ -20,7 +20,7 @@ Vaultier.CardEditRoute = Ember.Route.extend(
         setupController: function (ctrl, model) {
             this._super(ctrl, model);
             var environment = this.get('environment');
-            environment.set('card', model);
+
             // set breadcrumbs
             ctrl.set('breadcrumbs',
                 Vaultier.Breadcrumbs.create({router: this.get('router'), environment: environment})
