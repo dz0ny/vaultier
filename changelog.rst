@@ -4,6 +4,7 @@ Changelog
 
 Release 0.7.0
 -------------
+* [feature] #200 Update build system
 * [feature] Refactored mailer module and added email notification on workspacekey acquired
 * [feature] #195 Search usability - make search window more responsive
 * [bugfix] Display message "No matches found" when search box contains no results
