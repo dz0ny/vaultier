@@ -881,15 +881,13 @@ Vaultier.registerDI = function (app) {
     // components injections
     app.inject('component:change-key', 'changekey', 'service:changekey');
 
-<<<<<<< HEAD
     app.inject('component:member-manager-accordion', 'store', 'store:main');
-=======
+
     // service:environment
     app.register('service:environment', Service.Environment);
     app.inject('route', 'environment', 'service:environment');
     app.inject('controller:LayoutWorkspaceBox', 'environment', 'service:environment');
     app.inject('service:invitations', 'env', 'service:environment');
->>>>>>> refactor environment service #92
 
     // model injections - it is done in model inits
 }
