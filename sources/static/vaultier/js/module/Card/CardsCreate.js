@@ -12,7 +12,7 @@ Vaultier.CardsCreateRoute = Ember.Route.extend(
 
             // check permissions
             if (!this.get('auth').checkPermissions(transition, function () {
-                return vault.get('perms.create')
+                return vault.get('perms.create');
             }.bind(this), true)) {
                 return;
             }
@@ -27,7 +27,7 @@ Vaultier.CardsCreateRoute = Ember.Route.extend(
                     to_vault: store.find('Role', {to_vault: vault.get('id')})
                 })
                 .then(function (memberships) {
-                    return [].concat(memberships.to_workspace.toArray(), memberships.to_vault.toArray())
+                    return [].concat(memberships.to_workspace.toArray(), memberships.to_vault.toArray());
                 });
 
             // return promise for all requests
@@ -55,7 +55,7 @@ Vaultier.CardsCreateRoute = Ember.Route.extend(
                     function () {
                         $.notify('Oooups! Something went wrong.', 'error');
                     }
-                )
+                );
 
                 ApplicationLoader.promise(promise);
             }
@@ -78,13 +78,12 @@ Vaultier.CardsCreateRoute = Ember.Route.extend(
 
             // set breadcrumbs
             ctrl.set('breadcrumbs',
-                Vaultier.Breadcrumbs.create({router: this.get('router')})
+                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
                     .addHome()
                     .addWorkspace()
                     .addVault()
                     .addText('Create new card')
-            )
-
+            );
 
         }
 

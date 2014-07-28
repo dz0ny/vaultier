@@ -9,15 +9,15 @@ Vaultier.CardMemberIndexRoute = Vaultier.MemberIndexRoute.extend(
             var card = this.modelFor('Card');
             return {
                 inviteObject: card
-            }
+            };
         },
 
         setupBlocks: function () {
-            return {workspace: true, vault: true, card: true}
+            return {workspace: true, vault: true, card: true};
         },
 
         setupBreadcrumbs: function () {
-            return Vaultier.Breadcrumbs.create({router: this.get('router')})
+            return Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
                 .addHome()
                 .addWorkspace()
                 .addVault()
@@ -28,15 +28,15 @@ Vaultier.CardMemberIndexRoute = Vaultier.MemberIndexRoute.extend(
         setupInviteRoute: function (models) {
             return {
                 inviteRouteName: 'Card.memberInvite'
-            }
+            };
         },
 
         setupRoleLevels: function () {
             var levels = Vaultier.Role.proto().roles.toArray().filter(function (item, index) {
                 if (item.id == 'CREATE') {
-                    return false
+                    return false;
                 }
-                return item
+                return item;
             });
             return levels;
         }
@@ -66,7 +66,7 @@ Vaultier.CardMemberInviteRoute = Vaultier.MemberInviteRoute.extend(
         },
 
         setupBreadcrumbs: function () {
-            return Vaultier.Breadcrumbs.create({router: this.get('router')})
+            return Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
                 .addHome()
                 .addWorkspace()
                 .addVault()
@@ -78,9 +78,9 @@ Vaultier.CardMemberInviteRoute = Vaultier.MemberInviteRoute.extend(
         setupRoleLevels: function () {
             var levels = Vaultier.Role.proto().roles.toArray().filter(function (item, index) {
                 if (item.id == 'CREATE') {
-                    return false
+                    return false;
                 }
-                return item
+                return item;
             });
             return levels;
         }

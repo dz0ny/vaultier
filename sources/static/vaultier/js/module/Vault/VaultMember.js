@@ -17,7 +17,7 @@ Vaultier.VaultMemberIndexRoute = Vaultier.MemberIndexRoute.extend(
         },
 
         setupBreadcrumbs: function () {
-            return Vaultier.Breadcrumbs.create({router: this.get('router')})
+            return Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
                 .addHome()
                 .addWorkspace()
                 .addVault()
@@ -27,7 +27,7 @@ Vaultier.VaultMemberIndexRoute = Vaultier.MemberIndexRoute.extend(
         setupInviteRoute: function (models) {
             return {
                 inviteRouteName: 'Vault.memberInvite'
-            }
+            };
         }
 
     });
@@ -59,7 +59,7 @@ Vaultier.VaultMemberInviteRoute = Vaultier.MemberInviteRoute.extend(
         },
 
         setupBreadcrumbs: function () {
-            return Vaultier.Breadcrumbs.create({router: this.get('router')})
+            return Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
                 .addHome()
                 .addWorkspace()
                 .addVault()

@@ -33,8 +33,10 @@ Vaultier.SecretEditRoute = Ember.Route.extend(
             this._super(ctrl, model);
 
             // set breadcrumbs
+            var environment = this.get('environment');
+
             ctrl.set('breadcrumbs',
-                Vaultier.Breadcrumbs.create({router: this.get('router')})
+                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: environment})
                     .addHome()
                     .addWorkspace()
                     .addVault()
@@ -48,7 +50,7 @@ Vaultier.SecretEditRoute = Ember.Route.extend(
                 var notifyError = function (error) {
                     $.notify('Oooups! Something went wrong.', 'error');
                     throw error;
-                }
+                };
 
                 try {
                     var record = this.get('controller.content');

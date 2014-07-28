@@ -37,7 +37,7 @@ var vaultierModulesConfig = {
                 "./bower_components/jsep/src/jsep.js",
 
                 /**************** file utitlities **/
-                "./bower_components/FileSaver/FileSave.js",
+                "./bower_components/FileSaver/FileSaver.js",
                 "./bower_components/FileAPI/dist/FileAPI.js",
 
                 /**************** ember **/

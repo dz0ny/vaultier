@@ -39,7 +39,7 @@ Vaultier.VaultsCreateRoute = Ember.Route.extend(
             save: function () {
                 var workspace = this.get('workspace');
                 var record = this.get('controller.content');
-                record.set('workspace', this.get('workspace.id'))
+                record.set('workspace', this.get('workspace.id'));
 
                 var promise = record
                     .saveRecord()
@@ -50,7 +50,7 @@ Vaultier.VaultsCreateRoute = Ember.Route.extend(
                     .catch(function (error) {
                         $.notify('Oooups! Something went wrong.', 'error');
                         this.get('errors').logError(error);
-                    }.bind(this))
+                    }.bind(this));
 
                 ApplicationLoader.promise(promise);
             }
@@ -68,11 +68,11 @@ Vaultier.VaultsCreateRoute = Ember.Route.extend(
 
             // set breadcrumbs
             ctrl.set('breadcrumbs',
-                Vaultier.Breadcrumbs.create({router: this.get('router')})
+                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
                     .addHome()
                     .addWorkspace()
                     .addText('Create new vault')
-            )
+            );
 
         }
     });

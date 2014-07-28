@@ -1,4 +1,5 @@
-Ember.TEMPLATES["Auth/AuthLogin"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["Auth/AuthLogin"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
+/**/) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, helper, options, escapeExpression=this.escapeExpression, self=this, helperMissing=helpers.helperMissing;
@@ -103,7 +104,8 @@ function program11(depth0,data) {
   
 });
 
-Ember.TEMPLATES["Auth/AuthRegister"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["Auth/AuthRegister"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
+/**/) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, helper, options, self=this, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
@@ -204,7 +206,8 @@ function program14(depth0,data) {
   
 });
 
-Ember.TEMPLATES["Auth/AuthRegisterBefore"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["Auth/AuthRegisterBefore"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
+/**/) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   
@@ -214,7 +217,8 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   
 });
 
-Ember.TEMPLATES["Auth/AuthRegisterKeys"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["Auth/AuthRegisterKeys"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
+/**/) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, escapeExpression=this.escapeExpression, self=this;
@@ -242,7 +246,8 @@ function program3(depth0,data) {
   
 });
 
-Ember.TEMPLATES["Auth/AuthRegisterCreds"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["Auth/AuthRegisterCreds"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
+/**/) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, escapeExpression=this.escapeExpression;
@@ -281,7 +286,8 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   
 });
 
-Ember.TEMPLATES["Auth/AuthLostKeyIndex"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["Auth/AuthLostKeyIndex"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
+/**/) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, helper, options, escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing;
@@ -309,7 +315,8 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   
 });
 
-Ember.TEMPLATES["Auth/AuthLostKeySuccess"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["Auth/AuthLostKeySuccess"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
+/**/) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, helper, options, self=this, helperMissing=helpers.helperMissing;
@@ -330,7 +337,8 @@ function program1(depth0,data) {
   
 });
 
-Ember.TEMPLATES["Auth/AuthRegisterSum"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["Auth/AuthRegisterSum"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
+/**/) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, escapeExpression=this.escapeExpression;
@@ -349,7 +357,8 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   
 });
 
-Ember.TEMPLATES["Auth/AuthLostKeyRecoveryReset"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["Auth/AuthLostKeyRecoveryReset"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
+/**/) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, self=this, escapeExpression=this.escapeExpression;
@@ -390,7 +399,8 @@ function program4(depth0,data) {
   
 });
 
-Ember.TEMPLATES["Auth/AuthLostKeyRecoveryRebuild"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["Auth/AuthLostKeyRecoveryRebuild"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
+/**/) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', helper, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
@@ -405,7 +415,8 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   
 });
 
-Ember.TEMPLATES["Auth/AuthLostKeyRecoveryDisable"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["Auth/AuthLostKeyRecoveryDisable"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
+/**/) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, helper, options, self=this, helperMissing=helpers.helperMissing;
@@ -426,7 +437,8 @@ function program1(depth0,data) {
   
 });
 
-Ember.TEMPLATES["Auth/AuthLostKeyRecoverySuccess"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["Auth/AuthLostKeyRecoverySuccess"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
+/**/) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, helper, options, self=this, helperMissing=helpers.helperMissing;

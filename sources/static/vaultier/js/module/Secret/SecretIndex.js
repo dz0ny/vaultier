@@ -7,12 +7,12 @@ Vaultier.SecretIndexRoute = Ember.Route.extend(
 
         model: function (params, queryParams) {
             var vault = this.modelFor('Vault');
-            var workspace = this.modelFor('Workspace')
+            var workspace = this.modelFor('Workspace');
             var card = this.modelFor('Card');
             var store = this.get('store');
 
             // load secrets
-            var secrets = store.find('Secret', {card: card.get('id')})
+            var secrets = store.find('Secret', {card: card.get('id')});
 
             // load memberships
             var memberships = Ember.RSVP
@@ -22,7 +22,7 @@ Vaultier.SecretIndexRoute = Ember.Route.extend(
                     to_card: store.find('Role', {to_card: card.get('id')})
                 })
                 .then(function (memberships) {
-                    return [].concat(memberships.to_workspace.toArray(), memberships.to_vault.toArray(), memberships.to_card.toArray())
+                    return [].concat(memberships.to_workspace.toArray(), memberships.to_vault.toArray(), memberships.to_card.toArray());
                 });
 
             // return promise for all requests
@@ -55,12 +55,12 @@ Vaultier.SecretIndexRoute = Ember.Route.extend(
 
             // set breadcrumbs
             ctrl.set('breadcrumbs',
-                Vaultier.Breadcrumbs.create({router: this.get('router')})
+                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
                     .addHome()
                     .addWorkspace()
                     .addVault()
                     .addCard()
-            )
+            );
         },
 
         actions: {
@@ -92,7 +92,7 @@ Vaultier.SecretIndexRoute = Ember.Route.extend(
             deleteSecret: function (secret) {
                 Vaultier.confirmModal(this, 'Are you sure?', function () {
 
-                    this.get('controller.content').removeObject(secret)
+                    this.get('controller.content').removeObject(secret);
                     var promise = secret
                         .deleteRecord()
                         .then(
@@ -105,7 +105,7 @@ Vaultier.SecretIndexRoute = Ember.Route.extend(
                                 $.notify('Oooups! Something went wrong.', 'error');
                             }.bind(this)
                         );
-                    ApplicationLoader.promise(promise)
+                    ApplicationLoader.promise(promise);
                 }.bind(this));
             }
 

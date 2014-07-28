@@ -1,4 +1,5 @@
-Ember.TEMPLATES["Workspace/WorkspacesIndex"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["Workspace/WorkspacesIndex"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
+/**/) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, self=this, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
@@ -66,7 +67,8 @@ function program8(depth0,data) {
   
 });
 
-Ember.TEMPLATES["Workspace/WorkspacesIndexItem"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["Workspace/WorkspacesIndexItem"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
+/**/) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, helper, options, escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, self=this;
@@ -106,7 +108,8 @@ function program1(depth0,data) {
   
 });
 
-Ember.TEMPLATES["Workspace/WorkspacesIndexWithoutKeys"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["Workspace/WorkspacesIndexWithoutKeys"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
+/**/) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, self=this;
@@ -133,7 +136,8 @@ function program3(depth0,data) {
   
 });
 
-Ember.TEMPLATES["Workspace/WorkspacesCreate"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["Workspace/WorkspacesCreate"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
+/**/) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, escapeExpression=this.escapeExpression;
@@ -177,7 +181,8 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   
 });
 
-Ember.TEMPLATES["Workspace/WorkspaceEdit"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["Workspace/WorkspaceEdit"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
+/**/) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, escapeExpression=this.escapeExpression;
@@ -221,7 +226,8 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   
 });
 
-Ember.TEMPLATES["Workspace/WorkspaceNoKeys"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["Workspace/WorkspaceNoKeys"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
+/**/) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, helper, options, self=this, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;

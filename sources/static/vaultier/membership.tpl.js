@@ -1,4 +1,5 @@
-Ember.TEMPLATES["Member/MemberManagerAccordion"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["Member/MemberManagerAccordion"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
+/**/) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, helper, options, self=this, escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing;
@@ -165,7 +166,8 @@ function program21(depth0,data) {
   
 });
 
-Ember.TEMPLATES["Member/MemberManagement"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["Member/MemberManagement"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
+/**/) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, helper, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, self=this;
@@ -212,7 +214,8 @@ function program3(depth0,data) {
   
 });
 
-Ember.TEMPLATES["Member/MemberIndex"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["Member/MemberIndex"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
+/**/) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, helper, options, self=this, escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing;
@@ -432,7 +435,8 @@ function program26(depth0,data) {
   
 });
 
-Ember.TEMPLATES["Member/MemberInvite"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["Member/MemberInvite"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
+/**/) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', helper, options, escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing;
@@ -473,7 +477,8 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   
 });
 
-Ember.TEMPLATES["Member/MemberBox"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["Member/MemberBox"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
+/**/) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, self=this;
@@ -542,7 +547,8 @@ function program8(depth0,data) {
   
 });
 
-Ember.TEMPLATES["Invitation/InvitationAnonymous"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["Invitation/InvitationAnonymous"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
+/**/) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, helper, options, self=this, helperMissing=helpers.helperMissing;
@@ -574,7 +580,8 @@ function program3(depth0,data) {
   
 });
 
-Ember.TEMPLATES["Invitation/InvitationAccept"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["Invitation/InvitationAccept"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
+/**/) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, self=this;

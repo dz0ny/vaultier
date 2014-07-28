@@ -7,7 +7,7 @@ Vaultier.CardsIndexRoute = Ember.Route.extend(
 
         model: function (params, transition) {
             var vault = this.modelFor('Vault');
-            var workspace = this.modelFor('Workspace')
+            var workspace = this.modelFor('Workspace');
             var store = this.get('store');
 
             // load cards
@@ -20,7 +20,7 @@ Vaultier.CardsIndexRoute = Ember.Route.extend(
                     to_vault: store.find('Role', {to_vault: vault.get('id')})
                 })
                 .then(function (memberships) {
-                    return [].concat(memberships.to_workspace.toArray(), memberships.to_vault.toArray())
+                    return [].concat(memberships.to_workspace.toArray(), memberships.to_vault.toArray());
                 });
 
              // return promise for all requests
@@ -31,6 +31,7 @@ Vaultier.CardsIndexRoute = Ember.Route.extend(
         },
 
         setupController: function (ctrl, model) {
+            var environment = this.get('environment');
             // set model
             ctrl.set('content', model.cards);
             ctrl.set('memberships', model.memberships);
@@ -47,7 +48,7 @@ Vaultier.CardsIndexRoute = Ember.Route.extend(
 
             // set breadcrumbs
             ctrl.set('breadcrumbs',
-                Vaultier.Breadcrumbs.create({router: this.get('router')})
+                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
                     .addHome()
                     .addWorkspace()
                     .addVault()

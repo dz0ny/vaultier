@@ -11,7 +11,7 @@ Vaultier.SettingsKeysRoute = Ember.Route.extend(
 
             // set breadcrumbs
             ctrl.get('controllers.Settings').set('breadcrumbs',
-                Vaultier.Breadcrumbs.create({router: this.get('router')})
+                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
                     .addHome()
                     .addSettings()
                     .addText('Regenerate private key')
@@ -45,11 +45,11 @@ Vaultier.SettingsKeysRoute = Ember.Route.extend(
                     .catch(function (error) {
                         $.notify('There was an error during update of your key', 'error');
                         this.get('errors').consoleError(error)
-                    }.bind(this))
+                    }.bind(this));
 
-                ApplicationLoader.promise(promise)
+                ApplicationLoader.promise(promise);
 
-                result.promise = promise
+                result.promise = promise;
 
             }
         }
@@ -58,7 +58,7 @@ Vaultier.SettingsKeysRoute = Ember.Route.extend(
 
 Vaultier.SettingsKeysController = Ember.Controller.extend({
     needs: ['Settings']
-})
+});
 
 
 Vaultier.SettingsKeysView = Ember.View.extend({

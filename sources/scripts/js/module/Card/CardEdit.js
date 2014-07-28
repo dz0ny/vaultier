@@ -19,16 +19,17 @@ Vaultier.CardEditRoute = Ember.Route.extend(
 
         setupController: function (ctrl, model) {
             this._super(ctrl, model);
+            var environment = this.get('environment');
 
             // set breadcrumbs
             ctrl.set('breadcrumbs',
-                Vaultier.Breadcrumbs.create({router: this.get('router')})
+                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: environment})
                     .addHome()
                     .addWorkspace()
                     .addVault()
                     .addCard()
                     .addText('Edit card')
-            )
+            );
         },
 
         actions: {
@@ -42,9 +43,9 @@ Vaultier.CardEditRoute = Ember.Route.extend(
                     function () {
                         $.notify('Oooups! Something went wrong.', 'error');
                     }
-                )
+                );
 
-                ApplicationLoader.promise(promise)
+                ApplicationLoader.promise(promise);
 
             }
         }

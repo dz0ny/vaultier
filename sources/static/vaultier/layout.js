@@ -228,7 +228,7 @@ Vaultier.DotDotDotComponent = Ember.Component.extend({
 Vaultier.Breadcrumbs = Ember.Object.extend({
 
     items: null,
-
+    environment: null,
 
     addLink: function (link, title, params, icon) {
         this.items = this.items || [];
@@ -238,21 +238,21 @@ Vaultier.Breadcrumbs = Ember.Object.extend({
         if (link) {
             try {
                 if (params) {
-                    args = [link, params]
+                    args = [link, params];
                 } else {
-                    args = [link]
+                    args = [link];
                 }
-                link = this.router.generate.apply(this.router, args)
+                link = this.router.generate.apply(this.router, args);
             } catch (e) {
                 console.error(e.message);
                 console.error('Breadcrumbs error during generate route (' + link + ')');
             }
         }
 
-        title = Utils.HandlebarsHelpers.current().ellipsis(title, 25)
+        title = Utils.HandlebarsHelpers.current().ellipsis(title, 25);
 
         if (!icon) {
-            icon = '/static/vaultier/images/icon-wrench-grey.png'
+            icon = '/static/vaultier/images/icon-wrench-grey.png';
         }
 
         this.items.push({
@@ -260,7 +260,7 @@ Vaultier.Breadcrumbs = Ember.Object.extend({
             title: title,
             icon: icon,
             last: true
-        })
+        });
         return this;
     },
 
@@ -289,7 +289,7 @@ Vaultier.Breadcrumbs = Ember.Object.extend({
     },
 
     addVault: function () {
-        var vault = Service.Environment.current().vault;
+        var vault = this.get('environment.vault');
         if (vault) {
             this.addLink('Vault.index', vault.get('name'), vault,'/static/vaultier/images/icon-vault-grey.png')
         }
@@ -297,7 +297,7 @@ Vaultier.Breadcrumbs = Ember.Object.extend({
     },
 
     addCard: function () {
-        var card = Service.Environment.current().card;
+        var card = this.get('environment.card');
         if (card) {
             this.addLink('Card.index', card.get('name'), card,'/static/vaultier/images/icon-card-grey.png')
         }
@@ -306,14 +306,14 @@ Vaultier.Breadcrumbs = Ember.Object.extend({
 
 
     addWorkspace: function () {
-        var workspace = Service.Environment.current().workspace;
+        var workspace = this.get('environment.workspace');
         if (workspace) {
             this.addLink('Workspace.index', workspace.get('name'), workspace, '/static/vaultier/images/icon-workspace-grey.png')
         }
         return this;
     }
 
-})
+});
 
 
 
@@ -323,10 +323,10 @@ Vaultier.LayoutWorkspaceBoxController = Ember.Controller.extend({
 
     init: function () {
         this._super();
-        this.env = Service.Environment.current();
+        this.env = this.get('environment');
     }
 
-})
+});
 
 Vaultier.LayoutWorkspaceBoxView = Ember.View.extend({
     tagName: 'span',

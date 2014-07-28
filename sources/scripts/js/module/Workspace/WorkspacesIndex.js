@@ -34,9 +34,9 @@ Vaultier.WorkspacesIndexRoute = Ember.Route.extend(
                     } else {
                         this.transitionTo('Workspaces.select');
                     }
-                }.bind(this))
+                }.bind(this));
 
-            return promise
+            return promise;
         }
 
     });
@@ -47,7 +47,7 @@ Vaultier.WorkspacesSelectRoute = Ember.Route.extend(
 
         model: function () {
             var store = this.get('store');
-            var promise = store.find('Workspace')
+            var promise = store.find('Workspace');
             return promise;
         },
 
@@ -55,7 +55,7 @@ Vaultier.WorkspacesSelectRoute = Ember.Route.extend(
             this._super(ctrl, model);
 
             ctrl.set('breadcrumbs',
-                Vaultier.Breadcrumbs.create({router: this.get('router')})
+                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
                     .addHome()
                     .addText('List of workspaces', '/static/vaultier/images/icon-home-grey.png')
             );

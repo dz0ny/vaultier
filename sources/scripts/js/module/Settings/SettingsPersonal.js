@@ -1,15 +1,15 @@
 Vaultier.SettingsPersonalRoute = Ember.Route.extend(
     {
         renderTemplate: function () {
-            this.render('SettingsPersonal', {outlet: 'Settings'})
+            this.render('SettingsPersonal', {outlet: 'Settings'});
         },
 
         setupController: function (ctrl) {
-            ctrl.set('content', this.get('auth.user'))
+            ctrl.set('content', this.get('auth.user'));
 
                         // set breadcrumbs
             ctrl.get('controllers.Settings').set('breadcrumbs',
-                Vaultier.Breadcrumbs.create({router: this.get('router')})
+                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
                     .addHome()
                     .addSettings()
                     .addText('Personal settings')
@@ -27,9 +27,9 @@ Vaultier.SettingsPersonalRoute = Ember.Route.extend(
                     }.bind(this),
                     function () {
                         $.notify('Oooups! Something went wrong.', 'error');
-                    })
+                    });
 
-                ApplicationLoader.promise(promise)
+                ApplicationLoader.promise(promise);
             }
 
         }

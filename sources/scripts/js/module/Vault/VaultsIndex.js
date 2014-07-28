@@ -39,10 +39,10 @@ Vaultier.VaultsIndexRoute = Ember.Route.extend(
 
             // set breadcrumbs
             ctrl.set('breadcrumbs',
-                Vaultier.Breadcrumbs.create({router: this.get('router')})
+                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
                     .addHome()
                     .addWorkspace()
-            )
+            );
         }
 
     });

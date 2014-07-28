@@ -1,4 +1,6 @@
-Po.NS('Service');
+'use strict';
+
+var Service = Po.NS('Service');
 
 Service.Environment = Ember.Object.extend({
 
@@ -9,4 +11,3 @@ Service.Environment = Ember.Object.extend({
     router: null
 
 });
-Service.Environment.reopenClass(Utils.Singleton);

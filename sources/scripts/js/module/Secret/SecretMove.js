@@ -9,8 +9,8 @@ Vaultier.SecretCardNodeView = Ember.Tree.TreeNodeView.extend({
         }
     }),
     loadData: function () {
-        return []
-    },
+        return [];
+    }
 });
 
 Vaultier.SecretVaultNodeView = Ember.Tree.TreeNodeView.extend({
@@ -27,11 +27,11 @@ Vaultier.SecretVaultNodeView = Ember.Tree.TreeNodeView.extend({
             .find('Card', {vault: id})
             .then(function (model) {
                 model.forEach(function (item) {
-                    item.set('branch', true)
-                })
-                return model
-            })
-        return nodes
+                    item.set('branch', true);
+                });
+                return model;
+            });
+        return nodes;
     }
 });
 
@@ -45,7 +45,7 @@ Vaultier.SecretMoveRoute = Ember.Route.extend(
         serialize: function (secret) {
             return {
                 secret: secret.id
-            }
+            };
         },
 
         model: function (params, transition) {
@@ -57,22 +57,22 @@ Vaultier.SecretMoveRoute = Ember.Route.extend(
                 .then(this.get('auth').checkPermissions(transition, function (model) {
                     perms = model.get('perms.update');
                     return perms
-                }))
+                }));
 
             var vaults =
                 store.
                     find('Vault', {workspace: workspace.get('id')})
                     .then(function (model) {
                         model.forEach(function (item) {
-                            item.set('branch', true)
-                        })
-                        return model
-                    })
+                            item.set('branch', true);
+                        });
+                        return model;
+                    });
 
             return Ember.RSVP.hash({
                 secret: secret,
                 vaults: vaults
-            })
+            });
         },
 
         setupController: function (ctrl, model) {
@@ -81,20 +81,20 @@ Vaultier.SecretMoveRoute = Ember.Route.extend(
 
             // set breadcrumbs
             ctrl.set('breadcrumbs',
-                Vaultier.Breadcrumbs.create({router: this.get('router')})
+                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
                     .addHome()
                     .addWorkspace()
                     .addVault()
                     .addCard()
                     .addText('Move secret')
-            )
+            );
         },
 
         actions: {
 
             save: function () {
                 var record = this.get('controller.content');
-                record.set('card', this.get('controller.selected'))
+                record.set('card', this.get('controller.selected'));
                 record
                     .saveRecord()
                     .then(

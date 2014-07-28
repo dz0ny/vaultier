@@ -70,18 +70,18 @@ Service.WorkspaceKey = Ember.Object.extend(
                                     {
                                         autoHideDelay: 10000
                                     }
-                                )
-                                this.trigger('keyTransfered', workspace)
-                            }.bind(this))
+                                );
+                                this.trigger('keyTransfered', workspace);
+                            }.bind(this));
                     }
-                }.bind(this))
+                }.bind(this));
 
         },
 
         selectWorkspace: function (workspace) {
 
-            this.set('membersToApprove', null)
-            this.set('workspace', workspace)
+            this.set('membersToApprove', null);
+            this.set('workspace', workspace);
 
             if (workspace) {
                 this.stopChecking();

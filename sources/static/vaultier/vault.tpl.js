@@ -1,4 +1,5 @@
-Ember.TEMPLATES["Vault/VaultsIndex"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["Vault/VaultsIndex"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
+/**/) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, helper, options, self=this, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
@@ -244,7 +245,8 @@ function program34(depth0,data) {
   
 });
 
-Ember.TEMPLATES["Vault/VaultsIndexItem"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["Vault/VaultsIndexItem"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
+/**/) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, helper, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, self=this;
@@ -298,7 +300,8 @@ function program4(depth0,data) {
   
 });
 
-Ember.TEMPLATES["Vault/VaultsCreate"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["Vault/VaultsCreate"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
+/**/) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, helper, options, escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing;
@@ -347,7 +350,8 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   
 });
 
-Ember.TEMPLATES["Vault/VaultEdit"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["Vault/VaultEdit"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data
+/**/) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, escapeExpression=this.escapeExpression;
