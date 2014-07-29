@@ -729,28 +729,39 @@ a:hover {
     border-style: solid;
     border-color: #1686C6;
     box-shadow: 0px 0px 10px 1px #c1c1c1;
-    border-radius: 6px;
-    border-bottom-left-radius: 0px;
-    border-top-left-radius: 0px;
     border-left: 0px;
+    border-radius: 6px;
     width: 230px;
-    margin-left: 70px;
+    margin-left: 20px;
     margin-top: 20px;
     margin-right: 20px;
     background-color: transparent;
     height: 350px;
 }
 
+
 .vlt-card-item .vlt-visual {
     height: 350px;
-    left: -60px;
+    left: -25px;
     top: -2px;
     position: absolute;
     width: 60px;
-    background-size: 100% 100%;
     background-position: 0px 0px;
-    background-repeat: no-repeat;
+    background-repeat: repeat;
     background-image: url('/static/vaultier/images/visual-card.png');
+}
+
+.vlt-card-item .vlt-content {
+    position: relative;
+    margin-left: 10px;
+    color: #1686C6;
+    border-radius: 6px;
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 0px;
+    height: 100%;
+    padding: 10px;
+    background-color: #ffffff;
+    overflow: hidden;
 }
 
 .vlt-card-item .vlt-content .vlt-header h4 {
@@ -760,14 +771,6 @@ a:hover {
 }
 
 
-.vlt-card-item .vlt-content {
-    color: #1686C6;
-    border-radius: 6px;
-    height: 100%;
-    padding: 10px;
-    background-color: #ffffff;
-    overflow: hidden;
-}
 
 .vlt-card-item .vlt-content .vlt-footer {
     position: absolute;
@@ -1333,86 +1336,101 @@ span.vlt-user img {
 *************************************************************/
 
 .vlt-secret-box {
+    border-radius: 6px;
     position: relative;
-    margin-top: 100px;
-    padding: 60px 20px 20px 20px;
+    margin-top: 70px;
+    padding: 30px 20px 20px 20px;
     background-color: #1686c6;
     box-shadow: 0px 0px 10px 1px #c1c1c1;
-
 }
+
+/**
+* aspect ratio:
+* http://stackoverflow.com/questions/12121090/responsively-change-div-size-keeping-aspect-ratio
+**/
+.vlt-secret-box:after {
+    padding-top: 75%;
+    display: block;
+    content: '';
+}
+
 
 .vlt-secret-box > .vlt-visual {
+    position: relative;
+    width: 100%;
+    height: 5px;
+}
+
+.vlt-secret-box > .vlt-visual > .vlt-visual-bg {
     position: absolute;
-    top: -75px;
-    left: 50%;
-    height: 118px;
-    width: 200px;
-    margin-left: -80px;
+    top: -60px;
+    height: 100px;
+    width: 100%;
     background-image: url('/static/vaultier/images/visual-secret.png');
-    background-repeat: no-repeat;
+    background-repeat: repeat-x;
 
 }
 
-.vlt-secret-item {
+.vlt-secret-box .vlt-secret-item {
     position: relative;
     border: 1px solid #e0dbdb;
     border-top-width: 0px;
     background-color: #EEEEEE;
 }
 
-.vlt-secret-item:first-of-type {
+.vlt-secret-box .vlt-secret-item:first-of-type {
     border-top-width: 1px;
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
 }
 
-.vlt-secret-item:first-of-type .vlt-inner {
+.vlt-secret-box .vlt-secret-item:first-of-type .vlt-inner {
     border-top-right-radius: 6px;
     border-top-left-radius: 6px;
 }
 
-.vlt-secret-item:last-of-type {
+.vlt-secret-box .vlt-secret-item:last-of-type {
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
 }
 
-.vlt-secret-item:last-of-type .vlt-inner {
+.vlt-secret-box .vlt-secret-item:last-of-type .vlt-inner {
     border-bottom-right-radius: 6px;
 }
 
-.vlt-secret-item .vlt-visual {
+.vlt-secret-box .vlt-secret-item .vlt-visual {
     position: absolute;
     left: 0px;
     top: 0px;
     padding: 10px;
 }
 
-.vlt-secret-item .vlt-visual .vlt-icon {
+.vlt-secret-box .vlt-secret-item .vlt-visual .vlt-icon {
     background-size: 100% 100%;
     height: 100px;
     width: 100px;
 }
 
-.vlt-secret-item.vlt-password .vlt-visual .vlt-icon {
+.vlt-secret-box .vlt-secret-item.vlt-password .vlt-visual .vlt-icon {
     background-image: url('../images/icon-password-white.png');
 }
 
-.vlt-secret-item.vlt-note .vlt-visual .vlt-icon {
+.vlt-secret-box .vlt-secret-item.vlt-note .vlt-visual .vlt-icon {
     background-image: url('../images/icon-note-white.png');
 }
 
-.vlt-secret-item.vlt-file .vlt-visual .vlt-icon {
+.vlt-secret-box .vlt-secret-item.vlt-file .vlt-visual .vlt-icon {
     background-image: url('../images/icon-file-white.png');
 }
 
-.vlt-secret-item .vlt-visual .vlt-type {
+.vlt-secret-box .vlt-secret-item .vlt-visual .vlt-type {
     color: #ffffff;
     font-size: 20px;
     text-align: center;
     font-weight: bold;
 }
 
-.vlt-secret-item .vlt-inner {
+.vlt-secret-box .vlt-secret-item .vlt-inner {
     position: relative;
     padding: 20px;
     background-color: #ffffff;
@@ -1420,35 +1438,35 @@ span.vlt-user img {
     min-height: 150px;
 }
 
-.vlt-secret-item .vlt-inner .vlt-attr-name {
+.vlt-secret-box .vlt-secret-item .vlt-inner .vlt-attr-name {
     background-color: #F5F5F5;
 }
 
-.vlt-secret-item .vlt-inner .vlt-attrs {
+.vlt-secret-box .vlt-secret-item .vlt-inner .vlt-attrs {
     min-height: 100px;
 }
 
-.vlt-secret-item .vlt-inner .vlt-controls .vlt-buttons {
+.vlt-secret-box .vlt-secret-item .vlt-inner .vlt-controls .vlt-buttons {
     padding: 0px;
 }
 
-.vlt-secret-item.vlt-inner .vlt-controls .vlt-author {
+.vlt-secret-box .vlt-secret-item.vlt-inner .vlt-controls .vlt-author {
     padding: 0px;
 }
 
-.vlt-secret-item .vlt-inner .vlt-controls .vlt-buttons .btn-group {
+.vlt-secret-box .vlt-secret-item .vlt-inner .vlt-controls .vlt-buttons .btn-group {
     float: right;
 }
 
-.vlt-secret-item .vlt-inner .vlt-attr-name:after {
+.vlt-secret-box .vlt-secret-item .vlt-inner .vlt-attr-name:after {
     __content: ':'
 }
 
-.vlt-secret-item {
+.vlt-secret-box .vlt-secret-item {
     border-top-width: 4px;
 }
 
-.vlt-secret-item .vlt-footer-item.help-block {
+.vlt-secret-box .vlt-secret-item .vlt-footer-item.help-block {
     margin-bottom: 0px;
     margin-top: 0px;
 }
