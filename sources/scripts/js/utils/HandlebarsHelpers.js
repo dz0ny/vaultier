@@ -97,18 +97,16 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
             short = '';
             name = '';
         }
-        if (displayEmailInsideBrackets) {
-            return '<span class="vlt-user" {tooltip} >{avatar} {name} ({email})</span>'
-                .replace('{tooltip}', tooltip)
-                .replace('{name}', short)
-                .replace('{email}', email)
-                .replace('{avatar}', avatar);
-        } else {
-            return '<span class="vlt-user" {tooltip} >{avatar} {name}</span>'
-                .replace('{tooltip}', tooltip)
-                .replace('{name}', short)
-                .replace('{avatar}', avatar);
-        }
+        return '<span class="vlt-user" {tooltip} >{avatar} {name} {email}</span>'
+            .replace('{tooltip}', tooltip)
+            .replace('{name}', short)
+            .replace('{avatar}', avatar)
+            .replace('{email}', function () {
+                if (displayEmailInsideBrackets) {
+                    return '(' + email + ')';
+                }
+                return '';
+            });
 
     },
 
