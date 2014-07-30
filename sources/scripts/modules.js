@@ -251,11 +251,8 @@ var vaultierModulesConfig = {
                 "./js/module/Member/MemberIndex.js",
                 "./js/module/Member/MemberInvite.js",
                 "./js/module/Member/MemberBox.js",
-                "./js/module/Member/MemberManagement.js"
             ],
             "templates": [
-                "./js/module/Member/MemberManagerAccordion.hbs",
-                "./js/module/Member/MemberManagement.hbs",
                 "./js/module/Member/MemberIndex.hbs",
                 "./js/module/Member/MemberInvite.hbs",
                 "./js/module/Member/MemberBox.hbs",
@@ -270,15 +267,33 @@ var vaultierModulesConfig = {
                 "./js/module/Workspace/WorkspaceIndex.js",
                 "./js/module/Workspace/WorkspaceEdit.js",
                 "./js/module/Workspace/WorkspaceMember.js",
-                "./js/module/Workspace/WorkspaceMemberManagement.js"
+                "./js/module/Workspace/MembersAdmin.js"
             ],
             "templates": [
+                "./js/module/Workspace/MembersAdminRoleItemWorkspace.hbs",
+                "./js/module/Workspace/MembersAdminRoleItemVault.hbs",
+                "./js/module/Workspace/MembersAdminRoleItemCard.hbs",
+                "./js/module/Workspace/MembersAdmin.hbs",
+                "./js/module/Workspace/MembersAdminAccordion.hbs",
                 "./js/module/Workspace/WorkspacesIndex.hbs",
                 "./js/module/Workspace/WorkspacesIndexItem.hbs",
                 "./js/module/Workspace/WorkspacesIndexWithoutKeys.hbs",
                 "./js/module/Workspace/WorkspacesCreate.hbs",
                 "./js/module/Workspace/WorkspaceEdit.hbs",
                 "./js/module/Workspace/WorkspaceNoKeys.hbs"
+            ]
+        },
+        "members_admin": {
+            "scripts": [
+                "./js/module/MembersAdmin/MembersAdminAccordion.js",
+                "./js/module/MembersAdmin/MembersAdmin.js"
+            ],
+            "templates": [
+                "./js/module/MembersAdmin/MembersAdminRoleItemWorkspace.hbs",
+                "./js/module/MembersAdmin/MembersAdminRoleItemVault.hbs",
+                "./js/module/MembersAdmin/MembersAdminRoleItemCard.hbs",
+                "./js/module/MembersAdmin/MembersAdmin.hbs",
+                "./js/module/MembersAdmin/MembersAdminAccordion.hbs"
             ]
         },
         "vault": {

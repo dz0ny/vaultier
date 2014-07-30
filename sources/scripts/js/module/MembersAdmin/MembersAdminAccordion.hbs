@@ -1,0 +1,58 @@
+<div class="table vlt-table">
+
+    <div class="vlt-row">
+        <div class="row">
+            <div class="vlt-col  col-sm-4 vlt-user">
+                {{printUser member size=50}}
+            </div>
+            <div class="vlt-col col-sm-4 vlt-labels">
+                {{#if member.total_roles}}
+
+                    <span class="label label-default">
+                        <span class="badge">{{member.total_roles}}</span>
+                        {{pluralize member.total_roles "permission"}}
+                    </span>
+                {{else}}
+                    <span class="label label-warning">Has no permissions</span>
+                    {{#if member.isInvited}}
+                        <span class="label label-warning">Invited only. Did not show up yet!</span>
+                    {{else}}
+                        <span class="label label-danger">Has no keys</span>
+                    {{/if}}
+                {{/if}}
+            </div>
+            <div class="vlt-col col-sm-4 vlt-actions">
+                <div class="vlt-edit-perms pull-right">
+                    <a class="btn btn-default accordion-toggle btn-sm" type="button" data-toggle="collapse"
+                        {{bind-attr href=targetElement}} {{action "loadRoles" target=view}} {{bind-attr disabled=member.isInvited}}>
+                        <span class="caret vlt-caret"></span>
+                    </a>
+
+                    <a class="vlt-delete btn btn-default btn-sm" {{action "deleteMember" member target=view}}>
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="row collapse" {{ bind-attr id="id"}}>
+
+        <div class="list-group well-lg">
+
+            {{#ifCond roles '&&' roles.length}}
+                <p class="lead"><small>Permission</small></p>
+                {{#each role in roles }}
+                    {{view Vaultier.MembersAdminRoleItemView role=role }}
+                {{/each}}
+            {{/ifCond}}
+
+        </div>
+        {{!-- End list-group --}}
+
+    </div>
+    {{!-- End vlt-row collapse --}}
+</div>
+{{!-- end of vlt-row --}}
+</div>
+{{!-- end table --}}

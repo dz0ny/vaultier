@@ -79,7 +79,7 @@ var router = Vaultier.Router.map(function () {
             // member
             this.route('memberIndex', { path: '/team'});
             this.route('memberInvite', { path: '/team/invite'});
-            this.route('memberManagement', {path: '/team/management'});
+            this.resource('MembersAdmin', {path: '/team/management'});
 
             /************************************************************
              * Vaults

@@ -203,6 +203,29 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
         }
     },
 
+    /**
+     * Creates a plural whit the name given if the word is
+     * irregular pass the correct plural as the option parameter
+     * @param quantity {Number}
+     * @param name {String}
+     * @param option {String}
+     * @returns {String}
+     */
+    pluralize: function (quantity, name, option) {
+        if (quantity === 1) {
+            return name;
+        }
+        if (option) {
+            return name + option;
+        }
+        // mostly just word finished with 'h' or 's' needs 'es' to make the plural
+        if (/[hs]$/.test(name)) {
+            return name + 'es';
+        }
+        return name + 's';
+
+    },
+
     register: function () {
 
         var renderMarkdown = this.renderMarkdown.bind(this)
@@ -227,7 +250,17 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
         /////////////////////////////////////////////////////////////////
         var debug = this.debug.bind(this);
         Ember.Handlebars.registerBoundHelper('debug', debug);
+        /////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////
+        var pluralize = this.pluralize.bind(this);
+        Ember.Handlebars.registerBoundHelper('pluralize', pluralize);
 
+        /////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////
         var ucfirst = this.ucfirst.bind(this);
         Ember.Handlebars.registerBoundHelper('ucfirst', ucfirst);
 

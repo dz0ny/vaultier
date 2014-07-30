@@ -9,7 +9,7 @@
                         Back
                     </a>
 
-                    {{#link-to inviteRouteName class="btn btn-primary"}}
+                    {{#link-to 'Workspace.memberInvite' class="btn btn-primary"}}
                         <span class="glyphicon glyphicon-user"></span>
                         Invite
                     {{/link-to}}
@@ -20,7 +20,7 @@
             </div>
             <div class="clearfix"></div>
         </div>
-        <div class="panel panel-default">
+        <div class="panel panel-default vlt-panel-members">
             <div class="panel-heading ">
                 <div class="vlt-col col-md-8">
                     <h4> {{members.length}} members at <strong>{{content.workspace.name}}</strong></h4>
@@ -30,7 +30,7 @@
             <!-- End of heading -->
             <div class="panel-body" id="collapse">
                 {{#each member in members }}
-                    {{member-manager-accordion member=member deleteMember="deleteMember" loadRoles="loadRoles" deleteRole="deleteRole"}}
+                    {{members-admin-accordion member=member deleteMember="deleteMember" loadRoles="loadRoles" deleteRole="deleteRole"}}
                 {{/each}}
             </div>
             <!-- End of panel-body -->

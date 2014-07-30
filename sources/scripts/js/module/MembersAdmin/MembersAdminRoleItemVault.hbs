@@ -1,0 +1,50 @@
+<div class="list-group-item">
+
+    <div class="clt-col col-sm-5">
+
+            <span data-toggle="tooltip vlt-img-25" data-placement="top" title="Vault">
+                <img class="vlt-wspaceimg"
+                    src="/static/vaultier/images/icon-vault-grey.png"
+                    style="width: 25px">
+             </span>
+
+        <span class="col-sm-offset-1" data-toggle="tooltip" data-placement="top" title="name">
+
+            {{role.to_vault.name}}
+
+        </span>
+
+    </div>
+
+    <div class="vlt-col col-sm-5 vlt-labels">
+        {{#if role.isMemberWithoutKeys}}
+            <span class="vlt-edit-perms vlt-labels">
+                <span class="label label-warning">
+                    Does not have workspace key yet
+                </span>
+            </span>
+        {{/if}}
+
+        {{#if role.isInvited}}
+            <span class="vlt-edit-perms vlt-labels">
+                <span class="label label-warning">
+                    Invited only. Did not show up yet!
+                </span>
+            </span>
+        {{/if}}
+
+        <span class="vlt-edit-perms vlt-labels">
+            <span data-toggle='tooltip'
+                class="label label-default" {{bind-attr title=role.printableDesc}}>
+                    {{role.printableName}}
+            </span>
+        </span>
+    </div>
+
+    <div class="vlt-col col-sm-2 vlt-actions pull-right">
+        <a class="vlt-delete btn btn-default btn-sm pull-right">
+            <span class="glyphicon glyphicon-trash" {{action "deleteRole" role }}></span>
+        </a>
+    </div>
+    <div class="clearfix"></div>
+</div>{{! end list-group-item }}

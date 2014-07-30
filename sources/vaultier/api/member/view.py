@@ -37,6 +37,7 @@ class CanDeleteMember(BasePermission):
 class MemberSerializer(ModelSerializer):
     email = SerializerMethodField('get_email')
     nickname = SerializerMethodField('get_nickname')
+    total_roles = SerializerMethodField('get_member_roles')
 
     def get_email(self, obj):
         if obj:
@@ -52,9 +53,15 @@ class MemberSerializer(ModelSerializer):
             else:
                 return obj.invitation_email
 
+    def get_member_roles(self, obj):
+        if not obj.user:
+            return None
+        from vaultier.models.role.model import Role
+        return Role.objects.all_for_user(obj.user).filter(member=obj).count()
+
     class Meta:
         model = Member
-        fields = ('id', 'status', 'email', 'nickname', 'workspace', 'user', 'created_at', 'updated_at')
+        fields = ('id', 'status', 'email', 'nickname', 'workspace', 'user', 'created_at', 'updated_at', 'total_roles')
 
 
 class RelatedMemberSerializer(MemberSerializer):

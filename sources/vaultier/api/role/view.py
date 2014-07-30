@@ -82,10 +82,11 @@ class RoleViewSet(
     def get_serializer_class(self):
         if self.action == 'update' or self.action == 'partial_update':
             return RoleUpdateSerializer
-        elif self.action == 'list' and self.request.QUERY_PARAMS.get('to_member', None):
+
+        if self.action == 'list' and self.request.QUERY_PARAMS.get('to_member', None):
             return MemberRolesSerializer
-        else:
-            return super(RoleViewSet, self).get_serializer_class()
+
+        return super(RoleViewSet, self).get_serializer_class()
 
     def pre_save(self, object):
         self.check_object_permissions(self.request, object)

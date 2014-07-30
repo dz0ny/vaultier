@@ -90,8 +90,6 @@ Vaultier.registerDI = function (app) {
     // components injections
     app.inject('component:change-key', 'changekey', 'service:changekey');
 
-    app.inject('component:member-manager-accordion', 'store', 'store:main');
-
     // service:environment
     app.register('service:environment', Service.Environment);
     app.inject('route', 'environment', 'service:environment');

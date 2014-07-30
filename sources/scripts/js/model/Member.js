@@ -8,6 +8,7 @@ Vaultier.Member = RL.Model.extend(
         nickname: RL.attr('string'),
         user: RL.attr('object'),
         workspace: RL.attr('object'),
+        total_roles: RL.attr('number'),
 
         statuses: new Utils.ConstantList({
             'INVITED': {
@@ -22,7 +23,11 @@ Vaultier.Member = RL.Model.extend(
                 value: 300,
                 text: 'MEMBER'
             }
-        })
+        }),
+
+        isInvited: function () {
+            return this.get('status') === this.get('statuses')['INVITED'].value;
+        }.property('status')
 
     });
 

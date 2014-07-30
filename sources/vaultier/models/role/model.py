@@ -26,7 +26,8 @@ class RoleManager(Manager):
     def all_for_member(self, member_id):
         from vaultier.models.member.model import Member
         member = Member.objects.get(pk=member_id)
-        return self.all_for_user(member.user)
+
+        return self.all_for_user(member.user).filter(member=member)
 
     def all_for_user(self, user):
         from vaultier.models.workspace.model import Workspace
