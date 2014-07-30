@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, url
 
 from rest_framework import routers
-from vaultier.api.auth.view import AuthView, LogoutView
+from vaultier.api.auth.view import AuthView, LogoutView, DigestView
 from vaultier.api.card.view import CardViewSet
 from vaultier.api.member.view import MemberViewSet
 from vaultier.api.role.view import RoleViewSet
@@ -38,4 +38,5 @@ urlpatterns += patterns('',
                         url(r'^auth/auth$', AuthView.as_view(), name='auth-auth'),
                         url(r'^auth/user$', UserViewSet.as_view(), name='auth-user'),
                         url(r'^auth/logout$', LogoutView.as_view(), name='auth-logout'),
+                        url(r'^auth/digest$', DigestView.as_view(), name='auth-digest'),
 )

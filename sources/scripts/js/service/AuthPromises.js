@@ -10,15 +10,16 @@ Service.AuthPromises = Ember.Object.extend({
      */
     coder: null,
 
-    _auth: function (email, privateKey) {
+    _auth: function (email, digest, privateKey) {
         var coder = this.coder;
-        var signature = coder.sign(email, privateKey);
+        var signature = coder.sign(email + digest, privateKey);
 
         return Utils.RSVPAjax({
             url: '/api/auth/auth',
             type: 'post',
             data: {
                 email: email,
+                digest: digest,
                 signature: signature
             }})
     },
@@ -72,12 +73,12 @@ Service.AuthPromises = Ember.Object.extend({
             .then(this._resetToken())
     },
 
-    login: function (email, privateKey) {
+    login: function (email, digest, privateKey) {
         var user;
         var token;
         return Ember.RSVP.resolve()
             .then(function() {
-                return this._auth(email, privateKey)
+                return this._auth(email, digest, privateKey)
             }.bind(this))
 
             .then(function(response) {
@@ -89,8 +90,16 @@ Service.AuthPromises = Ember.Object.extend({
             .then(function() {
                 return this._retrieveUser(user)
             }.bind(this))
-    }
+    },
 
+
+    getDigest: function (email) {
+        return Utils.RSVPAjax({
+            url: '/api/auth/digest',
+            type: 'post',
+            data: {email: email}
+        });
+    }
 
 })
 ;

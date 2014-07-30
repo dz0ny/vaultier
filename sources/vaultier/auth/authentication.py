@@ -46,14 +46,14 @@ class Backend(ModelBackend):
         sig = signer.sign(h)
         return sig.encode('base64')
 
-    def authenticate(self, email=None, signature=None):
+    def authenticate(self, email=None, digest=None, signature=None):
         from vaultier.models import Token, User
 
         try:
             user = User.objects.get(email=email.lower())
         except User.DoesNotExist:
             return None
-        if (self.verify(user.public_key, email, signature)):
+        if (self.verify(user.public_key, email + digest, signature)):
             token = Token(user=user);
             token.save();
             return token

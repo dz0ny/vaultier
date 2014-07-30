@@ -109,31 +109,35 @@ Service.Auth = Ember.Object.extend({
         }
         email = email.toLowerCase();
 
-        return this.promises.login(email, privateKey)
-            .then(
-                // successfull login
-                function (user) {
-                    // save credentials
-                    this.setAuthenticatedUser(user, privateKey, this.promises.get('token'))
+        return this.promises.getDigest(email)
+            .then(function (response) {
+                return this.promises.login(email, response.digest, privateKey)
+                    .then(
+                    // successfull login
+                    function (user) {
+                        // save credentials
+                        this.setAuthenticatedUser(user, privateKey, this.promises.get('token'))
 
-                    // transition to previously requested page
-                    if (transitionAfterLogin) {
-                        var transition = this.get('transition');
-                        if (transition) {
-                            transition.retry()
-                        } else {
-                            this.get('router').transitionTo('index')
+                        // transition to previously requested page
+                        if (transitionAfterLogin) {
+                            var transition = this.get('transition');
+                            if (transition) {
+                                transition.retry()
+                            } else {
+                                this.get('router').transitionTo('index')
+                            }
                         }
-                    }
 
-                    return user
-                }.bind(this),
+                        return user
+                    }.bind(this),
 
-                // unsuccessfull login
-                function () {
-                    this.setAuthenticatedUser(null)
-                    return Ember.RSVP.reject()
-                }.bind(this))
+                    // unsuccessfull login
+                    function () {
+                        this.setAuthenticatedUser(null)
+                        return Ember.RSVP.reject()
+                    }.bind(this))
+            }.bind(this));
+
     },
 
     rememberUser: function (email,privateKey, ttl) {
