@@ -29,6 +29,7 @@ class TokenAuthentication(BaseAuthentication):
 
 
 class Backend(ModelBackend):
+    timestamp_validator = None
     @classmethod
     def verify(self, public_key, content, signature):
         signature = b64decode(signature)
@@ -46,14 +47,15 @@ class Backend(ModelBackend):
         sig = signer.sign(h)
         return sig.encode('base64')
 
-    def authenticate(self, email=None, digest=None, signature=None):
+    def authenticate(self, email=None, js_timestamp=None, signature=None):
         from vaultier.models import Token, User
 
         try:
             user = User.objects.get(email=email.lower())
         except User.DoesNotExist:
             return None
-        if (self.verify(user.public_key, email + digest, signature)):
+
+        if (self.verify(user.public_key, email + str(js_timestamp), signature)):
             token = Token(user=user);
             token.save();
             return token

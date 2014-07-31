@@ -109,9 +109,7 @@ Service.Auth = Ember.Object.extend({
         }
         email = email.toLowerCase();
 
-        return this.promises.getDigest(email)
-            .then(function (response) {
-                return this.promises.login(email, response.digest, privateKey)
+        return this.promises.login(email, privateKey)
                     .then(
                     // successfull login
                     function (user) {
@@ -136,7 +134,6 @@ Service.Auth = Ember.Object.extend({
                         this.setAuthenticatedUser(null)
                         return Ember.RSVP.reject()
                     }.bind(this))
-            }.bind(this));
 
     },
 

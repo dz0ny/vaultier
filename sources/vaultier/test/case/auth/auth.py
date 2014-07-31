@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 from django.test.testcases import TransactionTestCase
 from django.utils import unittest
 from django.utils.unittest.suite import TestSuite
@@ -5,7 +6,7 @@ from rest_framework.status import HTTP_201_CREATED, HTTP_200_OK, HTTP_403_FORBID
 from modelext.version.context import version_context_manager
 from vaultier.auth.authentication import Backend
 
-from vaultier.test.tools.auth.api import auth_api_call, register_api_call
+from vaultier.test.tools.auth.api import auth_api_call, register_api_call, get_timestamp
 from vaultier.test.tools import FileAccessMixin, format_response
 
 
@@ -18,6 +19,15 @@ class SignaturesTest(TransactionTestCase, FileAccessMixin):
 
         self.assertTrue(Backend.verify(pubkey, email, signature))
         self.assertFalse(Backend.verify(pubkey, 'Unsigned text', signature))
+
+
+class FakeDate(object):
+    """
+    A fake replacement for date that can be mocked for testing
+    """
+    @classmethod
+    def now(cls):
+        return datetime.datetime.now() + timedelta(seconds=40)
 
 
 class ApiRegisterTest(TransactionTestCase):
@@ -38,7 +48,6 @@ class ApiRegisterTest(TransactionTestCase):
         self.assertTrue(response.data.get('email') is not None)
         self.assertEqual(response.status_code, HTTP_400_BAD_REQUEST, msg=format_response(response))
 
-
     def test_020_auth(self):
          # register user
         email = 'jan.misek@rclick.cz'
@@ -51,7 +60,8 @@ class ApiRegisterTest(TransactionTestCase):
         self.assertEqual(response.status_code, HTTP_200_OK, msg=format_response(response))
 
         # try to login, check wrong signature
-        response = auth_api_call(email=email, signature='WrongSignature')
+        js_timestamp = get_timestamp()
+        response = auth_api_call(email=email, js_timestamp=js_timestamp, signature='WrongSignature')
         self.assertEqual(response.status_code, HTTP_403_FORBIDDEN, msg=format_response(response))
 
     def test_030_registration_should_be_case_insensitive(self):
@@ -108,8 +118,6 @@ class ApiRegisterTest(TransactionTestCase):
         self.assertEqual(response.status_code, HTTP_400_BAD_REQUEST, msg=format_response(response))
         self.assertEqual(response.data.get('email'), [u'User with this Email already exists.'],
                          'The email was already registered')
-
-
 
 
 def auth_suite():
