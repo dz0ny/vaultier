@@ -6,6 +6,8 @@ Vaultier.MemberBoxComponent = Ember.Component.extend({
         this.checkParameters();
     },
 
+    object: null,
+
     checkParameters: function () {
         var roles = this.get('roles');
         var user = this.get('user');
@@ -22,32 +24,25 @@ Vaultier.MemberBoxComponent = Ember.Component.extend({
 
     processedRoles: function () {
         // remove me from roles
-        var roles = this.get('roles').filter(function (role) {
-            if (role.get('member.user') != this.get('user.id')) {
-                return role;
-            }
-        }.bind(this))
-
-        // sort by permission level
-        roles = roles.sort(function (a, b) {
-            return b.get('level') - a.get('level');
+        var roles = Utils.RolesProxy.create({
+           content: this.get('roles')
         });
+        roles.removeUser(this.get('auth.user'))
+            .filterCreateRolesByObjectScope(this.get('object'));
 
         // unique array
         var foundRoles = []
-        roles = roles.filter(function (role) {
+        return roles.filter(function (role) {
             var id = role.get('member.id');
             if (foundRoles.indexOf(id) == -1) {
                 foundRoles.push(id);
                 return role;
             }
-        })
-
-        return roles;
+        });
     }.property('roles'),
 
     hasAny: function () {
-        if (this.get('processedRoles').length > 0) {
+        if (this.get('processedRoles').get('length') > 0) {
             return true;
         }
         return false;

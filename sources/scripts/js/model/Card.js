@@ -6,5 +6,9 @@ Vaultier.Card = RL.Model.extend(
         slug: RL.attr('string'),
         description: RL.attr('string'),
         vault: RL.attr('number'),
-        perms: RL.attr('object')
+        perms: RL.attr('object'),
+
+        objectType: function () {
+            return Vaultier.Role.proto().types['TO_CARD'].value;
+        }.property()
     });

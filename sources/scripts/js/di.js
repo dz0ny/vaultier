@@ -98,5 +98,6 @@ Vaultier.registerDI = function (app) {
     app.inject('controller:LayoutWorkspaceBox', 'environment', 'service:environment');
     app.inject('service:invitations', 'env', 'service:environment');
 
+    app.inject('component:member-box', 'auth', 'service:auth');
     // model injections - it is done in model inits
 }

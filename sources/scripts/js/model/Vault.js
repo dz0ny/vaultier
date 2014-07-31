@@ -6,7 +6,11 @@ Vaultier.Vault = RL.Model.extend(
         slug: RL.attr('string'),
         workspace: RL.attr('number'),
         description: RL.attr('string'),
-        perms: RL.attr('object')
+        perms: RL.attr('object'),
+
+        objectType: function () {
+            return Vaultier.Role.proto().types['TO_VAULT'].value;
+        }.property()
 
     });
 
