@@ -17,14 +17,14 @@
                     {{#if member.isInvited}}
                         <span class="label label-warning">Invited only. Did not show up yet!</span>
                     {{else}}
-                        <span class="label label-danger">Has no keys</span>
+                        <span class="label label-warning">Does not have key yet</span>
                     {{/if}}
                 {{/if}}
             </div>
             <div class="vlt-col col-sm-4 vlt-actions">
                 <div class="vlt-edit-perms pull-right">
                     <a class="btn btn-default accordion-toggle btn-sm" type="button" data-toggle="collapse"
-                        {{bind-attr href=targetElement}} {{action "loadRoles" target=view}} {{bind-attr disabled=member.isInvited}}>
+                        {{bind-attr href=targetElement}} {{action "loadRoles" target=view}} {{bind-attr disabled=member.isNotMember}}>
                         <span class="caret vlt-caret"></span>
                     </a>
 

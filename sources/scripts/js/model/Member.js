@@ -24,6 +24,12 @@ Vaultier.Member = RL.Model.extend(
                 text: 'MEMBER'
             }
         }),
+        /**
+         * @return {Boolean}
+         */
+        isNotMember: function () {
+            return this.get('status') !== this.get('statuses')['MEMBER'].value;
+        }.property('status'),
 
         isInvited: function () {
             return this.get('status') === this.get('statuses')['INVITED'].value;

@@ -84,14 +84,13 @@ Vaultier.MembersAdminRoute = Ember.Route.extend({
              * @param context
              * @param member
              */
-            deleteMember: function (context, member) {
-
+            deleteMember: function (member) {
                 Vaultier.confirmModal(this, 'Are you sure you want to delete this member?', function () {
 
                     var promise = member
                         .deleteRecord()
                         .then(function () {
-                            var members = context.get('members');
+                            var members = this.get('controller.content.members');
                             members.removeObject(member);
                             $.notify('Member has been remove', 'success');
                         }.bind(this))
@@ -117,7 +116,7 @@ Vaultier.MembersAdminController = Em.Controller.extend({
                 return item.get('email') !== user.get('email');
             }
         );
-    }.property('content.@each')
+    }.property('content.members.@each')
 });
 
 
@@ -193,7 +192,7 @@ Vaultier.MembersAdminAccordionComponent = Em.Component.extend({
         },
 
         deleteMember: function (member) {
-            this.sendAction('deleteMember', this.get('context'), member);
+            this.sendAction('deleteMember', member);
         }
     }
 })

@@ -3,35 +3,45 @@
         <div class="vlt-page-nav">
 
             <div class="vlt-page-toolbar pull-right">
-                <div>
+                <div class="vlt-members-management-controls">
                     <a href="javascript:window.history.go(-1)" class="btn btn-default">
                         <span class="glyphicon glyphicon-chevron-left"></span>
                         Back
                     </a>
 
                     {{#link-to 'Workspace.memberInvite' class="btn btn-primary"}}
-                        <span class="glyphicon glyphicon-user"></span>
+                        <span class="glyphicon glyphicon-plus"></span>
                         Invite
+                    {{/link-to}}
+
+                    {{#link-to 'Workspace.memberIndex' class="btn btn-default pull-right"}}
+                        <span class="glyphicon glyphicon-user"></span>
+                        People
                     {{/link-to}}
                 </div>
             </div>
             <div class="pull-left">
-                <h2>{{ content.workspace.name }}</h2>
+                <h2>Mebers management for <strong>{{ content.workspace.name }}</strong></h2>
             </div>
             <div class="clearfix"></div>
         </div>
         <div class="panel panel-default vlt-panel-members">
             <div class="panel-heading ">
                 <div class="vlt-col col-md-8">
-                    <h4> {{members.length}} members at <strong>{{content.workspace.name}}</strong></h4>
+                    <h4> {{members.length}} Members at </h4>
                 </div>
                 <div class="clearfix"></div>
             </div>
             <!-- End of heading -->
             <div class="panel-body" id="collapse">
-                {{#each member in members }}
-                    {{members-admin-accordion member=member deleteMember="deleteMember" loadRoles="loadRoles" deleteRole="deleteRole"}}
-                {{/each}}
+                {{#if members.length}}
+                    {{#each member in members }}
+                        {{members-admin-accordion member=member deleteMember="deleteMember" loadRoles="loadRoles" deleteRole="deleteRole"}}
+                    {{/each}}
+                {{else}}
+                    <div class="lead">You have no members on  this workspace</div>
+                {{/if}}
+
             </div>
             <!-- End of panel-body -->
             <div class="clearfix"></div>
