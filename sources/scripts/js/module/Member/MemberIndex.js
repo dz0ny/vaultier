@@ -184,8 +184,7 @@ Vaultier.MemberIndexRoute = Ember.Route.extend(
 Vaultier.MemberIndexController = Ember.Controller.extend({
     currentObject: null,
     blocks: function () {
-        Po.NS('Utils');
-        var rolesProxy = Utils.RolesProxy;
+        var UtilsRolesProxy = Utils.RolesProxy;
         var auth = this.get('auth');
         var shownIndex = 0;
         return this.get('content').map(function (item, index) {
@@ -204,7 +203,7 @@ Vaultier.MemberIndexController = Ember.Controller.extend({
                 isHidden: isHidden,
                 readOnly: index > 0
             });
-            var roles = rolesProxy.create({
+            var roles = UtilsRolesProxy.create({
                 content: item.roles.toArray()
             });
             roles.filterCreateRolesByObjectScope(this.get('currentObject'));

@@ -16,7 +16,7 @@ Utils.RolesProxy = Em.ArrayProxy.extend(
     {
         init: function () {
             this._super.apply(this, arguments);
-            this.set('sealUsers', []);// must be reset manually each time tha the class is instantiated
+            this.set('sealedUsers', []);// must be reset manually each time tha the class is instantiated
         },
         content: [],
 
@@ -24,7 +24,7 @@ Utils.RolesProxy = Em.ArrayProxy.extend(
          * User to be seal(reverse of filter) from content array
          * @type {Array}
          */
-        sealUsers: [],
+        sealedUsers: [],
 
         /**
          * Current object {Workspace, Vault or Card}
@@ -51,7 +51,7 @@ Utils.RolesProxy = Em.ArrayProxy.extend(
                     sortFunction: this.sortFunction,
                     content: this.get('content').filter(this.filterFunction.bind(this))
                 });
-        }.property('content', 'objectScope', 'sealUsers.[]', 'sortProperties.[]'),
+        }.property('content', 'objectScope', 'sealedUsers.[]', 'sortProperties.[]'),
 
         /**
          * @type {Number}
@@ -88,10 +88,10 @@ Utils.RolesProxy = Em.ArrayProxy.extend(
          */
         filterFunction: function (item, idx, enumerable) {
             var objectScope = this.get('objectScope');
-            var sealUsers = this.get('sealUsers');
-            if (objectScope && !this.roleIsRelatedToObject(item, objectScope)) {
+            var sealUsers = this.get('sealedUsers');
+            if (objectScope && !this.isRoleRelatedToObject(item, objectScope)) {
                 return false;
-            } else if (sealUsers.length && this.sealUser(item)) {
+            } else if (sealUsers.length && this.isUserSealed(item)) {
                 return false;
             }
             return true;
@@ -108,26 +108,26 @@ Utils.RolesProxy = Em.ArrayProxy.extend(
         },
 
         /**
-         * Add a user to the sealUsers array if the user is not yet there.
+         * Add a user to the sealedUsers array if the user is not yet there.
          *
          * @param user {Vaultier.User}
          * @returns {RolesProxy}
          */
         removeUser: function (user) {
-            if (this.get('sealUsers').indexOf(user.get('id')) < 0) {
-                this.get('sealUsers').push(user.get('id'));
+            if (this.get('sealedUsers').indexOf(user.get('id')) < 0) {
+                this.get('sealedUsers').push(user.get('id'));
             }
 
             return this;
         },
 
         /**
-         * Returns true if the user is not on the sealUsers array
+         * Returns true if the user is not on the sealedUsers array
          * @param role {Vaultier.Role}
          * @returns {boolean}
          */
-        sealUser: function (role) {
-            return this.get('sealUsers').indexOf(role.get('member.user')) > -1;
+        isUserSealed: function (role) {
+            return this.get('sealedUsers').indexOf(role.get('member.user')) > -1;
         },
 
         /**
@@ -136,7 +136,7 @@ Utils.RolesProxy = Em.ArrayProxy.extend(
          * @param objectScope
          * @returns {boolean}
          */
-        roleIsRelatedToObject: function (role, objectScope) {
+        isRoleRelatedToObject: function (role, objectScope) {
             var create = this.get('createLevelValue');
             if (role.get('level') !== create) {
                 return true;
@@ -154,21 +154,12 @@ Utils.RolesProxy = Em.ArrayProxy.extend(
         contentArrayDidChange: function (array, idx, removedCount, addedCount) {
             if (addedCount) {
                 var items = array.slice(idx, idx + addedCount);
-                this.addItems(items);
+                items.forEach(function (item) {
+                    if (this.filterFunction(item)) {
+                        this.get('arrangedContent').pushObject(item);
+                    }
+                }.bind(this));
             }
-        },
-
-        /**
-         *
-         * @param items {Array}
-         */
-        addItems: function (items) {
-
-            items.forEach(function (item) {
-                if (this.filterFunction(item)) {
-                    this.get('arrangedContent').pushObject(item);
-                }
-            }.bind(this));
         }
 
     });
