@@ -1,30 +1,34 @@
 <div class="table vlt-table">
-
     <div class="vlt-row">
         <div class="row">
             <div class="vlt-col  col-sm-4 vlt-user">
                 {{printUser member size=50}}
             </div>
             <div class="vlt-col col-sm-4 vlt-labels">
-                {{#if member.total_roles}}
+                {{#if rolesCount}}
 
                     <span class="label label-default">
-                        <span class="badge">{{member.total_roles}}</span>
-                        {{pluralize member.total_roles "permission"}}
+                        <span class="badge">{{rolesCount}}</span>
+                        {{pluralize rolesCount "permission"}}
                     </span>
                 {{else}}
                     <span class="label label-warning">Has no permissions</span>
+
                     {{#if member.isInvited}}
                         <span class="label label-warning">Invited only. Did not show up yet!</span>
                     {{else}}
-                        <span class="label label-warning">Does not have key yet</span>
+                        {{#if member.hasNoKeys}}
+                            <span class="label label-warning">Does not have key yet</span>
+                        {{/if}}
+
                     {{/if}}
                 {{/if}}
             </div>
+
             <div class="vlt-col col-sm-4 vlt-actions">
                 <div class="vlt-edit-perms pull-right">
                     <a class="btn btn-default accordion-toggle btn-sm" type="button" data-toggle="collapse"
-                        {{bind-attr href=targetElement}} {{action "loadRoles" target=view}} {{bind-attr disabled=member.isNotMember}}>
+                        {{bind-attr href=targetElement}} {{action "loadRoles" target=view}} {{bind-attr disabled=isDisabledRolesDropDown}}>
                         <span class="caret vlt-caret"></span>
                     </a>
 
@@ -38,21 +42,23 @@
 
         <div class="row collapse" {{ bind-attr id="id"}}>
 
-        <div class="list-group well-lg">
+            <div class="list-group well-lg">
+                {{debug rolesCount}}
+                {{#if rolesCount}}
+                    <div class="lead"><small>Permissions</small></div>
+                    {{#each role in roles }}
+                        {{view Vaultier.MembersAdminRoleItemView role=role }}
+                    {{/each}}
+                {{else}}
+                    <div class="lead"><small>This member has no permissions</small></div>
+                {{/if}}
 
-            {{#ifCond roles '&&' roles.length}}
-                <p class="lead"><small>Permission</small></p>
-                {{#each role in roles }}
-                    {{view Vaultier.MembersAdminRoleItemView role=role }}
-                {{/each}}
-            {{/ifCond}}
+            </div>
+            {{!-- End list-group --}}
 
         </div>
-        {{!-- End list-group --}}
-
+        {{!-- End vlt-row collapse --}}
     </div>
-    {{!-- End vlt-row collapse --}}
-</div>
-{{!-- end of vlt-row --}}
+    {{!-- end of vlt-row --}}
 </div>
 {{!-- end table --}}

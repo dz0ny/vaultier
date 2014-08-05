@@ -135,20 +135,14 @@ function program1(depth0,data) {
 
 function program3(depth0,data) {
   
-  
-  data.buffer.push("\n                        <span class=\"glyphicon glyphicon-user\"></span>\n                        People\n                    ");
-  }
-
-function program5(depth0,data) {
-  
   var buffer = '', stack1;
   data.buffer.push("\n                    ");
-  stack1 = helpers.each.call(depth0, "member", "in", "members", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(6, program6, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
+  stack1 = helpers.each.call(depth0, "member", "in", "members", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(4, program4, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n                ");
   return buffer;
   }
-function program6(depth0,data) {
+function program4(depth0,data) {
   
   var buffer = '', helper, options;
   data.buffer.push("\n                        ");
@@ -162,7 +156,7 @@ function program6(depth0,data) {
   return buffer;
   }
 
-function program8(depth0,data) {
+function program6(depth0,data) {
   
   
   data.buffer.push("\n                    <div class=\"lead\">You have no members on  this workspace</div>\n                ");
@@ -173,19 +167,14 @@ function program8(depth0,data) {
     'class': ("btn btn-primary")
   },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "Workspace.memberInvite", options) : helperMissing.call(depth0, "link-to", "Workspace.memberInvite", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n\n                    ");
-  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{
-    'class': ("btn btn-default pull-right")
-  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "Workspace.memberIndex", options) : helperMissing.call(depth0, "link-to", "Workspace.memberIndex", options));
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n                </div>\n            </div>\n            <div class=\"pull-left\">\n                <h2>Mebers management for <strong>");
+  data.buffer.push("\n\n                </div>\n            </div>\n            <div class=\"pull-left\">\n                <h2>Members of workspace <strong>");
   stack1 = helpers._triageMustache.call(depth0, "content.workspace.name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("</strong></h2>\n            </div>\n            <div class=\"clearfix\"></div>\n        </div>\n        <div class=\"panel panel-default vlt-panel-members\">\n            <div class=\"panel-heading \">\n                <div class=\"vlt-col col-md-8\">\n                    <h4> ");
   stack1 = helpers._triageMustache.call(depth0, "members.length", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push(" Members at </h4>\n                </div>\n                <div class=\"clearfix\"></div>\n            </div>\n            <!-- End of heading -->\n            <div class=\"panel-body\" id=\"collapse\">\n                ");
-  stack1 = helpers['if'].call(depth0, "members.length", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(8, program8, data),fn:self.program(5, program5, data),contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers['if'].call(depth0, "members.length", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(6, program6, data),fn:self.program(3, program3, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n\n            </div>\n            <!-- End of panel-body -->\n            <div class=\"clearfix\"></div>\n\n        </div>\n\n        <div class=\"clearfix\"></div>\n    </div>\n</div>");
   return buffer;
@@ -202,10 +191,10 @@ function program1(depth0,data) {
   
   var buffer = '', stack1, helper, options;
   data.buffer.push("\n\n                    <span class=\"label label-default\">\n                        <span class=\"badge\">");
-  stack1 = helpers._triageMustache.call(depth0, "member.total_roles", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers._triageMustache.call(depth0, "rolesCount", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("</span>\n                        ");
-  data.buffer.push(escapeExpression((helper = helpers.pluralize || (depth0 && depth0.pluralize),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["ID","STRING"],data:data},helper ? helper.call(depth0, "member.total_roles", "permission", options) : helperMissing.call(depth0, "pluralize", "member.total_roles", "permission", options))));
+  data.buffer.push(escapeExpression((helper = helpers.pluralize || (depth0 && depth0.pluralize),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["ID","STRING"],data:data},helper ? helper.call(depth0, "rolesCount", "permission", options) : helperMissing.call(depth0, "pluralize", "rolesCount", "permission", options))));
   data.buffer.push("\n                    </span>\n                ");
   return buffer;
   }
@@ -213,7 +202,7 @@ function program1(depth0,data) {
 function program3(depth0,data) {
   
   var buffer = '', stack1;
-  data.buffer.push("\n                    <span class=\"label label-warning\">Has no permissions</span>\n                    ");
+  data.buffer.push("\n                    <span class=\"label label-warning\">Has no permissions</span>\n\n                    ");
   stack1 = helpers['if'].call(depth0, "member.isInvited", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(6, program6, data),fn:self.program(4, program4, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n                ");
@@ -227,38 +216,53 @@ function program4(depth0,data) {
 
 function program6(depth0,data) {
   
-  
-  data.buffer.push("\n                        <span class=\"label label-warning\">Does not have key yet</span>\n                    ");
-  }
-
-function program8(depth0,data) {
-  
   var buffer = '', stack1;
-  data.buffer.push("\n                <p class=\"lead\"><small>Permission</small></p>\n                ");
-  stack1 = helpers.each.call(depth0, "role", "in", "roles", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(9, program9, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
+  data.buffer.push("\n                        ");
+  stack1 = helpers['if'].call(depth0, "member.hasNoKeys", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(7, program7, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n            ");
+  data.buffer.push("\n\n                    ");
   return buffer;
   }
+function program7(depth0,data) {
+  
+  
+  data.buffer.push("\n                            <span class=\"label label-warning\">Does not have key yet</span>\n                        ");
+  }
+
 function program9(depth0,data) {
   
-  var buffer = '';
-  data.buffer.push("\n                    ");
-  data.buffer.push(escapeExpression(helpers.view.call(depth0, "Vaultier.MembersAdminRoleItemView", {hash:{
-    'role': ("role")
-  },hashTypes:{'role': "ID"},hashContexts:{'role': depth0},contexts:[depth0],types:["ID"],data:data})));
+  var buffer = '', stack1;
+  data.buffer.push("\n                    <div class=\"lead\"><small>Permissions</small></div>\n                    ");
+  stack1 = helpers.each.call(depth0, "role", "in", "roles", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(10, program10, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n                ");
   return buffer;
   }
+function program10(depth0,data) {
+  
+  var buffer = '';
+  data.buffer.push("\n                        ");
+  data.buffer.push(escapeExpression(helpers.view.call(depth0, "Vaultier.MembersAdminRoleItemView", {hash:{
+    'role': ("role")
+  },hashTypes:{'role': "ID"},hashContexts:{'role': depth0},contexts:[depth0],types:["ID"],data:data})));
+  data.buffer.push("\n                    ");
+  return buffer;
+  }
 
-  data.buffer.push("<div class=\"table vlt-table\">\n\n    <div class=\"vlt-row\">\n        <div class=\"row\">\n            <div class=\"vlt-col  col-sm-4 vlt-user\">\n                ");
+function program12(depth0,data) {
+  
+  
+  data.buffer.push("\n                    <div class=\"lead\"><small>This member has no permissions</small></div>\n                ");
+  }
+
+  data.buffer.push("<div class=\"table vlt-table\">\n    <div class=\"vlt-row\">\n        <div class=\"row\">\n            <div class=\"vlt-col  col-sm-4 vlt-user\">\n                ");
   data.buffer.push(escapeExpression((helper = helpers.printUser || (depth0 && depth0.printUser),options={hash:{
     'size': (50)
   },hashTypes:{'size': "INTEGER"},hashContexts:{'size': depth0},contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "member", options) : helperMissing.call(depth0, "printUser", "member", options))));
   data.buffer.push("\n            </div>\n            <div class=\"vlt-col col-sm-4 vlt-labels\">\n                ");
-  stack1 = helpers['if'].call(depth0, "member.total_roles", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers['if'].call(depth0, "rolesCount", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n            </div>\n            <div class=\"vlt-col col-sm-4 vlt-actions\">\n                <div class=\"vlt-edit-perms pull-right\">\n                    <a class=\"btn btn-default accordion-toggle btn-sm\" type=\"button\" data-toggle=\"collapse\"\n                        ");
+  data.buffer.push("\n            </div>\n\n            <div class=\"vlt-col col-sm-4 vlt-actions\">\n                <div class=\"vlt-edit-perms pull-right\">\n                    <a class=\"btn btn-default accordion-toggle btn-sm\" type=\"button\" data-toggle=\"collapse\"\n                        ");
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
     'href': ("targetElement")
   },hashTypes:{'href': "ID"},hashContexts:{'href': depth0},contexts:[],types:[],data:data})));
@@ -268,7 +272,7 @@ function program9(depth0,data) {
   },hashTypes:{'target': "ID"},hashContexts:{'target': depth0},contexts:[depth0],types:["STRING"],data:data})));
   data.buffer.push(" ");
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
-    'disabled': ("member.isNotMember")
+    'disabled': ("isDisabledRolesDropDown")
   },hashTypes:{'disabled': "ID"},hashContexts:{'disabled': depth0},contexts:[],types:[],data:data})));
   data.buffer.push(">\n                        <span class=\"caret vlt-caret\"></span>\n                    </a>\n\n                    <a class=\"vlt-delete btn btn-default btn-sm\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "deleteMember", "member", {hash:{
@@ -278,12 +282,14 @@ function program9(depth0,data) {
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
     'id': ("id")
   },hashTypes:{'id': "STRING"},hashContexts:{'id': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push(">\n\n        <div class=\"list-group well-lg\">\n\n            ");
-  stack1 = (helper = helpers.ifCond || (depth0 && depth0.ifCond),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(8, program8, data),contexts:[depth0,depth0,depth0],types:["ID","STRING","ID"],data:data},helper ? helper.call(depth0, "roles", "&&", "roles.length", options) : helperMissing.call(depth0, "ifCond", "roles", "&&", "roles.length", options));
+  data.buffer.push(">\n\n            <div class=\"list-group well-lg\">\n                ");
+  data.buffer.push(escapeExpression((helper = helpers.debug || (depth0 && depth0.debug),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "rolesCount", options) : helperMissing.call(depth0, "debug", "rolesCount", options))));
+  data.buffer.push("\n                ");
+  stack1 = helpers['if'].call(depth0, "rolesCount", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(12, program12, data),fn:self.program(9, program9, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n\n        </div>\n        \n\n    </div>\n    \n</div>\n\n</div>\n");
+  data.buffer.push("\n\n            </div>\n            \n\n        </div>\n        \n    </div>\n    \n</div>\n");
   return buffer;
   
 });
 
-//# sourceMappingURL=members_admin.tpl.js.map
+//# sourceMappingURL=membersAdmin.tpl.js.map

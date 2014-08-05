@@ -24,6 +24,7 @@ Vaultier.Member = RL.Model.extend(
                 text: 'MEMBER'
             }
         }),
+
         /**
          * @return {Boolean}
          */
@@ -33,6 +34,13 @@ Vaultier.Member = RL.Model.extend(
 
         isInvited: function () {
             return this.get('status') === this.get('statuses')['INVITED'].value;
+        }.property('status'),
+
+        /**
+         * @return {Boolean}
+         */
+        hasNokey: function () {
+            return this.get('status') === this.get('statuses')['MEMBER_WITHOUT_WORKSPACE_KEY'].value;
         }.property('status')
 
     });

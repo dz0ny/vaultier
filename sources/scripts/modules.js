@@ -283,7 +283,7 @@ var vaultierModulesConfig = {
                 "./js/module/Workspace/WorkspaceNoKeys.hbs"
             ]
         },
-        "members_admin": {
+        "membersAdmin": {
             "scripts": [
                 "./js/module/MembersAdmin/MembersAdminAccordion.js",
                 "./js/module/MembersAdmin/MembersAdmin.js"

@@ -462,6 +462,10 @@ a:hover {
     border-top-width: 0px;
 }
 
+.vlt-page-toolbar .vlt-page-collaborators {
+    width: 248px;
+}
+
 /* Sidebared page */
 
 .vlt-page.vlt-page-with-sidebar {
@@ -1709,16 +1713,6 @@ span.vlt-user img {
         float: left;
     }
 
-}
-
-/*************************************************************
-**************************************************************
-* Member management
-*************************************************************
-*************************************************************/
-
-.vlt-members-management-controls {
-    min-width: 248px;
 }
 
 /*************************************************************

@@ -43,6 +43,11 @@ Vaultier.MembersAdminRoute = Ember.Route.extend({
                         .then(function () {
                             var roles = context.get('roles');
                             roles.removeObject(role);
+                            console.log(roles.get('length'));
+                            if (!roles.get('length')) {
+//                                $('#' + context.get('elementId') + ' .collapse').hide();
+//                                $('#' + context.get('elementId') + ' .accordion-toggle').attr('disabled', 'disabled');
+                            }
                             $.notify('Role has been remove', 'success');
                         }.bind(this))
                         .catch(function (error) {
@@ -68,11 +73,9 @@ Vaultier.MembersAdminRoute = Ember.Route.extend({
                     {
                         to_member: member.get('id')
                     }).then(function (response) {
-                        var memberRoles = Em.ArrayProxy.create({content: response}).toArray();
-
-                        if (memberRoles.length) {
-                            context.set('roles', memberRoles);
-                        }
+                        var memberRoles = Utils.RolesProxy.create({content: response.toArray()});
+                        context.set('roles', memberRoles);
+                        context.set('member.total_roles', memberRoles.get('length'));
 
                         return memberRoles;
                     }.bind(this));
@@ -92,7 +95,7 @@ Vaultier.MembersAdminRoute = Ember.Route.extend({
                         .then(function () {
                             var members = this.get('controller.content.members');
                             members.removeObject(member);
-                            $.notify('Member has been remove', 'success');
+                            $.notify('Member has been removed', 'success');
                         }.bind(this))
                         .catch(function (error) {
                             $.notify('Oooups! Something went wrong.', 'error');
@@ -110,13 +113,18 @@ Vaultier.MembersAdminRoute = Ember.Route.extend({
 Vaultier.MembersAdminController = Em.Controller.extend({
 
     members: function () {
+        var members = Em.ArrayProxy.create({
+             sortProperties: ['email', 'nickname', 'status', 'total_rows'],
+            content: this.get('content.members').toArray()
+        });
+        return members.filter(function(item, idx, enumerable) {
+            return item.get('user') !== this.get('auth.user.id');
+        }.bind(this));
+    }.property('content.members.@each'),
 
-        var user = this.get('auth.user');
-        return this.get('content.members').filter(function (item, index) {
-                return item.get('email') !== user.get('email');
-            }
-        );
-    }.property('content.members.@each')
+    membersLength: function () {
+        return !!this.get('members.arrangedContent').length;
+    }.property('members')
 });
 
 
@@ -173,6 +181,16 @@ Vaultier.MembersAdminAccordionComponent = Em.Component.extend({
 
     roles: null,
 
+    rolesCount: function () {
+
+        console.warn(this.get('roles.length'));
+        console.warn(this.get('member.total_roles'));
+        if (this.get('roles')) {
+            return this.get('roles.length');
+        }
+        return this.get('member.total_roles');
+    }.property('roles.[]', 'member'),
+
     control: null,
 
     member: null,
@@ -180,6 +198,10 @@ Vaultier.MembersAdminAccordionComponent = Em.Component.extend({
     roleLevels: function () {
         return Vaultier.Role.proto().roles.toArray();
     }.property('content.@each'),
+
+    isDisabledRolesDropDown: function () {
+        return this.get('member.isNotMember');
+    }.property('roles.@each'),
 
     actions: {
 
