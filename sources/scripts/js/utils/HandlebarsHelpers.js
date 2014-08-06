@@ -70,7 +70,8 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
         var length = options.hash.ellipsis || 60;
         var prefix = options.hash.prefix || '';
         var disableTooltip = options.hash.disableTooltip || false;
-        var disableName = options.hash.disableName || false
+        var disableName = options.hash.disableName || false;
+        var displayEmailInsideBrackets = options.hash.displayEmailInsideBrackets || false;
 
         var avatar = this.gravatarImg(email, {hash: {size: size}});
 
@@ -96,11 +97,17 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
             short = '';
             name = '';
         }
-
-        return '<span class="vlt-user" {tooltip} >{avatar}{name}</span>'
+        return '<span class="vlt-user" {tooltip} >{avatar} {name} {email}</span>'
             .replace('{tooltip}', tooltip)
             .replace('{name}', short)
             .replace('{avatar}', avatar)
+            .replace('{email}', function () {
+                if (displayEmailInsideBrackets) {
+                    return '(' + email + ')';
+                }
+                return '';
+            });
+
     },
 
     printAgo: function (t, options) {

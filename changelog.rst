@@ -8,6 +8,7 @@ Release 0.7.0
 * [feature] Refactored mailer module and added email notification on workspacekey acquired
 * [feature] #195 Search usability - make search window more responsive
 * [feature] #92 Get rid of Service.Environment
+* [feature] #140 When inviting user email should be part of selected username wording
 * [bugfix] Display message "No matches found" when search box contains no results
 * [bugfix] Search box remembered old names.
 * [feature] #199 Redesign cards and vault item
