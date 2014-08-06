@@ -6,18 +6,19 @@ from app.settings import PROJECT_ROOT
 from vaultier.test.tools import FileAccessMixin
 
 
-def auth_api_call(email=None, js_timestamp=None, signature=None):
+def auth_api_call(email=None, timestamp=None, signature=None):
     url = reverse('auth-auth')
     client = APIClient()
     m = FileAccessMixin()
 
+    if not timestamp:
+        timestamp = get_timestamp()
+
     if not signature:
         privkey = m.read_file('vaultier.key')
-        js_timestamp = get_timestamp()
+        signature = Backend.sign(privkey, email, timestamp)
 
-        signature = Backend.sign(privkey, email + str(js_timestamp))
-
-    response = client.post(url, {'email': email, 'js_timestamp': js_timestamp, 'signature': signature})
+    response = client.post(url, {'email': email, 'timestamp': timestamp, 'signature': signature})
     return response
 
 
@@ -33,4 +34,4 @@ def register_api_call(*args, **kwargs):
 
 
 def get_timestamp():
-    return int(round(time.time() * 1000))
+    return int(time.time())

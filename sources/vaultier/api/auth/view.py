@@ -17,7 +17,7 @@ from vaultier.models import Token
 class AuthSerializer(serializers.Serializer):
     email = EmailField(required=True)
     signature = CharField(required=True)
-    js_timestamp = IntegerField(required=True)
+    timestamp = IntegerField(required=True)
 
 
 class TokenSerializer(ModelSerializer):
@@ -27,19 +27,15 @@ class TokenSerializer(ModelSerializer):
 
 
 class AuthView(APIView):
-
     @atomic
     def auth(self, request):
         serializer = AuthSerializer(data=request.DATA)
         if serializer.is_valid():
             try:
-                js_timestamp = serializer.data.get('js_timestamp')
-                time_difference = datetime.datetime.now() - datetime.datetime.fromtimestamp(js_timestamp / 1000.0)
-                total_seconds = time_difference.total_seconds()
                 token = authenticate(email=serializer.data.get('email'),
-                                     js_timestamp=serializer.data.get('js_timestamp'),
+                                     timestamp=serializer.data.get('timestamp'),
                                      signature=serializer.data.get('signature'))
-                if token and total_seconds < BK_FEATURES.get('login_safe_timestamp_delta'):
+                if token:
                     return Response(TokenSerializer(token).data)
                 else:
                     return Response({'result': False}, status=HTTP_403_FORBIDDEN)
