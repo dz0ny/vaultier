@@ -247,17 +247,23 @@ var vaultierModulesConfig = {
         "membership": {
             "scripts": [
                 "./js/module/Invitation/Invitation.js",
+
                 "./js/module/Member/MemberInviteInput.js",
                 "./js/module/Member/MemberIndex.js",
                 "./js/module/Member/MemberInvite.js",
                 "./js/module/Member/MemberBox.js",
+
+                "./js/module/MembersAdmin/MembersAdminAccordion.js",
+                "./js/module/MembersAdmin/MembersAdmin.js",
+                "./js/module/MembersAdmin/MembersAdminList.js",
+                "./js/module/MembersAdmin/MembersAdminListItem.js",
+                "./js/module/MembersAdmin/MembersAdminRoleItem.js"
             ],
             "templates": [
-                "./js/module/Member/MemberIndex.hbs",
-                "./js/module/Member/MemberInvite.hbs",
-                "./js/module/Member/MemberBox.hbs",
-                "./js/module/Invitation/InvitationAnonymous.hbs",
-                "./js/module/Invitation/InvitationAccept.hbs"
+                "./js/module/Member/**/*.hbs",
+                "./js/module/Invitation/**/*.hbs",
+                "./js/module/MembersAdmin/**/*.hbs"
+
             ]
         },
         "workspace": {
@@ -283,19 +289,7 @@ var vaultierModulesConfig = {
                 "./js/module/Workspace/WorkspaceNoKeys.hbs"
             ]
         },
-        "membersAdmin": {
-            "scripts": [
-                "./js/module/MembersAdmin/MembersAdminAccordion.js",
-                "./js/module/MembersAdmin/MembersAdmin.js"
-            ],
-            "templates": [
-                "./js/module/MembersAdmin/MembersAdminRoleItemWorkspace.hbs",
-                "./js/module/MembersAdmin/MembersAdminRoleItemVault.hbs",
-                "./js/module/MembersAdmin/MembersAdminRoleItemCard.hbs",
-                "./js/module/MembersAdmin/MembersAdmin.hbs",
-                "./js/module/MembersAdmin/MembersAdminAccordion.hbs"
-            ]
-        },
+
         "vault": {
             "scripts": [
                 "./js/module/Vault/VaultsIndex.js",

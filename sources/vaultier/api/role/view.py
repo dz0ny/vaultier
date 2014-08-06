@@ -11,7 +11,6 @@ from vaultier.api.vault.view import RelatedVaultSerializer
 from vaultier.api.workspace.view import RelatedWorkspaceSerializer
 from vaultier.auth.authentication import TokenAuthentication
 from vaultier.models.acl.fields import AclLevelField
-from vaultier.models.member.model import Member
 from vaultier.models.role.model import Role
 from vaultier.perms.check import has_object_acl
 
@@ -20,17 +19,20 @@ class CanManageRolePermission(BasePermission):
     def has_object_permission(self, request, view, role):
 
         object = role.get_object()
+        member = role.member
+
         result = has_object_acl(request.user, object, AclLevelField.LEVEL_WRITE)
+        result = result and has_object_acl(request.user, member.workspace, AclLevelField.LEVEL_READ)
 
         return result
 
 
 class RoleSerializer(ModelSerializer):
     created_by = RelatedNestedField(serializer=RelatedUserSerializer, required=False, read_only=True)
-    member = RelatedNestedField(required=True, serializer=RelatedMemberSerializer, queryset=Member.objects.all())
-    to_workspace = PrimaryKeyRelatedField(required=False, read_only=False)
-    to_vault = PrimaryKeyRelatedField(required=False, read_only=False)
-    to_card = PrimaryKeyRelatedField(required=False, read_only=False)
+    member = RelatedNestedField(required=True, serializer=RelatedMemberSerializer)
+    to_workspace = RelatedNestedField(required=False, serializer=RelatedWorkspaceSerializer)
+    to_vault = RelatedNestedField(required=False, serializer=RelatedVaultSerializer)
+    to_card = RelatedNestedField(required=False, serializer=RelatedCardSerializer)
 
     def validate(self, attrs):
         if not (attrs.get('to_workspace') or attrs.get('to_vault') or attrs.get('to_card')):
@@ -62,31 +64,20 @@ class RoleUpdateSerializer(RoleSerializer):
                 fields[field].read_only = True
         return fields
 
-
-class MemberRolesSerializer(RoleSerializer):
-    member = RelatedNestedField(required=True, serializer=RelatedMemberSerializer, queryset=Member.objects.all())
-    to_workspace = RelatedNestedField(required=False, read_only=False, serializer=RelatedWorkspaceSerializer)
-    to_vault = RelatedNestedField(required=False, read_only=False, serializer=RelatedVaultSerializer)
-    to_card = RelatedNestedField(required=False, read_only=False, serializer=RelatedCardSerializer)
-
-
 class RoleViewSet(
     AtomicTransactionMixin,
     ModelViewSet):
     model = Role
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated, CanManageRolePermission)
-    filter_fields = ('to_workspace', 'to_vault', 'to_card', 'level',)
+    filter_fields = ('to_workspace', 'to_vault', 'to_card', 'level', 'member')
     serializer_class = RoleSerializer
 
     def get_serializer_class(self):
         if self.action == 'update' or self.action == 'partial_update':
             return RoleUpdateSerializer
-
-        if self.action == 'list' and self.request.QUERY_PARAMS.get('to_member', None):
-            return MemberRolesSerializer
-
-        return super(RoleViewSet, self).get_serializer_class()
+        else:
+            return super(RoleViewSet, self).get_serializer_class()
 
     def pre_save(self, object):
         self.check_object_permissions(self.request, object)
@@ -95,9 +86,4 @@ class RoleViewSet(
         return super(RoleViewSet, self).pre_save(object)
 
     def get_queryset(self):
-        member_id = self.request.QUERY_PARAMS.get('to_member')
-        if member_id:
-            queryset = Role.objects.all_for_member(member_id)
-        else:
-            queryset = Role.objects.all_for_user(self.request.user)
-        return queryset
+        return  Role.objects.all_for_user(self.request.user)

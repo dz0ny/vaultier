@@ -30,14 +30,8 @@
             </div>
             <!-- End of heading -->
             <div class="panel-body" id="collapse">
-                {{#if members.length}}
-                    {{#each member in members }}
-                        {{members-admin-accordion member=member deleteMember="deleteMember" loadRoles="loadRoles" deleteRole="deleteRole"}}
-                    {{/each}}
-                {{else}}
-                    <div class="lead">You have no members on  this workspace</div>
-                {{/if}}
-
+                {{members-admin-list members=concreteMembers}}
+                {{members-admin-list members=invitedMembers}}
             </div>
             <!-- End of panel-body -->
             <div class="clearfix"></div>

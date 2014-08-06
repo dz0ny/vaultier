@@ -1,0 +1,7 @@
+{{#if members.length}}
+    {{#each member in members }}
+        {{members-admin-list-item member=member members=members }}
+    {{/each}}
+{{else}}
+    <div class="lead">You have no members on this workspace</div>
+{{/if}}

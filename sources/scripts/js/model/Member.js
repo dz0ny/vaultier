@@ -8,7 +8,7 @@ Vaultier.Member = RL.Model.extend(
         nickname: RL.attr('string'),
         user: RL.attr('object'),
         workspace: RL.attr('object'),
-        total_roles: RL.attr('number'),
+        roles_count: RL.attr('number'),
 
         statuses: new Utils.ConstantList({
             'INVITED': {
