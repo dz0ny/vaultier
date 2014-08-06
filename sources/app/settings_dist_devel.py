@@ -27,4 +27,6 @@ BK_FEATURES = {
     # 1 hour in milliseconds, used to calculate the expiration date of a lostkey resource
     'lostkey_hash_expiration_time': 3600000,
     'from_email': 'info@rclick.com',  # Default email address from which we send emails
+    'login_safe_timestamp_delta': 15,  # Max difference between timestamp from server and from front-end in seconds
+
 }

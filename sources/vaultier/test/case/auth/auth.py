@@ -1,11 +1,12 @@
+from time import time
 from django.test.testcases import TransactionTestCase
+from django.conf import settings
 from django.utils import unittest
 from django.utils.unittest.suite import TestSuite
 from rest_framework.status import HTTP_201_CREATED, HTTP_200_OK, HTTP_403_FORBIDDEN, HTTP_400_BAD_REQUEST
 from modelext.version.context import version_context_manager
 from vaultier.auth.authentication import Backend
-
-from vaultier.test.tools.auth.api import auth_api_call, register_api_call
+from vaultier.test.tools.auth.api import auth_api_call, register_api_call, get_timestamp
 from vaultier.test.tools import FileAccessMixin, format_response
 
 
@@ -14,10 +15,10 @@ class SignaturesTest(TransactionTestCase, FileAccessMixin):
         email = 'jan.misek@rclick.cz'
         privkey = self.read_file('vaultier.key')
         pubkey = self.read_file('vaultier.pub')
-        signature = Backend.sign(privkey, email);
+        signature = Backend.sign(privkey, email, 1);
 
-        self.assertTrue(Backend.verify(pubkey, email, signature))
-        self.assertFalse(Backend.verify(pubkey, 'Unsigned text', signature))
+        self.assertTrue(Backend.verify(pubkey, email, 1, signature))
+        self.assertFalse(Backend.verify(pubkey, 'Unsigned text',1, signature))
 
 
 class ApiRegisterTest(TransactionTestCase):
@@ -38,8 +39,8 @@ class ApiRegisterTest(TransactionTestCase):
         self.assertTrue(response.data.get('email') is not None)
         self.assertEqual(response.status_code, HTTP_400_BAD_REQUEST, msg=format_response(response))
 
-
     def test_020_auth(self):
+
          # register user
         email = 'jan.misek@rclick.cz'
         response = register_api_call(email=email, nickname='Misan')
@@ -53,6 +54,12 @@ class ApiRegisterTest(TransactionTestCase):
         # try to login, check wrong signature
         response = auth_api_call(email=email, signature='WrongSignature')
         self.assertEqual(response.status_code, HTTP_403_FORBIDDEN, msg=format_response(response))
+
+        # try to login, check wrong expired timestamp
+        expired = int(time()) - 1;
+        response = auth_api_call(email=email, timestamp=expired, signature='WrongSignature')
+        self.assertEqual(response.status_code, HTTP_403_FORBIDDEN, msg=format_response(response))
+
 
     def test_030_registration_should_be_case_insensitive(self):
          # register user
@@ -108,8 +115,6 @@ class ApiRegisterTest(TransactionTestCase):
         self.assertEqual(response.status_code, HTTP_400_BAD_REQUEST, msg=format_response(response))
         self.assertEqual(response.data.get('email'), [u'User with this Email already exists.'],
                          'The email was already registered')
-
-
 
 
 def auth_suite():

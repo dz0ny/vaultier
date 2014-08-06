@@ -2,23 +2,25 @@ Service.AuthPromises = Ember.Object.extend({
 
     token: null,
     /**
-     * @config
+     * @DI Vaultier.store.
      */
     store: null,
     /**
-     * @config
+     * @DI Service.Coder
      */
     coder: null,
 
     _auth: function (email, privateKey) {
         var coder = this.coder;
-        var signature = coder.sign(email, privateKey);
+        var timestamp = Math.round( ( Date.getTime ? new Date().getTime() : Date.now() ) / 1000 );
+        var signature = coder.sign(email + timestamp, privateKey);
 
         return Utils.RSVPAjax({
             url: '/api/auth/auth',
             type: 'post',
             data: {
                 email: email,
+                timestamp: timestamp,
                 signature: signature
             }})
     },
@@ -82,7 +84,7 @@ Service.AuthPromises = Ember.Object.extend({
 
             .then(function(response) {
                 user = response.user;
-                token = response.token
+                token = response.token;
                 return this._useToken(token)
             }.bind(this))
 
@@ -90,7 +92,6 @@ Service.AuthPromises = Ember.Object.extend({
                 return this._retrieveUser(user)
             }.bind(this))
     }
-
 
 })
 ;

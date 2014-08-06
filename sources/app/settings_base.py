@@ -242,5 +242,6 @@ BK_FEATURES = {
     # 1 hour in milliseconds used to calculate the expiration time on api.lostkey module
     'lostkey_hash_expiration_time': 3600000,
     'from_email': 'info@rclick.com',  # Default email address from which we send emails
-    'ga_create_code': 'UA-17830772-11' # code for google analytics
+    'ga_create_code': 'UA-17830772-11',  # code for google analytics
+    'login_safe_timestamp_delta': 15,  # Max difference between timestamp from server and from front-end in seconds
 }
