@@ -1,166 +1,168 @@
 <div class="container">
-<div class="vlt-page vlt-page-plain">
-<div class="vlt-page-nav">
+    <div class="vlt-page vlt-page-plain">
+        <div class="vlt-page-nav">
 
-    <div class="vlt-page-toolbar pull-right">
-        <div>
+            <div class="vlt-page-toolbar pull-right">
+                <div>
 
-            <a href="javascript:window.history.go(-1)" class="btn btn-default">
-                <span class="glyphicon glyphicon-chevron-left"></span>
-                Back
-            </a>
+                    <a href="javascript:window.history.go(-1)" class="btn btn-default">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                        Back
+                    </a>
 
-            <div style="display: none">
-                <a href="#" class="btn btn-default">
-                    <span class="glyphicon glyphicon-question-sign"></span>
-                    Permissions
-                </a>
+                    <div style="display: none">
+                        <a href="#" class="btn btn-default">
+                            <span class="glyphicon glyphicon-question-sign"></span>
+                            Permissions
+                        </a>
+                    </div>
+
+                    {{#link-to inviteRouteName class="btn btn-primary"}}
+                        <span class="glyphicon glyphicon-user"></span>
+                        Invite
+                    {{/link-to}}
+
+
+                </div>
             </div>
 
-            {{#link-to inviteRouteName class="btn btn-primary"}}
-                <span class="glyphicon glyphicon-user"></span>
-                Invite
-            {{/link-to}}
+            <div class="pull-left">
+                <h2>Collaborators</h2>
+            </div>
 
-
+            <div class="clearfix"></div>
         </div>
-    </div>
 
-    <div class="pull-left">
-        <h2>Collaborators</h2>
-    </div>
+        <div class="vlt-page-invitations">
 
-    <div class="clearfix"></div>
-</div>
+            {{#each block in blocks }}
 
-<div class="vlt-page-invitations">
-
-    {{#each block in blocks }}
-
-        {{#if block.isSecond}}
-            {{#unless block.isHidden}}
-                <div class="top-30">
-                    <h3>Inherited memberships</h3>
-                </div>
-            {{/unless}}
-        {{/if}}
-
-        {{#unless block.isHidden}}
-
-            <div class="panel panel-default vlt-panel-permissions top-30">
-                <div class="panel-heading">
-                    <div class="col-md-8">
-                        <h4>
-                            {{block.roles.length}} collaborators at {{block.type}} <b>{{block.object.name}}</b>
-                        </h4>
-                    </div>
-                    <div class="col-md-4 vlt-controls">
-                        {{#if block.readOnly }}
-                            {{#if block.object.perms.invite}}
-                                <a class="btn btn-default btn-sm"
-                                    {{bind-attr href=block.url}}
-                                   data-toggle="tooltip"
-                                   title="Edit inherited roles"
-                                        >
-                                    <span class="glyphicon glyphicon-edit"></span>
-                                </a>
-                            {{/if}}
-                        {{/if}}
-
-                    </div>
-
-                    <div class="clearfix"></div>
-                </div>
-                <div class="table vlt-table">
-
-                    {{#unless block.roles.length}}
-                        <div>
-                            <div class="padding-15">
-                                There are no permission to this object.
-
-                                {{#link-to inviteRouteName class="btn btn-default btn-sm"}}
-                                    <span class="glyphicon glyphicon-user"></span>
-                                    Invite
-                                {{/link-to}}
-
-                            </div>
+                {{#if block.isSecond}}
+                    {{#unless block.isHidden}}
+                        <div class="top-30">
+                            <h3>Inherited memberships</h3>
                         </div>
                     {{/unless}}
+                {{/if}}
 
-                    {{#each role in block.roles }}
+                {{#unless block.isHidden}}
 
-                        {{#view view.Item role=role block=block class="vlt-row" classNameBindings='role.isMember:normal:invited' }}
-                            <div class="vlt-col col-sm-4 vlt-user">
-                                {{printUser role.member size=50}}
+                    <div class="panel panel-default vlt-panel-permissions top-30">
+                        <div class="panel-heading">
+                            <div class="col-md-8">
+                                <h4>
+                                    {{block.roles.length}} collaborators at {{block.type}} <b>{{block.object.name}}</b>
+                                </h4>
                             </div>
-                            <div class="vlt-col col-sm-4 vlt-labels">
-                                {{#if role.isMemberWithoutKeys}}
-                                    <div class="label label-warning">
-                                        Does not have workspace key yet
-                                    </div>
+                            <div class="col-md-4 vlt-controls">
+                                {{#if block.readOnly }}
+                                    {{#if block.object.perms.invite}}
+                                        <a class="btn btn-default btn-sm"
+                                            {{bind-attr href=block.url}}
+                                           data-toggle="tooltip"
+                                           title="Edit inherited roles"
+                                                >
+                                            <span class="glyphicon glyphicon-edit"></span>
+                                        </a>
+                                    {{/if}}
                                 {{/if}}
 
-                                {{#if role.isInvited}}
-                                    <div class="label label-warning">
-                                        Invited only. Did not show up yet!
-                                    </div>
-                                {{/if}}
-                                <div class="clearfix"></div>
                             </div>
-                            <div class="vlt-col col-sm-4 vlt-actions">
-                                {{#unless block.readOnly}}
 
-                                    {{#if role.isCurrentUser}}
-                                        <span class="label label-warning">
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="table vlt-table">
+
+                            {{#unless block.roles.length}}
+                                <div>
+                                    <div class="padding-15">
+                                        There are no permission to this object.
+
+                                        {{#link-to inviteRouteName class="btn btn-default btn-sm"}}
+                                            <span class="glyphicon glyphicon-user"></span>
+                                            Invite
+                                        {{/link-to}}
+
+                                    </div>
+                                </div>
+                            {{/unless}}
+
+                            {{#each role in block.roles }}
+
+                                {{#view view.Item role=role block=block class="vlt-row" classNameBindings='role.isMember:normal:invited' }}
+                                    <div class="vlt-col col-sm-4 vlt-user">
+                                        {{printUser role.member size=50}}
+                                    </div>
+                                    <div class="vlt-col col-sm-4 vlt-labels">
+                                        {{#if role.isMemberWithoutKeys}}
+                                            <div class="label label-warning">
+                                                Does not have workspace key yet
+                                            </div>
+                                        {{/if}}
+
+                                        {{#if role.isInvited}}
+                                            <div class="label label-warning">
+                                                Invited only. Did not show up yet!
+                                            </div>
+                                        {{/if}}
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="vlt-col col-sm-4 vlt-actions">
+                                        {{#unless block.readOnly}}
+
+                                            {{#if role.isCurrentUser}}
+                                                <span class="label label-warning">
                                         It's you
                                         </span>
-                                        <span class="label label-default" data-toggle="tooltip" {{bind-attr data-toggle='tooltip' title=role.printableDesc}}>
+                                        <span class="label label-default"
+                                              data-toggle="tooltip" {{bind-attr data-toggle='tooltip' title=role.printableDesc}}>
                                             {{role.printableName}}
                                         </span>
 
 
-                                    {{else}}
-                                        <div class="vlt-edit-perms">
-                                            <a class="vlt-delete btn btn-default btn-sm" {{action deleteRole role block}}>
-                                                <span class="glyphicon glyphicon-trash"></span>
-                                            </a>
-                                            {{view view.Select
-                                            role=role
-                                            class="form-control vlt-perms"
-                                            contentBinding="roleLevels"
-                                            optionValuePath="content.value"
-                                            optionLabelPath="content.text"
-                                            }}
-                                        </div>
-                                    {{/if}}
-                                {{else}}
+                                            {{else}}
+                                                <div class="vlt-edit-perms">
+                                                    <a class="vlt-delete btn btn-default btn-sm" {{action deleteRole role block}}>
+                                                        <span class="glyphicon glyphicon-trash"></span>
+                                                    </a>
+                                                    {{view view.Select
+                                                    role=role
+                                                    class="form-control vlt-perms"
+                                                    contentBinding="roleLevels"
+                                                    optionValuePath="content.value"
+                                                    optionLabelPath="content.text"
+                                                    }}
+                                                </div>
+                                            {{/if}}
+                                        {{else}}
 
-                                    {{#if role.isCurrentUser}}
-                                        <span class="label label-warning">
+                                            {{#if role.isCurrentUser}}
+                                                <span class="label label-warning">
                                         It's you
                                         </span>
-                                    {{/if}}
+                                            {{/if}}
 
-                                    <span class="label label-default" data-toggle='tooltip' {{bind-attr title=role.printableDesc}}>
-                                        {{role.printableName}}
-                                    </span>
+                                            <span class="label label-default"
+                                                  data-toggle='tooltip' {{bind-attr title=role.printableDesc}}>
+                                                {{role.printableName}}
+                                            </span>
 
-                                {{/unless}}
-                            </div>
-                            <div class="clearfix"></div>
+                                        {{/unless}}
+                                    </div>
+                                    <div class="clearfix"></div>
 
-                        {{/view}}
+                                {{/view}}
 
-                    {{/each}}
-                </div>
+                            {{/each}}
+                        </div>
 
-            </div>
-        {{/unless}}
-    {{/each}}
+                    </div>
+                {{/unless}}
+            {{/each}}
 
 
 
-</div>
-<div class="clearfix"></div>
-</div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
 </div>

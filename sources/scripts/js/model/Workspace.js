@@ -48,7 +48,11 @@ Vaultier.Workspace = RL.Model.extend(
             }
 
             return promise;
-        }
+        },
+
+        objectType: function () {
+            return Vaultier.Role.proto().types['TO_WORKSPACE'].value;
+        }.property()
 
 
     }

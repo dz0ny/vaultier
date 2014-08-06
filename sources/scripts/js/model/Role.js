@@ -85,7 +85,47 @@ Vaultier.Role = RL.Model.extend(
             } else {
                 return 'Unknown role level'
             }
-        }.property('level')
+        }.property('level'),
+
+        /**
+         * Retrieve the type of the object related to this role
+         */
+        relatedObjectType: function() {
+
+            if (this.get('to_workspace')) {
+                return (this.get('types')['TO_WORKSPACE']).value;
+            } else if (this.get('to_vault')) {
+                return (this.get('types')['TO_VAULT']).value;
+            } else if (this.get('to_card')) {
+                return (this.get('types')['TO_CARD']).value;
+            }
+
+        }.property('to_vault', 'to_card', 'to_workspace'),
+
+        relatedObjectId: function () {
+
+            if (this.get('to_workspace')) {
+                return this.get('to_workspace');
+            } else if (this.get('to_vault')) {
+                return this.get('to_vault');
+            } else if (this.get('to_card')) {
+                return this.get('to_card');
+            }
+
+        }.property('to_vault', 'to_card', 'to_workspace'),
+
+        /**
+         * Return true if the given object is related to this role
+         */
+        isRelatedToObject: function (object) {
+            if (typeof object === 'number') {
+                // the object come from a secret and its value refer to its parent card id
+                return this.get('relatedObjectId') === object;
+            }
+
+            return this.get('relatedObjectType') === object.get('objectType') &&
+                this.get('relatedObjectId') === object.get('id');
+        }
 
     });
 

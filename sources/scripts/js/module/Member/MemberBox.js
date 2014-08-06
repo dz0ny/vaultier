@@ -6,6 +6,8 @@ Vaultier.MemberBoxComponent = Ember.Component.extend({
         this.checkParameters();
     },
 
+    object: null,
+
     checkParameters: function () {
         var roles = this.get('roles');
         var user = this.get('user');
@@ -22,18 +24,16 @@ Vaultier.MemberBoxComponent = Ember.Component.extend({
 
     processedRoles: function () {
         // remove me from roles
-        var roles = this.get('roles').filter(function (role) {
-            if (role.get('member.user') != this.get('user.id')) {
-                return role;
-            }
-        }.bind(this))
-
-        // sort by permission level
-        roles = roles.sort(function (a, b) {
-            return b.get('level') - a.get('level');
+        var roles = Utils.RolesProxy.create({
+           content: this.get('roles')
         });
 
-        // unique array
+        // seal current user, and filter create roles for inherited permissions
+        roles
+            .sealUser(this.get('auth.user'))
+            .filterCreateRolesByObjectScope(this.get('object'));
+
+        // each user to be only once at result
         var foundRoles = []
         roles = roles.filter(function (role) {
             var id = role.get('member.id');
@@ -41,13 +41,13 @@ Vaultier.MemberBoxComponent = Ember.Component.extend({
                 foundRoles.push(id);
                 return role;
             }
-        })
+        });
 
         return roles;
     }.property('roles'),
 
     hasAny: function () {
-        if (this.get('processedRoles').length > 0) {
+        if (this.get('processedRoles').get('length') > 0) {
             return true;
         }
         return false;

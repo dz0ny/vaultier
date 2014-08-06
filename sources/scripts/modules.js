@@ -133,6 +133,7 @@ var vaultierModulesConfig = {
                 "./js/utils/HandlebarsHelpers.js",
                 "./js/utils/RSVPAjax.js",
                 "./js/utils/MutableAdapterMixin.js",
+                "./js/utils/RolesProxy.js",
             /**************** App **/
                 "./js/application.js",
                 "./js/keypressBindings.js",

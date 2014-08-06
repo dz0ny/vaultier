@@ -182,13 +182,16 @@ Vaultier.MemberIndexRoute = Ember.Route.extend(
     });
 
 Vaultier.MemberIndexController = Ember.Controller.extend({
+    currentObject: null,
     blocks: function () {
-        var secondMarked = false;
         var shownIndex = 0;
         return this.get('content').map(function (item, index) {
             var isHidden = item.roles.get('length') === 0 && index > 0;
             if (!isHidden) {
                 shownIndex++;
+            }
+            if (index < 1) {
+                this.set('currentObject', item.get('object'));
             }
             var isSecond = !isHidden && shownIndex === 2;
 
@@ -198,9 +201,13 @@ Vaultier.MemberIndexController = Ember.Controller.extend({
                 isHidden: isHidden,
                 readOnly: index > 0
             });
-
+            var roles = Utils.RolesProxy.create({
+                content: item.roles
+            });
+            roles.filterCreateRolesByObjectScope(this.get('currentObject'));
+            item.set('roles', roles.toArray());
             return item;
-        });
+        }.bind(this));
     }.property('content.@each')
 });
 
