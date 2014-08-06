@@ -21,7 +21,7 @@
     "test",
     "tests"
   ],
-  "dependencies": {
+  "devDependencies": {
     "FileAPI": "~2.0.3",
     "FileSaver": "*",
     "Keypress": "https://github.com/dmauro/Keypress.git#1.0.9",
@@ -51,6 +51,7 @@
     "jsep": "https://github.com/soney/jsep.git#0.2.0",
     "bootswatch": "https://github.com/thomaspark/bootswatch.git#3.0.3",
     "raven-js": "~1.1.15",
-    "CryptoJS": "~3.1.12"
+    "CryptoJS": "~3.1.12",
+    "FileSaver": "*"
   }
 }
