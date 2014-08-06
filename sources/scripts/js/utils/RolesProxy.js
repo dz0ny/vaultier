@@ -91,7 +91,7 @@ Utils.RolesProxy = Em.ArrayProxy.extend(
             var sealUsers = this.get('sealedUsers');
             if (objectScope && !this.isRoleRelatedToObject(item, objectScope)) {
                 return false;
-            } else if (sealUsers.length && this.isUserSealed(item)) {
+            } else if (sealUsers.length && this.isRoleSealed(item)) {
                 return false;
             }
             return true;
@@ -113,7 +113,7 @@ Utils.RolesProxy = Em.ArrayProxy.extend(
          * @param user {Vaultier.User}
          * @returns {RolesProxy}
          */
-        removeUser: function (user) {
+        sealUser: function (user) {
             if (this.get('sealedUsers').indexOf(user.get('id')) < 0) {
                 this.get('sealedUsers').push(user.get('id'));
             }
@@ -122,11 +122,11 @@ Utils.RolesProxy = Em.ArrayProxy.extend(
         },
 
         /**
-         * Returns true if the user is not on the sealedUsers array
+         * Returns true if the user of role is not on the sealedUsers array
          * @param role {Vaultier.Role}
          * @returns {boolean}
          */
-        isUserSealed: function (role) {
+        isRoleSealed: function (role) {
             return this.get('sealedUsers').indexOf(role.get('member.user')) > -1;
         },
 

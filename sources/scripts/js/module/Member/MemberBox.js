@@ -27,18 +27,23 @@ Vaultier.MemberBoxComponent = Ember.Component.extend({
         var roles = Utils.RolesProxy.create({
            content: this.get('roles')
         });
-        roles.removeUser(this.get('auth.user'))
+
+        // seal current user, and filter create roles for inherited permissions
+        roles
+            .sealUser(this.get('auth.user'))
             .filterCreateRolesByObjectScope(this.get('object'));
 
-        // unique array
+        // each user to be only once at result
         var foundRoles = []
-        return roles.filter(function (role) {
+        roles = roles.filter(function (role) {
             var id = role.get('member.id');
             if (foundRoles.indexOf(id) == -1) {
                 foundRoles.push(id);
                 return role;
             }
         });
+
+        return roles;
     }.property('roles'),
 
     hasAny: function () {
