@@ -1,4 +1,4 @@
-Vaultier.CardVaultNodeView = Ember.Tree.TreeNodeView.extend({
+Vaultier.CardVaultNodeView = EmberExt.Tree.TreeNodeView.extend({
     templateName: 'Card/CardMoveVaultNode',
     Radio: Ember.View.extend({
         tagName: "input",
@@ -99,7 +99,7 @@ Vaultier.CardMoveController = Ember.ObjectController.extend({
 Vaultier.CardMoveView = Ember.View.extend({
     templateName: 'Card/CardMove',
     layoutName: 'Layout/LayoutStandard',
-    Tree: Ember.Tree.TreeView.extend({
+    Tree: EmberExt.Tree.TreeView.extend({
         itemViewClass: Vaultier.CardVaultNodeView
     })
 

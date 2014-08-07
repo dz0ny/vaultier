@@ -14,6 +14,13 @@ Vaultier.MembersAdminRoleItemComponent = Ember.Component.extend({
         }
     }.property('role.relatedObjectType'),
 
+//    willDestroyElement: function () {
+//        var current = this.$();
+//        var clone = current.clone();
+//        clone.insertBefore(current.prev('script'));
+//        clone.slideUp();
+//    },
+
     actions: {
         deleteRole: function (member, role) {
             this.sendAction('deleteRole', member, role);

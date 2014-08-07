@@ -1,6 +1,6 @@
-Po.NS('Ember.Tree');
+Po.NS('EmberExt.Tree');
 
-Ember.Tree.TreeNodeView = Ember.View.extend({
+EmberExt.Tree.TreeNodeView = Ember.View.extend({
     opened: false,
     loading: false,
     branch: function () {
@@ -44,11 +44,11 @@ Ember.Tree.TreeNodeView = Ember.View.extend({
     },
 
     getSubNodeViewClass: function() {
-        return Ember.Tree.TreeNodeView;
+        return EmberExt.Tree.TreeNodeView;
     },
 
     createSubBranchView: function () {
-        var view = Ember.Tree.TreeView.create({
+        var view = EmberExt.Tree.TreeView.create({
             itemViewClass: this.getSubNodeViewClass(),
             container: this.get('container')
         });
@@ -93,7 +93,7 @@ Ember.Tree.TreeNodeView = Ember.View.extend({
     }
 });
 
-Ember.Tree.TreeView = Ember.CollectionView.extend({
+EmberExt.Tree.TreeView = Ember.CollectionView.extend({
     tagName: 'ul',
     content: [
         {
@@ -113,5 +113,5 @@ Ember.Tree.TreeView = Ember.CollectionView.extend({
         }
     ],
     classNames: ['treebranch'],
-    itemViewClass: 'Ember.Tree.TreeNodeView'
+    itemViewClass: 'EmberExt.Tree.TreeNodeView'
 });

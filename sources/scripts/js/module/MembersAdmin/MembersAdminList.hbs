@@ -1,7 +1,16 @@
-{{#if members.length}}
-    {{#each member in members }}
-        {{members-admin-list-item member=member members=members }}
-    {{/each}}
-{{else}}
-    <div class="lead">You have no members on this workspace</div>
-{{/if}}
+<div class="panel panel-default vlt-panel-members">
+    <div class="panel-heading ">
+        <div class="vlt-col col-md-8">
+            <h4> {{yield}} </h4>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="panel-body">
+        {{#each member in members}}
+            {{view Vaultier.MembersAdminListItemView}}
+        {{/each}}
+    </div>
+    <div class="clearfix"></div>
+</div>
+
+

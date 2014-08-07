@@ -1,71 +1,52 @@
-<div class="table vlt-table">
-    <div class="vlt-row">
-        <div class="row">
-            <div class="vlt-col  col-sm-4 vlt-user">
-                {{printUser member size=50}}
-            </div>
-            <div class="vlt-col col-sm-4 vlt-labels">
+{{#view Vaultier.AnimatedUnlessView condition=member.removed in="none" out="slideUp"}}
+
+    <div class="table vlt-table">
+        <div class="vlt-row">
+            <div class="row">
+                <div class="vlt-col  col-sm-4 vlt-user">
+                    {{printUser member size=50}}
+                </div>
+                <div class="vlt-col col-sm-4 vlt-labels">
                     <span {{bind-attr class=":label member.roles_count:label-default:label-warning"}}>
                         {{member.roles_count}}
                         {{pluralize member.roles_count "permission"}}
                     </span>
 
-                {{#if member.isInvited}}
-                    <span class="label label-warning">Invited only. Did not show up yet!</span>
-                {{/if}}
-
-                {{#if member.hasNoKeys}}
-                    <span class="label label-warning">Does not have key yet</span>
-                {{/if}}
-            </div>
-
-            <div class="vlt-col col-sm-4 vlt-actions">
-                <div class="vlt-edit-perms pull-right">
-                    <a
-                            class="btn btn-default accordion-toggle btn-sm"
-                            type="button"
-                            data-toggle="collapse"
-                        {{bind-attr href=targetElement}}
-                        {{action "loadRoles" member}}
-                            >
-                        <span class="caret vlt-caret"></span>
-                    </a>
-
-                    <a class="vlt-delete btn btn-default btn-sm" {{action "deleteMember" members member}}>
-                        <span class="glyphicon glyphicon-trash"></span>
-                    </a>
-                </div>
-            </div>
-            <div class="clearfix"></div>
-        </div>
-
-        <div class="row collapse" {{ bind-attr id="id"}}>
-
-            <div class="list-group well-lg">
-                {{#if rolesLoaded }}
-                    {{#if member.roles.length}}
-                        <div class="lead">
-                            <small>Permissions</small>
-                        </div>
-                        {{#each role in member.roles }}
-                            {{members-admin-role-item member=member role=role }}
-                        {{/each}}
-                    {{else}}
-                        <div class="lead">
-                            <small>This member has no permissions</small>
-                        </div>
+                    {{#if member.isInvited}}
+                        <span class="label label-warning">Invited only. Did not show up yet!</span>
                     {{/if}}
-                {{else}}
-                    <!-- loading -->
-                {{/if}}
 
+                    {{#if member.hasNoKeys}}
+                        <span class="label label-warning">Does not have key yet</span>
+                    {{/if}}
+                </div>
 
+                <div class="vlt-col col-sm-4 vlt-actions">
+                    <div class="vlt-edit-perms pull-right">
+                        <a
+                                data-toggle="collapse"
+                            {{bind-attr class=":btn :btn-default :accordion-toggle :btn-sm member.roles_count::hide"}}
+                            {{bind-attr href=targetElement}}
+                            {{action "loadRoles" member}}>
+
+                            Permissions
+                            <span class="caret"></span>
+                        </a>
+
+                        <a class="vlt-delete btn btn-default btn-sm" {{action "deleteMember" members member target=view.parentView}}>
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
             </div>
-            {{!-- End list-group --}}
 
+            <div class="collapse" {{ bind-attr id="id"}}>
+                {{#each role in member.roles }}
+                    {{members-admin-role-item member=member role=role deleteRole="deleteRole"}}
+                {{/each}}
+            </div>
         </div>
-        {{!-- End vlt-row collapse --}}
     </div>
-    {{!-- end of vlt-row --}}
-</div>
-{{!-- end table --}}
+
+{{/view}}

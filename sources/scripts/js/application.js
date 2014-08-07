@@ -81,11 +81,11 @@ Vaultier = Ember.Application.create({
          **************************************************
          */
 
-        setInterval(function() {
+        setInterval(function () {
             var body = $('body').height();
             var win = $(window).height();
             var footer = $('#vlt-footer').height();
-            if ( body + footer < win)  {
+            if (body + footer < win) {
                 $('#vlt-footer').css({position: 'fixed'})
             } else {
                 $('#vlt-footer').css({position: 'relative'})
@@ -99,17 +99,14 @@ Vaultier = Ember.Application.create({
          **************************************************
          */
 
-        // instead css overflow-y:scroll
-//        var minHeight = function () {
-//            $('html').css('height', $(window).height()+1);
-//        }
-//        $(window).resize(minHeight());
-//        minHeight();
-
         this.keypressBindings();
         this.registerDI(this);
 
+        //include components
+        Vaultier.AnimatedIfView = EmberExt.AnimatedIf.AnimatedIfView;
+        Vaultier.AnimatedUnlessView = EmberExt.AnimatedIf.AnimatedUnlessView;
     }
 });
+
 
 Vaultier.deferReadiness();

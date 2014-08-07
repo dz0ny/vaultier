@@ -21,22 +21,32 @@
             </div>
             <div class="clearfix"></div>
         </div>
-        <div class="panel panel-default vlt-panel-members">
-            <div class="panel-heading ">
-                <div class="vlt-col col-md-8">
-                    <h4> {{members.length}} Members at </h4>
-                </div>
-                <div class="clearfix"></div>
-            </div>
-            <!-- End of heading -->
-            <div class="panel-body" id="collapse">
-                {{members-admin-list members=concreteMembers}}
-                {{members-admin-list members=invitedMembers}}
-            </div>
-            <!-- End of panel-body -->
-            <div class="clearfix"></div>
 
-        </div>
+
+        {{#with invitedMembers as members}}
+            {{#view Vaultier.AnimatedIfView condition=members.length in="fadeIn" out="fadeOut"}}
+                {{#view Vaultier.MembersAdminListView}}
+                    {{members.length}} invited only {{pluralize members.length "member"}}
+                {{/view}}
+            {{/view}}
+        {{/with}}
+
+        {{#with concreteMembers as members}}
+            {{#view Vaultier.AnimatedIfView condition=members.length in="fadeIn" out="fadeOut"}}
+                {{#view Vaultier.MembersAdminListView members=concreteMembers}}
+                    {{members.length}} concrete team {{pluralize members.length "member"}}
+                {{/view}}
+            {{/view}}
+        {{/with}}
+
+        {{#with membersWithoutKey as members}}
+            {{#view Vaultier.AnimatedIfView condition=members.length in="fadeIn" out="fadeOut"}}
+                {{#view Vaultier.MembersAdminListView members=membersWithoutKeys}}
+                    {{members.length}} {{pluralize members.length "member"}} without valid keys
+                {{/view}}
+            {{/view}}
+        {{/with}}
+
 
         <div class="clearfix"></div>
     </div>
