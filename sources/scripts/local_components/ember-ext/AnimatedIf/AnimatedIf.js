@@ -76,4 +76,5 @@ EmberExt.AnimatedIf.Transitions = Ember.Object.extend({
         element.slideUp(duration, callback);
     }
 
-});
+})
+
