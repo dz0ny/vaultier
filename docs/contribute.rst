@@ -50,6 +50,9 @@ install frontend development tools
     sudo apt-get install nodejs
     sudo apt-get install npm
 
+    # install bower
+    npm install -g bower
+
     # initialize sources and vendors
     cd sources/vaultier/scripts
     npm install
@@ -69,5 +72,3 @@ Run development instance
     # run frontend compiler
     cd sources/vaultier/scripts
     gulp watch
-
-
