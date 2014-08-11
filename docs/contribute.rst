@@ -51,12 +51,15 @@ install frontend development tools
     sudo apt-get install npm
 
     # install bower
-    npm install -g bower
+    sudo npm install -g bower
 
     # initialize sources and vendors
     cd sources/vaultier/scripts
     npm install
     bower install
+
+    # install gulp
+    sudo npm install -g gulp
 
 
 ========================
