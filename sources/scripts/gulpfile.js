@@ -25,6 +25,7 @@
     var gulp = require('gulp');
 
     var gulp_concat = require('gulp-concat');
+    var gulp_concat_sourcemap = require('gulp-concat-sourcemap');
     var gulp_uglify = require('gulp-uglify');
     var gulp_jshint = require('gulp-jshint');
     var gulp_sourcemaps = require('gulp-sourcemaps');
@@ -56,10 +57,12 @@
                         return dirs.slice(-2).join('/');
                     }
                 }))
-                .pipe(gulp_sourcemaps.init())
-                .pipe(gulp_uglify())
-                .pipe(gulp_concat(destFile))
-                .pipe(gulp_sourcemaps.write())
+//                .pipe(gulp_sourcemaps.init())
+//                .pipe(gulp_uglify())
+//                .pipe(gulp_concat(destFile))
+//                .pipe(gulp_sourcemaps.write())
+
+                .pipe(gulp_concat_sourcemap(destFile))
                 .pipe(gulp.dest(destination));
         });
     };
@@ -71,11 +74,12 @@
             return gulp
                 .src(glob)
                 .pipe(gulp_newer(destination + destFile))
-                .pipe(gulp_sourcemaps.init())
-                .pipe(gulp_jshint())
-                .pipe(gulp_uglify())
-                .pipe(gulp_concat(destFile))
-                .pipe(gulp_sourcemaps.write())
+//                .pipe(gulp_sourcemaps.init())
+//                .pipe(gulp_uglify())
+//                .pipe(gulp_concat(destFile))
+//                .pipe(gulp_sourcemaps.write())
+
+                .pipe(gulp_concat_sourcemap(destFile))
                 .pipe(gulp.dest(destination));
         });
 

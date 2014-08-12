@@ -4,6 +4,7 @@ Vaultier.HomeRoute = Ember.Route.extend({
     }
 });
 
+
 Vaultier.HomeIndexRoute = Ember.Route.extend({
 });
 
