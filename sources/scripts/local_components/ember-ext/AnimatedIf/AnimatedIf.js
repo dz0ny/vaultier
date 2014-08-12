@@ -12,8 +12,8 @@ EmberExt.AnimatedIf.AnimatedIfView = Ember.View.extend({
     in: 'fadeIn',
     out: 'fadeOut',
     visible: false,
-    inDuration: 500,
-    outDuration: 500,
+    inDuration: EmberExt.AnimatedIf.defaultDuration,
+    outDuration: EmberExt.AnimatedIf.defaultDuration,
 
     classNames: 'ember-ext-animated-if-view',
 
