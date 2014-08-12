@@ -1,7 +1,12 @@
 Po.NS('EmberExt.AnimatedIf');
 
+EmberExt.AnimatedIf.defaultDuration = 500;
+EmberExt.AnimatedIf.intendedToRemoveProperty = '_intendedToAnimatedRemove';
+
+
 EmberExt.AnimatedIf.AnimatedIfView = Ember.View.extend({
-    // Passed-in / public
+
+    // Passed-in / public or determined from model
     condition: null,
 
     in: 'fadeIn',
@@ -48,7 +53,7 @@ EmberExt.AnimatedIf.Transitions = Ember.Object.extend({
             throw new Error('Effect %fx% not found'.replace('%fx%', name));
         }
         if (!duration) {
-            duration = 500;
+            duration = EmberExt.AnimatedIf.defaultDuration;
         }
 
         return new Ember.RSVP.Promise(function (resolve) {
@@ -76,5 +81,4 @@ EmberExt.AnimatedIf.Transitions = Ember.Object.extend({
         element.slideUp(duration, callback);
     }
 
-})
-
+});

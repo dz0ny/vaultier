@@ -1,3 +1,6 @@
+<a {{action nick}}>nick</a>
+<a {{action id}}>id</a>
+
 <div class="panel panel-default vlt-panel-members">
     <div class="panel-heading ">
         <div class="vlt-col col-md-8">
@@ -6,9 +9,7 @@
         <div class="clearfix"></div>
     </div>
     <div class="panel-body">
-        {{#each member in members}}
-            {{view Vaultier.MembersAdminListItemView}}
-        {{/each}}
+        {{each member in members itemViewClass='Vaultier.MembersAdminListItemView'}}
     </div>
     <div class="clearfix"></div>
 </div>

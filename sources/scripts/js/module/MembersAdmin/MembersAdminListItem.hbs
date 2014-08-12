@@ -1,4 +1,4 @@
-{{#view Vaultier.AnimatedUnlessView condition=member.removed in="none" out="slideUp"}}
+{{#view Vaultier.AnimatedUnlessView item=member collection=members in="slideDown" out="slideUp"}}
 
     <div class="table vlt-table">
         <div class="vlt-row">
@@ -24,16 +24,13 @@
                 <div class="vlt-col col-sm-4 vlt-actions">
                     <div class="vlt-edit-perms pull-right">
                         <a
-                                data-toggle="collapse"
-                            {{bind-attr class=":btn :btn-default :accordion-toggle :btn-sm member.roles_count::hide"}}
-                            {{bind-attr href=targetElement}}
-                            {{action "loadRoles" member}}>
-
+                            {{bind-attr class=":btn :btn-default :btn-sm member.roles_count::hide"}}
+                            {{action "toggleRoles" member target=view.parentView}}>
                             Permissions
                             <span class="caret"></span>
                         </a>
 
-                        <a class="vlt-delete btn btn-default btn-sm" {{action "deleteMember" members member target=view.parentView}}>
+                        <a class="vlt-delete btn btn-default btn-sm" {{action "deleteMember" members member}}>
                             <span class="glyphicon glyphicon-trash"></span>
                         </a>
                     </div>
@@ -41,11 +38,12 @@
                 <div class="clearfix"></div>
             </div>
 
-            <div class="collapse" {{ bind-attr id="id"}}>
-                {{#each role in member.roles }}
-                    {{members-admin-role-item member=member role=role deleteRole="deleteRole"}}
-                {{/each}}
-            </div>
+            {{#view Vaultier.AnimatedIfView condition=member.roles.length in="none" out="slideUp"}}
+                <div class="vlt-roles" style="display:none">
+                    {{each role in member.roles itemViewClass='Vaultier.MembersAdminRoleItemView' }}
+                </div>
+            {{/view}}
+
         </div>
     </div>
 

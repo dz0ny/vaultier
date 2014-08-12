@@ -255,11 +255,8 @@ var vaultierModulesConfig = {
                 "./js/module/Member/MemberInvite.js",
                 "./js/module/Member/MemberBox.js",
 
-                "./js/module/MembersAdmin/MembersAdminAccordion.js",
-                "./js/module/MembersAdmin/MembersAdmin.js",
                 "./js/module/MembersAdmin/MembersAdminList.js",
-                "./js/module/MembersAdmin/MembersAdminListItem.js",
-                "./js/module/MembersAdmin/MembersAdminRoleItem.js"
+                "./js/module/MembersAdmin/MembersAdmin.js"
             ],
             "templates": [
                 "./js/module/Member/**/*.hbs",

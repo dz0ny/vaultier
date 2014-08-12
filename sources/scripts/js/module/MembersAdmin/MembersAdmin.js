@@ -1,4 +1,6 @@
-Vaultier.MembersAdminRoute = Ember.Route.extend({
+Vaultier.MembersAdminRoute = Ember.Route.extend(
+    Vaultier.MembersAdminListActionsMixin,
+    {
         model: function (params) {
             var store = this.get('store');
 
@@ -31,13 +33,24 @@ Vaultier.MembersAdminRoute = Ember.Route.extend({
 
 Vaultier.MembersAdminController = Ember.Controller.extend({
 
+    actions: {
+        nick: function() {
+            this.set('invitedMembers.sortProperties', ['nickname']);
+        },
+
+        id: function() {
+            this.set('invitedMembers.sortProperties', ['id']);
+
+        }
+    },
+
+
     invitedMembers: function () {
         return Ember.ArrayProxy.createWithMixins(
             Ember.SortableMixin,
             {
                 sortProperties: ['nickname'],
                 content: this.get('content').filter(function (item, index, enumerable) {
-
                     return item.get('status') == Vaultier.Member.proto().statuses.INVITED.value;
                 })
             })
@@ -49,7 +62,7 @@ Vaultier.MembersAdminController = Ember.Controller.extend({
             {
                 sortProperties: ['nickname'],
                 content: this.get('content').filter(function (item, index, enumerable) {
-                    return item.get('status') ==  Vaultier.Member.proto().statuses.MEMBER_WITHOUT_WORKSPACE_KEY.value;
+                    return item.get('status') == Vaultier.Member.proto().statuses.MEMBER_WITHOUT_WORKSPACE_KEY.value;
                 })
             })
     }.property('content.@each', 'content.@each.status'),
