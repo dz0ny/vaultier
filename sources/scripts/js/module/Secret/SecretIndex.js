@@ -132,17 +132,19 @@ Vaultier.SecretIndexView = Ember.View.extend({
 });
 
 
-Vaultier.SecretIndexItemNoteView = Ember.View.extend({
-    templateName: 'Secret/SecretIndexItemNote'
-});
-
-Vaultier.SecretIndexItemPasswordView = Ember.View.extend({
-    templateName: 'Secret/SecretIndexItemPassword'
-});
-
-
-Vaultier.SecretIndexItemFileView = Ember.View.extend({
-    templateName: 'Secret/SecretIndexItemFile'
+Vaultier.SecretIndexItemView = Ember.View.extend({
+    classNames: ['vlt-secret-item'],
+    templateName: function () {
+        var types = Vaultier.Secret.proto().types;
+        switch (this.get('secret.type')) {
+            case types['NOTE'].value:
+                return 'Secret/SecretIndexItemNote';
+            case types['PASSWORD'].value:
+                return 'Secret/SecretIndexItemPassword';
+            case types['FILE'].value:
+                return 'Secret/SecretIndexItemFile';
+        }
+    }.property()
 });
 
 Vaultier.SecretIndexItemControlsView = Ember.View.extend({

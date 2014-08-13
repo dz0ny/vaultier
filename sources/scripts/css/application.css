@@ -1411,15 +1411,15 @@ span.vlt-user img {
     width: 100px;
 }
 
-.vlt-secret-box .vlt-secret-item.vlt-password .vlt-visual .vlt-icon {
+.vlt-secret-box .vlt-secret-item .vlt-secret-item-password .vlt-visual .vlt-icon {
     background-image: url('../images/icon-password-white.png');
 }
 
-.vlt-secret-box .vlt-secret-item.vlt-note .vlt-visual .vlt-icon {
+.vlt-secret-box .vlt-secret-item .vlt-secret-item-note .vlt-visual .vlt-icon {
     background-image: url('../images/icon-note-white.png');
 }
 
-.vlt-secret-box .vlt-secret-item.vlt-file .vlt-visual .vlt-icon {
+.vlt-secret-box .vlt-secret-item .vlt-secret-item-file .vlt-visual .vlt-icon {
     background-image: url('../images/icon-file-white.png');
 }
 
