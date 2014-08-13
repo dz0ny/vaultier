@@ -14,6 +14,7 @@ Release 0.7.0
 * [feature] #199 Redesign cards and vault item
 * [feature] #180 clever footer
 * [feature] #80 Generate random password on secret creation
+* [feature] #207 Migrate rendering of secret list items to view with computed templateName
 
 Release 0.6.5
 -------------
@@ -34,4 +35,4 @@ Release 0.6.2
 
 Release 0.6.1
 -------------
-Initial release
+* Initial release
