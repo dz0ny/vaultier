@@ -40,7 +40,10 @@
 
             {{#view Vaultier.AnimatedIfView condition=member.roles.length in="none" out="slideUp"}}
                 <div class="vlt-roles" style="display:none">
-                    {{each role in member.roles itemViewClass='Vaultier.MembersAdminRoleItemView' }}
+                    {{#each role in member.roles}}
+                        {{view Vaultier.MembersAdminRoleItemView role=role }}
+                    {{/each}}
+
                 </div>
             {{/view}}
 
