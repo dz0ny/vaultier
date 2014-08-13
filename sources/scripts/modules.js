@@ -179,7 +179,8 @@ var vaultierModulesConfig = {
                 "./js/module/Layout/Breadcrumbs.hbs",
                 "./js/module/Layout/LayoutStandard.hbs",
                 "./js/module/Layout/Confirm.hbs",
-                "./js/module/Layout/Footer.hbs"
+                "./js/module/Layout/Footer.hbs",
+                "./js/module/Layout/PasswordField.hbs"
             ],
             "scripts": [
                 "./js/module/Layout/LayoutStandard.js",
@@ -188,7 +189,8 @@ var vaultierModulesConfig = {
                 "./js/module/Layout/DotDotDot.js",
                 "./js/module/Layout/Breadcrumbs.js",
                 "./js/module/Layout/WorkspaceBox.js",
-                "./js/module/Layout/Confirm.js"
+                "./js/module/Layout/Confirm.js",
+                "./js/module/Layout/PasswordField.js"
             ],
             "resources": [
                 './images/**/*'
