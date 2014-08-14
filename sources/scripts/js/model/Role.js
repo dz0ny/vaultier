@@ -102,7 +102,7 @@ Vaultier.Role = RL.Model.extend(
 
         }.property('to_vault', 'to_card', 'to_workspace'),
 
-        relatedObjectId: function () {
+        relatedObject: function () {
 
             if (this.get('to_workspace')) {
                 return this.get('to_workspace');
@@ -118,13 +118,8 @@ Vaultier.Role = RL.Model.extend(
          * Return true if the given object is related to this role
          */
         isRelatedToObject: function (object) {
-            if (typeof object === 'number') {
-                // the object come from a secret and its value refer to its parent card id
-                return this.get('relatedObjectId') === object;
-            }
-
             return this.get('relatedObjectType') === object.get('objectType') &&
-                this.get('relatedObjectId') === object.get('id');
+                this.get('relatedObject.id') === object.get('id');
         }
 
     });

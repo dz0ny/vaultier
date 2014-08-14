@@ -1,4 +1,4 @@
-Vaultier.SecretCardNodeView = Ember.Tree.TreeNodeView.extend({
+Vaultier.SecretCardNodeView = EmberExt.Tree.TreeNodeView.extend({
     templateName: 'Secret/SecretMoveCardNode',
     Radio: Ember.View.extend({
         tagName: "input",
@@ -13,7 +13,7 @@ Vaultier.SecretCardNodeView = Ember.Tree.TreeNodeView.extend({
     }
 });
 
-Vaultier.SecretVaultNodeView = Ember.Tree.TreeNodeView.extend({
+Vaultier.SecretVaultNodeView = EmberExt.Tree.TreeNodeView.extend({
     templateName: 'Secret/SecretMoveVaultNode',
 
     getSubNodeViewClass: function () {
@@ -126,7 +126,7 @@ Vaultier.SecretMoveController = Ember.ObjectController.extend({
 Vaultier.SecretMoveView = Ember.View.extend({
     templateName: 'Secret/SecretMove',
     layoutName: 'Layout/LayoutStandard',
-    Tree: Ember.Tree.TreeView.extend({
+    Tree: EmberExt.Tree.TreeView.extend({
         itemViewClass: Vaultier.SecretVaultNodeView
     })
 

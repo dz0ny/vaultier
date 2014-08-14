@@ -46,7 +46,9 @@ var vaultierModulesConfig = {
                 "./bower_components/ember-restless/dist/ember-restless+extras.js",
 
                 /**************** ember extensions **/
-                "./local_components/ember-ext/Tree/EmberTree.js",
+                "./bower_components/ember-animate/ember-animate.js",
+                "./local_components/ember-ext/Tree/Tree.js",
+                "./local_components/ember-ext/AnimatedIf/AnimatedIf.js",
 
                 /**************** boostrap **/
                 "./bower_components/bootstrap/dist/js/bootstrap.js",
@@ -269,6 +271,10 @@ var vaultierModulesConfig = {
                 "./js/module/Workspace/WorkspaceRolesAdminManagement.js"
             ],
             "templates": [
+                "./js/module/Workspace/MembersAdminRoleItemWorkspace.hbs",
+                "./js/module/Workspace/MembersAdminRoleItemVault.hbs",
+                "./js/module/Workspace/MembersAdminRoleItemCard.hbs",
+                "./js/module/Workspace/MembersAdmin.hbs",
                 "./js/module/Workspace/WorkspacesIndex.hbs",
                 "./js/module/Workspace/WorkspacesIndexItem.hbs",
                 "./js/module/Workspace/WorkspacesIndexWithoutKeys.hbs",

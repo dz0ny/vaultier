@@ -57,7 +57,7 @@
                             <div class="col-md-4 vlt-controls">
                                 {{#if block.readOnly }}
                                     {{#if block.object.perms.invite}}
-                                        <a class="btn btn-default btn-sm"
+                                        <a class="btn btn-default btn-sm pull-right"
                                             {{bind-attr href=block.url}}
                                            data-toggle="tooltip"
                                            title="Edit inherited roles"
@@ -95,13 +95,13 @@
                                     </div>
                                     <div class="vlt-col col-sm-4 vlt-labels">
                                         {{#if role.isMemberWithoutKeys}}
-                                            <div class="label label-warning">
+                                            <div class="label label-warning pull-right">
                                                 Does not have workspace key yet
                                             </div>
                                         {{/if}}
 
                                         {{#if role.isInvited}}
-                                            <div class="label label-warning">
+                                            <div class="label label-warning pull-right">
                                                 Invited only. Did not show up yet!
                                             </div>
                                         {{/if}}
@@ -111,10 +111,10 @@
                                         {{#unless block.readOnly}}
 
                                             {{#if role.isCurrentUser}}
-                                                <span class="label label-warning">
+                                                <span class="label label-warning pull-right">
                                         It's you
                                         </span>
-                                        <span class="label label-default"
+                                        <span class="label label-default pull-right"
                                               data-toggle="tooltip" {{bind-attr data-toggle='tooltip' title=role.printableDesc}}>
                                             {{role.printableName}}
                                         </span>
@@ -122,7 +122,7 @@
 
                                             {{else}}
                                                 <div class="vlt-edit-perms">
-                                                    <a class="vlt-delete btn btn-default btn-sm" {{action deleteRole role block}}>
+                                                    <a class="vlt-delete btn btn-default btn-sm pull-right" {{action deleteRole role block}}>
                                                         <span class="glyphicon glyphicon-trash"></span>
                                                     </a>
                                                     {{view view.Select
@@ -137,12 +137,12 @@
                                         {{else}}
 
                                             {{#if role.isCurrentUser}}
-                                                <span class="label label-warning">
+                                                <span class="label label-warning pull-right">
                                         It's you
                                         </span>
                                             {{/if}}
 
-                                            <span class="label label-default"
+                                            <span class="label label-default pull-right"
                                                   data-toggle='tooltip' {{bind-attr title=role.printableDesc}}>
                                                 {{role.printableName}}
                                             </span>
