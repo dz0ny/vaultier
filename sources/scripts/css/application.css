@@ -462,10 +462,6 @@ a:hover {
     border-top-width: 0px;
 }
 
-.vlt-page-toolbar .vlt-page-collaborators {
-    width: 248px;
-}
-
 /* Sidebared page */
 
 .vlt-page.vlt-page-with-sidebar {
@@ -1617,102 +1613,110 @@ span.vlt-user img {
 * Permissions/Members panel
 *************************************************************
 *************************************************************/
-.vlt-panel-members .panel-body {
-    padding-bottom: 0;
+.vlt-panel-members .vlt-panel-members-body {
+    padding: 0px;
 }
-
-.vlt-panel-members .vlt-controls,
-.vlt-panel-permissions .vlt-controls {
-    text-align: right;
+.vlt-panel-members .vlt-panel-members-body .vlt-table > .row > .vlt-actions {
+    padding-right: 30px;
 }
-
-.vlt-panel-members .vlt-table .vlt-row,
-.vlt-panel-permissions .vlt-table .vlt-row {
-    padding: 10px 0px 10px 0px;
+.vlt-panel-members .vlt-panel-members-body .vlt-table {
     border-bottom: 2px solid #F5F5F5;
+    padding: 15px;
+    margin-bottom: 0px;
 }
-
-.vlt-panel-members .vlt-table .vlt-row:last-of-type
-.vlt-panel-permissions .vlt-table .vlt-row:last-of-type {
-    border-bottom: 0px;
-}
-
-.vlt-panel-members .vlt-table {
-    padding-bottom: 0;
-    margin-bottom: 0;
-}
-
-.vlt-panel-members .vlt-table .vlt-row .vlt-user img
-.vlt-panel-permissions .vlt-table .vlt-row .vlt-user img {
-    vertical-align: top;
-    margin-left: 4px;
-    width: 50px;
-    height: 50px;
-}
-
-.vlt-panel-members .vlt-row .vlt-labels {
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-}
-
-.vlt-panel-members .vlt-row .list-group-item .vlt-labels {
-    height: auto;
-    margin: 0;
-}
-
-.vlt-panel-members .vlt-table .label {
-    float: right;
+.vlt-panel-members .vlt-panel-members-body .vlt-table .label {
     display: inline-block;
     padding: 8px;
-    margin: 0px 0px 0px 5px;
+    margin: 0px 0px 3px 5px;
     word-wrap: normal;
     white-space: normal;
 }
-
+.vlt-panel-members .vlt-panel-members-body .vlt-table .vlt-actions .btn {
+    margin-bottom: 3px;
+    margin-left: 3px;
+}
+.vlt-panel-members .vlt-panel-members-body .vlt-controls {
+    text-align: right;
+}
+/*************************************************************
+* Roles
+*************************************************************/
+.vlt-panel-members .vlt-panel-members-body .vlt-panel-members-roles {
+    display: none;
+    margin-top: 30px;
+    width: 100%;
+    position: relative;
+    background: #F5F5F5;
+    border: 1px solid #dddddd;
+    border-radius: 6px;
+}
+.vlt-panel-members .vlt-panel-members-body .vlt-table .vlt-panel-members-roles:after,
+.vlt-panel-members .vlt-panel-members-body .vlt-table .vlt-panel-members-roles:before {
+	bottom: 100%;
+	left: 23px;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+.vlt-panel-members .vlt-panel-members-body .vlt-table .vlt-panel-members-roles:after {
+	border-color: rgba(77, 131, 213, 0);
+	border-bottom-color: #F5F5F5;
+	border-width: 20px;
+	margin-left: -20px;
+}
+.vlt-panel-members .vlt-panel-members-body .vlt-table .vlt-panel-members-roles:before {
+	border-color: rgba(194, 225, 245, 0);
+	border-bottom-color: #dddddd;
+	border-width: 21px;
+	margin-left: -21px;
+}
+.vlt-panel-members .vlt-panel-members-body .vlt-panel-members-role {
+    margin: 6px;
+    background: white;
+}
+.vlt-panel-members .vlt-panel-members-body .vlt-panel-members-role .vlt-labels {
+    padding-right: 0px;
+}
+.vlt-panel-members .vlt-panel-members-body .vlt-panel-members-roles .vlt-actions {
+    padding-right: 0px;
+}
+/*************************************************************
+* Permissions
+*************************************************************/
+.vlt-panel-permissions .vlt-panel-permissions-body {
+    padding: 0px;
+}
+.vlt-panel-permissions .vlt-table {
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-bottom: 0px
+}
+.vlt-panel-permissions .vlt-table .vlt-row {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #F5F5F5;
+}
+.vlt-panel-permissions .vlt-panel-permissions-body .vlt-table .vlt-actions .btn {
+    margin-bottom: 3px;
+    margin-left: 3px;
+}
 .vlt-panel-permissions .vlt-table .vlt-row .vlt-actions .vlt-perms {
     float: right;
     width: 150px;
 }
-
 .vlt-panel-permissions .vlt-table .vlt-row .vlt-actions .vlt-delete {
     margin-left: 5px;
     min-height: 35px;
-    float: right;
 }
-
-.vlt-panel-permissions .panel-heading {
-    padding-left: 0px;
-    padding-right: 0px;
-}
-
 .vlt-panel-permissions .vlt-table .label {
-    float: right;
     display: inline-block;
     padding: 8px;
     margin: 0px 0px 0px 5px;
     word-wrap: normal;
     white-space: normal;
-}
-
-@media (max-width: 767px) {
-    .vlt-panel-permissions .vlt-table .vlt-col {
-        float: none;
-        padding: 10px;
-    }
-
-    .vlt-panel-permissions .vlt-table .vlt-row .vlt-actions .vlt-perms {
-        float: left;
-    }
-
-    .vlt-panel-permissions .vlt-table .vlt-row .vlt-actions .vlt-delete {
-        float: left;
-    }
-
-    .vlt-panel-permissions .vlt-table .vlt-row .label {
-        float: left;
-    }
-
 }
 
 /*************************************************************

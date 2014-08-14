@@ -33,18 +33,6 @@ Vaultier.MembersAdminRoute = Ember.Route.extend(
 
 Vaultier.MembersAdminController = Ember.Controller.extend({
 
-    actions: {
-        nick: function() {
-            this.set('invitedMembers.sortProperties', ['nickname']);
-        },
-
-        id: function() {
-            this.set('invitedMembers.sortProperties', ['id']);
-
-        }
-    },
-
-
     invitedMembers: function () {
         return Ember.ArrayProxy.createWithMixins(
             Ember.SortableMixin,

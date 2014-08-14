@@ -1,26 +1,26 @@
-<div class="list-group-item">
+<div class="list-group-item vlt-panel-members-role">
 
-    <div class="clt-col col-sm-5">
+    <div class="col-sm-4">
 
-            <span data-toggle="tooltip vlt-img-25" data-placement="top" title="Card">
-                <img class="vlt-wspaceimg" {{bind-attr src=view.icon}} style="width: 25px">
-             </span>
+        <span data-toggle="tooltip vlt-img-25" data-placement="top" title="Card">
+            <img class="vlt-wspaceimg" {{bind-attr src=view.icon}} style="width: 25px">
+         </span>
 
         <span class="col-sm-offset-1" data-toggle="tooltip" data-placement="top" title="name">
             {{role.relatedObject.name}}
         </span>
 
     </div>
-    <div class="vlt-col col-sm-5 vlt-labels">
+    <div class="col-sm-5 vlt-labels">
         <span class="vlt-edit-perms vlt-labels">
             <span data-toggle='tooltip'
-                  class="label label-default" {{bind-attr title=role.printableDesc}}>
+                  class="label label-default pull-right" {{bind-attr title=role.printableDesc}}>
                 {{role.printableName}}
             </span>
         </span>
     </div>
 
-    <div class="vlt-col col-sm-2 vlt-actions pull-right">
+    <div class="col-sm-3 vlt-actions pull-right">
         <a class="vlt-delete btn btn-default btn-sm pull-right">
             <span class="glyphicon glyphicon-trash" {{action "deleteRole" member role }}></span>
         </a>

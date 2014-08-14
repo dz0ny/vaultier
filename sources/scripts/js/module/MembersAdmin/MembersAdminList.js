@@ -117,19 +117,19 @@ Vaultier.MembersAdminListItemView = Ember.View.extend({
 
     showRoles: function () {
         Ember.run.next(function () {
-            this.$('.vlt-roles').slideDown();
+            this.$('.vlt-panel-members-roles').slideDown();
         }.bind(this))
     },
 
     hideRoles: function () {
         Ember.run.next(function () {
-            this.$('.vlt-roles').slideUp();
+            this.$('.vlt-panel-members-roles').slideUp();
         }.bind(this))
     },
 
     toggleRoles: function () {
         Ember.run.next(function () {
-            this.$('.vlt-roles').slideToggle();
+            this.$('.vlt-panel-members-roles').slideToggle();
         }.bind(this))
     },
 

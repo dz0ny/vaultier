@@ -1,14 +1,11 @@
-<a {{action nick}}>nick</a>
-<a {{action id}}>id</a>
-
 <div class="panel panel-default vlt-panel-members">
-    <div class="panel-heading ">
+    <div class="panel-heading">
         <div class="vlt-col col-md-8">
             <h4> {{yield}} </h4>
         </div>
         <div class="clearfix"></div>
     </div>
-    <div class="panel-body">
+    <div class="panel-body vlt-panel-members-body">
         {{each member in members itemViewClass='Vaultier.MembersAdminListItemView'}}
     </div>
     <div class="clearfix"></div>

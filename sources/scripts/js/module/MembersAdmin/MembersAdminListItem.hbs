@@ -1,53 +1,47 @@
-{{#view Vaultier.AnimatedUnlessView item=member collection=members in="slideDown" out="slideUp"}}
-
-    <div class="table vlt-table">
-        <div class="vlt-row">
-            <div class="row">
-                <div class="vlt-col  col-sm-4 vlt-user">
-                    {{printUser member size=50}}
-                </div>
-                <div class="vlt-col col-sm-4 vlt-labels">
-                    <span {{bind-attr class=":label member.roles_count:label-default:label-warning"}}>
-                        {{member.roles_count}}
-                        {{pluralize member.roles_count "permission"}}
-                    </span>
-
-                    {{#if member.isInvited}}
-                        <span class="label label-warning">Invited only. Did not show up yet!</span>
-                    {{/if}}
-
-                    {{#if member.hasNoKeys}}
-                        <span class="label label-warning">Does not have key yet</span>
-                    {{/if}}
-                </div>
-
-                <div class="vlt-col col-sm-4 vlt-actions">
-                    <div class="vlt-edit-perms pull-right">
-                        <a
-                            {{bind-attr class=":btn :btn-default :btn-sm member.roles_count::hide"}}
-                            {{action "toggleRoles" member target=view.parentView}}>
-                            Permissions
-                            <span class="caret"></span>
-                        </a>
-
-                        <a class="vlt-delete btn btn-default btn-sm" {{action "deleteMember" members member}}>
-                            <span class="glyphicon glyphicon-trash"></span>
-                        </a>
-                    </div>
-                </div>
-                <div class="clearfix"></div>
-            </div>
-
-            {{#view Vaultier.AnimatedIfView condition=member.roles.length in="none" out="slideUp"}}
-                <div class="vlt-roles" style="display:none">
-                    {{#each role in member.roles}}
-                        {{view Vaultier.MembersAdminRoleItemView role=role }}
-                    {{/each}}
-
-                </div>
-            {{/view}}
-
+<div class="table vlt-table">
+    <div class="row">
+        <div class="col-sm-4 vlt-user">
+            {{printUser member size=50}}
         </div>
+        <div class="col-sm-5 vlt-labels">
+            <span {{bind-attr class=":label member.roles_count:label-default:label-warning :pull-right"}}>
+                {{member.roles_count}}
+                {{pluralize member.roles_count "permission"}}
+            </span>
+
+            {{#if member.isInvited}}
+                <span class="label label-warning pull-right">Invited only. Did not show up yet!</span>
+            {{/if}}
+
+            {{#if member.hasNoKeys}}
+                <span class="label label-warning pull-right">Does not have key yet</span>
+            {{/if}}
+        </div>
+
+        <div class="col-sm-3 vlt-actions">
+            <div class="vlt-edit-perms pull-right">
+                <a class="vlt-delete btn btn-default btn-sm pull-right" {{action "deleteMember" members member}}>
+                    <span class="glyphicon glyphicon-trash"></span>
+                </a>
+                <a
+                    {{bind-attr class=":btn :btn-default :btn-sm member.roles_count::hide :pull-right"}}
+                    {{action "toggleRoles" member target=view}}>
+                    Permissions
+                    <span class="caret"></span>
+                </a>
+            </div>
+        </div>
+        <div class="clearfix"></div>
     </div>
 
-{{/view}}
+    {{#view Vaultier.AnimatedIfView condition=member.roles.length in="none" out="slideUp"}}
+        <div class="vlt-panel-members-roles">
+            {{#each role in member.roles}}
+                {{view Vaultier.MembersAdminRoleItemView role=role }}
+            {{/each}}
+
+        </div>
+    {{/view}}
+
+</div>
+
