@@ -1,13 +1,17 @@
+from datetime import timedelta, datetime
 from time import time
 from django.test.testcases import TransactionTestCase
 from django.conf import settings
 from django.utils import unittest
 from django.utils.unittest.suite import TestSuite
+import pytz
 from rest_framework.status import HTTP_201_CREATED, HTTP_200_OK, HTTP_403_FORBIDDEN, HTTP_400_BAD_REQUEST
 from modelext.version.context import version_context_manager
 from vaultier.auth.authentication import Backend
+from vaultier.models.token.model import Token
 from vaultier.test.tools.auth.api import auth_api_call, register_api_call, get_timestamp
 from vaultier.test.tools import FileAccessMixin, format_response
+from django.utils import timezone
 
 
 class SignaturesTest(TransactionTestCase, FileAccessMixin):
@@ -18,16 +22,14 @@ class SignaturesTest(TransactionTestCase, FileAccessMixin):
         signature = Backend.sign(privkey, email, 1);
 
         self.assertTrue(Backend.verify(pubkey, email, 1, signature))
-        self.assertFalse(Backend.verify(pubkey, 'Unsigned text',1, signature))
+        self.assertFalse(Backend.verify(pubkey, 'Unsigned text', 1, signature))
 
 
 class ApiRegisterTest(TransactionTestCase):
-
     def setUp(self):
         version_context_manager.set_enabled(False)
 
     def test_010_register(self):
-
         # register user
         email = 'jan.misek@rclick.cz'
         response = register_api_call(email=email, nickname='Misan')
@@ -40,8 +42,7 @@ class ApiRegisterTest(TransactionTestCase):
         self.assertEqual(response.status_code, HTTP_400_BAD_REQUEST, msg=format_response(response))
 
     def test_020_auth(self):
-
-         # register user
+        # register user
         email = 'jan.misek@rclick.cz'
         response = register_api_call(email=email, nickname='Misan')
         self.id = response.data.get('id')
@@ -60,9 +61,8 @@ class ApiRegisterTest(TransactionTestCase):
         response = auth_api_call(email=email, timestamp=expired, signature='WrongSignature')
         self.assertEqual(response.status_code, HTTP_403_FORBIDDEN, msg=format_response(response))
 
-
     def test_030_registration_should_be_case_insensitive(self):
-         # register user
+        # register user
         email = 'TeSt.CaSe.InSeSiTiVe@rclick.cz'
         response = register_api_call(email=email, nickname='case_insensitive')
         self.id = response.data.get('id')
@@ -79,7 +79,7 @@ class ApiRegisterTest(TransactionTestCase):
         self.assertEqual(response.data.get('user'), self.id,
                          'User could be logged with the UPPER case version of the email')
 
-         # register user
+        # register user
         email = 'TEST_UPPERCASE_REGISTRATION@rclick.cz'
         response = register_api_call(email=email, nickname='UPPERCASE_REGISTRATION')
         self.id = response.data.get('id')
@@ -88,7 +88,6 @@ class ApiRegisterTest(TransactionTestCase):
         # login with the email to lower case
         response = auth_api_call(email=email.lower())
         self.assertEqual(response.status_code, HTTP_200_OK, msg=format_response(response))
-
 
     def test_040_email_cannot_be_registered_more_than_once(self):
         # register user
@@ -117,8 +116,82 @@ class ApiRegisterTest(TransactionTestCase):
                          'The email was already registered')
 
 
+class TokenExpirationTest(TransactionTestCase):
+    def test_010_token_renewed(self):
+        # register user
+        email = 'jan.misek@rclick.cz'
+        register_api_call(email=email, nickname='Misan')
+        response = auth_api_call(email=email)
+        token = response.data.get('token')
+
+        token_model = Token.objects.get(token=token)
+        """:type : Token """
+        td = timedelta(days=-1)
+        last_used_at = timezone.now() - td
+        token_model.last_used_at = last_used_at
+        token_model.save()
+
+        # current date should be set, limit 60 seconds in case of some slowdown
+        self.assertTrue((timezone.now() - token_model.last_used_at).total_seconds() < 60)
+
+    def test_020_token_not_renewed_immediately(self):
+        # register user
+        email = 'jan.misek@rclick.cz'
+        register_api_call(email=email, nickname='Misan')
+        response = auth_api_call(email=email)
+        token = response.data.get('token')
+
+        token_model = Token.objects.get(token=token)
+        """:type : Token """
+
+        last_used_at = token_model.last_used_at
+        token_model.save()
+
+        # last_used_at not changed
+        self.assertEqual(last_used_at, token_model.last_used_at)
+
+    def test_030_old_token_cleaned_up(self):
+        # register user
+        email = 'jan.misek@rclick.cz'
+        register_api_call(email=email, nickname='Misan')
+        response = auth_api_call(email=email)
+        token = response.data.get('token')
+
+        token_model = Token.objects.get(token=token)
+        """:type : Token """
+        token_lifetime = settings.VAULTIER.get('authentication_token_lifetime')
+        td = timedelta(hours=2 * token_lifetime)
+        last_used_at = timezone.now() - td
+        token_model.last_used_at = last_used_at
+        token_model.save()
+
+        Token.objects.clean_old_tokens()
+        self.assertEqual(Token.objects.all().count(), 0)
+
+    def test_040_recent_token_not_cleaned_up(self):
+        # register user
+        email = 'jan.misek@rclick.cz'
+        register_api_call(email=email, nickname='Misan')
+        response = auth_api_call(email=email)
+        token = response.data.get('token')
+
+        token_model = Token.objects.get(token=token)
+        """:type : Token """
+        token_lifetime = settings.VAULTIER.get('authentication_token_lifetime')
+        td = timedelta(hours=token_lifetime - 1)
+        last_used_at = timezone.now() - td
+
+        token_model.last_used_at = last_used_at
+        token_model.save()
+
+        Token.objects.clean_old_tokens()
+        # token not deleted
+        self.assertEqual(Token.objects.all().count(), 1)
+
+
 def auth_suite():
     suite = TestSuite()
     suite.addTest(unittest.TestLoader().loadTestsFromTestCase(SignaturesTest))
     suite.addTest(unittest.TestLoader().loadTestsFromTestCase(ApiRegisterTest))
+    suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TokenExpirationTest))
     return suite
