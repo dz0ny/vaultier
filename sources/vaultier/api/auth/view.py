@@ -56,6 +56,7 @@ class LogoutView(APIView):
             logout(request)
             response = Response({'result': True})
             response.delete_cookie('sessionid', '/', '.')
+            Token.objects.filter(token=request.auth).delete()
             return response
         except Exception as e:
             raise CustomAPIException(exception=e)
