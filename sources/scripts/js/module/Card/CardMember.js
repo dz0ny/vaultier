@@ -1,4 +1,4 @@
-Vaultier.CardMemberIndexRoute = Vaultier.MemberIndexRoute.extend(
+Vaultier.CardRolesAdminIndexRoute = Vaultier.RolesAdminIndexRoute.extend(
     Vaultier.WorkspaceKeysMixin,
     {
         beforeModel: function () {
@@ -22,12 +22,12 @@ Vaultier.CardMemberIndexRoute = Vaultier.MemberIndexRoute.extend(
                 .addWorkspace()
                 .addVault()
                 .addCard()
-                .addCollaboratorsIndex('Card.memberIndex');
+                .addCollaboratorsIndex('Card.rolesAdminIndex');
         },
 
         setupInviteRoute: function (models) {
             return {
-                inviteRouteName: 'Card.memberInvite'
+                inviteRouteName: 'Card.rolesAdminInvite'
             };
         },
 
@@ -43,11 +43,11 @@ Vaultier.CardMemberIndexRoute = Vaultier.MemberIndexRoute.extend(
     });
 
 
-Vaultier.CardMemberIndexController = Vaultier.MemberIndexController.extend({
+Vaultier.CardRolesAdminIndexController = Vaultier.RolesAdminIndexController.extend({
 });
 
 
-Vaultier.CardMemberInviteRoute = Vaultier.MemberInviteRoute.extend(
+Vaultier.CardRolesAdminInviteRoute = Vaultier.RolesAdminInviteRoute.extend(
     Vaultier.WorkspaceKeysMixin,
     {
         beforeModel: function () {
@@ -71,8 +71,8 @@ Vaultier.CardMemberInviteRoute = Vaultier.MemberInviteRoute.extend(
                 .addWorkspace()
                 .addVault()
                 .addCard()
-                .addCollaboratorsIndex('Card.memberIndex')
-                .addCollaboratorsInvite('Card.memberInvite');
+                .addCollaboratorsIndex('Card.rolesAdminIndex')
+                .addCollaboratorsInvite('Card.rolesAdminInvite');
         },
 
         setupRoleLevels: function () {
@@ -87,5 +87,5 @@ Vaultier.CardMemberInviteRoute = Vaultier.MemberInviteRoute.extend(
 
     });
 
-Vaultier.CardMemberInviteController = Vaultier.MemberInviteController.extend({
+Vaultier.CardRolesAdminInviteController = Vaultier.RolesAdminInviteController.extend({
 });

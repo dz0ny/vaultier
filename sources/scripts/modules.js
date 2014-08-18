@@ -247,18 +247,18 @@ var vaultierModulesConfig = {
         "membership": {
             "scripts": [
                 "./js/module/Invitation/Invitation.js",
-                "./js/module/Member/MemberInviteInput.js",
-                "./js/module/Member/MemberIndex.js",
-                "./js/module/Member/MemberInvite.js",
-                "./js/module/Member/MemberBox.js",
-                "./js/module/Member/MemberManagement.js"
+                "./js/module/RolesAdmin/RolesAdminInviteInput.js",
+                "./js/module/RolesAdmin/RolesAdminIndex.js",
+                "./js/module/RolesAdmin/RolesAdminInvite.js",
+                "./js/module/RolesAdmin/RolesAdminBox.js",
+                "./js/module/RolesAdmin/RolesAdminManagement.js"
             ],
             "templates": [
-                "./js/module/Member/MemberManagerAccordion.hbs",
-                "./js/module/Member/MemberManagement.hbs",
-                "./js/module/Member/MemberIndex.hbs",
-                "./js/module/Member/MemberInvite.hbs",
-                "./js/module/Member/MemberBox.hbs",
+                "./js/module/RolesAdmin/RolesAdminManagerAccordion.hbs",
+                "./js/module/RolesAdmin/RolesAdminManagement.hbs",
+                "./js/module/RolesAdmin/RolesAdminIndex.hbs",
+                "./js/module/RolesAdmin/RolesAdminInvite.hbs",
+                "./js/module/RolesAdmin/RolesAdminBox.hbs",
                 "./js/module/Invitation/InvitationAnonymous.hbs",
                 "./js/module/Invitation/InvitationAccept.hbs"
             ]
@@ -269,8 +269,8 @@ var vaultierModulesConfig = {
                 "./js/module/Workspace/WorkspacesCreate.js",
                 "./js/module/Workspace/WorkspaceIndex.js",
                 "./js/module/Workspace/WorkspaceEdit.js",
-                "./js/module/Workspace/WorkspaceMember.js",
-                "./js/module/Workspace/WorkspaceMemberManagement.js"
+                "./js/module/Workspace/WorkspaceRolesAdmin.js",
+                "./js/module/Workspace/WorkspaceRolesAdminManagement.js"
             ],
             "templates": [
                 "./js/module/Workspace/WorkspacesIndex.hbs",

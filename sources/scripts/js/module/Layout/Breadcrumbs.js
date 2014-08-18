@@ -54,7 +54,7 @@ Vaultier.Breadcrumbs = Ember.Object.extend({
     },
 
     addCollaboratorsIndex: function(route) {
-        return this.addLink(route, 'Collaborators', null, '/static/vaultier/images/icon-user-grey.png')
+        return this.addLink(route, 'Team', null, '/static/vaultier/images/icon-user-grey.png')
     },
 
     addCollaboratorsInvite : function(route) {

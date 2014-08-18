@@ -1,6 +1,6 @@
 'use strict';
 
-Vaultier.MemberManagementRoute = Vaultier.MemberIndexRoute.extend({
+Vaultier.RolesAdminManagementRoute = Vaultier.RolesAdminIndexRoute.extend({
     model: function (params, transition) {
 
         this.setProperties(this.setupInviteData(params));
@@ -31,7 +31,7 @@ Vaultier.MemberManagementRoute = Vaultier.MemberIndexRoute.extend({
     },
 
     renderTemplate: function () {
-        this.render('MemberManagement', {controller: this.get('controller')});
+        this.render('RolesAdminManagement', {controller: this.get('controller')});
     },
     actions: {
         deleteRole: function (context, role) {
@@ -79,7 +79,7 @@ Vaultier.MemberManagementRoute = Vaultier.MemberIndexRoute.extend({
                     .then(function () {
                         var members = context.get('members');
                         members.removeObject(member);
-                        $.notify('Member has been remove', 'success');
+                        $.notify('RolesAdmin has been remove', 'success');
                     }.bind(this))
                     .catch(function (error) {
                         $.notify('Oooups! Something went wrong.', 'error');
@@ -92,7 +92,7 @@ Vaultier.MemberManagementRoute = Vaultier.MemberIndexRoute.extend({
     }
 });
 
-Vaultier.MemberManagementController = Vaultier.MemberIndexController.extend({
+Vaultier.RolesAdminManagementController = Vaultier.RolesAdminIndexController.extend({
     members: function () {
 
         var user = this.get('auth.user');
@@ -104,14 +104,14 @@ Vaultier.MemberManagementController = Vaultier.MemberIndexController.extend({
 });
 
 
-Vaultier.MemberManagementView = Vaultier.MemberIndexView.extend({
-    templateName: 'Member/MemberManagement'
+Vaultier.RolesAdminManagementView = Vaultier.RolesAdminIndexView.extend({
+    templateName: 'RolesAdmin/RolesAdminManagement'
 });
 
 
-Vaultier.MemberManagerAccordionComponent = Em.Component.extend({
+Vaultier.RolesAdminManagerAccordionComponent = Em.Component.extend({
     store: null,
-    layoutName: 'Member/MemberManagerAccordion',
+    layoutName: 'RolesAdmin/RolesAdminManagerAccordion',
     buildId: function (str) {
         str = str.replace(/[@\.]/g, ' ');
         return Em.String.dasherize(str) + '-roles';

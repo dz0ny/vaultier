@@ -48,9 +48,9 @@ Vaultier.registerDI = function (app) {
 
     app.inject('route:InvitationUse', 'invitations', 'service:invitations')
     app.inject('route:InvitationAccept', 'invitations', 'service:invitations')
-    app.inject('route:WorkspaceMemberInvite', 'invitations', 'service:invitations')
-    app.inject('route:VaultMemberInvite', 'invitations', 'service:invitations')
-    app.inject('route:CardMemberInvite', 'invitations', 'service:invitations');
+    app.inject('route:WorkspaceRolesAdminInvite', 'invitations', 'service:invitations')
+    app.inject('route:VaultRolesAdminInvite', 'invitations', 'service:invitations')
+    app.inject('route:CardRolesAdminInvite', 'invitations', 'service:invitations');
     app.inject('route:Workspaces', 'invitations', 'service:invitations');
 
     // service:keytransfer
@@ -69,7 +69,7 @@ Vaultier.registerDI = function (app) {
     app.inject('route:WorkspacesCreate', 'workspacekey', 'service:workspacekey');
     app.inject('route:Workspace', 'workspacekey', 'service:workspacekey');
     app.inject('route:WorkspaceNoKeys', 'workspacekey', 'service:workspacekey');
-    app.inject('route:WorkspaceMemberApprove', 'workspacekey', 'service:workspacekey');
+    app.inject('route:WorkspaceRolesAdminApprove', 'workspacekey', 'service:workspacekey');
 
     // service:changekey
     app.register('service:changekey', Service.ChangeKey);
@@ -90,7 +90,7 @@ Vaultier.registerDI = function (app) {
     // components injections
     app.inject('component:change-key', 'changekey', 'service:changekey');
 
-    app.inject('component:member-manager-accordion', 'store', 'store:main');
+    app.inject('component:roles-admin-manager-accordion', 'store', 'store:main');
 
     // service:environment
     app.register('service:environment', Service.Environment);
@@ -98,6 +98,6 @@ Vaultier.registerDI = function (app) {
     app.inject('controller:LayoutWorkspaceBox', 'environment', 'service:environment');
     app.inject('service:invitations', 'env', 'service:environment');
 
-    app.inject('component:member-box', 'auth', 'service:auth');
+    app.inject('component:roles-admin-box', 'auth', 'service:auth');
     // model injections - it is done in model inits
 }

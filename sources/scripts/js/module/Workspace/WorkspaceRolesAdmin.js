@@ -21,27 +21,27 @@ Vaultier.WorkspaceMixin = Em.Mixin.create({
             return Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
                 .addHome()
                 .addWorkspace()
-                .addCollaboratorsIndex('Workspace.memberIndex');
+                .addCollaboratorsIndex('Workspace.rolesAdminIndex');
         },
 
         setupInviteRoute: function (models) {
             return {
-                inviteRouteName: 'Workspace.memberInvite'
+                inviteRouteName: 'Workspace.rolesAdminInvite'
             };
         }
     });
 
-Vaultier.WorkspaceMemberIndexRoute = Vaultier.MemberIndexRoute.extend(
+Vaultier.WorkspaceRolesAdminIndexRoute = Vaultier.RolesAdminIndexRoute.extend(
     Vaultier.WorkspaceKeysMixin,
     Vaultier.WorkspaceMixin
 );
 
 
-Vaultier.WorkspaceMemberIndexController = Vaultier.MemberIndexController.extend({
+Vaultier.WorkspaceRolesAdminIndexController = Vaultier.RolesAdminIndexController.extend({
 });
 
 
-Vaultier.WorkspaceMemberInviteRoute = Vaultier.MemberInviteRoute.extend(
+Vaultier.WorkspaceRolesAdminInviteRoute = Vaultier.RolesAdminInviteRoute.extend(
     Vaultier.WorkspaceKeysMixin,
     {
 
@@ -62,11 +62,11 @@ Vaultier.WorkspaceMemberInviteRoute = Vaultier.MemberInviteRoute.extend(
             return Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
                 .addHome()
                 .addWorkspace()
-                .addCollaboratorsIndex('Workspace.memberIndex')
-                .addCollaboratorsInvite('Workspace.memberInvite');
+                .addCollaboratorsIndex('Workspace.rolesAdminIndex')
+                .addCollaboratorsInvite('Workspace.rolesAdminInvite');
         }
 
     });
 
-Vaultier.WorkspaceMemberInviteController = Vaultier.MemberInviteController.extend({
+Vaultier.WorkspaceRolesAdminInviteController = Vaultier.RolesAdminInviteController.extend({
 });

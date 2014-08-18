@@ -30,7 +30,7 @@
 
                                         {{#if vault.perms.invite}}
                                             <li>
-                                                {{#link-to "Vault.memberIndex" vault}}
+                                                {{#link-to "Vault.rolesAdminIndex" vault}}
                                                     Share
                                                 {{/link-to}}
                                             </li>
@@ -174,7 +174,7 @@
                         </h3>
                     </div>
                     <div class="vlt-body">
-                        {{member-box roles=memberships user=auth.user object=vault}}
+                        {{roles-admin-box roles=memberships user=auth.user object=vault}}
                     </div>
                     <div class="vlt-controls">
                         <div>
@@ -189,7 +189,7 @@
                              "
                                         data-placement="bottom"
                                         >
-                                    {{#link-to "Vault.memberInvite" vault class="btn btn-default"}}
+                                    {{#link-to "Vault.rolesAdminInvite" vault class="btn btn-default"}}
                                         <span class="glyphicon glyphicon-plus"></span>
                                         Invite
                                     {{/link-to}}
@@ -205,7 +205,7 @@
                              "
                                         data-placement="bottom"
                                         >
-                                    {{#link-to "Vault.memberIndex" vault class="btn btn-default"}}
+                                    {{#link-to "Vault.rolesAdminIndex" vault class="btn btn-default"}}
                                         <span class="glyphicon glyphicon-user"></span>
                                         Team
                                     {{/link-to}}

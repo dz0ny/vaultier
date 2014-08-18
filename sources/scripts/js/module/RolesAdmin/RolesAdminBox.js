@@ -1,5 +1,5 @@
-Vaultier.MemberBoxComponent = Ember.Component.extend({
-    layoutName: 'Member/MemberBox',
+Vaultier.RolesAdminBoxComponent = Ember.Component.extend({
+    layoutName: 'RolesAdmin/RolesAdminBox',
 
     init: function () {
         this._super.apply(this, arguments);

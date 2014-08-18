@@ -539,12 +539,12 @@ a:hover {
     color: #555555;
 }
 
-.vlt-member-box .vlt-user {
+.vlt-roles-admin-box .vlt-user {
     display: block;
     float: left;
 }
 
-.vlt-member-box .vlt-user img {
+.vlt-roles-admin-box .vlt-user img {
     margin-right: 2px;
     margin-bottom: 2px;
 }
@@ -1681,10 +1681,10 @@ span.vlt-user img {
 
 /*************************************************************
 **************************************************************
-* Member invitations
+* RolesAdmin invitations
 *************************************************************
 *************************************************************/
-.vaultier-member-invite-input .select2-choices {
+.vaultier-roles-admin-invite-input .select2-choices {
     min-height: 150px;
 }
 
