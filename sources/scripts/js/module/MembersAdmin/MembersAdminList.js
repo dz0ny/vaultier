@@ -137,6 +137,12 @@ Vaultier.MembersAdminListItemView = Ember.View.extend({
         EmberExt.AnimatedIf.Transitions.create().runFx(this.$(), 'slideUp').then(done);
     },
 
+    AnimatedView: Ember.View.extend({
+        animateOut: function (done) {
+            EmberExt.AnimatedIf.Transitions.create().runFx(this.$(), 'slideUp').then(done);
+        }
+    }),
+
     actions: {
 
         /**
