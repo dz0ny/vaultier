@@ -21,7 +21,7 @@
     </div>
 
     <div class="col-sm-3 vlt-actions pull-right">
-        <a class="vlt-delete btn btn-default btn-sm pull-right">
+        <a class="vlt-delete btn btn-default btn-sm pull-right" {{bind-attr disabled='view.cannotDelete' }}>
             <span class="glyphicon glyphicon-trash" {{action "deleteRole" member role }}></span>
         </a>
     </div>

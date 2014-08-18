@@ -9,29 +9,35 @@ Vaultier.MembersAdminListActionsMixin = Ember.Mixin.create({
     actions: {
         deleteRole: function (member, role) {
 
-            Vaultier.confirmModal(this, 'Are you sure you want to delete this permission?', function () {
+            var loggedUserId = this.get('auth.user.id');
+            var deleteUserId = member.get('user');
 
-                var promise = role
-                    .saveRecord()//@todo: deleteRecord
+            if (loggedUserId == deleteUserId && role.get('to_workspace') != null) {
+                throw new Error('You can not delete yourself.');
+            } else {
+                Vaultier.confirmModal(this, 'Are you sure you want to delete this permission?', function () {
 
-                    .then(function () {
+                    var promise = role
+                        .deleteRecord()
 
-                        var roles = member.get('roles');
-                        roles.removeObject(role);
-                        member.set('roles_count', roles.get('length'));
+                        .then(function () {
 
-                        $.notify('Role has been remove', 'success');
-                    }.bind(this))
+                            var roles = member.get('roles');
+                            roles.removeObject(role);
+                            member.set('roles_count', roles.get('length'));
 
-                    .catch(function (error) {
-                        $.notify('Oooups! Something went wrong.', 'error');
-                        this.get('errors').logError(error);
-                    }.bind(this));
+                            $.notify('Role has been remove', 'success');
+                        }.bind(this))
 
-                ApplicationLoader.promise(promise);
+                        .catch(function (error) {
+                            $.notify('Oooups! Something went wrong.', 'error');
+                            this.get('errors').logError(error);
+                        }.bind(this));
 
-            });
+                    ApplicationLoader.promise(promise);
 
+                });
+            }
         },
 
         /**
@@ -41,24 +47,31 @@ Vaultier.MembersAdminListActionsMixin = Ember.Mixin.create({
          */
 
         deleteMember: function (members, member) {
-            Vaultier.confirmModal(this, 'Are you sure you want to delete this member?', function () {
+            var loggedUserId = this.get('auth.user.id');
+            var deleteUserId = member.get('user');
 
-                var promise = member
-                    .saveRecord()//@todo: deleteRecord
+            if (loggedUserId == deleteUserId) {
+                throw new Error('You can not delete yourself.');
+            } else {
+                Vaultier.confirmModal(this, 'Are you sure you want to delete this member?', function () {
 
-                    .then(function () {
-                        members.removeObject(member);
-                        $.notify('Member has been removed', 'success');
-                    }.bind(this))
+                    var promise = member
+                        .deleteRecord()
 
-                    .catch(function (error) {
-                        $.notify('Oooups! Something went wrong.', 'error');
-                        console.error(error);
-                        //this.get('errors').logError(error);
-                    }.bind(this));
+                        .then(function () {
+                            members.removeObject(member);
+                            $.notify('Member has been removed', 'success');
+                        }.bind(this))
 
-                ApplicationLoader.promise(promise);
-            }.bind(this));
+                        .catch(function (error) {
+                            $.notify('Oooups! Something went wrong.', 'error');
+                            console.error(error);
+                            //this.get('errors').logError(error);
+                        }.bind(this));
+
+                    ApplicationLoader.promise(promise);
+                }.bind(this));
+            }
         },
 
         /**
@@ -101,6 +114,12 @@ Vaultier.MembersAdminListItemView = Ember.View.extend({
 
         return this.get('_member');
     }.property('_member'),
+
+    myself: function() {
+        var loggedUserId = this.get('controller.auth.user.id');
+        var deleteUserId = this.get('content.user');
+        return loggedUserId == deleteUserId;
+    }.property(),
 
     onRolesEmpty: function () {
         if (!this.get('member.roles.length')) {
@@ -172,6 +191,12 @@ Vaultier.MembersAdminListItemView = Ember.View.extend({
  */
 Vaultier.MembersAdminRoleItemView = Ember.View.extend({
     templateName: 'MembersAdmin/MembersAdminRoleItem',
+
+    cannotDelete: function() {
+        var loggedUserId = this.get('controller.auth.user.id');
+        var deleteUserId = this.get('role.member.user');
+        return loggedUserId == deleteUserId && this.get('role.to_workspace') != null;
+    }.property(),
 
     animateOut: function (done) {
         EmberExt.AnimatedIf.Transitions.create().runFx(this.$(), 'slideUp').then(done);

@@ -9,6 +9,10 @@
                 {{pluralize member.roles_count "permission"}}
             </span>
 
+            {{#if view.myself }}
+                <span class="label label-warning pull-right">It's you</span>
+            {{/if}}
+
             {{#if member.isInvited}}
                 <span class="label label-warning pull-right">Invited only. Did not show up yet!</span>
             {{/if}}
@@ -20,9 +24,12 @@
 
         <div class="col-sm-3 vlt-actions">
             <div class="vlt-edit-perms pull-right">
-                <a class="vlt-delete btn btn-default btn-sm pull-right" {{action "deleteMember" members member}}>
+
+                <a class="vlt-delete btn btn-default btn-sm pull-right" {{action "deleteMember" members member}}
+                        {{bind-attr disabled='view.myself' }}>
                     <span class="glyphicon glyphicon-trash"></span>
                 </a>
+
                 <a
                     {{bind-attr class=":btn :btn-default :btn-sm member.roles_count::hide :pull-right"}}
                     {{action "toggleRoles" member target=view}}>

@@ -1,10 +1,16 @@
 Vaultier.MembersAdminRoute = Ember.Route.extend(
     Vaultier.MembersAdminListActionsMixin,
     {
-        model: function (params) {
+        model: function (params, transition) {
             var store = this.get('store');
 
             var workspace = this.modelFor('Workspace');
+
+            if (!this.get('auth').checkPermissions(transition, function () {
+                return workspace.get('perms.update')
+            }.bind(this), true)) {
+                return;
+            }
 
             var members = store
                 .find('Member', { workspace: workspace.get('id')})
@@ -23,7 +29,7 @@ Vaultier.MembersAdminRoute = Ember.Route.extend(
                 Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
                     .addHome()
                     .addWorkspace()
-                    .addText('Member management')
+                    .addText('Members of workspace')
             );
         }
 

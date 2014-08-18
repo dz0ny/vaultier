@@ -22,6 +22,14 @@
             </li>
             {{/if}}
 
+            {{#if env.workspace.perms.update }}
+            <li>
+                {{#link-to 'MembersAdmin' }}
+                    Manage members
+                {{/link-to}}
+            </li>
+            {{/if}}
+
             <li class="divider"></li>
 
             <li>
