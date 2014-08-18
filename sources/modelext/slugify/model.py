@@ -2,7 +2,7 @@ from django.contrib.contenttypes.generic import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.db.models.fields import PositiveIntegerField
-from modelext.changes.changes import post_change, INSERT, UPDATE
+from modelext.changes.changes import post_change, INSERT, UPDATE, DELETE
 from modelext.slugify.slugify import unique_slugify
 
 
@@ -18,6 +18,9 @@ class SlugManagerMixin(object):
             # create slug when name of instance changed. Slugs are not deleted (permalink pattern)
             if event_type == UPDATE and overwritten_values.has_key('name'):
                 self.create_slug_for_model(instance)
+            # handle only delete not softdelete
+            if event_type == DELETE:
+                self.delete_slugs(instance)
         finally:
             instance.set_post_change_signal_enabled(True)
 
@@ -34,9 +37,9 @@ class SlugManagerMixin(object):
 
         # if not slug exists, create
         if not self.get_queryset().filter(
-            object_id=model.id,
-            content_type=model_type,
-            slug=slug_text
+                object_id=model.id,
+                content_type=model_type,
+                slug=slug_text
         ).count():
             s = self.create(content_object=model, slug=slug_text)
             s.save()
@@ -44,6 +47,14 @@ class SlugManagerMixin(object):
         # update slug on model
         model.slug = slug_text
         model.save()
+
+    def delete_slugs(self, instance):
+        """
+        Deletes slugs related to instance
+        @type instance: models.Model
+        """
+        c = ContentType.objects.get_for_model(instance)
+        self.filter(object_id=instance.id, content_type=c).delete()
 
 
 class SlugMixin(models.Model):
