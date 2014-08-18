@@ -11,7 +11,6 @@ from vaultier.models.workspace.model import Workspace
 
 
 class SlugTest(TransactionTestCase):
-
     def setUp(self):
         version_context_manager.set_enabled(False)
 
@@ -42,11 +41,14 @@ class SlugTest(TransactionTestCase):
         self.assertEquals(w2.slug, 'new-workspace-name')
         self.assertEquals(Slug.objects.all().count(), 3)
 
-
-        # delete all
-        # we preserve permalinks
-        Workspace.objects.all().delete()
+        # we preserve permalinks for softdeleted objects
+        w2.softdelete()
         self.assertEquals(Slug.objects.all().count(), 3)
+        # delete all
+
+        # slugs are removed after delete
+        Workspace.objects.include_deleted().delete()
+        self.assertEquals(Slug.objects.all().count(), 0)
 
 
     def test_020_vault_slug(self):
@@ -66,7 +68,7 @@ class SlugTest(TransactionTestCase):
         v1._user = u
         v1.save()
         self.assertEquals(v1.slug, 'vault')
-        self.assertEquals(Slug.objects.all().count(),prereqs_slug_count+1)
+        self.assertEquals(Slug.objects.all().count(), prereqs_slug_count + 1)
 
         # create 2
         # on create new slug should be created
@@ -75,26 +77,28 @@ class SlugTest(TransactionTestCase):
         v2._user = u
         v2.save()
         self.assertEquals(v2.slug, 'vault-2')
-        self.assertEquals(Slug.objects.all().count(),prereqs_slug_count+2)
+        self.assertEquals(Slug.objects.all().count(), prereqs_slug_count + 2)
 
         # rename 2
         # on update new slug should be created
         v2.name = 'New Vault Name'
         v2.save()
         self.assertEquals(v2.slug, 'new-vault-name')
-        self.assertEquals(Slug.objects.all().count(),prereqs_slug_count+3)
+        self.assertEquals(Slug.objects.all().count(), prereqs_slug_count + 3)
+
+        # we preserve permalinks for softdeleted objects
+        v2.softdelete()
+        self.assertEquals(Slug.objects.all().count(), prereqs_slug_count + 3)
 
 
-        # delete all
-        # we preserve permalinks
-        Vault.objects.all().delete()
-        self.assertEquals(Slug.objects.all().count(),prereqs_slug_count+3)
+        # delete all, only workspace slug should stay
+        Vault.objects.include_deleted().delete()
+        self.assertEquals(Slug.objects.all().count(), prereqs_slug_count)
 
 
     def test_030_card_slug(self):
         u = User(email="jan@rclick.cz")
         u.save()
-
 
         w1 = Workspace(name="Workspace", created_by=u)
         w1._user = u
@@ -114,7 +118,7 @@ class SlugTest(TransactionTestCase):
         c1._user = u
         c1.save()
         self.assertEquals(c1.slug, 'card')
-        self.assertEquals(Slug.objects.all().count(),prereqs_slug_count +1)
+        self.assertEquals(Slug.objects.all().count(), prereqs_slug_count + 1)
 
         # create 2
         # on create new slug should be created
@@ -123,20 +127,22 @@ class SlugTest(TransactionTestCase):
         c2._user = u
         c2.save()
         self.assertEquals(c2.slug, 'card-2')
-        self.assertEquals(Slug.objects.all().count(),prereqs_slug_count +2)
+        self.assertEquals(Slug.objects.all().count(), prereqs_slug_count + 2)
 
         # rename 2
         # on update new slug should be created
         c2.name = 'New Card Name'
         c2.save()
         self.assertEquals(c2.slug, 'new-card-name')
-        self.assertEquals(Slug.objects.all().count(),prereqs_slug_count +3)
+        self.assertEquals(Slug.objects.all().count(), prereqs_slug_count + 3)
 
+        # we preserve permalinks for softdeleted objects
+        c2.softdelete()
+        self.assertEquals(Slug.objects.all().count(), prereqs_slug_count + 3)
 
-        # delete all
-        # we preserve permalinks
-        Card.objects.all().delete()
-        self.assertEquals(Slug.objects.all().count(),prereqs_slug_count +3)
+        # delete all, only workspace slug should stay
+        Card.objects.include_deleted().delete()
+        self.assertEquals(Slug.objects.all().count(), prereqs_slug_count)
 
     def test_040_slug_features(self):
         u = User(email="jan@rclick.cz")
