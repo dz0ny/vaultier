@@ -2,7 +2,7 @@
 
     <p>
         Your public and private keypair has been generated.
-        Please follow steps to finish procedure
+        Please follow steps to finish procedure:
     </p>
 
 
@@ -15,13 +15,13 @@
 
     <div class="top-15 padding-15 panel panel-default">
 
-        <div class="col-md-5 col-md-offset-1">
+        <div class="col-md-6 col-md-offset-1">
             <b>
-                Your private key
+                Private key
             </b>
             <br/>
                 <span class="help-block">
-                    Used instead of password. Please save the key.
+                    It is used instead of password. Please save the key.
                 </span>
         </div>
         <div class="col-md-4">
@@ -38,19 +38,19 @@
     <div class="bottom-15  top-30">
         <h4>
             <div class="label label-header">2</div>
-            Send your public key to server
+            Confirm sending public key
         </h4>
     </div>
 
     <div class="top-15 padding-15 panel panel-default">
 
-        <div class="col-md-5 col-md-offset-1">
+        <div class="col-md-6 col-md-offset-1">
             <b>
-                Your public key
+                Public key
             </b>
             <br/>
                 <span class="help-block">
-                    Will be sent to server and cyphers is going to be rebuilt
+                    Your public key will be send to server now.
                 </span>
         </div>
         <div class="col-md-4">
@@ -59,7 +59,7 @@
                 {{bind-attr class=":btn view.privateKeySaved:btn-primary:btn-default"}}
                 {{ action savePublicKey target=view }}
                     class="btn btn-default">
-                Submit public key
+                Confirm
             </button>
         </div>
         <div class="clearfix"></div>
