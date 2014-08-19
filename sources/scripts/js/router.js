@@ -80,6 +80,7 @@ var router = Vaultier.Router.map(function () {
             this.route('rolesAdminIndex', { path: '/team'});
             this.route('rolesAdminInvite', { path: '/team/invite'});
             this.route('rolesAdminManagement', {path: '/team/management'});
+            this.resource('MembersAdmin', {path: '/members'});
 
             /************************************************************
              * Vaults

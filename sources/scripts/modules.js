@@ -253,12 +253,14 @@ var vaultierModulesConfig = {
                 "./js/module/RolesAdmin/RolesAdminIndex.js",
                 "./js/module/RolesAdmin/RolesAdminInvite.js",
                 "./js/module/RolesAdmin/RolesAdminBox.js",
-                "./js/module/RolesAdmin/RolesAdminManagement.js"
+                "./js/module/RolesAdmin/RolesAdminManagement.js",
+                "./js/module/MembersAdmin/MembersAdminList.js",
+                "./js/module/MembersAdmin/MembersAdmin.js"
             ],
             "templates": [
                 "./js/module/RolesAdmin/**/*.hbs",
-                "./js/module/Invitation/InvitationAnonymous.hbs",
-                "./js/module/Invitation/InvitationAccept.hbs"
+                "./js/module/Invitation/**/*.hbs",
+                "./js/module/MembersAdmin/**/*.hbs"
             ]
         },
         "workspace": {
@@ -271,10 +273,6 @@ var vaultierModulesConfig = {
                 "./js/module/Workspace/WorkspaceRolesAdminManagement.js"
             ],
             "templates": [
-                "./js/module/Workspace/MembersAdminRoleItemWorkspace.hbs",
-                "./js/module/Workspace/MembersAdminRoleItemVault.hbs",
-                "./js/module/Workspace/MembersAdminRoleItemCard.hbs",
-                "./js/module/Workspace/MembersAdmin.hbs",
                 "./js/module/Workspace/WorkspacesIndex.hbs",
                 "./js/module/Workspace/WorkspacesIndexItem.hbs",
                 "./js/module/Workspace/WorkspacesIndexWithoutKeys.hbs",
