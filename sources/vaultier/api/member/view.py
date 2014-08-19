@@ -7,12 +7,10 @@ from rest_framework.serializers import ModelSerializer, Serializer
 from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_200_OK
 from rest_framework.viewsets import ModelViewSet
 from vaultier.api.transactionmixin import AtomicTransactionMixin
-from vaultier.api.user.view import RelatedUserSerializer
 from vaultier.auth.authentication import TokenAuthentication
 from vaultier.models.acl.fields import AclLevelField
 from vaultier.models.member.fields import MemberStatusField
 from vaultier.models.member.model import Member
-from vaultier.models.role.model import Role
 from vaultier.models.workspace.model import Workspace
 from vaultier.perms.check import has_object_acl
 
@@ -37,6 +35,7 @@ class CanDeleteMember(BasePermission):
 class MemberSerializer(ModelSerializer):
     email = SerializerMethodField('get_email')
     nickname = SerializerMethodField('get_nickname')
+    roles_count = SerializerMethodField('get_roles_count')
 
     def get_email(self, obj):
         if obj:
@@ -52,9 +51,13 @@ class MemberSerializer(ModelSerializer):
             else:
                 return obj.invitation_email
 
+    def get_roles_count(self, obj):
+        from vaultier.models.role.model import Role
+        return Role.objects.filter(member=obj).count()
+
     class Meta:
         model = Member
-        fields = ('id', 'status', 'email', 'nickname', 'workspace', 'user', 'created_at', 'updated_at')
+        fields = ('id', 'status', 'email', 'nickname', 'workspace', 'user', 'created_at', 'updated_at', 'roles_count')
 
 
 class RelatedMemberSerializer(MemberSerializer):
@@ -70,25 +73,6 @@ class MemberInviteSerializer(Serializer):
 
 class MemberResendSerializer(Serializer):
     resend = BooleanField(required=False, default=True)
-
-
-class MemberRoleSerializer(ModelSerializer):
-    created_by = SerializerMethodField('get_created_by')
-    to_type = SerializerMethodField('get_to_type')
-    to_name = SerializerMethodField('get_to_name')
-
-    def get_created_by(self, obj):
-        return RelatedUserSerializer(instance=obj.created_by).data
-
-    def get_to_type(self, obj):
-        return obj.type
-
-    def get_to_name(self, obj):
-        return obj.get_object().name
-
-    class Meta:
-        model = Role
-        fields = ('id', 'created_by', 'to_type', 'to_name')
 
 
 class MemberWorkspaceKeySerializer(ModelSerializer):

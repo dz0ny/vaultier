@@ -46,7 +46,9 @@ var vaultierModulesConfig = {
                 "./bower_components/ember-restless/dist/ember-restless+extras.js",
 
                 /**************** ember extensions **/
-                "./local_components/ember-ext/Tree/EmberTree.js",
+                "./bower_components/ember-animate/ember-animate.js",
+                "./local_components/ember-ext/Tree/Tree.js",
+                "./local_components/ember-ext/AnimatedIf/AnimatedIf.js",
 
                 /**************** boostrap **/
                 "./bower_components/bootstrap/dist/js/bootstrap.js",
@@ -251,12 +253,14 @@ var vaultierModulesConfig = {
                 "./js/module/RolesAdmin/RolesAdminIndex.js",
                 "./js/module/RolesAdmin/RolesAdminInvite.js",
                 "./js/module/RolesAdmin/RolesAdminBox.js",
-                "./js/module/RolesAdmin/RolesAdminManagement.js"
+                "./js/module/RolesAdmin/RolesAdminManagement.js",
+                "./js/module/MembersAdmin/MembersAdminList.js",
+                "./js/module/MembersAdmin/MembersAdmin.js"
             ],
             "templates": [
                 "./js/module/RolesAdmin/**/*.hbs",
-                "./js/module/Invitation/InvitationAnonymous.hbs",
-                "./js/module/Invitation/InvitationAccept.hbs"
+                "./js/module/Invitation/**/*.hbs",
+                "./js/module/MembersAdmin/**/*.hbs"
             ]
         },
         "workspace": {

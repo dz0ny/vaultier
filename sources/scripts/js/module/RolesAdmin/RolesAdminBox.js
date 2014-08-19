@@ -28,10 +28,8 @@ Vaultier.RolesAdminBoxComponent = Ember.Component.extend({
            content: this.get('roles')
         });
 
-        // seal current user, and filter create roles for inherited permissions
-        roles
-            .sealUser(this.get('auth.user'))
-            .filterCreateRolesByObjectScope(this.get('object'));
+        // filter create roles for inherited permissions
+        roles.filterCreateRolesByObjectScope(this.get('object'));
 
         // each user to be only once at result
         var foundRoles = []

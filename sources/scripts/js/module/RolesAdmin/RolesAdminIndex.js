@@ -216,18 +216,20 @@ Vaultier.RolesAdminIndexView = Ember.View.extend({
     templateName: 'RolesAdmin/RolesAdminIndex',
     layoutName: 'Layout/LayoutStandard',
 
-
-    Item: Ember.View.extend({
-        tagName: 'div',
-        Select: Vaultier.RolesAdminSelectRoleView.extend({
-            actions: {
-                changed: function () {
-                    this.get('controller').send('changeRole', this.get('role'), this.get('block'));
+    AnimatedItemWrapper: Ember.View.extend({
+        Item: Ember.View.extend({
+            tagName: 'div',
+            Select: Vaultier.RolesAdminSelectRoleView.extend({
+                actions: {
+                    changed: function () {
+                        this.get('controller').send('changeRole', this.get('role'), this.get('block'));
+                    }
                 }
-            }
-        })
-
-
+            })
+        }),
+        animateOut: function (done) {
+            EmberExt.AnimatedIf.Transitions.create().runFx(this.$(), 'slideUp').then(done);
+        }
     })
 
 });
