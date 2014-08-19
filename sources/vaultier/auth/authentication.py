@@ -3,6 +3,7 @@ from Crypto.Hash import SHA
 from Crypto.PublicKey import RSA
 from Crypto.Signature import PKCS1_v1_5
 from base64 import b64decode
+from django.utils import timezone
 from django.contrib.auth.backends import ModelBackend
 from rest_framework.authentication import BaseAuthentication
 from rest_framework.exceptions import AuthenticationFailed
@@ -21,6 +22,15 @@ class TokenAuthentication(BaseAuthentication):
 
         try:
             model = Token.objects.get(token=token)
+            """:type : Token"""
+            token_renewal_interval = settings.VAULTIER.get('authentication_token_renewal_interval')
+            #convert to seconds
+            token_renewal_interval *= 60
+
+            td = timezone.now() - model.last_used_at
+            if td.total_seconds() > token_renewal_interval:
+                model.last_used_at = timezone.now()
+                model.save()
         except Token.DoesNotExist:
             raise AuthenticationFailed('Invalid token')
 

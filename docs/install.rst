@@ -119,7 +119,7 @@ Install supervisord
     cp cfg/supervisord.conf-dist /etc/supervisor/conf.d/vaultier.conf
     supervisorctl reread
     supervisorctl update
-    supervisorctl status vaultier
+    supervisorctl status vaultier:
     /etc/init.d/nginx restart
 
 
@@ -130,9 +130,8 @@ Start stop restart
 
     /etc/init.d/nginx restart
 
-    supervisorctl status vaultier
-    supervisorctl start vaultier
-    supervisorctl stop vaultier
+    supervisorctl status vaultier:
+    supervisorctl restart vaultier:
 
 ================================================
 To allow user vaultier to start restart and stop
