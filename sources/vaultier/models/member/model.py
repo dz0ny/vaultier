@@ -1,3 +1,4 @@
+from datetime import timedelta
 import hmac
 import uuid
 from hashlib import sha1
@@ -11,6 +12,8 @@ from vaultier.mailer.invitation.sender import InvitationEmailSender
 from modelext.changes.changes import ChangesMixin
 from vaultier.mailer.transfer_workspace_key.sender import WorkspaceKeyTransferEmailSender
 from vaultier.models.member.fields import MemberStatusField
+from django.conf import settings
+from django.utils import timezone
 
 
 class MemberManager(Manager):
@@ -157,6 +160,11 @@ class MemberManager(Manager):
             # the user has been invited and the workspace_key was set
             sender = WorkspaceKeyTransferEmailSender(instance)
             sender.send()
+
+    def clean_old_invitations(self):
+        lifetime_in_days = settings.VAULTIER.get("invitation_lifetime")
+        expired_date = timezone.now() - timedelta(days=lifetime_in_days)
+        self.filter(status=MemberStatusField.STATUS_INVITED, created_at__lt=expired_date).delete()
 
 
 class Member(ChangesMixin, models.Model):

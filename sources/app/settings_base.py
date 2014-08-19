@@ -252,7 +252,9 @@ VAULTIER = {
     # token lifetime (in hours)
     'authentication_token_lifetime': 2,
     # last_used_at will be renewed after some interval (in minutes)
-    'authentication_token_renewal_interval': 1
+    'authentication_token_renewal_interval': 1,
+    # invitation lifetime (in days)
+    'invitation_lifetime': 7
 }
 
 #celery broker
@@ -262,7 +264,7 @@ CELERY_TASK_SERIALIZER = 'pickle'
 CELERY_RESULT_SERIALIZER = 'pickle'
 CELERYBEAT_SCHEDULE = {
     'garbage_collector_tokens': {
-        'task': 'vaultier.tasks.task_token_garbage_collector',
+        'task': 'vaultier.tasks.task_garbage_collector',
         'schedule': crontab(hour='*/6'),
     }
 }
