@@ -30,7 +30,7 @@
             <!-- End of heading -->
             <div class="panel-body" id="collapse">
                 {{#each member in members }}
-                    {{member-manager-accordion member=member deleteMember="deleteMember" loadRoles="loadRoles" deleteRole="deleteRole"}}
+                    {{roles-admin-manager-accordion member=member deleteMember="deleteMember" loadRoles="loadRoles" deleteRole="deleteRole"}}
                 {{/each}}
             </div>
             <!-- End of panel-body -->

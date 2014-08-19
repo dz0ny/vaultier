@@ -1,4 +1,4 @@
-Vaultier.VaultMemberIndexRoute = Vaultier.MemberIndexRoute.extend(
+Vaultier.VaultRolesAdminIndexRoute = Vaultier.RolesAdminIndexRoute.extend(
     Vaultier.WorkspaceKeysMixin,
     {
         beforeModel: function () {
@@ -21,23 +21,23 @@ Vaultier.VaultMemberIndexRoute = Vaultier.MemberIndexRoute.extend(
                 .addHome()
                 .addWorkspace()
                 .addVault()
-                .addCollaboratorsIndex('Vault.memberIndex');
+                .addRolesAdminIndex('Vault.rolesAdminIndex');
         },
 
         setupInviteRoute: function (models) {
             return {
-                inviteRouteName: 'Vault.memberInvite'
+                inviteRouteName: 'Vault.rolesAdminInvite'
             };
         }
 
     });
 
 
-Vaultier.VaultMemberIndexController = Vaultier.MemberIndexController.extend({
+Vaultier.VaultRolesAdminIndexController = Vaultier.RolesAdminIndexController.extend({
 });
 
 
-Vaultier.VaultMemberInviteRoute = Vaultier.MemberInviteRoute.extend(
+Vaultier.VaultRolesAdminInviteRoute = Vaultier.RolesAdminInviteRoute.extend(
     Vaultier.WorkspaceKeysMixin,
     {
 
@@ -63,11 +63,11 @@ Vaultier.VaultMemberInviteRoute = Vaultier.MemberInviteRoute.extend(
                 .addHome()
                 .addWorkspace()
                 .addVault()
-                .addCollaboratorsIndex('Vault.memberIndex')
-                .addCollaboratorsInvite('Vault.memberInvite');
+                .addRolesAdminIndex('Vault.rolesAdminIndex')
+                .addRolesAdminInvite('Vault.rolesAdminInvite');
         }
 
     });
 
-Vaultier.VaultMemberInviteController = Vaultier.MemberInviteController.extend({
+Vaultier.VaultRolesAdminInviteController = Vaultier.RolesAdminInviteController.extend({
 });

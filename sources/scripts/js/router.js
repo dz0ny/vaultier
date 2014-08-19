@@ -76,10 +76,10 @@ var router = Vaultier.Router.map(function () {
             // no keys
             this.route('noKeys', { path: '/waiting-for-keys'});
 
-            // member
-            this.route('memberIndex', { path: '/team'});
-            this.route('memberInvite', { path: '/team/invite'});
-            this.route('memberManagement', {path: '/team/management'});
+            // rolesAdmin
+            this.route('rolesAdminIndex', { path: '/team'});
+            this.route('rolesAdminInvite', { path: '/team/invite'});
+            this.route('rolesAdminManagement', {path: '/team/management'});
 
             /************************************************************
              * Vaults
@@ -97,9 +97,9 @@ var router = Vaultier.Router.map(function () {
                     // edit
                     this.route('edit', { path: '/edit'});
 
-                    // members
-                    this.route('memberIndex', { path: '/team'});
-                    this.route('memberInvite', { path: '/team/invite'});
+                    // rolesAdmin
+                    this.route('rolesAdminIndex', { path: '/team'});
+                    this.route('rolesAdminInvite', { path: '/team/invite'});
 
                     /************************************************************
                      * Cards
@@ -120,9 +120,9 @@ var router = Vaultier.Router.map(function () {
                             // move
                             this.route('move', { path: '/move'});
 
-                            // members
-                            this.route('memberIndex', { path: '/team'});
-                            this.route('memberInvite', { path: '/team/invite'});
+                            // rolesAdmin
+                            this.route('rolesAdminIndex', { path: '/team'});
+                            this.route('rolesAdminInvite', { path: '/team/invite'});
 
                             this.resource('Secret', {path: '/secrets'}, function () {
                                 // automatic Secrets.index
