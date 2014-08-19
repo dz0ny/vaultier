@@ -1,3 +1,5 @@
+from datetime import timedelta
+from django.conf import settings
 from django.test.testcases import TransactionTestCase
 from django.utils import unittest
 from django.utils.unittest.suite import TestSuite
@@ -14,6 +16,7 @@ from vaultier.test.tools import format_response, AssertionsMixin
 from vaultier.test.tools.role.api import create_role_api_call
 from vaultier.test.tools.workspace.api import create_workspace_api_call, retrieve_workspace_api_call
 from vaultier.test.tools.workspacekey.api import set_workspace_key_api_call
+from django.utils import timezone
 
 
 class ApiInviteTest(TransactionTestCase, AssertionsMixin):
@@ -101,6 +104,36 @@ class ApiInviteTest(TransactionTestCase, AssertionsMixin):
         self.assert_dict(response.data.get('membership'),
                          {'status': MemberStatusField.STATUS_MEMBER,
                           'id': user2member.get('id')})
+
+    def test_020_old_invitation_cleaned(self):
+        # create first user
+        user1email = 'ctirad@rclick.cz'
+        register_api_call(email=user1email, nickname='ctirad')
+        user1token = auth_api_call(email=user1email).data.get('token')
+
+        # create workspace
+        workspace1 = create_workspace_api_call(user1token, name='workspace1').data
+        response = set_workspace_key_api_call(user1token, 1, '__KEY__')
+
+        # user1 tries to invite user2 using upper case email
+        user2member = invite_member_api_call(user1token, 'user2@rclick.cz', workspace1.get('id')).data
+
+        member_model = Member.objects.get(pk=user2member.get('id'))
+        """:type : Member """
+        invitation_lifetime = settings.VAULTIER.get('invitation_lifetime')
+
+        # change date of invitation
+        member_model.created_at = timezone.now() - timedelta(days=2*invitation_lifetime)
+        member_model.save()
+
+        # invite second user
+        user3member = invite_member_api_call(user1token, 'user3@rclick.cz', workspace1.get('id')).data
+
+        Member.objects.clean_old_invitations()
+        # first invitation too old, it should be deleted
+        self.assertEqual(Member.objects.filter(pk=user2member.get('id')).count(), 0)
+        # second invitation should stay
+        self.assertEqual(Member.objects.filter(pk=user3member.get('id')).count(), 1)
 
 
 def invitation_suite():
