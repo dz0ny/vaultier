@@ -1,5 +1,5 @@
 You can rebuild your key on the url bellow
 
-Please do not follow the link if it was not you
 {{ url }}
+Please do not follow the link if it was not you who requested a new key!
 Thanks, you rock!
