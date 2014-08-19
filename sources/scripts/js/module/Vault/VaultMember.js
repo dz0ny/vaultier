@@ -21,7 +21,7 @@ Vaultier.VaultRolesAdminIndexRoute = Vaultier.RolesAdminIndexRoute.extend(
                 .addHome()
                 .addWorkspace()
                 .addVault()
-                .addCollaboratorsIndex('Vault.rolesAdminIndex');
+                .addRolesAdminIndex('Vault.rolesAdminIndex');
         },
 
         setupInviteRoute: function (models) {
@@ -63,8 +63,8 @@ Vaultier.VaultRolesAdminInviteRoute = Vaultier.RolesAdminInviteRoute.extend(
                 .addHome()
                 .addWorkspace()
                 .addVault()
-                .addCollaboratorsIndex('Vault.rolesAdminIndex')
-                .addCollaboratorsInvite('Vault.rolesAdminInvite');
+                .addRolesAdminIndex('Vault.rolesAdminIndex')
+                .addRolesAdminInvite('Vault.rolesAdminInvite');
         }
 
     });

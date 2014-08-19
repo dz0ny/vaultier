@@ -254,11 +254,7 @@ var vaultierModulesConfig = {
                 "./js/module/RolesAdmin/RolesAdminManagement.js"
             ],
             "templates": [
-                "./js/module/RolesAdmin/RolesAdminManagerAccordion.hbs",
-                "./js/module/RolesAdmin/RolesAdminManagement.hbs",
-                "./js/module/RolesAdmin/RolesAdminIndex.hbs",
-                "./js/module/RolesAdmin/RolesAdminInvite.hbs",
-                "./js/module/RolesAdmin/RolesAdminBox.hbs",
+                "./js/module/RolesAdmin/**/*.hbs",
                 "./js/module/Invitation/InvitationAnonymous.hbs",
                 "./js/module/Invitation/InvitationAccept.hbs"
             ]

@@ -21,7 +21,7 @@ Vaultier.WorkspaceMixin = Em.Mixin.create({
             return Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
                 .addHome()
                 .addWorkspace()
-                .addCollaboratorsIndex('Workspace.rolesAdminIndex');
+                .addRolesAdminIndex('Workspace.rolesAdminIndex');
         },
 
         setupInviteRoute: function (models) {
@@ -62,8 +62,8 @@ Vaultier.WorkspaceRolesAdminInviteRoute = Vaultier.RolesAdminInviteRoute.extend(
             return Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
                 .addHome()
                 .addWorkspace()
-                .addCollaboratorsIndex('Workspace.rolesAdminIndex')
-                .addCollaboratorsInvite('Workspace.rolesAdminInvite');
+                .addRolesAdminIndex('Workspace.rolesAdminIndex')
+                .addRolesAdminInvite('Workspace.rolesAdminInvite');
         }
 
     });

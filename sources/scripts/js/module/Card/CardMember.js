@@ -22,7 +22,7 @@ Vaultier.CardRolesAdminIndexRoute = Vaultier.RolesAdminIndexRoute.extend(
                 .addWorkspace()
                 .addVault()
                 .addCard()
-                .addCollaboratorsIndex('Card.rolesAdminIndex');
+                .addRolesAdminIndex('Card.rolesAdminIndex');
         },
 
         setupInviteRoute: function (models) {
@@ -71,8 +71,8 @@ Vaultier.CardRolesAdminInviteRoute = Vaultier.RolesAdminInviteRoute.extend(
                 .addWorkspace()
                 .addVault()
                 .addCard()
-                .addCollaboratorsIndex('Card.rolesAdminIndex')
-                .addCollaboratorsInvite('Card.rolesAdminInvite');
+                .addRolesAdminIndex('Card.rolesAdminIndex')
+                .addRolesAdminInvite('Card.rolesAdminInvite');
         },
 
         setupRoleLevels: function () {
