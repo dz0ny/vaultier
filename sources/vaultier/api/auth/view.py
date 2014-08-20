@@ -33,7 +33,7 @@ class AuthView(APIView):
         if serializer.is_valid():
             try:
                 token = authenticate(email=serializer.data.get('email'),
-                                     timestamp=serializer.data.get('timestamp'),
+                                     date=serializer.data.get('date'),
                                      signature=serializer.data.get('signature'))
                 if token:
                     return Response(TokenSerializer(token).data)
