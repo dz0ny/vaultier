@@ -47,6 +47,7 @@ var vaultierModulesConfig = {
 
                 /**************** ember extensions **/
                 "./bower_components/ember-animate/ember-animate.js",
+                "./bower_components/ember-selectize/src/ember.selectize.js",
                 "./local_components/ember-ext/Tree/Tree.js",
                 "./local_components/ember-ext/AnimatedIf/AnimatedIf.js",
 
@@ -190,6 +191,7 @@ var vaultierModulesConfig = {
                 "./js/module/Layout/PasswordField.hbs"
             ],
             "scripts": [
+                "./js/module/Layout/inputs/SelectBox.js",
                 "./js/module/Layout/LayoutStandard.js",
                 "./js/module/Layout/SecurityBox.js",
                 "./js/module/Layout/SearchBox.js",

@@ -340,6 +340,11 @@ a:hover {
     margin-top: 150px;
 }
 
+.vlt-col {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
 /*************************************************************
 **************************************************************
 * breadcrumbs
@@ -1700,7 +1705,7 @@ span.vlt-user img {
     margin-bottom: 3px;
     margin-left: 3px;
 }
-.vlt-panel-permissions .vlt-table .vlt-row .vlt-actions .vlt-perms {
+.vlt-panel-permissions .vlt-table .vlt-row .vlt-actions .selectize-control {
     float: right;
     width: 150px;
 }

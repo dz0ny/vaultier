@@ -89,7 +89,7 @@
 
                             {{#each role in block.roles itemViewClass='view.AnimatedItemWrapper' }}
 
-                                {{#view view.Item role=role block=block class="row vlt-row" classNameBindings='role.isMember:normal:invited' }}
+                                {{#view view.Item controller=controller roleLevels=roleLevels role=role block=block class="row vlt-row" classNameBindings='role.isMember:normal:invited' }}
                                     <div class="vlt-col col-sm-4 vlt-user">
                                         {{printUser role.member size=50}}
                                     </div>
@@ -122,16 +122,21 @@
 
                                             {{else}}
                                                 <div class="vlt-edit-perms">
-                                                    <a class="vlt-delete btn btn-default btn-sm pull-right" {{action deleteRole role block}}>
-                                                        <span class="glyphicon glyphicon-trash"></span>
-                                                    </a>
-                                                    {{view view.Select
-                                                    role=role
-                                                    class="form-control vlt-perms"
-                                                    contentBinding="roleLevels"
-                                                    optionValuePath="content.value"
-                                                    optionLabelPath="content.text"
-                                                    }}
+                                                    <div class="col-md-offset-1 col-sm-9 vlt-col">
+                                                        {{view view.Select
+                                                          dataBinding='role'
+                                                          controllerBinding="controller"
+                                                          contentBinding="roleLevels"
+                                                          optionValuePath="content.value"
+                                                          optionLabelPath="content.text"
+                                                          selectionBinding="role.level"
+                                                          placeholder="Select an option" }}
+                                                    </div>
+                                                    <div class="col-md-2 vlt-col">
+                                                        <a class="vlt-delete btn btn-default btn-sm" {{action deleteRole role block}}>
+                                                            <span class="glyphicon glyphicon-trash"></span>
+                                                        </a>
+                                                    </div>
                                                 </div>
                                             {{/if}}
                                         {{else}}

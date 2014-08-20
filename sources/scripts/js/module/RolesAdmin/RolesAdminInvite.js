@@ -106,5 +106,15 @@ Vaultier.RolesAdminInviteView = Ember.View.extend({
     templateName: 'RolesAdmin/RolesAdminInvite',
     layoutName: 'Layout/LayoutStandard',
 
-    Select: Vaultier.RolesAdminSelectRoleView
+    Select: Vaultier.SelectBox.extend({
+        setDefaultValue: function() {
+            this.selectize.setValue(Vaultier.Role.proto().roles.toArray()[0].value);
+        },
+
+        changeData: function (obj) {
+            var roleType = Vaultier.Role.proto().roles.getByValue(obj.value);
+            set(this, 'selection', roleType);
+            set(this, 'data.level', obj.value);
+        }
+    })
 });
