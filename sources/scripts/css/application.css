@@ -1230,19 +1230,6 @@ span.vlt-user img {
     padding: 25px 50px 25px 50px;
 }
 
-.vlt-register-keys .generate {
-    text-align: center;
-}
-
-.vlt-register-keys .generated {
-    text-align: center;
-}
-
-.vlt-register-keys .generated .vlt-download {
-    width: 40%;
-    margin: 0px auto;
-}
-
 /*************************************************************
 **************************************************************
 * login
