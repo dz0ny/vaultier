@@ -254,6 +254,14 @@
         );
     });
 
+    gulp.task('clean-watch', function () {
+        return runSequence(
+            'clean',
+            'build',
+            'watch'
+        );
+    });
+
 
 }());
 
