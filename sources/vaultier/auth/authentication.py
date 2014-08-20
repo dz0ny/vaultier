@@ -65,9 +65,9 @@ class Backend(ModelBackend):
 
         # verify timestamp
         try:
-            date = dateparser.parse(date)
+            date_parsed = dateparser.parse(date)
             safe_delta = settings.BK_FEATURES.get('login_safe_timestamp_delta')
-            safe_until = date + timedelta(seconds=safe_delta)
+            safe_until = date_parsed + timedelta(seconds=safe_delta)
             now = timezone.now()
 
             if safe_until < now:

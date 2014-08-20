@@ -12,15 +12,16 @@ Service.AuthPromises = Ember.Object.extend({
 
     _auth: function (email, privateKey) {
         var coder = this.coder;
-        var timestamp = Math.round( ( Date.getTime ? new Date().getTime() : Date.now() ) / 1000 );
-        var signature = coder.sign(email + timestamp, privateKey);
+        var date = new Date();
+        var dateInISO = date.toISOString();
+        var signature = coder.sign(email + dateInISO, privateKey);
 
         return Utils.RSVPAjax({
             url: '/api/auth/auth',
             type: 'post',
             data: {
                 email: email,
-                timestamp: timestamp,
+                date: dateInISO,
                 signature: signature
             }})
     },

@@ -17,7 +17,7 @@ from vaultier.models import Token
 class AuthSerializer(serializers.Serializer):
     email = EmailField(required=True)
     signature = CharField(required=True)
-    timestamp = IntegerField(required=True)
+    date = CharField(required=True)
 
 
 class TokenSerializer(ModelSerializer):
