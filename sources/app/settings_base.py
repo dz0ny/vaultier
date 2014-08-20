@@ -254,8 +254,15 @@ VAULTIER = {
     # last_used_at will be renewed after some interval (in minutes)
     'authentication_token_renewal_interval': 1,
     # invitation lifetime (in days)
-    'invitation_lifetime': 7
+    'invitation_lifetime': 7,
+    # When anonymous usage statistics is enabled, vaultier periodically anonymously notifies its maintainer and
+    # developer about running instance of Valtier.
+    # As Vaultier is Open Source we kindly ask you to leave this option enabled and let us
+    # know how many instances are deployed.
+    # We send these statistics data: count of workspaces, vaults,cards, secrets, users, members
+    'allow_anonymous_usage_statistics': True
 }
+
 
 #celery broker
 BROKER_URL = 'django://'
