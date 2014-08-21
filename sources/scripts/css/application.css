@@ -148,9 +148,9 @@ a:hover {
 }
 
 .notifyjs-container {
-    margin-left: -200px !important;
+    margin-left: -50% !important;
+    width: 100% !important;;
 }
-
 .notifyjs-corner {
     margin-bottom: 100px !important;
     left: 50% !important;
