@@ -1,24 +1,25 @@
 import time
 from django.core.urlresolvers import reverse
+from django.utils import timezone
 from rest_framework.test import APIClient
 from vaultier.auth.authentication import Backend
 from app.settings import PROJECT_ROOT
 from vaultier.test.tools import FileAccessMixin
 
 
-def auth_api_call(email=None, timestamp=None, signature=None):
+def auth_api_call(email=None, date=None, signature=None):
     url = reverse('auth-auth')
     client = APIClient()
     m = FileAccessMixin()
 
-    if not timestamp:
-        timestamp = get_timestamp()
+    if not date:
+        date = timezone.now()
 
     if not signature:
         privkey = m.read_file('vaultier.key')
-        signature = Backend.sign(privkey, email, timestamp)
+        signature = Backend.sign(privkey, email, date)
 
-    response = client.post(url, {'email': email, 'timestamp': timestamp, 'signature': signature})
+    response = client.post(url, {'email': email, 'date': date, 'signature': signature})
     return response
 
 
