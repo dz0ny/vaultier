@@ -14,15 +14,15 @@ if [ -z "$1" ] ; then
 fi
 
 
-PROJDIR=$MY_PATH/../sources
+PROJDIR=$MY_PATH/../vaultier
 PIDFILE="$MY_PATH/../run/vaultier.pid"
 SOCKET="$MY_PATH/../run/vaultier.sock"
 LOGSDIR="$MY_PATH/../logs"
 VENV="$1"
 NAME="Vaultier"
 NUM_WORKERS=4
-DJANGO_SETTINGS_MODULE=app.settings
-DJANGO_WSGI_MODULE=app.wsgi
+DJANGO_SETTINGS_MODULE=vaultier.settings.prod
+DJANGO_WSGI_MODULE=vaultier.wsgi
 
 
 echo "Starting $NAME as `whoami`"

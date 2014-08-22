@@ -19,6 +19,8 @@ logs/*
 .settings
 nbproject/
 .idea/
+# development settings
+vaultier/vaultier/settings/dev_*.py
 
 sources/app/settings.py
 

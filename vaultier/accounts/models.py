@@ -1,0 +1,86 @@
+import hmac
+import uuid
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from django.db import models
+from django.db.models.deletion import CASCADE, PROTECT
+from django.db.models.signals import pre_save, post_save
+from libs.changes.changes import ChangesMixin
+from libs.lowercasefield.lowercasefield import LowerCaseCharField
+from .business.managers import UserManager, LostKeyManager
+from hashlib import sha1
+
+
+class User(ChangesMixin, AbstractBaseUser, PermissionsMixin):
+    USERNAME_FIELD = 'email'
+
+    nickname = models.CharField(max_length=255, blank=False, null=False)
+    public_key = models.CharField(max_length=1024)
+    email = LowerCaseCharField(max_length=255, unique=True)
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(
+        'staff status',
+        default=False,
+        help_text='Designates whether the user can log into this admin site.'
+    )
+
+    is_active = models.BooleanField(
+        'active',
+        default=True,
+        help_text='Designates whether this user should be treated as active. '
+                  'Unselect this instead of deleting accounts.'
+    )
+
+    objects = UserManager()
+
+    class Meta:
+        db_table = u'vaultier_user'
+
+    def get_full_name(self):
+        full_name = '%s %s' % (self.first_name, self.last_name)
+        return full_name.strip()
+
+    def get_short_name(self):
+        return self.first_name
+
+
+class Token(ChangesMixin, models.Model):
+    token = models.CharField(max_length=64)
+    user = models.ForeignKey('accounts.User', on_delete=CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = u'vaultier_token'
+
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def save(self, *args, **kwargs):
+        if not self.token:
+            self.token = self.generate_token()
+        return super(Token, self).save(*args, **kwargs)
+
+    def generate_token(self):
+        unique = uuid.uuid4()
+        return hmac.new(unique.bytes, digestmod=sha1).hexdigest()
+
+    def __unicode__(self):
+        return self.key
+
+
+class LostKey(models.Model):
+    objects = LostKeyManager()
+
+    hash = models.TextField(null=False)
+    created_by = models.ForeignKey('accounts.User', on_delete=PROTECT,
+                                   related_name='distracted')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    expires_at = models.DateTimeField(null=False)
+    used = models.BooleanField(default=False)
+
+    class Meta:
+        db_table = u'vaultier_lost_key'
+
+
+def register_signals():
+    pre_save.connect(LostKey.objects.on_pre_save, sender=LostKey)
+    post_save.connect(LostKey.objects.send_notification, sender=LostKey)

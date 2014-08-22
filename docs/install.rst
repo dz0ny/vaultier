@@ -50,17 +50,20 @@ Create venv
 
     virtualenv ./env
     source ./env/bin/activate
-    pip install -r sources/REQUIREMENTS
+    pip install -r REQUIREMENTS
 
 
 ==============
 Prepare config
 ==============
+
 ::
 
-    cp sources/app/settings.py-prod-dist sources/app/settings.py
+    cp vaultier/vaultier/dev.py vaultier/vaultier/dev_whatever.py
+    export DJANGO_SETTINGS_MODULE=vaultier.settings.dev_whatever
     mcedit sources/app/settings.py
 
+If you name your dev config dev_<varible>.py, you won't deal with gitignore
 
 ================
 Prepare database
@@ -80,7 +83,7 @@ Prepare database
     exit
 
     # migrate
-    cd sources
+    cd vaultier
     ./manage.py syncdb
     ./manage.py migrate
 

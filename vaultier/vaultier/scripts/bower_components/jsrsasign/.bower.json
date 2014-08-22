@@ -1,0 +1,14 @@
+{
+  "name": "jsrsasign",
+  "homepage": "https://github.com/kjur/jsrsasign",
+  "version": "4.2.3",
+  "_release": "4.2.3",
+  "_resolution": {
+    "type": "version",
+    "tag": "4.2.3",
+    "commit": "438b916d06dcf4c2eb932bf0fef756f501fc0860"
+  },
+  "_source": "https://github.com/kjur/jsrsasign.git",
+  "_target": "~4.2.2",
+  "_originalSource": "https://github.com/kjur/jsrsasign.git"
+}

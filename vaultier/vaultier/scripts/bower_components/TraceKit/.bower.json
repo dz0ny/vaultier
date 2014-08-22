@@ -1,0 +1,12 @@
+{
+  "name": "TraceKit",
+  "_cacheHeaders": {
+    "ETag": "\"490f39554d0baef90cea0db788129038\"",
+    "Content-Type": "text/html; charset=utf-8"
+  },
+  "_release": "e-tag:490f39554",
+  "main": "index",
+  "_source": "https://github.com/getsentry/TraceKit",
+  "_target": "*",
+  "_originalSource": "https://github.com/getsentry/TraceKit"
+}

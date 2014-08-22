@@ -1,0 +1,14 @@
+{
+  "name": "jsep",
+  "homepage": "https://github.com/soney/jsep",
+  "version": "0.2.0",
+  "_release": "0.2.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.2.0",
+    "commit": "053fa848775337b0ac194a7a101efd389122c7ec"
+  },
+  "_source": "https://github.com/soney/jsep.git",
+  "_target": "0.2.0",
+  "_originalSource": "https://github.com/soney/jsep.git"
+}

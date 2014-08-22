@@ -38,7 +38,7 @@ Create venv
 
     virtualenv ./env
     source ./env/bin/activate
-    pip install -r sources/REQUIREMENTS
+    pip install -r REQUIREMENTS
 
 
 ----------------------------------
@@ -54,7 +54,7 @@ install frontend development tools
     sudo npm install -g bower
 
     # initialize sources and vendors
-    cd sources/vaultier/scripts
+    cd vaultier/vaultier/scripts
     npm install
     bower install
 
@@ -68,10 +68,10 @@ Run development instance
 ::
 
     # run server
-    cd sources
+    cd vaultier
     ./manage.py runserver 127.0.0.0:8000
     http://127.0.0.0:8000
 
     # run frontend compiler
-    cd sources/vaultier/scripts
+    cd vaultier/scripts
     gulp watch
