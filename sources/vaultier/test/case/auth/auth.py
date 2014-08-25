@@ -57,8 +57,8 @@ class ApiRegisterTest(TransactionTestCase):
         self.assertEqual(response.status_code, HTTP_403_FORBIDDEN, msg=format_response(response))
 
         # try to login, check wrong expired timestamp
-        expired = int(time()) - 1;
-        response = auth_api_call(email=email, timestamp=expired, signature='WrongSignature')
+        expired = timezone.now() - timedelta(days=15)
+        response = auth_api_call(email=email, date=expired, signature='WrongSignature')
         self.assertEqual(response.status_code, HTTP_403_FORBIDDEN, msg=format_response(response))
 
     def test_030_registration_should_be_case_insensitive(self):
