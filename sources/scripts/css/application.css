@@ -1229,18 +1229,12 @@ span.vlt-user img {
 .vlt-register .modal-body {
     padding: 25px 50px 25px 50px;
 }
-
-.vlt-register-keys .generate {
-    text-align: center;
+.vlt-register .vlt-register-key {
+    margin-left: 8.4%;
+    margin-right: 8.4%;
 }
-
-.vlt-register-keys .generated {
-    text-align: center;
-}
-
-.vlt-register-keys .generated .vlt-download {
-    width: 40%;
-    margin: 0px auto;
+.vlt-register .vlt-register-key .vlt-register-key-info {
+    margin-top: 10px;
 }
 
 /*************************************************************

@@ -54,7 +54,7 @@ Vaultier.AuthRegisterRoute = Ember.Route.extend({
         if (this.get('auth').get('isAuthenticated')) {
             transition.router.replaceWith('AuthRegister.sum');
         } else {
-            transition.router.replaceWith('AuthRegister.before');
+            transition.router.replaceWith('AuthRegister.keys');
         }
     },
 
@@ -81,50 +81,14 @@ Vaultier.AuthRegisterIndexRoute = Ember.Route.extend({
         if (this.get('auth').get('isAuthenticated')) {
             transition.router.replaceWith('AuthRegister.sum');
         } else {
-            transition.router.replaceWith('AuthRegister.before');
+            transition.router.replaceWith('AuthRegister.keys');
         }
     }
 });
 
 
 /////////////////////////////////////////////////////////////////
-//// STEP1 - Before
-/////////////////////////////////////////////////////////////////
-
-Vaultier.AuthRegisterBeforeRoute = Ember.Route.extend({
-    step: 'AuthRegisterBefore',
-
-    beforeModel: function (transition) {
-        if (this.get('auth').get('isAuthenticated')) {
-            transition.router.replaceWith('AuthRegister.sum');
-        }
-    },
-
-    setupController: function (ctrl) {
-        ctrl.set('props.loginButtonHidden', false);
-        ctrl.set('props.nextButtonDisabled', false);
-        ctrl.set('props.nextButtonTitle', null)
-    },
-
-    renderTemplate: function () {
-        this.render(this.step, { outlet: 'AuthRegister'})
-    },
-
-    actions: {
-        next: function () {
-            this.transitionTo('AuthRegister.keys');
-        }
-    }
-});
-
-Vaultier.AuthRegisterBeforeView = Ember.View.extend({
-    templateName: 'Auth/AuthRegisterBefore'
-});
-
-Vaultier.AuthRegisterBeforeController = BaseRegisterController.extend();
-
-/////////////////////////////////////////////////////////////////
-//// STEP2 - keys
+//// STEP1 - keys
 /////////////////////////////////////////////////////////////////
 
 Vaultier.AuthRegisterKeysController = BaseRegisterController.extend();
@@ -161,7 +125,7 @@ Vaultier.AuthRegisterKeysRoute = Ember.Route.extend({
     },
 
     setupController: function (ctrl) {
-        ctrl.set('props.loginButtonHidden', true);
+        ctrl.set('props.loginButtonHidden', false);
         ctrl.set('props.nextButtonTitle', null)
 
         if (!ctrl.get('props.keysReady')) {
@@ -181,7 +145,7 @@ Vaultier.AuthRegisterKeysView = Ember.View.extend({
 });
 
 /////////////////////////////////////////////////////////////////
-//// STEP3 - Creds
+//// STEP2 - Creds
 /////////////////////////////////////////////////////////////////
 
 
@@ -214,13 +178,6 @@ Vaultier.AuthRegisterCredsRoute = Ember.Route.extend({
 
         // prepare user model
         var user = this.modelFor('AuthRegister');
-
-        // testing
-//        var u = 'jan' + Math.round(Math.random() * 100000) + '@rclick.cz';
-//        user.setProperties({
-//            email: u,
-//            nickname: u
-//        });
 
         ctrl.set('content', user);
 
@@ -298,7 +255,7 @@ Vaultier.AuthRegisterCredsView = Ember.View.extend({
 });
 
 /////////////////////////////////////////////////////////////////
-//// STEP4 - Sum
+//// STEP3 - Sum
 /////////////////////////////////////////////////////////////////
 
 Vaultier.AuthRegisterSumRoute = Ember.Route.extend({
@@ -319,12 +276,6 @@ Vaultier.AuthRegisterSumRoute = Ember.Route.extend({
     },
 
     actions: {
-
-        downloadKey: function () {
-            // start download
-            var blob = new Blob([this.get('auth.privateKey')], {type: "text/plain;charset=utf-8"});
-            saveAs(blob, "vaultier.key");
-        },
 
         next: function () {
             // get transition function created by newuserinit service this function is used to transition to proper page after registration
