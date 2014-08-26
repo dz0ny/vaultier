@@ -1686,6 +1686,9 @@ span.vlt-user img {
 /*************************************************************
 * Permissions
 *************************************************************/
+.vlt-panel-permissions .panel-heading {
+    padding-left: 0px;
+}
 .vlt-panel-permissions .vlt-panel-permissions-body {
     padding: 0px;
 }

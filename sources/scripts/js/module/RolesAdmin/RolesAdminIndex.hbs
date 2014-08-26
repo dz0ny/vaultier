@@ -89,7 +89,7 @@
 
                             {{#each role in block.roles itemViewClass='view.AnimatedItemWrapper' }}
 
-                                {{#view view.Item role=role block=block class="vlt-row" classNameBindings='role.isMember:normal:invited' }}
+                                {{#view view.Item role=role block=block class="row vlt-row" classNameBindings='role.isMember:normal:invited' }}
                                     <div class="vlt-col col-sm-4 vlt-user">
                                         {{printUser role.member size=50}}
                                     </div>
