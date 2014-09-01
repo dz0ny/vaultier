@@ -113,7 +113,7 @@ Vaultier.VaultsCreateRoute = Ember.Route.extend(
                         this.transitionTo('Vault.index', record);
                     }.bind(this))
                     .catch(function (error) {
-                        $.notify('Oooups! Something went wrong.', 'error');
+                        $.notify('Ooops! Something went wrong.', 'error');
                         this.get('errors').logError(error);
                     }.bind(this));
 
@@ -200,7 +200,7 @@ Vaultier.VaultRoute = Ember.Route.extend(
                                 this.transitionTo('Workspace.index');
                             }.bind(this),
                             function (error) {
-                                $.notify('Oooups! Something went wrong.', 'error');
+                                $.notify('Ooops! Something went wrong.', 'error');
                             }.bind(this)
                         );
                     ApplicationLoader.promise(promise);
@@ -269,7 +269,7 @@ Vaultier.VaultEditRoute = Ember.Route.extend(
                         history.go(-1);
                     }.bind(this))
                     .catch(function (error) {
-                        $.notify('Oooups! Something went wrong.', 'error');
+                        $.notify('Ooops! Something went wrong.', 'error');
                         this.get('errors').logError(error)
                     }.bind(this))
 

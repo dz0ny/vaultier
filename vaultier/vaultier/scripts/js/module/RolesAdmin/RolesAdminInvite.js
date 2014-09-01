@@ -64,7 +64,7 @@ Vaultier.RolesAdminInviteRoute = Ember.Route.extend(
                         window.history.go(-1);
                     })
                     .catch(function () {
-                        $.notify('Oooups! Something went wrong.', 'error');
+                        $.notify('Ooops! Something went wrong.', 'error');
                     })
 
                 ApplicationLoader.promise(bulk);

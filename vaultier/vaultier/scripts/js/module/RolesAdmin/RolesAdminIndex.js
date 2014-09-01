@@ -153,7 +153,7 @@ Vaultier.RolesAdminIndexRoute = Ember.Route.extend(
                             $.notify('User \'s permission has been removed.', 'success');
                         })
                         .catch(function (error) {
-                            $.notify('Oooups! Something went wrong.', 'error');
+                            $.notify('Ooops! Something went wrong.', 'error');
                             this.get('errors').logError(error)
                         }.bind(this))
 
@@ -170,7 +170,7 @@ Vaultier.RolesAdminIndexRoute = Ember.Route.extend(
                         $.notify('User \'s permission has been updated.', 'success');
                     })
                     .catch(function (error) {
-                        $.notify('Oooups! Something went wrong.', 'error');
+                        $.notify('Ooops! Something went wrong.', 'error');
                         this.get('errors').logError(error)
                     }.bind(this))
 

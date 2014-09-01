@@ -401,7 +401,7 @@ Vaultier.RolesAdminIndexRoute = Ember.Route.extend(
                             $.notify('User \'s permission has been removed.', 'success');
                         })
                         .catch(function (error) {
-                            $.notify('Oooups! Something went wrong.', 'error');
+                            $.notify('Ooops! Something went wrong.', 'error');
                             this.get('errors').logError(error)
                         }.bind(this))
 
@@ -418,7 +418,7 @@ Vaultier.RolesAdminIndexRoute = Ember.Route.extend(
                         $.notify('User \'s permission has been updated.', 'success');
                     })
                     .catch(function (error) {
-                        $.notify('Oooups! Something went wrong.', 'error');
+                        $.notify('Ooops! Something went wrong.', 'error');
                         this.get('errors').logError(error)
                     }.bind(this))
 
@@ -566,7 +566,7 @@ Vaultier.RolesAdminInviteRoute = Ember.Route.extend(
                         window.history.go(-1);
                     })
                     .catch(function () {
-                        $.notify('Oooups! Something went wrong.', 'error');
+                        $.notify('Ooops! Something went wrong.', 'error');
                     })
 
                 ApplicationLoader.promise(bulk);
@@ -774,7 +774,7 @@ Vaultier.RolesAdminManagementRoute = Vaultier.RolesAdminIndexRoute.extend({
                         $.notify('Role has been remove', 'success');
                     }.bind(this))
                     .catch(function (error) {
-                        $.notify('Oooups! Something went wrong.', 'error');
+                        $.notify('Ooops! Something went wrong.', 'error');
                         this.get('errors').logError(error);
                     }.bind(this));
 
@@ -807,10 +807,10 @@ Vaultier.RolesAdminManagementRoute = Vaultier.RolesAdminIndexRoute.extend({
                     .then(function () {
                         var members = context.get('members');
                         members.removeObject(member);
-                        $.notify('RolesAdmin has been remove', 'success');
+                        $.notify('RolesAdmin has been removed', 'success');
                     }.bind(this))
                     .catch(function (error) {
-                        $.notify('Oooups! Something went wrong.', 'error');
+                        $.notify('Ooops! Something went wrong.', 'error');
                         this.get('errors').logError(error);
                     }.bind(this));
 
@@ -900,11 +900,11 @@ Vaultier.MembersAdminListActionsMixin = Ember.Mixin.create({
                             roles.removeObject(role);
                             member.set('roles_count', roles.get('length'));
 
-                            $.notify('Role has been remove', 'success');
+                            $.notify('Role has been removed', 'success');
                         }.bind(this))
 
                         .catch(function (error) {
-                            $.notify('Oooups! Something went wrong.', 'error');
+                            $.notify('Ooops! Something went wrong.', 'error');
                             this.get('errors').logError(error);
                         }.bind(this));
 
@@ -938,7 +938,7 @@ Vaultier.MembersAdminListActionsMixin = Ember.Mixin.create({
                         }.bind(this))
 
                         .catch(function (error) {
-                            $.notify('Oooups! Something went wrong.', 'error');
+                            $.notify('Ooops! Something went wrong.', 'error');
                             console.error(error);
                             //this.get('errors').logError(error);
                         }.bind(this));

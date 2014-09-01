@@ -103,7 +103,7 @@ Vaultier.SecretMoveRoute = Ember.Route.extend(
                         history.go(-1);
                     }.bind(this),
                     function () {
-                        $.notify('Oooups! Something went wrong.', 'error');
+                        $.notify('Ooops! Something went wrong.', 'error');
                     }
                 )
             }

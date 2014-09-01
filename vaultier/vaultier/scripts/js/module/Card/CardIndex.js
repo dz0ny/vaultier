@@ -35,7 +35,7 @@ Vaultier.CardRoute = Ember.Route.extend(
                             }.bind(this),
                             function (error) {
                                 card.rollback();
-                                $.notify('Oooups! Something went wrong.', 'error');
+                                $.notify('Ooops! Something went wrong.', 'error');
                             }.bind(this)
                         );
                     ApplicationLoader.promise(promise);

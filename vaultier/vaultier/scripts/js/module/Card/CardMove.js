@@ -74,7 +74,7 @@ Vaultier.CardMoveRoute = Ember.Route.extend(
                     )
                 }.bind(this),
                     function () {
-                        $.notify('Oooups! Something went wrong.', 'error');
+                        $.notify('Ooops! Something went wrong.', 'error');
                     }
                 )
 

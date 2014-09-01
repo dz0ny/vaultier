@@ -53,7 +53,7 @@ Vaultier.CardsCreateRoute = Ember.Route.extend(
                         this.transitionTo('Card.index', record);
                     }.bind(this),
                     function () {
-                        $.notify('Oooups! Something went wrong.', 'error');
+                        $.notify('Ooops! Something went wrong.', 'error');
                     }
                 );
 

@@ -46,7 +46,7 @@ Vaultier.RolesAdminManagementRoute = Vaultier.RolesAdminIndexRoute.extend({
                         $.notify('Role has been remove', 'success');
                     }.bind(this))
                     .catch(function (error) {
-                        $.notify('Oooups! Something went wrong.', 'error');
+                        $.notify('Ooops! Something went wrong.', 'error');
                         this.get('errors').logError(error);
                     }.bind(this));
 
@@ -82,7 +82,7 @@ Vaultier.RolesAdminManagementRoute = Vaultier.RolesAdminIndexRoute.extend({
                         $.notify('RolesAdmin has been remove', 'success');
                     }.bind(this))
                     .catch(function (error) {
-                        $.notify('Oooups! Something went wrong.', 'error');
+                        $.notify('Ooops! Something went wrong.', 'error');
                         this.get('errors').logError(error);
                     }.bind(this));
 

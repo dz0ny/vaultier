@@ -44,7 +44,7 @@ Vaultier.VaultRoute = Ember.Route.extend(
                                 this.transitionTo('Workspace.index');
                             }.bind(this),
                             function (error) {
-                                $.notify('Oooups! Something went wrong.', 'error');
+                                $.notify('Ooops! Something went wrong.', 'error');
                             }.bind(this)
                         );
                     ApplicationLoader.promise(promise);

@@ -48,7 +48,7 @@ Vaultier.SecretEditRoute = Ember.Route.extend(
         actions: {
             save: function () {
                 var notifyError = function (error) {
-                    $.notify('Oooups! Something went wrong.', 'error');
+                    $.notify('Ooops! Something went wrong.', 'error');
                     throw error;
                 };
 

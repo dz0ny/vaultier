@@ -62,7 +62,7 @@ Vaultier.WorkspaceRoute = Ember.Route.extend(
                                 this.transitionTo('Workspaces.select');
                             }.bind(this))
                         .catch(function (error) {
-                            $.notify('Oooups! Something went wrong.', 'error');
+                            $.notify('Ooops! Something went wrong.', 'error');
                             throw error;
                         }.bind(this));
 

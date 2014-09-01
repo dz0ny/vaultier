@@ -27,7 +27,7 @@ Service.Errors = Ember.Object.extend({
 
     parseError: function (error) {
         var data = {
-            title: 'Oooups! Something wrong happen here',
+            title: 'Ooops! Something wrong happen here',
             message: 'Fatal error',
             template: 'ErrorGeneric',
             error: error

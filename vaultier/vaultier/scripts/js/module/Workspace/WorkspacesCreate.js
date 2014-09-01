@@ -10,7 +10,7 @@ Vaultier.WorkspacesCreateRoute = Ember.Route.extend({
                     }.bind(this))
 
                 .catch(function (error) {
-                    $.notify('Oooups! Something went wrong.', 'error');
+                    $.notify('Ooops! Something went wrong.', 'error');
                     this.get('errors').logError(error);
                 }.bind(this));
 

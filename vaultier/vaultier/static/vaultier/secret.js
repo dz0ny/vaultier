@@ -178,7 +178,7 @@ Vaultier.SecretCreateSubmitRoute = Ember.Route.extend(
             submit: function () {
                 var record = this.get('controller.content');
                 var notifyError = function (error) {
-                    $.notify('Oooups! Something went wrong.', 'error');
+                    $.notify('Ooops! Something went wrong.', 'error');
                     throw error;
                 };
 
@@ -256,7 +256,7 @@ Vaultier.SecretEditRoute = Ember.Route.extend(
         actions: {
             save: function () {
                 var notifyError = function (error) {
-                    $.notify('Oooups! Something went wrong.', 'error');
+                    $.notify('Ooops! Something went wrong.', 'error');
                     throw error;
                 };
 
@@ -452,7 +452,7 @@ Vaultier.SecretIndexRoute = Ember.Route.extend(
 
                             function (error) {
                                 secret.rollback();
-                                $.notify('Oooups! Something went wrong.', 'error');
+                                $.notify('Ooops! Something went wrong.', 'error');
                             }.bind(this)
                         );
                     ApplicationLoader.promise(promise);
@@ -607,7 +607,7 @@ Vaultier.SecretMoveRoute = Ember.Route.extend(
                         history.go(-1);
                     }.bind(this),
                     function () {
-                        $.notify('Oooups! Something went wrong.', 'error');
+                        $.notify('Ooops! Something went wrong.', 'error');
                     }
                 )
             }

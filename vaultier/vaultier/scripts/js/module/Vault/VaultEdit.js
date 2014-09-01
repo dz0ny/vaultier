@@ -43,7 +43,7 @@ Vaultier.VaultEditRoute = Ember.Route.extend(
                         history.go(-1);
                     }.bind(this))
                     .catch(function (error) {
-                        $.notify('Oooups! Something went wrong.', 'error');
+                        $.notify('Ooops! Something went wrong.', 'error');
                         this.get('errors').logError(error)
                     }.bind(this))
 

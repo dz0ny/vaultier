@@ -48,7 +48,7 @@ Vaultier.VaultsCreateRoute = Ember.Route.extend(
                         this.transitionTo('Vault.index', record);
                     }.bind(this))
                     .catch(function (error) {
-                        $.notify('Oooups! Something went wrong.', 'error');
+                        $.notify('Ooops! Something went wrong.', 'error');
                         this.get('errors').logError(error);
                     }.bind(this));
 

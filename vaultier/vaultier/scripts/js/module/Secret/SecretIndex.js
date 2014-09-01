@@ -102,7 +102,7 @@ Vaultier.SecretIndexRoute = Ember.Route.extend(
 
                             function (error) {
                                 secret.rollback();
-                                $.notify('Oooups! Something went wrong.', 'error');
+                                $.notify('Ooops! Something went wrong.', 'error');
                             }.bind(this)
                         );
                     ApplicationLoader.promise(promise);
