@@ -1,5 +1,5 @@
+from accounts.models import Member
 from cards.models import Card
-from workspaces.models import Member
 from acls.models import Role
 from secrets.models import Secret
 from vaults.models import Vault
@@ -19,14 +19,14 @@ def on_role_created(signal=None, sender=None, instance=None, event_type=None,
 
 # when role level is updated
 def on_role_level_updated(signal=None, sender=None, instance=None,
-                          event_type=None,overwritten_values=None, **kwargs):
+                          event_type=None, overwritten_values=None, **kwargs):
     if event_type == UPDATE and overwritten_values.has_key('level'):
         materializer = UpdateRoleLevelMaterializer(instance)
         materializer.materialize()
 
 # when member of role is updated
 def on_role_member_updated(signal=None, sender=None, instance=None,
-                           event_type=None,overwritten_values=None, **kwargs):
+                           event_type=None, overwritten_values=None, **kwargs):
     if event_type == UPDATE and overwritten_values.has_key('member') and \
             instance.member.user:
         materializer = UpdateRoleMemberMaterializer(instance)

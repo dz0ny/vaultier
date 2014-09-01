@@ -4,9 +4,10 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 from django.db.models.deletion import CASCADE, PROTECT
 from django.db.models.signals import pre_save, post_save
+from accounts.business.fields import MemberStatusField
 from libs.changes.changes import ChangesMixin
 from libs.lowercasefield.lowercasefield import LowerCaseCharField
-from .business.managers import UserManager, LostKeyManager
+from .business.managers import UserManager, LostKeyManager, MemberManager
 from hashlib import sha1
 
 
@@ -81,6 +82,43 @@ class LostKey(models.Model):
         db_table = u'vaultier_lost_key'
 
 
+class Member(ChangesMixin, models.Model):
+
+    workspace = models.ForeignKey('workspaces.Workspace',
+                                  related_name='membership',
+                                  on_delete=CASCADE)
+
+    user = models.ForeignKey('accounts.User', on_delete=CASCADE, null=True,
+                             related_name='membership'
+                             )
+    invitation_hash = models.CharField(max_length=64, null=True, unique=True)
+    invitation_email = LowerCaseCharField(max_length=1024, null=True)
+    workspace_key = models.CharField(max_length=4096)
+    status = MemberStatusField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_by = models.ForeignKey('accounts.User', on_delete=PROTECT,
+                                   related_name='members_created'
+                                   )
+    objects = MemberManager()
+
+    class Meta:
+        db_table = u'vaultier_member'
+
+    def is_invitation(self):
+        if self.status == MemberStatusField.STATUS_INVITED:
+            return True
+        return False
+
+    def save(self, *args, **kwargs):
+        if not self.invitation_hash:
+            self.invitation_hash = Member.objects.generate_invitation_hash()
+        return super(Member, self).save(*args, **kwargs)
+
+
 def register_signals():
     pre_save.connect(LostKey.objects.on_pre_save, sender=LostKey)
     post_save.connect(LostKey.objects.send_notification, sender=LostKey)
+    post_save.connect(Member.objects.send_transfer_workspace_key_info,
+                      sender=Member
+                      )

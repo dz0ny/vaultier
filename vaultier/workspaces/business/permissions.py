@@ -1,7 +1,7 @@
 from rest_framework.permissions import BasePermission
+from accounts.models import Member
 from acls.business.fields import AclLevelField
 from acls.business.permissions import has_object_acl
-from workspaces.models import Member
 
 
 class CanManageMemberPermission(BasePermission):

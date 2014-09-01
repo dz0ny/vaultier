@@ -1035,4 +1035,4 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   
 });
 
-//# sourceMappingURL=secrets.tpl.js.map
+//# sourceMappingURL=secret.tpl.js.map

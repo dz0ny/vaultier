@@ -2,6 +2,7 @@ import os.path
 import sys
 
 DEBUG = True
+
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -15,7 +16,11 @@ BASE_DIR = os.path.join(
     '..'
 )
 
-PROJECT_ROOT = os.path.realpath(os.path.join(os.path.dirname(__file__), '..').replace('\\', '/'))
+# PROJECT_ROOT = os.path.realpath(os.path.join(os.path.dirname(__file__), '..').replace('\\', '/'))
+
+# BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+PROJECT_PATH = os.path.split(os.path.abspath(os.path.dirname(__file__)))[0]
+
 
 DATABASES = {
     'default': {
@@ -41,7 +46,7 @@ ALLOWED_HOSTS = []
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
 # In a Windows environment this must be set to your system time zone.
-TIME_ZONE = 'America/Chicago'
+TIME_ZONE = 'UTC'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -60,7 +65,7 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
-MEDIA_ROOT = PROJECT_ROOT + '/media/'
+MEDIA_ROOT = PROJECT_PATH + '/media/'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -82,7 +87,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    os.path.join(PROJECT_ROOT, 'static').replace('\\', '/'),
+    os.path.join(PROJECT_PATH, 'static').replace('\\', '/'),
 )
 
 SITE_URL = 'http://localhost:8000/'
@@ -126,7 +131,7 @@ WSGI_APPLICATION = 'vaultier.wsgi.application'
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'vaultier/tempates'),
     os.path.join(BASE_DIR, 'vaultier/business'),
-    os.path.join(PROJECT_ROOT, 'vaultier'),
+    os.path.join(PROJECT_PATH, 'vaultier'),
 
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
@@ -139,9 +144,7 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
-        # 'rest_framework.renderers.BrowsableAPIRenderer',
     ),
-    # 'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.AllowAny',
     ),
@@ -155,9 +158,6 @@ REST_FRAMEWORK = {
         'accounts.business.authentication.TokenAuthentication',
     ),
 }
-
-#
-# SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 
 COMPRESS_ENABLED = 1
 
@@ -229,7 +229,6 @@ LOGGING = {
     }
 }
 
-EMAIL_BACKEND = 'vaultier.mailer.backends.VaultierEmailBackend'
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 25
 EMAIL_HOST_USER = ''
@@ -237,12 +236,12 @@ EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = False
 
 AUTH_USER_MODEL = 'accounts.User'
-AUTHENTICATION_BACKENDS = ( 'accounts.business.authentication.Backend', )
+AUTHENTICATION_BACKENDS = ('accounts.business.authentication.Backend', )
 
 TEST_RUNNER = 'django.test.simple.DjangoTestSuiteRunner'
 
-EMBER_TPL_DIR = os.path.join(PROJECT_ROOT, 'static/js/module')
-EMBER_TPL_CMPDIR = os.path.join(PROJECT_ROOT, 'static/tpl')
+EMBER_TPL_DIR = os.path.join(PROJECT_PATH, 'static/js/module')
+EMBER_TPL_CMPDIR = os.path.join(PROJECT_PATH, 'static/tpl')
 EMBER_TPL_MASK = "\w+.hbs$"
 
 # Indicates options for frontend

@@ -59,6 +59,3 @@ def register_signals():
             required_event=UPDATE,
         )
     )
-
-
-

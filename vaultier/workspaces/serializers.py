@@ -1,91 +1,12 @@
 from rest_framework import serializers
-from accounts.serializers import RelatedUserSerializer
+
+from accounts.business.fields import MemberStatusField
+from accounts.models import Member
+from accounts.serializers import RelatedUserSerializer, MemberSerializer, \
+    RelatedMemberSerializer
 from acls.models import Role
 from vaultier.business.fields import PermsField
-from workspaces.business.fields import MemberStatusField
-from workspaces.models import Member, Workspace
-
-
-class MemberSerializer(serializers.ModelSerializer):
-    email = serializers.SerializerMethodField('get_email')
-    nickname = serializers.SerializerMethodField('get_nickname')
-
-    class Meta:
-        model = Member
-        fields = ('id', 'status', 'email', 'nickname', 'workspace', 'user',
-                  'created_at', 'updated_at')
-
-    def get_email(self, obj):
-        if obj:
-            if (obj.user):
-                return obj.user.email
-            else:
-                return obj.invitation_email
-
-    def get_nickname(self, obj):
-        if obj:
-            if (obj.user):
-                return obj.user.nickname
-            else:
-                return obj.invitation_email
-
-
-class RelatedMemberSerializer(MemberSerializer):
-    pass
-
-
-class MemberInviteSerializer(serializers.Serializer):
-
-    email = serializers.EmailField(required=True)
-    workspace = serializers.PrimaryKeyRelatedField(
-        required=True, queryset=Workspace.objects.all())
-    send = serializers.BooleanField(required=False, default=True)
-    resend = serializers.BooleanField(required=False, default=True)
-
-
-class MemberResendSerializer(serializers.Serializer):
-    resend = serializers.BooleanField(required=False, default=True)
-
-
-class MemberRoleSerializer(serializers.ModelSerializer):
-
-    created_by = serializers.SerializerMethodField('get_created_by')
-    to_type = serializers.SerializerMethodField('get_to_type')
-    to_name = serializers.SerializerMethodField('get_to_name')
-
-    def get_created_by(self, obj):
-        return RelatedUserSerializer(instance=obj.created_by).data
-
-    def get_to_type(self, obj):
-        return obj.type
-
-    def get_to_name(self, obj):
-        return obj.get_object().name
-
-    class Meta:
-        model = Role
-        fields = ('id', 'created_by', 'to_type', 'to_name')
-
-
-class MemberWorkspaceKeySerializer(serializers.ModelSerializer):
-
-    public_key = serializers.SerializerMethodField('get_public_key')
-    status = serializers.IntegerField(read_only=True)
-
-    class Meta:
-        model = Member
-        fields = ('id', 'public_key', 'workspace_key', 'status')
-
-    def validate_workspace_key(self, attrs, source):
-        return attrs
-
-    def get_public_key(self, obj):
-        return obj.user.public_key
-
-    def save_object(self, obj, **kwargs):
-        obj.status = MemberStatusField.STATUS_MEMBER
-        return super(MemberWorkspaceKeySerializer, self).\
-            save_object(obj, **kwargs)
+from workspaces.models import Workspace
 
 
 class InvitationRoleSerializer(serializers.ModelSerializer):

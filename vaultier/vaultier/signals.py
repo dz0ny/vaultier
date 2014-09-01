@@ -40,9 +40,3 @@ role_register_signals()
 ##################################################
 from accounts.models import register_signals as lostkey_register_signals
 lostkey_register_signals()
-
-##################################################
-#Member post_save signals
-##################################################
-from workspaces.models import register_signals as member_register_signals
-member_register_signals()

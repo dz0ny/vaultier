@@ -1,12 +1,12 @@
 from django.db.models.loading import get_model
 from django.db.models.manager import Manager
 from django.db.models.query_utils import Q
+from accounts.business.fields import MemberStatusField
 from acls.business.fields import AclLevelField
 from libs.changes.changes import INSERT
 from vaultier.business.mailer.granted_access.sender import \
     GrantedAccessEmailSender
 from vaults.models import Vault
-from workspaces.business.fields import MemberStatusField
 
 
 class RoleManager(Manager):

@@ -637,4 +637,4 @@ Vaultier.SecretMoveView = Ember.View.extend({
 });
 
 
-//# sourceMappingURL=secrets.js.map
+//# sourceMappingURL=secret.js.map

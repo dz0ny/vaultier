@@ -1,8 +1,8 @@
 from django.core.management.base import BaseCommand
+from accounts.business.fields import MemberStatusField
 
 from acls.models import Acl, Role
 from acls.business.perms.materializer import CreateRoleMaterializer
-from workspaces.business.fields import MemberStatusField
 
 
 class Command(BaseCommand):

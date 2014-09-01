@@ -1,12 +1,11 @@
 from rest_framework import serializers
-from accounts.serializers import RelatedUserSerializer
+from accounts.models import Member
+from accounts.serializers import RelatedUserSerializer, RelatedMemberSerializer
 from acls.models import Role
 from cards.serializers import RelatedCardSerializer
 from vaultier.business.fields import RelatedNestedField
 from vaults.serializers import RelatedVaultSerializer
-from workspaces.models import Member
-from workspaces.serializers import RelatedMemberSerializer, \
-    RelatedWorkspaceSerializer
+from workspaces.serializers import RelatedWorkspaceSerializer
 
 
 class RoleSerializer(serializers.ModelSerializer):

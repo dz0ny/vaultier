@@ -8,10 +8,8 @@ from .business.fields import RoleLevelField, AclDirectionField
 
 
 class Acl(ObjectReference, models.Model):
+
     type = ObjectReferenceTypeField()
-
-
-
     to_workspace = models.ForeignKey('workspaces.Workspace', on_delete=CASCADE,
                                      null=True, blank=True)
     to_vault = models.ForeignKey('vaults.Vault', on_delete=CASCADE,
@@ -55,7 +53,7 @@ class Role(ChangesMixin, ObjectReference, models.Model):
                                  null=True, blank=True)
     to_card = models.ForeignKey('cards.Card', on_delete=CASCADE,
                                 null=True, blank=True)
-    member = models.ForeignKey('workspaces.Member', on_delete=CASCADE)
+    member = models.ForeignKey('accounts.Member', on_delete=CASCADE)
 
     level = RoleLevelField()
     created_at = models.DateTimeField(auto_now_add=True)

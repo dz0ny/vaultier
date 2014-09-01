@@ -48680,7 +48680,7 @@ Ember.Route = Ember.Object.extend(Ember.ActionHandler, {
     ```javascript
     App.Router.map(function() {
       this.route("index");
-      this.route("secrets");
+      this.route("secret");
       this.route("fourOhFour", { path: "*:"});
     });
 
@@ -48688,7 +48688,7 @@ Ember.Route = Ember.Object.extend(Ember.ActionHandler, {
       actions: {
         moveToSecret: function(context){
           if (authorized()){
-            this.transitionTo('secrets', context);
+            this.transitionTo('secret', context);
           }
             this.transitionTo('fourOhFour');
         }
@@ -48803,7 +48803,7 @@ Ember.Route = Ember.Object.extend(Ember.ActionHandler, {
     ```javascript
     App.Router.map(function() {
       this.route("index");
-      this.route("secrets");
+      this.route("secret");
     });
 
     App.SecretRoute = Ember.Route.extend({
@@ -74441,7 +74441,7 @@ code.google.com/p/crypto-js/wiki/License
      * Shortcut function to the HMAC's object interface.
      *
      * @param {WordArray|string} message The message to hash.
-     * @param {WordArray|string} key The secrets key.
+     * @param {WordArray|string} key The secret key.
      *
      * @return {WordArray} The HMAC.
      *
@@ -74579,7 +74579,7 @@ code.google.com/p/crypto-js/wiki/License
      * Shortcut function to the HMAC's object interface.
      *
      * @param {WordArray|string} message The message to hash.
-     * @param {WordArray|string} key The secrets key.
+     * @param {WordArray|string} key The secret key.
      *
      * @return {WordArray} The HMAC.
      *
@@ -74766,7 +74766,7 @@ code.google.com/p/crypto-js/wiki/License
      * Shortcut function to the HMAC's object interface.
      *
      * @param {WordArray|string} message The message to hash.
-     * @param {WordArray|string} key The secrets key.
+     * @param {WordArray|string} key The secret key.
      *
      * @return {WordArray} The HMAC.
      *
@@ -75021,7 +75021,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
      * Shortcut function to the HMAC's object interface.
      *
      * @param {WordArray|string} message The message to hash.
-     * @param {WordArray|string} key The secrets key.
+     * @param {WordArray|string} key The secret key.
      *
      * @return {WordArray} The HMAC.
      *
@@ -75624,7 +75624,7 @@ code.google.com/p/crypto-js/wiki/License
      * Shortcut function to the HMAC's object interface.
      *
      * @param {WordArray|string} message The message to hash.
-     * @param {WordArray|string} key The secrets key.
+     * @param {WordArray|string} key The secret key.
      *
      * @return {WordArray} The HMAC.
      *

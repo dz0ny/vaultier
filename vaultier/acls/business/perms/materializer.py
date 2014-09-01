@@ -1,7 +1,7 @@
+from accounts.business.fields import MemberStatusField
 from acls.business.fields import RoleLevelField, AclDirectionField
 from acls.models import Acl, Role
 from acls.business.perms.strategy import ReadAclStrategy, WriteAclStrategy, CreateAclStrategy
-from workspaces.business.fields import MemberStatusField
 
 
 class CreateRoleMaterializer(object):

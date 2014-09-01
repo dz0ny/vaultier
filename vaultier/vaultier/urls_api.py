@@ -1,13 +1,14 @@
 from django.conf.urls import patterns, url
 
 from rest_framework import routers
-from accounts.api import UserViewSet, LostKeyViewSet, AuthView, LogoutView
+from accounts.api import UserViewSet, LostKeyViewSet, AuthView, LogoutView, \
+    MemberViewSet
 from acls.api import RoleViewSet
 from cards.api import CardViewSet
 from search.api import SearchView
 from secrets.api import SecretViewSet, SecretBlobViewSet
 from vaults.api import VaultViewSet
-from workspaces.api import WorkspaceViewSet, WorkspaceKeyViewSet, MemberViewSet, \
+from workspaces.api import WorkspaceViewSet, WorkspaceKeyViewSet, \
     InvitationViewSet
 
 router = routers.DefaultRouter()
