@@ -133,7 +133,7 @@ Vaultier.CardsCreateRoute = Ember.Route.extend(
                     .saveRecord()
                     .then(
                     function () {
-                        $.notify('Your card has been successfully created.', 'success');
+                        $.notify('Your card has been created successfully.', 'success');
                         this.transitionTo('Card.index', record);
                     }.bind(this),
                     function () {
@@ -223,7 +223,7 @@ Vaultier.CardEditRoute = Ember.Route.extend(
                 var record = this.get('controller.content');
                 var promise = record.saveRecord().then(
                     function () {
-                        $.notify('Your changes have been successfully saved.', 'success');
+                        $.notify('Your changes have been saved successfully.', 'success');
                         history.go(-1);
                     }.bind(this),
                     function () {
@@ -278,7 +278,7 @@ Vaultier.CardRoute = Ember.Route.extend(
                         .deleteRecord()
                         .then(
                             function () {
-                                $.notify('Your card has been successfully deleted.', 'success');
+                                $.notify('Your card has been deleted successfully.', 'success');
 
                                 this.transitionTo('Cards.index', parentVault);
                             }.bind(this),
@@ -475,7 +475,7 @@ Vaultier.CardMoveRoute = Ember.Route.extend(
                         return this.get('store').find('Vault', record.get('vault'))
                     }.bind(this))
                     .then(function (vault) {
-                    $.notify('Your card has been successfully moved.', 'success');
+                    $.notify('Your card has been moved successfully.', 'success');
                     this.transitionTo(
                         'Secret.index',
                         this.modelFor('Workspace').get('slug'),

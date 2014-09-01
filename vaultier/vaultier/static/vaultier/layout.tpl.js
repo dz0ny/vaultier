@@ -122,7 +122,7 @@ function program4(depth0,data) {
 function program5(depth0,data) {
   
   
-  data.buffer.push("\r\n                    Setup workspace\r\n                ");
+  data.buffer.push("\r\n                    Configure workspace\r\n                ");
   }
 
 function program7(depth0,data) {

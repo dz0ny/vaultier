@@ -88,7 +88,7 @@ Vaultier.WorkspacesCreateRoute = Ember.Route.extend({
             var promise = record.saveRecord()
                 .then(
                     function () {
-                        $.notify('You workspace has been successfully created.', 'success');
+                        $.notify('You workspace has been created successfully.', 'success');
                         this.transitionTo('Workspace.index', record.get('slug'));
                     }.bind(this))
 
@@ -192,7 +192,7 @@ Vaultier.WorkspaceRoute = Ember.Route.extend(
                         .deleteRecord()
                         .then(
                             function () {
-                                $.notify('Your workspace has been successfully deleted.', 'success');
+                                $.notify('Your workspace has been deleted successfully.', 'success');
                                 this.transitionTo('Workspaces.select');
                             }.bind(this))
                         .catch(function (error) {
@@ -344,7 +344,7 @@ Vaultier.WorkspaceEditRoute = Ember.Route.extend(
                 var promise = record
                     .saveRecord()
                     .then(function () {
-                        $.notify('Your changes has been successfully saved.', 'success');
+                        $.notify('Your changes has been saved successfully.', 'success');
                         history.go(-1);
                     }.bind(this))
 

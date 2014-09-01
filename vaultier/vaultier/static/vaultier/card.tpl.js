@@ -40,6 +40,7 @@ function program5(depth0,data) {
   var buffer = '', stack1, helper, options;
   data.buffer.push("\n                                            <li>\n                                                ");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(6, program6, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "Vault.rolesAdminIndex", "vault", options) : helperMissing.call(depth0, "link-to", "Vault.rolesAdminIndex", "vault", options));
+rolesAdminIndex", "vault", options) : helperMissing.call(depth0, "link-to", "Vault.rolesAdminIndex", "vault", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n                                            </li>\n                                        ");
   return buffer;
@@ -390,7 +391,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "view.Tree", {hash:{
     'content': ("treeNodes")
   },hashTypes:{'content': "ID"},hashContexts:{'content': depth0},contexts:[depth0],types:["ID"],data:data})));
-  data.buffer.push("\n                    </div>\n                    <div class=\"help-block\">\n                        Also all granted permissions will be moved.\n                    </div>\n                    <div class=\"clearfix\"></div>\n                </div>\n                <div class=\"vlt-dialog-footer\">\n                    <a href=\"javascript:window.history.go(-1)\" class=\"btn btn-default btn-sm\">\n                        <span class=\"glyphicon glyphicon-chevron-left\"></span>\n                        Back\n                    </a>\n                    <button ");
+  data.buffer.push("\n                    </div>\n                    <div class=\"help-block\">\n                        Also all granted permissions will be moved.  data.buffer.push("\n                    </div>\n                    <div class=\"help-block\">\n                        Also all granted permissions will be moved.\n                    </div>\n                    <div class=\"clearfix\"></div>\n                </div>\n                <div class=\"vlt-dialog-footer\">\n                    <a href=\"javascript:window.history.go(-1)\" class=\"btn btn-default btn-sm\">\n                        <span class=\"glyphicon glyphicon-chevron-left\"></span>\n                        Back\n                    </a>\n                    <button ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "save", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data})));
   data.buffer.push(" ");
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{

@@ -49,7 +49,7 @@ Vaultier.CardsCreateRoute = Ember.Route.extend(
                     .saveRecord()
                     .then(
                     function () {
-                        $.notify('Your card has been successfully created.', 'success');
+                        $.notify('Your card has been created successfully.', 'success');
                         this.transitionTo('Card.index', record);
                     }.bind(this),
                     function () {

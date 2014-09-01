@@ -58,7 +58,7 @@ Vaultier.WorkspaceRoute = Ember.Route.extend(
                         .deleteRecord()
                         .then(
                             function () {
-                                $.notify('Your workspace has been successfully deleted.', 'success');
+                                $.notify('Your workspace has been deleted successfully.', 'success');
                                 this.transitionTo('Workspaces.select');
                             }.bind(this))
                         .catch(function (error) {

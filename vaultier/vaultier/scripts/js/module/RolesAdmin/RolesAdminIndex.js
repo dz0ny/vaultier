@@ -150,7 +150,7 @@ Vaultier.RolesAdminIndexRoute = Ember.Route.extend(
                         .deleteRecord()
                         .then(function () {
                             block.roles.removeObject(role);
-                            $.notify('User \'s permission has been removed.', 'success');
+                            $.notify('User\'s permission has been removed.', 'success');
                         })
                         .catch(function (error) {
                             $.notify('Ooops! Something went wrong.', 'error');
@@ -167,7 +167,7 @@ Vaultier.RolesAdminIndexRoute = Ember.Route.extend(
                 var promise = role
                     .saveRecord()
                     .then(function () {
-                        $.notify('User \'s permission has been updated.', 'success');
+                        $.notify('User\'s permission has been updated.', 'success');
                     })
                     .catch(function (error) {
                         $.notify('Ooops! Something went wrong.', 'error');

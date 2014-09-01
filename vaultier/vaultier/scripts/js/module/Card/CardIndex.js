@@ -29,7 +29,7 @@ Vaultier.CardRoute = Ember.Route.extend(
                         .deleteRecord()
                         .then(
                             function () {
-                                $.notify('Your card has been successfully deleted.', 'success');
+                                $.notify('Your card has been deleted successfully.', 'success');
 
                                 this.transitionTo('Cards.index', parentVault);
                             }.bind(this),

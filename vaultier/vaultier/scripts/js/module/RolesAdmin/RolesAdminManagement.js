@@ -43,7 +43,7 @@ Vaultier.RolesAdminManagementRoute = Vaultier.RolesAdminIndexRoute.extend({
                     .then(function () {
                         var roles = context.get('roles');
                         roles.removeObject(role);
-                        $.notify('Role has been remove', 'success');
+                        $.notify('Role has been removed', 'success');
                     }.bind(this))
                     .catch(function (error) {
                         $.notify('Ooops! Something went wrong.', 'error');
@@ -79,7 +79,7 @@ Vaultier.RolesAdminManagementRoute = Vaultier.RolesAdminIndexRoute.extend({
                     .then(function () {
                         var members = context.get('members');
                         members.removeObject(member);
-                        $.notify('RolesAdmin has been remove', 'success');
+                        $.notify('RolesAdmin has been removed', 'success');
                     }.bind(this))
                     .catch(function (error) {
                         $.notify('Ooops! Something went wrong.', 'error');

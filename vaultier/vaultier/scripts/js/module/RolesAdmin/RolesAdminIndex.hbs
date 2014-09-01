@@ -40,7 +40,7 @@
                 {{#if block.isSecond}}
                     {{#unless block.isHidden}}
                         <div class="top-30">
-                            <h3>Inherited memberships</h3>
+                            <h3>Inherited Memberships</h3>
                         </div>
                     {{/unless}}
                 {{/if}}
@@ -51,7 +51,7 @@
                         <div class="panel-heading">
                             <div class="col-md-8">
                                 <h4>
-                                    {{block.roles.length}} collaborators at {{block.type}} <b>{{block.object.name}}</b>
+                                    {{block.roles.length}} collaborators &mdash; {{block.type}} <b>{{block.object.name}}</b>
                                 </h4>
                             </div>
                             <div class="col-md-4 vlt-controls">
@@ -76,7 +76,7 @@
                             {{#unless block.roles.length}}
                                 <div>
                                     <div class="padding-15">
-                                        There are no permission to this object.
+                                        No permissions are set for this object.
 
                                         {{#link-to inviteRouteName class="btn btn-default btn-sm"}}
                                             <span class="glyphicon glyphicon-user"></span>
