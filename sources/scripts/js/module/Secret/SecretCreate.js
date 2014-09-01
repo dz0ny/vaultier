@@ -82,7 +82,6 @@ Vaultier.SecretCreateSubmitRoute = Ember.Route.extend(
             var workspace = this.modelFor('Workspace');
             var card = this.modelFor('Card');
 
-
             // check permissions
             if (!this.get('auth').checkPermissions(transition, function () {
                 return this.modelFor('Card').get('perms.create');
@@ -137,6 +136,7 @@ Vaultier.SecretCreateSubmitRoute = Ember.Route.extend(
         setupController: function (ctrl, model) {
             ctrl.set('content', model.secret);
             ctrl.set('memberships', model.memberships);
+            ctrl.set('membershipsScope',  this.modelFor('Card'))
 
             ctrl.set('controllers.SecretCreate.submitButtonShown', true);
 
