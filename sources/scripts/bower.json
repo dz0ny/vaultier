@@ -25,6 +25,7 @@
     "ember": "~1.5.1",
     "ember-animate": "~0.3.4",
     "ember-restless": "~0.5.1",
+    "ember-selectize": "git+https://github.com/rclick-cz/ember-selectize.git",
 
     "FileAPI": "~2.0.3",
     "FileSaver": "*",

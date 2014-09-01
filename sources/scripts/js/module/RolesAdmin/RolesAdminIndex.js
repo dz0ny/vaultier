@@ -220,18 +220,26 @@ Vaultier.RolesAdminIndexView = Ember.View.extend({
     AnimatedItemWrapper: Ember.View.extend({
         Item: Ember.View.extend({
             tagName: 'div',
-            Select: Vaultier.SelectBox.extend({
-                setDefaultValue: function() {
-                    this.selectize.setValue(get(this, 'data.level'));
+            Select: Ember.Selectize.extend({
+                didInsertElement: function() {
+                    this.renderOptions = {
+                        option: function (item, escape) {
+                            var item = Vaultier.Role.proto().roles.getByValue(item.value);
+                            return [
+                                '<div>',
+                                    '<div>' + item.text + '</div>',
+                                    '<div class="help-block">' + item.desc + '</div>',
+                                '</div>'
+                            ].join('')
+                        }
+                    };
+                    this._super();
                 },
-
                 changeData: function (obj) {
                     var roleType = Vaultier.Role.proto().roles.getByValue(obj.value);
                     set(this, 'selection', roleType);
                     set(this, 'data.level', obj.value);
-                    if (this.init) {
-                        get(this, 'controller').send('changeRole', get(this, 'data'));
-                    }
+                    get(this, 'controller').send('changeRole', get(this, 'data'));
                 }
             })
         }),

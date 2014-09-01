@@ -191,7 +191,6 @@ var vaultierModulesConfig = {
                 "./js/module/Layout/PasswordField.hbs"
             ],
             "scripts": [
-                "./js/module/Layout/inputs/SelectBox.js",
                 "./js/module/Layout/LayoutStandard.js",
                 "./js/module/Layout/SecurityBox.js",
                 "./js/module/Layout/SearchBox.js",

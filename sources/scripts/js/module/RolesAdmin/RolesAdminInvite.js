@@ -79,6 +79,7 @@ Vaultier.RolesAdminInviteRoute = Ember.Route.extend(
             ctrl.set('invited', []);
             ctrl.set('role', {level: this.getDefaultRoleLevel()});
             ctrl.set('roleLevels', this.setupRoleLevels());
+            ctrl.set('defaultValue', Vaultier.Role.proto().roles.toArray()[0].value);
             ctrl.set('invitation_lifetime',this.get('config.invitation_lifetime'));
         },
 
@@ -106,9 +107,20 @@ Vaultier.RolesAdminInviteView = Ember.View.extend({
     templateName: 'RolesAdmin/RolesAdminInvite',
     layoutName: 'Layout/LayoutStandard',
 
-    Select: Vaultier.SelectBox.extend({
-        setDefaultValue: function() {
-            this.selectize.setValue(Vaultier.Role.proto().roles.toArray()[0].value);
+    Select: Ember.Selectize.extend({
+        didInsertElement: function() {
+            this.renderOptions = {
+                option: function (item, escape) {
+                    var item = Vaultier.Role.proto().roles.getByValue(item.data.value);
+                    return [
+                        '<div>',
+                            '<div>' + item.text + '</div>',
+                            '<div class="help-block">' + item.desc + '</div>',
+                        '</div>'
+                    ].join('')
+                  }
+              };
+              this._super();
         },
 
         changeData: function (obj) {
