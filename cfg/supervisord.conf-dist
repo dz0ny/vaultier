@@ -9,7 +9,7 @@ user = vaultier
 stdout_logfile = /opt/vaultier/logs/gunicorn_supervisor.log
 redirect_stderr = true
 
-[program:vaultier-garbage-collector]
+[program:vaultier-worker]
 command=/opt/vaultier/env/bin/celery -A sources.vaultier worker
 directory=/opt/vaultier/sources
 environment=PATH="/opt/vaultier/env/bin:",DJANGO_SETTINGS_MODULE="app.settings",PYTHONPATH=/opt/vaultier/sources
@@ -21,7 +21,7 @@ startsecs=1
 stopwaitsecs = 600
 
 [program:vaultier-celerybeat]
-command=/opt/vaultier/env/bin/celery -A sources.vaultier worker
+command=/opt/vaultier/env/bin/celery -A sources.vaultier beat
 directory=/opt/vaultier/sources
 environment=PATH="/opt/vaultier/env/bin:",DJANGO_SETTINGS_MODULE="app.settings",PYTHONPATH=/opt/vaultier/sources
 user=vaultier
@@ -32,4 +32,4 @@ startsecs=1
 stopwaitsecs = 600
 
 [group:vaultier]
-programs=vaultier-web,vaultier-celerybeat,vaultier-garbage-collector
+programs=vaultier-web,vaultier-celerybeat,vaultier-worker
