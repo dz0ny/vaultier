@@ -9,11 +9,11 @@ class SlugManager(SlugManagerMixin, Manager):
 
 
 class Slug(SlugMixin, models.Model):
-    class Meta:
-        app_label = 'vaultier'
-        db_table = u'vaultier_slug'
 
     objects = SlugManager()
+
+    class Meta:
+        db_table = u'vaultier_slug'
 
 
 def register_signals(model):
