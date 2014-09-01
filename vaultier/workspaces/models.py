@@ -30,7 +30,6 @@ class Workspace(ChangesMixin, SoftDeleteMixin, TreeIterableModelMixin,
         db_table = u'vaultier_workspace'
 
     def save(self, *args, **kwargs):
-        # created = self.id is None
         super(Workspace, self).save(*args, **kwargs)
         if kwargs.get('force_insert', False):
             Workspace.objects.create_member_with_workspace(self)

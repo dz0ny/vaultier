@@ -23,7 +23,7 @@ class WorkspaceManager(SoftDeleteManagerMixin, Manager):
             msg = '_user attribute is required to create related membership'
             raise AttributeError(msg)
 
-        m = get_model('workspaces', 'Member')(
+        m = get_model('accounts', 'Member')(
             workspace=workspace,
             user=workspace._user,
             status=MemberStatusField.STATUS_MEMBER_WITHOUT_WORKSPACE_KEY,
