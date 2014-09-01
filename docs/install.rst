@@ -145,10 +145,10 @@ To allow user vaultier to start restart and stop
     echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl stop vaultier: >> /etc/sudoers.d/vaultier
     echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl status vaultier: >> /etc/sudoers.d/vaultier
 
-    echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl restart vaultier-garbage-collector >> /etc/sudoers.d/vaultier
-    echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl start vaultier-garbage-collector >> /etc/sudoers.d/vaultier
-    echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl stop vaultier-garbage-collector >> /etc/sudoers.d/vaultier
-    echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl status vaultier-garbage-collector >> /etc/sudoers.d/vaultier
+    echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl restart vaultier-worker >> /etc/sudoers.d/vaultier
+    echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl start vaultier-worker >> /etc/sudoers.d/vaultier
+    echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl stop vaultier-worker >> /etc/sudoers.d/vaultier
+    echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl status vaultier-worker >> /etc/sudoers.d/vaultier
 
     echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl restart vaultier-celerybeat >> /etc/sudoers.d/vaultier
     echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl start vaultier-celerybeat >> /etc/sudoers.d/vaultier

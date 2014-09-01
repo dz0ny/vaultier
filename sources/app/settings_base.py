@@ -273,5 +273,10 @@ CELERYBEAT_SCHEDULE = {
     'garbage_collector_tokens': {
         'task': 'vaultier.tasks.task_garbage_collector',
         'schedule': crontab(hour='*/6'),
+    },
+    'usage_statistics': {
+        'task': 'vaultier.tasks.task_statistics_collector',
+        # every day in 1 am
+        'schedule': crontab(hour='1'),
     }
 }

@@ -14,6 +14,7 @@ def task_garbage_collector():
     Member.objects.clean_old_invitations()
 
 
+@shared_task()
 def task_statistics_collector():
     """
     Collects statistics from database and sends them to vaultier.org
