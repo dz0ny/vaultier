@@ -15,7 +15,7 @@ def config(request):
     script = json.dumps({
         'FT_FEATURES': FT_FEATURES,
         'VERSION' : git.tag,
-        'invitationLifetime' : VAULTIER.get('invitation_lifetime')
+        'invitation_lifetime' : VAULTIER.get('invitation_lifetime')
     })
     script = 'InitializeConfig = function(app) {  app.Config = Ember.Object.extend('+script+'); }'
 

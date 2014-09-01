@@ -79,7 +79,7 @@ Vaultier.RolesAdminInviteRoute = Ember.Route.extend(
             ctrl.set('invited', []);
             ctrl.set('role', {level: this.getDefaultRoleLevel()});
             ctrl.set('roleLevels', this.setupRoleLevels());
-            ctrl.set('invitationLifetime',this.get('config.invitationLifetime'));
+            ctrl.set('invitation_lifetime',this.get('config.invitation_lifetime'));
         },
 
         renderTemplate: function () {
