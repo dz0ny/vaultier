@@ -97,7 +97,7 @@ Vaultier.SecretIndexRoute = Ember.Route.extend(
                         .deleteRecord()
                         .then(
                             function () {
-                                $.notify('Your secret has been successfully deleted.', 'success');
+                                $.notify('Your secret has been deleted successfully.', 'success');
                             }.bind(this),
 
                             function (error) {

@@ -97,7 +97,7 @@ function program14(depth0,data) {
 function program16(depth0,data) {
   
   var buffer = '', stack1;
-  data.buffer.push("\r\n                            <div class=\"jumbotron vlt-bigbox vlt-secret\">\r\n                                <div class=\"vlt-header\">\r\n                                    <div class=\"vlt-icon\">\r\n                                    </div>\r\n                                    <div class=\"vlt-title\">\r\n                                        <h1>You do not have any secret yet</h1>\r\n                                    </div>\r\n                                </div>\r\n\r\n                                ");
+  data.buffer.push("\r\n                            <div class=\"jumbotron vlt-bigbox vlt-secret\">\r\n                                <div class=\"vlt-header\">\r\n                                    <div class=\"vlt-icon\">\r\n                                    </div>\r\n                                    <div class=\"vlt-title\">\r\n                                        <h1>You do not have any secrets yet</h1>\r\n                                    </div>\r\n                                </div>\r\n\r\n                                ");
   stack1 = helpers['if'].call(depth0, "card.perms.create", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(17, program17, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n                            </div>\r\n                    ");
@@ -106,7 +106,7 @@ function program16(depth0,data) {
 function program17(depth0,data) {
   
   var buffer = '', stack1, helper, options;
-  data.buffer.push("\r\n                                    <p>\r\n                                        This card is empty.\r\n                                        Please create one or more secrets on this card.\r\n                                        Secret are secured by encryption and accessible only to you and your team.\r\n                                        Secret could be password, note, credit card number or key file\r\n                                    </p>\r\n\r\n                                    <p class=\"top-30\">\r\n                                        ");
+  data.buffer.push("\r\n                                    <p>\r\n                                        This card is empty.\r\n                                        Create one or more secrets on this card.\r\n                                        Secrets are secured by encryption and accessible only to you and your team.\r\n                                        A secret can be a password, a note, credit card number, a key file or similar.\r\n                                    </p>\r\n\r\n                                    <p class=\"top-30\">\r\n                                        ");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{
     'class': ("btn btn-lg btn-primary")
   },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(18, program18, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "Secret.createSelect", options) : helperMissing.call(depth0, "link-to", "Secret.createSelect", options));
@@ -139,7 +139,7 @@ function program22(depth0,data) {
 function program24(depth0,data) {
   
   var buffer = '', stack1, helper, options;
-  data.buffer.push("\r\n                                <div\r\n                                        class=\"vlt-button-wrapper\"\r\n                                        data-toggle=\"tooltip\"\r\n                                        title=\r\n                                                \"\r\n                                                 Create one or more secrets on this card.\r\n                                                 Secrets are secured by encryption and accessible only to you and your team.\r\n                                                 Secret could be password, note, credit card number or key file\r\n                                                 \"\r\n                                        data-placement=\"bottom\"\r\n                                        >\r\n                                    ");
+  data.buffer.push("\r\n                                <div\r\n                                        class=\"vlt-button-wrapper\"\r\n                                        data-toggle=\"tooltip\"\r\n                                        title=\r\n                                                \"\r\n                                                 Create one or more secrets on this card.\r\n                                                 Secrets are secured by encryption and accessible only to you and your team.\r\n                                                 A secret can be a password, a note, credit card number, a key file or similar.\r\n                                                 \"\r\n                                        data-placement=\"bottom\"\r\n                                        >\r\n                                    ");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{
     'class': ("btn btn-primary")
   },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(25, program25, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "Secret.createSelect", options) : helperMissing.call(depth0, "link-to", "Secret.createSelect", options));
@@ -190,7 +190,7 @@ function program30(depth0,data) {
 function program32(depth0,data) {
   
   var buffer = '', stack1, helper, options;
-  data.buffer.push("\r\n                                <div\r\n                                        class=\"vlt-button-wrapper\"\r\n                                        data-toggle=\"tooltip\"\r\n                                        title=\r\n                                                \"\r\n                                     Invite new team members to collaborate over this card\r\n                                     or  grant access permission to current team members\r\n                                     \"\r\n                                        data-placement=\"bottom\"\r\n                                        >\r\n                                    ");
+  data.buffer.push("\r\n                                <div\r\n                                        class=\"vlt-button-wrapper\"\r\n                                        data-toggle=\"tooltip\"\r\n                                        title=\r\n                                                \"\r\n                                     Invite new team members to collaborate on this card\r\n                                     or grant access permissions to existing team members\r\n                                     \"\r\n                                        data-placement=\"bottom\"\r\n                                        >\r\n                                    ");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{
     'class': ("btn btn-default")
   },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(33, program33, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "Card.rolesAdminInvite", "card", options) : helperMissing.call(depth0, "link-to", "Card.rolesAdminInvite", "card", options));
@@ -207,7 +207,7 @@ function program33(depth0,data) {
 function program35(depth0,data) {
   
   var buffer = '', stack1, helper, options;
-  data.buffer.push("\r\n                                <div\r\n                                        class=\"vlt-button-wrapper\"\r\n                                        data-toggle=\"tooltip\"\r\n                                        title=\r\n                                                \"\r\n                                     Invite new team members to collaborate over this card\r\n                                     or  grant access permission to current team members\r\n                                     \"\r\n                                        data-placement=\"bottom\"\r\n                                        >\r\n                                    ");
+  data.buffer.push("\r\n                                <div\r\n                                        class=\"vlt-button-wrapper\"\r\n                                        data-toggle=\"tooltip\"\r\n                                        title=\r\n                                                \"\r\n                                     Invite new team members to collaborate on this card\r\n                                     or grant access permissions to existing team members\r\n                                     \"\r\n                                        data-placement=\"bottom\"\r\n                                        >\r\n                                    ");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{
     'class': ("btn btn-default")
   },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(36, program36, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "Card.rolesAdminIndex", "card", options) : helperMissing.call(depth0, "link-to", "Card.rolesAdminIndex", "card", options));
@@ -291,7 +291,7 @@ function program5(depth0,data) {
   return buffer;
   }
 
-  data.buffer.push("<div class=\"container\">\n    <div class=\"vlt-page vlt-page-plain\">\n        <div class=\"vlt-dialog col-md-8 col-md-offset-2 top-50\">\n            <form>\n                <div class=\"vlt-dialog-content\">\n                    <div class=\"vlt-dialog-header\">\n                        <h2>Edit secret</h2>\n                    </div>\n                    <div class=\"vlt-dialog-body\">\n\n                        ");
+  data.buffer.push("<div class=\"container\">\n    <div class=\"vlt-page vlt-page-plain\">\n        <div class=\"vlt-dialog col-md-8 col-md-offset-2 top-50\">\n            <form>\n                <div class=\"vlt-dialog-content\">\n                    <div class=\"vlt-dialog-header\">\n                        <h2>Edit Secret</h2>\n                    </div>\n                    <div class=\"vlt-dialog-body\">\n\n                        ");
   stack1 = helpers['if'].call(depth0, "isNote", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n\n                        ");
@@ -319,13 +319,13 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   
-  data.buffer.push("\r\n                                <a>\r\n                                    Choose secret you want to create\r\n                                    <span class=\"glyphicon glyphicon glyphicon-chevron-right\"></span>\r\n                                </a>\r\n                            ");
+  data.buffer.push("\r\n                                <a>\r\n                                    Choose a secret type\r\n                                    <span class=\"glyphicon glyphicon glyphicon-chevron-right\"></span>\r\n                                </a>\r\n                            ");
   }
 
 function program3(depth0,data) {
   
   
-  data.buffer.push("\r\n                                <a>\r\n                                    Fillout data\r\n                                    <span class=\"glyphicon glyphicon glyphicon-chevron-right\"></span>\r\n                                </a>\r\n                            ");
+  data.buffer.push("\r\n                                <a>\r\n                                    Fill in details\r\n                                    <span class=\"glyphicon glyphicon glyphicon-chevron-right\"></span>\r\n                                </a>\r\n                            ");
   }
 
 function program5(depth0,data) {
@@ -337,7 +337,7 @@ function program5(depth0,data) {
   return buffer;
   }
 
-  data.buffer.push("<div class=\"container\">\r\n    <div class=\"vlt-page vlt-page-plain\">\r\n            <div class=\"vlt-dialog col-md-10 col-md-offset-1 top-50\">\r\n\r\n                <div class=\"vlt-dialog-content\">\r\n                    <div class=\"vlt-dialog-header\">\r\n                        <h2>Create new secret wizard</h2>\r\n\r\n                        <ul class=\"nav nav-pills nav-justified vlt-wizard-steps\">\r\n                            ");
+  data.buffer.push("<div class=\"container\">\r\n    <div class=\"vlt-page vlt-page-plain\">\r\n            <div class=\"vlt-dialog col-md-10 col-md-offset-1 top-50\">\r\n\r\n                <div class=\"vlt-dialog-content\">\r\n                    <div class=\"vlt-dialog-header\">\r\n                        <h2>Create New Secret Wizard</h2>\r\n\r\n                        <ul class=\"nav nav-pills nav-justified vlt-wizard-steps\">\r\n                            ");
   stack1 = helpers.view.call(depth0, "view.TabView", {hash:{
     'tab': ("createSelect")
   },hashTypes:{'tab': "STRING"},hashContexts:{'tab': depth0},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
@@ -371,13 +371,13 @@ function program1(depth0,data) {
 function program3(depth0,data) {
   
   
-  data.buffer.push("\r\n        <div class=\"list-item vlt-select-secret-item\">\r\n            <div class=\"vlt-visual\">\r\n                <div class=\"vlt-icon note\"></div>\r\n            </div>\r\n            <div class=\"vlt-desc\">\r\n                <h4>Secret note</h4>\r\n\r\n                <p class=\"help-block\">\r\n                    Secret as note, you can save whatever text you want.\r\n                    You can use markdown to format note\r\n                </p>\r\n\r\n                <div class=\"clearfix\"></div>\r\n            </div>\r\n        </div>\r\n    ");
+  data.buffer.push("\r\n        <div class=\"list-item vlt-select-secret-item\">\r\n            <div class=\"vlt-visual\">\r\n                <div class=\"vlt-icon note\"></div>\r\n            </div>\r\n            <div class=\"vlt-desc\">\r\n                <h4>Secret note</h4>\r\n\r\n                <p class=\"help-block\">\r\n                    You can save whatever text you want.\r\n                    You can use markdown to format the note.\r\n                </p>\r\n\r\n                <div class=\"clearfix\"></div>\r\n            </div>\r\n        </div>\r\n    ");
   }
 
 function program5(depth0,data) {
   
   
-  data.buffer.push("\r\n        <div class=\"list-item vlt-select-secret-item\">\r\n            <div class=\"vlt-visual\">\r\n                <div class=\"vlt-icon file\"></div>\r\n            </div>\r\n            <div class=\"vlt-desc\">\r\n                <h4>Secret file</h4>\r\n\r\n                <p class=\"help-block\">\r\n                    Store file up to 25KB filesize, you can also anotate file with username,\r\n                    password and note\r\n                </p>\r\n\r\n                <div class=\"clearfix\"></div>\r\n            </div>\r\n        </div>\r\n    ");
+  data.buffer.push("\r\n        <div class=\"list-item vlt-select-secret-item\">\r\n            <div class=\"vlt-visual\">\r\n                <div class=\"vlt-icon file\"></div>\r\n            </div>\r\n            <div class=\"vlt-desc\">\r\n                <h4>Secret file</h4>\r\n\r\n                <p class=\"help-block\">\r\n                    Store file up to 25KB in size, you can also annotate file with username,\r\n                    password and a note\r\n                </p>\r\n\r\n                <div class=\"clearfix\"></div>\r\n            </div>\r\n        </div>\r\n    ");
   }
 
   data.buffer.push("<div class=\"vlt-create-secret col-md-10 col-md-offset-1\">\r\n\r\n    <h4>Please select type of secret you would like to create</h4>\r\n\r\n    ");
@@ -429,7 +429,7 @@ function program1(depth0,data) {
   data.buffer.push("\r\n        <span class=\"error\">");
   stack1 = helpers._triageMustache.call(depth0, "errors.name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("</span>\r\n    </div>\r\n    <div class=\"help-block\">\r\n        Informational field. Do not enter any sensitive information. This field is not encrypted\r\n    </div>\r\n\r\n\r\n    <h4 class=\"top-30\">Please fillout your note</h4>\r\n    <hr class=\"top-0\"/>\r\n    <div class=\"form-group\">\r\n        ");
+  data.buffer.push("</span>\r\n    </div>\r\n    <div class=\"help-block\">\r\n        Informational field. Do not enter any sensitive information. This field is not encrypted!!!\r\n    </div>\r\n\r\n\r\n    <h4 class=\"top-30\">Please fill-in your note</h4>\r\n    <hr class=\"top-0\"/>\r\n    <div class=\"form-group\">\r\n        ");
   stack1 = helpers._triageMustache.call(depth0, "errors.description", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n        ");
@@ -439,7 +439,7 @@ function program1(depth0,data) {
     'class': ("form-control"),
     'rows': (8)
   },hashTypes:{'elementId': "STRING",'valueBinding': "STRING",'class': "STRING",'rows': "INTEGER"},hashContexts:{'elementId': depth0,'valueBinding': depth0,'class': depth0,'rows': depth0},contexts:[depth0],types:["ID"],data:data})));
-  data.buffer.push("\r\n        <div class=\"help-block\">\r\n            Markdown is available. Markdown manual <a\r\n                href=\"https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet\" target=\"_blank\">here</a>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n");
+  data.buffer.push("\r\n        <div class=\"help-block\">\r\n            Markdown is available. Markdown manual can be found <a\r\n                href=\"https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet\" target=\"_blank\">here</a>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n");
   stack1 = helpers.unless.call(depth0, "content.id", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n\r\n<div class=\"clearfix\"></div>\r\n\r\n");
@@ -482,7 +482,7 @@ function program1(depth0,data) {
   data.buffer.push("\r\n        <span class=\"error\">");
   stack1 = helpers._triageMustache.call(depth0, "errors.name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("</span>\r\n    </div>\r\n    <div class=\"help-block\">\r\n        Informational field. Do not enter any sensitive information. This field is not cyphered\r\n    </div>\r\n\r\n    <h4 class=\"top-30\">Please fillout data for your password secret</h4>\r\n    <hr class=\"top-0\"/>\r\n\r\n    <div class=\"form-group\" ");
+  data.buffer.push("</span>\r\n    </div>\r\n    <div class=\"help-block\">\r\n        Informational field. Do not enter any sensitive information. This field is not encrypted!\r\n    </div>\r\n\r\n    <h4 class=\"top-30\">Please fill-in data for your password secret</h4>\r\n    <hr class=\"top-0\"/>\r\n\r\n    <div class=\"form-group\" ");
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
     'class': ("errors.url:has-error")
   },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
@@ -535,7 +535,7 @@ function program1(depth0,data) {
     'class': ("form-control"),
     'rows': (5)
   },hashTypes:{'elementId': "STRING",'valueBinding': "STRING",'class': "STRING",'rows': "INTEGER"},hashContexts:{'elementId': depth0,'valueBinding': depth0,'class': depth0,'rows': depth0},contexts:[depth0],types:["ID"],data:data})));
-  data.buffer.push("\r\n    </div>\r\n    <div class=\"help-block\">\r\n        Markdown is available. Markdown manual <a\r\n            href=\"https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet\"\r\n            target=\"_blank\">\r\n        here\r\n    </a>\r\n    </div>\r\n</div>\r\n\r\n");
+  data.buffer.push("\r\n    </div>\r\n    <div class=\"help-block\">\r\n        Markdown is available. Markdown manual can be found<a\r\n            href=\"https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet\"\r\n            target=\"_blank\">\r\n        here\r\n    </a>\r\n    </div>\r\n</div>\r\n\r\n");
   stack1 = helpers.unless.call(depth0, "content.id", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n\r\n<div class=\"clearfix\"></div>");
@@ -578,7 +578,7 @@ function program1(depth0,data) {
     'valueBinding': ("content.name"),
     'class': ("form-control")
   },hashTypes:{'elementId': "STRING",'valueBinding': "STRING",'class': "STRING"},hashContexts:{'elementId': depth0,'valueBinding': depth0,'class': depth0},contexts:[depth0],types:["ID"],data:data})));
-  data.buffer.push("\r\n        <div class=\"help-block\">\r\n            Informational field. Do not enter any sensitive information. This field is not cyphered\r\n        </div>\r\n    </div>\r\n\r\n    <h4>Please fillout data for your file secret</h4>\r\n\r\n    <div class=\"form-group\" ");
+  data.buffer.push("\r\n        <div class=\"help-block\">\r\n            Informational field. Do not enter any sensitive information. This field is not encrypted!\r\n        </div>\r\n    </div>\r\n\r\n    <h4>Please fill in data for your file secret</h4>\r\n\r\n    <div class=\"form-group\" ");
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
     'class': ("errors.url:has-error")
   },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
@@ -625,7 +625,7 @@ function program1(depth0,data) {
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
     'value': ("content.filename")
   },hashTypes:{'value': "STRING"},hashContexts:{'value': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push("\r\n                    type=\"text\"\r\n                    class=\"form-control vlt-filename\"\r\n                    readonly=\"\"\r\n                    placeholder=\"Select your key\">\r\n\r\n            <span class=\"vlt-secret-type-file input-group-btn btn btn-default btn-file\">\r\n                Browse <input type=\"file\">\r\n            </span>\r\n\r\n        </div>\r\n        <div class=\"help-block\">\r\n            Store file up to 25KB filesize\r\n        </div>\r\n    </div>\r\n\r\n\r\n    <div class=\"form-group\" ");
+  data.buffer.push("\r\n                    type=\"text\"\r\n                    class=\"form-control vlt-filename\"\r\n                    readonly=\"\"\r\n                    placeholder=\"Select your key\">\r\n\r\n            <span class=\"vlt-secret-type-file input-group-btn btn btn-default btn-file\">\r\n                Browse <input type=\"file\">\r\n            </span>\r\n\r\n        </div>\r\n        <div class=\"help-block\">\r\n            Store a file up to 25 KB in size\r\n        </div>\r\n    </div>\r\n\r\n\r\n    <div class=\"form-group\" ");
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
     'class': ("errors.name:has-error")
   },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
@@ -852,7 +852,7 @@ function program6(depth0,data) {
 function program8(depth0,data) {
   
   var buffer = '', stack1;
-  data.buffer.push("\r\n                            <tr>\r\n                                <td class=\"vlt-attr-name\">\r\n                                    Filename\r\n                                </td>\r\n                                <td>\r\n                                    ");
+  data.buffer.push("\r\n                            <tr>\r\n                                <td class=\"vlt-attr-name\">\r\n                                    File Name\r\n                                </td>\r\n                                <td>\r\n                                    ");
   stack1 = helpers._triageMustache.call(depth0, "filename", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n                                    <a ");
@@ -864,7 +864,7 @@ function program8(depth0,data) {
 function program10(depth0,data) {
   
   var buffer = '', helper, options;
-  data.buffer.push("\r\n                            <tr>\r\n                                <td class=\"vlt-attr-name\">\r\n                                    Filesize\r\n                                </td>\r\n                                <td>");
+  data.buffer.push("\r\n                            <tr>\r\n                                <td class=\"vlt-attr-name\">\r\n                                    File Size\r\n                                </td>\r\n                                <td>");
   data.buffer.push(escapeExpression((helper = helpers.humanFilesize || (depth0 && depth0.humanFilesize),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "filesize", options) : helperMissing.call(depth0, "humanFilesize", "filesize", options))));
   data.buffer.push("</td>\r\n                            </tr>\r\n                        ");
   return buffer;
@@ -873,7 +873,7 @@ function program10(depth0,data) {
 function program12(depth0,data) {
   
   var buffer = '', stack1;
-  data.buffer.push("\r\n                            <tr>\r\n                                <td class=\"vlt-attr-name\">\r\n                                    Mime type\r\n                                </td>\r\n                                <td>");
+  data.buffer.push("\r\n                            <tr>\r\n                                <td class=\"vlt-attr-name\">\r\n                                    MIME type\r\n                                </td>\r\n                                <td>");
   stack1 = helpers._triageMustache.call(depth0, "filetype", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("</td>\r\n                            </tr>\r\n                        ");
@@ -983,7 +983,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "view.Tree", {hash:{
     'content': ("treeNodes")
   },hashTypes:{'content': "ID"},hashContexts:{'content': depth0},contexts:[depth0],types:["ID"],data:data})));
-  data.buffer.push("\n                        </div>\n                        <div class=\"help-block\">\n                            Also all granted permissions will be moved.\n                        </div>\n                        <div class=\"clearfix\"></div>\n                   </div>\n                    <div class=\"vlt-dialog-footer\">\n                        <a href=\"javascript:window.history.go(-1)\" class=\"btn btn-default btn-sm\">\n                            <span class=\"glyphicon glyphicon-chevron-left\"></span>\n                            Back\n                        </a>\n                        <button ");
+  data.buffer.push("\n                        </div>\n                        <div class=\"help-block\">\n                            All granted permissions will be moved as well.\n                        </div>\n                        <div class=\"clearfix\"></div>\n                   </div>\n                    <div class=\"vlt-dialog-footer\">\n                        <a href=\"javascript:window.history.go(-1)\" class=\"btn btn-default btn-sm\">\n                            <span class=\"glyphicon glyphicon-chevron-left\"></span>\n                            Back\n                        </a>\n                        <button ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "save", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data})));
   data.buffer.push(" ");
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{

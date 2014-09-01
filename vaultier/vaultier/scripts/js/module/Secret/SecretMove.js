@@ -99,7 +99,7 @@ Vaultier.SecretMoveRoute = Ember.Route.extend(
                     .saveRecord()
                     .then(
                     function () {
-                        $.notify('Your secret has been successfully moved.', 'success');
+                        $.notify('Your secret has been moved successfully.', 'success');
                         history.go(-1);
                     }.bind(this),
                     function () {
