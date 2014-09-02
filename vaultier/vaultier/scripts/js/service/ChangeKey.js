@@ -25,7 +25,7 @@ Service.ChangeKey = Ember.Object.extend({
     changeKey: function (incomingPPK) {
 
         if (!this.get('auth.isAuthenticated')) {
-            throw Error('Only authenticated user can change his privatekey');
+            throw Error('Only authenticated user can change his private key');
         }
         var currentPrivateKey = this.get('auth.privateKey');
         var incomingPrivateKey = incomingPPK.privateKey;

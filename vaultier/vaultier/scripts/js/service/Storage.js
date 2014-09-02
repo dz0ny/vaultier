@@ -4,7 +4,10 @@ Service.Storage = Ember.CoreObject.extend({
 
     init: function() {
         if (!window.localStorage) {
-            throw 'Vaultier requires localStorage to be supported by browser'
+            throw 'Vaultier requires Local Storage to be supported by your ' +
+                'browser. Virtually all modern browsers support this feature. ' +
+                'Check that you have a recent version of your browser and try ' +
+                'again'
         }
     },
 

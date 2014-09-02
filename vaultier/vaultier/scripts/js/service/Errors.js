@@ -27,7 +27,7 @@ Service.Errors = Ember.Object.extend({
 
     parseError: function (error) {
         var data = {
-            title: 'Ooops! Something wrong happen here',
+            title: 'Ooops! Something wrong happened',
             message: 'Fatal error',
             template: 'ErrorGeneric',
             error: error
@@ -43,7 +43,7 @@ Service.Errors = Ember.Object.extend({
 
         if (error && error.status == 403) {
             data.title = 'Access denied!';
-            data.message = 'You do not have access to desired area';
+            data.message = 'You are not allowed to enter this part of the site';
         }
 
         if (error && error.status == 404) {

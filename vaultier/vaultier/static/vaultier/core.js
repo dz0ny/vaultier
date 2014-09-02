@@ -1334,7 +1334,7 @@ Service.Errors = Ember.Object.extend({
 
     parseError: function (error) {
         var data = {
-            title: 'Ooops! Something wrong happen here',
+            title: 'Ooops! Something wrong happened',
             message: 'Fatal error',
             template: 'ErrorGeneric',
             error: error
@@ -1350,7 +1350,7 @@ Service.Errors = Ember.Object.extend({
 
         if (error && error.status == 403) {
             data.title = 'Access denied!';
-            data.message = 'You do not have access to desired area';
+            data.message = 'You are not allowed to enter this part of the site';
         }
 
         if (error && error.status == 404) {
@@ -1647,7 +1647,7 @@ Service.Auth = Ember.Object.extend({
     checkAuthenticatedOrLogin: function (transition) {
         if (!this.get('isAuthenticated')) {
             // abort transition
-            $.notify('You do not have access to secured area. Please login', 'error');
+            $.notify('Please login before proceeding to secured area of Vaultier', 'error');
             transition.abort();
 
             // store transition
@@ -1850,7 +1850,10 @@ Service.Storage = Ember.CoreObject.extend({
 
     init: function() {
         if (!window.localStorage) {
-            throw 'Vaultier requires localStorage to be supported by browser'
+            throw 'Vaultier requires Local Storage to be supported by your ' +
+                'browser. Virtually all modern browsers support this feature. ' +
+                'Check that you have a recent version of your browser and try ' +
+                'again'
         }
     },
 
@@ -2255,8 +2258,8 @@ Service.WorkspaceKey = Ember.Object.extend(
                             .then(function () {
                                 this.selectWorkspace(workspace);
                                 $.notify(
-                                    ['Keys to workspace "{workspace}" has been transfered to you. ',
-                                        'You can now fully work with workspace']
+                                    ['Keys to workspace "{workspace}" have been transfered to you. ',
+                                        'You can now fully work with this workspace']
                                         .join('')
                                         .replace('{workspace}', workspace.get('name')),
                                     {
@@ -2515,7 +2518,7 @@ Service.ChangeKey = Ember.Object.extend({
     changeKey: function (incomingPPK) {
 
         if (!this.get('auth.isAuthenticated')) {
-            throw Error('Only authenticated user can change his privatekey');
+            throw Error('Only authenticated user can change his private key');
         }
         var currentPrivateKey = this.get('auth.privateKey');
         var incomingPrivateKey = incomingPPK.privateKey;
