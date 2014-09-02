@@ -61,15 +61,16 @@ class SlugManagerMixin(object):
 
 
 class SlugMixin(models.Model):
-    class Meta:
-        abstract = True
-
     slug = models.CharField(max_length=255, unique=True, db_index=True)
+
     content_type = models.ForeignKey(ContentType)
     object_id = PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
 
 
 def register_signals(slug_model, slugable_model):
