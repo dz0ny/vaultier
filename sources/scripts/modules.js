@@ -122,7 +122,12 @@ var vaultierModulesConfig = {
 
                 /**************** bootwatch resources **/
                 "./local_components/bootwatch/css/**/*.*",
-                "./local_components/bootwatch/fonts/**/*.*"
+                "./local_components/bootwatch/fonts/**/*.*",
+
+                /**************** select2 resources **/
+                "./bower_components/select2/*.png",
+                "./bower_components/select2/*.jpg",
+                "./bower_components/select2/*.gif"
            ]
         },
 
