@@ -1724,6 +1724,9 @@ span.vlt-user img {
 .vaultier-roles-admin-invite-input .select2-choices {
     min-height: 150px;
 }
+.vaultier-roles-admin-invite-input .select2-search-choice-close {
+    top:7px;
+}
 
 /*************************************************************
 **************************************************************
