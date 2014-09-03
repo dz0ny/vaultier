@@ -45,3 +45,45 @@ Contribute
 ==========
 * Information how to contribute `here <./docs/contribute.rst>`_
 * Changelog `here <./changelog.rst>`_
+
+
+===============
+OS Dependencies
+===============
+
+Production
+----------
+
+You need these packages:
+
+ * postgresql, postgresql-contrib
+ * python, python-dev, python-pip
+
+Therefore, on Ubuntu/Debian, run this::
+
+    sudo apt-get install postgresql postgresql-contrib python python-dev python-pip
+
+Also, virtualenv is recommended, as per usual
+
+Development and testing
+-----------------------
+
+For development and running tests, we're using sqlite3::
+
+    sudo apt-get install sqlite3 libsqlite3-dev
+
+
+
+Development with Ember compilation
+----------------------------------
+Install nodejs from http://ariejan.net/2011/10/24/installing-node-js-and-npm-on-ubuntu-debian/ ::
+
+    sudo apt-get install nodejs-legacy
+
+Then, install nodejs package system npm::
+
+    curl https://npmjs.org/install.sh | sudo sh
+
+And last, you need to install ember-precompile Node package::
+
+    sudo npm install -g ember-precompile

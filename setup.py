@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from setuptools import setup, find_packages
+from setuptools import setup
 
 setup(
     name="Vaultier",
@@ -23,7 +23,19 @@ setup(
         'raven==5.0.0',
         'dealer==1.1.1'
     ],
-    packages=find_packages(),
+    classifiers=[
+        "Development Status :: 5 - Production/Stable",
+        "Environment :: Web Environment",
+        "Framework :: Django",
+        "Intended Audience :: Information Technology",
+        "Topic :: Security",
+        "License :: Other/Proprietary License",
+        "Natural Lanugage :: English",
+        "Operating System :: POSIX :: Linux",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 2.7",
+    ],
+    packages=['vaultier'],
     author=u"rclick s.r.o.",
     author_email='info@rclick.cz',
     zip_safe=True,

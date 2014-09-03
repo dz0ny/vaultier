@@ -1,6 +1,5 @@
-*************************************
-Migration scenario for 0.0.0 to 0.6.0
-*************************************
+Migrate 0.0.0 to 0.6.0
+**********************
 
 
 Before you start
@@ -43,7 +42,7 @@ Migrate
     ./sources/manage.py rematerializeacl
 
 Start vaultier
-=============
+==============
 ::
 
     sudo supervisorctl start vaultier
