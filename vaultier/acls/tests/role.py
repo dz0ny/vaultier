@@ -269,7 +269,7 @@ class ApiRoleTest(TransactionTestCase):
                                              workspace1.get('id')).data
         user2invitation = Member.objects.get(
             pk=user2member.get('id')).invitation_hash
-        accept_invitation_api_call(user2token, id=user2member.get('id'),
+        accept_invitation_api_call(user2token, pk=user2member.get('id'),
                                    hash=user2invitation)
 
         # user 1 creates role for user 2

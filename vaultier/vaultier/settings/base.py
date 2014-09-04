@@ -1,5 +1,6 @@
 import os.path
 import sys
+from celery.schedules import crontab
 
 DEBUG = True
 
@@ -182,7 +183,9 @@ INSTALLED_APPS = (
     'vaults',
     'versions',
     'workspaces',
-    'slugs'
+    'slugs',
+    'kombu.transport.django'
+
 )
 
 # Sentry site_id
@@ -260,4 +263,37 @@ BK_FEATURES = {
     'from_email': 'info@rclick.com',  # Default email address from which we send emails
     'ga_create_code': 'UA-17830772-11',  # code for google analytics
     'login_safe_timestamp_delta': 15,  # Max difference between timestamp from server and from front-end in seconds
+}
+
+VAULTIER = {
+    # token lifetime (in hours)
+    'authentication_token_lifetime': 2,
+    # last_used_at will be renewed after some interval (in minutes)
+    'authentication_token_renewal_interval': 1,
+    'invitation_lifetime': 7,
+    # When anonymous usage statistics is enabled, vaultier periodically
+    # anonymously notifies its maintainer and developer about running
+    # instance of Valtier.
+    # As Vaultier is Open Source we kindly ask you to leave this option
+    # enabled and let us know how many instances are deployed.
+    # We send these statistics data: count of workspaces, vaults,cards,
+    # secrets, users, members
+    'allow_anonymous_usage_statistics': True
+}
+
+#celery broker
+BROKER_URL = 'django://'
+CELERY_ACCEPT_CONTENT = ['json', 'pickle']
+CELERY_TASK_SERIALIZER = 'pickle'
+CELERY_RESULT_SERIALIZER = 'pickle'
+CELERYBEAT_SCHEDULE = {
+    'garbage_collector_tokens': {
+        'task': 'accounts.tasks.task_token_garbage_collector',
+        'schedule': crontab(hour='*/6'),
+    },
+    'usage_statistics': {
+        'task': 'vaultier.tasks.task_statistics_collector',
+        # every day in 1 am
+        'schedule': crontab(hour='1'),
+    }
 }

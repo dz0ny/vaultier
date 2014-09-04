@@ -178,10 +178,6 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
     /////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////
-    debug: function (value) {
-        "use strict";
-        console.log(value);
-    },
 
     ucfirst: function (value) {
         if (value) {
@@ -376,6 +372,32 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
         }
     },
 
+    /**
+     * Creates a plural whit the name given if the word is
+     * irregular pass the correct plural as the pluralPrefix parameter
+     *
+     * @param quantity {Number}
+     * @param name {String}
+     * @param pluralPrefix {String}
+     * @returns {String}
+     */
+    pluralize: function (quantity, name, pluralPrefix) {
+        if (quantity === 1) {
+            return name;
+        }
+
+        if (typeof pluralPrefix === 'string') {
+            return name + pluralPrefix;
+        }
+
+        // mostly just word finished with 'h' or 's' needs 'es' to make the plural
+        if (/[hs]$/.test(name)) {
+            return name + 'es';
+        }
+        return name + 's';
+
+    },
+
     register: function () {
 
         var renderMarkdown = this.renderMarkdown.bind(this)
@@ -398,9 +420,13 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
         /////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////
-        var debug = this.debug.bind(this);
-        Ember.Handlebars.registerBoundHelper('debug', debug);
+        var pluralize = this.pluralize.bind(this);
+        Ember.Handlebars.registerBoundHelper('pluralize', pluralize);
 
+        /////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////
         var ucfirst = this.ucfirst.bind(this);
         Ember.Handlebars.registerBoundHelper('ucfirst', ucfirst);
 
@@ -888,11 +914,11 @@ Vaultier = Ember.Application.create({
          **************************************************
          */
 
-        setInterval(function() {
+        setInterval(function () {
             var body = $('body').height();
             var win = $(window).height();
             var footer = $('#vlt-footer').height();
-            if ( body + footer < win)  {
+            if (body + footer < win) {
                 $('#vlt-footer').css({position: 'fixed'})
             } else {
                 $('#vlt-footer').css({position: 'relative'})
@@ -906,16 +932,12 @@ Vaultier = Ember.Application.create({
          **************************************************
          */
 
-        // instead css overflow-y:scroll
-//        var minHeight = function () {
-//            $('html').css('height', $(window).height()+1);
-//        }
-//        $(window).resize(minHeight());
-//        minHeight();
-
         this.keypressBindings();
         this.registerDI(this);
 
+        //include components
+        Vaultier.AnimatedIfView = EmberExt.AnimatedIf.AnimatedIfView;
+        Vaultier.AnimatedUnlessView = EmberExt.AnimatedIf.AnimatedUnlessView;
     }
 });
 
@@ -977,14 +999,20 @@ Vaultier.registerDI = function (app) {
     app.register('store:main', Vaultier.Client, {instantiate: false});
     app.inject('route', 'store', 'store:main');
     app.inject('controller', 'store', 'store:main');
+    app.inject('component', 'store', 'store:main');
     //also there lazy loading does not work properly with ember initialize:
     RESTless.set('client', Vaultier.Client);
 
     // service:errors
     app.register('service:errors', Service.Errors);
     app.inject('route', 'errors', 'service:errors');
+    app.inject('component', 'errors', 'service:errors');
+    app.inject('view', 'errors', 'service:errors');
+
     app.inject('service:errors', 'errorController', 'controller:ErrorGeneric');
     app.inject('service:errors', 'router', 'router:main')
+//    app.inject('controller', 'errors', 'service:errors');
+
 
     // service:session and service:storage
     app.register('service:session', Service.Session);
@@ -1013,9 +1041,9 @@ Vaultier.registerDI = function (app) {
 
     app.inject('route:InvitationUse', 'invitations', 'service:invitations')
     app.inject('route:InvitationAccept', 'invitations', 'service:invitations')
-    app.inject('route:WorkspaceMemberInvite', 'invitations', 'service:invitations')
-    app.inject('route:VaultMemberInvite', 'invitations', 'service:invitations')
-    app.inject('route:CardMemberInvite', 'invitations', 'service:invitations');
+    app.inject('route:WorkspaceRolesAdminInvite', 'invitations', 'service:invitations')
+    app.inject('route:VaultRolesAdminInvite', 'invitations', 'service:invitations')
+    app.inject('route:CardRolesAdminInvite', 'invitations', 'service:invitations');
     app.inject('route:Workspaces', 'invitations', 'service:invitations');
 
     // service:keytransfer
@@ -1034,7 +1062,6 @@ Vaultier.registerDI = function (app) {
     app.inject('route:WorkspacesCreate', 'workspacekey', 'service:workspacekey');
     app.inject('route:Workspace', 'workspacekey', 'service:workspacekey');
     app.inject('route:WorkspaceNoKeys', 'workspacekey', 'service:workspacekey');
-    app.inject('route:WorkspaceMemberApprove', 'workspacekey', 'service:workspacekey');
 
     // service:changekey
     app.register('service:changekey', Service.ChangeKey);
@@ -1055,15 +1082,13 @@ Vaultier.registerDI = function (app) {
     // components injections
     app.inject('component:change-key', 'changekey', 'service:changekey');
 
-    app.inject('component:member-manager-accordion', 'store', 'store:main');
-
     // service:environment
     app.register('service:environment', Service.Environment);
     app.inject('route', 'environment', 'service:environment');
     app.inject('controller:LayoutWorkspaceBox', 'environment', 'service:environment');
     app.inject('service:invitations', 'env', 'service:environment');
 
-    app.inject('component:member-box', 'auth', 'service:auth');
+    app.inject('component:roles-admin-box', 'auth', 'service:auth');
     // model injections - it is done in model inits
 }
 
@@ -1145,10 +1170,11 @@ var router = Vaultier.Router.map(function () {
             // no keys
             this.route('noKeys', { path: '/waiting-for-keys'});
 
-            // member
-            this.route('memberIndex', { path: '/team'});
-            this.route('memberInvite', { path: '/team/invite'});
-            this.route('memberManagement', {path: '/team/management'});
+            // rolesAdmin
+            this.route('rolesAdminIndex', { path: '/team'});
+            this.route('rolesAdminInvite', { path: '/team/invite'});
+            this.route('rolesAdminManagement', {path: '/team/management'});
+            this.resource('MembersAdmin', {path: '/members'});
 
             /************************************************************
              * Vaults
@@ -1166,9 +1192,9 @@ var router = Vaultier.Router.map(function () {
                     // edit
                     this.route('edit', { path: '/edit'});
 
-                    // members
-                    this.route('memberIndex', { path: '/team'});
-                    this.route('memberInvite', { path: '/team/invite'});
+                    // rolesAdmin
+                    this.route('rolesAdminIndex', { path: '/team'});
+                    this.route('rolesAdminInvite', { path: '/team/invite'});
 
                     /************************************************************
                      * Cards
@@ -1189,9 +1215,9 @@ var router = Vaultier.Router.map(function () {
                             // move
                             this.route('move', { path: '/move'});
 
-                            // members
-                            this.route('memberIndex', { path: '/team'});
-                            this.route('memberInvite', { path: '/team/invite'});
+                            // rolesAdmin
+                            this.route('rolesAdminIndex', { path: '/team'});
+                            this.route('rolesAdminInvite', { path: '/team/invite'});
 
                             this.resource('Secret', {path: '/secrets'}, function () {
                                 // automatic Secrets.index
@@ -1701,15 +1727,16 @@ Service.AuthPromises = Ember.Object.extend({
 
     _auth: function (email, privateKey) {
         var coder = this.coder;
-        var timestamp = Math.round( ( Date.getTime ? new Date().getTime() : Date.now() ) / 1000 );
-        var signature = coder.sign(email + timestamp, privateKey);
+        var date = new Date();
+        var dateInISO = date.toISOString();
+        var signature = coder.sign(email + dateInISO, privateKey);
 
         return Utils.RSVPAjax({
             url: '/api/auth/auth',
             type: 'post',
             data: {
                 email: email,
-                timestamp: timestamp,
+                date: dateInISO,
                 signature: signature
             }})
     },
@@ -3273,6 +3300,7 @@ Vaultier.Member = RL.Model.extend(
         nickname: RL.attr('string'),
         user: RL.attr('object'),
         workspace: RL.attr('object'),
+        roles_count: RL.attr('number'),
 
         statuses: new Utils.ConstantList({
             'INVITED': {
@@ -3287,7 +3315,25 @@ Vaultier.Member = RL.Model.extend(
                 value: 300,
                 text: 'MEMBER'
             }
-        })
+        }),
+
+        /**
+         * @return {Boolean}
+         */
+        isNotMember: function () {
+            return this.get('status') !== this.get('statuses')['MEMBER'].value;
+        }.property('status'),
+
+        isInvited: function () {
+            return this.get('status') === this.get('statuses')['INVITED'].value;
+        }.property('status'),
+
+        /**
+         * @return {Boolean}
+         */
+        hasNokey: function () {
+            return this.get('status') === this.get('statuses')['MEMBER_WITHOUT_WORKSPACE_KEY'].value;
+        }.property('status')
 
     });
 
@@ -3439,7 +3485,7 @@ Vaultier.Role = RL.Model.extend(
 
         }.property('to_vault', 'to_card', 'to_workspace'),
 
-        relatedObjectId: function () {
+        relatedObject: function () {
 
             if (this.get('to_workspace')) {
                 return this.get('to_workspace');
@@ -3455,13 +3501,8 @@ Vaultier.Role = RL.Model.extend(
          * Return true if the given object is related to this role
          */
         isRelatedToObject: function (object) {
-            if (typeof object === 'number') {
-                // the object come from a secrets and its value refer to its parent card id
-                return this.get('relatedObjectId') === object;
-            }
-
             return this.get('relatedObjectType') === object.get('objectType') &&
-                this.get('relatedObjectId') === object.get('id');
+                this.get('relatedObject.id') === object.get('id');
         }
 
     });

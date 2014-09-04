@@ -32,7 +32,7 @@ class AuthView(APIView):
             try:
                 token = authenticate(
                     email=serializer.data.get('email'),
-                    timestamp=serializer.data.get('timestamp'),
+                    date=serializer.data.get('date'),
                     signature=serializer.data.get('signature')
                 )
 
@@ -98,7 +98,8 @@ class UserViewSet(AtomicTransactionMixin, ModelViewSet):
 class LostKeyViewSet(AtomicTransactionMixin,
                      mixins.RetrieveModelMixin,
                      mixins.UpdateModelMixin,
-                     mixins.CreateModelMixin, viewsets.GenericViewSet):
+                     mixins.CreateModelMixin,
+                     viewsets.GenericViewSet):
     """
     LostKey view points
     """

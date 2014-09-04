@@ -252,11 +252,11 @@ function program3(depth0,data) {
   stack1 = helpers['if'].call(depth0, "workspace.description", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n                    </div>\n                </div>\n\n                <div class=\"vlt-sidebar-block-sharing\">\n                    <div class=\"vlt-header\">\n                        <img src=\"/static/vaultier/images/icon-team-grey.png\" class=\"vlt-icon\">\n\n                        <h3 class=\"vlt-title\">\n                            Sharing with\n                        </h3>\n                    </div>\n                    <div class=\"vlt-body\">\n                         ");
-  data.buffer.push(escapeExpression((helper = helpers['member-box'] || (depth0 && depth0['member-box']),options={hash:{
+  data.buffer.push(escapeExpression((helper = helpers['roles-admin-box'] || (depth0 && depth0['roles-admin-box']),options={hash:{
     'roles': ("memberships"),
     'user': ("auth.user"),
     'object': ("workspaceq")
-  },hashTypes:{'roles': "ID",'user': "ID",'object': "ID"},hashContexts:{'roles': depth0,'user': depth0,'object': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "member-box", options))));
+  },hashTypes:{'roles': "ID",'user': "ID",'object': "ID"},hashContexts:{'roles': depth0,'user': depth0,'object': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "roles-admin-box", options))));
   data.buffer.push("\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n\n");
   return buffer;
   

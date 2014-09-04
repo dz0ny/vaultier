@@ -18,7 +18,8 @@ router.register(r'vaults', VaultViewSet, base_name='vault')
 router.register(r'cards', CardViewSet, base_name='card')
 router.register(r'secrets', SecretViewSet, base_name='secret')
 router.register(r'secret_blobs', SecretBlobViewSet, base_name='secret_blob')
-router.register(r'workspace_keys', WorkspaceKeyViewSet, base_name='workspace_key')
+router.register(r'workspace_keys', WorkspaceKeyViewSet,
+                base_name='workspace_key')
 router.register(r'members', MemberViewSet, base_name='member')
 router.register(r'invitations', InvitationViewSet, base_name='invitation')
 router.register(r'roles', RoleViewSet, base_name='role')
@@ -27,10 +28,10 @@ router.register(r'lost_keys', LostKeyViewSet, base_name='lost_keys')
 urlpatterns = router.urls
 
 urlpatterns += patterns('',
-                        # search
-                        url(r'^search/search$', SearchView.as_view(), name='search-search'),
-                        # auth
-                        url(r'^auth/auth$', AuthView.as_view(), name='auth-auth'),
-                        url(r'^auth/user$', UserViewSet.as_view(), name='auth-user'),
-                        url(r'^auth/logout$', LogoutView.as_view(), name='auth-logout'),
+    # search
+    url(r'^search/search$', SearchView.as_view(), name='search-search'),
+    # auth
+    url(r'^auth/auth$', AuthView.as_view(), name='auth-auth'),
+    url(r'^auth/user$', UserViewSet.as_view(), name='auth-user'),
+    url(r'^auth/logout$', LogoutView.as_view(), name='auth-logout'),
 )

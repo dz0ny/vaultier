@@ -1,8 +1,8 @@
 import hmac
 import uuid
-from datetime import datetime
+from datetime import datetime, timedelta
 from django.contrib.auth.models import BaseUserManager
-from django.db.models import Manager, get_model, Q
+from django.db.models import Q
 from django.db.models.loading import get_model
 from django.db.models.manager import Manager
 from django.utils import timezone
@@ -56,7 +56,7 @@ class LostKeyManager(Manager):
         expiration_time = settings.BK_FEATURES.get(
             'lostkey_hash_expiration_time')
         instance.expires_at = timezone.now().replace(tzinfo=utc) + \
-                              datetime.timedelta(milliseconds=expiration_time)
+                              timedelta(milliseconds=expiration_time)
 
     def send_notification(self, sender, instance=None, *args, **kwargs):
         """
@@ -317,3 +317,18 @@ class MemberManager(Manager):
             # the user has been invited and the workspace_key was set
             sender = WorkspaceKeyTransferEmailSender(instance)
             sender.send()
+
+    def clean_old_invitations(self):
+        lifetime_in_days = settings.VAULTIER.get("invitation_lifetime")
+        expired_date = timezone.now() - timedelta(days=lifetime_in_days)
+        self.filter(status=MemberStatusField.STATUS_INVITED,
+                    created_at__lt=expired_date
+                    ).delete()
+
+
+class TokenManager(Manager):
+
+    def clean_old_tokens(self):
+        token_lifetime = settings.VAULTIER.get('authentication_token_lifetime')
+        expired_date = datetime.now() - timedelta(hours=token_lifetime)
+        self.filter(last_used_at__lte=expired_date).delete()

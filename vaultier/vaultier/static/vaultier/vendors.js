@@ -5359,7 +5359,7 @@ $.notify.addStyle("bootstrap", {
 
 /* FileSaver.js
  * A saveAs() FileSaver implementation.
- * 2014-07-25
+ * 2014-08-29
  *
  * By Eli Grey, http://eligrey.com
  * License: X11/MIT
@@ -5390,7 +5390,7 @@ var saveAs = saveAs
 			return view.URL || view.webkitURL || view;
 		}
 		, save_link = doc.createElementNS("http://www.w3.org/1999/xhtml", "a")
-		, can_use_save_link = !view.externalHost && "download" in save_link
+		, can_use_save_link = "download" in save_link
 		, click = function(node) {
 			var event = doc.createEvent("MouseEvents");
 			event.initMouseEvent(
@@ -59362,9 +59362,269 @@ RESTless.Model.reopenClass({
 
 })(this, jQuery, Ember);
 
-Po.NS('Ember.Tree');
+(function () {
 
-Ember.Tree.TreeNodeView = Ember.View.extend({
+	var run,
+		destroying$;
+
+	var run = function (fn) {
+		if (fn && typeof fn === 'function') {
+			return fn();
+		}
+	};
+
+	Ember.View.reopen({
+
+		isAnimatingIn : false,
+		isAnimatingOut : false,
+		hasAnimatedIn : false,
+		hasAnimatedOut : false,
+
+		_animateInCallbacks : null,
+		_animateOutCallbacks : null,
+
+		_afterRender : function () {
+
+			var self = this;
+
+			this.$el = this.$();
+
+			this._transitionTo = this._transitionTo || this.transitionTo;
+
+			if (!self.isDestroyed) {
+
+				self.willAnimateIn();
+				self.isAnimatingIn = true;
+				self.hasAnimatedIn = false;
+
+				Ember.run.next(function () {
+
+					if (!self.isDestroyed) {
+
+						self.animateIn(function () {
+
+							var i;
+
+							self.isAnimatingIn = false;
+							self.hasAnimatedIn = true;
+							self.didAnimateIn();
+
+							if (self._animateInCallbacks && self._animateInCallbacks.length) {
+								for (i = 0; i < self._animateInCallbacks.length; i ++) {
+									run(self._animateInCallbacks[i]);
+								}
+							}
+
+							self._animateInCallbacks = null;
+
+						});
+					}
+				});
+			}
+		},
+
+		willInsertElement : function () {
+			Ember.run.scheduleOnce('afterRender', this, this._afterRender);
+			return this._super();
+		},
+
+		willAnimateIn : Ember.K,
+		willAnimateOut : Ember.K,
+		didAnimateIn : Ember.K,
+		didAnimateOut : Ember.K,
+
+		animateIn : run,
+		animateOut : run,
+
+		onAnimateIn : function (callback) {
+
+			this._animateInCallbacks = this._animateInCallbacks || [];
+
+			if (typeof callback === 'function') {
+				this._animateInCallbacks.push(callback);
+			}
+		},
+
+		onAnimateOut : function (callback) {
+
+			this._animateOutCallbacks = this._animateOutCallbacks || [];
+
+			if (typeof callback === 'function') {
+				this._animateOutCallbacks.push(callback);
+			}
+		},
+
+		destroy : function (done) {
+
+			var _super = this._super;
+
+			this.onAnimateOut(done);
+
+			if (this.isAnimatingOut) {
+				return;
+			}
+
+			if (!this.$el || this.isDestroyed) {
+
+				if (this._animateOutCallbacks && this._animateOutCallbacks.length) {
+					for (i = 0; i < this._animateOutCallbacks.length; i ++) {
+						run(this._animateOutCallbacks[i]);
+					}
+				}
+
+				this._animateOutCallbacks = null;
+
+				return _super.call(this);
+			}
+
+			if (!this.$()) {
+				this.$ = function () {
+					return this.$el;
+				}
+			}
+
+			this.willAnimateOut();
+			this.isAnimatingOut = true;
+
+			this.animateOut(function () {
+
+				this.isAnimatingOut = false;
+				this.hasAnimatedOut = true;
+
+				this.didAnimateOut();
+
+				if (this._animateOutCallbacks && this._animateOutCallbacks.length) {
+					for (i = 0; i < this._animateOutCallbacks.length; i ++) {
+						run(this._animateOutCallbacks[i]);
+					}
+				}
+
+				this.isDestroying = false;
+
+				_super.call(this);
+
+				// remove from parent if found. Don't call removeFromParent,
+				// as removeFromParent will try to remove the element from
+				// the DOM again.
+				if (this._parentView) {
+					this._parentView.removeChild(this);
+				}
+
+				this.isDestroying = true;
+
+				this._transitionTo('destroying', false);
+
+				delete this.$;
+				delete this.$el;
+
+				return this;
+
+			}.bind(this));
+
+			return this;
+		}
+	});
+
+	Ember.ContainerView.reopen({
+
+		currentView : null,
+		activeView : null,
+		newView : null,
+		nextView : null,
+
+		animationSequence : 'sync', // sync, async, reverse
+
+		init : function () {
+
+			var currentView;
+
+			this._super();
+
+			if (currentView = this.get('currentView')) {
+				this.set('activeView', currentView);
+			}
+		},
+
+		_currentViewWillChange : Ember.K,
+
+		_currentViewDidChange : Ember.observer('currentView', function () {
+
+			var self,
+				newView,
+				oldView,
+				asyncCount;
+
+			self = this;
+			oldView = this.get('activeView');
+			newView = this.get('currentView');
+
+			this.set('newView', newView);
+
+			function pushView (view) {
+
+				if (view ) {
+					self.pushObject(view);
+				}
+
+				self.set('activeView', view);
+			}
+
+			function removeView (view) {
+
+				if (view.isAnimatingOut) {
+					return;
+				}
+
+				if (!view.hasAnimatedIn) {
+					view.onAnimateIn(view.destroy.call(view));
+					return;
+				}
+
+				view.destroy();
+			};
+
+			if (oldView) {
+
+				// reverse
+				if (this.animationSequence === 'reverse') {
+
+					newView.onAnimateIn(function () {
+						removeView(oldView);
+					});
+
+					pushView(newView);
+				}
+
+				// async
+				else if (this.animationSequence === 'async') {
+					removeView(oldView);
+					pushView(newView);
+				}
+
+				// sync
+				else {
+
+					oldView.onAnimateOut(function () {
+						pushView(self.get('currentView'));
+					});
+
+					removeView(oldView);
+				}
+			}
+
+			else {
+				pushView(newView);
+			}
+		})
+
+	});
+
+})();
+
+
+Po.NS('EmberExt.Tree');
+
+EmberExt.Tree.TreeNodeView = Ember.View.extend({
     opened: false,
     loading: false,
     branch: function () {
@@ -59408,11 +59668,11 @@ Ember.Tree.TreeNodeView = Ember.View.extend({
     },
 
     getSubNodeViewClass: function() {
-        return Ember.Tree.TreeNodeView;
+        return EmberExt.Tree.TreeNodeView;
     },
 
     createSubBranchView: function () {
-        var view = Ember.Tree.TreeView.create({
+        var view = EmberExt.Tree.TreeView.create({
             itemViewClass: this.getSubNodeViewClass(),
             container: this.get('container')
         });
@@ -59457,7 +59717,7 @@ Ember.Tree.TreeNodeView = Ember.View.extend({
     }
 });
 
-Ember.Tree.TreeView = Ember.CollectionView.extend({
+EmberExt.Tree.TreeView = Ember.CollectionView.extend({
     tagName: 'ul',
     content: [
         {
@@ -59477,9 +59737,94 @@ Ember.Tree.TreeView = Ember.CollectionView.extend({
         }
     ],
     classNames: ['treebranch'],
-    itemViewClass: 'Ember.Tree.TreeNodeView'
+    itemViewClass: 'EmberExt.Tree.TreeNodeView'
 });
 
+
+Po.NS('EmberExt.AnimatedIf');
+
+EmberExt.AnimatedIf.defaultDuration = 500;
+EmberExt.AnimatedIf.intendedToRemoveProperty = '_intendedToAnimatedRemove';
+
+
+EmberExt.AnimatedIf.AnimatedIfView = Ember.View.extend({
+
+    // Passed-in / public or determined from model
+    condition: null,
+
+    in: 'fadeIn',
+    out: 'fadeOut',
+    visible: false,
+    inDuration: EmberExt.AnimatedIf.defaultDuration,
+    outDuration: EmberExt.AnimatedIf.defaultDuration,
+
+    classNames: 'ember-ext-animated-if-view',
+
+    isInverse: false,
+
+    transitions: function () {
+        return EmberExt.AnimatedIf.Transitions.create();
+    }.property(),
+
+    updateVisibility: function () {
+        var transitions = this.get('transitions')
+        var condition = !!this.get('condition');
+        var visible = this.get('visible');
+
+        if (condition ^ this.isInverse) {
+            if (!visible) {
+                transitions.runFx(this.$(), this.get('in'), this.get('inDuration'));
+                this.set('visible', true);
+            }
+        } else {
+            if (visible) {
+                transitions.runFx(this.$(), this.get('out'), this.get('outDuration'));
+                this.set('visible', false);
+            }
+        }
+    }.on('didInsertElement').observes('condition')
+});
+
+EmberExt.AnimatedIf.AnimatedUnlessView = EmberExt.AnimatedIf.AnimatedIfView.extend({
+    isInverse: true
+});
+
+EmberExt.AnimatedIf.Transitions = Ember.Object.extend({
+
+    runFx: function (element, name, duration) {
+        if (typeof this[name] !== 'function') {
+            throw new Error('Effect %fx% not found'.replace('%fx%', name));
+        }
+        if (!duration) {
+            duration = EmberExt.AnimatedIf.defaultDuration;
+        }
+
+        return new Ember.RSVP.Promise(function (resolve) {
+            this[name](element, duration, resolve);
+        }.bind(this))
+    },
+
+    none: Ember.K,
+
+    fadeIn: function (element, duration, callback) {
+        element.hide();
+        element.fadeIn(duration, callback);
+    },
+
+    fadeOut: function (element, duration, callback) {
+        element.fadeOut(duration, callback);
+    },
+
+    slideDown: function (element, duration, callback) {
+        element.hide();
+        element.slideDown(duration, callback);
+    },
+
+    slideUp: function (element, duration, callback) {
+        element.slideUp(duration, callback);
+    }
+
+});
 
 /*!
  * Bootstrap v3.0.3 (http://getbootstrap.com)

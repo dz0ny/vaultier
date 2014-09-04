@@ -95,8 +95,11 @@ function program1(depth0,data) {
   data.buffer.push("\r\n            </li>\r\n\r\n            ");
   stack1 = helpers['if'].call(depth0, "env.workspace.perms.update", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(4, program4, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\r\n\r\n            ");
+  stack1 = helpers['if'].call(depth0, "env.workspace.perms.update", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(7, program7, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n\r\n            <li class=\"divider\"></li>\r\n\r\n            <li>\r\n                ");
-  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(7, program7, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "Workspaces.select", options) : helperMissing.call(depth0, "link-to", "Workspaces.select", options));
+  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(10, program10, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "Workspaces.select", options) : helperMissing.call(depth0, "link-to", "Workspaces.select", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n            </li>\r\n\r\n        </ul>\r\n    </div>\r\n");
   return buffer;
@@ -123,6 +126,21 @@ function program5(depth0,data) {
   }
 
 function program7(depth0,data) {
+  
+  var buffer = '', stack1, helper, options;
+  data.buffer.push("\r\n            <li>\r\n                ");
+  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(8, program8, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "MembersAdmin", options) : helperMissing.call(depth0, "link-to", "MembersAdmin", options));
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\r\n            </li>\r\n            ");
+  return buffer;
+  }
+function program8(depth0,data) {
+  
+  
+  data.buffer.push("\r\n                    Manage members\r\n                ");
+  }
+
+function program10(depth0,data) {
   
   
   data.buffer.push("\r\n                    Switch to another workspace\r\n                ");

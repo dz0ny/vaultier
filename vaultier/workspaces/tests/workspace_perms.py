@@ -65,7 +65,7 @@ class ApiWorkspacePermsTest(TransactionTestCase):
         #user1 invites user and grant to user role READ
         user2member = invite_member_api_call(user1token, email=user2.get('email'), workspace=workspace1.get('id')).data
         user2hash = Member.objects.get(pk=user2member.get('id')).invitation_hash
-        user2accepted = accept_invitation_api_call(user2token, id=user2member.get('id'), hash=user2hash)
+        user2accepted = accept_invitation_api_call(user2token, pk=user2member.get('id'), hash=user2hash)
         user2role = create_role_api_call(user1token, member=user2member.get('id'), to_workspace=workspace1.get('id'), level=RoleLevelField.LEVEL_READ)
 
         # user2 tries to delete workspace1, should not be allowed 403 because of role only read

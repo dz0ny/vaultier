@@ -9,7 +9,6 @@ setup(
         'South==0.8.4',
         'argparse==1.2.1',
         'cssutils==1.0',
-        '#django-appconf==0.6',
         'django-filter==0.7',
         'djangorestframework==2.3.12',
         'flup==1.0.2',
@@ -20,7 +19,6 @@ setup(
         'pycrypto==2.6.1',
         'pynliner==0.5.0',
         'six==1.4.1',
-        'uWSGI==2.0',
         'wsgiref==0.1.2',
         'raven==5.0.0',
         'dealer==1.1.1'

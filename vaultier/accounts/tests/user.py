@@ -14,6 +14,7 @@ from django.utils import timezone
 
 
 class SignaturesTest(TransactionTestCase, FileAccessMixin):
+
     def test_rsa(self):
         email = 'jan.misek@rclick.cz'
         privkey = self.read_file('vaultier.key')
@@ -25,6 +26,7 @@ class SignaturesTest(TransactionTestCase, FileAccessMixin):
 
 
 class ApiRegisterTest(TransactionTestCase):
+
     def setUp(self):
         version_context_manager.set_enabled(False)
 
@@ -151,6 +153,7 @@ class ApiRegisterTest(TransactionTestCase):
 
 
 class TokenExpirationTest(TransactionTestCase):
+
     def test_010_token_renewed(self):
         # register user
         email = 'jan.misek@rclick.cz'
@@ -174,7 +177,6 @@ class TokenExpirationTest(TransactionTestCase):
         email = 'jan.misek@rclick.cz'
         register_api_call(email=email, nickname='Misan')
         response = auth_api_call(email=email)
-        print response.data
         token = response.data.get('token')
 
         token_model = Token.objects.get(token=token)
@@ -223,6 +225,8 @@ class TokenExpirationTest(TransactionTestCase):
         Token.objects.clean_old_tokens()
         # token not deleted
         self.assertEqual(Token.objects.all().count(), 1)
+
+
 
 
 def test_suite():

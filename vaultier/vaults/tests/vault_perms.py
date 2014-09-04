@@ -102,7 +102,7 @@ class ApiVaultPermsTest(TransactionTestCase):
         #user1 invites user and grant to user role READ to vault1
         user2member = invite_member_api_call(user1token, email=user2.get('email'), workspace=workspace1.get('id')).data
         user2hash = Member.objects.get(pk=user2member.get('id')).invitation_hash
-        user2accepted = accept_invitation_api_call(user2token, id=user2member.get('id'), hash=user2hash)
+        user2accepted = accept_invitation_api_call(user2token, pk=user2member.get('id'), hash=user2hash)
         user2role = create_role_api_call(
             user1token,
             member=user2member.get('id'),

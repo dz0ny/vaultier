@@ -1,10 +1,10 @@
 from time import time
 from django.core.urlresolvers import reverse
-from django.utils import timezone
 from rest_framework.test import APIClient
 from accounts.business.authentication import Backend
 from accounts.business.fields import RecoverTypeField
 from vaultier.test.tools import FileAccessMixin, VaultierAPIClient
+from django.utils import timezone
 
 
 def auth_api_call(email=None, date=None, signature=None):
@@ -21,8 +21,8 @@ def auth_api_call(email=None, date=None, signature=None):
 
     response = client.post(url, {'email': email,
                                  'date': date,
-                                 'signature': signature,
-                                 'timestamp': int(time())})
+                                 'signature': signature}
+                           )
     return response
 
 

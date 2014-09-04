@@ -3,7 +3,9 @@ from Crypto.Hash import SHA
 from Crypto.PublicKey import RSA
 from Crypto.Signature import PKCS1_v1_5
 from base64 import b64decode
-from datetime import datetime
+from datetime import datetime, timedelta
+from dateutil import parser as dateparser
+from django.utils import timezone
 from django.contrib.auth.backends import ModelBackend
 from django.db.models.loading import get_model
 from rest_framework.authentication import BaseAuthentication
@@ -23,6 +25,16 @@ class TokenAuthentication(BaseAuthentication):
 
         try:
             model = Token.objects.get(token=token)
+            """:type : Token"""
+            token_renewal_interval = settings.VAULTIER.get(
+                'authentication_token_renewal_interval')
+            #convert to seconds
+            token_renewal_interval *= 60
+
+            td = timezone.now() - model.last_used_at
+            if td.total_seconds() > token_renewal_interval:
+                model.last_used_at = timezone.now()
+                model.save()
         except Token.DoesNotExist:
             raise AuthenticationFailed('Invalid token')
 
@@ -60,10 +72,10 @@ class HashAuthentication(BaseAuthentication):
 
 class Backend(ModelBackend):
     @classmethod
-    def verify(cls, public_key, content, timestamp, signature):
+    def verify(cls, public_key, content, date, signature):
         signature = b64decode(signature)
         key = RSA.importKey(public_key)
-        h = SHA.new(content+str(timestamp))
+        h = SHA.new(content + str(date))
         verifier = PKCS1_v1_5.new(key)
         return verifier.verify(h, signature)
 
@@ -71,18 +83,19 @@ class Backend(ModelBackend):
     def sign(cls, private_key, content, timestamp):
         key = RSA.importKey(private_key)
         h = SHA.new()
-        h.update(content+str(timestamp))
+        h.update(content + str(timestamp))
         signer = PKCS1_v1_5.new(key)
         sig = signer.sign(h)
         return sig.encode('base64')
 
-    def authenticate(self, email=None, timestamp=None, signature=None):
+    def authenticate(self, email=None, date=None, signature=None):
 
         # verify timestamp
         try:
+            date_parsed = dateparser.parse(date)
             safe_delta = settings.BK_FEATURES.get('login_safe_timestamp_delta')
-            safe_until = timestamp+safe_delta
-            now = int(time.time())
+            safe_until = date_parsed + timedelta(seconds=safe_delta)
+            now = timezone.now()
 
             if safe_until < now:
                 raise Exception('Login timestamp to old')
@@ -96,7 +109,7 @@ class Backend(ModelBackend):
             return None
 
         # verify signature
-        if Backend.verify(user.public_key, email, timestamp, signature):
+        if self.__class__.verify(user.public_key, email, date, signature):
             token = Token(user=user)
             token.save()
             return token

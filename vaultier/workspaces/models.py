@@ -16,7 +16,6 @@ class Workspace(ChangesMixin, SoftDeleteMixin, TreeIterableModelMixin,
                 models.Model):
     tree_iterator_class = WorkspaceTreeIterator
 
-    objects = WorkspaceManager()
 
     name = models.CharField(max_length=255)
 
@@ -26,8 +25,16 @@ class Workspace(ChangesMixin, SoftDeleteMixin, TreeIterableModelMixin,
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    objects = WorkspaceManager()
+
     class Meta:
         db_table = u'vaultier_workspace'
+
+    def __str__(self):
+        return self.name
+
+    def __unicode__(self):
+        return unicode(str(self))
 
     def save(self, *args, **kwargs):
         super(Workspace, self).save(*args, **kwargs)

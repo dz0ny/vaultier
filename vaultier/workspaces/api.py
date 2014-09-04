@@ -1,4 +1,5 @@
-from rest_framework.mixins import UpdateModelMixin, RetrieveModelMixin
+from rest_framework.mixins import UpdateModelMixin, RetrieveModelMixin, \
+    ListModelMixin
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet, ModelViewSet
@@ -70,18 +71,17 @@ class WorkspaceViewSet(AtomicTransactionMixin, RetrieveBySlugMixin,
         return queryset
 
 
-class WorkspaceKeyViewSet(AtomicTransactionMixin, ModelViewSet):
+class WorkspaceKeyViewSet(AtomicTransactionMixin,
+                          RetrieveModelMixin,
+                          ListModelMixin,
+                          UpdateModelMixin,
+                          GenericViewSet):
     model = Member
     permission_classes = (IsAuthenticated, CanManageWorkspaceKey)
 
-    def destroy(self, request, *args, **kwargs):
-        return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED, data={'detail': 'Destroy not provided'})
-
-    def create(self, request, *args, **kwargs):
-        return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED, data={'detail': 'Create not provided'})
-
     def partial_update(self, request, *args, **kwargs):
-        return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED, data={'detail': 'Partial update not provided'})
+        return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED,
+                        data={'detail': 'Partial update not provided'})
 
     def get_serializer_class(self):
         if self.action == 'list':

@@ -7,8 +7,10 @@ from django.db.models.signals import pre_save, post_save
 from accounts.business.fields import MemberStatusField
 from libs.changes.changes import ChangesMixin
 from libs.lowercasefield.lowercasefield import LowerCaseCharField
-from .business.managers import UserManager, LostKeyManager, MemberManager
-from hashlib import sha1
+from .business.managers import UserManager, LostKeyManager, MemberManager, \
+    TokenManager
+from django.utils import timezone
+import random
 
 
 class User(ChangesMixin, AbstractBaseUser, PermissionsMixin):
@@ -45,23 +47,36 @@ class User(ChangesMixin, AbstractBaseUser, PermissionsMixin):
 
 
 class Token(ChangesMixin, models.Model):
-    token = models.CharField(max_length=64)
+
+    TOKEN_LENGTH = 64
+    """
+    Length of generated token
+    """
+    token = models.CharField(max_length=TOKEN_LENGTH, unique=True,
+                             db_index=True)
     user = models.ForeignKey('accounts.User', on_delete=CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    last_used_at = models.DateTimeField(null=True)
+
+    objects = TokenManager()
 
     class Meta:
         db_table = u'vaultier_token'
 
-    updated_at = models.DateTimeField(auto_now=True)
-
     def save(self, *args, **kwargs):
         if not self.token:
             self.token = self.generate_token()
+        if not self.last_used_at:
+            self.last_used_at = timezone.now()
         return super(Token, self).save(*args, **kwargs)
 
     def generate_token(self):
-        unique = uuid.uuid4()
-        return hmac.new(unique.bytes, digestmod=sha1).hexdigest()
+        chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVW' \
+                'XYZ!"#$%&\()*+,-./:;<=>?@[\]^_`{|}~'
+        unique = ''.join(random.choice(chars) for i in range(
+            Token.TOKEN_LENGTH))
+        return unique
 
     def __unicode__(self):
         return self.key

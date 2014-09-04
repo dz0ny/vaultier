@@ -5,7 +5,7 @@ from rest_framework.status import HTTP_200_OK
 from accounts.tests.api import register_api_call, auth_api_call
 from cards.tests.api import create_card_api_call
 from libs.version.context import version_context_manager
-from search.tests.api import search_api_call
+from .api import search_api_call
 from vaultier.test.tools import format_response
 from vaults.tests.api import create_vault_api_call
 from workspaces.tests.api import create_workspace_api_call

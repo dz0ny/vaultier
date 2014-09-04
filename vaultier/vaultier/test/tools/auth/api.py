@@ -3,7 +3,7 @@ import time
 from django.core.urlresolvers import reverse
 from rest_framework.test import APIClient
 
-from vaultier.auth.authentication import Backend
+from accounts.business.authentication import Backend
 from vaultier.test.tools import FileAccessMixin
 
 

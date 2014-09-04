@@ -80,11 +80,17 @@ class RelatedWorkspaceSerializer(WorkspaceSerializer):
 
 
 class WorkspaceKeySerializer(serializers.ModelSerializer):
+
     public_key = serializers.SerializerMethodField('get_public_key')
     status = serializers.IntegerField(read_only=True)
     workspace_key = serializers.CharField(required=True)
     workspace = RelatedWorkspaceSerializer(read_only=True)
     user = RelatedUserSerializer(read_only=True)
+
+    class Meta:
+        model = Member
+        fields = ('id', 'public_key', 'workspace_key', 'status',
+                  'workspace', 'user', 'created_at', 'updated_at')
 
     def get_public_key(self, obj):
         return obj.user.public_key
@@ -92,11 +98,6 @@ class WorkspaceKeySerializer(serializers.ModelSerializer):
     def save_object(self, obj, **kwargs):
         obj.status = MemberStatusField.STATUS_MEMBER
         return super(WorkspaceKeySerializer, self).save_object(obj, **kwargs)
-
-    class Meta:
-        model = Member
-        fields = ('id', 'public_key', 'workspace_key', 'status',
-                  'workspace', 'user', 'created_at', 'updated_at')
 
 
 class ShortenedWorkspaceKeySerializer(serializers.ModelSerializer):

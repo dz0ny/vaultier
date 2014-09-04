@@ -39,7 +39,7 @@ function program5(depth0,data) {
   
   var buffer = '', stack1, helper, options;
   data.buffer.push("\n                                        <li>\n                                            ");
-  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(6, program6, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "Workspace.memberIndex", "workspace", options) : helperMissing.call(depth0, "link-to", "Workspace.memberIndex", "workspace", options));
+  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(6, program6, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "Workspace.rolesAdminIndex", "workspace", options) : helperMissing.call(depth0, "link-to", "Workspace.rolesAdminIndex", "workspace", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n                                        </li>\n                                    ");
   return buffer;
@@ -179,7 +179,7 @@ function program30(depth0,data) {
   data.buffer.push("\n                        <div\n                                class=\"vlt-button-wrapper\"\n                                data-toggle=\"tooltip\"\n                                title=\n                                        \"\n                             Invite new team members to collaborate over this workspace\n                             or  grant access permission to current team members\n                             \"\n                                data-placement=\"bottom\"\n                                >\n                            ");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{
     'class': ("btn btn-default")
-  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(31, program31, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "Workspace.memberInvite", "workspace.slug", options) : helperMissing.call(depth0, "link-to", "Workspace.memberInvite", "workspace.slug", options));
+  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(31, program31, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "Workspace.rolesAdminInvite", "workspace.slug", options) : helperMissing.call(depth0, "link-to", "Workspace.rolesAdminInvite", "workspace.slug", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n                        </div>\n                    ");
   return buffer;
@@ -196,7 +196,7 @@ function program33(depth0,data) {
   data.buffer.push("\n                        <div\n                                class=\"vlt-button-wrapper\"\n                                data-toggle=\"tooltip\"\n                                title=\n                                        \"\n                             Invite new team members to collaborate over this workspace\n                             or  grant access permission to current team members\n                             \"\n                                data-placement=\"bottom\"\n                                >\n                            ");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{
     'class': ("btn btn-default")
-  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(34, program34, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "Workspace.memberIndex", "workspace.slug", options) : helperMissing.call(depth0, "link-to", "Workspace.memberIndex", "workspace.slug", options));
+  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(34, program34, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "Workspace.rolesAdminIndex", "workspace.slug", options) : helperMissing.call(depth0, "link-to", "Workspace.rolesAdminIndex", "workspace.slug", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n                        </div>\n                    ");
   return buffer;
@@ -229,11 +229,11 @@ function program34(depth0,data) {
   stack1 = (helper = helpers.exp || (depth0 && depth0.exp),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(24, program24, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "( workspace.perms.update || workspace.perms.delete)", options) : helperMissing.call(depth0, "exp", "( workspace.perms.update || workspace.perms.delete)", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n\n\n                </div>\n\n                <div class=\"clearfix\"></div>\n            </div>\n        </div>\n\n        <div class=\"vlt-sidebar-block-sharing\">\n            <div class=\"vlt-header\">\n                <img src=\"/static/vaultier/images/icon-team-grey.png\" class=\"vlt-icon\">\n\n                <h3 class=\"vlt-title\">\n                    Sharing with\n                </h3>\n            </div>\n            <div class=\"vlt-body\">\n                ");
-  data.buffer.push(escapeExpression((helper = helpers['member-box'] || (depth0 && depth0['member-box']),options={hash:{
+  data.buffer.push(escapeExpression((helper = helpers['roles-admin-box'] || (depth0 && depth0['roles-admin-box']),options={hash:{
     'roles': ("memberships"),
     'user': ("auth.user"),
     'object': ("workspace")
-  },hashTypes:{'roles': "ID",'user': "ID",'object': "ID"},hashContexts:{'roles': depth0,'user': depth0,'object': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "member-box", options))));
+  },hashTypes:{'roles': "ID",'user': "ID",'object': "ID"},hashContexts:{'roles': depth0,'user': depth0,'object': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "roles-admin-box", options))));
   data.buffer.push("\n            </div>\n            <div class=\"vlt-controls\">\n                <div>\n\n                    ");
   stack1 = helpers['if'].call(depth0, "workspace.perms.invite", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(30, program30, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
@@ -333,11 +333,11 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   stack1 = helpers._triageMustache.call(depth0, "content.errors.description", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n                                </span>\n                            </div>\n                        </div>\n\n                        <div class=\"col-md-5 bottom-15\">\n\n                            <div class=\"callout callout-info\">\n                                <h4>Vault will be shared with:</h4>\n\n                                ");
-  data.buffer.push(escapeExpression((helper = helpers['member-box'] || (depth0 && depth0['member-box']),options={hash:{
+  data.buffer.push(escapeExpression((helper = helpers['roles-admin-box'] || (depth0 && depth0['roles-admin-box']),options={hash:{
     'roles': ("memberships"),
     'user': ("auth.user"),
     'object': ("workspace")
-  },hashTypes:{'roles': "ID",'user': "ID",'object': "ID"},hashContexts:{'roles': depth0,'user': depth0,'object': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "member-box", options))));
+  },hashTypes:{'roles': "ID",'user': "ID",'object': "ID"},hashContexts:{'roles': depth0,'user': depth0,'object': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "roles-admin-box", options))));
   data.buffer.push("\n                            </div>\n                        </div>\n\n\n                        <div class=\"clearfix\"></div>\n\n\n                    </div>\n                    <div class=\"vlt-dialog-footer\">\n                        <a href=\"javascript:window.history.go(-1)\" class=\"btn btn-default btn-sm\">\n                            <span class=\"glyphicon glyphicon-chevron-left\"></span>\n                            Back\n                        </a>\n                        <button ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "save", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data})));
   data.buffer.push(" ");

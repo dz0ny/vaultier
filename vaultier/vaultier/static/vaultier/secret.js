@@ -88,7 +88,6 @@ Vaultier.SecretCreateSubmitRoute = Ember.Route.extend(
             var workspace = this.modelFor('Workspace');
             var card = this.modelFor('Card');
 
-
             // check permissions
             if (!this.get('auth').checkPermissions(transition, function () {
                 return this.modelFor('Card').get('perms.create');
@@ -143,6 +142,7 @@ Vaultier.SecretCreateSubmitRoute = Ember.Route.extend(
         setupController: function (ctrl, model) {
             ctrl.set('content', model.secret);
             ctrl.set('memberships', model.memberships);
+            ctrl.set('membershipsScope',  this.modelFor('Card'))
 
             ctrl.set('controllers.SecretCreate.submitButtonShown', true);
 
@@ -502,7 +502,7 @@ Vaultier.SecretIndexItemControlsView = Ember.View.extend({
 });
 
 
-Vaultier.SecretCardNodeView = Ember.Tree.TreeNodeView.extend({
+Vaultier.SecretCardNodeView = EmberExt.Tree.TreeNodeView.extend({
     templateName: 'Secret/SecretMoveCardNode',
     Radio: Ember.View.extend({
         tagName: "input",
@@ -517,7 +517,7 @@ Vaultier.SecretCardNodeView = Ember.Tree.TreeNodeView.extend({
     }
 });
 
-Vaultier.SecretVaultNodeView = Ember.Tree.TreeNodeView.extend({
+Vaultier.SecretVaultNodeView = EmberExt.Tree.TreeNodeView.extend({
     templateName: 'Secret/SecretMoveVaultNode',
 
     getSubNodeViewClass: function () {
@@ -630,7 +630,7 @@ Vaultier.SecretMoveController = Ember.ObjectController.extend({
 Vaultier.SecretMoveView = Ember.View.extend({
     templateName: 'Secret/SecretMove',
     layoutName: 'Layout/LayoutStandard',
-    Tree: Ember.Tree.TreeView.extend({
+    Tree: EmberExt.Tree.TreeView.extend({
         itemViewClass: Vaultier.SecretVaultNodeView
     })
 

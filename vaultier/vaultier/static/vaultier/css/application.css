@@ -148,9 +148,9 @@ a:hover {
 }
 
 .notifyjs-container {
-    margin-left: -200px !important;
+    margin-left: -50% !important;
+    width: 100% !important;;
 }
-
 .notifyjs-corner {
     margin-bottom: 100px !important;
     left: 50% !important;
@@ -539,12 +539,12 @@ a:hover {
     color: #555555;
 }
 
-.vlt-member-box .vlt-user {
+.vlt-roles-admin-box .vlt-user {
     display: block;
     float: left;
 }
 
-.vlt-member-box .vlt-user img {
+.vlt-roles-admin-box .vlt-user img {
     margin-right: 2px;
     margin-bottom: 2px;
 }
@@ -622,7 +622,7 @@ a:hover {
     background-size: 90px 90px;
     background-position: 5px -10px;
     background-repeat: no-repeat;
-    background-image: url('/_statics/static/vaultier/images/visual-vault.png');
+    background-image: url('/static/vaultier/images/visual-vault.png');
     background-color: #1686C6;
 }
 
@@ -748,7 +748,7 @@ a:hover {
     width: 60px;
     background-position: 0px 0px;
     background-repeat: repeat;
-    background-image: url('/_statics/static/vaultier/images/visual-card.png');
+    background-image: url('/static/vaultier/images/visual-card.png');
 }
 
 .vlt-card-item .vlt-content {
@@ -816,7 +816,7 @@ a:hover {
 }
 
 .vlt-card-item:hover .vlt-visual {
-    background-image: url('/_statics/static/vaultier/images/visual-card-light.png');
+    background-image: url('/static/vaultier/images/visual-card-light.png');
 }
 
 
@@ -1229,18 +1229,12 @@ span.vlt-user img {
 .vlt-register .modal-body {
     padding: 25px 50px 25px 50px;
 }
-
-.vlt-register-keys .generate {
-    text-align: center;
+.vlt-register .vlt-register-key {
+    margin-left: 8.4%;
+    margin-right: 8.4%;
 }
-
-.vlt-register-keys .generated {
-    text-align: center;
-}
-
-.vlt-register-keys .generated .vlt-download {
-    width: 40%;
-    margin: 0px auto;
+.vlt-register .vlt-register-key .vlt-register-key-info {
+    margin-top: 10px;
 }
 
 /*************************************************************
@@ -1366,7 +1360,7 @@ span.vlt-user img {
     top: -60px;
     height: 100px;
     width: 100%;
-    background-image: url('/_statics/static/vaultier/images/visual-secret.png');
+    background-image: url('/static/vaultier/images/visual-secret.png');
     background-repeat: repeat-x;
 
 }
@@ -1610,48 +1604,111 @@ span.vlt-user img {
 
 /*************************************************************
 **************************************************************
-* Permissions panel
+* Permissions/Members panel
 *************************************************************
 *************************************************************/
-
-.vlt-panel-permissions .vlt-controls {
+.vlt-panel-members .vlt-panel-members-body {
+    padding: 0px;
+}
+.vlt-panel-members .vlt-panel-members-body .vlt-table > .row > .vlt-actions {
+    padding-right: 30px;
+}
+.vlt-panel-members .vlt-panel-members-body .vlt-table {
+    border-bottom: 2px solid #F5F5F5;
+    padding: 15px;
+    margin-bottom: 0px;
+}
+.vlt-panel-members .vlt-panel-members-body .vlt-table .label {
+    display: inline-block;
+    padding: 8px;
+    margin: 0px 0px 3px 5px;
+    word-wrap: normal;
+    white-space: normal;
+}
+.vlt-panel-members .vlt-panel-members-body .vlt-table .vlt-actions .btn {
+    margin-bottom: 3px;
+    margin-left: 3px;
+}
+.vlt-panel-members .vlt-panel-members-body .vlt-controls {
     text-align: right;
 }
-
+/*************************************************************
+* Roles
+*************************************************************/
+.vlt-panel-members .vlt-panel-members-body .vlt-panel-members-roles {
+    display: none;
+    margin-top: 30px;
+    width: 100%;
+    position: relative;
+    background: #F5F5F5;
+    border: 1px solid #dddddd;
+    border-radius: 6px;
+}
+.vlt-panel-members .vlt-panel-members-body .vlt-table .vlt-panel-members-roles:after,
+.vlt-panel-members .vlt-panel-members-body .vlt-table .vlt-panel-members-roles:before {
+	bottom: 100%;
+	left: 23px;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+.vlt-panel-members .vlt-panel-members-body .vlt-table .vlt-panel-members-roles:after {
+	border-color: rgba(77, 131, 213, 0);
+	border-bottom-color: #F5F5F5;
+	border-width: 20px;
+	margin-left: -20px;
+}
+.vlt-panel-members .vlt-panel-members-body .vlt-table .vlt-panel-members-roles:before {
+	border-color: rgba(194, 225, 245, 0);
+	border-bottom-color: #dddddd;
+	border-width: 21px;
+	margin-left: -21px;
+}
+.vlt-panel-members .vlt-panel-members-body .vlt-panel-members-role {
+    margin: 6px;
+    background: white;
+}
+.vlt-panel-members .vlt-panel-members-body .vlt-panel-members-role .vlt-labels {
+    padding-right: 0px;
+}
+.vlt-panel-members .vlt-panel-members-body .vlt-panel-members-roles .vlt-actions {
+    padding-right: 0px;
+}
+/*************************************************************
+* Permissions
+*************************************************************/
+.vlt-panel-permissions .panel-heading {
+    padding-left: 0px;
+}
+.vlt-panel-permissions .vlt-panel-permissions-body {
+    padding: 0px;
+}
+.vlt-panel-permissions .vlt-table {
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-bottom: 0px
+}
 .vlt-panel-permissions .vlt-table .vlt-row {
-    padding: 10px 0px 10px 0px;
+    padding-top: 15px;
+    padding-bottom: 15px;
     border-bottom: 2px solid #F5F5F5;
 }
-
-.vlt-panel-permissions .vlt-table .vlt-row:last-of-type {
-    border-bottom: 0px;
+.vlt-panel-permissions .vlt-panel-permissions-body .vlt-table .vlt-actions .btn {
+    margin-bottom: 3px;
+    margin-left: 3px;
 }
-
-.vlt-panel-permissions .vlt-table .vlt-row .vlt-user img {
-    vertical-align: top;
-    margin-left: 4px;
-    width: 50px;
-    height: 50px;
-}
-
 .vlt-panel-permissions .vlt-table .vlt-row .vlt-actions .vlt-perms {
     float: right;
     width: 150px;
 }
-
 .vlt-panel-permissions .vlt-table .vlt-row .vlt-actions .vlt-delete {
     margin-left: 5px;
     min-height: 35px;
-    float: right;
 }
-
-.vlt-panel-permissions .panel-heading {
-    padding-left: 0px;
-    padding-right: 0px;
-}
-
 .vlt-panel-permissions .vlt-table .label {
-    float: right;
     display: inline-block;
     padding: 8px;
     margin: 0px 0px 0px 5px;
@@ -1659,33 +1716,16 @@ span.vlt-user img {
     white-space: normal;
 }
 
-@media (max-width: 767px) {
-    .vlt-panel-permissions .vlt-table .vlt-col {
-        float: none;
-        padding: 10px;
-    }
-
-    .vlt-panel-permissions .vlt-table .vlt-row .vlt-actions .vlt-perms {
-        float: left;
-    }
-
-    .vlt-panel-permissions .vlt-table .vlt-row .vlt-actions .vlt-delete {
-        float: left;
-    }
-
-    .vlt-panel-permissions .vlt-table .vlt-row .label {
-        float: left;
-    }
-
-}
-
 /*************************************************************
 **************************************************************
-* Member invitations
+* RolesAdmin invitations
 *************************************************************
 *************************************************************/
-.vaultier-member-invite-input .select2-choices {
+.vaultier-roles-admin-invite-input .select2-choices {
     min-height: 150px;
+}
+.vaultier-roles-admin-invite-input .select2-search-choice-close {
+    top:7px;
 }
 
 /*************************************************************
@@ -1765,15 +1805,4 @@ span.vlt-user img {
 
 .vlt-inline * {
     display: inline;
-}
-
-.vlt-divider {
-    height: 1px;
-    margin: 9px 1px;
-    overflow: hidden;
-    border-bottom: 1px solid #e5e5e5;
-}
-
-div.vlt-divider:last-of-type {
-    display: none;
 }

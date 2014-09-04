@@ -9,7 +9,7 @@ from workspaces.models import Workspace
 class AuthSerializer(serializers.Serializer):
     email = serializers.EmailField(required=True)
     signature = serializers.CharField(required=True)
-    timestamp = serializers.IntegerField(required=True)
+    date = serializers.CharField(required=True)
 
 
 class TokenSerializer(serializers.ModelSerializer):

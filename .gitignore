@@ -33,4 +33,8 @@ sources/scripts/bower_components/
 # we can ignore builded handlebar templates
 sources/scripts/tpl/
 
-sources/media/
+vaultier/vaultier/media/
+
+#celery files
+celerybeat-schedule
+celerybeat.pid

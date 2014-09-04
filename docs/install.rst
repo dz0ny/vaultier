@@ -122,7 +122,7 @@ Install supervisord
     cp cfg/supervisord.conf-dist /etc/supervisor/conf.d/vaultier.conf
     supervisorctl reread
     supervisorctl update
-    supervisorctl status vaultier
+    supervisorctl status vaultier:
     /etc/init.d/nginx restart
 
 
@@ -133,9 +133,8 @@ Start stop restart
 
     /etc/init.d/nginx restart
 
-    supervisorctl status vaultier
-    supervisorctl start vaultier
-    supervisorctl stop vaultier
+    supervisorctl status vaultier:
+    supervisorctl restart vaultier:
 
 ================================================
 To allow user vaultier to start restart and stop
@@ -144,7 +143,22 @@ To allow user vaultier to start restart and stop
 
     create file /etc/sudoers.d/vaultier
     echo "" > /etc/sudoers.d/vaultier
-    echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl restart vaultier >> /etc/sudoers.d/vaultier
-    echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl start vaultier >> /etc/sudoers.d/vaultier
-    echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl stop vaultier >> /etc/sudoers.d/vaultier
+    echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl restart vaultier: >> /etc/sudoers.d/vaultier
+    echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl start vaultier: >> /etc/sudoers.d/vaultier
+    echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl stop vaultier: >> /etc/sudoers.d/vaultier
+    echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl status vaultier: >> /etc/sudoers.d/vaultier
 
+    echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl restart vaultier-garbage-collector >> /etc/sudoers.d/vaultier
+    echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl start vaultier-garbage-collector >> /etc/sudoers.d/vaultier
+    echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl stop vaultier-garbage-collector >> /etc/sudoers.d/vaultier
+    echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl status vaultier-garbage-collector >> /etc/sudoers.d/vaultier
+
+    echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl restart vaultier-celerybeat >> /etc/sudoers.d/vaultier
+    echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl start vaultier-celerybeat >> /etc/sudoers.d/vaultier
+    echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl stop vaultier-celerybeat >> /etc/sudoers.d/vaultier
+    echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl status vaultier-celerybeat >> /etc/sudoers.d/vaultier
+
+    echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl restart vaultier-web >> /etc/sudoers.d/vaultier
+    echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl start vaultier-web >> /etc/sudoers.d/vaultier
+    echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl stop vaultier-web >> /etc/sudoers.d/vaultier
+    echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl status vaultier-web >> /etc/sudoers.d/vaultier

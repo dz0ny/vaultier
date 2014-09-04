@@ -111,8 +111,8 @@ Vaultier.InvitationAnonymousView = Ember.View.extend({
 });
 
 
-Vaultier.MemberInviteInput = Ember.Component.extend({
-    classNames: ['vaultier-member-invite-input'],
+Vaultier.RolesAdminInviteInput = Ember.Component.extend({
+    classNames: ['vaultier-roles-admin-invite-input'],
 
     value: null,
 
@@ -127,13 +127,13 @@ Vaultier.MemberInviteInput = Ember.Component.extend({
     didInsertElement: function () {
 
         if (!this.store) {
-            throw 'MemberInviteInput requires store to autocomplete. Inject store to component as store=store'
+            throw 'RolesAdminInviteInput requires store to autocomplete. Inject store to component as store=store'
         }
         if (!this.workspace) {
-            throw 'MemberInviteInput requires workspace to autocomplete. Inject workspace to component as workspace=workspace'
+            throw 'RolesAdminInviteInput requires workspace to autocomplete. Inject workspace to component as workspace=workspace'
         }
         if (!this.auth) {
-            throw 'MemberInviteInput requires auth service to autocomplete. Inject auth to component as auth=auth'
+            throw 'RolesAdminInviteInput requires auth service to autocomplete. Inject auth to component as auth=auth'
         }
 
         var el = Ember.$(this.get('element'));
@@ -245,7 +245,7 @@ Vaultier.MemberInviteInput = Ember.Component.extend({
 
 });
 
-Vaultier.MemberSelectRoleView = Ember.Select.extend({
+Vaultier.RolesAdminSelectRoleView = Ember.Select.extend({
 
     willDestroyElement: function () {
         var el = $(this.get('element'));
@@ -292,7 +292,7 @@ Vaultier.MemberSelectRoleView = Ember.Select.extend({
 });
 
 
-Vaultier.MemberIndexRoute = Ember.Route.extend(
+Vaultier.RolesAdminIndexRoute = Ember.Route.extend(
     {
 
         inviteObject: null,
@@ -402,7 +402,7 @@ Vaultier.MemberIndexRoute = Ember.Route.extend(
             if (models.vault) {
                 blocks.push(Ember.Object.create({
                     type: 'vault',
-                    url: this.get('router').generate('Vault.memberIndex', models.vault),
+                    url: this.get('router').generate('Vault.rolesAdminIndex', models.vault),
                     object: models.vault,
                     roles: models.vaultRoles
                 }));
@@ -411,7 +411,7 @@ Vaultier.MemberIndexRoute = Ember.Route.extend(
             if (models.workspace) {
                 blocks.push(Ember.Object.create({
                     type: 'workspace',
-                    url: this.get('router').generate('Workspace.memberIndex', models.workspace),
+                    url: this.get('router').generate('Workspace.rolesAdminIndex', models.workspace),
                     object: models.workspace,
                     roles: models.workspaceRoles
                 }));
@@ -432,7 +432,7 @@ Vaultier.MemberIndexRoute = Ember.Route.extend(
 
         renderTemplate: function () {
             // this is important if you want to inherite this route https://github.com/emberjs/ember.js/issues/1872 to use proper controller
-            this.render('MemberIndex', {controller: this.get('controller')})
+            this.render('RolesAdminIndex', {controller: this.get('controller')})
         },
 
 
@@ -475,7 +475,7 @@ Vaultier.MemberIndexRoute = Ember.Route.extend(
 
     });
 
-Vaultier.MemberIndexController = Ember.Controller.extend({
+Vaultier.RolesAdminIndexController = Ember.Controller.extend({
     currentObject: null,
     blocks: function () {
         var shownIndex = 0;
@@ -506,29 +506,31 @@ Vaultier.MemberIndexController = Ember.Controller.extend({
 });
 
 
-Vaultier.MemberIndexView = Ember.View.extend({
-    templateName: 'Member/MemberIndex',
+Vaultier.RolesAdminIndexView = Ember.View.extend({
+    templateName: 'RolesAdmin/RolesAdminIndex',
     layoutName: 'Layout/LayoutStandard',
 
-
-    Item: Ember.View.extend({
-        tagName: 'div',
-        Select: Vaultier.MemberSelectRoleView.extend({
-            actions: {
-                changed: function () {
-                    this.get('controller').send('changeRole', this.get('role'), this.get('block'));
+    AnimatedItemWrapper: Ember.View.extend({
+        Item: Ember.View.extend({
+            tagName: 'div',
+            Select: Vaultier.RolesAdminSelectRoleView.extend({
+                actions: {
+                    changed: function () {
+                        this.get('controller').send('changeRole', this.get('role'), this.get('block'));
+                    }
                 }
-            }
-        })
-
-
+            })
+        }),
+        animateOut: function (done) {
+            EmberExt.AnimatedIf.Transitions.create().runFx(this.$(), 'slideUp').then(done);
+        }
     })
 
 });
 
 
 
-Vaultier.MemberInviteRoute = Ember.Route.extend(
+Vaultier.RolesAdminInviteRoute = Ember.Route.extend(
     {
 
         inviteObject: null,
@@ -609,16 +611,17 @@ Vaultier.MemberInviteRoute = Ember.Route.extend(
             ctrl.set('invited', []);
             ctrl.set('role', {level: this.getDefaultRoleLevel()});
             ctrl.set('roleLevels', this.setupRoleLevels());
+            ctrl.set('invitation_lifetime',this.get('config.invitation_lifetime'));
         },
 
         renderTemplate: function () {
             // this is important if you want to inherite this route https://github.com/emberjs/ember.js/issues/1872 to use proper controller
-            this.render('MemberInvite', {controller: this.get('controller')})
+            this.render('RolesAdminInvite', {controller: this.get('controller')})
         }
 
     });
 
-Vaultier.MemberInviteController = Ember.Controller.extend({
+Vaultier.RolesAdminInviteController = Ember.Controller.extend({
     workspace: null,
     role: null,
     invited: [],
@@ -631,15 +634,15 @@ Vaultier.MemberInviteController = Ember.Controller.extend({
     breadcrumbs: null
 });
 
-Vaultier.MemberInviteView = Ember.View.extend({
-    templateName: 'Member/MemberInvite',
+Vaultier.RolesAdminInviteView = Ember.View.extend({
+    templateName: 'RolesAdmin/RolesAdminInvite',
     layoutName: 'Layout/LayoutStandard',
 
-    Select: Vaultier.MemberSelectRoleView
+    Select: Vaultier.RolesAdminSelectRoleView
 });
 
-Vaultier.MemberBoxComponent = Ember.Component.extend({
-    layoutName: 'Member/MemberBox',
+Vaultier.RolesAdminBoxComponent = Ember.Component.extend({
+    layoutName: 'RolesAdmin/RolesAdminBox',
 
     init: function () {
         this._super.apply(this, arguments);
@@ -668,10 +671,8 @@ Vaultier.MemberBoxComponent = Ember.Component.extend({
            content: this.get('roles')
         });
 
-        // seal current user, and filter create roles for inherited permissions
-        roles
-            .sealUser(this.get('auth.user'))
-            .filterCreateRolesByObjectScope(this.get('object'));
+        // filter create roles for inherited permissions
+        roles.filterCreateRolesByObjectScope(this.get('object'));
 
         // each user to be only once at result
         var foundRoles = []
@@ -735,7 +736,7 @@ Vaultier.MemberBoxComponent = Ember.Component.extend({
 
 'use strict';
 
-Vaultier.MemberManagementRoute = Vaultier.MemberIndexRoute.extend({
+Vaultier.RolesAdminManagementRoute = Vaultier.RolesAdminIndexRoute.extend({
     model: function (params, transition) {
 
         this.setProperties(this.setupInviteData(params));
@@ -766,7 +767,7 @@ Vaultier.MemberManagementRoute = Vaultier.MemberIndexRoute.extend({
     },
 
     renderTemplate: function () {
-        this.render('MemberManagement', {controller: this.get('controller')});
+        this.render('RolesAdminManagement', {controller: this.get('controller')});
     },
     actions: {
         deleteRole: function (context, role) {
@@ -814,7 +815,7 @@ Vaultier.MemberManagementRoute = Vaultier.MemberIndexRoute.extend({
                     .then(function () {
                         var members = context.get('members');
                         members.removeObject(member);
-                        $.notify('Member has been remove', 'success');
+                        $.notify('RolesAdmin has been remove', 'success');
                     }.bind(this))
                     .catch(function (error) {
                         $.notify('Oooups! Something went wrong.', 'error');
@@ -827,7 +828,7 @@ Vaultier.MemberManagementRoute = Vaultier.MemberIndexRoute.extend({
     }
 });
 
-Vaultier.MemberManagementController = Vaultier.MemberIndexController.extend({
+Vaultier.RolesAdminManagementController = Vaultier.RolesAdminIndexController.extend({
     members: function () {
 
         var user = this.get('auth.user');
@@ -839,14 +840,14 @@ Vaultier.MemberManagementController = Vaultier.MemberIndexController.extend({
 });
 
 
-Vaultier.MemberManagementView = Vaultier.MemberIndexView.extend({
-    templateName: 'Member/MemberManagement'
+Vaultier.RolesAdminManagementView = Vaultier.RolesAdminIndexView.extend({
+    templateName: 'RolesAdmin/RolesAdminManagement'
 });
 
 
-Vaultier.MemberManagerAccordionComponent = Em.Component.extend({
+Vaultier.RolesAdminManagerAccordionComponent = Em.Component.extend({
     store: null,
-    layoutName: 'Member/MemberManagerAccordion',
+    layoutName: 'RolesAdmin/RolesAdminManagerAccordion',
     buildId: function (str) {
         str = str.replace(/[@\.]/g, ' ');
         return Em.String.dasherize(str) + '-roles';
@@ -878,5 +879,347 @@ Vaultier.MemberManagerAccordionComponent = Em.Component.extend({
     }
 })
 ;
+
+/**
+ *
+ * Mixin to be used on routes, to provide actions for MembersList views
+ *
+ * @class MembersAdminListActionsMixin
+ * @namespace Vaultier
+ */
+Vaultier.MembersAdminListActionsMixin = Ember.Mixin.create({
+    actions: {
+        deleteRole: function (member, role) {
+
+            var loggedUserId = this.get('auth.user.id');
+            var deleteUserId = member.get('user');
+
+            if (loggedUserId == deleteUserId && role.get('to_workspace') != null) {
+                throw new Error('You can not delete yourself.');
+            } else {
+                Vaultier.confirmModal(this, 'Are you sure you want to delete this permission?', function () {
+
+                    var promise = role
+                        .deleteRecord()
+
+                        .then(function () {
+
+                            var roles = member.get('roles');
+                            roles.removeObject(role);
+                            member.set('roles_count', roles.get('length'));
+
+                            $.notify('Role has been remove', 'success');
+                        }.bind(this))
+
+                        .catch(function (error) {
+                            $.notify('Oooups! Something went wrong.', 'error');
+                            this.get('errors').logError(error);
+                        }.bind(this));
+
+                    ApplicationLoader.promise(promise);
+
+                });
+            }
+        },
+
+        /**
+         * Delete a member from the workspace and all his roles inside of it
+         * @param context
+         * @param member
+         */
+
+        deleteMember: function (members, member) {
+            var loggedUserId = this.get('auth.user.id');
+            var deleteUserId = member.get('user');
+
+            if (loggedUserId == deleteUserId) {
+                throw new Error('You can not delete yourself.');
+            } else {
+                Vaultier.confirmModal(this, 'Are you sure you want to delete this member?', function () {
+
+                    var promise = member
+                        .deleteRecord()
+
+                        .then(function () {
+                            members.removeObject(member);
+                            $.notify('Member has been removed', 'success');
+                        }.bind(this))
+
+                        .catch(function (error) {
+                            $.notify('Oooups! Something went wrong.', 'error');
+                            console.error(error);
+                            //this.get('errors').logError(error);
+                        }.bind(this));
+
+                    ApplicationLoader.promise(promise);
+                }.bind(this));
+            }
+        },
+
+        /**
+         * Retrieves one member roles for the actual workspace
+         * @param context
+         * @param member
+         */
+        loadRoles: function (member) {
+            var store = this.get('controller.store');
+            var promise = store
+                .find('Role', {
+                    member: member.get('id')
+                })
+                .then(function (roles) {
+                    member.set('roles', roles)
+                    member.set('roles_count', roles.get('length'));
+                }.bind(this));
+            ApplicationLoader.promise(promise);
+        }
+    }
+});
+
+/**
+ *
+ * Single member item
+ *
+ * @class MembersAdminListItemView
+ * @namespace Vaultier
+ */
+Vaultier.MembersAdminListItemView = Ember.View.extend({
+
+    layoutName: 'MembersAdmin/MembersAdminListItem',
+
+    member: function (key, member) {
+
+        if (arguments.length > 1 && !this.get('_member')) {
+            // setter
+            this.set('_member', member)
+        }
+
+        return this.get('_member');
+    }.property('_member'),
+
+    myself: function() {
+        var loggedUserId = this.get('controller.auth.user.id');
+        var deleteUserId = this.get('content.user');
+        return loggedUserId == deleteUserId;
+    }.property(),
+
+    onRolesEmpty: function () {
+        if (!this.get('member.roles.length')) {
+            this.hideRoles();
+        }
+    }.observes('member.roles.length'),
+
+    onRolesLoaded: function () {
+        if (this.get('member.roles.length')) {
+            this.showRoles();
+        }
+    }.observes('member.roles'),
+
+
+    showRoles: function () {
+        Ember.run.next(function () {
+            this.$('.vlt-panel-members-roles').slideDown();
+        }.bind(this))
+    },
+
+    hideRoles: function () {
+        Ember.run.next(function () {
+            this.$('.vlt-panel-members-roles').slideUp();
+        }.bind(this))
+    },
+
+    toggleRoles: function () {
+        Ember.run.next(function () {
+            this.$('.vlt-panel-members-roles').slideToggle();
+        }.bind(this))
+    },
+
+    animateOut: function (done) {
+        EmberExt.AnimatedIf.Transitions.create().runFx(this.$(), 'slideUp').then(done);
+    },
+
+    AnimatedView: Ember.View.extend({
+        animateOut: function (done) {
+            EmberExt.AnimatedIf.Transitions.create().runFx(this.$(), 'slideUp').then(done);
+        }
+    }),
+
+    actions: {
+
+        /**
+         * Toggles roles
+         * @param context
+         * @param role
+         */
+        toggleRoles: function (member) {
+            this.set('member', member);
+            if (this.get('member.roles')) {
+                this.toggleRoles();
+            } else {
+                this.get('controller').send('loadRoles', member);
+            }
+
+
+        }
+    }
+});
+
+/**
+ *
+ * Single role item of single member
+ *
+ * @class MembersAdminRoleItemView
+ * @namespace Vaultier
+ */
+Vaultier.MembersAdminRoleItemView = Ember.View.extend({
+    templateName: 'MembersAdmin/MembersAdminRoleItem',
+
+    cannotDelete: function() {
+        var loggedUserId = this.get('controller.auth.user.id');
+        var deleteUserId = this.get('role.member.user');
+        return loggedUserId == deleteUserId && this.get('role.to_workspace') != null;
+    }.property(),
+
+    animateOut: function (done) {
+        EmberExt.AnimatedIf.Transitions.create().runFx(this.$(), 'slideUp').then(done);
+    },
+
+    icon: function () {
+        var types = Vaultier.Role.proto().types;
+        if (this.get('role.relatedObjectType') == types.TO_CARD.value) {
+            return '/static/vaultier/images/icon-card-grey.png';
+        }
+        if (this.get('role.relatedObjectType') == types.TO_VAULT.value) {
+            return '/static/vaultier/images/icon-vault-grey.png';
+        }
+        if (this.get('role.relatedObjectType') == types.TO_WORKSPACE.value) {
+            return '/static/vaultier/images/icon-workspace-grey.png';
+        }
+    }.property('role.relatedObjectType')
+});
+
+/**
+ *
+ * List view of all members
+ *
+ * @class MembersAdminListView
+ * @namespace Vaultier
+ */
+Vaultier.MembersAdminListView = Ember.View.extend({
+    layoutName: 'MembersAdmin/MembersAdminList',
+
+    membersView: function () {
+        var members = this.get('members');
+        return Ember.CollectionView.extend({
+
+            content: members,
+
+            createChildView: function (itemViewClass, attrs) {
+                if (attrs) {
+                    attrs.members = members;
+                }
+                return this._super.apply(this, arguments);
+            },
+
+            emptyView: Ember.View.extend({
+                template: Ember.Handlebars.compile("The collection is empty")
+            }),
+
+            itemViewClass: Vaultier.MembersAdminListItemView
+
+        });
+    }.property()
+
+});
+
+
+
+Vaultier.MembersAdminRoute = Ember.Route.extend(
+    Vaultier.MembersAdminListActionsMixin,
+    {
+        model: function (params, transition) {
+            var store = this.get('store');
+
+            var workspace = this.modelFor('Workspace');
+
+            if (!this.get('auth').checkPermissions(transition, function () {
+                return workspace.get('perms.update')
+            }.bind(this), true)) {
+                return;
+            }
+
+            var members = store
+                .find('Member', { workspace: workspace.get('id')})
+
+            var queries = {
+                workspace: workspace,
+                members: members
+            };
+            return  Ember.RSVP.hash(queries);
+        },
+
+        setupController: function (ctrl, model) {
+            ctrl.set('content', model.members);
+            ctrl.set('workspace', model.workspace)
+            ctrl.set('breadcrumbs',
+                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
+                    .addHome()
+                    .addWorkspace()
+                    .addText('Members of workspace')
+            );
+        }
+
+    }
+);
+
+
+Vaultier.MembersAdminController = Ember.Controller.extend({
+
+    invitedMembers: function () {
+        return Ember.ArrayProxy.createWithMixins(
+            Ember.SortableMixin,
+            {
+                sortProperties: ['nickname'],
+                content: this.get('content').filter(function (item, index, enumerable) {
+                    return item.get('status') == Vaultier.Member.proto().statuses.INVITED.value;
+                })
+            })
+    }.property('content.@each', 'content.@each.status'),
+
+    membersWithoutKeys: function () {
+        return Ember.ArrayProxy.createWithMixins(
+            Ember.SortableMixin,
+            {
+                sortProperties: ['nickname'],
+                content: this.get('content').filter(function (item, index, enumerable) {
+                    return item.get('status') == Vaultier.Member.proto().statuses.MEMBER_WITHOUT_WORKSPACE_KEY.value;
+                })
+            })
+    }.property('content.@each', 'content.@each.status'),
+
+    concreteMembers: function () {
+        return Ember.ArrayProxy.createWithMixins(
+            Ember.SortableMixin,
+            {
+                sortProperties: ['nickname'],
+                content: this.get('content').filter(function (item, index, enumerable) {
+                    return item.get('status') == Vaultier.Member.proto().statuses.MEMBER.value;
+                })
+            })
+    }.property('content.@each', 'content.@each.status')
+
+
+
+});
+
+
+Vaultier.MembersAdminView = Em.View.extend({
+    layoutName: 'Layout/LayoutStandard',
+    templateName: 'MembersAdmin/MembersAdmin'
+});
+
+
+
+
 
 //# sourceMappingURL=membership.js.map

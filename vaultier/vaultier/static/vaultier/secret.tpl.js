@@ -48,7 +48,7 @@ function program7(depth0,data) {
   
   var buffer = '', stack1, helper, options;
   data.buffer.push("\r\n                                            <li>\r\n                                                ");
-  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(8, program8, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "Card.memberIndex", "card", options) : helperMissing.call(depth0, "link-to", "Card.memberIndex", "card", options));
+  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(8, program8, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "Card.rolesAdminIndex", "card", options) : helperMissing.call(depth0, "link-to", "Card.rolesAdminIndex", "card", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n                                            </li>\r\n                                        ");
   return buffer;
@@ -193,7 +193,7 @@ function program32(depth0,data) {
   data.buffer.push("\r\n                                <div\r\n                                        class=\"vlt-button-wrapper\"\r\n                                        data-toggle=\"tooltip\"\r\n                                        title=\r\n                                                \"\r\n                                     Invite new team members to collaborate over this card\r\n                                     or  grant access permission to current team members\r\n                                     \"\r\n                                        data-placement=\"bottom\"\r\n                                        >\r\n                                    ");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{
     'class': ("btn btn-default")
-  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(33, program33, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "Card.memberInvite", "card", options) : helperMissing.call(depth0, "link-to", "Card.memberInvite", "card", options));
+  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(33, program33, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "Card.rolesAdminInvite", "card", options) : helperMissing.call(depth0, "link-to", "Card.rolesAdminInvite", "card", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n                                </div>\r\n                            ");
   return buffer;
@@ -210,7 +210,7 @@ function program35(depth0,data) {
   data.buffer.push("\r\n                                <div\r\n                                        class=\"vlt-button-wrapper\"\r\n                                        data-toggle=\"tooltip\"\r\n                                        title=\r\n                                                \"\r\n                                     Invite new team members to collaborate over this card\r\n                                     or  grant access permission to current team members\r\n                                     \"\r\n                                        data-placement=\"bottom\"\r\n                                        >\r\n                                    ");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{
     'class': ("btn btn-default")
-  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(36, program36, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "Card.memberIndex", "card", options) : helperMissing.call(depth0, "link-to", "Card.memberIndex", "card", options));
+  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(36, program36, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "Card.rolesAdminIndex", "card", options) : helperMissing.call(depth0, "link-to", "Card.rolesAdminIndex", "card", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n                                </div>\r\n                            ");
   return buffer;
@@ -243,11 +243,11 @@ function program36(depth0,data) {
   stack1 = (helper = helpers.exp || (depth0 && depth0.exp),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(27, program27, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "( card.perms.update || card.perms.delete)", options) : helperMissing.call(depth0, "exp", "( card.perms.update || card.perms.delete)", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n\r\n                        </div>\r\n\r\n                        <div class=\"clearfix\"></div>\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"vlt-sidebar-block-sharing\">\r\n                    <div class=\"vlt-header\">\r\n                        <img src=\"/static/vaultier/images/icon-team-grey.png\" class=\"vlt-icon\">\r\n\r\n                        <h3 class=\"vlt-title\">\r\n                            Sharing with\r\n                        </h3>\r\n                    </div>\r\n                    <div class=\"vlt-body\">\r\n                        ");
-  data.buffer.push(escapeExpression((helper = helpers['member-box'] || (depth0 && depth0['member-box']),options={hash:{
+  data.buffer.push(escapeExpression((helper = helpers['roles-admin-box'] || (depth0 && depth0['roles-admin-box']),options={hash:{
     'roles': ("memberships"),
     'user': ("auth.user"),
     'object': ("card")
-  },hashTypes:{'roles': "ID",'user': "ID",'object': "ID"},hashContexts:{'roles': depth0,'user': depth0,'object': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "member-box", options))));
+  },hashTypes:{'roles': "ID",'user': "ID",'object': "ID"},hashContexts:{'roles': depth0,'user': depth0,'object': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "roles-admin-box", options))));
   data.buffer.push("\r\n                    </div>\r\n                    <div class=\"vlt-controls\">\r\n                        <div>\r\n                            ");
   stack1 = helpers['if'].call(depth0, "card.perms.invite", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(32, program32, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
@@ -403,11 +403,11 @@ function program1(depth0,data) {
   
   var buffer = '', helper, options;
   data.buffer.push("\r\n<div class=\"col-md-5 bottom-15\">\r\n    <div class=\"callout callout-info\">\r\n        <h4>Secret will be shared with:</h4>\r\n        ");
-  data.buffer.push(escapeExpression((helper = helpers['member-box'] || (depth0 && depth0['member-box']),options={hash:{
+  data.buffer.push(escapeExpression((helper = helpers['roles-admin-box'] || (depth0 && depth0['roles-admin-box']),options={hash:{
     'roles': ("memberships"),
     'user': ("auth.user"),
-    'object': ("card")
-  },hashTypes:{'roles': "ID",'user': "ID",'object': "ID"},hashContexts:{'roles': depth0,'user': depth0,'object': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "member-box", options))));
+    'object': ("membershipsScope")
+  },hashTypes:{'roles': "ID",'user': "ID",'object': "ID"},hashContexts:{'roles': depth0,'user': depth0,'object': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "roles-admin-box", options))));
   data.buffer.push("\r\n    </div>\r\n</div>\r\n");
   return buffer;
   }
@@ -456,11 +456,11 @@ function program1(depth0,data) {
   
   var buffer = '', helper, options;
   data.buffer.push("\r\n<div class=\"col-md-5 bottom-15\">\r\n    <div class=\"callout callout-info\">\r\n        <h4>Secret will be shared with:</h4>\r\n        ");
-  data.buffer.push(escapeExpression((helper = helpers['member-box'] || (depth0 && depth0['member-box']),options={hash:{
+  data.buffer.push(escapeExpression((helper = helpers['roles-admin-box'] || (depth0 && depth0['roles-admin-box']),options={hash:{
     'roles': ("memberships"),
     'user': ("auth.user"),
-    'object': ("card")
-  },hashTypes:{'roles': "ID",'user': "ID",'object': "ID"},hashContexts:{'roles': depth0,'user': depth0,'object': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "member-box", options))));
+    'object': ("membershipsScope")
+  },hashTypes:{'roles': "ID",'user': "ID",'object': "ID"},hashContexts:{'roles': depth0,'user': depth0,'object': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "roles-admin-box", options))));
   data.buffer.push("\r\n    </div>\r\n</div>\r\n");
   return buffer;
   }
@@ -552,11 +552,11 @@ function program1(depth0,data) {
   
   var buffer = '', helper, options;
   data.buffer.push("\r\n<div class=\"col-md-5 bottom-15\">\r\n    <div class=\"callout callout-info\">\r\n        <h4>Secret will be shared with:</h4>\r\n        ");
-  data.buffer.push(escapeExpression((helper = helpers['member-box'] || (depth0 && depth0['member-box']),options={hash:{
+  data.buffer.push(escapeExpression((helper = helpers['roles-admin-box'] || (depth0 && depth0['roles-admin-box']),options={hash:{
     'roles': ("memberships"),
     'user': ("auth.user"),
-    'object': ("card")
-  },hashTypes:{'roles': "ID",'user': "ID",'object': "ID"},hashContexts:{'roles': depth0,'user': depth0,'object': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "member-box", options))));
+    'object': ("membershipsScope")
+  },hashTypes:{'roles': "ID",'user': "ID",'object': "ID"},hashContexts:{'roles': depth0,'user': depth0,'object': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "roles-admin-box", options))));
   data.buffer.push("\r\n    </div>\r\n</div>\r\n");
   return buffer;
   }
