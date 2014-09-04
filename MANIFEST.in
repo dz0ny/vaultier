@@ -1,1 +1,3 @@
+recursive-include vaultier *
 recursive-exclude vaultier *.pyc
+recursive-exclude vaultier/vaultier/media *

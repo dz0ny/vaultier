@@ -35,10 +35,14 @@ setup(
         "Programming Language :: Python",
         "Programming Language :: Python :: 2.7",
     ],
-    packages=['vaultier'],
+    scripts=[
+        'vaultier/manage.py',
+    ],
+    packages=['vaultier', ],
     author=u"rclick s.r.o.",
     author_email='info@rclick.cz',
     zip_safe=True,
+    include_package_data = True,
     description="Vaultier project backend",
     version="0.6.5"
 )
