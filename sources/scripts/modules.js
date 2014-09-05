@@ -47,6 +47,7 @@ var vaultierModulesConfig = {
 
                 /**************** ember extensions **/
                 "./bower_components/ember-animate/ember-animate.js",
+                "./bower_components/ember-selectize/src/ember.selectize.js",
                 "./local_components/ember-ext/Tree/Tree.js",
                 "./local_components/ember-ext/AnimatedIf/AnimatedIf.js",
 

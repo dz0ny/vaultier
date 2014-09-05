@@ -89,11 +89,11 @@
 
                             {{#each role in block.roles itemViewClass='view.AnimatedItemWrapper' }}
 
-                                {{#view view.Item role=role block=block class="row vlt-row" classNameBindings='role.isMember:normal:invited' }}
-                                    <div class="vlt-col col-sm-4 vlt-user">
+                                {{#view view.Item controller=controller roleLevels=roleLevels role=role block=block class="row vlt-row" classNameBindings='role.isMember:normal:invited' }}
+                                    <div class="col-sm-4 vlt-user">
                                         {{printUser role.member size=50}}
                                     </div>
-                                    <div class="vlt-col col-sm-4 vlt-labels">
+                                    <div class="col-sm-4 vlt-labels">
                                         {{#if role.isMemberWithoutKeys}}
                                             <div class="label label-warning pull-right">
                                                 Does not have workspace key yet
@@ -107,7 +107,7 @@
                                         {{/if}}
                                         <div class="clearfix"></div>
                                     </div>
-                                    <div class="vlt-col col-sm-4 vlt-actions">
+                                    <div class="col-sm-4 vlt-actions">
                                         {{#unless block.readOnly}}
 
                                             {{#if role.isCurrentUser}}
@@ -122,16 +122,22 @@
 
                                             {{else}}
                                                 <div class="vlt-edit-perms">
-                                                    <a class="vlt-delete btn btn-default btn-sm pull-right" {{action deleteRole role block}}>
-                                                        <span class="glyphicon glyphicon-trash"></span>
-                                                    </a>
-                                                    {{view view.Select
-                                                    role=role
-                                                    class="form-control vlt-perms"
-                                                    contentBinding="roleLevels"
-                                                    optionValuePath="content.value"
-                                                    optionLabelPath="content.text"
-                                                    }}
+                                                    <div class="pull-right">
+                                                        <a class="vlt-delete btn btn-default btn-sm" {{action deleteRole role block}}>
+                                                            <span class="glyphicon glyphicon-trash"></span>
+                                                        </a>
+                                                    </div>
+                                                    <div class="pull-right">
+                                                        {{view view.Select
+                                                          dataBinding='role'
+                                                          controllerBinding="controller"
+                                                          contentBinding="roleLevels"
+                                                          optionValuePath="content.value"
+                                                          optionLabelPath="content.text"
+                                                          selectionBinding="role.level"
+                                                          placeholder="Select an option" }}
+                                                    </div>
+
                                                 </div>
                                             {{/if}}
                                         {{else}}

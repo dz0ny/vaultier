@@ -128,6 +128,7 @@ Vaultier.RolesAdminIndexRoute = Ember.Route.extend(
 
             // setup roles
             ctrl.set('roleLevels', this.setupRoleLevels());
+            ctrl.set('controller', this);
 
             // set invite route
             ctrl.setProperties(this.setupInviteRoute(models));
@@ -219,11 +220,26 @@ Vaultier.RolesAdminIndexView = Ember.View.extend({
     AnimatedItemWrapper: Ember.View.extend({
         Item: Ember.View.extend({
             tagName: 'div',
-            Select: Vaultier.RolesAdminSelectRoleView.extend({
-                actions: {
-                    changed: function () {
-                        this.get('controller').send('changeRole', this.get('role'), this.get('block'));
-                    }
+            Select: Ember.Selectize.extend({
+                didInsertElement: function() {
+                    this.renderOptions = {
+                        option: function (item, escape) {
+                            var item = Vaultier.Role.proto().roles.getByValue(item.value);
+                            return [
+                                '<div>',
+                                    '<div>' + item.text + '</div>',
+                                    '<div class="help-block">' + item.desc + '</div>',
+                                '</div>'
+                            ].join('')
+                        }
+                    };
+                    this._super();
+                },
+                changeData: function (obj) {
+                    var roleType = Vaultier.Role.proto().roles.getByValue(obj.value);
+                    set(this, 'selection', roleType);
+                    set(this, 'data.level', obj.value);
+                    get(this, 'controller').send('changeRole', get(this, 'data'));
                 }
             })
         }),
