@@ -98,7 +98,7 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = '4*1g_d$&2ur&i0$bp^yh!16@$6nq#e^5_=isv9h2!ud8+3%grm'
+SECRET_KEY = ''
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -171,9 +171,7 @@ INSTALLED_APPS = (
     'vaults',
     'versions',
     'workspaces',
-    'slugs',
-    'kombu.transport.django'
-
+    'slugs'
 )
 
 # Sentry site_id
@@ -239,7 +237,7 @@ EMBER_TPL_MASK = "\w+.hbs$"
 FT_FEATURES = {
     'dev_shared_key': False,  # True to use/generate same key for all users
     # sentry key to be used for loggin errors on the frontend
-    'raven_key': 'http://df6466226ad14775b23818b42df3a5c8@sentry.rclick.cz/5'
+    'raven_key': ''
 }
 
 # Indicates options for backed
@@ -247,7 +245,7 @@ BK_FEATURES = {
     'dev_mail_to': False,  # 'email@example.com' to send all emails to this address
     'dev_shared_key': False,  # True to use/generate same key for all users
     # 1 hour in milliseconds used to calculate the expiration time on api.lostkey module
-    'lostkey_hash_expiration_time': 3600000,
+    'lostkey_hash_expiration_time': 60*60*1000,
     'from_email': 'info@rclick.com',  # Default email address from which we send emails
     'ga_create_code': 'UA-17830772-11',  # code for google analytics
     'login_safe_timestamp_delta': 15,  # Max difference between timestamp from server and from front-end in seconds

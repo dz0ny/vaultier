@@ -36,7 +36,7 @@ setup(
         "Programming Language :: Python :: 2.7",
     ],
     scripts=[
-        'vaultier/manage.py',
+        'bin/vaultier-manage.py',
     ],
     packages=['vaultier', ],
     author=u"rclick s.r.o.",
