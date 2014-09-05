@@ -1618,6 +1618,9 @@ span.vlt-user img {
     padding: 15px;
     margin-bottom: 0px;
 }
+.vlt-panel-members .vlt-panel-members-body .ember-view:last-of-type .vlt-table {
+    border-bottom: none;
+}
 .vlt-panel-members .vlt-panel-members-body .vlt-table .label {
     display: inline-block;
     padding: 8px;
@@ -1695,6 +1698,9 @@ span.vlt-user img {
     padding-top: 15px;
     padding-bottom: 15px;
     border-bottom: 2px solid #F5F5F5;
+}
+.vlt-panel-permissions .vlt-table .ember-view:last-of-type .vlt-row {
+    border-bottom: none;
 }
 .vlt-panel-permissions .vlt-panel-permissions-body .vlt-table .vlt-actions .btn {
     margin-bottom: 3px;
