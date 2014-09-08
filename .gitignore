@@ -19,19 +19,20 @@ logs/*
 .settings
 nbproject/
 .idea/
+
 # development settings
 vaultier/vaultier/settings/dev_*.py
 
 sources/app/settings.py
 
 # ignore node modules
-sources/scripts/node_modules/
+vaultier/vaultier/scripts/node_modules/
 
 #ignore bower componets
-sources/scripts/bower_components/
+vaultier/vaultier/scripts/bower_components/
 
 # we can ignore builded handlebar templates
-sources/scripts/tpl/
+vaultier/vaultier/scripts/tpl/
 
 vaultier/vaultier/media/
 
