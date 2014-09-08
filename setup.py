@@ -21,7 +21,8 @@ setup(
         'six==1.4.1',
         'wsgiref==0.1.2',
         'raven==5.0.0',
-        'dealer==1.1.1'
+        'dealer==1.1.1',
+        'logan==0.5.10',
     ],
     classifiers=[
         "Development Status :: 5 - Production/Stable",
@@ -35,9 +36,11 @@ setup(
         "Programming Language :: Python",
         "Programming Language :: Python :: 2.7",
     ],
-    scripts=[
-        'bin/vaultier-manage.py',
-    ],
+    entry_points={
+        'console_scripts': [
+            'vaultier = vaultier.runner:main'
+        ],
+    },
     packages=['vaultier', ],
     author=u"rclick s.r.o.",
     author_email='info@rclick.cz',

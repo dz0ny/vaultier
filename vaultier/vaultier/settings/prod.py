@@ -5,19 +5,19 @@ RAVEN_CONFIG = {
 }
 
 ALLOWED_HOSTS = [
-    '$(DOMAIN)',
+    'www.example.com',
 ]
 
 FT_FEATURES.update({
     'raven_key': ''
 })
 
-SECRET_KEY = '$(SECRET_KEY)'
+SECRET_KEY = ''
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.$(DB_TYPE)', # Add  'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'vaultier', # Or path to database file if using sqlite3.
+        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add  'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'vaultier',  # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         'USER': 'vaultier',
         'PASSWORD': 'vaultier',
@@ -27,7 +27,7 @@ DATABASES = {
 }
 
 # url of site used in emailing, templates and so.
-SITE_URL = 'http://$(DOMAIN)/'
+SITE_URL = 'http://www.example.com/'
 
 COMPRESS_ENABLED = 1
 

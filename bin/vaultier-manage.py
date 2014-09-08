@@ -4,7 +4,14 @@ from django.utils.crypto import get_random_string
 import shutil
 
 
-def _create_config():
+def _import_settings(settings):
+    settings = settings or 'vaultier_settings'
+
+    print settings
+    # __import__('vaultier_settings')
+
+
+def _create_config(settings):
     """
     Creates the configuration file with some sensible defaults and asks the
     user for the most important things
@@ -16,7 +23,7 @@ def _create_config():
 
     import vaultier.settings.prod_template
     src = vaultier.settings.prod_template.__file__.rstrip('c')
-    shutil.copyfile(src, './vaultier-settings.py')
+    shutil.copyfile(src, './vaultier_settings.py')
 
     # Input domain
     domain = raw_input(">>> Please enter the domain where your project is "
@@ -45,9 +52,9 @@ def _create_config():
         if db_type:
             break
 
-    with open('vaultier-settings.py', 'r') as file:
+    with open('vaultier_settings.py', 'r') as file:
         config = file.read()
-    with open('vaultier-settings.py', 'w') as file:
+    with open('vaultier_settings.py', 'w') as file:
         config = config.replace('$(SECRET_KEY)', secret_key)
         config = config.replace('$(DOMAIN)', domain)
 
@@ -61,29 +68,35 @@ def _create_config():
 
         file.write(config)
 
+    print "Config file has been generated in 'vaultier-settings.py' file. " \
+          "Please inspect the file and review your settings. You WILL need " \
+          "to supply database connection details, before proceeding with the" \
+          " 'check' command."
 
-def _check():
+
+def _check(settings):
     print "Checking configuration"
-    import vaultier_settings
+    _import_settings(settings)
 
 
-def _init():
+def _init(settings):
     print "Initializing database"
-    pass
+    _import_settings(settings)
 
 
-def run(command):
+def run(command, settings):
     delegate = {
         'create-config': _create_config,
         'check': _check,
         'init': _init
     }[command]
 
-    delegate()
+    delegate(settings)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         description="Vaultier management command")
     parser.add_argument('command', choices=['create-config', 'check', 'init'])
+    parser.add_argument('--settings')
     args = parser.parse_args()
-    run(args.command)
+    run(args.command, args.settings)
