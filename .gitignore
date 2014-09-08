@@ -20,19 +20,17 @@ logs/*
 nbproject/
 .idea/
 
-sources/app/settings.py
+# development settings
+vaultier/vaultier/settings/dev_*.py
+
 
 # ignore node modules
-sources/scripts/node_modules/
+vaultier/vaultier/scripts/node_modules/
 
 #ignore bower componets
-sources/scripts/bower_components/
+vaultier/vaultier/scripts/bower_components/
 
 # we can ignore builded handlebar templates
-sources/scripts/tpl/
+vaultier/vaultier/scripts/tpl/
 
-sources/media/
-
-#celery files
-celerybeat-schedule
-celerybeat.pid
+vaultier/vaultier/media
