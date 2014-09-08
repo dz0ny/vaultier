@@ -96,6 +96,50 @@ without any consequences.
 
 .. attention:: Docs fixed up to here.
 
+===========================
+Create a Configuration File
+===========================
+
+With everything installed, you can now create your setting file, where you can
+fine-tune Vaultier configuration. To do this, change to the `/opt/vaultier`
+directory. You will be prompted for two basic questions, the |FQDN| where you
+plan to host the project, and the database type (PostgreSQL is recommended)::
+
+    vaultier init
+
+You can optionally specify a path to the setting file, if you wish to place
+it elsewhere, like this::
+
+    vaultier init /path/to/vaultier.conf.py
+
+
+The command will create a file of name `vaultier.conf.py` by default. You can
+change all settings in there (and all others supported by Django). The answers
+you were asked for are used to generate settings in the configuration file, so
+you don't have to deal with them manually, but you are able to change them of
+course.
+
+.. |FQDN| replace:: fully qualified domain name
+
+
+=======================
+Check the Configuration
+=======================
+
+Once you are done with configuration, you need to check that everything is set
+up correctly, to do this, first run this command::
+
+    vaultier check
+
+There should be no output. If that is the case, the check succeeded. Next, try
+to login to your database to verify, that your DB connection settings are
+correct::
+
+    vaultier dbshell
+
+If you successfully connect, you are set to go. Otherwise, you may see an error
+indicating that your DB settings are incorrect. Fix them and try again.
+To exit the PostgreSQL shell, type `\q`.
 
 =============
 Create a User
