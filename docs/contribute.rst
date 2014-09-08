@@ -1,9 +1,9 @@
 *****************
-How to contribute
+How To Contribute
 *****************
 
 =========================
-Install devel environment
+Install Devel Environment
 =========================
 
 -----
@@ -19,7 +19,7 @@ Clone
 
 
 -------------------------
-Install required packages
+Install Required Packages
 -------------------------
 ::
 
@@ -32,7 +32,7 @@ Install required packages
 
 
 -----------
-Create venv
+Create Venv
 -----------
 ::
 
@@ -42,7 +42,7 @@ Create venv
 
 
 ----------------------------------
-install frontend development tools
+Install Frontend Development Tools
 ----------------------------------
 ::
 
@@ -63,7 +63,7 @@ install frontend development tools
 
 
 ========================
-Run development instance
+Run Development Instance
 ========================
 ::
 

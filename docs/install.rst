@@ -1,56 +1,110 @@
 *********************
-Vaultier installation
+Vaultier Installation
 *********************
 
-=============
-Prerequisites
-=============
+=================================
+Prerequisites (Recommended Setup)
+=================================
+.. note:: We list a configuration, that is known to work properly and it is an
+    environment we run Vaultier ourselves in. On the other hand, Vaultier is
+    built on top of Django, so many other deployment setups should work. At
+    minimum, you should be able to use other databases (mysql, orcale), or
+    deploy using other WSGI wrappers (for example gUnicorn).
+
 * Ubuntu server 14.04 or Debian 7
-* Nginx web server / psql database (also mysql is available)
-* Running under supervisord utilizing gunicorn
+* uWSGI
+* Nginx web server
+* posgressql database
 * Python 2.7.5
+* Supervisord for running background workers
 
-=====
-Clone
-=====
-::
+==========================================
+How Does the Target Installation Look Like
+==========================================
 
-    cd /opt
-    mkdir /opt/vaultier
-    cd vaultier
-    git clone git@git.rclick.cz:rclick/vaultier.git .
-    git checkout stable
+If you follow this guide to the letter, you will end up with a running instance
+of Vaultier (obviously), setup like this:
 
+* Vaultier is installed in `/opt/vaultier`
+* The process runs under newly created `vaultier` user and group
+* PostgreSQL is the underlying database
+* uWSGI runs the application
+* Nginx is used as a proxy server to the application
+* Redis is used for brokering background tasks
+* Supervisord runs the background processes
 
-=========================
-Install required packages
-=========================
-::
+Many aspects of this can be configured differently. However, for the time
+being, let's say this is the only one supported, save maybe for different
+installation directory.
+
+If you opt to configure the system in any different manner, you will be on your
+own.
+
+==========================
+Setting up the Environment
+==========================
+
+First thig to do is obviously creating the installation directory and a
+virtualenv_. We're installing in the `/opt/vaultier` directory. Create it now::
+
+    mkdir -p /opt/vaultier
+    cd /opt/vaultier
+
+You will need to install some system libraries, so that once we get to
+installing Vaultier, it can build it's dependencies::
 
     sudo apt-get install postgresql postgresql-contrib
     sudo apt-get install python
     sudo apt-get install python-dev
     sudo apt-get install python-pip
-    sudo pip install virtualenv
 
-===========
-create user
-===========
-::
+Now, create your new virtual environment::
+
+    virtualenv venv
+
+Finally, activate the virtualenv::
+
+    source /opt/vaultier/venv/bin/activate
+
+This ensures that all required libraries and dependencies are installed in the
+virtualenv, instead of your system, thereby not polluting your OS with
+libraries that may not be in your package manager.
+
+.. _virtualenv: http://virtualenv.readthedocs.org/
+
+================
+Install Vaultier
+================
+
+.. warning:: Make sure that your virtualenv is activated at this point. You can
+    check this by running `which python`. The result should be:
+    `/opt/vaultier/venv/bin/python`. If not, check the `source` command in
+    previous chapter.
+
+We're going to use Python's package manager `pip` to install Vaultier. It's as
+easy as this::
+
+    pip install vaultier
+
+The command will take a while to complete, since it installs all the
+dependencies of the project, as well as compiles few thigs here and there. Do
+not worry, just let it run its course.
+
+If anything goes wrong -- say you did not have some library installed -- you
+can correct the problem and run the `pip install vaultier` command again
+without any consequences.
+
+.. attention:: Docs fixed up to here.
+
+
+=============
+Create a User
+=============
+We need to create a user for Vaultier, so using normal OS procedures::
 
     useradd -d /opt/vaultier -s /bin/bash vaultier
     passwd vaultier
-    chown -R vaultier:www-data /opt/vaultier
 
-
-===========
-Create venv
-===========
-::
-
-    virtualenv ./env
-    source ./env/bin/activate
-    pip install -r REQUIREMENTS
 
 
 ==============
