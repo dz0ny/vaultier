@@ -1,0 +1,73 @@
+<div class="container">
+    <div class="vlt-page vlt-page-plain">
+        <div class="vlt-dialog col-md-8 col-md-offset-2 col-xs-12 top-50">
+            <div class="vlt-dialog-content">
+                <form class="form-horizontal" role="form">
+
+                    <div class="vlt-dialog-header">
+                        <h2>Rebuild your lost key</h2>
+                    </div>
+                    <div class="vlt-dialog-body">
+                        <div class="row bottom-15">
+
+                            <div class="col-md-10 col-md-offset-1">
+                                <h3>Workspace encrypted data recovery</h3>
+
+                                <p>
+                                    After you rebuild your private key access to encrypted workspace data has to be
+                                    recovered.
+                                    Recovery is possible only to workspaces where more than one member exists.
+                                    Your access will be recovered once at least one of your workspace collaborators goes
+                                    online.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row table-responsive">
+                            <div class="col-md-10 col-md-offset-1">
+                                <table class="table table-condensed">
+                                    <thead>
+                                    <tr>
+                                        <th>Workspace</th>
+                                        <th>Possible recovery</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {{#each content.memberships }}
+                                        <tr>
+                                            <td>
+                                                {{ workspace_name }}
+                                            </td>
+                                            <td>
+                                                {{#if is_recoverable }}
+                                                    <strong class="text-success">Yes</strong>
+                                                {{else}}
+                                                    <strong class="text-danger">No</strong>
+                                                {{/if}}
+                                            </td>
+                                        </tr>
+                                    {{/each}}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="vlt-dialog-footer">
+
+                        <div class="pull-right vlt-right-buttons">
+                            <button type="submit" class="btn btn-primary" {{ action disableKey }}>
+                                Disable current lost key
+                            </button>
+                            <button type="submit" class="btn btn-primary" {{ action rebuildKey }}>
+                                Rebuild your lost key
+                            </button>
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

@@ -1,0 +1,30 @@
+<div class="container">
+    <div class="vlt-page vlt-page-plain">
+        <div class="row">
+            <div class="top-50">
+                <div class="col-md-3">
+                    <ul class="nav nav-pills nav-stacked">
+                        {{#view view.TabView tab="personal" }}
+                            {{#link-to 'Settings.personal'}}
+                                My profile
+                            {{/link-to}}
+                        {{/view}}
+
+                        {{#view view.TabView tab="keys" }}
+                            {{#link-to 'Settings.keys'}}
+                                Private key
+                            {{/link-to}}
+                        {{/view}}
+                    </ul>
+                </div>
+
+                <div class="col-md-9">
+                    {{outlet Settings}}
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+
+

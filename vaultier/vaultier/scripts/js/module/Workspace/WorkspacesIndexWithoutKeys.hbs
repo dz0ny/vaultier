@@ -1,0 +1,14 @@
+{{#unless view.workspace.hasValidKey}}
+    <div class="alert alert-warning top-15">
+        <b> Your access to workspace is limited.<br/></b>
+        Workspace key has not been transfered to you yet. Key will be transfered to you automatically once
+        some workspace team member will go online.
+    </div>
+{{/unless}}
+
+{{#if view.workspace.keyError}}
+    <div class="alert alert-danger top-15">
+        <b>Workspace key error. <br/></b>
+        Your workspace key cannot be decoded. It means you have no access to workspace secret data
+    </div>
+{{/if}}

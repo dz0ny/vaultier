@@ -1,0 +1,49 @@
+<div class="vlt-dialog">
+    <form>
+        <div class="vlt-dialog-content">
+            <div class="vlt-dialog-header">
+                <h2>Personal settings</h2>
+            </div>
+            <div class="vlt-dialog-body">
+
+                <div class="col-md-8 col-md-offset-2">
+
+                    <div class="form-group" {{bind-attr class='content.errors.email:has-error'}}>
+                        <label for="register-form-email" class="control-label">Email *</label>
+
+                        {{ view Ember.TextField
+                        elementId='register-form-email'
+                        valueBinding='content.email'
+                        class="form-control"
+                        placeholder="Please enter valid email address"}}
+                        <span class="error">
+                            {{content.errors.email}}
+                        </span>
+                    </div>
+
+                    <div class="form-group" {{bind-attr class='content.errors.nickname:has-error'}}>
+                        <label for="register-form-nickname" class="control-label">Your nickname *</label>
+
+                        {{ view Ember.TextField
+                        elementId='register-form-nickname'
+                        valueBinding='content.nickname'
+                        class="form-control"
+                        placeholder="Please enter your nickname"}}
+                        <span class="error">
+                            {{content.errors.nickname}}
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="clearfix"></div>
+
+            </div>
+            <div class="vlt-dialog-footer">
+                <a {{action save}} class="btn btn-primary">Save changes</a>
+            </div>
+
+        </div>
+    </form>
+</div>
+

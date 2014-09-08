@@ -1,0 +1,59 @@
+{
+  "name": "vaultier",
+  "version": "0.2.0-alpha1",
+  "authors": [
+    "rclick.cz"
+  ],
+  "description": "Secret manager",
+  "keywords": [
+    "rclick",
+    "vaultier",
+    "secrect",
+    "privacy"
+  ],
+  "license": "MIT",
+  "homepage": "vaultier.rclick.cz",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "ember": "~1.5.1",
+    "ember-animate": "~0.3.4",
+    "ember-restless": "~0.5.1",
+    "ember-selectize": "git+https://github.com/rclick-cz/ember-selectize.git",
+
+    "FileAPI": "~2.0.3",
+    "FileSaver": "*",
+
+    "Keypress": "https://github.com/dmauro/Keypress.git#1.0.9",
+    "bootstrap": "3.0.3",
+    "bootswatch": "https://github.com/thomaspark/bootswatch.git#3.0.3",
+    "lgtm": "~0.3.5",
+    "marked": "~0.3.2",
+    "momentjs": "~2.6.0",
+    "jsep": "https://github.com/soney/jsep.git#0.2.0",
+
+    "jquery": "~2.1.0",
+    "jquery-cookie": "~1.4.1",
+    "jquery.sessionstorage": "*",
+    "jquery.dotdotdot": "~1.6.16",
+    "jstorage": "~0.4.8",
+    "notifyjs": "https://github.com/jpillora/notifyjs.git#~0.3.1",
+
+    "select2": "~3.4.8",
+    "selectize": "~0.9.1",
+
+    "jsencrypt": "~2.0.0",
+    "CryptoJS": "~3.1.12",
+    "jsrsasign": "https://github.com/kjur/jsrsasign.git#~4.2.2",
+
+    "headjs": "~1.0.3",
+
+    "raven-js": "~1.1.15"
+  }
+}

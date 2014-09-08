@@ -1,0 +1,30 @@
+{{#link-to 'Workspace.index' this.slug class="list-group-item vlt-workspace-item"}}
+    <div class="vlt-icon">
+        <img src="/static/vaultier/images/icon-workspace-grey.png"/>
+    </div>
+    <div class="vlt-text">
+        <h4 class="list-group-item-heading">{{name}}</h4>
+
+        <p class="list-group-item-text">
+            {{description}}
+        </p>
+
+        {{view Vaultier.WorkspacesIndexWithoutKeysView workspace=this }}
+
+        <div class="top-15">
+            <div class="vlt-footer-item help-block pull-left">
+                {{printUser created_by  ellipsis=20 prefix='Created by:'}}
+            </div>
+            <div class="vlt-footer-item help-block pull-right">
+                {{printAgo updated_at prefix='Latest modification at:' }}
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="clearfix"></div>
+    </div>
+
+{{/link-to}}
+
+
+

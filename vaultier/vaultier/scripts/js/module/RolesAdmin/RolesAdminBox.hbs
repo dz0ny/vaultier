@@ -1,0 +1,43 @@
+<div class="vlt-roles-admin-box">
+    {{#unless hasAny}}
+        Not shared with anybody yet
+    {{/unless}}
+
+
+    {{#if hasWrite}}
+        <div class="vlt-perms-section">
+            Users able to manage
+        </div>
+        <div class="vlt-perms-roles">
+            {{#each role in rolesWrite}}
+                {{printUser role.member  size=50 disableName=1}}
+            {{/each}}
+        </div>
+        <div class="clearfix"></div>
+    {{/if}}
+
+    {{#if hasRead}}
+        <div class="vlt-perms-section">
+            Users able to read
+        </div>
+        <div class="vlt-perms-roles">
+            {{#each role in rolesRead}}
+                {{printUser role.member  size=50 disableName=1}}
+            {{/each}}
+        </div>
+        <div class="clearfix"></div>
+    {{/if}}
+
+    {{#if hasCreate}}
+        <div class="vlt-perms-section">
+            Users able to create only
+        </div>
+        <div class="vlt-perms-roles">
+            {{#each role in rolesCreate}}
+                {{printUser role.member  size=50 disableName=1}}
+            {{/each}}
+        </div>
+        <div class="clearfix"></div>
+    {{/if}}
+
+</div>
