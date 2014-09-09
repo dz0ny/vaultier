@@ -106,10 +106,6 @@ var vaultierModulesConfig = {
                 "./bower_components/select2/select2-bootstrap.css",
                 "./bower_components/selectize/dist/css/selectize.bootstrap3.css",
 
-                /**************** bootwatch css as modified boostrap **/
-                "./local_components/bootwatch/css/bootstrap.css",
-                "./local_components/bootwatch/css/bootwatch.min.css",
-
                 /**************** select2 and selectize styles **/
                 "./bower_components/select2/select2.css",
                 "./bower_components/select2/select2-bootstrap.css",
@@ -120,10 +116,6 @@ var vaultierModulesConfig = {
                 /**************** bootsrap resources **/
                 "./bower_components/bootstrap/dist/css/**/*.*",
                 "./bower_components/bootstrap/dist/fonts/**/*.*",
-
-                /**************** bootwatch resources **/
-                "./local_components/bootwatch/css/**/*.*",
-                "./local_components/bootwatch/fonts/**/*.*",
 
                 /**************** select2 resources **/
                 "./bower_components/select2/*.png",
