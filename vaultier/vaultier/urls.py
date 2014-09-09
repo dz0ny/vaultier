@@ -1,8 +1,10 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-from .views import index, config
+from .views import index, config, error404
 
 admin.autodiscover()
+
+handler404 = error404
 
 urlpatterns = patterns('',
 
