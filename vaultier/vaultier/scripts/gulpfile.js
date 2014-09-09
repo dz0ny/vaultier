@@ -7,7 +7,7 @@
     /* global console:true */
 
     // Configuration
-    var destination = './../static/vaultier/';
+    var destination = './dist/';
     var destinationUrl = '/static/vaultier/';
     var sourcesDestination = destination;
     var includesFile = destination + 'includes.json';
