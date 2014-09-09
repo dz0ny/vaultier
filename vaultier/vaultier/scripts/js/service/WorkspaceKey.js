@@ -63,8 +63,8 @@ Service.WorkspaceKey = Ember.Object.extend(
                             .then(function () {
                                 this.selectWorkspace(workspace);
                                 $.notify(
-                                    ['Keys to workspace "{workspace}" has been transfered to you. ',
-                                        'You can now fully work with workspace']
+                                    ['Keys to workspace "{workspace}" have been transfered to you. ',
+                                        'You can now fully work with this workspace']
                                         .join('')
                                         .replace('{workspace}', workspace.get('name')),
                                     {

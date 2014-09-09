@@ -65,7 +65,7 @@ Vaultier.CardMoveRoute = Ember.Route.extend(
                         return this.get('store').find('Vault', record.get('vault'))
                     }.bind(this))
                     .then(function (vault) {
-                    $.notify('Your card has been successfully moved.', 'success');
+                    $.notify('Your card has been moved successfully.', 'success');
                     this.transitionTo(
                         'Secret.index',
                         this.modelFor('Workspace').get('slug'),
@@ -74,7 +74,7 @@ Vaultier.CardMoveRoute = Ember.Route.extend(
                     )
                 }.bind(this),
                     function () {
-                        $.notify('Oooups! Something went wrong.', 'error');
+                        $.notify('Ooops! Something went wrong.', 'error');
                     }
                 )
 

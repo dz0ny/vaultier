@@ -25,7 +25,7 @@ Vaultier.SecretTypeFileView = Vaultier.SecretTypeBaseView.extend ({
 
                     if (size > 25000) {
                         input.closest('.form-group').addClass('has-error');
-                        $.notify('Maximum filesize 25K exceeded!', 'error');
+                        $.notify('Maximum filesize of 25K exceeded!', 'error');
                     } else {
                         // Success
                         input.closest('.form-group').removeClass('has-error');

@@ -178,7 +178,7 @@ Vaultier.SecretCreateSubmitRoute = Ember.Route.extend(
             submit: function () {
                 var record = this.get('controller.content');
                 var notifyError = function (error) {
-                    $.notify('Oooups! Something went wrong.', 'error');
+                    $.notify('Ooops! Something went wrong.', 'error');
                     throw error;
                 };
 
@@ -186,7 +186,7 @@ Vaultier.SecretCreateSubmitRoute = Ember.Route.extend(
                     var promise = record
                         .saveRecord()
                         .then(function (response) {
-                            $.notify('Your secret has been successfully created.', 'success');
+                            $.notify('Your secret has been created successfully.', 'success');
                             this.transitionTo('Secret.index', this.get('card'));
                         }.bind(this))
                         .catch(notifyError);
@@ -256,7 +256,7 @@ Vaultier.SecretEditRoute = Ember.Route.extend(
         actions: {
             save: function () {
                 var notifyError = function (error) {
-                    $.notify('Oooups! Something went wrong.', 'error');
+                    $.notify('Ooops! Something went wrong.', 'error');
                     throw error;
                 };
 
@@ -265,7 +265,7 @@ Vaultier.SecretEditRoute = Ember.Route.extend(
                     var promise = record
                         .saveRecord()
                         .then(function () {
-                            $.notify('Your changes has been successfully saved.', 'success');
+                            $.notify('Your changes have been saved successfully.', 'success');
                             history.go(-1);
                         }.bind(this))
                         .catch(notifyError);
@@ -316,7 +316,7 @@ Vaultier.SecretTypeFileView = Vaultier.SecretTypeBaseView.extend ({
 
                     if (size > 25000) {
                         input.closest('.form-group').addClass('has-error');
-                        $.notify('Maximum filesize 25K exceeded!', 'error');
+                        $.notify('Maximum filesize of 25K exceeded!', 'error');
                     } else {
                         // Success
                         input.closest('.form-group').removeClass('has-error');
@@ -447,12 +447,12 @@ Vaultier.SecretIndexRoute = Ember.Route.extend(
                         .deleteRecord()
                         .then(
                             function () {
-                                $.notify('Your secret has been successfully deleted.', 'success');
+                                $.notify('Your secret has been deleted successfully.', 'success');
                             }.bind(this),
 
                             function (error) {
                                 secret.rollback();
-                                $.notify('Oooups! Something went wrong.', 'error');
+                                $.notify('Ooops! Something went wrong.', 'error');
                             }.bind(this)
                         );
                     ApplicationLoader.promise(promise);
@@ -603,11 +603,11 @@ Vaultier.SecretMoveRoute = Ember.Route.extend(
                     .saveRecord()
                     .then(
                     function () {
-                        $.notify('Your secret has been successfully moved.', 'success');
+                        $.notify('Your secret has been moved successfully.', 'success');
                         history.go(-1);
                     }.bind(this),
                     function () {
-                        $.notify('Oooups! Something went wrong.', 'error');
+                        $.notify('Ooops! Something went wrong.', 'error');
                     }
                 )
             }

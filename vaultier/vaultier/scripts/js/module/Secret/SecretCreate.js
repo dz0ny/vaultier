@@ -172,7 +172,7 @@ Vaultier.SecretCreateSubmitRoute = Ember.Route.extend(
             submit: function () {
                 var record = this.get('controller.content');
                 var notifyError = function (error) {
-                    $.notify('Oooups! Something went wrong.', 'error');
+                    $.notify('Ooops! Something went wrong.', 'error');
                     throw error;
                 };
 
@@ -180,7 +180,7 @@ Vaultier.SecretCreateSubmitRoute = Ember.Route.extend(
                     var promise = record
                         .saveRecord()
                         .then(function (response) {
-                            $.notify('Your secret has been successfully created.', 'success');
+                            $.notify('Your secret has been created successfully.', 'success');
                             this.transitionTo('Secret.index', this.get('card'));
                         }.bind(this))
                         .catch(notifyError);

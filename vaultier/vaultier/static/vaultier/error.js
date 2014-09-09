@@ -17,7 +17,7 @@ Vaultier.ErrorGenericRoute = Ember.Route.extend({
 
 Vaultier.ErrorGenericController = Ember.Controller.extend({
     content: {
-        title: 'Oooups! Error',
+        title: 'Ooops! Error',
         message: ''
     }
 });

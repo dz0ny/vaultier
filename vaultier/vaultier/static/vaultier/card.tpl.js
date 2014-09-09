@@ -86,7 +86,7 @@ function program12(depth0,data) {
 function program14(depth0,data) {
   
   var buffer = '', stack1;
-  data.buffer.push("\n\n                    <div class=\"jumbotron vlt-bigbox vlt-card top-50\">\n\n                        <div class=\"vlt-header\">\n                            <div class=\"vlt-icon\">\n\n                            </div>\n                            <div class=\"vlt-title\">\n                                <h1>You do not have any card yet</h1>\n                            </div>\n                        </div>\n\n                        ");
+  data.buffer.push("\n\n                    <div class=\"jumbotron vlt-bigbox vlt-card top-50\">\n\n                        <div class=\"vlt-header\">\n                            <div class=\"vlt-icon\">\n\n                            </div>\n                            <div class=\"vlt-title\">\n                                <h1>You do not have any cards yet</h1>\n                            </div>\n                        </div>\n\n                        ");
   stack1 = helpers['if'].call(depth0, "vault.perms.create", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(15, program15, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n                    </div>\n                ");
@@ -95,7 +95,7 @@ function program14(depth0,data) {
 function program15(depth0,data) {
   
   var buffer = '', stack1, helper, options;
-  data.buffer.push("\n                            <p>\n                                Card is analogy to sheet in folder. Card lets you organize your secrets into groups.\n                                You can also collaborate with team over a card.\n                            </p>\n\n                            <p class=\"top-30\">\n                                ");
+  data.buffer.push("\n                            <p>\n                                A card is an analogy to a sheet in a folder. A Card lets you organize your secrets into groups.\n                                You can also collaborate with team on a card.\n                            </p>\n\n                            <p class=\"top-30\">\n                                ");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{
     'class': ("btn btn-lg btn-primary")
   },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(16, program16, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "Cards.create", options) : helperMissing.call(depth0, "link-to", "Cards.create", options));
@@ -128,7 +128,7 @@ function program20(depth0,data) {
 function program22(depth0,data) {
   
   var buffer = '', stack1, helper, options;
-  data.buffer.push("\n                                <div\n                                        class=\"vlt-button-wrapper\"\n                                        data-toggle=\"tooltip\"\n                                        title=\n                                                \"\n                                    Card is analogy to sheet in folder. Card lets you organize your secrets into groups.\n                                    You can also collaborate with team over a card.\n                                    \"\n                                        data-placement=\"bottom\"\n                                        >\n                                    ");
+  data.buffer.push("\n                                <div\n                                        class=\"vlt-button-wrapper\"\n                                        data-toggle=\"tooltip\"\n                                        title=\n                                                \"\n                                    A card is an analogy to a sheet in a folder. A Card lets you organize your secrets into groups.\n                                You can also collaborate with team on a card.\n                                    \"\n                                        data-placement=\"bottom\"\n                                        >\n                                    ");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{
     'class': ("btn btn-primary")
   },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(23, program23, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "Cards.create", options) : helperMissing.call(depth0, "link-to", "Cards.create", options));
@@ -176,12 +176,12 @@ function program28(depth0,data) {
 function program30(depth0,data) {
   
   var buffer = '', stack1, helper, options;
-  data.buffer.push("\n                                <div\n                                        class=\"vlt-button-wrapper\"\n                                        data-toggle=\"tooltip\"\n                                        title=\n                                                \"\n                             Invite new team members to collaborate over this vault\n                             or  grant access permission to current team members\n                             \"\n                                        data-placement=\"bottom\"\n                                        >\n                                    ");
+  data.buffer.push("\n                                <div\n                                        class=\"vlt-button-wrapper\"\n                                        data-toggle=\"tooltip\"\n                                        title=\n                                                \"\n                             Invite new team members to collaborate on this vault\n                             or grant access permissions to existing team members\n                             \"\n                                        data-placement=\"bottom\"\n                                        >\n                                    ");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{
     'class': ("btn btn-default")
   },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(31, program31, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "Vault.rolesAdminInvite", "vault", options) : helperMissing.call(depth0, "link-to", "Vault.rolesAdminInvite", "vault", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n                                </div>\n\n                                <div\n                                        class=\"vlt-button-wrapper\"\n                                        data-toggle=\"tooltip\"\n                                        title=\n                                                \"\n                             Invite new team members to collaborate over this vault\n                             or  grant access permission to current team members\n                             \"\n                                        data-placement=\"bottom\"\n                                        >\n                                    ");
+  data.buffer.push("\n                                </div>\n\n                                <div\n                                        class=\"vlt-button-wrapper\"\n                                        data-toggle=\"tooltip\"\n                                        title=\n                                                \"\n                             Invite new team members to collaborate on this vault\n                             or grant access permissions to existing team members\n                             \"\n                                        data-placement=\"bottom\"\n                                        >\n                                    ");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{
     'class': ("btn btn-default")
   },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(33, program33, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "Vault.rolesAdminIndex", "vault", options) : helperMissing.call(depth0, "link-to", "Vault.rolesAdminIndex", "vault", options));
@@ -222,7 +222,7 @@ function program33(depth0,data) {
   data.buffer.push("\n\n                            ");
   stack1 = (helper = helpers.exp || (depth0 && depth0.exp),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(25, program25, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "( vault.perms.update || vault.perms.delete)", options) : helperMissing.call(depth0, "exp", "( vault.perms.update || vault.perms.delete)", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n\n                        </div>\n\n                        <div class=\"clearfix\"></div>\n                    </div>\n                </div>\n\n                <div class=\"vlt-sidebar-block-sharing\">\n                    <div class=\"vlt-header\">\n                        <img src=\"/static/vaultier/images/icon-team-grey.png\" class=\"vlt-icon\">\n\n                        <h3 class=\"vlt-title\">\n                            Sharing with\n                        </h3>\n                    </div>\n                    <div class=\"vlt-body\">\n                        ");
+  data.buffer.push("\n\n                        </div>\n\n                        <div class=\"clearfix\"></div>\n                    </div>\n                </div>\n\n                <div class=\"vlt-sidebar-block-sharing\">\n                    <div class=\"vlt-header\">\n                        <img src=\"/static/vaultier/images/icon-team-grey.png\" class=\"vlt-icon\">\n\n                        <h3 class=\"vlt-title\">\n                            Sharing\n                        </h3>\n                    </div>\n                    <div class=\"vlt-body\">\n                        ");
   data.buffer.push(escapeExpression((helper = helpers['roles-admin-box'] || (depth0 && depth0['roles-admin-box']),options={hash:{
     'roles': ("memberships"),
     'user': ("auth.user"),
@@ -259,7 +259,7 @@ function program1(depth0,data) {
   },hashTypes:{'ellipsis': "INTEGER",'prefix': "STRING"},hashContexts:{'ellipsis': depth0,'prefix': depth0},contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "created_by", options) : helperMissing.call(depth0, "printUser", "created_by", options))));
   data.buffer.push("\n                ");
   data.buffer.push(escapeExpression((helper = helpers.printAgo || (depth0 && depth0.printAgo),options={hash:{
-    'prefix': ("Latest modification at:")
+    'prefix': ("Last modified at:")
   },hashTypes:{'prefix': "STRING"},hashContexts:{'prefix': depth0},contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "updated_at", options) : helperMissing.call(depth0, "printAgo", "updated_at", options))));
   data.buffer.push("\n            </div>\n        </div>\n    ");
   return buffer;
@@ -296,7 +296,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, helper, options, escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing;
 
 
-  data.buffer.push("<div class=\"container\">\n    <div class=\"vlt-page vlt-page-plain\">\n        <div class=\"vlt-dialog col-md-8 col-md-offset-2 top-50\">\n            <form>\n                <div class=\"vlt-dialog-content\">\n                    <div class=\"vlt-dialog-header\">\n                        <h2>Create new card</h2>\n                    </div>\n                    <div class=\"vlt-dialog-body\">\n                        <div class=\"row\">\n\n                            <div class=\"col-md-7\">\n\n                                <div class=\"form-group\" ");
+  data.buffer.push("<div class=\"container\">\n    <div class=\"vlt-page vlt-page-plain\">\n        <div class=\"vlt-dialog col-md-8 col-md-offset-2 top-50\">\n            <form>\n                <div class=\"vlt-dialog-content\">\n                    <div class=\"vlt-dialog-header\">\n                        <h2>Create a New Card</h2>\n                    </div>\n                    <div class=\"vlt-dialog-body\">\n                        <div class=\"row\">\n\n                            <div class=\"col-md-7\">\n\n                                <div class=\"form-group\" ");
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
     'class': ("content.errors.name:has-error")
   },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
@@ -323,7 +323,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   data.buffer.push("\n                                    <span class=\"error\">\n                                        ");
   stack1 = helpers._triageMustache.call(depth0, "content.errors.description", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n                                    </span>\n                                </div>\n                            </div>\n\n                            <div class=\"col-md-5 bottom-15\">\n\n                                <div class=\"callout callout-info\">\n                                    <h4>Card will be shared with:</h4>\n\n                                     ");
+  data.buffer.push("\n                                    </span>\n                                </div>\n                            </div>\n\n                            <div class=\"col-md-5 bottom-15\">\n\n                                <div class=\"callout callout-info\">\n                                    <h4>The card will be shared with:</h4>\n\n                                     ");
   data.buffer.push(escapeExpression((helper = helpers['roles-admin-box'] || (depth0 && depth0['roles-admin-box']),options={hash:{
     'roles': ("memberships"),
     'user': ("auth.user"),
@@ -331,7 +331,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   },hashTypes:{'roles': "ID",'user': "ID",'object': "ID"},hashContexts:{'roles': depth0,'user': depth0,'object': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "roles-admin-box", options))));
   data.buffer.push("\n                                </div>\n                            </div>\n\n\n                            <div class=\"clearfix\"></div>\n                        </div>\n\n\n                    </div>\n                    <div class=\"vlt-dialog-footer\">\n                        <a href=\"javascript:window.history.go(-1)\" class=\"btn btn-default btn-sm\">\n                            <span class=\"glyphicon glyphicon-chevron-left\"></span>\n                            Back\n                        </a>\n                        <button ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "save", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data})));
-  data.buffer.push(" class=\"btn btn-primary\">\n                            <span class=\"glyphicon glyphicon-ok\"></span>\n                            Create new card\n                        </button>\n                    </div>\n                </div>\n            </form>\n        </div>\n        <div class=\"clearfix\"></div>\n    </div>\n</div>");
+  data.buffer.push(" class=\"btn btn-primary\">\n                            <span class=\"glyphicon glyphicon-ok\"></span>\n                            Create a new card\n                        </button>\n                    </div>\n                </div>\n            </form>\n        </div>\n        <div class=\"clearfix\"></div>\n    </div>\n</div>");
   return buffer;
   
 });
@@ -342,7 +342,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, escapeExpression=this.escapeExpression;
 
 
-  data.buffer.push("<div class=\"container\">\r\n    <div class=\"vlt-page vlt-page-plain\">\r\n        <div class=\"vlt-dialog col-md-8 col-md-offset-2 top-50\">\r\n            <form>\r\n                <div class=\"vlt-dialog-content\">\r\n                    <div class=\"vlt-dialog-header\">\r\n                        <h2>Edit card</h2>\r\n                    </div>\r\n                    <div class=\"vlt-dialog-body\">\r\n\r\n                        <div class=\"col-md-8 col-md-offset-2\">\r\n\r\n                            <div class=\"form-group\" ");
+  data.buffer.push("<div class=\"container\">\r\n    <div class=\"vlt-page vlt-page-plain\">\r\n        <div class=\"vlt-dialog col-md-8 col-md-offset-2 top-50\">\r\n            <form>\r\n                <div class=\"vlt-dialog-content\">\r\n                    <div class=\"vlt-dialog-header\">\r\n                        <h2>Edit Card</h2>\r\n                    </div>\r\n                    <div class=\"vlt-dialog-body\">\r\n\r\n                        <div class=\"col-md-8 col-md-offset-2\">\r\n\r\n                            <div class=\"form-group\" ");
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
     'class': ("content.errors.name:has-error")
   },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
@@ -386,11 +386,11 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', escapeExpression=this.escapeExpression;
 
 
-  data.buffer.push("<div class=\"container\">\n    <div class=\"vlt-page vlt-page-plain\">\n        <div class=\"vlt-dialog col-md-8 col-md-offset-2 top-50\">\n            <div class=\"vlt-dialog-content\">\n                <div class=\"vlt-dialog-header\">\n                    <h2>Move card to another vault</h2>\n                </div>\n                <div class=\"vlt-dialog-body\">\n                    <h4>Please select target vault</h4>\n\n                    <div class=\"vlt-tree\">\n                        ");
+  data.buffer.push("<div class=\"container\">\n    <div class=\"vlt-page vlt-page-plain\">\n        <div class=\"vlt-dialog col-md-8 col-md-offset-2 top-50\">\n            <div class=\"vlt-dialog-content\">\n                <div class=\"vlt-dialog-header\">\n                    <h2>Move Card to Another Vault</h2>\n                </div>\n                <div class=\"vlt-dialog-body\">\n                    <h4>Please select target vault</h4>\n\n                    <div class=\"vlt-tree\">\n                        ");
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "view.Tree", {hash:{
     'content': ("treeNodes")
   },hashTypes:{'content': "ID"},hashContexts:{'content': depth0},contexts:[depth0],types:["ID"],data:data})));
-  data.buffer.push("\n                    </div>\n                    <div class=\"help-block\">\n                        Also all granted permissions will be moved.\n                    </div>\n                    <div class=\"clearfix\"></div>\n                </div>\n                <div class=\"vlt-dialog-footer\">\n                    <a href=\"javascript:window.history.go(-1)\" class=\"btn btn-default btn-sm\">\n                        <span class=\"glyphicon glyphicon-chevron-left\"></span>\n                        Back\n                    </a>\n                    <button ");
+  data.buffer.push("\n                    </div>\n                    <div class=\"help-block\">\n                        All granted permissions will be moved as well\n                    </div>\n                    <div class=\"clearfix\"></div>\n                </div>\n                <div class=\"vlt-dialog-footer\">\n                    <a href=\"javascript:window.history.go(-1)\" class=\"btn btn-default btn-sm\">\n                        <span class=\"glyphicon glyphicon-chevron-left\"></span>\n                        Back\n                    </a>\n                    <button ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "save", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data})));
   data.buffer.push(" ");
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{

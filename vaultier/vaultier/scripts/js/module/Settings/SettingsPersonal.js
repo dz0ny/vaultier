@@ -23,10 +23,10 @@ Vaultier.SettingsPersonalRoute = Ember.Route.extend(
                     .saveRecord()
                     .then(
                     function () {
-                        $.notify('Your changes has been successfully saved.', 'success');
+                        $.notify('Your changes have been saved successfully.', 'success');
                     }.bind(this),
                     function () {
-                        $.notify('Oooups! Something went wrong.', 'error');
+                        $.notify('Ooops! Something went wrong.', 'error');
                     });
 
                 ApplicationLoader.promise(promise);

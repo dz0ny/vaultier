@@ -5,12 +5,12 @@ Vaultier.WorkspacesCreateRoute = Ember.Route.extend({
             var promise = record.saveRecord()
                 .then(
                     function () {
-                        $.notify('You workspace has been successfully created.', 'success');
+                        $.notify('You workspace has been created successfully.', 'success');
                         this.transitionTo('Workspace.index', record.get('slug'));
                     }.bind(this))
 
                 .catch(function (error) {
-                    $.notify('Oooups! Something went wrong.', 'error');
+                    $.notify('Ooops! Something went wrong.', 'error');
                     this.get('errors').logError(error);
                 }.bind(this));
 

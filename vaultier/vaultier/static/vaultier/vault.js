@@ -109,11 +109,11 @@ Vaultier.VaultsCreateRoute = Ember.Route.extend(
                 var promise = record
                     .saveRecord()
                     .then(function () {
-                        $.notify('Your vault has been successfully created.', 'success');
+                        $.notify('Your vault has been created successfully.', 'success');
                         this.transitionTo('Vault.index', record);
                     }.bind(this))
                     .catch(function (error) {
-                        $.notify('Oooups! Something went wrong.', 'error');
+                        $.notify('Ooops! Something went wrong.', 'error');
                         this.get('errors').logError(error);
                     }.bind(this));
 
@@ -196,11 +196,11 @@ Vaultier.VaultRoute = Ember.Route.extend(
                         .deleteRecord()
                         .then(
                             function () {
-                                $.notify('Your vault has been successfully deleted.', 'success');
+                                $.notify('Your vault has been deleted successfully.', 'success');
                                 this.transitionTo('Workspace.index');
                             }.bind(this),
                             function (error) {
-                                $.notify('Oooups! Something went wrong.', 'error');
+                                $.notify('Ooops! Something went wrong.', 'error');
                             }.bind(this)
                         );
                     ApplicationLoader.promise(promise);
@@ -265,11 +265,11 @@ Vaultier.VaultEditRoute = Ember.Route.extend(
                 var promise = record
                     .saveRecord()
                     .then(function () {
-                        $.notify('Your changes has been successfully saved.', 'success');
+                        $.notify('Your changes has been saved successfully.', 'success');
                         history.go(-1);
                     }.bind(this))
                     .catch(function (error) {
-                        $.notify('Oooups! Something went wrong.', 'error');
+                        $.notify('Ooops! Something went wrong.', 'error');
                         this.get('errors').logError(error)
                     }.bind(this))
 

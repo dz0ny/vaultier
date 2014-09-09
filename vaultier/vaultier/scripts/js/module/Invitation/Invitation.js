@@ -36,7 +36,7 @@ Vaultier.InvitationAcceptRoute = Ember.Route.extend(
                         this.get('errors').consoleError(error)
                         this.get('errors').renderError({
                             title: 'Invalid invitation.',
-                            message: 'this invitation cannot be used. Not found or it was already used by other member'
+                            message: 'this invitation cannot be used. Either it does not exist or it has been used by another member'
                         });
                     } else {
                         throw new Error('Invalid invitation');

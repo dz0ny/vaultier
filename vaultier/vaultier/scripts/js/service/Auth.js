@@ -199,7 +199,7 @@ Service.Auth = Ember.Object.extend({
     checkAuthenticatedOrLogin: function (transition) {
         if (!this.get('isAuthenticated')) {
             // abort transition
-            $.notify('You do not have access to secured area. Please login', 'error');
+            $.notify('Please login before proceeding to secured area of Vaultier', 'error');
             transition.abort();
 
             // store transition

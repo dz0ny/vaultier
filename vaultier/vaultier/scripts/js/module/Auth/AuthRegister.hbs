@@ -5,26 +5,26 @@
 <div class="vlt-dialog vlt-register col-xs-12 col-md-10 col-md-offset-1 top-50">
     <div class="vlt-dialog-content">
         <div class="vlt-dialog-header">
-            <h2>Register to Vaultier</h2>
+            <h2>Sign up for Vaultier</h2>
 
             <ul class="nav nav-pills nav-justified vlt-wizard-steps">
                 {{#view view.TabView tab="keys" }}
                     <a>
-                        Generate key
+                        Generate Key
                         <span class="glyphicon glyphicon glyphicon-chevron-right"></span>
                     </a>
                 {{/view}}
 
                 {{#view view.TabView tab="creds" }}
                     <a>
-                        Your credentials
+                        Your Credentials
                         <span class="glyphicon glyphicon glyphicon-chevron-right"></span>
                     </a>
                 {{/view}}
 
                 {{#view view.TabView tab="sum" }}
                     <a>
-                        Finish registration
+                        Finish Registration
                         <span class="glyphicon glyphicon glyphicon-chevron-right"></span>
                     </a>
                 {{/view}}
@@ -51,7 +51,7 @@
 
             <div class="vlt-left-buttons pull-left">
                     {{#unless props.loginButtonHidden}}
-                        Do you have account already?
+                        Do you have an account already?
                         {{#link-to 'AuthLogin' class="btn btn-default btn-sm" }}
                             Login to your account here
                         {{/link-to}}

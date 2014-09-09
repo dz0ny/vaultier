@@ -60,11 +60,11 @@ Vaultier.RolesAdminInviteRoute = Ember.Route.extend(
 
                 var bulk = Ember.RSVP.all(invitedPromises)
                     .then(function () {
-                        $.notify('Your invitations has been saved', 'success');
+                        $.notify('Your invitations have been saved', 'success');
                         window.history.go(-1);
                     })
                     .catch(function () {
-                        $.notify('Oooups! Something went wrong.', 'error');
+                        $.notify('Ooops! Something went wrong.', 'error');
                     })
 
                 ApplicationLoader.promise(bulk);

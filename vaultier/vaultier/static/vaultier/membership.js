@@ -36,7 +36,7 @@ Vaultier.InvitationAcceptRoute = Ember.Route.extend(
                         this.get('errors').consoleError(error)
                         this.get('errors').renderError({
                             title: 'Invalid invitation.',
-                            message: 'this invitation cannot be used. Not found or it was already used by other member'
+                            message: 'this invitation cannot be used. Either it does not exist or it has been used by another member'
                         });
                     } else {
                         throw new Error('Invalid invitation');
@@ -398,10 +398,10 @@ Vaultier.RolesAdminIndexRoute = Ember.Route.extend(
                         .deleteRecord()
                         .then(function () {
                             block.roles.removeObject(role);
-                            $.notify('User \'s permission has been removed.', 'success');
+                            $.notify('User\'s permission has been removed.', 'success');
                         })
                         .catch(function (error) {
-                            $.notify('Oooups! Something went wrong.', 'error');
+                            $.notify('Ooops! Something went wrong.', 'error');
                             this.get('errors').logError(error)
                         }.bind(this))
 
@@ -415,10 +415,10 @@ Vaultier.RolesAdminIndexRoute = Ember.Route.extend(
                 var promise = role
                     .saveRecord()
                     .then(function () {
-                        $.notify('User \'s permission has been updated.', 'success');
+                        $.notify('User\'s permission has been updated.', 'success');
                     })
                     .catch(function (error) {
-                        $.notify('Oooups! Something went wrong.', 'error');
+                        $.notify('Ooops! Something went wrong.', 'error');
                         this.get('errors').logError(error)
                     }.bind(this))
 
@@ -562,11 +562,11 @@ Vaultier.RolesAdminInviteRoute = Ember.Route.extend(
 
                 var bulk = Ember.RSVP.all(invitedPromises)
                     .then(function () {
-                        $.notify('Your invitations has been saved', 'success');
+                        $.notify('Your invitations have been saved', 'success');
                         window.history.go(-1);
                     })
                     .catch(function () {
-                        $.notify('Oooups! Something went wrong.', 'error');
+                        $.notify('Ooops! Something went wrong.', 'error');
                     })
 
                 ApplicationLoader.promise(bulk);
@@ -771,10 +771,10 @@ Vaultier.RolesAdminManagementRoute = Vaultier.RolesAdminIndexRoute.extend({
                     .then(function () {
                         var roles = context.get('roles');
                         roles.removeObject(role);
-                        $.notify('Role has been remove', 'success');
+                        $.notify('Role has been removed', 'success');
                     }.bind(this))
                     .catch(function (error) {
-                        $.notify('Oooups! Something went wrong.', 'error');
+                        $.notify('Ooops! Something went wrong.', 'error');
                         this.get('errors').logError(error);
                     }.bind(this));
 
@@ -807,10 +807,10 @@ Vaultier.RolesAdminManagementRoute = Vaultier.RolesAdminIndexRoute.extend({
                     .then(function () {
                         var members = context.get('members');
                         members.removeObject(member);
-                        $.notify('RolesAdmin has been remove', 'success');
+                        $.notify('RolesAdmin has been removed', 'success');
                     }.bind(this))
                     .catch(function (error) {
-                        $.notify('Oooups! Something went wrong.', 'error');
+                        $.notify('Ooops! Something went wrong.', 'error');
                         this.get('errors').logError(error);
                     }.bind(this));
 

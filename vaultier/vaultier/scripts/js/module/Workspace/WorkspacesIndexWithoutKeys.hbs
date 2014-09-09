@@ -1,14 +1,15 @@
 {{#unless view.workspace.hasValidKey}}
     <div class="alert alert-warning top-15">
-        <b> Your access to workspace is limited.<br/></b>
-        Workspace key has not been transfered to you yet. Key will be transfered to you automatically once
-        some workspace team member will go online.
+        <b>Your access to this workspace is currently limited.<br/></b>
+        Workspace key has not been transfered to you yet. The key will be transfered to you automatically once
+        someone from the workspace team will go online.
     </div>
 {{/unless}}
 
 {{#if view.workspace.keyError}}
     <div class="alert alert-danger top-15">
-        <b>Workspace key error. <br/></b>
-        Your workspace key cannot be decoded. It means you have no access to workspace secret data
+        <b>Workspace key error<br/></b>
+        Your workspace key cannot be used to decode data. This means you have no access to this workspace secret data.
+        Ask someone from the workspace collaborators team to transfer workspace keys to you once more and try to access the workspace again.
     </div>
 {{/if}}

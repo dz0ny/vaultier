@@ -43,7 +43,7 @@ function program6(depth0,data) {
 function program8(depth0,data) {
   
   var buffer = '', stack1;
-  data.buffer.push("\n        <div class=\"vlt-perms-section\">\n            Users able to create only\n        </div>\n        <div class=\"vlt-perms-roles\">\n            ");
+  data.buffer.push("\n        <div class=\"vlt-perms-section\">\n            Users able to just create\n        </div>\n        <div class=\"vlt-perms-roles\">\n            ");
   stack1 = helpers.each.call(depth0, "role", "in", "rolesCreate", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(4, program4, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n        </div>\n        <div class=\"clearfix\"></div>\n    ");
@@ -102,7 +102,7 @@ function program4(depth0,data) {
 function program5(depth0,data) {
   
   
-  data.buffer.push("\n                        <div class=\"top-30\">\n                            <h3>Inherited memberships</h3>\n                        </div>\n                    ");
+  data.buffer.push("\n                        <div class=\"top-30\">\n                            <h3>Inherited Memberships</h3>\n                        </div>\n                    ");
   }
 
 function program7(depth0,data) {
@@ -111,7 +111,7 @@ function program7(depth0,data) {
   data.buffer.push("\n\n                    <div class=\"panel panel-default vlt-panel-permissions top-30\">\n                        <div class=\"panel-heading\">\n                            <div class=\"col-md-8\">\n                                <h4>\n                                    ");
   stack1 = helpers._triageMustache.call(depth0, "block.roles.length", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push(" collaborators at ");
+  data.buffer.push(" collaborators &mdash; ");
   stack1 = helpers._triageMustache.call(depth0, "block.type", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push(" <b>");
@@ -154,7 +154,7 @@ function program9(depth0,data) {
 function program11(depth0,data) {
   
   var buffer = '', stack1, helper, options;
-  data.buffer.push("\n                                <div>\n                                    <div class=\"padding-15\">\n                                        There are no permission to this object.\n\n                                        ");
+  data.buffer.push("\n                                <div>\n                                    <div class=\"padding-15\">\n                                        No permissions are set for this object.\n\n                                        ");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{
     'class': ("btn btn-default btn-sm")
   },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(12, program12, data),contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "inviteRouteName", options) : helperMissing.call(depth0, "link-to", "inviteRouteName", options));
@@ -299,7 +299,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, helper, options, escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing;
 
 
-  data.buffer.push("<div class=\"container\">\n<div class=\"vlt-page vlt-page-plain\">\n<div class=\"vlt-dialog col-md-8 col-md-offset-2 top-50\">\n    <form>\n        <div class=\"vlt-dialog-content\">\n            <div class=\"vlt-dialog-header\">\n                <h2>Invite collaborators</h2>\n            </div>\n            <div class=\"vlt-dialog-body\">\n\n                <div class=\"col-md-10 col-md-offset-1\">\n\n                    <div class=\"form-group\">\n                        <label for=\"invite-form-invited\">Select users</label>\n\n                        ");
+  data.buffer.push("<div class=\"vlt-page vlt-page-plain\">\n<div class=\"vlt-dialog col-md-8 col-md-offset-2 top-50\">\n    <form>\n        <div class=\"vlt-dialog-content\">\n            <div class=\"vlt-dialog-header\">\n                <h2>Invite Collaborators</h2>\n            </div>\n            <div class=\"vlt-dialog-body\">\n\n                <div class=\"col-md-10 col-md-offset-1\">\n\n                    <div class=\"form-group\">\n                        <label for=\"invite-form-invited\">Select users</label>\n\n                        ");
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "Vaultier.RolesAdminInviteInput", {hash:{
     'store': ("store"),
     'workspace': ("workspace"),
@@ -308,7 +308,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
     'elementId': ("invite-form-invited"),
     'valueBinding': ("invited")
   },hashTypes:{'store': "ID",'workspace': "ID",'auth': "ID",'class': "STRING",'elementId': "STRING",'valueBinding': "STRING"},hashContexts:{'store': depth0,'workspace': depth0,'auth': depth0,'class': depth0,'elementId': depth0,'valueBinding': depth0},contexts:[depth0],types:["ID"],data:data})));
-  data.buffer.push("\n                        <span class=\"help-block\"><b>Select existing users or invite new by email</b>. You can invite more users at once. Separate them with space, comma or semicolon</span>\n                    </div>\n\n                    <div class=\"form-group\">\n                        <div class=\"checkbox\">\n                            <label for=\"invite-form-resend\">\n                                ");
+  data.buffer.push("\n                        <span class=\"help-block\"><b>Select existing users or invite new ones by email</b>. You can invite more users at once. Separate them with space, comma or semicolon</span>\n                    </div>\n\n                    <div class=\"form-group\">\n                        <div class=\"checkbox\">\n                            <label for=\"invite-form-resend\">\n                                ");
   data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
     'type': ("checkbox"),
     'elementId': ("invite-form-resend"),
@@ -333,7 +333,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   },hashTypes:{'disabled': "ID"},hashContexts:{'disabled': depth0},contexts:[],types:[],data:data})));
   data.buffer.push(" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "save", "invited", "role", "resend", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0,depth0,depth0],types:["ID","ID","ID","ID"],data:data})));
-  data.buffer.push("\n                        class=\"btn btn-primary\">\n                    <span class=\"glyphicon glyphicon-ok\"></span>\n                    Submit\n                </button>\n            </div>\n        </div>\n    </form>\n</div>\n<div class=\"clearfix\"></div>\n</div>\n</div>\n");
+  data.buffer.push("\n                        class=\"btn btn-primary\">\n                    <span class=\"glyphicon glyphicon-ok\"></span>\n                    Submit\n                </button>\n            </div>\n        </div>\n    </form>\n</div>\n<div class=\"clearfix\"></div>\n</div>\n");
   return buffer;
   
 });
@@ -411,7 +411,7 @@ function program2(depth0,data) {
   return buffer;
   }
 
-  data.buffer.push("<div class=\"vlt-dialog col-md-8 col-md-offset-2 top-50\">\n    <form>\n        <div class=\"vlt-dialog-content\">\n            <div class=\"vlt-dialog-header\">\n                <h2>You have pending invitations</h2>\n            </div>\n            <div class=\"vlt-dialog-body\">\n\n                <div class=\"col-md-8 col-md-offset-2 top-15 bottom-30\">\n                    <div class=\"bottom-15\">\n                        You have been invited to Vaultier.\n                        <b>Please see invitations to accept:</b>\n                    </div>\n                    <table class=\"table vlt-table table-bordered\">\n                        <tbody>\n                        ");
+  data.buffer.push("<div class=\"vlt-dialog col-md-8 col-md-offset-2 top-50\">\n    <form>\n        <div class=\"vlt-dialog-content\">\n            <div class=\"vlt-dialog-header\">\n                <h2>You have pending invitations</h2>\n            </div>\n            <div class=\"vlt-dialog-body\">\n\n                <div class=\"col-md-8 col-md-offset-2 top-15 bottom-30\">\n                    <div class=\"bottom-15\">\n                        You have been invited to Vaultier.\n                        <b>Please see a list of invitations to accept:</b>\n                    </div>\n                    <table class=\"table vlt-table table-bordered\">\n                        <tbody>\n                        ");
   stack1 = helpers.each.call(depth0, "invitation", "in", "content", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n                        </tbody>\n                    </table>\n                </div>\n\n                <div class=\"clearfix\"></div>\n\n            </div>\n            <div class=\"vlt-dialog-footer\">\n                <a href=\"#\" class=\"btn btn-default btn-sm\" ");
@@ -440,7 +440,7 @@ function program3(depth0,data) {
   data.buffer.push("Login");
   }
 
-  data.buffer.push("<div class=\"vlt-dialog col-md-8 col-md-offset-2 top-50\">\r\n    <form>\r\n        <div class=\"vlt-dialog-content\">\r\n            <div class=\"vlt-dialog-header\">\r\n                <h2>You have been invited to vaultier</h2>\r\n            </div>\r\n            <div class=\"vlt-dialog-body\">\r\n\r\n                <div class=\"col-md-8 col-md-offset-2 top-30 bottom-30\">\r\n                    <b>\r\n                        Before further procceeding we need you to have account. Please login or create new\r\n                        account.\r\n                    </b>\r\n                </div>\r\n\r\n                <div class=\"clearfix\"></div>\r\n\r\n            </div>\r\n            <div class=\"vlt-dialog-footer\">\r\n                ");
+  data.buffer.push("<div class=\"vlt-dialog col-md-8 col-md-offset-2 top-50\">\r\n    <form>\r\n        <div class=\"vlt-dialog-content\">\r\n            <div class=\"vlt-dialog-header\">\r\n                <h2>You have been invited to Vaultier</h2>\r\n            </div>\r\n            <div class=\"vlt-dialog-body\">\r\n\r\n                <div class=\"col-md-8 col-md-offset-2 top-30 bottom-30\">\r\n                    <b>\r\n                        Before procceeding further, you will need to have an account. Please login or create a new\r\n                        one.\r\n                    </b>\r\n                </div>\r\n\r\n                <div class=\"clearfix\"></div>\r\n\r\n            </div>\r\n            <div class=\"vlt-dialog-footer\">\r\n                ");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{
     'class': ("btn btn-default btn-sm")
   },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "AuthRegister", options) : helperMissing.call(depth0, "link-to", "AuthRegister", options));
