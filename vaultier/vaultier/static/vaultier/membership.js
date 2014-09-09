@@ -900,11 +900,11 @@ Vaultier.MembersAdminListActionsMixin = Ember.Mixin.create({
                             roles.removeObject(role);
                             member.set('roles_count', roles.get('length'));
 
-                            $.notify('Role has been removed', 'success');
+                            $.notify('Role has been remove', 'success');
                         }.bind(this))
 
                         .catch(function (error) {
-                            $.notify('Ooops! Something went wrong.', 'error');
+                            $.notify('Oooups! Something went wrong.', 'error');
                             this.get('errors').logError(error);
                         }.bind(this));
 
@@ -938,7 +938,7 @@ Vaultier.MembersAdminListActionsMixin = Ember.Mixin.create({
                         }.bind(this))
 
                         .catch(function (error) {
-                            $.notify('Ooops! Something went wrong.', 'error');
+                            $.notify('Oooups! Something went wrong.', 'error');
                             console.error(error);
                             //this.get('errors').logError(error);
                         }.bind(this));

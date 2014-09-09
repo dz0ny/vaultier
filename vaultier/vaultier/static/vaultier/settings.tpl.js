@@ -6,7 +6,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   var buffer = '';
-  data.buffer.push("\n\n    <p>\n        Your public and private keypair has been generated.\n        Please follow steps to finish procedure:\n    </p>\n\n\n    <div class=\"bottom-15 top-30\">\n        <h4>\n            <div class=\"label label-header\">1</div>\n            Save private key key to your computer\n        </h4>\n    </div>\n\n    <div class=\"top-15 padding-15 panel panel-default\">\n\n        <div class=\"col-md-6 col-md-offset-1\">\n            <b>\n                Private key\n            </b>\n            <br/>\n                <span class=\"help-block\">\n                    It is used instead of password. Please save the key.\n                </span>\n        </div>\n        <div class=\"col-md-4\">\n            <button\n                ");
+  data.buffer.push("\n\n    <p>\n        Your public and private keys have been generated.\n        Please follow given steps to finish the procedure.\n    </p>\n\n\n    <div class=\"bottom-15 top-30\">\n        <h4>\n            <div class=\"label label-header\">1</div>\n            Save private key to your computer\n        </h4>\n    </div>\n\n    <div class=\"top-15 padding-15 panel panel-default\">\n\n        <div class=\"col-md-6 col-md-offset-1\">\n            <b>\n                Private key\n            </b>\n            <br/>\n                <span class=\"help-block\">\n                    This file is used instead of a password. Please save the key.\n                </span>\n        </div>\n        <div class=\"col-md-4\">\n            <button\n                ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "savePrivateKey", {hash:{
     'target': ("view")
   },hashTypes:{'target': "ID"},hashContexts:{'target': depth0},contexts:[depth0],types:["ID"],data:data})));
@@ -14,7 +14,7 @@ function program1(depth0,data) {
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
     'class': (":btn view.privateKeySaved:btn-default:btn-primary")
   },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push("\n                    >\n                Save private key\n            </button>\n        </div>\n        <div class=\"clearfix\"></div>\n    </div>\n\n    <div class=\"bottom-15  top-30\">\n        <h4>\n            <div class=\"label label-header\">2</div>\n            Confirm sending public key\n        </h4>\n    </div>\n\n    <div class=\"top-15 padding-15 panel panel-default\">\n\n        <div class=\"col-md-6 col-md-offset-1\">\n            <b>\n                Public key\n            </b>\n            <br/>\n                <span class=\"help-block\">\n                    Your public key will be send to server now.\n                </span>\n        </div>\n        <div class=\"col-md-4\">\n            <button\n                ");
+  data.buffer.push("\n                    >\n                Save private key\n            </button>\n        </div>\n        <div class=\"clearfix\"></div>\n    </div>\n\n    <div class=\"bottom-15  top-30\">\n        <h4>\n            <div class=\"label label-header\">2</div>\n            Confirm sending the public key\n        </h4>\n    </div>\n\n    <div class=\"top-15 padding-15 panel panel-default\">\n\n        <div class=\"col-md-6 col-md-offset-1\">\n            <b>\n                Public key\n            </b>\n            <br/>\n                <span class=\"help-block\">\n                    Your public key will be sent to the server now.\n                </span>\n        </div>\n        <div class=\"col-md-4\">\n            <button\n                ");
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
     'disabled': ("view.publicButtonDisabled")
   },hashTypes:{'disabled': "ID"},hashContexts:{'disabled': depth0},contexts:[],types:[],data:data})));
@@ -33,7 +33,7 @@ function program1(depth0,data) {
 function program3(depth0,data) {
   
   
-  data.buffer.push("\n    <div class=\" text-center top-30\">\n        <h4>Please wait while generating your keys...</h4>\n\n        <div class=\"vlt-preloader vlt-preloader-small\">\n        </div>\n    </div>\n");
+  data.buffer.push("\n    <div class=\" text-center top-30\">\n        <h4>Please wait while we generate your keys...</h4>\n\n        <div class=\"vlt-preloader vlt-preloader-small\">\n        </div>\n    </div>\n");
   }
 
   stack1 = helpers['if'].call(depth0, "view.keys", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
@@ -59,7 +59,7 @@ function program1(depth0,data) {
 function program2(depth0,data) {
   
   
-  data.buffer.push("\n                                My profile\n                            ");
+  data.buffer.push("\n                                My Profile\n                            ");
   }
 
 function program4(depth0,data) {
@@ -74,7 +74,7 @@ function program4(depth0,data) {
 function program5(depth0,data) {
   
   
-  data.buffer.push("\n                                Private key\n                            ");
+  data.buffer.push("\n                                Private Key\n                            ");
   }
 
   data.buffer.push("<div class=\"container\">\n    <div class=\"vlt-page vlt-page-plain\">\n        <div class=\"row\">\n            <div class=\"top-50\">\n                <div class=\"col-md-3\">\n                    <ul class=\"nav nav-pills nav-stacked\">\n                        ");
@@ -100,7 +100,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, escapeExpression=this.escapeExpression;
 
 
-  data.buffer.push("<div class=\"vlt-dialog\">\n    <form>\n        <div class=\"vlt-dialog-content\">\n            <div class=\"vlt-dialog-header\">\n                <h2>Personal settings</h2>\n            </div>\n            <div class=\"vlt-dialog-body\">\n\n                <div class=\"col-md-8 col-md-offset-2\">\n\n                    <div class=\"form-group\" ");
+  data.buffer.push("<div class=\"vlt-dialog\">\n    <form>\n        <div class=\"vlt-dialog-content\">\n            <div class=\"vlt-dialog-header\">\n                <h2>Personal Settings</h2>\n            </div>\n            <div class=\"vlt-dialog-body\">\n\n                <div class=\"col-md-8 col-md-offset-2\">\n\n                    <div class=\"form-group\" ");
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
     'class': ("content.errors.email:has-error")
   },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
@@ -143,7 +143,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   var buffer = '';
-  data.buffer.push("\n                    <div class=\"vlt-dialog-body\">\n                        <div class=\"text-center\">\n                            If you want to generate new private key.\n                            Click the generate button and\n                            you will go throught generate process\n                            <br/>\n                            <br/>\n                            <a ");
+  data.buffer.push("\n                    <div class=\"vlt-dialog-body\">\n                        <div class=\"text-center\">\n                            If you want to generate new private key,\n                            click the \"generate\" button and\n                            we will walk you through the process.\n                            <br/>\n                            <br/>\n                            <a ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "generate", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data})));
   data.buffer.push(" class=\"btn btn-primary\">Generate new private key</a>\n                        </div>\n                    </div>\n                ");
   return buffer;
@@ -163,7 +163,7 @@ function program3(depth0,data) {
 function program5(depth0,data) {
   
   var buffer = '';
-  data.buffer.push("\n                    <div class=\"top-30 bottom-30\">\n\n                        <div class=\" alert alert-success\">\n                            <b>\n                                Your private key has been successfully changed.\n                            </b>\n                        </div>\n\n                        <div class=\" bottom-30 text-center top-30\">\n                            <span class=\"help-block\">\n                                From now use new private key generated. Please be sure you have saved your private key.\n                            </span>\n\n                            <a class=\"btn btn-default\" ");
+  data.buffer.push("\n                    <div class=\"top-30 bottom-30\">\n\n                        <div class=\" alert alert-success\">\n                            <b>\n                                Your private key has been successfully changed.\n                            </b>\n                        </div>\n\n                        <div class=\" bottom-30 text-center top-30\">\n                            <span class=\"help-block\">\n                                From now on, use the newly generated private key. Please make sure you have saved your private key.\n                            </span>\n\n                            <a class=\"btn btn-default\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "savePrivateKey", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data})));
   data.buffer.push(">Save your new private key</a>\n                        </div>\n\n                        <div class=\"clearfix\"></div>\n                    </div>\n\n                ");
   return buffer;

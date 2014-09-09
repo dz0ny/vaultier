@@ -228,7 +228,7 @@ function program34(depth0,data) {
   data.buffer.push("\n\n                    ");
   stack1 = (helper = helpers.exp || (depth0 && depth0.exp),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(24, program24, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "( workspace.perms.update || workspace.perms.delete)", options) : helperMissing.call(depth0, "exp", "( workspace.perms.update || workspace.perms.delete)", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n\n\n                </div>\n\n                <div class=\"clearfix\"></div>\n            </div>\n        </div>\n\n        <div class=\"vlt-sidebar-block-sharing\">\n            <div class=\"vlt-header\">\n                <img src=\"/static/vaultier/images/icon-team-grey.png\" class=\"vlt-icon\">\n\n                <h3 class=\"vlt-title\">\n                    Sharing with\n                </h3>\n            </div>\n            <div class=\"vlt-body\">\n                ");
+  data.buffer.push("\n\n\n                </div>\n\n                <div class=\"clearfix\"></div>\n            </div>\n        </div>\n\n        <div class=\"vlt-sidebar-block-sharing\">\n            <div class=\"vlt-header\">\n                <img src=\"/static/vaultier/images/icon-team-grey.png\" class=\"vlt-icon\">\n\n                <h3 class=\"vlt-title\">\n                    Sharing\n                </h3>\n            </div>\n            <div class=\"vlt-body\">\n                ");
   data.buffer.push(escapeExpression((helper = helpers['roles-admin-box'] || (depth0 && depth0['roles-admin-box']),options={hash:{
     'roles': ("memberships"),
     'user': ("auth.user"),
