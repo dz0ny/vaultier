@@ -193,7 +193,8 @@ var vaultierModulesConfig = {
                 "./js/module/Layout/PasswordField.js"
             ],
             "resources": [
-                './images/**/*'
+                './images/**/*',
+                "./font/**/*"
             ],
             "styles": [
                 "./css/application.css",
