@@ -1,10 +1,9 @@
 {{#if env.workspace }}
     <div class="vlt-wspace-box dropdown">
 
-        <img class="vlt-wspaceimg" src="/static/vaultier/images/icon-workspace-white.png ">
-
         <a href="#" class="vlt-wspacename dropdown-toggle" data-toggle="dropdown">
-            {{ellipsis env.workspace.cleanValues.name 20 }}
+            <img class="vlt-wspaceimg" src="/static/vaultier/images/icon-workspace-white.png ">
+            <p>{{ellipsis env.workspace.cleanValues.name 20 }}</p>
         </a>
 
         <ul class="dropdown-menu caret-right">

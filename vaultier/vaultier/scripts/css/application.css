@@ -963,26 +963,30 @@ a:hover {
     font-weight: bold;
     background-color: #262626;
     border-radius: 4px;
-    padding: 10px;
     margin: 5px;
 }
-
+.vlt-wspace-box p {
+    display: inline;
+    position: relative;
+    top: 1px;
+}
 .vlt-wspace-box .vlt-wspacename {
     vertical-align: middle;
     color: #FFFFFF;
     font-size: 14px;
     line-height: 14px;
     display: inline-block;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 10px;
 }
-
 .vlt-wspace-box .vlt-wspaceimg {
-    margin-left: 0px;
+    margin-left: 10px;
     margin-right: 10px;
     border-radius: 4px;
     width: 25px;
     height: 25px;
 }
-
 .vlt-wspace-box .dropdown-menu {
     text-align: right;
 }
@@ -1014,23 +1018,29 @@ span.vlt-user img {
     background-color: transparent;
     border: 0px;
 }
-
 .vlt-security-box {
     font-weight: bold;
     background-color: #262626;
     border-radius: 4px;
-    padding: 10px;
     margin: 5px;
 }
-
 .vlt-security-box a.vlt-username {
     color: #FFFFFF;
     vertical-align: middle;
     font-size: 14px;
     line-height: 14px;
-    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 10px;
 }
-
+.vlt-security-box img {
+    margin: 10px;
+}
+.vlt-security-box p {
+    display: inline;
+    position: relative;
+    top: 1px;
+}
 .vlt-security-box .dropdown-menu {
     text-align: right;
 }
