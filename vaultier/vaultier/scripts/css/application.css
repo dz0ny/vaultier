@@ -1,14 +1,38 @@
 /*************************************************************
 **************************************************************
+* setting fonts
+*************************************************************
+*************************************************************/
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans'), local('OpenSans'), url('../font/open-sans-400.woff') format('woff');
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Open Sans Bold'), local('OpenSans-Bold'), url('../font/open-sans-700.woff') format('woff');
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 800;
+  src: local('Open Sans Extrabold'), local('OpenSans-Extrabold'), url('../font/open-sans-800.woff') format('woff');
+}
+
+/*************************************************************
+**************************************************************
 * globals
 *************************************************************
 *************************************************************/
-
 body {
     padding: 0px;
     margin: 0px;
     overflow-y: scroll;
     word-wrap: break-word !important;
+    font-family: 'Open Sans', sans-serif;
 }
 
 html {
@@ -39,8 +63,11 @@ a:hover {
 /*
 * Dropdown
 */
-.dropdown-menu a, .dropdown-menu:hover {
+.dropdown-menu a, {
     transition: none;
+}
+.dropdown-menu li a:hover, .dropdown-menu li a:focus {
+    background-color: #C1C1C1;
 }
 
 /*
@@ -360,6 +387,13 @@ a:hover {
 
 .vlt-breads .vlt-bread {
     float: left;
+}
+
+.vlt-bread a {
+    color: #545454;
+}
+.vlt-breads .container-full .vlt-bread:first-of-type a {
+    font-weight: bold;
 }
 
 .vlt-breads .vlt-separator {
@@ -867,6 +901,7 @@ a:hover {
 
 .vlt-navbar {
     margin: 0px;
+    background-color: #555555;
 }
 
 .vlt-navbar .vlt-logo {
@@ -926,7 +961,7 @@ a:hover {
 *************************************************************/
 .vlt-wspace-box {
     font-weight: bold;
-    background-color: #1686c6;
+    background-color: #262626;
     border-radius: 4px;
     padding: 10px;
     margin: 5px;
@@ -982,7 +1017,7 @@ span.vlt-user img {
 
 .vlt-security-box {
     font-weight: bold;
-    background-color: #1686c6;
+    background-color: #262626;
     border-radius: 4px;
     padding: 10px;
     margin: 5px;
@@ -1021,9 +1056,25 @@ span.vlt-user img {
         width: 480px;
     }
 }
-
-.vlt-search-box .selectize-input {
+.vlt-search-box .selectize-input input {
+    color: #E5E5E5;
+    font-family: 'Open Sans', sans-serif;
+}
+.vlt-search-box .selectize-input input::-webkit-input-placeholder {
+    color: #E5E5E5;
+    font-family: 'Open Sans', sans-serif;
+}
+.vlt-search-box .selectize-input input::-moz-placeholder {
+    color: #E5E5E5;
+    font-family: 'Open Sans', sans-serif;
+}
+.vlt-search-box .selectize-input,
+.vlt-search-box .selectize-control.single .selectize-input.input-active {
+    font-family: 'Open Sans', sans-serif;
     border: 2px solid #E0DBDB;
+    background-color: #6D6D6D;
+    color: #E5E5E5;
+    border-radius: 2px;
 }
 
 .vlt-search-box .selectize-input.has-error {
@@ -1152,7 +1203,7 @@ span.vlt-user img {
 
 .vlt-search-box .vlt-search-result.active {
     color: #fff;
-    background-color: #2fa4e7;
+    background-color: #31A5E7;
 }
 
 .vlt-search-box .vlt-search-result.vlt-card {
