@@ -81,7 +81,7 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
 
 
         if (!disableTooltip) {
-            var tooltip = 'data-toggle="tooltip" title="{prefix} {name} ({email})"'
+            var tooltip = 'data-toggle="tooltip" data-container="body" title="{prefix} {name} ({email})"'
                 .replace('{prefix}', prefix)
                 .replace('{name}', name)
                 .replace('{email}', email)

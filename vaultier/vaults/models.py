@@ -11,6 +11,7 @@ class Vault(SoftDeleteMixin, ChangesMixin, TreeIterableModelMixin,
             models.Model):
 
     name = models.CharField(max_length=255)
+    color = models.CharField(max_length=30, default='blue')
     slug = models.CharField(max_length=255, default='')
     description = models.CharField(max_length=1024, blank=True, null=True)
     workspace = models.ForeignKey('workspaces.Workspace', on_delete=CASCADE)

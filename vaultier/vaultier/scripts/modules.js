@@ -159,6 +159,7 @@ var vaultierModulesConfig = {
                 "./js/model/mixin/EncryptedModelMixin.js",
                 "./js/model/mixin/RollbackMixin.js",
                 "./js/model/adapter/Adapter.js",
+                "./js/model/Color.js",
                 "./js/model/User.js",
                 "./js/model/Workspace.js",
                 "./js/model/WorkspaceKey.js",
@@ -282,6 +283,7 @@ var vaultierModulesConfig = {
         },
         "vault": {
             "scripts": [
+                "./js/module/Vault/VaultColor.js",
                 "./js/module/Vault/VaultsIndex.js",
                 "./js/module/Vault/VaultsCreate.js",
                 "./js/module/Vault/VaultIndex.js",
@@ -290,11 +292,7 @@ var vaultierModulesConfig = {
                 "./js/module/Vault/VaultHistory.js"
             ],
             "templates": [
-                "./js/module/Vault/VaultsIndex.hbs",
-                "./js/module/Vault/VaultsIndexItem.hbs",
-                "./js/module/Vault/VaultsCreate.hbs",
-                "./js/module/Vault/VaultEdit.hbs",
-                "./js/module/Vault/VaultHistoryIndex.hbs"
+                "./js/module/Vault/**/*.hbs"
             ]
         },
         "card": {

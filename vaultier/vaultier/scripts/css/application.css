@@ -633,128 +633,189 @@ a:hover {
 
 /*************************************************************
 **************************************************************
-* vault item
+* Vault
 *************************************************************
 *************************************************************/
-
+.vlt-vault-index .vlt-page-with-sidebar .vlt-page-content {
+    padding-right: 0px;
+}
+/*************************************************************
+* Vault item
+*************************************************************/
 .vlt-vault-item {
     overflow: hidden;
     position: relative;
-    border-width: 2px;
+    border-width: 1px;
     border-style: solid;
-    border-color: #1686C6;
-    box-shadow: 0px 0px 10px 1px #c1c1c1;
-    border-radius: 6px;
-    width: 410px;
+    border-color: #CACDD0;
+    width: 395px;
     margin-top: 20px;
     margin-right: 20px;
     background-color: #ffffff;
     height: 200px;
 }
-
-.vlt-vault-item .vlt-visual {
-    height: 100%;
-    left: 0;
-    top: 0;
-    position: absolute;
-    width: 100px;
-    background-size: 90px 90px;
-    background-position: 5px -10px;
-    background-repeat: no-repeat;
-    background-image: url('/static/vaultier/images/visual-vault.png');
-    background-color: #1686C6;
+.vlt-vault-item-href {
+    display: block;
+    height: 198px;
 }
-
-.vlt-vault-item .vlt-content {
-    margin-left: 100px;
-    padding: 10px;
-    color: #888888;
-    height: 100%;
+.vlt-vault-item-blue:hover,
+.vlt-vault-item-blue:focus {
+    -webkit-box-shadow: 0px 0px 1px 1px rgba(95, 185, 236, 0.34);
+    -moz-box-shadow:    0px 0px 1px 1px rgba(95, 185, 236, 0.34);
+    box-shadow:         0px 0px 1px 1px rgba(95, 185, 236, 0.34);
+    border: 1px solid #5FB9EC;
 }
-
-.vlt-vault-item .vlt-content .vlt-header {
-    margin-right: 60px;
+.vlt-vault-item-orange:hover,
+.vlt-vault-item-orange:focus {
+    -webkit-box-shadow: 0px 0px 1px 1px rgba(251, 174, 81, 0.34);
+    -moz-box-shadow:    0px 0px 1px 1px rgba(251, 174, 81, 0.34);
+    box-shadow:         0px 0px 1px 1px rgba(251, 174, 81, 0.34);
+    border: 1px solid #FBAE51;
 }
-
-.vlt-vault-item .vlt-content .vlt-header .vlt-icon {
-    position: absolute;
-    right: 0px;
-    top: 0px;
-    width: 60px;
+.vlt-vault-item-purple:hover,
+.vlt-vault-item-purple:focus {
+    -webkit-box-shadow: 0px 0px 1px 1px rgba(190, 121, 189, 0.34);
+    -moz-box-shadow:    0px 0px 1px 1px rgba(190, 121, 189, 0.34);
+    box-shadow:         0px 0px 1px 1px rgba(190, 121, 189, 0.34);
+    border: 1px solid #BE79BD;
+}
+.vlt-vault-item-green:hover,
+.vlt-vault-item-green:focus {
+    -webkit-box-shadow: 0px 0px 1px 1px rgba(127, 211, 54, 0.34);
+    -moz-box-shadow:    0px 0px 1px 1px rgba(127, 211, 54, 0.34);
+    box-shadow:         0px 0px 1px 1px rgba(127, 211, 54, 0.34);
+    border: 1px solid #7FD336;
+}
+.vlt-vault-item-red:hover,
+.vlt-vault-item-red:focus {
+    -webkit-box-shadow: 0px 0px 1px 1px rgba(232, 107, 107, 0.34);
+    -moz-box-shadow:    0px 0px 1px 1px rgba(232, 107, 107, 0.34);
+    box-shadow:         0px 0px 1px 1px rgba(232, 107, 107, 0.34);
+    border: 1px solid #E86D6D;
+}
+.vlt-vault-item .vlt-vault-item-header-icon {
+    display: inline-block;
+    width: 85px;
     height: 60px;
-    border: 2px solid #1686C6;
-    border-right-width: 0px;
-    border-top-width: 0px;
-    border-bottom-left-radius: 6px;
+    background-image: url('../images/icon-vault-white.png');
+    background-position: 22px 11px;
+    background-size: 50%;
+    background-repeat: no-repeat;
 }
-
-.vlt-vault-item .vlt-content .vlt-header .vlt-icon img {
-    width: 100%;
-    height: 100%;
-    border-radius: 6px;
-}
-
-.vlt-vault-item .vlt-content .vlt-header h4 {
-    color: #1686C6;
-    padding: 0px;
-    padding-bottom: 10px;
+.vlt-vault-item .vlt-vault-item-header h2 {
+    display: inline-block;
+    position: relative;
+    top: -15px;
+    width: 300px;
+    color: white;
     margin: 0px;
 }
-
-.vlt-vault-item .vlt-content .vlt-header h4 > span {
-    _display: table-cell;
-    _vertical-align: middle;
+.vlt-vault-item .vlt-vault-item-header-blue {
+    background-color: #32A5E7;
 }
-
-.vlt-vault-item .vlt-content .vlt-description {
-    margin-right: 60px;
-    height: 65px;
+.vlt-vault-item .vlt-vault-item-header-orange {
+    background-color: #F99820;
 }
-
-.vlt-vault-item .vlt-content .vlt-footer {
+.vlt-vault-item .vlt-vault-item-header-purple {
+    background-color: #AF57AE;
+}
+.vlt-vault-item .vlt-vault-item-header-green {
+    background-color: #65AF26;
+}
+.vlt-vault-item .vlt-vault-item-header-red {
+    background-color: #E14342;
+}
+.vlt-vault-item .vlt-vault-item-content {
+    margin-top: 10px;
+    margin-left: 90px;
+    font-size: 115%;
+}
+.vlt-vault-item .vlt-vault-item-content-blue {
+    color: #32A5E7;
+}
+.vlt-vault-item .vlt-vault-item-content-orange {
+    color: #F99820;
+}
+.vlt-vault-item .vlt-vault-item-content-purple {
+    color: #AF57AE;
+}
+.vlt-vault-item .vlt-vault-item-content-green {
+    color: #65AF26;
+}
+.vlt-vault-item .vlt-vault-item-content-red {
+    color: #E14342;
+}
+.vlt-vault-item .vlt-vault-item-footer {
+    color: #A0A2A7;
     position: absolute;
     bottom: 0px;
-    left: 100px;
-    padding: 5px;
+    padding: 5px 9px 5px 6px;
     width: 100%;
     background-color: #F5F5F5;
 }
-
-.vlt-vault-item .vlt-content .vlt-header h4,
-.vlt-vault-item:hover  .vlt-content .vlt-header h4  {
-    transition: color 500ms;
+.vlt-vault-item .vlt-vault-item-footer .vlt-vault-item-footer-user {
+    display: inline-block;
+    float: left;
+}
+.vlt-vault-item .vlt-vault-item-footer .vlt-vault-item-footer-time {
+    display: inline-block;
+    float: right;
 }
 
-.vlt-vault-item:hover,
-.vlt-vault-item:hover .vlt-content .vlt-header .vlt-icon,
-.vlt-vault-item:hover .vlt-visual {
-    transition: border 500ms, background-color 500ms, box-shadow 500ms;
-}
-
-.vlt-vault-item,
-.vlt-vault-item .vlt-content .vlt-header .vlt-icon,
-.vlt-vault-item .vlt-visual {
-    transition: border 500ms, background-color 500ms, box-shadow 500ms;
-}
-
-.vlt-vault-item:hover  .vlt-content .vlt-header h4 {
-    color: #50B2EA;
-}
-
-.vlt-vault-item:hover {
-    box-shadow: 0px 0px 20px 1px #b4b4b4;
-}
-
-.vlt-vault-item:hover,
-.vlt-vault-item:hover .vlt-content .vlt-header .vlt-icon {
+/*************************************************************
+* Color chooser
+*************************************************************/
+.color-chooser .color-picker {
+    display: inline-block;
     cursor: pointer;
-    border-color: #50B2EA;
+    width: 60px;
+    height: 60px;
 }
-
-.vlt-vault-item:hover .vlt-visual {
-    background-color: #50B2EA;
+.color-chooser .color-picker-blue {
+    background-color: #8DCDF2;
+    width: 60px;
+    height: 60px;
 }
-
+.color-chooser .color-picker.selected .color-picker-blue {
+    background-color: #32A5E7;
+    border: 2px solid #555555;
+}
+.color-chooser .color-picker-orange {
+    background-color: #FCC582;
+    width: 60px;
+    height: 60px;
+}
+.color-chooser .color-picker.selected .color-picker-orange {
+    background-color: #F99820;
+    border: 2px solid #555555;
+}
+.color-chooser .color-picker-purple {
+    background-color: #CF9BCE;
+    width: 60px;
+    height: 60px;
+}
+.color-chooser .color-picker.selected .color-picker-purple {
+    background-color: #AF57AE;
+    border: 2px solid #555555;
+}
+.color-chooser .color-picker-green {
+    background-color: #9ADC60;
+    width: 60px;
+    height: 60px;
+}
+.color-chooser .color-picker.selected .color-picker-green {
+    background-color: #65AF26;
+    border: 2px solid #555555;
+}
+.color-chooser .color-picker-red {
+    background-color: #EC8383;
+    width: 60px;
+    height: 60px;
+}
+.color-chooser .color-picker.selected .color-picker-red {
+    background-color: #E14342;
+    border: 2px solid #555555;
+}
 
 /*************************************************************
 **************************************************************

@@ -3,6 +3,7 @@ Vaultier.Vault = RL.Model.extend(
     Vaultier.RollbackMixin,
     {
         name: RL.attr('string'),
+        color: RL.attr('string'),
         slug: RL.attr('string'),
         workspace: RL.attr('number'),
         description: RL.attr('string'),
