@@ -951,17 +951,14 @@ a:hover {
     margin: 0px;
     background-color: #555555;
 }
-
-.vlt-navbar .vlt-logo {
-    width: 32px;
-    height: 32px;
+.vlt-navbar .vlt-navbar-brand {
+    height: 100%;
+    padding: 12px 15px 12px 15px;
 }
-
-.vlt-navbar .vlt-brand {
-    font-size: 32px;
-    line-height: 32px;
-    vertical-align: middle;
-    display: inline-block;
+.vlt-navbar .vlt-logo {
+    width: 200px;
+    height: 40px;
+    padding: 0px;
 }
 
 .vlt-navbar .navbar-right {
