@@ -1,23 +1,31 @@
-<div class="vlt-card-item pull-left">
-    {{#link-to 'Card.index' this }}
-
-        <div class="vlt-visual">
+{{#link-to 'Card.index' this class='vlt-card-item-href'}}
+    <div class="vlt-card-background-div vlt-card-background-div-left vlt-border-{{unbound view.controller.vault.color}}-light">
+        <div class="vlt-card-item-header vlt-background-{{unbound view.controller.vault.color}}-light">
         </div>
-        <div class="vlt-content">
-            <div class="vlt-header">
-                <h4>{{dot-dot-dot value=name height=60}}</h4>
-            </div>
-            <div class="vlt-description">
-                {{#if description}}
-                    {{dot-dot-dot value=description height=200}}
-                {{else}}
-                    No description given
-                {{/if}}
-            </div>
-            <div class="vlt-footer">
+    </div>
+    <div class="vlt-card-background-div vlt-card-background-div-right vlt-border-{{unbound view.controller.vault.color}}-light">
+        <div class="vlt-card-item-header vlt-background-{{unbound view.controller.vault.color}}-light">
+        </div>
+    </div>
+    <div class="vlt-card-frontend-div vlt-border-{{unbound view.controller.vault.color}}">
+        <div class="vlt-card-item-header vlt-background-{{unbound view.controller.vault.color}}">
+            <div class="vlt-card-item-header-icon"></div>
+            <h2>{{dot-dot-dot value=name height=60}}</h2>
+        </div>
+        <div class="vlt-card-item-content vlt-font-{{unbound view.controller.vault.color}}">
+            {{#if description}}
+                {{dot-dot-dot value=description height=200}}
+            {{else}}
+                No description
+            {{/if}}
+        </div>
+        <div class="vlt-card-item-footer">
+            <div class="vlt-card-item-footer-user">
                 {{printUser created_by  ellipsis=12 prefix='Created by:'}}
+            </div>
+            <div class="vlt-card-item-footer-time">
                 {{printAgo updated_at prefix='Last modified at:' }}
             </div>
         </div>
-    {{/link-to}}
-</div>
+    </div>
+{{/link-to}}

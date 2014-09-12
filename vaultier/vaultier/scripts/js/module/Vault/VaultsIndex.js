@@ -59,5 +59,12 @@ Vaultier.VaultsIndexView = Ember.View.extend({
 
 
 Vaultier.VaultIndexItemView = Ember.View.extend({
-    templateName: 'Vault/VaultsIndexItem'
+    templateName: 'Vault/VaultsIndexItem',
+    classNameBindings: ['selected:selected'],
+    mouseEnter: function() {
+        this.set('selected', 'selected');
+    },
+    mouseLeave: function() {
+        this.set('selected', null);
+    }
 });

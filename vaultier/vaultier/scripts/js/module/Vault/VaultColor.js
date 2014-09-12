@@ -4,17 +4,22 @@ Vaultier.VaultColor = Ember.View.extend({
         if (this.get('value') == null) {
             this.set('value', 'blue');
         }
+        this.prepareColorPicker();
+
+        this._super();
+    },
+    prepareColorPicker: function () {
         var colorsAndSelected = [];
         Vaultier.Color.proto().colors.forEach(function (color) {
             colorsAndSelected.addObject({
                 'value': color,
                 'selected': color == this.get('value'),
-                'css': 'color-picker-' + color
+                'css': (color == this.get('value')
+                    ? 'color-picker-base vlt-background-' + color
+                    : 'color-picker-base vlt-background-' + color + '-light')
             });
         }.bind(this));
         this.set('colors', colorsAndSelected);
-
-        this._super();
     },
     actions: {
         changeColor: function (color) {
@@ -22,8 +27,10 @@ Vaultier.VaultColor = Ember.View.extend({
             this.get('colors').forEach(function (color) {
                 if (Ember.get(color, 'value') == this.get('value')) {
                     Ember.set(color, 'selected', 'selected');
+                    Ember.set(color, 'css', 'color-picker-base vlt-background-' + color.value)
                 } else {
                     Ember.set(color, 'selected', null);
+                    Ember.set(color, 'css', 'color-picker-base vlt-background-' + color.value + '-light')
                 }
             }.bind(this));
         }
