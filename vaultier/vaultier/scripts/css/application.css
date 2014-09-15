@@ -609,7 +609,7 @@ a:hover {
     display: table-cell;
     position: relative;
     vertical-align: top;
-    width: 250px;
+    width: 260px;
     max-width: 250px;
     background-color: #F5F5F5;
     border: 1px solid #E0DBDB;
@@ -1440,15 +1440,6 @@ span.vlt-user img {
 *************************************************************
 *************************************************************/
 
-.vlt-secret-box {
-    border-radius: 6px;
-    position: relative;
-    margin-top: 70px;
-    padding: 30px 20px 20px 20px;
-    background-color: #1686c6;
-    box-shadow: 0px 0px 10px 1px #c1c1c1;
-}
-
 /**
 * aspect ratio:
 * http://stackoverflow.com/questions/12121090/responsively-change-div-size-keeping-aspect-ratio
@@ -1459,121 +1450,90 @@ span.vlt-user img {
     content: '';
 }
 
-
-.vlt-secret-box > .vlt-visual {
-    position: relative;
-    width: 100%;
-    height: 5px;
-}
-
-.vlt-secret-box > .vlt-visual > .vlt-visual-bg {
-    position: absolute;
-    top: -60px;
-    height: 100px;
-    width: 100%;
-    background-image: url('/static/vaultier/images/visual-secret.png');
-    background-repeat: repeat-x;
-
-}
-
 .vlt-secret-box .vlt-secret-item {
     position: relative;
-    border: 1px solid #e0dbdb;
-    border-top-width: 0px;
-    background-color: #EEEEEE;
+    border: 1px solid white;
+    box-shadow: 0px 0px 5px #888888;
+    background-color: #ffffff;
+    margin-bottom: 1em;
+    height: 100%;
 }
-
-.vlt-secret-box .vlt-secret-item:first-of-type {
-    border-top-width: 1px;
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
+.vlt-secret-box .vlt-secret-item-base {
+    margin: 7px;
+    min-height: 300px;
 }
-
-.vlt-secret-box .vlt-secret-item:first-of-type .vlt-inner {
-    border-top-right-radius: 6px;
-    border-top-left-radius: 6px;
-}
-
-.vlt-secret-box .vlt-secret-item:last-of-type {
-    border-bottom-left-radius: 6px;
-    border-bottom-right-radius: 6px;
-}
-
-.vlt-secret-box .vlt-secret-item:last-of-type .vlt-inner {
-    border-bottom-right-radius: 6px;
-}
-
-.vlt-secret-box .vlt-secret-item .vlt-visual {
+/*************************************************************
+* Secret left panel
+*************************************************************/
+.vlt-secret-box .vlt-secret-item .vlt-left-panel {
+    min-height: 300px;
+    padding: 0px;
+    width: 120px;
     position: absolute;
-    left: 0px;
-    top: 0px;
-    padding: 10px;
+    left: 7px;
+    top: 7px;
 }
-
-.vlt-secret-box .vlt-secret-item .vlt-visual .vlt-icon {
+.vlt-secret-box .vlt-secret-item .vlt-left-panel .vlt-wrapper {
+    margin: 10px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+.vlt-secret-box .vlt-secret-item .vlt-left-panel .vlt-icon {
     background-size: 100% 100%;
     height: 100px;
     width: 100px;
 }
-
-.vlt-secret-box .vlt-secret-item .vlt-secret-item-password .vlt-visual .vlt-icon {
+.vlt-secret-box .vlt-secret-item .vlt-secret-item-password .vlt-left-panel .vlt-icon {
     background-image: url('../images/icon-password-white.png');
 }
-
-.vlt-secret-box .vlt-secret-item .vlt-secret-item-note .vlt-visual .vlt-icon {
+.vlt-secret-box .vlt-secret-item .vlt-secret-item-note .vlt-left-panel .vlt-icon {
     background-image: url('../images/icon-note-white.png');
 }
 
-.vlt-secret-box .vlt-secret-item .vlt-secret-item-file .vlt-visual .vlt-icon {
+.vlt-secret-box .vlt-secret-item .vlt-secret-item-file .vlt-left-panel .vlt-icon {
     background-image: url('../images/icon-file-white.png');
 }
-
-.vlt-secret-box .vlt-secret-item .vlt-visual .vlt-type {
+.vlt-secret-box .vlt-secret-item .vlt-left-panel .vlt-type {
     color: #ffffff;
     font-size: 20px;
     text-align: center;
     font-weight: bold;
 }
-
-.vlt-secret-box .vlt-secret-item .vlt-inner {
+/*************************************************************
+* Secret right panel
+*************************************************************/
+.vlt-secret-box .vlt-secret-item .vlt-right-panel {
+    min-height: 300px;
+    margin-left: 140px;
+    margin-right: 10px;
     position: relative;
-    padding: 20px;
-    background-color: #ffffff;
-    margin-left: 120px;
-    min-height: 150px;
+    height: 100%;
+}
+.vlt-secret-box .vlt-secret-item .vlt-right-panel h3 {
+    margin-top: 8px;
 }
 
-.vlt-secret-box .vlt-secret-item .vlt-inner .vlt-attr-name {
-    background-color: #F5F5F5;
+.vlt-secret-box .vlt-secret-item .vlt-secret-item-controls {
+    width: 100%;
+    position: absolute;
+    bottom: 0px;
 }
-
-.vlt-secret-box .vlt-secret-item .vlt-inner .vlt-attrs {
-    min-height: 100px;
-}
-
-.vlt-secret-box .vlt-secret-item .vlt-inner .vlt-controls .vlt-buttons {
-    padding: 0px;
-}
-
-.vlt-secret-box .vlt-secret-item.vlt-inner .vlt-controls .vlt-author {
-    padding: 0px;
-}
-
-.vlt-secret-box .vlt-secret-item .vlt-inner .vlt-controls .vlt-buttons .btn-group {
-    float: right;
-}
-
-.vlt-secret-box .vlt-secret-item .vlt-inner .vlt-attr-name:after {
-    __content: ':'
-}
-
-.vlt-secret-box .vlt-secret-item {
-    border-top-width: 4px;
-}
-
 .vlt-secret-box .vlt-secret-item .vlt-footer-item.help-block {
     margin-bottom: 0px;
     margin-top: 0px;
+}
+.vlt-secret-box .vlt-secret-item .vlt-footer-item.help-block {
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+.vlt-secret-box .vlt-secret-item .vlt-secret-item-controls .vlt-author {
+    padding-left: 0px;
+}
+.vlt-secret-box .vlt-secret-item .vlt-secret-item-controls .vlt-buttons {
+    padding-right: 0px;
+    padding-bottom: 5px;
+
 }
 
 /*************************************************************
