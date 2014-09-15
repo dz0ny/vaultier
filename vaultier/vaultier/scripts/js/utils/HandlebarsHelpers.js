@@ -65,6 +65,9 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
         var size = options.hash.size || 25;
         var length = options.hash.ellipsis || 60;
         var prefix = options.hash.prefix || '';
+        var dataContainer = (options.hash.container)
+            ? 'data-container=".' + options.hash.container + '"'
+            : '';
         var disableTooltip = options.hash.disableTooltip || false;
         var disableName = options.hash.disableName || false;
         var displayEmailInsideBrackets = options.hash.displayEmailInsideBrackets || false;
@@ -81,7 +84,8 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
 
 
         if (!disableTooltip) {
-            var tooltip = 'data-toggle="tooltip" data-container="body" title="{prefix} {name} ({email})"'
+            var tooltip = 'data-toggle="tooltip" {dataContainer} title="{prefix} {name} ({email})"'
+                .replace('{dataContainer}', dataContainer)
                 .replace('{prefix}', prefix)
                 .replace('{name}', name)
                 .replace('{email}', email)
