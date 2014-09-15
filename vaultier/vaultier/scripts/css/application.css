@@ -198,6 +198,7 @@ a:hover {
 .btn-file {
     position: relative;
     overflow: hidden;
+    font-size: 100%;
 }
 
 .btn-file input[type=file] {
@@ -1356,16 +1357,6 @@ span.vlt-user img {
 }
 .vlt-register .vlt-register-key .vlt-register-key-info {
     margin-top: 10px;
-}
-
-/*************************************************************
-**************************************************************
-* login
-*************************************************************
-*************************************************************/
-.vlt-login .vlt-login-key,
-.vlt-login .vlt-login-switch {
-    min-width: 120px;
 }
 
 /*************************************************************
