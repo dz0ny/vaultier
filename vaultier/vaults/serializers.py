@@ -23,4 +23,4 @@ class VaultSerializer(serializers.ModelSerializer):
 class RelatedVaultSerializer(VaultSerializer):
     
     class Meta(VaultSerializer.Meta):
-        fields = ['id', 'slug', 'name']
+        fields = ['id', 'slug', 'name', 'color']

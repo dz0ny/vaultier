@@ -7,17 +7,27 @@ Vaultier.LayoutSearchBoxView = Ember.View.extend({
 
     vaultTpl: [
         '<div class="vlt-search-result vlt-{{type}}">',
-        '<div class="vlt-line vlt-name">{{name}}</div>',
-        '<div class="vlt-line vlt-path help-block">{{workspace.name}} >  {{name}}</div>',
-        '<div class="vlt-line vlt-desc help-block">{{description}}</div>',
+            '<div class="vlt-left-panel">',
+                '<div class="vlt-icon vlt-background-{{color}}"></div>',
+            '</div>',
+            '<div class="vlt-right-panel">',
+                '<div class="vlt-name">{{name}}</div>',
+                '<div class="vlt-path help-block">{{workspace.name}} >  {{name}}</div>',
+                '<div class="vlt-desc help-block">{{description}}</div>',
+            '</div>',
         '</div>'
     ].join(''),
 
     cardTpl: [
         '<div class="vlt-search-result vlt-{{type}}">',
-        '<div class="vlt-line vlt-name">{{name}}</div>',
-        '<div class="vlt-line vlt-path help-block">{{workspace.name}} > {{vault.name}} > {{name}}</div>',
-        '<div class="vlt-line vlt-desc help-block">{{description}}</div>',
+            '<div class="vlt-left-panel">',
+                '<div class="vlt-icon vlt-background-{{vault.color}}"></div>',
+            '</div>',
+            '<div class="vlt-right-panel">',
+                '<div class="vlt-name">{{name}}</div>',
+                '<div class="vlt-path help-block">{{workspace.name}} > {{vault.name}} > {{name}}</div>',
+                '<div class="vlt-desc help-block">{{description}}</div>',
+            '</div>',
         '</div>'
     ].join(''),
 

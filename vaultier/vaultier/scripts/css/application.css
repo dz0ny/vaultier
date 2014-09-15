@@ -1208,17 +1208,24 @@ span.vlt-user img {
 
 .vlt-search-box .vlt-search-result {
     padding: 6px;
-    padding-left: 45px;
-    background-position: 5px 7px;
-    background-size: 32px 32px;
-    background-repeat: no-repeat;
     border-bottom: 1px solid #E0DBDB;
+    position: relative;
 }
 
 /**
     Selectize dropdown result items
 **/
-.vlt-search-box .vlt-search-result .vlt-line {
+
+.vlt-search-box .vlt-search-result .vlt-left-panel {
+    width: 45px;
+    display: inline-block;
+}
+.vlt-search-box .vlt-search-result .vlt-right-panel {
+    display: inline-block;
+    position: absolute;
+}
+
+.vlt-search-box .vlt-search-result {
     white-space: nowrap !important;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -1262,20 +1269,22 @@ span.vlt-user img {
     background-color: #31A5E7;
 }
 
-.vlt-search-box .vlt-search-result.vlt-card {
-    background-image: url('../images/icon-card-grey.png');
-}
-
-.vlt-search-box .vlt-search-result.vlt-card.active {
+.vlt-search-box .vlt-search-result.vlt-card .vlt-icon {
     background-image: url('../images/icon-card-white.png');
+    background-repeat: no-repeat;
+    background-size: 33px 33px;
+    background-position: 3px 3px;
+    height: 40px;
+    width: 40px;
 }
 
-.vlt-search-box .vlt-search-result.vlt-vault {
-    background-image: url('../images/icon-vault-grey.png');
-}
-
-.vlt-search-box .vlt-search-result.vlt-vault.active {
+.vlt-search-box .vlt-search-result.vlt-vault .vlt-icon {
     background-image: url('../images/icon-vault-white.png');
+    background-repeat: no-repeat;
+    background-size: 33px 33px;
+    background-position: 3px 3px;
+    height: 40px;
+    width: 40px;
 }
 
 /*************************************************************
