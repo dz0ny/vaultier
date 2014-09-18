@@ -101,6 +101,11 @@ If anything goes wrong -- say you did not have some library installed -- you
 can correct the problem and run the `pip install vaultier` command again
 without any consequences.
 
+When everything is ready, you need to update your environment for the setup
+like so::
+
+    export PYTHONPATH="${PYTHONPATH}:/opt/vaultier/venv/local/lib/python2.7/site-packages/vaultier
+
 ===========================
 Create a Configuration File
 ===========================

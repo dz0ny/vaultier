@@ -1,5 +1,3 @@
-from distutils.sysconfig import get_python_lib
-import os
 import sys
 from django.utils.crypto import get_random_string
 from logan.runner import run_app
@@ -98,10 +96,6 @@ def _generate_settings():
 
 
 def main():
-    sys.path.append(
-        os.path.join(get_python_lib(), 'vaultier')
-    )
-    raise Exception(sys.path)
     run_app(
         project='vaultier',
         default_config_path='vaultier.conf.py',
