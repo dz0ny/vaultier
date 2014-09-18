@@ -50,13 +50,19 @@ virtualenv_. We're installing in the `/opt/vaultier` directory. Create it now::
     mkdir -p /opt/vaultier
     cd /opt/vaultier
 
-You will need to install some system libraries, so that once we get to
-installing Vaultier, it can build it's dependencies::
+You will need to install some system libraries and software, so that once we
+get to installing Vaultier, it can build it's dependencies. Also, we need tools
+for deployment (Nginx, uWSGI and Supervisord)::
 
     sudo apt-get install postgresql postgresql-contrib
+    sudo apt-get install nginx
+    sudo apt-get install supervisord
+    sudo apt-get install uwsgi
     sudo apt-get install python
     sudo apt-get install python-dev
-    sudo apt-get install python-pip
+
+
+Chances are that some if not all of those things are on your system already.
 
 Now, create your new virtual environment::
 
@@ -94,8 +100,6 @@ If anything goes wrong -- say you did not have some library installed -- you
 can correct the problem and run the `pip install vaultier` command again
 without any consequences.
 
-.. attention:: Docs fixed up to here.
-
 ===========================
 Create a Configuration File
 ===========================
@@ -122,9 +126,47 @@ course.
 .. |FQDN| replace:: fully qualified domain name
 
 
-=======================
-Check the Configuration
-=======================
+=============================
+Check and Update the Settings
+=============================
+
+Wherever you created the `vaultier.conf.py` file, you should now open it and
+inspect it's contents. What you can configure:
+
+*RAVEN_CONFIG*
+  If you opt to use Sentry for monitoring your instance for _backend_ errors,
+  you can set the DSN here
+
+*ALLOWED_HOSTS*
+  Set a list of domains, where the app will run. This should be preconfigured
+  for you, if you filled in the FQDN during the `vaultier init` step.
+  Otherwise, you will see an `www.example.com` entry that you should change to
+  whatever your FQDN is.
+
+*FT_FEATURES*
+  This is a dictionary, in which you see the `raven_key` entry, set to empty
+  string. Again, you can set this to your Sentry DSN, if you want to monitor
+  _frontend_ errors
+
+*DATABASES*
+  Fill out the connection details for your DB. You should focus on _NAME_,
+  _USER_, _PASSWORD_, _HOST_ and _PORT_ settings, the engine will be prefilled
+  for you based on your answer during the `vaultier init` step.
+
+*SITE_URL*
+  Similarly to *ALLOWED_HOSTS*, this should list the full path to your Vaultier
+  instance including protocol and shoul be prefilled. If you see
+  `https://www.example.com`, then you need to adjust this accordingly.
+
+*EMAIL_<key>*
+ This configures settings to your mail server, which you should set up
+ accordingly. Vaultier relies on sending invitations and such, so this is
+ needed for production setup
+
+
+==========================
+Finish Up the Installation
+==========================
 
 Once you are done with configuration, you need to check that everything is set
 up correctly, to do this, first run this command::
@@ -141,54 +183,44 @@ If you successfully connect, you are set to go. Otherwise, you may see an error
 indicating that your DB settings are incorrect. Fix them and try again.
 To exit the PostgreSQL shell, type `\q`.
 
+Now, the only thing that remains is to create your database. To do this, simply
+run::
+
+    vaultier setup
+
+This will complete the rest of the required steps and the application is ready
+to be deployed to production.
+
+To verify that everything is okay, you can run this command::
+
+    vaultier runserver
+
+After this, point your browser to `127.0.0.1` address and port `8000`. You will
+see *blank* page. This is to be expected, because you did not setup your web
+server yet. However, you should not see any error messages. If you do not, you
+can proceed. After you're done checking, just CTRL^C.
+
 =============
 Create a User
 =============
-We need to create a user for Vaultier, so using normal OS procedures::
+
+We want to run Vaultier under a unprivileged user. So using standard OS
+tools::
 
     useradd -d /opt/vaultier -s /bin/bash vaultier
-    passwd vaultier
 
 
+With this set, just `chown` the entire directory::
 
-==============
-Prepare config
-==============
+    chown -R vaultier:vaulter /opt/vaultier
 
-::
 
-    cp vaultier/vaultier/dev.py vaultier/vaultier/dev_whatever.py
-    export DJANGO_SETTINGS_MODULE=vaultier.settings.dev_whatever
-    mcedit sources/app/settings.py
-
-If you name your dev config dev_<varible>.py, you won't deal with gitignore
-
-================
-Prepare database
-================
-::
-
-    su - postgres
-    psql
-    # create user and db
-    create user "vaultier" with password "vaultier";
-    create database "vaultier" owner "vaultier";
-    \c vaultier
-
-    # grant
-    grant all on all tables in schema public to "vaultier";
-    CTRL+] or \q
-    exit
-
-    # migrate
-    cd vaultier
-    ./manage.py syncdb
-    ./manage.py migrate
-
+.. warning:: Documenation fixed up here
 
 ===============
-Configure nginx
+Configure Nginx
 ===============
+
 ::
 
     cp cfg/nginx.conf-dist cfg/nginx.conf

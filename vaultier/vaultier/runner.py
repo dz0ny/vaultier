@@ -3,13 +3,15 @@ from logan.runner import run_app
 
 
 CONFIG_TEMPLATE = '''"""\nVaultier configuration file\n"""\n
-from vaultier.settings.base import *
+from vaultier.settings.prod import *
 
 RAVEN_CONFIG = {
     'dsn': ''
 }
 
 ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
     '$(DOMAIN)',
 ]
 
@@ -32,9 +34,7 @@ DATABASES = {
 }
 
 # url of site used in emailing, templates and so.
-SITE_URL = 'http://$(DOMAIN)/'
-
-COMPRESS_ENABLED = 1
+SITE_URL = 'https://$(DOMAIN)/'
 
 # Email configuration
 EMAIL_HOST = 'localhost'
@@ -97,7 +97,7 @@ def _generate_settings():
 def main():
     run_app(
         project='vaultier',
-        default_config_path='~/.vaultier/vaultier.conf.py',
+        default_config_path='vaultier.conf.py',
         default_settings='vaultier.settings.prod',
         settings_initializer=_generate_settings,
         settings_envvar='VAULTIER_CONF'
