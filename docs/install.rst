@@ -59,6 +59,7 @@ for deployment (Nginx, uWSGI and Supervisord)::
     sudo apt-get install supervisord
     sudo apt-get install uwsgi
     sudo apt-get install python
+    sudo apt-get install python-virtualenv
     sudo apt-get install python-dev
 
 
@@ -222,7 +223,6 @@ Configure Nginx
 ===============
 
 ::
-
     cp cfg/nginx.conf-dist cfg/nginx.conf
     mcedit cfg/nginx.conf
 
@@ -231,21 +231,9 @@ Configure Nginx
     chmod -R 755 /opt/vaultier/sources/static
 
 
-
-=============
-Test vaultier
-=============
-::
-
-
-    ./bin/vaultier_start <virtual_env_>/bin/activate
-    CTRL+C
-
-
-
-===================
-Install supervisord
-===================
+======================
+Configure Supervisord
+======================
 ::
 
     sudo apt-get install supervisor
@@ -266,10 +254,13 @@ Start stop restart
     supervisorctl status vaultier:
     supervisorctl restart vaultier:
 
-================================================
-To allow user vaultier to start restart and stop
-================================================
-::
+=================================================================
+To Allow `vaultier` User to Start, Restart and Stop It's Services
+=================================================================
+
+You may consider this as a nice-to-have. Since we have a user under which
+Vaultier runs, we may as well, enable him to restart all the related services.
+To achieve this, we add him to sudoers for specific commands.::
 
     create file /etc/sudoers.d/vaultier
     echo "" > /etc/sudoers.d/vaultier
