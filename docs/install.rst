@@ -255,18 +255,23 @@ file (`vaultier`) with your favorite editor and put this in it::
     chmod-socket=777
     chown-socket=vaultier
     listen=1000
+    logger = file:/opt/vaultier/logs/uwsgi.log
 
 Safe the file and restart uwsgi::
 
     sudo service uwsgi restart
 
-After this, consult your log files that uwsgi started. On Ubuntu (and Debian)
-systems, you will find this in `/var/log/uwsgi/app/vaultier.log`
+After this, consult your log files that uwsgi has started. You will find them
+in `/opt/vaultier/logs/uwsgi.log`
 
 
 ===============
 Configure Nginx
 ===============
+
+.. warning:: If you already have a running webserver, you probably want to skip
+    this step and configure it yourself.
+
 In a similar fashion as uWSGI, we need to configure Nginx to work as a proxy
 to our deployed uWSGI app. Navigate to nginx config directory and create and
 enable the configuration file::
@@ -280,7 +285,11 @@ settings file::
 
     server {
             server_name www.example.com;
+            listen   *:80;
             client_max_body_size 10M;
+
+            access_log /opt/vaultier/logs/nginx-access.log;
+            error_log /opt/vaultier/logs/nginx-error.log;
 
             location / {
                 include uwsgi_params;
@@ -301,8 +310,8 @@ Vaultier is going to be run. When you're done, you can restart nginx::
 
     sudo service nginx restart
 
-Again, you can consult nginx logs to see, whether this worked properly, usually
-located in `/var/log/nginx` directory.
+Again, you can consult nginx logs to see, whether this worked properly, located
+in `/opt/vaultier/logs` directory.
 
 =======================
 Verify the Installation
@@ -313,7 +322,8 @@ Verify the Installation
 ======================
 Configure Supervisord
 ======================
-::
+
+what to do::
 
     cp cfg/supervisord.conf-dist /etc/supervisor/conf.d/vaultier.conf
     supervisorctl reread
@@ -321,20 +331,58 @@ Configure Supervisord
     supervisorctl status vaultier:
     /etc/init.d/nginx restart
 
+config::
 
-==================
-Start stop restart
-==================
-::
+    [program:vaultier-worker]
+    command=/opt/vaultier/venv/bin/celery -A vaultier worker
+    directory=/opt/vaultier/vaultier
+    environment=PATH="/opt/vaultier/venv/bin:",DJANGO_SETTINGS_MODULE="app.settings",PYTHONPATH=/opt/vaultier/sources
+    user=vaultier
+    numprocs=1
+    autostart=true
+    autorestart=true
+    startsecs=1
+    stopwaitsecs = 600
 
-    /etc/init.d/nginx restart
+    [program:vaultier-celerybeat]
+    command=/opt/vaultier/venv/bin/celery -A vaultier beat
+    directory=/opt/vaultier/vaultier
+    environment=PATH="/opt/vaultier/venv/bin:",DJANGO_SETTINGS_MODULE="app.settings",PYTHONPATH=/opt/vaultier/sources
+    user=vaultier
+    numprocs=1
+    autostart=true
+    autorestart=true
+    startsecs=1
+    stopwaitsecs = 600
 
-    supervisorctl status vaultier:
-    supervisorctl restart vaultier:
+    [group:vaultier]
+    programs=vaultier-celerybeat,vaultier-worker
 
-=================================================================
-To Allow `vaultier` User to Start, Restart and Stop It's Services
-=================================================================
+
+===============================
+Start,  Stop & Restart Vaultier
+===============================
+
+To restart (or stop and start) the Vaultier application and it's associated
+services, you may use these commands::
+
+    sudo service uwsgi start/stop/restart
+    sudo supervisorctl restart start/stop/vaultier
+
+To check status of services managed by `supervisord`, you can also use this
+command::
+
+    supervisorctl status vaultier
+
+If anything goes south, remember to check the logs available in
+`/opt/vaultier/logs` directory.
+
+==============================================================
+Allow `vaultier` User to Start, Restart and Stop It's Services
+==============================================================
+
+.. note:: This step is optional and is up to you whether you want to allow such
+    behavior
 
 You may consider this as a nice-to-have. Since we have a user under which
 Vaultier runs, we may as well, enable him to restart all the related services.
@@ -361,3 +409,16 @@ To achieve this, we add him to sudoers for specific commands.::
     echo vaultier ALL = (root) NOPASSWD:/usr/local/bin/uwsgi  start vaultier >> /etc/sudoers.d/vaultier
     echo vaultier ALL = (root) NOPASSWD:/usr/local/bin/uwsgi  stop vaultier >> /etc/sudoers.d/vaultier
     echo vaultier ALL = (root) NOPASSWD:/usr/local/bin/uwsgi  status vaultier >> /etc/sudoers.d/vaultier
+
+===============
+Troubleshooting
+===============
+
+--------------------------------------------------------------------------
+When I navigate to Vaultier, I see only text, but no images or theme/style
+--------------------------------------------------------------------------
+
+You have pointed nginx to a bad directory. The ``Location /static`` directive
+has to be set to where Vaultiers static files reside, which is in
+`/opt/vaultier/vaultier/vaultier/static`. Double check that this is the case.
+Also, consult the nginx logs.

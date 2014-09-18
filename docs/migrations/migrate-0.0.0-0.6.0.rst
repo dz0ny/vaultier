@@ -12,6 +12,7 @@ Stop vaultier
 ::
 
     sudo supervisorctl stop vaultier
+    sudo service uwsgi stop vaultier
 
 
 Backup database
@@ -45,5 +46,6 @@ Start vaultier
 ==============
 ::
 
+    sudo service uwsgi start vaultier
     sudo supervisorctl start vaultier
 
