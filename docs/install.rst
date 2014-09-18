@@ -237,6 +237,10 @@ directory of uWSGI and create a new config file and symlink it to
     ln -s /etc/uwsgi/apps-available/vaultier ../apps-enabled
 
 
+.. note:: You can find the configuration template in
+    ``/opt/vaultier/venv/vaultier-config-examples/uwsgi``, if you have your
+    virtualenv in ``/opt/vaultier/venv`` directory
+
 Now, you need to edit the configuration. Basically, just open the just created
 file (`vaultier`) with your favorite editor and put this in it::
 
@@ -279,6 +283,10 @@ enable the configuration file::
     cd /etc/nginx/sites-available
     sudo touch vaultier
     sudo ln -s /etc/nginx/sites-available/vaultier ../sites-enabled
+
+.. note:: You can find the configuration template in
+    ``/opt/vaultier/venv/vaultier-config-examples/nginx``, if you have your
+    virtualenv in ``/opt/vaultier/venv`` directory
 
 Now, edit the configuration file with your favorite editor. Put this in the
 settings file::
@@ -332,6 +340,10 @@ supervisors configuration directory::
 
     cd /etc/supervisor/cond.f
     touch vaultier.conf
+
+.. note:: You can find the configuration template in
+    ``/opt/vaultier/venv/vaultier-config-examples/supervisord``, if you have
+    your virtualenv in ``/opt/vaultier/venv`` directory
 
 Now, open the ``vaultier.conf`` file in your editor of choice and put the
 following contents inside::

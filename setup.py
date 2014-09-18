@@ -46,6 +46,12 @@ setup(
             'vaultier = vaultier.runner:main'
         ],
     },
+    data_files = [
+        (
+            'vaultier-config-examples',
+            ['cfg/nginx', 'cfg/supervisord', 'cfg/uwsgi']
+        )
+    ],
     packages=['vaultier', ],
     author=u"rclick s.r.o.",
     author_email='info@rclick.cz',
