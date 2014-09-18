@@ -55,7 +55,7 @@ Therefore, on Ubuntu/Debian, run this::
 
     sudo apt-get install postgresql postgresql-contrib python python-dev python-pip
 
-Also, virtualenv is recommended, as per usual
+Also, virtualenv is recommended, as per usual.
 
 Development and testing
 -----------------------

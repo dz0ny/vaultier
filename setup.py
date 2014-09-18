@@ -52,5 +52,5 @@ setup(
     zip_safe=True,
     include_package_data = True,
     description="Vaultier project backend",
-    version="0.6.5"
+    version="0.7.0"
 )

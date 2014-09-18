@@ -56,7 +56,7 @@ for deployment (Nginx, uWSGI and Supervisord)::
 
     sudo apt-get install postgresql postgresql-contrib
     sudo apt-get install nginx
-    sudo apt-get install supervisord
+    sudo apt-get install supervisor
     sudo apt-get install uwsgi
     sudo apt-get install python
     sudo apt-get install python-virtualenv
@@ -224,24 +224,97 @@ With this set, just `chown` the entire directory::
 .. warning:: Documenation fixed up here
 
 ===============
-Configure Nginx
+Configure uWSGI
 ===============
 
-::
-    cp cfg/nginx.conf-dist cfg/nginx.conf
-    mcedit cfg/nginx.conf
+Okay, at this point, you want to configure to run Vaultier under uWSGI as a
+WSGI wrapper. This is rather simple to do. Navigate to `apps-available`
+directory of uWSGI and create a new config file and symlink it to
+`apps-enabled`::
 
-    sudo ln -s /opt/vaultier/cfg/nginx.conf /etc/nginx/sites-enabled/vaultier
-    sudo chmod 0777 -R /var/opt/vaultier/run/
-    chmod -R 755 /opt/vaultier/sources/static
+    cd /etc/uwsgi/apps-available
+    touch vaultier
+    ln -s /etc/uwsgi/apps-available/vaultier ../apps-enabled
 
+
+Now, you need to edit the configuration. Basically, just open the just created
+file (`vaultier`) with your favorite editor and put this in it::
+
+    [uwsgi]
+    workers=4
+    max-requests=10000
+    chdir=/opt/vaultier
+    module=vaultier.wsgi:application
+    home=/opt/vaultier/venv
+    pythonpath=/opt/vaultier:/opt/vaultier/venv/vaultier/lib/python2.7/site-packages/vaultier/
+    env=DJANGO_SETTINGS_MODULE=vaultier_conf
+    vacuum=true
+    no-orphans=true
+    uid=vaultier
+    gid=vaultier
+    chmod-socket=777
+    chown-socket=vaultier
+    listen=1000
+
+Safe the file and restart uwsgi::
+
+    sudo service uwsgi restart
+
+After this, consult your log files that uwsgi started. On Ubuntu (and Debian)
+systems, you will find this in `/var/log/uwsgi/app/vaultier.log`
+
+
+===============
+Configure Nginx
+===============
+In a similar fashion as uWSGI, we need to configure Nginx to work as a proxy
+to our deployed uWSGI app. Navigate to nginx config directory and create and
+enable the configuration file::
+
+    cd /etc/nginx/sites-available
+    sudo touch vaultier
+    sudo ln -s /etc/nginx/sites-available/vaultier ../sites-enabled
+
+Now, edit the configuration file with your favorite editor. Put this in the
+settings file::
+
+    server {
+            server_name www.example.com;
+            client_max_body_size 10M;
+
+            location / {
+                include uwsgi_params;
+                uwsgi_pass unix:/run/uwsgi/app/vaultier/socket;
+            }
+
+            location /static {
+                alias /opt/vaultier/vaultier/vaultier/static;
+            }
+
+            location /media {
+                alias /opt/vaultier/vaultier/vaultier/media;
+            }
+    }
+
+Mind that you need to adjust the `server_name` to reflect the domain where
+Vaultier is going to be run. When you're done, you can restart nginx::
+
+    sudo service nginx restart
+
+Again, you can consult nginx logs to see, whether this worked properly, usually
+located in `/var/log/nginx` directory.
+
+=======================
+Verify the Installation
+=======================
+
+.. warning:: Docs fixed up here
 
 ======================
 Configure Supervisord
 ======================
 ::
 
-    sudo apt-get install supervisor
     cp cfg/supervisord.conf-dist /etc/supervisor/conf.d/vaultier.conf
     supervisorctl reread
     supervisorctl update
@@ -284,7 +357,7 @@ To achieve this, we add him to sudoers for specific commands.::
     echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl stop vaultier-celerybeat >> /etc/sudoers.d/vaultier
     echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl status vaultier-celerybeat >> /etc/sudoers.d/vaultier
 
-    echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl restart vaultier-web >> /etc/sudoers.d/vaultier
-    echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl start vaultier-web >> /etc/sudoers.d/vaultier
-    echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl stop vaultier-web >> /etc/sudoers.d/vaultier
-    echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl status vaultier-web >> /etc/sudoers.d/vaultier
+    echo vaultier ALL = (root) NOPASSWD:/usr/local/bin/uwsgi restart vaultier >> /etc/sudoers.d/vaultier
+    echo vaultier ALL = (root) NOPASSWD:/usr/local/bin/uwsgi  start vaultier >> /etc/sudoers.d/vaultier
+    echo vaultier ALL = (root) NOPASSWD:/usr/local/bin/uwsgi  stop vaultier >> /etc/sudoers.d/vaultier
+    echo vaultier ALL = (root) NOPASSWD:/usr/local/bin/uwsgi  status vaultier >> /etc/sudoers.d/vaultier
