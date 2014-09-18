@@ -1,4 +1,3 @@
-import sys
 from django.utils.crypto import get_random_string
 from logan.runner import run_app
 

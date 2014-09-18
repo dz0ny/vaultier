@@ -14,7 +14,7 @@ Prerequisites (Recommended Setup)
 * Ubuntu server 14.04 or Debian 7
 * uWSGI
 * Nginx web server
-* posgressql database
+* PostgreSQL database 8.x or newer
 * Python 2.7.5
 * Supervisord for running background workers
 
@@ -317,21 +317,24 @@ in `/opt/vaultier/logs` directory.
 Verify the Installation
 =======================
 
-.. warning:: Docs fixed up here
+The Vaultier is basically installed, apart from background workers. To verify,
+that the system is up, navigate with your browser to a domain or IP address
+where Vaultier is deployed and check, you can see the welcome page. If so, the
+installation is successful.
 
-======================
+=====================
 Configure Supervisord
-======================
+=====================
 
-what to do::
+Last thing that has to be setup is the background worker group, that handles
+some of Vaultiers tasks. To do this, we will use `supervisord`. First, go to
+supervisors configuration directory::
 
-    cp cfg/supervisord.conf-dist /etc/supervisor/conf.d/vaultier.conf
-    supervisorctl reread
-    supervisorctl update
-    supervisorctl status vaultier:
-    /etc/init.d/nginx restart
+    cd /etc/supervisor/cond.f
+    touch vaultier.conf
 
-config::
+Now, open the ``vaultier.conf`` file in your editor of choice and put the
+following contents inside::
 
     [program:vaultier-worker]
     command=/opt/vaultier/venv/bin/celery -A vaultier worker
@@ -358,6 +361,19 @@ config::
     [group:vaultier]
     programs=vaultier-celerybeat,vaultier-worker
 
+After you're done, save the file and run these commands to start those
+background daemons::
+
+    supervisorctl reread
+    supervisorctl update
+    supervisorctl status vaultier:
+
+You should see two entries with a status of `RUNNING`. If not, please consult
+supervisord logs.
+
+Supervisor will take care of starting those daemons on machine startup.
+
+With this, the installation is fully completed.
 
 ===============================
 Start,  Stop & Restart Vaultier
