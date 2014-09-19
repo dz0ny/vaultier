@@ -1,0 +1,9 @@
+Package: vaultier
+Version: 0.7
+Section: web
+Priority: optional
+Architecture: all
+Depends: python, nginx, uwsgi
+Maintainer: Rclick s.r.o. <info@rclick.cz>
+Description: lorem lipsum
+ long lorem ipsum

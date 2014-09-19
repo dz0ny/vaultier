@@ -1,0 +1,13 @@
+#!/bin/bash
+set -e
+
+if [ "$1" = "purge" -a -e /usr/share/debconf/confmodule ]; then
+    . /usr/share/debconf/confmodule
+    db_purge
+fi
+
+if [ "$1" = "remove" ]; then
+   . /usr/share/debconf/confmodule
+   update-rc.d -f vaultier remove
+   db_purge
+fi

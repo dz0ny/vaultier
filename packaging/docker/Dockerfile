@@ -1,0 +1,47 @@
+# Vaultier Dockerfile for building a Vaultier image
+
+# Base this on Ubuntu LTS
+FROM ubuntu:14.04
+MAINTAINER info@rclick.cz
+
+# Set locales
+RUN DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales && \
+    locale-gen en_US.UTF-8 && \
+    /usr/sbin/update-locale LANG=en_US.UTF-8
+
+ENV LC_ALL en_US.UTF-8
+
+# Install Postgres, Htop, Uwsgi, Nginx & Supervisor
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    postgresql-9.3 postgresql-client-9.3 postgresql-contrib-9.3 postgresql-server-dev-9.3 \
+    python-virtualenv python-dev \
+    htop \
+    nginx \
+    uwsgi \
+    supervisor
+
+# Postgres configuration
+RUN echo "host all  all    0.0.0.0/0  md5" >> /etc/postgresql/9.3/main/pg_hba.conf
+RUN echo "listen_addresses='*'" >> /etc/postgresql/9.3/main/postgresql.conf
+
+RUN /etc/init.d/postgresql start && \
+    sudo -u postgres psql --command "CREATE USER vaultier WITH SUPERUSER PASSWORD 'vaultier';" && \
+    sudo -u postgres createdb -O vaultier vaultier
+
+
+# Vaultier installation
+RUN mkdir -p /opt/vaultier
+WORKDIR /opt/vaultier
+COPY Vaultier-0.7.0.tar.gz /opt/vaultier/Vaultier-0.7.0.tar.gz
+RUN virtualenv venv && /opt/vaultier/venv/bin/pip install Vaultier-0.7.0.tar.gz
+ENV PYTHONPATH /opt/vaultier/venv/lib/python2.7/site-packages/vaultier
+RUN /etc/init.d/postgresql start && /opt/vaultier/venv/bin/vaultier init --managed && /opt/vaultier/venv/bin/vaultier setup
+
+# We don't want SSH
+RUN rm -rf /etc/service/sshd /etc/my_init.d/00_regen_ssh_host_keys.sh
+
+# Volumes
+VOLUME ["/var/log", "/var/lib/postgresql"]
+
+ENTRYPOINT /bin/bash

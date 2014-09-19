@@ -1,9 +1,11 @@
 from django.utils.crypto import get_random_string
 from logan.runner import run_app
+import sys
 
 
 CONFIG_TEMPLATE = '''"""\nVaultier configuration file\n"""\n
 from vaultier.settings.prod import *
+import os
 
 RAVEN_CONFIG = {
     'dsn': ''
@@ -44,6 +46,8 @@ EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = False
 '''
 
+_managed = False
+
 
 def _db_choice():
     """
@@ -78,23 +82,69 @@ def _generate_settings():
 
     # Fetch DB type
     db_type = None
-    while True:
-        db_type = _db_choice()
-        if db_type:
-            break
+    if not _managed:
+        while True:
+            db_type = _db_choice()
+            if db_type:
+                break
+    else:
+        db_type = 'postgresql_psycopg2'
 
     # Input domain
-    domain = raw_input(">>> Please enter the domain where your project is "
-                       "going to reside. "
-                       "[example: vaultier.mydomain.com]: ")
+    domain = None
+    if not _managed:
+        domain = raw_input(
+            ">>> Please enter the domain where your project is going to "
+            "reside. [example: vaultier.mydomain.com]: "
+        )
     if not domain:
         domain = "www.example.com"
 
-    return CONFIG_TEMPLATE.replace('$(SECRET_KEY)', secret_key). \
-        replace('$(DB_TYPE)', str(db_type)).replace('$(DOMAIN)', domain)
+    cfg = CONFIG_TEMPLATE.replace('$(SECRET_KEY)', secret_key). \
+        replace('$(DB_TYPE)', str(db_type))
+
+    if _managed:
+        # Update allowed hosts
+        cfg = cfg.replace(
+            '\'$(DOMAIN)\'',
+            "os.getenv('VAULTIER_DOMAIN', 'www.example.com')",
+            1
+        )
+        # Update site url
+        cfg = cfg.replace(
+            '$(DOMAIN)',
+            "' + os.getenv('VAULTIER_DOMAIN', 'www.example.com') + '"
+        )
+
+
+        # Update email settings
+        cfg = cfg.replace(
+            "EMAIL_HOST = 'localhost'",
+            "EMAIL_HOST = os.getenv('VAULTIER_EMAIL_HOST', '')")
+        cfg = cfg.replace(
+            "EMAIL_PORT = 25",
+            "EMAIL_PORT = os.getenv('VAULTIER_EMAIL_PORT', 25)")
+        cfg = cfg.replace(
+            "EMAIL_HOST_USER = ''",
+            "EMAIL_HOST_USER = os.getenv('VAULTIER_EMAIL_USER', '')")
+        cfg = cfg.replace(
+            "EMAIL_HOST_PASSWORD = ''",
+            "EMAIL_HOST_PASSWORD = os.getenv('VAULTIER_EMAIL_PASSWORD', '')")
+        cfg = cfg.replace(
+            "EMAIL_USE_TLS = False",
+            "EMAIL_USE_TLS = bool(os.getenv('VAULTIER_EMAIL_TLS', False))")
+        return cfg
+    else:
+        return cfg.replace('$(DOMAIN)', domain)
 
 
 def main():
+    # Automatically managed install, we need to circumvent logan a bit
+    global _managed
+    _managed = '--managed' in sys.argv
+    if _managed:
+        sys.argv.pop(sys.argv.index('--managed'))
+
     run_app(
         project='vaultier',
         default_config_path='vaultier.conf.py',
