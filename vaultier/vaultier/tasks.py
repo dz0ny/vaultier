@@ -1,3 +1,5 @@
+from __future__ import absolute_import
+
 from vaultier.statistics.statistics import StatisticsManager
 from celery import shared_task
 

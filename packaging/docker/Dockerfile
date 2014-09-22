@@ -19,7 +19,9 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
     htop \
     nginx \
     uwsgi \
-    supervisor
+    supervisor && \
+    apt-get clean -y && \
+    apt-get autoclean -y
 
 # Postgres configuration
 RUN echo "host all  all    0.0.0.0/0  md5" >> /etc/postgresql/9.3/main/pg_hba.conf
@@ -31,17 +33,24 @@ RUN /etc/init.d/postgresql start && \
 
 
 # Vaultier installation
-RUN mkdir -p /opt/vaultier
+RUN mkdir -p /opt/vaultier/logs
 WORKDIR /opt/vaultier
+RUN useradd -d /opt/vaultier -s /bin/bash vaultier
 COPY Vaultier-0.7.0.tar.gz /opt/vaultier/Vaultier-0.7.0.tar.gz
-RUN virtualenv venv && /opt/vaultier/venv/bin/pip install Vaultier-0.7.0.tar.gz
+RUN virtualenv venv && /opt/vaultier/venv/bin/pip install Vaultier-0.7.0.tar.gz && rm /opt/vaultier/Vaultier-0.7.0.tar.gz
 ENV PYTHONPATH /opt/vaultier/venv/lib/python2.7/site-packages/vaultier
 RUN /etc/init.d/postgresql start && /opt/vaultier/venv/bin/vaultier init --managed && /opt/vaultier/venv/bin/vaultier setup
+
+# Setup configuration for services
+ADD supervisord.conf /etc/supervisor/supervisord.conf
+ADD nginx.conf /etc/nginx/nginx.conf
+ADD nginx-vaultier /etc/nginx/sites-available/vaultier
+RUN rm /etc/nginx/sites-enabled/default && ln -s /etc/nginx/sites-available/vaultier /etc/nginx/sites-enabled
 
 # We don't want SSH
 RUN rm -rf /etc/service/sshd /etc/my_init.d/00_regen_ssh_host_keys.sh
 
 # Volumes
-VOLUME ["/var/log", "/var/lib/postgresql"]
+VOLUME ["/var/log", "/var/lib/postgresql", "/opt/vaultier/logs"]
 
 ENTRYPOINT /bin/bash
