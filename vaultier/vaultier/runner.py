@@ -147,7 +147,7 @@ def main():
 
     run_app(
         project='vaultier',
-        default_config_path='vaultier.conf.py',
+        default_config_path='vaultier_conf.py',
         default_settings='vaultier.settings.prod',
         settings_initializer=_generate_settings,
         settings_envvar='VAULTIER_CONF'
