@@ -55,6 +55,7 @@ get to installing Vaultier, it can build it's dependencies. Also, we need tools
 for deployment (Nginx, uWSGI and Supervisord)::
 
     sudo apt-get install postgresql postgresql-contrib
+    sudo apt-get install postgresql-server-dev-all
     sudo apt-get install nginx
     sudo apt-get install supervisor
     sudo apt-get install uwsgi
@@ -104,7 +105,7 @@ without any consequences.
 When everything is ready, you need to update your environment for the setup
 like so::
 
-    export PYTHONPATH="${PYTHONPATH}:/opt/vaultier/venv/local/lib/python2.7/site-packages/vaultier
+    export PYTHONPATH="${PYTHONPATH}:/opt/vaultier/venv/local/lib/python2.7/site-packages/vaultier"
 
 ===========================
 Create a Configuration File
@@ -218,7 +219,7 @@ tools::
 
 With this set, just `chown` the entire directory::
 
-    chown -R vaultier:vaulter /opt/vaultier
+    chown -R vaultier:vaultier /opt/vaultier
 
 
 .. warning:: Documenation fixed up here
@@ -233,8 +234,8 @@ directory of uWSGI and create a new config file and symlink it to
 `apps-enabled`::
 
     cd /etc/uwsgi/apps-available
-    touch vaultier
-    ln -s /etc/uwsgi/apps-available/vaultier ../apps-enabled
+    touch vaultier.ini
+    ln -s /etc/uwsgi/apps-available/vaultier.ini ../apps-enabled
 
 
 .. note:: You can find the configuration template in
@@ -250,7 +251,7 @@ file (`vaultier`) with your favorite editor and put this in it::
     chdir=/opt/vaultier
     module=vaultier.wsgi:application
     home=/opt/vaultier/venv
-    pythonpath=/opt/vaultier:/opt/vaultier/venv/vaultier/lib/python2.7/site-packages/vaultier/
+    pythonpath=/opt/vaultier:/opt/vaultier/venv/lib/python2.7/site-packages/vaultier/
     env=DJANGO_SETTINGS_MODULE=vaultier_conf
     vacuum=true
     no-orphans=true
