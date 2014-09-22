@@ -1,0 +1,14 @@
+#!/bin/sh
+set -e
+
+. /usr/share/debconf/confmodule
+
+# db_get vaultier/database ... # and other questions
+# database_type="$RET"
+
+# register vaultier as into init scripts
+update-rc.d django defaults 90 >/dev/null
+# start vaultier
+service vaultier start
+
+db_stop

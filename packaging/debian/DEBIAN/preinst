@@ -1,0 +1,6 @@
+#!/bin/bash
+set -e
+
+if [ -f /etc/init.d/vaultier ]; then
+    service vaultier stop
+fi
