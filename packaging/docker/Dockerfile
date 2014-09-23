@@ -59,5 +59,6 @@ RUN rm -rf /etc/service/sshd /etc/my_init.d/00_regen_ssh_host_keys.sh
 # Volumes
 VOLUME ["/var/log", "/var/lib/postgresql", "/opt/vaultier/logs"]
 
-# ENTRYPOINT /bin/bash
-ENTRYPOINT /usr/bin/supervisord
+# Run supervisord on startup. Do not run with sh -c, so that SIGTERM works
+# on docker stop <conatiner>
+ENTRYPOINT ["/usr/bin/supervisord"]
