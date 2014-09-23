@@ -306,11 +306,11 @@ settings file::
             }
 
             location /static {
-                alias /opt/vaultier/vaultier/vaultier/static;
+                alias /opt/vaultier/venv/lib/python2.7/site-packages/vaultier/vaultier/static/;
             }
 
             location /media {
-                alias /opt/vaultier/vaultier/vaultier/media;
+                alias /opt/vaultier/venv/lib/python2.7/site-packages/vaultier/vaultier/media/;
             }
     }
 
@@ -339,7 +339,7 @@ Last thing that has to be setup is the background worker group, that handles
 some of Vaultiers tasks. To do this, we will use `supervisord`. First, go to
 supervisors configuration directory::
 
-    cd /etc/supervisor/cond.f
+    cd /etc/supervisor/conf.d
     touch vaultier.conf
 
 .. note:: You can find the configuration template in
@@ -424,10 +424,10 @@ To achieve this, we add him to sudoers for specific commands.::
     echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl stop vaultier: >> /etc/sudoers.d/vaultier
     echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl status vaultier: >> /etc/sudoers.d/vaultier
 
-    echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl restart vaultier-garbage-collector >> /etc/sudoers.d/vaultier
-    echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl start vaultier-garbage-collector >> /etc/sudoers.d/vaultier
-    echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl stop vaultier-garbage-collector >> /etc/sudoers.d/vaultier
-    echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl status vaultier-garbage-collector >> /etc/sudoers.d/vaultier
+    echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl restart vaultier-worker >> /etc/sudoers.d/vaultier
+    echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl start vaultier-worker >> /etc/sudoers.d/vaultier
+    echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl stop vaultier-worker >> /etc/sudoers.d/vaultier
+    echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl status vaultier-worker >> /etc/sudoers.d/vaultier
 
     echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl restart vaultier-celerybeat >> /etc/sudoers.d/vaultier
     echo vaultier ALL = (root) NOPASSWD:/usr/bin/supervisorctl start vaultier-celerybeat >> /etc/sudoers.d/vaultier
