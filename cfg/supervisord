@@ -1,7 +1,7 @@
 [program:vaultier-worker]
 command=/opt/vaultier/venv/bin/celery -A vaultier worker
-directory=/opt/vaultier/vaultier
-environment=PATH="/opt/vaultier/venv/bin:",DJANGO_SETTINGS_MODULE="app.settings",PYTHONPATH=/opt/vaultier/sources
+directory=/opt/vaultier
+environment=PATH="/opt/vaultier/venv/bin:",DJANGO_SETTINGS_MODULE="vaultier_conf"
 user=vaultier
 numprocs=1
 autostart=true
@@ -11,8 +11,8 @@ stopwaitsecs = 600
 
 [program:vaultier-celerybeat]
 command=/opt/vaultier/venv/bin/celery -A vaultier beat
-directory=/opt/vaultier/vaultier
-environment=PATH="/opt/vaultier/venv/bin:",DJANGO_SETTINGS_MODULE="app.settings",PYTHONPATH=/opt/vaultier/sources
+directory=/opt/vaultier
+environment=PATH="/opt/vaultier/venv/bin:",DJANGO_SETTINGS_MODULE="vaultier_conf"
 user=vaultier
 numprocs=1
 autostart=true

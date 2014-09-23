@@ -247,19 +247,19 @@ file (`vaultier`) with your favorite editor and put this in it::
 
     [uwsgi]
     workers=4
-    max-requests=10000
+    max-requests=1000
     chdir=/opt/vaultier
     module=vaultier.wsgi:application
     home=/opt/vaultier/venv
-    pythonpath=/opt/vaultier:/opt/vaultier/venv/lib/python2.7/site-packages/vaultier/
+    pythonpath=/opt/vaultier
+    pythonpath=/opt/vaultier/venv/lib/python2.7/site-packages/vaultier/
     env=DJANGO_SETTINGS_MODULE=vaultier_conf
     vacuum=true
     no-orphans=true
     uid=vaultier
     gid=vaultier
-    chmod-socket=777
-    chown-socket=vaultier
-    listen=1000
+    chown-socket=vaultier:www-data
+    listen=50
     logger = file:/opt/vaultier/logs/uwsgi.log
 
 Safe the file and restart uwsgi::
@@ -351,8 +351,8 @@ following contents inside::
 
     [program:vaultier-worker]
     command=/opt/vaultier/venv/bin/celery -A vaultier worker
-    directory=/opt/vaultier/vaultier
-    environment=PATH="/opt/vaultier/venv/bin:",DJANGO_SETTINGS_MODULE="app.settings",PYTHONPATH=/opt/vaultier/sources
+    directory=/opt/vaultier
+    environment=PATH="/opt/vaultier/venv/bin:",DJANGO_SETTINGS_MODULE="vaultier_conf"
     user=vaultier
     numprocs=1
     autostart=true
@@ -362,8 +362,8 @@ following contents inside::
 
     [program:vaultier-celerybeat]
     command=/opt/vaultier/venv/bin/celery -A vaultier beat
-    directory=/opt/vaultier/vaultier
-    environment=PATH="/opt/vaultier/venv/bin:",DJANGO_SETTINGS_MODULE="app.settings",PYTHONPATH=/opt/vaultier/sources
+    directory=/opt/vaultier
+    environment=PATH="/opt/vaultier/venv/bin:",DJANGO_SETTINGS_MODULE="vaultier_conf"
     user=vaultier
     numprocs=1
     autostart=true

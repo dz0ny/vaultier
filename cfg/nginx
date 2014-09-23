@@ -12,10 +12,10 @@ server {
         }
 
         location /static {
-            alias /opt/vaultier/vaultier/vaultier/static;
+            alias /opt/vaultier/venv/lib/python2.7/site-packages/vaultier/vaultier/static/;
         }
 
         location /media {
-            alias /opt/vaultier/vaultier/vaultier/media;
+            alias /opt/vaultier/venv/lib/python2.7/site-packages/vaultier/vaultier/media/;
         }
 }
