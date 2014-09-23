@@ -1,0 +1,21 @@
+server {
+        listen 80 default_server;
+        listen [::]:80 default_server ipv6only=on;
+        client_max_body_size 10M;
+
+        access_log /opt/vaultier/logs/nginx-access.log;
+        error_log /opt/vaultier/logs/nginx-error.log;
+
+        location / {
+            include uwsgi_params;
+            uwsgi_pass unix:/run/uwsgi/app/vaultier/socket;
+        }
+
+        location /static {
+            alias /opt/vaultier/vaultier/vaultier/static;
+        }
+
+        location /media {
+            alias /opt/vaultier/vaultier/vaultier/media;
+        }
+}
