@@ -572,7 +572,6 @@ a:hover {
     border-top-right-radius: 0px;
     background-color: #f0f7fd;
     padding: 0px 30px 100px 30px;
-    margin-bottom: 200px;
 }
 
 .vlt-page.vlt-page-plain > .vlt-page-nav {
@@ -602,7 +601,6 @@ a:hover {
     margin-top: -1px;
     display: table;
     width: 100%;
-    padding-bottom: 100px;
 }
 
 .vlt-page.vlt-page-with-sidebar > .vlt-page-sidebar {
@@ -725,7 +723,35 @@ a:hover {
         margin-left: 399px;
     }
 }
-
+/*************************************************************
+**************************************************************
+* Homepage
+*************************************************************
+*************************************************************/
+.vlt-hp {
+    background: url('../images/topcover.png') no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100%;
+    width: 100%;
+    display: inline-block;
+    position: absolute;
+    top: -56px;
+    padding-bottom: 112px;
+}
+.vlt-hp .container {
+    position: relative;
+    top: 112px;
+    padding-bottom: 112px;
+}
+.vlt-hp .container img {
+    text-align: center;
+    margin: 5em auto auto auto;
+    display: block;
+    width: 95%;
+}
+.vlt-hp .container .vlt-login.vlt-dialog .vlt-dialog-body {
+    padding-right: 25px;
+}
 /*************************************************************
 **************************************************************
 * Vault
@@ -952,32 +978,37 @@ a:hover {
 * Footer
 *************************************************************
 *************************************************************/
-
-#vlt-footer {
-    min-height: 100px;
-    border-top: 1px solid #E0DBDB;
+.clearfooter {
+    height: 56px;
+}
+footer {
+    display: block;
+    z-index: 9999;
+    border-top: 1px solid #474747;
     position: fixed;
     bottom: 0px;
     width: 100%;
     text-align: right;
-    padding: 30px 0px 0px 0px;
-    background-color: #F5F5F5;
+    padding: 10px 0px 0px 0px;
+    background-color: #555555;
+    height: 56px;
 }
 
-#vlt-footer .container {
+footer .container {
     padding: 10px;
 }
 
-#vlt-footer .vlt-version {
+footer .vlt-version {
     color: #cec9c9;
     padding: 8px 30px 0px 8px;
 }
-
-#vlt-footer .vlt-rclick img {
+footer .vlt-rclick a {
+    color: white;
+    font-size: 110%;
+}
+footer .vlt-rclick img {
     border-radius: 3px;
-    display: block;
     padding: 2px;
-    background-color: #FDFDFD;
 }
 
 /*************************************************************
@@ -989,6 +1020,7 @@ a:hover {
 .vlt-navbar {
     margin: 0px;
     background-color: #555555;
+    border-bottom: 1px solid #474747;
 }
 .vlt-navbar .vlt-navbar-brand {
     height: 100%;

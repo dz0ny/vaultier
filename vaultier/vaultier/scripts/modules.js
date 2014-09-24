@@ -198,8 +198,7 @@ var vaultierModulesConfig = {
                 "./font/**/*"
             ],
             "styles": [
-                "./css/application.css",
-                "./css/home.css"
+                "./css/application.css"
             ]
         },
         "error": {
@@ -210,14 +209,6 @@ var vaultierModulesConfig = {
             ],
             "scripts": [
                 "./js/module/Error/Error.js"
-            ]
-        },
-        "home": {
-            "scripts": [
-                "./js/module/Home/HomeIndex.js"
-            ],
-            "templates": [
-                "./js/module/Home/HomeIndex.hbs"
             ]
         },
         "auth": {

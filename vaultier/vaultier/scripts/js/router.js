@@ -150,10 +150,6 @@ var router = Vaultier.Router.map(function () {
      * System and error routes
      ************************************************************/
 
-    this.resource('Home', {path: '/home'}, function () {
-        //this.route('about', { path: '/about'});
-    });
-
     this.route("ErrorGeneric", { path: "/errors/"});
     this.route("Error404", { path: "*path"}); //also referred as /errors/error-404
 
@@ -204,7 +200,7 @@ Vaultier.IndexRoute = Ember.Route.extend(
             if (auth.get('isAuthenticated')) {
                 return this.transitionTo('Workspaces.index');
             } else {
-                return this.transitionTo('Home.index');
+                return this.transitionTo('AuthLogin');
             }
         }
     });
