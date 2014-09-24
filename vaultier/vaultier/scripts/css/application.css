@@ -754,7 +754,6 @@ a:hover {
     display: block;
     height: 198px;
 }
-
 .vlt-vault-item .vlt-vault-item-header-icon {
     display: inline-block;
     width: 85px;
@@ -766,11 +765,25 @@ a:hover {
 }
 .vlt-vault-item .vlt-vault-item-header h2 {
     display: inline-block;
-    position: relative;
-    top: -15px;
-    width: 300px;
+    position: absolute;
+    font-size: 140%;
     color: white;
     margin: 0px;
+    width: 290px;
+    height: 60px;
+}
+.vlt-vault-item .vlt-vault-item-header h2:after {
+    display:inline-block;
+    line-height: 63px;
+    width:0;
+    content:"\00A0";
+    overflow:hidden;
+    vertical-align:middle
+}
+.vlt-vault-item .vlt-vault-item-header h2 span {
+    display:inline-block;
+    vertical-align:middle;
+    width: 290px;
 }
 .vlt-vault-item .vlt-vault-item-content {
     margin-top: 10px;
@@ -829,7 +842,7 @@ a:hover {
     background-color: #ffffff;
     position: relative;
     margin: 20px 13px 20px 13px;
-    width: 250px;
+    width: 275px;
     height: 320px;
 }
 .vlt-card-item-href {
@@ -871,6 +884,9 @@ a:hover {
     z-index: 3;
     background-color: #ffffff;
 }
+.vlt-card-frontend-div .vlt-card-item-header {
+    height: 60px;
+}
 .vlt-card-frontend-div .vlt-card-item-header-icon {
     display: inline-block;
     width: 50px;
@@ -879,17 +895,31 @@ a:hover {
     top: 12px;
     left: 12px;
     background-image: url('../images/icon-card-white.png');
-    background-size: 60%;
+    background-size: 65%;
     background-repeat: no-repeat;
 }
 .vlt-card-frontend-div .vlt-card-item-header h2 {
     display: inline-block;
-    position: relative;
+    position: absolute;
     top: -2px;
-    height: 53px;
-    padding: 10px 15px 10px 0px;
     color: white;
     margin: 0px;
+    font-size: 140%;
+    width: 210px;
+    height: 49px;
+}
+.vlt-card-item .vlt-card-item-header h2:after {
+    display:inline-block;
+    line-height: 63px;
+    width:0;
+    content:"\00A0";
+    overflow:hidden;
+    vertical-align:middle
+}
+.vlt-card-frontend-div .vlt-card-item-header h2 span {
+    width: 210px;
+    display:inline-block;
+    vertical-align:middle;
 }
 .vlt-card-frontend-div .vlt-card-item-content {
     margin: 10px 20px 10px 20px;
@@ -906,9 +936,15 @@ a:hover {
     display: inline-block;
     float: left;
 }
+.vlt-card-frontend-div .vlt-card-item-footer .vlt-card-item-footer-user .vlt-user {
+    font-size: 90%;
+}
 .vlt-card-frontend-div .vlt-card-item-footer .vlt-card-item-footer-time {
+    position: relative;
+    top: 2px;
     display: inline-block;
     float: right;
+    font-size: 90%;
 }
 
 /*************************************************************

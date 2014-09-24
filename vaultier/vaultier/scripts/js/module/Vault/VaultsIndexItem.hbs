@@ -2,7 +2,7 @@
     {{#link-to 'Vault.index' this class='vlt-vault-item-href'}}
         <div class="vlt-vault-item-header vlt-background-{{unbound color}}">
             <div class="vlt-vault-item-header-icon"></div>
-            <h2>{{dot-dot-dot value=name height=60}}</h2>
+            <h2>{{dot-dot-dot value=name height=48}}</h2>
         </div>
         <div class="vlt-vault-item-content vlt-font-{{unbound color}}">
             {{#if description}}
@@ -13,7 +13,7 @@
         </div>
         <div class="vlt-vault-item-footer">
             <div class="vlt-vault-item-footer-user">
-                {{printUser created_by  ellipsis=12 prefix='Created by:' container='vlt-vault-index'}}
+                {{printUser created_by  ellipsis=20 prefix='Created by:' container='vlt-vault-index'}}
             </div>
             <div class="vlt-vault-item-footer-time">
                 {{printAgo updated_at prefix='Last modified at:' }}
