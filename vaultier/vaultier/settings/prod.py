@@ -1,5 +1,8 @@
 from base import *
 
+# Sentry site_id
+SITE_ID = 1
+
 RAVEN_CONFIG = {
     'dsn': ''
 }

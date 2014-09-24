@@ -1,16 +1,11 @@
 import os.path
 import sys
 from celery.schedules import crontab
+from datetime import timedelta
 
 DEBUG = False
 
 TEMPLATE_DEBUG = DEBUG
-
-ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
-)
-
-MANAGERS = ADMINS
 
 BASE_DIR = os.path.join(
     os.path.dirname(os.path.dirname(__file__)),
@@ -108,10 +103,6 @@ TEMPLATE_LOADERS = (
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'vaultier.business.middleware.DisableCSRFMiddleware.DisableCSRFMiddleware'
 )
 
 ROOT_URLCONF = 'vaultier.urls'
@@ -137,11 +128,7 @@ REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
     ),
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.AllowAny',
-    ),
     'EXCEPTION_HANDLER': 'rest_framework.views.exception_handler',
-
     'TEST_REQUEST_RENDERER_CLASSES': (
         'rest_framework.renderers.MultiPartRenderer',
         'rest_framework.renderers.JSONRenderer',
@@ -154,14 +141,9 @@ REST_FRAMEWORK = {
 COMPRESS_ENABLED = 1
 
 INSTALLED_APPS = (
-    'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.sites',
-    'django.contrib.messages',
     'django.contrib.staticfiles',
     'raven.contrib.django.raven_compat',
-    'kombu.transport.django',
     'vaultier',
     'south',
     'rest_framework',
@@ -176,14 +158,6 @@ INSTALLED_APPS = (
     'slugs'
 )
 
-# Sentry site_id
-SITE_ID = 1
-
-# SCM dealer to provide git revision
-DEALER_TYPE = 'git'
-
-# SCM dealer path to git
-DEALER_PATH = './../'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
@@ -227,7 +201,6 @@ EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = False
 
 AUTH_USER_MODEL = 'accounts.User'
-AUTHENTICATION_BACKENDS = ('accounts.business.authentication.Backend', )
 
 TEST_RUNNER = 'django.test.simple.DjangoTestSuiteRunner'
 
@@ -250,7 +223,7 @@ BK_FEATURES = {
     'lostkey_hash_expiration_time': 60*60*1000,
     'from_email': 'info@rclick.com',  # Default email address from which we send emails
     'ga_create_code': 'UA-17830772-11',  # code for google analytics
-    'login_safe_timestamp_delta': 15,  # Max difference between timestamp from server and from front-end in seconds
+    'login_safe_timestamp_delta': timedelta(seconds=15),  # Max difference between timestamp from server and from front-end in seconds
 }
 
 VAULTIER = {

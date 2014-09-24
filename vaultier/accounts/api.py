@@ -1,12 +1,12 @@
-from django.contrib.auth import authenticate, logout
 from django.db.transaction import atomic
-from rest_framework.decorators import action
 from rest_framework.filters import SearchFilter, DjangoFilterBackend, \
     OrderingFilter
+from rest_framework.mixins import UpdateModelMixin, RetrieveModelMixin, \
+    CreateModelMixin, ListModelMixin
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from accounts.business.authentication import TokenAuthentication, \
     HashAuthentication
 from accounts.business.fields import MemberStatusField
@@ -22,15 +22,17 @@ from rest_framework import status
 from rest_framework import mixins, viewsets
 from vaultier.business.mixins import AtomicTransactionMixin
 from workspaces.business.permissions import CanManageMemberPermission
+from .business.authentication import Authenticator
 
 
 class AuthView(APIView):
+
     @atomic
     def auth(self, request):
         serializer = AuthSerializer(data=request.DATA)
         if serializer.is_valid():
             try:
-                token = authenticate(
+                token = Authenticator.authenticate(
                     email=serializer.data.get('email'),
                     date=serializer.data.get('date'),
                     signature=serializer.data.get('signature')
@@ -50,49 +52,26 @@ class AuthView(APIView):
         return self.auth(request)
 
 
-class LogoutView(APIView):
-
-    authentication_classes = (TokenAuthentication,)
-
-    def logout(self, request):
-        try:
-            logout(request)
-            response = Response({'result': True})
-            response.delete_cookie('sessionid', '/', '.')
-            Token.objects.filter(token=request.auth).delete()
-            return response
-        except Exception as e:
-            raise CustomAPIException(exception=e)
-
-    @atomic
-    def post(self, request):
-        return self.logout(request)
-
-
-class UserViewSet(AtomicTransactionMixin, ModelViewSet):
+class UserViewSet(AtomicTransactionMixin,
+                  UpdateModelMixin,
+                  RetrieveModelMixin,
+                  CreateModelMixin,
+                  ListModelMixin,
+                  GenericViewSet):
+    """
+    User resource endpoint
+    """
     serializer_class = UserSerializer
     permission_classes = (CanManageUserPermission,)
     model = User
 
-    @action(methods=['GET', 'PUT'])
-    def key(self, request, pk=None):
-        if self.request.method == 'GET':
-            serializer = UserKeySerializer(instance=self.get_object())
-            return Response(status=status.HTTP_200_OK, data=serializer.data)
-
-        if self.request.method == 'PUT':
-            object = self.get_object()
-            serializer = UserKeySerializer(instance=object, data=request.DATA)
-            if serializer.is_valid():
-                serializer.save_object(object)
-                return Response(status=status.HTTP_200_OK,
-                                data=serializer.data)
-            else:
-                return Response(status=status.HTTP_400_BAD_REQUEST,
-                                data=serializer.errors)
-
-        return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED,
-                        data={'Detail': 'Method not allowed'})
+    def get_serializer_class(self):
+        """
+        Change serializer class to UserKeySerializer in list action
+        """
+        if self.action in ["list"]:
+            return UserKeySerializer
+        return super(UserViewSet, self).get_serializer_class()
 
 
 class LostKeyViewSet(AtomicTransactionMixin,
