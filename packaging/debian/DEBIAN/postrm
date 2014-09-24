@@ -8,6 +8,9 @@ fi
 
 if [ "$1" = "remove" ]; then
    . /usr/share/debconf/confmodule
-   update-rc.d -f vaultier remove
    db_purge
 fi
+
+# start servers again
+service uwsgi start
+service nginx start

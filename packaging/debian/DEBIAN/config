@@ -1,0 +1,13 @@
+#!/bin/sh -e
+
+. /usr/share/debconf/confmodule
+
+# FQDN
+while true; do
+    db_input critical vaultier/domain
+    db_go
+    db_get vaultier/domain
+    if [ ! -z $RET ]; then
+        break
+    fi
+done

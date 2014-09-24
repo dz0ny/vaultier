@@ -16,7 +16,6 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y \
     postgresql-9.3 postgresql-client-9.3 postgresql-contrib-9.3 postgresql-server-dev-9.3 \
     python-virtualenv python-dev \
-    htop vim \
     nginx \
     uwsgi uwsgi-plugin-python \
     supervisor && \

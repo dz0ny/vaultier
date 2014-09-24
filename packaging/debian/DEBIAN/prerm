@@ -1,5 +1,9 @@
 #!/bin/bash
 set -e
 
-#stop serving vaultier
-service vaultier stop
+# stop servers for a little while
+service uwsgi stop
+service nginx stop
+
+# stop vaultier background jobs
+supervisorctl stop vaultier

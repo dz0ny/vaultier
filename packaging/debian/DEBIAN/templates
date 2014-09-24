@@ -1,0 +1,6 @@
+Template: vaultier/domain
+Type: string
+Description: Enter the FQDN where Vaultier will run
+  We need to know the full domain name where you want to run Vaultier. This is
+  to prevent some form of malicious attacks on the domain, as well as for
+  setting webserver for you. Example: vaultier.mycompany.com

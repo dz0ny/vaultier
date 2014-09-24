@@ -7,8 +7,40 @@ set -e
 # database_type="$RET"
 
 # register vaultier as into init scripts
-update-rc.d django defaults 90 >/dev/null
-# start vaultier
-service vaultier start
+# update-rc.d django defaults 90 >/dev/null
+
+# add Vaultier user
+useradd -d /opt/vaultier -s /bin/bash vaultier
+    # && chown vaultier:www-data /var/run/uwsgi/app/vaultier
+
+# Setup postgres account
+service postgresql start
+sudo -u postgres psql --command "CREATE USER vaultier WITH SUPERUSER PASSWORD 'vaultier';"
+sudo -u postgres createdb -O vaultier vaultier
+
+# install Vaultier
+cd /opt/vaultier
+virtualenv venv
+/opt/vaultier/venv/bin/pip install Vaultier-0.7.0.tar.gz
+rm /opt/vaultier/Vaultier-0.7.0.tar.gz
+export PYTHONPATH=/opt/vaultier/venv/lib/python2.7/site-packages/vaultier
+/opt/vaultier/venv/bin/vaultier init --managed
+
+if [ -f /etc/init.d/postgresql ]; then
+    /opt/vaultier/venv/bin/vaultier setup
+fi
+chown -R vaultier:vaultier /opt/vaultier
+
+ls -lah /etc/nginx/sites-available/
+
+# start uwsgi
+service uwsgi start
+
+# start nginx
+service nginx start
+
+# update & run supervisor
+service supervisor start
+supervisorctl update
 
 db_stop
