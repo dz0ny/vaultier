@@ -3,8 +3,27 @@ set -e
 
 . /usr/share/debconf/confmodule
 
-# db_get vaultier/database ... # and other questions
-# database_type="$RET"
+db_get vaultier/domain
+domain="$RET"
+db_get vaultier/email_host
+email_host="$RET"
+db_get vaultier/email_port
+email_port="$RET"
+if [ -z "$email_port" ]; then
+    email_port="25"
+fi
+db_get vaultier/email_user
+email_user="$RET"
+db_get vaultier/email_password
+email_password="$RET"
+db_get vaultier/email_tls
+email_tls="$RET"
+if $email_tls; then
+    email_tls="True"
+else
+    email_tls="False"
+fi
+
 
 # register vaultier as into init scripts
 # update-rc.d django defaults 90 >/dev/null
@@ -12,6 +31,8 @@ set -e
 # add Vaultier user
 useradd -d /opt/vaultier -s /bin/bash vaultier
     # && chown vaultier:www-data /var/run/uwsgi/app/vaultier
+
+mkdir -p /opt/vaultier/logs/
 
 # Setup postgres account
 service postgresql start
@@ -31,10 +52,22 @@ if [ -f /etc/init.d/postgresql ]; then
 fi
 chown -R vaultier:vaultier /opt/vaultier
 
-ls -lah /etc/nginx/sites-available/
+# update configuration files
+sed -i "s/DEB_DOMAIN/${domain}/g" /etc/nginx/sites-available/vaultier
+sed -i "s/os.getenv('VAULTIER_DOMAIN', 'www.example.com'),/'${domain}',/g" /opt/vaultier/vaultier_conf.py
+sed -i "s/' + os.getenv('VAULTIER_DOMAIN', 'www.example.com') + '/${domain}/g" /opt/vaultier/vaultier_conf.py
+sed -i "s/os.getenv('VAULTIER_EMAIL_HOST', '')/'${email_host}'/g" /opt/vaultier/vaultier_conf.py
+sed -i "s/os.getenv('VAULTIER_EMAIL_PORT', 25)/${email_port}/g" /opt/vaultier/vaultier_conf.py
+sed -i "s/os.getenv('VAULTIER_EMAIL_USER', '')/'${email_user}'/g" /opt/vaultier/vaultier_conf.py
+sed -i "s/os.getenv('VAULTIER_EMAIL_PASSWORD', '')/'${email_password}'/g" /opt/vaultier/vaultier_conf.py
+sed -i "s/bool(os.getenv('VAULTIER_EMAIL_TLS', False))/${email_tls}/g" /opt/vaultier/vaultier_conf.py
+
+# symlink configs
+ln -s /etc/nginx/sites-available/vaultier /etc/nginx/sites-enabled
+ln -s /etc/uwsgi/apps-available/vaultier.ini /etc/uwsgi/apps-enabled
 
 # start uwsgi
-service uwsgi start
+service uwsgi start || true
 
 # start nginx
 service nginx start

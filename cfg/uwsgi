@@ -13,4 +13,4 @@ uid=vaultier
 gid=vaultier
 chown-socket=vaultier:www-data
 listen=50
-logger = file:/opt/vaultier/logs/uwsgi.log
+logger=file:/opt/vaultier/logs/uwsgi.log

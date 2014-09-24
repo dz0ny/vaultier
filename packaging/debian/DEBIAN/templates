@@ -1,6 +1,29 @@
 Template: vaultier/domain
 Type: string
-Description: Enter the FQDN where Vaultier will run
+Description: Enter the FQDN where Vaultier will run (without slashes)
   We need to know the full domain name where you want to run Vaultier. This is
-  to prevent some form of malicious attacks on the domain, as well as for
-  setting webserver for you. Example: vaultier.mycompany.com
+  to prevent some forms of malicious attacks on the application, as well as for
+  setting up nginx for you. Example: vaultier.mycompany.com
+
+Template: vaultier/email_host
+Type: string
+Description: Email host
+
+Template: vaultier/email_port
+Default: 587
+Type: string
+Description: Email port
+
+Template: vaultier/email_user
+Type: string
+Description: Email user
+
+Template: vaultier/email_password
+Type: password
+Description: Email password
+
+Template: vaultier/email_tls
+Default: true
+Type: boolean
+Description: Email TLS
+

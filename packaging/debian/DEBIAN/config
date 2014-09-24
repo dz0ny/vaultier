@@ -11,3 +11,11 @@ while true; do
         break
     fi
 done
+
+# Email settings
+db_input high vaultier/email_host
+db_input high vaultier/email_port
+db_input high vaultier/email_user
+db_input high vaultier/email_password
+db_input high vaultier/email_tls
+db_go
