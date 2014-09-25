@@ -13,37 +13,20 @@ from django.utils import timezone
 import random
 
 
-class User(ChangesMixin, AbstractBaseUser, PermissionsMixin):
-    USERNAME_FIELD = 'email'
+class User(ChangesMixin, AbstractBaseUser):
 
     nickname = models.CharField(max_length=255, blank=False, null=False)
     public_key = models.CharField(max_length=1024)
     email = LowerCaseCharField(max_length=255, unique=True)
     is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(
-        'staff status',
-        default=False,
-        help_text='Designates whether the user can log into this admin site.'
-    )
-
-    is_active = models.BooleanField(
-        'active',
-        default=True,
-        help_text='Designates whether this user should be treated as active. '
-                  'Unselect this instead of deleting accounts.'
-    )
 
     objects = UserManager()
 
+    REQUIRED_FIELDS = []
+    USERNAME_FIELD = 'email'
+
     class Meta:
         db_table = u'vaultier_user'
-
-    def get_full_name(self):
-        full_name = '%s %s' % (self.first_name, self.last_name)
-        return full_name.strip()
-
-    def get_short_name(self):
-        return self.first_name
 
 
 class Token(ChangesMixin, models.Model):

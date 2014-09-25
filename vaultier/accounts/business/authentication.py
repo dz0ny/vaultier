@@ -1,4 +1,3 @@
-import time
 from Crypto.Hash import SHA
 from Crypto.PublicKey import RSA
 from Crypto.Signature import PKCS1_v1_5
@@ -70,9 +69,17 @@ class HashAuthentication(BaseAuthentication):
             return None
 
 
-class Backend(ModelBackend):
+class Authenticator(object):
+
     @classmethod
     def verify(cls, public_key, content, date, signature):
+        """
+        :param public_key:
+        :param content:
+        :param date:
+        :param signature:
+        :return:
+        """
         signature = b64decode(signature)
         key = RSA.importKey(public_key)
         h = SHA.new(content + str(date))
@@ -81,6 +88,14 @@ class Backend(ModelBackend):
 
     @classmethod
     def sign(cls, private_key, content, timestamp):
+        """
+        This is not production code, it is used in tests only
+
+        :param private_key:
+        :param content:
+        :param timestamp:
+        :return:
+        """
         key = RSA.importKey(private_key)
         h = SHA.new()
         h.update(content + str(timestamp))
@@ -88,19 +103,26 @@ class Backend(ModelBackend):
         sig = signer.sign(h)
         return sig.encode('base64')
 
-    def authenticate(self, email=None, date=None, signature=None):
+    @classmethod
+    def _create_token(cls, user):
+        """
+        Create new authentication token for user
 
-        # verify timestamp
-        try:
-            date_parsed = dateparser.parse(date)
-            safe_delta = settings.BK_FEATURES.get('login_safe_timestamp_delta')
-            safe_until = date_parsed + timedelta(seconds=safe_delta)
-            now = timezone.now()
+        :param user:
+        :return: Token
+        """
+        return Token.objects.create(user=user)
 
-            if safe_until < now:
-                raise Exception('Login timestamp to old')
-        except:
-            return None
+    @classmethod
+    def authenticate(cls, email=None, date=None, signature=None):
+
+        date_parsed = dateparser.parse(date)
+        safe_delta = settings.BK_FEATURES.get('login_safe_timestamp_delta')
+        safe_until = date_parsed + safe_delta
+        now = timezone.now()
+
+        if safe_until < now:
+            raise Exception('Login timestamp to old')
 
         #check database for user
         try:
@@ -109,16 +131,6 @@ class Backend(ModelBackend):
             return None
 
         # verify signature
-        if self.__class__.verify(user.public_key, email, date, signature):
-            token = Token(user=user)
-            token.save()
-            return token
-
+        if cls.verify(user.public_key, email, date, signature):
+            return cls._create_token(user)
         return None
-
-    def get_user(self, user_id):
-        user_model = get_model('accounts', 'User')
-        try:
-            return user_model.objects.get(pk=user_id)
-        except User.DoesNotExist:
-            return None

@@ -1,8 +1,7 @@
 from django.conf.urls import patterns, url
 
 from rest_framework import routers
-from accounts.api import UserViewSet, LostKeyViewSet, AuthView, LogoutView, \
-    MemberViewSet
+from accounts.api import UserViewSet, LostKeyViewSet, AuthView, MemberViewSet
 from acls.api import RoleViewSet
 from cards.api import CardViewSet
 from search.api import SearchView
@@ -33,5 +32,4 @@ urlpatterns += patterns('',
     # auth
     url(r'^auth/auth$', AuthView.as_view(), name='auth-auth'),
     url(r'^auth/user$', UserViewSet.as_view(), name='auth-user'),
-    url(r'^auth/logout$', LogoutView.as_view(), name='auth-logout'),
 )

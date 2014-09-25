@@ -7,12 +7,14 @@ from workspaces.models import Workspace
 
 
 class AuthSerializer(serializers.Serializer):
+
     email = serializers.EmailField(required=True)
     signature = serializers.CharField(required=True)
     date = serializers.CharField(required=True)
 
 
 class TokenSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Token
         fields = ('token', 'user')
@@ -21,14 +23,14 @@ class TokenSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(required=True)
 
-    def restore_fields(self, data, files):
-        if (self.context.get('view').action != 'create'):
-            self.fields.get('public_key').read_only = True
-        return super(UserSerializer, self).restore_fields(data, files)
-
     class Meta:
         model = User
         fields = ['id', 'email', 'nickname', 'public_key']
+
+    def restore_fields(self, data, files):
+        if self.context.get('view').action != 'create':
+            self.fields.get('public_key').read_only = True
+        return super(UserSerializer, self).restore_fields(data, files)
 
 
 class RelatedUserSerializer(UserSerializer):
@@ -40,17 +42,23 @@ class RelatedUserSerializer(UserSerializer):
 
 
 class MemberKeySerializer(serializers.ModelSerializer):
-    def save_object(self, obj, **kwargs):
-        return obj
 
     class Meta(UserSerializer.Meta):
         model = Member
         fields = ['id', 'workspace_key']
 
+    def save_object(self, obj, **kwargs):
+        return obj
+
 
 class UserKeySerializer(serializers.ModelSerializer):
 
     membership = MemberKeySerializer(many=True)
+
+    class Meta(UserSerializer.Meta):
+        model = User
+        fields = ['id', 'public_key', 'membership']
+        depth = 1
 
     def to_native(self, obj):
         obj.filtered_members = Member.objects.filter(
@@ -81,22 +89,17 @@ class UserKeySerializer(serializers.ModelSerializer):
 
         return attrs
 
-    class Meta(UserSerializer.Meta):
-        model = User
-        fields = ['id', 'public_key', 'membership']
-        depth = 1
-
 
 class LostKeyCreateSerializer(serializers.Serializer):
     """
     Custom serializer for the post request
     """
 
-    class Meta:
-        fields = ('id', 'email')
-
     email = serializers.EmailField(required=True)
     id = serializers.IntegerField(read_only=True)
+
+    class Meta:
+        fields = ('id', 'email')
 
     def validate_email(self, attrs, source):
         """
@@ -125,18 +128,19 @@ class LostKeySerializer(serializers.ModelSerializer):
     supported methods but POST
     """
 
-    class Meta:
-        model = LostKey
-        fields = ('id', 'created_by', 'created_at', 'updated_at',
-                  'expires_at', 'memberships', 'public_key', 'recover_type',)
-
     created_by = RelatedUserSerializer(read_only=True)
+
     expires_at = serializers.DateTimeField(read_only=True)
     hash = serializers.CharField(read_only=True)
     memberships = serializers.SerializerMethodField('get_memberships')
     public_key = serializers.CharField(max_length=1024, required=True,
                                        write_only=True)
     recover_type = RecoverTypeField(required=True, write_only=True)
+
+    class Meta:
+        model = LostKey
+        fields = ('id', 'created_by', 'created_at', 'updated_at',
+                  'expires_at', 'memberships', 'public_key', 'recover_type',)
 
     def restore_object(self, attrs, instance=None):
         """

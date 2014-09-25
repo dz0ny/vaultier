@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.template.context import Context
 from django.conf import settings
 import json
+import pkg_resources
 
 
 def index(request):
@@ -14,9 +15,10 @@ def index(request):
 
 
 def config(request):
+    print pkg_resources.get_distribution("Vaultier").version
     script = json.dumps({
         'FT_FEATURES': settings.FT_FEATURES,
-        'VERSION': "0.7",
+        'VERSION': pkg_resources.get_distribution("Vaultier").version,
         'invitationLifetime': settings.VAULTIER.get('invitation_lifetime')
     })
     script = 'InitializeConfig = function(app) {  app.Config = Ember.Object.extend('+script+'); }'
