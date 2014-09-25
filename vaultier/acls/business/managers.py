@@ -4,9 +4,8 @@ from django.db.models.query_utils import Q
 from accounts.business.fields import MemberStatusField
 from acls.business.fields import AclLevelField
 from libs.changes.changes import INSERT
-from vaultier.business.mailer.granted_access.sender import \
-    GrantedAccessEmailSender
 from vaults.models import Vault
+from acls.business.mailer import GrantedAccessMailer
 
 
 class RoleManager(Manager):
@@ -21,7 +20,7 @@ class RoleManager(Manager):
             self.send_granted_access(instance)
 
     def send_granted_access(self, instance):
-        sender = GrantedAccessEmailSender(instance.get_object())
+        sender = GrantedAccessMailer(object=instance.get_object())
         sender.send()
 
     def all_for_member(self, member_id):

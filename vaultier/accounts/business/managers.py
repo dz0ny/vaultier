@@ -10,11 +10,10 @@ from hashlib import sha1, __all__
 from django.utils.timezone import utc
 from django.conf import settings
 from accounts.business.fields import MemberStatusField
-from vaultier.business.mailer.invitation.sender import InvitationEmailSender
-from vaultier.business.mailer.lostkey.sender import LostKeyEmailSender
+from accounts.business.mailer import LostKeyMailer
 from django.db.models.aggregates import Count
-from vaultier.business.mailer.transfer_workspace_key.sender import \
-    WorkspaceKeyTransferEmailSender
+from workspaces.business.mailer import InvitationMailer, \
+    WorkspaceKeyTransferMailer
 
 
 class UserManager(BaseUserManager):
@@ -68,7 +67,7 @@ class LostKeyManager(Manager):
         :return: None
         """
         if not instance.used:
-            sender = LostKeyEmailSender(instance)
+            sender = LostKeyMailer(object=instance)
             sender.send()
 
     def disable_lost_key(self, user):
@@ -299,7 +298,7 @@ class MemberManager(Manager):
         :param member: Member
         :return: None
         """
-        invitation_sender = InvitationEmailSender(member)
+        invitation_sender = InvitationMailer(object=member)
         invitation_sender.send()
 
     def send_transfer_workspace_key_info(self, sender, instance=None, *args,
@@ -315,7 +314,7 @@ class MemberManager(Manager):
         if instance.status == MemberStatusField.STATUS_MEMBER and \
                 instance.invitation_email and instance.invitation_hash:
             # the user has been invited and the workspace_key was set
-            sender = WorkspaceKeyTransferEmailSender(instance)
+            sender = WorkspaceKeyTransferMailer(object=instance)
             sender.send()
 
     def clean_old_invitations(self):
