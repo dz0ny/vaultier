@@ -1,25 +1,18 @@
 import urlparse
 from django.template import Context
-from ..sender import VaultierEmailSender
 from django.conf import settings
+from vaultier.business.mailer import VaultierMailer
 
 
-class GrantedAccessEmailSender(VaultierEmailSender):
+class GrantedAccessEmailSender(VaultierMailer):
     """
     Sends an email when the user has granted access to a any workspace
     """
-    SUBJECT = '[Vaultier] You have been granted access to {{ type }}'
-    TEMPLATE_NAME = 'mailer/granted_access/granted_access'
+    subject = '[Vaultier] You have been granted access to {}'
+    template = 'mailer/granted_access/granted_access'
 
-    def build_to(self):
-        """
-        Get the right email to which the email will be send
-        :return: list
-        """
-        if hasattr(self.instance, 'member'):
-            return [self.instance.member.user.email]
-        elif hasattr(self.instance, 'membership'):
-            return [self.instance.created_by.email]
+
+
 
     def build_context(self):
         """

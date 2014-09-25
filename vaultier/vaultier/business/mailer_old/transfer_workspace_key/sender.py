@@ -3,6 +3,7 @@ from django.template import Context
 from ..sender import VaultierEmailSender
 from django.conf import settings
 
+
 class WorkspaceKeyTransferEmailSender(VaultierEmailSender):
 
     TEMPLATE_NAME = 'mailer/transfer_workspace_key/transfer_workspace_key'
