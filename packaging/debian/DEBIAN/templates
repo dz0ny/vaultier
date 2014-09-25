@@ -7,23 +7,33 @@ Description: Enter the FQDN where Vaultier will run (without slashes)
 
 Template: vaultier/email_host
 Type: string
-Description: Email host
+Description: Enter the domain name or IP address of your mail server
+  Emails are used to handle invitations and various workflow needs. Correctly
+  configured mail server is essential for getting the most out of Vaultier.
 
 Template: vaultier/email_port
 Default: 587
 Type: string
-Description: Email port
+Description: What port does your mail server listen at?
+  Emails are used to handle invitations and various workflow needs. Correctly
+  configured mail server is essential for getting the most out of Vaultier.
 
 Template: vaultier/email_user
 Type: string
-Description: Email user
+Description: Enter a valid mail server user name
+  Emails are used to handle invitations and various workflow needs. Correctly
+  configured mail server is essential for getting the most out of Vaultier.
 
 Template: vaultier/email_password
 Type: password
-Description: Email password
+Description: Enter a valid mail server password
+  Emails are used to handle invitations and various workflow needs. Correctly
+  configured mail server is essential for getting the most out of Vaultier.
 
 Template: vaultier/email_tls
 Default: true
 Type: boolean
-Description: Email TLS
+Description: Does your mail server use TLS security?
+  Emails are used to handle invitations and various workflow needs. Correctly
+  configured mail server is essential for getting the most out of Vaultier.
 

@@ -1,16 +1,37 @@
 #!/bin/bash
 set -e
 
+. /usr/share/debconf/confmodule
+
+# Remove configuration files
+rm -f /etc/supervisor/conf.d/vaultier.conf
+rm -f /etc/nginx/sites-enabled/vaultier
+rm -f /etc/nginx/sites-available/vaultier
+rm -f /etc/uwsgi/apps-enabled/vaultier.ini
+rm -f /etc/uwsgi/apps-available/vaultier.ini
+
+# Remove logs
+rm -rf /opt/vaultier/logs
+
+# Remove virtualenv
+rm -rf /opt/vaultier/venv
+
+# Remove orphans
+rm -f /opt/vaultier/celerybeat-schedule
+rm -f /opt/vaultier/vaultier_conf.pyc
+
+
 if [ "$1" = "purge" -a -e /usr/share/debconf/confmodule ]; then
-    . /usr/share/debconf/confmodule
+    rm -rf /opt/vaultier/
+    id -u vaultier &>/dev/null && deluser vaultier
     db_purge
 fi
 
 if [ "$1" = "remove" ]; then
-   . /usr/share/debconf/confmodule
    db_purge
 fi
 
 # start servers again
 service uwsgi start
 service nginx start
+db_stop

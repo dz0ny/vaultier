@@ -14,6 +14,7 @@ Contents:
    install
    docker-install
    contribute
+   building
    migrations/index
 
 

@@ -7,5 +7,5 @@ Depends: python-virtualenv, python-dev, nginx, uwsgi, uwsgi-plugin-python,
     supervisor, postgresql-9.3, postgresql-client-9.3, postgresql-contrib-9.3,
     postgresql-server-dev-9.3
 Maintainer: Rclick s.r.o. <info@rclick.cz>
-Description: lorem lipsum
- long lorem ipsum
+Description: Vaultier
+ Easy and secure password and credentials sharing across teams.
