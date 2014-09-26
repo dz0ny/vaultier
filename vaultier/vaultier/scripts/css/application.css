@@ -1086,7 +1086,8 @@ footer .vlt-rclick img {
     position: relative;
     top: 1px;
 }
-.vlt-wspace-box .vlt-wspacename {
+.vlt-wspace-box a.vlt-wspacename {
+    border-radius: 4px;
     vertical-align: middle;
     color: #FFFFFF;
     font-size: 14px;
@@ -1095,6 +1096,11 @@ footer .vlt-rclick img {
     padding-top: 10px;
     padding-bottom: 10px;
     padding-right: 10px;
+    background-color: #262626;
+}
+.vlt-wspace-box a:focus.vlt-spacename {
+    text-decoration: none;
+    background-color: #262626;
 }
 .vlt-wspace-box .vlt-wspaceimg {
     margin-left: 10px;
@@ -1149,6 +1155,11 @@ span.vlt-user img {
     padding-top: 10px;
     padding-bottom: 10px;
     padding-right: 10px;
+    background-color: #262626;
+}
+.vlt-security-box a:focus.vlt-username {
+    text-decoration: none;
+    background-color: #262626;
 }
 .vlt-security-box img {
     margin: 10px;
