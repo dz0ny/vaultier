@@ -10,4 +10,3 @@ fi
 if [ -f /etc/init.d/nginx ]; then
     service nginx stop
 fi
-

@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+. /usr/share/debconf/confmodule
+
 # stop servers for a little while
 service uwsgi stop || true
 service nginx stop

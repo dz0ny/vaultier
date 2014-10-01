@@ -5,6 +5,18 @@ set -e
 
 db_get vaultier/domain
 domain="$RET"
+
+db_get vaultier/database_host
+database_host="$RET"
+db_get vaultier/database_port
+database_port="$RET"
+db_get vaultier/database_name
+database_name="$RET"
+db_get vaultier/database_user
+database_user="$RET"
+db_get vaultier/database_password
+database_password="$RET"
+
 db_get vaultier/email_host
 email_host="$RET"
 db_get vaultier/email_port
@@ -25,31 +37,46 @@ else
 fi
 
 
-# register vaultier as into init scripts
-# update-rc.d django defaults 90 >/dev/null
-
 # add Vaultier user, if it does not exists
-id -u vaultier &>/dev/null || useradd -d /opt/vaultier -s /bin/bash vaultier
+id -u vaultier &>/dev/null || useradd -r -d /opt/vaultier -s /bin/bash vaultier
 
 mkdir -p /opt/vaultier/logs/
 
 # Setup postgres account
 service postgresql start
-sudo -u postgres psql postgres -tAc "SELECT 1 FROM pg_roles WHERE rolname='vaultier'" | grep -q 1 || \
-    psql --command "CREATE USER vaultier WITH SUPERUSER PASSWORD 'vaultier';"
-sudo -u postgres psql -l | grep vaultier | wc -l || createdb -O vaultier vaultier
+sudo -u postgres psql postgres -tAc "SELECT 1 FROM pg_roles WHERE rolname='$database_user'" | grep -q 1 || \
+    sudo -u postgres psql --command "CREATE USER $database_user WITH SUPERUSER PASSWORD '$database_password';" &>/dev/null
+
+if ! sudo -u postgres psql ${database_name} -c '\q' &>/dev/null; then
+    sudo -u postgres createdb -O ${database_user} ${database_name}
+fi
+
 
 # install Vaultier
 cd /opt/vaultier
 virtualenv venv
+
+if [ ! -f Vaultier-0.7.0.tar.gz ]; then
+    echo "nothing to install"
+fi
+
 /opt/vaultier/venv/bin/pip install Vaultier-0.7.0.tar.gz
 rm /opt/vaultier/Vaultier-0.7.0.tar.gz
 export PYTHONPATH=/opt/vaultier/venv/lib/python2.7/site-packages/vaultier
+
+
+
 
 # Create a configuration, if we don't have one
 if [ ! -f /opt/vaultier/vaultier_conf.py ]; then
     /opt/vaultier/venv/bin/vaultier init --managed
 fi
+
+sed -i "s/os.getenv('VAULTIER_DATABASE_HOST', '127.0.0.1')/'${database_host}'/g" /opt/vaultier/vaultier_conf.py
+sed -i "s/os.getenv('VAULTIER_DATABASE_PORT', '')/'${database_port}'/g" /opt/vaultier/vaultier_conf.py
+sed -i "s/os.getenv('VAULTIER_DATABASE_NAME', 'vaultier')/'${database_name}'/g" /opt/vaultier/vaultier_conf.py
+sed -i "s/os.getenv('VAULTIER_DATABASE_USER', 'vaultier')/'${database_user}'/g" /opt/vaultier/vaultier_conf.py
+sed -i "s/os.getenv('VAULTIER_DATABASE_PASSWORD', 'vaultier')/'${database_password}'/g" /opt/vaultier/vaultier_conf.py
 
 if [ -f /etc/init.d/postgresql ]; then
     /opt/vaultier/venv/bin/vaultier setup
@@ -57,14 +84,20 @@ fi
 chown -R vaultier:vaultier /opt/vaultier
 
 # update configuration files
-sed -i "s/DEB_DOMAIN/${domain}/g" /etc/nginx/sites-available/vaultier
 sed -i "s/os.getenv('VAULTIER_DOMAIN', 'www.example.com'),/'${domain}',/g" /opt/vaultier/vaultier_conf.py
 sed -i "s/' + os.getenv('VAULTIER_DOMAIN', 'www.example.com') + '/${domain}/g" /opt/vaultier/vaultier_conf.py
+
 sed -i "s/os.getenv('VAULTIER_EMAIL_HOST', '')/'${email_host}'/g" /opt/vaultier/vaultier_conf.py
 sed -i "s/os.getenv('VAULTIER_EMAIL_PORT', 25)/${email_port}/g" /opt/vaultier/vaultier_conf.py
 sed -i "s/os.getenv('VAULTIER_EMAIL_USER', '')/'${email_user}'/g" /opt/vaultier/vaultier_conf.py
 sed -i "s/os.getenv('VAULTIER_EMAIL_PASSWORD', '')/'${email_password}'/g" /opt/vaultier/vaultier_conf.py
 sed -i "s/bool(os.getenv('VAULTIER_EMAIL_TLS', False))/${email_tls}/g" /opt/vaultier/vaultier_conf.py
+
+# copy config files
+cp /usr/share/vaultier/config/nginx/vaultier /etc/nginx/sites-available/vaultier
+cp /usr/share/vaultier/config/supervisor/vaultier.conf /etc/supervisor/conf.d/vaultier.conf
+cp /usr/share/vaultier/config/uwsgi/vaultier.ini /etc/uwsgi/apps-available/vaultier.ini
+sed -i "s/DEB_DOMAIN/${domain}/g" /etc/nginx/sites-available/vaultier
 
 # symlink configs
 ln -s /etc/nginx/sites-available/vaultier /etc/nginx/sites-enabled

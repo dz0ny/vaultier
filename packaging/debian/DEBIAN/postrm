@@ -3,6 +3,24 @@ set -e
 
 . /usr/share/debconf/confmodule
 
+if [ "$1" = "purge" -a -e /usr/share/debconf/confmodule ]; then
+    db_get vaultier/database_name
+    echo "Found database $RET to delete"
+    database_name="$RET"
+
+    db_get vaultier/database_user
+    echo "Found user $RET to delete"
+    database_user="$RET"
+
+    if sudo -u postgres psql ${database_name} -c '\q' &>/dev/null; then
+        sudo -u postgres dropdb $database_name
+        echo "Database $database_name deleted successfully"
+    fi
+
+    sudo -u postgres psql postgres -tAc "SELECT 1 FROM pg_roles WHERE rolname='$database_user'" | grep -q 1 && \
+        sudo -u postgres dropuser $database_user && echo "Database user $database_user deleted successfully"
+fi
+
 # Remove configuration files
 rm -f /etc/supervisor/conf.d/vaultier.conf
 rm -f /etc/nginx/sites-enabled/vaultier
@@ -22,7 +40,9 @@ rm -f /opt/vaultier/vaultier_conf.pyc
 
 
 if [ "$1" = "purge" -a -e /usr/share/debconf/confmodule ]; then
+
     rm -rf /opt/vaultier/
+    id -f vaultier &>/dev/null && delgroup vaultier
     id -u vaultier &>/dev/null && deluser vaultier
     db_purge
 fi
@@ -34,4 +54,3 @@ fi
 # start servers again
 service uwsgi start
 service nginx start
-db_stop

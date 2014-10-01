@@ -1,3 +1,3 @@
-/etc/nginx/sites-available/vaultier
-/etc/uwsgi/apps-available/vaultier.ini
-/etc/supervisor/conf.d/vaultier.conf
+/usr/share/vaultier/config/nginx/vaultier
+/usr/share/vaultier/config/supervisor/vaultier.conf
+/usr/share/vaultier/config/uwsgi/vaultier.ini
