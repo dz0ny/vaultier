@@ -238,7 +238,8 @@ VAULTIER = {
     # enabled and let us know how many instances are deployed.
     # We send these statistics data: count of workspaces, vaults,cards,
     # secrets, users, members
-    'allow_anonymous_usage_statistics': True
+    'allow_anonymous_usage_statistics': True,
+    'registration_allow': True
 }
 
 #celery broker
