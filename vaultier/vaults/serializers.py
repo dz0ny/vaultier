@@ -16,11 +16,11 @@ class VaultSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Vault
-        fields = ('id', 'slug', 'name', 'description', 'workspace', 'perms',
+        fields = ('id', 'slug', 'name', 'color', 'description', 'workspace', 'perms',
                   'created_at', 'updated_at', 'created_by')
 
 
 class RelatedVaultSerializer(VaultSerializer):
     
     class Meta(VaultSerializer.Meta):
-        fields = ['id', 'slug', 'name']
+        fields = ['id', 'slug', 'name', 'color']

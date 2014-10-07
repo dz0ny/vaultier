@@ -1,9 +1,10 @@
 {{#if auth.isAuthenticated}}
     <div class="vlt-security-box dropdown">
-        {{gravatarImg auth.user.cleanValues.email size=25 class="vlt-avatar"}}
 
         <a href="#" class="vlt-username dropdown-toggle" data-toggle="dropdown">
-            {{ellipsis auth.user.cleanValues.nickname 12}}
+            {{gravatarImg auth.user.cleanValues.email size=25 class="vlt-avatar"}}
+            <p>{{ellipsis auth.user.cleanValues.nickname 17}}</p>
+
         </a>
 
         <ul class="dropdown-menu caret-right vlt-dropdown">
@@ -14,10 +15,5 @@
                 <li><a {{bind-attr  href=auth.token}} class="copy-token" >Copy token to clipboard</a></li>
             {{/if}}
         </ul>
-    </div>
-{{else}}
-    <div class=" vlt-security-box vlt-anonymous">
-       {{#link-to 'AuthLogin' class="btn btn-primary btn-sm" activeClass=""}}Login{{/link-to}}
-       {{#link-to 'AuthRegister' class="btn btn-default btn-sm" activeClass=""}}Create an account{{/link-to}}
     </div>
 {{/if}}

@@ -41,6 +41,7 @@ Vaultier.AuthLoginRoute = Ember.Route.extend({
             var pkey = keys.privateKey
             ctrl.set('email', this.get('config.FT_FEATURES.dev_email'));
             ctrl.set('privateKey', pkey)
+            ctrl.set('registration_allow', this.get('config.registration_allow'));
         }
 
         // remembering

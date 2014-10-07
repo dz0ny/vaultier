@@ -18,8 +18,9 @@ def config(request):
     print pkg_resources.get_distribution("Vaultier").version
     script = json.dumps({
         'FT_FEATURES': settings.FT_FEATURES,
-        'VERSION': pkg_resources.get_distribution("Vaultier").version,
-        'invitationLifetime': settings.VAULTIER.get('invitation_lifetime')
+        'VERSION': git.tag,
+        'invitation_lifetime': settings.VAULTIER.get('invitation_lifetime'),
+        'registration_allow': settings.VAULTIER.get('registration_allow')
     })
     script = 'InitializeConfig = function(app) {  app.Config = Ember.Object.extend('+script+'); }'
 

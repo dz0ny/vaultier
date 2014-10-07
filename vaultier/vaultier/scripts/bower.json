@@ -31,8 +31,7 @@
     "FileSaver": "*",
 
     "Keypress": "https://github.com/dmauro/Keypress.git#1.0.9",
-    "bootstrap": "https://github.com/twbs/bootstrap.git#3.0.3",
-    "bootswatch": "https://github.com/thomaspark/bootswatch.git#3.0.3",
+    "bootstrap": "https://github.com/twbs/bootstrap.git#3.2",
     "lgtm": "~0.3.5",
     "marked": "~0.3.2",
     "momentjs": "~2.6.0",

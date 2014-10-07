@@ -79,5 +79,12 @@ Vaultier.CardsIndexView = Ember.View.extend({
 
 
 Vaultier.CardsIndexItemView = Ember.View.extend({
-    templateName: 'Card/CardsIndexItem'
+    templateName: 'Card/CardsIndexItem',
+    classNameBindings: [':vlt-card-item', 'selected:selected'],
+    mouseEnter: function() {
+        this.set('selected', 'selected');
+    },
+    mouseLeave: function() {
+        this.set('selected', null);
+    }
 });

@@ -17,7 +17,6 @@ FT_FEATURES = {
 BK_FEATURES = {
     'dev_mail_to': '',  # all emails goes to only this use
     'dev_shared_key': True,  # for all users same private key is used
-    'ga_create_code': None,  # code for google analytics, on devel we don't want to track anything
     # 1 hour in milliseconds, used to calculate the expiration date of a lostkey resource
     'lostkey_hash_expiration_time': 3600000,
     'from_email': 'info@rclick.com',  # Default email address from which we send emails

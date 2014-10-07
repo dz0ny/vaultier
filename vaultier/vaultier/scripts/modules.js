@@ -106,10 +106,6 @@ var vaultierModulesConfig = {
                 "./bower_components/select2/select2-bootstrap.css",
                 "./bower_components/selectize/dist/css/selectize.bootstrap3.css",
 
-                /**************** bootwatch css as modified boostrap **/
-                "./local_components/bootwatch/css/bootstrap.css",
-                "./local_components/bootwatch/css/bootwatch.min.css",
-
                 /**************** select2 and selectize styles **/
                 "./bower_components/select2/select2.css",
                 "./bower_components/select2/select2-bootstrap.css",
@@ -120,10 +116,6 @@ var vaultierModulesConfig = {
                 /**************** bootsrap resources **/
                 "./bower_components/bootstrap/dist/css/**/*.*",
                 "./bower_components/bootstrap/dist/fonts/**/*.*",
-
-                /**************** bootwatch resources **/
-                "./local_components/bootwatch/css/**/*.*",
-                "./local_components/bootwatch/fonts/**/*.*",
 
                 /**************** select2 resources **/
                 "./bower_components/select2/*.png",
@@ -167,6 +159,7 @@ var vaultierModulesConfig = {
                 "./js/model/mixin/EncryptedModelMixin.js",
                 "./js/model/mixin/RollbackMixin.js",
                 "./js/model/adapter/Adapter.js",
+                "./js/model/Color.js",
                 "./js/model/User.js",
                 "./js/model/Workspace.js",
                 "./js/model/WorkspaceKey.js",
@@ -201,11 +194,11 @@ var vaultierModulesConfig = {
                 "./js/module/Layout/PasswordField.js"
             ],
             "resources": [
-                './images/**/*'
+                './images/**/*',
+                "./font/**/*"
             ],
             "styles": [
-                "./css/application.css",
-                "./css/home.css"
+                "./css/application.css"
             ]
         },
         "error": {
@@ -216,14 +209,6 @@ var vaultierModulesConfig = {
             ],
             "scripts": [
                 "./js/module/Error/Error.js"
-            ]
-        },
-        "home": {
-            "scripts": [
-                "./js/module/Home/HomeIndex.js"
-            ],
-            "templates": [
-                "./js/module/Home/HomeIndex.hbs"
             ]
         },
         "auth": {
@@ -289,6 +274,7 @@ var vaultierModulesConfig = {
         },
         "vault": {
             "scripts": [
+                "./js/module/Vault/VaultColor.js",
                 "./js/module/Vault/VaultsIndex.js",
                 "./js/module/Vault/VaultsCreate.js",
                 "./js/module/Vault/VaultIndex.js",
@@ -297,11 +283,7 @@ var vaultierModulesConfig = {
                 "./js/module/Vault/VaultHistory.js"
             ],
             "templates": [
-                "./js/module/Vault/VaultsIndex.hbs",
-                "./js/module/Vault/VaultsIndexItem.hbs",
-                "./js/module/Vault/VaultsCreate.hbs",
-                "./js/module/Vault/VaultEdit.hbs",
-                "./js/module/Vault/VaultHistoryIndex.hbs"
+                "./js/module/Vault/**/*.hbs"
             ]
         },
         "card": {
