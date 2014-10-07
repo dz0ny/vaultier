@@ -35,7 +35,7 @@ setup(
         "Framework :: Django",
         "Intended Audience :: Information Technology",
         "Topic :: Security",
-        "License :: Other/Proprietary License",
+        "License :: OSI Approved :: BSD License",
         "Natural Lanugage :: English",
         "Operating System :: POSIX :: Linux",
         "Programming Language :: Python",
