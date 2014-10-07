@@ -15,10 +15,9 @@ def index(request):
 
 
 def config(request):
-    print pkg_resources.get_distribution("Vaultier").version
     script = json.dumps({
         'FT_FEATURES': settings.FT_FEATURES,
-        'VERSION': git.tag,
+        'VERSION': pkg_resources.get_distribution("Vaultier").version,
         'invitation_lifetime': settings.VAULTIER.get('invitation_lifetime'),
         'registration_allow': settings.VAULTIER.get('registration_allow')
     })
