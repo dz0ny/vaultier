@@ -44,24 +44,25 @@ mkdir -p /opt/vaultier/logs/
 
 # Setup postgres account
 service postgresql start
-sudo -u postgres psql postgres -tAc "SELECT 1 FROM pg_roles WHERE rolname='$database_user'" | grep -q 1 || \
+if sudo -u postgres psql postgres -tAc "SELECT 1 FROM pg_roles WHERE rolname='$database_user'" &>/dev/null | grep -q 1; then
+    sudo -u postgres psql --command "ALTER USER $database_user WITH PASSWORD '$database_password';"
+    # ALTER USER Postgres WITH PASSWORD '<newpassword>';
+else
     sudo -u postgres psql --command "CREATE USER $database_user WITH SUPERUSER PASSWORD '$database_password';" &>/dev/null
-
+    #
+fi
 if ! sudo -u postgres psql ${database_name} -c '\q' &>/dev/null; then
     sudo -u postgres createdb -O ${database_user} ${database_name}
 fi
 
-
 # install Vaultier
+mkdir -p /opt/vaultier
 cd /opt/vaultier
 virtualenv venv
 
-if [ ! -f Vaultier-0.7.0.tar.gz ]; then
-    echo "nothing to install"
-fi
+/opt/vaultier/venv/bin/pip install /usr/share/vaultier/source/Vaultier-0.7.0.tar.gz
 
-/opt/vaultier/venv/bin/pip install Vaultier-0.7.0.tar.gz
-rm /opt/vaultier/Vaultier-0.7.0.tar.gz
+#rm /opt/vaultier/Vaultier-0.7.0.tar.gz
 export PYTHONPATH=/opt/vaultier/venv/lib/python2.7/site-packages/vaultier
 
 
@@ -103,14 +104,20 @@ sed -i "s/DEB_DOMAIN/${domain}/g" /etc/nginx/sites-available/vaultier
 ln -s /etc/nginx/sites-available/vaultier /etc/nginx/sites-enabled
 ln -s /etc/uwsgi/apps-available/vaultier.ini /etc/uwsgi/apps-enabled
 
-# start uwsgi
-service uwsgi start || true
 
-# start nginx
-service nginx start
+# start servers again
+if ! service uwsgi start &> /dev/null; then
+    echo "Starting uwsgi failed. Please try to start uwsgi manually."
+fi
 
-# update & run supervisor
-service supervisor start
-supervisorctl update
+if ! service nginx start &> /dev/null; then
+    echo "Starting nginx failed. Please try to start nginx manually."
+fi
+
+if ! service supervisor start &> /dev/null; then
+    echo "Starting supervisor failed. Please try to start supervisor manually."
+else
+    supervisorctl update
+fi
 
 db_stop
