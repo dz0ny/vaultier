@@ -24,3 +24,5 @@ VAULTIER.update({
     # (in seconds)
     'login_safe_timestamp': 15,
 })
+
+SECRET_KEY = 'DEV_KEY_DEV_KEY_DEV_KEY_DEV_KEY_'
