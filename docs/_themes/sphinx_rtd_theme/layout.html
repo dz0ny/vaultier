@@ -73,9 +73,20 @@
   {# Keep modernizr in head - http://modernizr.com/docs/#installing #}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
 
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:700,300,400' rel='stylesheet' type='text/css'>
+
 </head>
 
 <body class="wy-body-for-nav" role="document">
+
+  <div class="vault-nav">
+    <div class="brand">
+        <a href="{{ pathto(master_doc) }}"><img src="{{ pathto('_static/images/logo.png', 1) }}"></a>
+    </div>
+    <div class="menu">
+        <a href="http://vaultier.org/">Back to Vaultier-CMS</a>
+    </div>
+  </div>
 
   <div class="wy-grid-for-nav">
 
@@ -83,7 +94,7 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-nav-search">
         {% block sidebartitle %}
-          <a href="{{ pathto(master_doc) }}" class="fa fa-home"> {{ project }}</a>
+          <!-- <a href="{{ pathto(master_doc) }}" class="fa fa-home"> Home</a> -->
         {% endblock %}
         {% include "searchbox.html" %}
       </div>
