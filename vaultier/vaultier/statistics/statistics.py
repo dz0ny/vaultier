@@ -10,10 +10,10 @@ from workspaces.models import Workspace
 
 class StatisticsManager(object):
     """
-    Collects statistics about count of vaultier objects and sends them
+    Collects statistics about count of Vaultier objects and sends them
     to central endpoint.
     """
-    STATISTICS_ENDPOINT = 'http://vaultier.org/api/running-instances'
+    STATISTICS_ENDPOINT = 'http://vaultier.org/api/ping'
 
     @staticmethod
     def send_statistics():
@@ -35,4 +35,5 @@ class StatisticsManager(object):
                    'secrets': secret_count,
                    'users': user_count,
                    'members': member_count}
-        requests.post(StatisticsManager.STATISTICS_ENDPOINT, data=json.dumps(payload))
+        requests.post(StatisticsManager.STATISTICS_ENDPOINT,
+                      data=json.dumps(payload))

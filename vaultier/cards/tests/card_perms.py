@@ -188,11 +188,8 @@ class ApiCardPermsTest(TransactionTestCase):
 
         #user2 tries to delete card, should be allowed
         response = delete_card_api_call(user2token, card1.get('id'))
-        self.assertEqual(
-            response.status_code,
-            HTTP_204_NO_CONTENT,
-            format_response(response)
-        )
+        self.assertEqual(response.status_code, HTTP_204_NO_CONTENT,
+                         format_response(response))
 
     def test_030_retrieve_forbidden(self):
         # create user1
@@ -262,8 +259,7 @@ class ApiCardPermsTest(TransactionTestCase):
             pk=user2member.get('id')).invitation_hash
         accept_invitation_api_call(user2token,
                                    pk=user2member.get('id'),
-                                   hash=user2hash
-                                   )
+                                   hash=user2hash)
 
         create_role_api_call(
             user1token,
@@ -290,8 +286,7 @@ class ApiCardPermsTest(TransactionTestCase):
 
         # user1 moves card to vault2
         update_card_api_call(user1token, card1.get('id'),
-                             vault=vault2.get('id')
-        ).data
+                             vault=vault2.get('id')).data
 
         # card1 should be now accessible to user 2
         response = retrieve_card_api_call(user2token, card1.get('id'))
@@ -311,8 +306,7 @@ class ApiCardPermsTest(TransactionTestCase):
 
         # user1 moves card back to vault1
         update_card_api_call(user1token, card1.get('id'),
-                             vault=vault1.get('id')
-        ).data
+                             vault=vault1.get('id')).data
 
         # user2 should be able to access vault and card
         response = retrieve_card_api_call(user2token, vault1.get('id'))

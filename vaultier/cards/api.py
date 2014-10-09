@@ -9,12 +9,11 @@ from vaultier.business.mixins import AtomicTransactionMixin, \
     RetrieveBySlugMixin, SoftDeleteModelMixin
 
 
-class CardViewSet(
-    AtomicTransactionMixin,
-    RetrieveBySlugMixin,
-    SoftDeleteModelMixin,
-    VersionContextAwareApiViewMixin,
-    ModelViewSet):
+class CardViewSet(AtomicTransactionMixin,
+                  RetrieveBySlugMixin,
+                  SoftDeleteModelMixin,
+                  VersionContextAwareApiViewMixin,
+                  ModelViewSet):
     """
     API endpoint that allows cars to be viewed or edited.
     """

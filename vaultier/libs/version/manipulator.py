@@ -22,7 +22,7 @@ def factory_manipulator(version, manipulator_id):
 
 
 def get_manipulator_class(id):
-    if manipulators.has_key(id):
+    if id in manipulators:
         cls = manipulators[id]
     else:
         msg = 'manipulator class for "{name}" not found'
@@ -47,7 +47,7 @@ def register_manipulator_signal(version_cls, manipulator_id=None,
             **kwargs
         )
 
-        if (overwritten_values):
+        if overwritten_values:
             version = version_cls(versioned=instance)
             manipulator = factory_manipulator(version, manipulator_id)
             manipulator.store_state(overwritten_values, instance)

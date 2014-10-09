@@ -1,13 +1,8 @@
 from django.db import models
-from accounts.business.fields import MemberStatusField
-from accounts.business.managers import MemberManager
-from accounts.models import Member
 from libs.changes.changes import ChangesMixin
-from libs.lowercasefield.lowercasefield import LowerCaseCharField
 from libs.softdelete.softdelete import SoftDeleteMixin
 from libs.tree.iterator import TreeIterableModelMixin
-from django.db.models.deletion import PROTECT, CASCADE
-from django.db.models.signals import post_save
+from django.db.models.deletion import PROTECT
 from .business.tree import WorkspaceTreeIterator
 from .business.managers import WorkspaceManager
 

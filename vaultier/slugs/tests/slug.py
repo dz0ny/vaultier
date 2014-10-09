@@ -50,7 +50,6 @@ class SlugTest(TransactionTestCase):
         Workspace.objects.include_deleted().delete()
         self.assertEquals(Slug.objects.all().count(), 0)
 
-
     def test_020_vault_slug(self):
         u = User(email="jan@rclick.cz")
         u.save()
@@ -90,11 +89,9 @@ class SlugTest(TransactionTestCase):
         v2.softdelete()
         self.assertEquals(Slug.objects.all().count(), prereqs_slug_count + 3)
 
-
         # delete all, only workspace slug should stay
         Vault.objects.include_deleted().delete()
         self.assertEquals(Slug.objects.all().count(), prereqs_slug_count)
-
 
     def test_030_card_slug(self):
         u = User(email="jan@rclick.cz")
@@ -178,13 +175,11 @@ class SlugTest(TransactionTestCase):
         w1.save()
         self.assertEquals(w1.slug, 'n55')
 
-
         # support numeric names
         w1 = Workspace(name=-6.6, created_by=u)
         w1._user = u
         w1.save()
         self.assertEquals(w1.slug, 'n66')
-
 
         # support numeric names
         w1 = Workspace(name='+5.5.-5', created_by=u)

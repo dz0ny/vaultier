@@ -8,7 +8,7 @@ def search_api_call(token, query=None):
     client.token(token)
 
     data = {
-        'query':query
+        'query': query
     }
 
     response = client.get(url, data)

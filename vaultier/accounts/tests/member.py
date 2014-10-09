@@ -196,7 +196,6 @@ class ApiInviteTest(TransactionTestCase):
                              to_workspace=user1workspace.get('id'),
                              level=RoleLevelField.LEVEL_READ)
 
-
         # list roles for workspace1 without hash, should be forbidden
         response = retrieve_invitation_api_call(user2token,
                                                 user2member.get('id'),

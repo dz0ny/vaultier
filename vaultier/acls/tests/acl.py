@@ -32,7 +32,6 @@ class AclTest(TransactionTestCase):
         if not o:
             raise RuntimeError('Unknown test type')
 
-
         aclset = o.acl_set.all()
 
         if role:
@@ -407,7 +406,6 @@ class AclTest(TransactionTestCase):
 
         a = list(c.acl_set.all())
         self.assertAcl(level=AclLevelField.LEVEL_READ, count=1, card=c)
-
 
     def test_080_create_role_multiple_inheritance(self):
         u = User()

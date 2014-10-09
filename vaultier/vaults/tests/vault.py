@@ -1,7 +1,8 @@
 from django.test.testcases import TransactionTestCase
 from django.utils import unittest
 from django.utils.unittest.suite import TestSuite
-from rest_framework.status import HTTP_201_CREATED, HTTP_200_OK, HTTP_204_NO_CONTENT
+from rest_framework.status import HTTP_201_CREATED, HTTP_200_OK, \
+    HTTP_204_NO_CONTENT
 from accounts.tests.api import auth_api_call, register_api_call
 from libs.version.context import version_context_manager
 from vaultier.test.tools import format_response
@@ -19,10 +20,13 @@ class ApiVaultTest(TransactionTestCase):
         user1token = auth_api_call(email=email).data.get('token')
 
         # create workspace
-        workspace = create_workspace_api_call(user1token, name='Workspace').data
+        workspace = create_workspace_api_call(
+            user1token, name='Workspace').data
 
         #create vault
-        response = create_vault_api_call(user1token, name="vault_in_workspace", workspace=workspace.get('id'))
+        response = create_vault_api_call(
+            user1token, name="vault_in_workspace",
+            workspace=workspace.get('id'))
         self.assertEqual(
             response.status_code,
             HTTP_201_CREATED,
@@ -30,8 +34,7 @@ class ApiVaultTest(TransactionTestCase):
         )
         vault = response.data
 
-        return (user1, user1token, workspace, vault)
-
+        return user1, user1token, workspace, vault
 
     def setUp(self):
         version_context_manager.set_enabled(False)
@@ -54,7 +57,8 @@ class ApiVaultTest(TransactionTestCase):
         user1, user1token, workspace, vault = list(self.create_vault())
 
         #list vaults
-        response = list_vaults_api_call(user1token, workspace=workspace.get('id'))
+        response = list_vaults_api_call(
+            user1token, workspace=workspace.get('id'))
         self.assertEqual(
             response.status_code,
             HTTP_200_OK,
@@ -75,7 +79,8 @@ class ApiVaultTest(TransactionTestCase):
     @unittest.skip("should be fixed asap")
     def test_050_move_vault_should_not_be_allowed(self):
         user1, user1token, workspace, vault = list(self.create_vault())
-        response = update_vault_api_call(user1token, vault.get('id'), workspace=2, name="changed_name")
+        response = update_vault_api_call(
+            user1token, vault.get('id'), workspace=2, name="changed_name")
         self.assertEqual(
             response.status_code,
             HTTP_200_OK,
@@ -88,7 +93,6 @@ class ApiVaultTest(TransactionTestCase):
             1,
             format_response(response)
         )
-
 
 
 def vault_suite():

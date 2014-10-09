@@ -8,7 +8,7 @@ from libs.models import Garage
 
 
 class ChangesMixinTest(TransactionTestCase):
-    def assertDictEqual(self, d1, d2, msg=None): # assertEqual uses for dicts
+    def assertDictEqual(self, d1, d2, msg=None):  # assertEqual uses for dicts
         for k, v1 in d1.iteritems():
             self.assertIn(k, d2, msg)
             v2 = d2[k]
@@ -19,32 +19,31 @@ class ChangesMixinTest(TransactionTestCase):
                 self.assertEqual(v1, v2, msg)
         return True
 
-
     def test_dirtiness(self):
         g = Garage(car1='skoda')
 
         # no dirty fields there
-        v = g.dirty_values();
+        v = g.dirty_values()
         self.assertEqual(0, len(v.keys()))
 
         #one dirty field should be there
         g.car2 = 'lada'
-        v = g.dirty_values();
+        v = g.dirty_values()
         self.assertDictEqual({'car2': ''}, v)
 
         #no dirty fields should be there
         g.save()
-        v = g.dirty_values();
+        v = g.dirty_values()
         self.assertDictEqual({}, v)
 
         #no dirty field should be there because we did not do any change
         g.car2 = 'lada'
-        v = g.dirty_values();
+        v = g.dirty_values()
         self.assertDictEqual({}, v)
 
         #one dirty field should be there because we did not do any change
         g.car2 = 'porche'
-        v = g.dirty_values();
+        v = g.dirty_values()
         self.assertDictEqual({'car2': 'lada'}, v)
 
     def test_previous(self):
@@ -52,19 +51,19 @@ class ChangesMixinTest(TransactionTestCase):
         g.save()
 
         # assert previous values
-        v = g.previous_values();
+        v = g.previous_values()
         self.assertDictEqual({'car1': 'skoda', 'car2': '', 'id': None}, v)
 
         # assert overwritten values
         g.car2 = 'lada'
         g.save()
-        v = g.overwritten_values();
+        v = g.overwritten_values()
         self.assertDictEqual({'car2': ''}, v)
-
 
     def test_signals(self):
 
-        def on_change(sender=None, instance=None, overwritten_values=None, event_type=None, **kwargs):
+        def on_change(sender=None, instance=None, overwritten_values=None,
+                      event_type=None, **kwargs):
             self.signal_overwritten_values = overwritten_values
             self.signal_event_type = event_type
         post_change.connect(on_change, sender=Garage)
@@ -98,8 +97,8 @@ class ChangesMixinTest(TransactionTestCase):
         def post_change(self, **kwargs):
             self.post_change_hook = 'ok'
 
-        g.on_pre_save = types.MethodType(pre_save,g)
-        g.on_post_change = types.MethodType(post_change,g)
+        g.on_pre_save = types.MethodType(pre_save, g)
+        g.on_post_change = types.MethodType(post_change, g)
 
         g.save()
         self.assertEqual(g.post_change_hook, 'ok')
@@ -108,5 +107,6 @@ class ChangesMixinTest(TransactionTestCase):
 
 def changes_suite():
     suite = TestSuite()
-    suite.addTest(unittest.TestLoader().loadTestsFromTestCase(ChangesMixinTest))
+    suite.addTest(unittest.TestLoader().loadTestsFromTestCase(
+        ChangesMixinTest))
     return suite

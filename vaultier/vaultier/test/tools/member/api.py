@@ -3,7 +3,8 @@ from django.core.urlresolvers import reverse
 from vaultier.test.tools import VaultierAPIClient
 
 
-def invite_member_api_call(token, email=None, workspace=None, send=True, resend=True):
+def invite_member_api_call(token, email=None, workspace=None, send=True,
+                           resend=True):
     url = reverse('member-list')
     client = VaultierAPIClient()
     client.token(token)
@@ -30,7 +31,3 @@ def delete_member_api_call(token, member):
     client.token(token)
     response = client.delete(url)
     return response
-
-
-
-

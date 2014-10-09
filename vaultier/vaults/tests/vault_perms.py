@@ -1,7 +1,8 @@
 from django.test.testcases import TransactionTestCase
 from django.utils import unittest
 from django.utils.unittest.suite import TestSuite
-from rest_framework.status import HTTP_403_FORBIDDEN, HTTP_200_OK, HTTP_204_NO_CONTENT
+from rest_framework.status import HTTP_403_FORBIDDEN, HTTP_200_OK, \
+    HTTP_204_NO_CONTENT
 from accounts.models import Member
 from accounts.tests.api import register_api_call, auth_api_call, \
     invite_member_api_call
@@ -22,13 +23,13 @@ class ApiVaultPermsTest(TransactionTestCase):
         version_context_manager.set_enabled(False)
 
     def test_000_vault_anonymous_access(self):
-        response = create_vault_api_call(None, name="vault_in_workspace", workspace=None)
+        response = create_vault_api_call(
+            None, name="vault_in_workspace", workspace=None)
         self.assertEqual(
             response.status_code,
             HTTP_403_FORBIDDEN,
             format_response(response)
         )
-
 
     def test_001_create_delete_vault_as_anonymous(self):
 
@@ -38,14 +39,16 @@ class ApiVaultPermsTest(TransactionTestCase):
         user1token = auth_api_call(email=email).data.get('token')
 
         # create workspace
-        workspace = create_workspace_api_call(user1token, name='Workspace').data
+        workspace = create_workspace_api_call(
+            user1token, name='Workspace').data
 
         #create vault
-        vault = create_vault_api_call(user1token, name="vault_in_workspace", workspace=workspace.get('id'))
-
+        vault = create_vault_api_call(user1token, name="vault_in_workspace",
+                                      workspace=workspace.get('id'))
 
         #create vault as anonymous
-        response = create_vault_api_call(None, name="vault_in_workspace", workspace=workspace.get('id'))
+        response = create_vault_api_call(None, name="vault_in_workspace",
+                                         workspace=workspace.get('id'))
         self.assertEqual(
             response.status_code,
             HTTP_403_FORBIDDEN,
@@ -72,10 +75,13 @@ class ApiVaultPermsTest(TransactionTestCase):
         user2token = auth_api_call(email=email).data.get('token')
 
         # create workspace for user1
-        workspace1 = create_workspace_api_call(user1token, name='Workspace').data
+        workspace1 = create_workspace_api_call(
+            user1token, name='Workspace').data
 
-        # user2 tries to create vault in workspace of user 2 which he has no access to
-        response = create_vault_api_call(user2token, name="vault_in_workspace", workspace=workspace1.get('id'))
+        # user2 tries to create vault in workspace of user 2
+        # which he has no access to
+        response = create_vault_api_call(user2token, name="vault_in_workspace",
+                                         workspace=workspace1.get('id'))
         self.assertEqual(
             response.status_code,
             HTTP_403_FORBIDDEN,
@@ -94,15 +100,21 @@ class ApiVaultPermsTest(TransactionTestCase):
         user2token = auth_api_call(email=email).data.get('token')
 
         # create workspace for user1
-        workspace1 = create_workspace_api_call(user1token, name='Workspace').data
+        workspace1 = create_workspace_api_call(
+            user1token, name='Workspace').data
 
         # create vault
-        vault1 = create_vault_api_call(user1token, name="vault_in_workspace", workspace=workspace1.get('id')).data
+        vault1 = create_vault_api_call(user1token, name="vault_in_workspace",
+                                       workspace=workspace1.get('id')).data
 
         #user1 invites user and grant to user role READ to vault1
-        user2member = invite_member_api_call(user1token, email=user2.get('email'), workspace=workspace1.get('id')).data
-        user2hash = Member.objects.get(pk=user2member.get('id')).invitation_hash
-        user2accepted = accept_invitation_api_call(user2token, pk=user2member.get('id'), hash=user2hash)
+        user2member = invite_member_api_call(
+            user1token, email=user2.get('email'),
+            workspace=workspace1.get('id')).data
+        user2hash = Member.objects.get(
+            pk=user2member.get('id')).invitation_hash
+        user2accepted = accept_invitation_api_call(
+            user2token, pk=user2member.get('id'), hash=user2hash)
         user2role = create_role_api_call(
             user1token,
             member=user2member.get('id'),
@@ -135,7 +147,8 @@ class ApiVaultPermsTest(TransactionTestCase):
         )
 
         #user2 tries to delete workspace of vault1, should be forbidden
-        response = delete_workspace_api_call(user2token, vault1.get('workspace'))
+        response = delete_workspace_api_call(
+            user2token, vault1.get('workspace'))
         self.assertEqual(
             response.status_code,
             HTTP_403_FORBIDDEN,
@@ -170,10 +183,12 @@ class ApiVaultPermsTest(TransactionTestCase):
         user2token = auth_api_call(email=email).data.get('token')
 
         # create workspace for user1
-        workspace1 = create_workspace_api_call(user1token, name='workspace').data
+        workspace1 = create_workspace_api_call(
+            user1token, name='workspace').data
 
         # create vault for user1
-        vault1 = create_vault_api_call(user1token, name='vault_in_workspace', workspace=workspace1.get('id')).data
+        vault1 = create_vault_api_call(user1token, name='vault_in_workspace',
+                                       workspace=workspace1.get('id')).data
 
         # user 2 tries to retrieve card1 should be forbidden
         response = retrieve_vault_api_call(user2token, vault1.get('id'))
@@ -183,7 +198,9 @@ class ApiVaultPermsTest(TransactionTestCase):
             format_response(response)
         )
 
+
 def vault_perms_suite():
     suite = TestSuite()
-    suite.addTest(unittest.TestLoader().loadTestsFromTestCase(ApiVaultPermsTest))
+    suite.addTest(unittest.TestLoader().loadTestsFromTestCase(
+        ApiVaultPermsTest))
     return suite

@@ -2,12 +2,15 @@ from django.test.testcases import TransactionTestCase
 from django.utils import unittest
 from django.utils.unittest.suite import TestSuite
 from libs.version.context import version_context_manager
-from libs.version.manipulator import ACTION_CREATED, ACTION_UPDATED, ACTION_SOFTDELETED
+from libs.version.manipulator import ACTION_CREATED, ACTION_UPDATED, \
+    ACTION_SOFTDELETED
 from versions.models import Version
 from vaultier.test.tools.auth.api import auth_api_call, register_api_call
 from vaultier.test.tools import AssertionsMixin
-from vaultier.test.tools.vault.api import create_vault_api_call, delete_vault_api_call, update_vault_api_call
+from vaultier.test.tools.vault.api import create_vault_api_call, \
+    delete_vault_api_call, update_vault_api_call
 from vaultier.test.tools.workspace.api import create_workspace_api_call
+
 
 class VaultVersionTest(AssertionsMixin,  TransactionTestCase):
 
@@ -17,20 +20,18 @@ class VaultVersionTest(AssertionsMixin,  TransactionTestCase):
     def create_vault(self):
         # create user
         email = 'jan@rclick.cz'
-        user1 =register_api_call(email=email, nickname='jan').data
+        user1 = register_api_call(email=email, nickname='jan').data
         user1token = auth_api_call(email=email).data.get('token')
 
         # create workspace
-        workspace = create_workspace_api_call(user1token, name='workspace').data
+        workspace = create_workspace_api_call(
+            user1token, name='workspace').data
 
         # create vault
-        vault = create_vault_api_call(user1token,
-                                      workspace=workspace.get('id'),
-                                      name='vault'
-        ).data
+        vault = create_vault_api_call(
+            user1token, workspace=workspace.get('id'), name='vault').data
 
-
-        return (user1, user1token, workspace, vault, )
+        return user1, user1token, workspace, vault
 
     @unittest.skip("should be fixed asap")
     def test_vault_010_create(self):
@@ -53,7 +54,7 @@ class VaultVersionTest(AssertionsMixin,  TransactionTestCase):
         })
 
         # assert user has been stored with version
-        self.assertEqual(versions[0].created_by.id, user1.get('id'));
+        self.assertEqual(versions[0].created_by.id, user1.get('id'))
 
         # compare revision data
         self.assert_dict(versions[0].revert_data, {})
@@ -66,10 +67,9 @@ class VaultVersionTest(AssertionsMixin,  TransactionTestCase):
     def test_vault_020_update(self):
         user1, user1token, workspace, vault = list(self.create_vault())
 
-        vault = update_vault_api_call(user1token, vault.get('id'),
-                                      name='renamed_vault',
-                                      description="added_vault_description"
-        ).data
+        vault = update_vault_api_call(
+            user1token, vault.get('id'), name='renamed_vault',
+            description="added_vault_description").data
 
         #check version
         versions = Version.objects.filter(
@@ -87,11 +87,9 @@ class VaultVersionTest(AssertionsMixin,  TransactionTestCase):
             'description': None
         })
 
-        vault = update_vault_api_call(user1token, vault.get('id'),
-                                      name='renamed_vault_again',
-                                      description="changed_vault_description"
-        ).data
-
+        vault = update_vault_api_call(
+            user1token, vault.get('id'), name='renamed_vault_again',
+            description="changed_vault_description").data
 
         #check version
         versions = Version.objects.filter(
@@ -140,13 +138,15 @@ class VaultVersionTest(AssertionsMixin,  TransactionTestCase):
         self.assertEquals(versions.count(), 1)
 
         # compare revision data
-        self.assert_dict(versions[0].revert_data, {'deleted_at' : None})
+        self.assert_dict(versions[0].revert_data, {'deleted_at': None})
 
         # assert related id
         self.assertEqual(versions[0].versioned_related_type.model, 'workspace')
         self.assertEqual(versions[0].versioned_related_id, workspace.get('id'))
 
+
 def vault_version_suite():
     suite = TestSuite()
-    suite.addTest(unittest.TestLoader().loadTestsFromTestCase(VaultVersionTest))
+    suite.addTest(unittest.TestLoader().loadTestsFromTestCase(
+        VaultVersionTest))
     return suite

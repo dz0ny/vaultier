@@ -14,8 +14,10 @@ class VaultManager(SoftDeleteManagerMixin, Manager):
     def search(self, user, query, max_results=5):
         list = query.split()
         result = self.all_for_user(user).filter(
-            Q(reduce(lambda x, y: x | y, [Q(name__icontains=word) for word in list])) |
-            Q(reduce(lambda x, y: x | y, [Q(description__icontains=word) for word in list]))
+            Q(reduce(lambda x, y: x | y,
+                     [Q(name__icontains=word) for word in list])) |
+            Q(reduce(lambda x, y: x | y,
+                     [Q(description__icontains=word) for word in list]))
         ).order_by('updated_at')
 
         return result[:max_results]
@@ -27,4 +29,3 @@ class VaultManager(SoftDeleteManagerMixin, Manager):
         ).distinct()
 
         return vaults
-

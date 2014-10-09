@@ -24,32 +24,28 @@ class SecretSoftDeleteTest(TransactionTestCase):
         user1token = auth_api_call(email=email).data.get('token')
 
         # create workspace
-        workspace = create_workspace_api_call(user1token, name='workspace').data
+        workspace = create_workspace_api_call(
+            user1token, name='workspace').data
 
         #create vault
-        vault = create_vault_api_call(user1token,
-                                      name="vault_in_workspace",
-                                      workspace=workspace.get('id')
-        ).data
+        vault = create_vault_api_call(
+            user1token, name="vault_in_workspace",
+            workspace=workspace.get('id')).data
 
         #create card
-        card = create_card_api_call(user1token,
-                                    name="card_in_vault",
-                                    vault=vault.get('id')
-        ).data
+        card = create_card_api_call(
+            user1token, name="card_in_vault", vault=vault.get('id')).data
 
         #create secret
-        secret = create_secret_api_call(user1token,
-                                        name="secret_in_card",
-                                        card=card.get('id'),
-                                        type=SecretTypeField.SECRET_TYPE_PASSWORD
+        secret = create_secret_api_call(
+            user1token, name="secret_in_card", card=card.get('id'),
+            type=SecretTypeField.SECRET_TYPE_PASSWORD
         ).data
 
-        return (user1token, workspace, vault, card, secret)
-
+        return user1token, workspace, vault, card, secret
 
     def test_010_softdelete(self):
-        user1token, workspace, vault, card, secret = list(self.create_secret());
+        user1token, workspace, vault, card, secret = list(self.create_secret())
 
         delete_secret_api_call(user1token, secret.get('id'))
 
@@ -60,7 +56,7 @@ class SecretSoftDeleteTest(TransactionTestCase):
         self.assertEquals(secrets.count(), 1)
 
     def test_020_softdelete_card(self):
-        user1token, workspace, vault, card, secret = list(self.create_secret());
+        user1token, workspace, vault, card, secret = list(self.create_secret())
 
         delete_card_api_call(user1token, card.get('id'))
 
@@ -70,9 +66,8 @@ class SecretSoftDeleteTest(TransactionTestCase):
         secrets = Secret.objects.include_deleted().filter(id=secret.get('id'))
         self.assertEquals(secrets.count(), 1)
 
-
     def test_030_softdelete_vault(self):
-        user1token, workspace, vault, card, secret = list(self.create_secret());
+        user1token, workspace, vault, card, secret = list(self.create_secret())
 
         delete_vault_api_call(user1token, vault.get('id'))
 
@@ -84,7 +79,7 @@ class SecretSoftDeleteTest(TransactionTestCase):
 
     @unittest.skip("should be fixed asap")
     def test_040_softdelete_workspace(self):
-        user1token, workspace, vault, card, secret = list(self.create_secret());
+        user1token, workspace, vault, card, secret = list(self.create_secret())
 
         delete_workspace_api_call(user1token, vault.get('id'))
 
@@ -97,5 +92,6 @@ class SecretSoftDeleteTest(TransactionTestCase):
 
 def secret_softdelete_suite():
     suite = TestSuite()
-    suite.addTest(unittest.TestLoader().loadTestsFromTestCase(SecretSoftDeleteTest))
+    suite.addTest(unittest.TestLoader().loadTestsFromTestCase(
+        SecretSoftDeleteTest))
     return suite

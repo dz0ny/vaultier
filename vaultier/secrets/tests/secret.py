@@ -32,26 +32,20 @@ class ApiSecretTest(TransactionTestCase):
         # create vault
         vault = create_vault_api_call(user1token,
                                       workspace=workspace.get('id'),
-                                      name='vault'
-        ).data
-
+                                      name='vault').data
 
         # create card
         card = create_card_api_call(user1token,
                                     name="card_in_vault",
-                                    vault=vault.get('id')
-        ).data
+                                    vault=vault.get('id')).data
 
-        response = create_secret_api_call(user1token,
-                                          type=SecretTypeField.SECRET_TYPE_PASSWORD,
-                                          name='secret_in_card',
-                                          card=card.get('id'),
-                                          data="mocked_data"
-        )
+        response = create_secret_api_call(
+            user1token, type=SecretTypeField.SECRET_TYPE_PASSWORD,
+            name='secret_in_card', card=card.get('id'), data="mocked_data")
 
         secret = response.data
 
-        return (user1token, workspace, vault, card, secret, response)
+        return user1token, workspace, vault, card, secret, response
 
     def test_010_create_secret(self):
         user1token, workspace, vault, card, secret, response = list(
@@ -104,9 +98,9 @@ class ApiSecretTest(TransactionTestCase):
             self.create_secret())
 
         # retrieve secret
-        secret = update_secret_api_call(user1token, secret.get('id'),
-                                        type=SecretTypeField.SECRET_TYPE_NOTE
-        ).data
+        secret = update_secret_api_call(
+            user1token, secret.get('id'),
+            type=SecretTypeField.SECRET_TYPE_NOTE).data
 
         self.assertEqual(
             secret.get('type'),

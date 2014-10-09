@@ -23,11 +23,13 @@ class ApiWorkspacePermsTest(TransactionTestCase):
 
         # user has to be authenticated
         response = create_workspace_api_call(None, name='Workspace')
-        self.assertEqual(response.status_code,HTTP_403_FORBIDDEN, format_response(response))
+        self.assertEqual(response.status_code, HTTP_403_FORBIDDEN,
+                         format_response(response))
 
         # user has to be authenticated
-        response = list_workspaces_api_call (None)
-        self.assertEqual(response.status_code,HTTP_403_FORBIDDEN, format_response(response))
+        response = list_workspaces_api_call(None)
+        self.assertEqual(response.status_code, HTTP_403_FORBIDDEN,
+                         format_response(response))
 
     def test_010_workspace_delete_permissions(self):
         # create first user
@@ -41,7 +43,8 @@ class ApiWorkspacePermsTest(TransactionTestCase):
         user2token = auth_api_call(email=email).data.get('token')
 
         # create workspace for user1
-        workspace1 = create_workspace_api_call(user1token, name='workspace_of_user1').data
+        workspace1 = create_workspace_api_call(
+            user1token, name='workspace_of_user1').data
 
         # user1 tries to delete workspace1, should be allowed
         response = delete_workspace_api_call(user1token, workspace1.get('id'))
@@ -52,9 +55,11 @@ class ApiWorkspacePermsTest(TransactionTestCase):
         )
 
         # create workspace for user1
-        workspace1 = create_workspace_api_call(user1token, name='workspace_of_user1').data
+        workspace1 = create_workspace_api_call(
+            user1token, name='workspace_of_user1').data
 
-        # user2 tries to delete workspace1, should not be allowed 404 because of list he does see the workspce
+        # user2 tries to delete workspace1,
+        # should not be allowed 404 because of list he does see the workspace
         response = delete_workspace_api_call(user2token, workspace1.get('id'))
         self.assertEqual(
             response.status_code,
@@ -63,12 +68,19 @@ class ApiWorkspacePermsTest(TransactionTestCase):
         )
 
         #user1 invites user and grant to user role READ
-        user2member = invite_member_api_call(user1token, email=user2.get('email'), workspace=workspace1.get('id')).data
-        user2hash = Member.objects.get(pk=user2member.get('id')).invitation_hash
-        user2accepted = accept_invitation_api_call(user2token, pk=user2member.get('id'), hash=user2hash)
-        user2role = create_role_api_call(user1token, member=user2member.get('id'), to_workspace=workspace1.get('id'), level=RoleLevelField.LEVEL_READ)
+        user2member = invite_member_api_call(
+            user1token, email=user2.get('email'),
+            workspace=workspace1.get('id')).data
+        user2hash = Member.objects.get(
+            pk=user2member.get('id')).invitation_hash
+        user2accepted = accept_invitation_api_call(
+            user2token, pk=user2member.get('id'), hash=user2hash)
+        user2role = create_role_api_call(
+            user1token, member=user2member.get('id'),
+            to_workspace=workspace1.get('id'), level=RoleLevelField.LEVEL_READ)
 
-        # user2 tries to delete workspace1, should not be allowed 403 because of role only read
+        # user2 tries to delete workspace1,
+        # should not be allowed 403 because of role only read
         response = delete_workspace_api_call(user2token, workspace1.get('id'))
         self.assertEqual(
             response.status_code,
@@ -77,16 +89,19 @@ class ApiWorkspacePermsTest(TransactionTestCase):
         )
 
         # user2 promotes role of user1 to write
-        user2role = create_role_api_call(user1token, member=user2member.get('id'), to_workspace=workspace1.get('id'), level=RoleLevelField.LEVEL_WRITE)
+        user2role = create_role_api_call(
+            user1token, member=user2member.get('id'),
+            to_workspace=workspace1.get('id'),
+            level=RoleLevelField.LEVEL_WRITE)
 
-         # user2 tries to delete workspace1, should be allowed, because he has already proper role
+        # user2 tries to delete workspace1, should be allowed,
+        # because he has already proper role
         response = delete_workspace_api_call(user2token, workspace1.get('id'))
         self.assertEqual(
             response.status_code,
             HTTP_204_NO_CONTENT,
             format_response(response)
         )
-
 
     def test_020_workspace_permission_list(self):
 
@@ -101,10 +116,12 @@ class ApiWorkspacePermsTest(TransactionTestCase):
         user2token = auth_api_call(email=email).data.get('token')
 
         # create workspace for user1
-        workspace1 = create_workspace_api_call(user1token, name='workspace_of_user1').data
+        workspace1 = create_workspace_api_call(
+            user1token, name='workspace_of_user1').data
 
         # create second workspace for user1
-        workspace2 = create_workspace_api_call(user2token, name='workspace_of_user2').data
+        workspace2 = create_workspace_api_call(
+            user2token, name='workspace_of_user2').data
 
         # user1 should see only his workspace
         response = list_workspaces_api_call(user1token)
@@ -133,8 +150,8 @@ class ApiWorkspacePermsTest(TransactionTestCase):
         )
 
 
-
 def workspace_perms_suite():
     suite = TestSuite()
-    suite.addTest(unittest.TestLoader().loadTestsFromTestCase(ApiWorkspacePermsTest))
+    suite.addTest(unittest.TestLoader().loadTestsFromTestCase(
+        ApiWorkspacePermsTest))
     return suite

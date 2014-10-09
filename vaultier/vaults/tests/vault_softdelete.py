@@ -21,19 +21,19 @@ class VaultSoftDeleteTest(TransactionTestCase):
         user1token = auth_api_call(email=email).data.get('token')
 
         # create workspace
-        workspace = create_workspace_api_call(user1token, name='workspace').data
+        workspace = create_workspace_api_call(
+            user1token, name='workspace').data
 
         #create vault
-        vault = create_vault_api_call(user1token,
-                                      name="vault_in_workspace",
-                                      workspace=workspace.get('id')
-        ).data
+        vault = create_vault_api_call(
+            user1token, name="vault_in_workspace",
+            workspace=workspace.get('id')).data
 
-        return (user1token, workspace, vault, )
+        return user1token, workspace, vault
 
     def test_010_softdelete(self):
         # create user
-        user1token, workspace, vault = list(self.create_vault());
+        user1token, workspace, vault = list(self.create_vault())
 
         delete_vault_api_call(user1token, vault.get('id'))
 
@@ -45,7 +45,7 @@ class VaultSoftDeleteTest(TransactionTestCase):
 
     def test_020_softdelete_workspace(self):
 
-        user1token, workspace, vault = list(self.create_vault());
+        user1token, workspace, vault = list(self.create_vault())
 
         delete_workspace_api_call(user1token, vault.get('id'))
 
@@ -55,7 +55,9 @@ class VaultSoftDeleteTest(TransactionTestCase):
         cards = Vault.objects.include_deleted().filter(id=vault.get('id'))
         self.assertEquals(cards.count(), 1)
 
+
 def vault_softdelete_suite():
     suite = TestSuite()
-    suite.addTest(unittest.TestLoader().loadTestsFromTestCase(VaultSoftDeleteTest))
+    suite.addTest(unittest.TestLoader().loadTestsFromTestCase(
+        VaultSoftDeleteTest))
     return suite

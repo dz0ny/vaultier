@@ -1,7 +1,8 @@
 from django.test.testcases import TransactionTestCase
 from django.utils import unittest
 from django.utils.unittest.suite import TestSuite
-from rest_framework.status import HTTP_201_CREATED, HTTP_204_NO_CONTENT, HTTP_200_OK
+from rest_framework.status import HTTP_201_CREATED, HTTP_204_NO_CONTENT, \
+    HTTP_200_OK
 from accounts.models import Member
 from accounts.tests.api import register_api_call, auth_api_call
 from acls.models import Role
@@ -36,7 +37,7 @@ class ApiWorkspaceTest(TransactionTestCase):
         )
         workspace = response.data
 
-        return (user,token, workspace)
+        return user, token, workspace
 
     def test_010_create_workspace(self):
         user, token, workspace = list(self.create_workspace_and_user())
@@ -45,7 +46,7 @@ class ApiWorkspaceTest(TransactionTestCase):
         self.assertEqual(Member.objects.count(), 1)
 
         #assets role has been created together with workspace
-        self.assertEqual(Role.objects.count(),1)
+        self.assertEqual(Role.objects.count(), 1)
 
     def test_020_delete_workspace(self):
         user, token, workspace = list(self.create_workspace_and_user())
@@ -59,14 +60,13 @@ class ApiWorkspaceTest(TransactionTestCase):
         )
 
         #assert no workspace exists
-        self.assertEqual(Workspace.objects.count(),0)
-
+        self.assertEqual(Workspace.objects.count(), 0)
 
     def test_030_list_and_retrieve_workspace(self):
         user, token, workspace = list(self.create_workspace_and_user())
 
         #assert listing
-        response = list_workspaces_api_call (token)
+        response = list_workspaces_api_call(token)
         self.assertEqual(
             len(response.data),
             1
@@ -92,7 +92,9 @@ class ApiWorkspaceTest(TransactionTestCase):
             'updated',
         )
 
+
 def workspace_suite():
     suite = TestSuite()
-    suite.addTest(unittest.TestLoader().loadTestsFromTestCase(ApiWorkspaceTest))
+    suite.addTest(unittest.TestLoader().loadTestsFromTestCase(
+        ApiWorkspaceTest))
     return suite

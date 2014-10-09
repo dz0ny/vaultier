@@ -7,9 +7,7 @@ from acls.serializers import RoleSerializer, RoleUpdateSerializer, \
 from vaultier.business.mixins import AtomicTransactionMixin
 
 
-class RoleViewSet(
-    AtomicTransactionMixin,
-    ModelViewSet):
+class RoleViewSet(AtomicTransactionMixin, ModelViewSet):
     model = Role
     permission_classes = (IsAuthenticated, CanManageRolePermission)
     filter_fields = ('to_workspace', 'to_vault', 'to_card', 'level',)
@@ -27,7 +25,7 @@ class RoleViewSet(
     def pre_save(self, object):
         self.check_object_permissions(self.request, object)
         if not object.pk:
-            object.created_by = self.request.user;
+            object.created_by = self.request.user
         return super(RoleViewSet, self).pre_save(object)
 
     def get_queryset(self):

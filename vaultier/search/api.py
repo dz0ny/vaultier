@@ -15,7 +15,7 @@ class SearchView(APIView):
         return self.search(request)
 
     def include_type(self, value, type):
-        if (value):
+        if value:
             return type in value.lower()
         else:
             return True

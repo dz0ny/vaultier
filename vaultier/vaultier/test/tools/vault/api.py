@@ -18,12 +18,14 @@ def delete_vault_api_call(token, id):
     response = client.delete(url)
     return response
 
+
 def update_vault_api_call(token, id, **kwargs):
     url = reverse('vault-detail', args=(id,))
     client = VaultierAPIClient()
     client.token(token)
     response = client.put(url, kwargs)
     return response
+
 
 def retrieve_vault_api_call(token, id):
     url = reverse('vault-detail', args=(id,))
@@ -32,13 +34,14 @@ def retrieve_vault_api_call(token, id):
     response = client.get(url)
     return response
 
+
 def list_vaults_api_call(token, workspace=None):
     url = reverse('vault-list')
     client = VaultierAPIClient()
     client.token(token)
 
     data = {}
-    if (workspace):
+    if workspace:
         data['workspace'] = workspace
 
     response = client.get(url, **data)

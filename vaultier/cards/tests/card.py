@@ -112,7 +112,6 @@ class ApiCardTest(TransactionTestCase):
         card = create_card_api_call(user1token, name="card_in_vault",
                                     vault=vault.get('id')).data
 
-
         #retrieve card
         response = retrieve_card_api_call(user1token, card.get('id'))
         self.assertEqual(

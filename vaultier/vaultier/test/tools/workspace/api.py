@@ -18,6 +18,7 @@ def delete_workspace_api_call(token, id):
     response = client.delete(url)
     return response
 
+
 def retrieve_workspace_api_call(token, id):
     url = reverse('workspace-detail', args=(id,))
     client = VaultierAPIClient()
@@ -25,12 +26,14 @@ def retrieve_workspace_api_call(token, id):
     response = client.get(url)
     return response
 
+
 def list_workspaces_api_call(token):
     url = reverse('workspace-list')
     client = VaultierAPIClient()
     client.token(token)
     response = client.get(url)
     return response
+
 
 def update_workspace_api_call(token, id, **kwargs):
     url = reverse('workspace-detail', args=(id,))

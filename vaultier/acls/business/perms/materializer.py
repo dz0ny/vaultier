@@ -1,7 +1,8 @@
 from accounts.business.fields import MemberStatusField
 from acls.business.fields import RoleLevelField, AclDirectionField
 from acls.models import Acl, Role
-from acls.business.perms.strategy import ReadAclStrategy, WriteAclStrategy, CreateAclStrategy
+from acls.business.perms.strategy import ReadAclStrategy, WriteAclStrategy, \
+    CreateAclStrategy
 
 
 class CreateRoleMaterializer(object):
@@ -127,7 +128,7 @@ class UpdateRoleLevelMaterializer(object):
             role=self.role
         ).delete()
 
-        if (self.role.member.user):
+        if self.role.member.user:
             materializer = CreateRoleMaterializer(self.role)
             materializer.materialize(self.role.get_object())
 
@@ -171,7 +172,8 @@ class InsertedObjectMaterializer(object):
 
     def materialize_role(self):
         """
-        adds WRITE role for objects created by user based of parent CREATE roles
+        adds WRITE role for objects created by user based of parent
+        CREATE roles
         """
         parent = self.object.get_tree_iterator().get_parent_object()
         while parent:
@@ -234,4 +236,3 @@ class MovedObjectMaterializer(object):
         # rematerialize object as newly created
         m = InsertedObjectMaterializer(self.object)
         m.materialize()
-

@@ -227,8 +227,6 @@ class TokenExpirationTest(TransactionTestCase):
         self.assertEqual(Token.objects.all().count(), 1)
 
 
-
-
 def test_suite():
     suite = TestSuite()
     suite.addTest(unittest.TestLoader().loadTestsFromTestCase(SignaturesTest))

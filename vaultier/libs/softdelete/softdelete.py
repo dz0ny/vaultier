@@ -31,7 +31,6 @@ class SoftDeleteMixin(models.Model):
         """
         queryset.values('pk').update(deleted_at=now())
 
-
     def softdelete(self, using=None):
 
         try:
@@ -48,5 +47,3 @@ class SoftDeleteMixin(models.Model):
                 event_type=SOFT_DELETE,
                 overwritten_values=self.overwritten_values()
             )
-
-

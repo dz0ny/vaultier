@@ -18,7 +18,6 @@ def unique_slugify(
         # cast to str only if value is not a unicode
         value = str(value).strip()
 
-
     # disallow empty slugs
     if value == '':
         value = default_slug

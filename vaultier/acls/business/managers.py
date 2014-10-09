@@ -15,8 +15,7 @@ class RoleManager(Manager):
         if event_type == INSERT and \
                 (instance.member.status == MemberStatusField.STATUS_MEMBER or
                  instance.member.status ==
-                         MemberStatusField.STATUS_MEMBER_WITHOUT_WORKSPACE_KEY
-                 ):
+                 MemberStatusField.STATUS_MEMBER_WITHOUT_WORKSPACE_KEY):
             self.send_granted_access(instance)
 
     def send_granted_access(self, instance):
@@ -45,7 +44,6 @@ class RoleManager(Manager):
             acl__level=AclLevelField.LEVEL_READ,
             acl__user=user
         ).distinct()
-
 
         # all roles (to_workspace, to_vault, to_card) related to workspaces
         # in which user has permission to write

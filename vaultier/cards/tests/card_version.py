@@ -33,7 +33,6 @@ class CardVersionTest(AssertionsMixin, TransactionTestCase):
                                       name='vault'
                                       ).data
 
-
         # create card
         card = create_card_api_call(user1token,
                                     name="card_in_vault",

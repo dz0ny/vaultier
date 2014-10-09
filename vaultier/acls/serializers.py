@@ -11,18 +11,18 @@ from workspaces.serializers import RelatedWorkspaceSerializer
 class RoleSerializer(serializers.ModelSerializer):
     created_by = RelatedNestedField(serializer=RelatedUserSerializer,
                                     required=False, read_only=True)
-    member = RelatedNestedField(required=True,
-                                serializer=RelatedMemberSerializer,
-                                queryset=Member.objects.all())
-    to_workspace = serializers.PrimaryKeyRelatedField(required=False,
-                                                      read_only=False)
-    to_vault = serializers.PrimaryKeyRelatedField(required=False,
-                                                  read_only=False)
-    to_card = serializers.PrimaryKeyRelatedField(required=False, read_only=False)
+    member = RelatedNestedField(serializer=RelatedMemberSerializer,
+                                required=True, queryset=Member.objects.all())
+    to_workspace = serializers.PrimaryKeyRelatedField(
+        required=False, read_only=False)
+    to_vault = serializers.PrimaryKeyRelatedField(
+        required=False, read_only=False)
+    to_card = serializers.PrimaryKeyRelatedField(
+        required=False, read_only=False)
 
     def validate(self, attrs):
         if not (attrs.get('to_workspace') or attrs.get('to_vault') or
-                    attrs.get('to_card')):
+                attrs.get('to_card')):
             msg = 'At least one of to_workspace, to_vault, ' \
                   'to_card has to be set'
             raise serializers.ValidationError(msg)

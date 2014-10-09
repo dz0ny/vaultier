@@ -26,7 +26,7 @@ class AssertionsMixin(object):
 
     def assert_dict(self, compared, required):
         for key in required.keys():
-            if not compared.has_key(key):
+            if not key in compared:
                 raise self.failureException('Missing key "{}"'.format(key))
             if compared[key] != required[key]:
                 raise self.failureException('key "{}" not same'.format(key))

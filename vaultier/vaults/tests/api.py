@@ -40,7 +40,7 @@ def list_vaults_api_call(token, workspace=None):
     client.token(token)
 
     data = {}
-    if (workspace):
+    if workspace:
         data['workspace'] = workspace
 
     response = client.get(url, **data)

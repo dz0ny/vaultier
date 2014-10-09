@@ -1,7 +1,6 @@
 import os.path
 import sys
 from celery.schedules import crontab
-from datetime import timedelta
 
 DEBUG = False
 
