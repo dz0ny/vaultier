@@ -52,7 +52,7 @@ else
     #
 fi
 if ! sudo -u postgres psql ${database_name} -c '\q' &>/dev/null; then
-    sudo -u postgres createdb -O ${database_user} ${database_name}
+    sudo -u postgres createdb -E UTF-8 -O ${database_user} ${database_name}
 fi
 
 # install Vaultier

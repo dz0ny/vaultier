@@ -4,8 +4,8 @@ Section: web
 Priority: optional
 Architecture: all
 Depends: python-virtualenv, python-dev, nginx, uwsgi, uwsgi-plugin-python,
-    supervisor, postgresql-9.3, postgresql-client-9.3, postgresql-contrib-9.3,
-    postgresql-server-dev-9.3
+    supervisor, postgresql (>= 9.1.0), postgresql-client (>= 9.1.0), postgresql-contrib (>= 9.1.0),
+    postgresql-server-dev-all
 Maintainer: Rclick s.r.o. <info@rclick.cz>
 Description: Vaultier
  Easy and secure password and credentials sharing across teams.
