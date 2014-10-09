@@ -22,7 +22,6 @@ setup(
         'six==1.4.1',
         'wsgiref==0.1.2',
         'raven==5.0.0',
-        'dealer==1.1.1',
         'pytz==2014.7',
         'celery==3.1.9',
         'requests==2.3.0',

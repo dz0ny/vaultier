@@ -1,6 +1,4 @@
-import hmac
-import uuid
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from django.contrib.auth.models import AbstractBaseUser
 from django.db import models
 from django.db.models.deletion import CASCADE, PROTECT
 from django.db.models.signals import pre_save, post_save
@@ -82,22 +80,20 @@ class LostKey(models.Model):
 
 class Member(ChangesMixin, models.Model):
 
-    workspace = models.ForeignKey('workspaces.Workspace',
-                                  related_name='membership',
-                                  on_delete=CASCADE)
+    workspace = models.ForeignKey(
+        'workspaces.Workspace', related_name='membership', on_delete=CASCADE)
 
-    user = models.ForeignKey('accounts.User', on_delete=CASCADE, null=True,
-                             related_name='membership'
-                             )
+    user = models.ForeignKey(
+        'accounts.User', on_delete=CASCADE, null=True,
+        related_name='membership')
     invitation_hash = models.CharField(max_length=64, null=True, unique=True)
     invitation_email = LowerCaseCharField(max_length=1024, null=True)
     workspace_key = models.CharField(max_length=4096)
     status = MemberStatusField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    created_by = models.ForeignKey('accounts.User', on_delete=PROTECT,
-                                   related_name='members_created'
-                                   )
+    created_by = models.ForeignKey(
+        'accounts.User', on_delete=PROTECT, related_name='members_created')
     objects = MemberManager()
 
     class Meta:
@@ -117,6 +113,5 @@ class Member(ChangesMixin, models.Model):
 def register_signals():
     pre_save.connect(LostKey.objects.on_pre_save, sender=LostKey)
     post_save.connect(LostKey.objects.send_notification, sender=LostKey)
-    post_save.connect(Member.objects.send_transfer_workspace_key_info,
-                      sender=Member
-                      )
+    post_save.connect(
+        Member.objects.send_transfer_workspace_key_info, sender=Member)
