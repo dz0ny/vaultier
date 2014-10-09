@@ -16,7 +16,6 @@ class Workspace(ChangesMixin, SoftDeleteMixin, TreeIterableModelMixin,
                 models.Model):
     tree_iterator_class = WorkspaceTreeIterator
 
-
     name = models.CharField(max_length=255)
 
     slug = models.CharField(max_length=255, default='')
