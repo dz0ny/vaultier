@@ -10,8 +10,7 @@ from rest_framework.views import APIView
 def index(request):
 
     return render(request, 'index.html', Context({
-        'FT_FEATURES': settings.FT_FEATURES,
-        'BK_FEATURES': settings.BK_FEATURES
+        'dev_shared_key': settings.VAULTIER.get('dev_shared_key'),
     }))
 
 
@@ -25,11 +24,15 @@ class ConfigView(APIView):
         """
         # get settings and transform it to json
         conf_settings = json.dumps({
-            'FT_FEATURES': settings.FT_FEATURES,
             'VERSION': pkg_resources.get_distribution("Vaultier").version,
+            'raven_key': settings.VAULTIER.get('raven_key'),
             'invitation_lifetime': settings.VAULTIER.get(
                 'invitation_lifetime'),
-            'registration_allow': settings.VAULTIER.get('registration_allow')
+            'registration_allow': settings.VAULTIER.get('registration_allow'),
+            # dev
+            'dev_shared_key': settings.VAULTIER.get('dev_shared_key'),
+            'dev_show_token': settings.VAULTIER.get('dev_show_token'),
+            'dev_email': settings.VAULTIER.get('dev_email')
         })
         # add settings to script
         script = 'InitializeConfig = function(app) { ' \

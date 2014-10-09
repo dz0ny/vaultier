@@ -35,12 +35,12 @@ Vaultier.AuthLoginView = Ember.View.extend({
 Vaultier.AuthLoginRoute = Ember.Route.extend({
     setupController: function (ctrl) {
         //   testing
-        if (this.get('config.FT_FEATURES.dev_shared_key') ) {
+        if (this.get('config.dev_shared_key') ) {
             var auth = this.get('auth');
             var keys = auth.generateKeys();
-            var pkey = keys.privateKey
-            ctrl.set('email', this.get('config.FT_FEATURES.dev_email'));
-            ctrl.set('privateKey', pkey)
+            var pkey = keys.privateKey;
+            ctrl.set('email', this.get('config.dev_email'));
+            ctrl.set('privateKey', pkey);
             ctrl.set('registration_allow', this.get('config.registration_allow'));
         }
 
@@ -53,7 +53,7 @@ Vaultier.AuthLoginRoute = Ember.Route.extend({
         var user = auth.getRememberedUser();
         var ctrl = this.get('controller');
         if (user) {
-            ctrl.set('latestUser', true)
+            ctrl.set('latestUser', true);
             ctrl.set('email', user.email);
             ctrl.set('privateKey', user.privateKey);
             ctrl.set('ttl', user.ttl);
@@ -81,13 +81,13 @@ Vaultier.AuthLoginRoute = Ember.Route.extend({
             var promise = auth
                 .login(email, privateKey, true)
                 .then(function (user) {
-                    auth.rememberUser(email, privateKey, ttl)
+                    auth.rememberUser(email, privateKey, ttl);
                     $.notify('You have been successfully logged in.', 'success');
                 }.bind(this))
                 .catch(function () {
-                    auth.rememberUser(null)
+                    auth.rememberUser(null);
                     this.loadRemebered();
-                    ApplicationLoader.hideLoader()
+                    ApplicationLoader.hideLoader();
                     $.notify('We are sorry, but your login failed', 'error');
                 }.bind(this)
                 );

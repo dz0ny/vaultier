@@ -11,7 +11,7 @@ ALLOWED_HOSTS = [
     'www.example.com',
 ]
 
-FT_FEATURES.update({
+VAULTIER.update({
     'raven_key': ''
 })
 

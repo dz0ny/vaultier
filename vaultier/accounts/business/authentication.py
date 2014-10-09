@@ -117,7 +117,8 @@ class Authenticator(object):
     def authenticate(cls, email=None, date=None, signature=None):
 
         date_parsed = dateparser.parse(date)
-        safe_delta = settings.BK_FEATURES.get('login_safe_timestamp_delta')
+        safe_delta = timedelta(
+            seconds=settings.VAULTIER.get('login_safe_timestamp'))
         safe_until = date_parsed + safe_delta
         now = timezone.now()
 

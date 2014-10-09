@@ -214,16 +214,9 @@ EMBER_TPL_DIR = os.path.join(PROJECT_PATH, 'static/js/module')
 EMBER_TPL_CMPDIR = os.path.join(PROJECT_PATH, 'static/tpl')
 EMBER_TPL_MASK = "\w+.hbs$"
 
-# Indicates options for frontend
-FT_FEATURES = {
-    # True to use/generate same key for all users
-    'dev_shared_key': False,
+VAULTIER = {
     # sentry key to be used for loggin errors on the frontend
-    'raven_key': ''
-}
-
-# Indicates options for backed
-BK_FEATURES = {
+    'raven_key': '',
     # 'email@example.com' to send all emails to this address
     'dev_mail_to': False,
     # True to use/generate same key for all users
@@ -235,10 +228,7 @@ BK_FEATURES = {
     'from_email': 'info@rclick.com',
     # Max difference between timestamp from server and from front-end
     # (in seconds)
-    'login_safe_timestamp_delta': timedelta(seconds=15),
-}
-
-VAULTIER = {
+    'login_safe_timestamp': 15,
     # token lifetime (in hours)
     'authentication_token_lifetime': 2,
     # last_used_at will be renewed after some interval (in minutes)

@@ -6,7 +6,7 @@ from django.db.models import Q
 from django.db.models.loading import get_model
 from django.db.models.manager import Manager
 from django.utils import timezone
-from hashlib import sha1, __all__
+from hashlib import sha1
 from django.utils.timezone import utc
 from django.conf import settings
 from accounts.business.fields import MemberStatusField
@@ -52,10 +52,10 @@ class LostKeyManager(Manager):
         instance.hash = hmac.new(unique_hash.bytes, digestmod=sha1).hexdigest()
 
     def _generate_expiration_time(self, instance=None):
-        expiration_time = settings.BK_FEATURES.get(
+        expiration_time = settings.VAULTIER.get(
             'lostkey_hash_expiration_time')
         instance.expires_at = timezone.now().replace(tzinfo=utc) + \
-                              timedelta(milliseconds=expiration_time)
+            timedelta(milliseconds=expiration_time)
 
     def send_notification(self, sender, instance=None, *args, **kwargs):
         """
@@ -149,7 +149,8 @@ class LostKeyManager(Manager):
         :return:
         """
         unrecoverable_workspaces = self._get_unrecoverable_workspaces(user)
-        get_model('workspaces', 'Workspace').bulk_delete(unrecoverable_workspaces)
+        get_model('workspaces', 'Workspace').bulk_delete(
+            unrecoverable_workspaces)
 
     def _get_unrecoverable_workspaces(self, user):
         """
