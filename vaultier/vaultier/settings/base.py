@@ -144,6 +144,7 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.staticfiles',
     'raven.contrib.django.raven_compat',
+    'kombu.transport.django',
     'vaultier',
     'south',
     'rest_framework',
