@@ -17,17 +17,21 @@ PROJECT_PATH = os.path.split(os.path.abspath(os.path.dirname(__file__)))[0]
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE': 'django.db.backends.mysql',
         # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'vaultier',  # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         'USER': 'root',
         'PASSWORD': 'password',
-        'HOST': '',  # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+        # Empty for localhost through domain sockets or '127.0.0.1'
+        # for localhost through TCP.
+        'HOST': '',
         'PORT': '',  # Set to empty string for default.
     }
 }
-if 'test' in sys.argv or 'test_coverage' in sys.argv:  # Covers regular testing and django-coverage
+# Covers regular testing and django-coverage
+if 'test' in sys.argv or 'test_coverage' in sys.argv:
     DATABASES['default']['ENGINE'] = 'django.db.backends.sqlite3'
 
 
@@ -212,19 +216,26 @@ EMBER_TPL_MASK = "\w+.hbs$"
 
 # Indicates options for frontend
 FT_FEATURES = {
-    'dev_shared_key': False,  # True to use/generate same key for all users
+    # True to use/generate same key for all users
+    'dev_shared_key': False,
     # sentry key to be used for loggin errors on the frontend
     'raven_key': ''
 }
 
 # Indicates options for backed
 BK_FEATURES = {
-    'dev_mail_to': False,  # 'email@example.com' to send all emails to this address
-    'dev_shared_key': False,  # True to use/generate same key for all users
-    # 1 hour in milliseconds used to calculate the expiration time on api.lostkey module
+    # 'email@example.com' to send all emails to this address
+    'dev_mail_to': False,
+    # True to use/generate same key for all users
+    'dev_shared_key': False,
+    # 1 hour in milliseconds used to calculate the expiration time
+    # on api.lostkey module
     'lostkey_hash_expiration_time': 60*60*1000,
-    'from_email': 'info@rclick.com',  # Default email address from which we send emails
-    'login_safe_timestamp_delta': timedelta(seconds=15),  # Max difference between timestamp from server and from front-end in seconds
+    # Default email address from which we send emails
+    'from_email': 'info@rclick.com',
+    # Max difference between timestamp from server and from front-end
+    # (in seconds)
+    'login_safe_timestamp_delta': timedelta(seconds=15),
 }
 
 VAULTIER = {
@@ -232,14 +243,15 @@ VAULTIER = {
     'authentication_token_lifetime': 2,
     # last_used_at will be renewed after some interval (in minutes)
     'authentication_token_renewal_interval': 1,
+    # invitation lifetime (in hours)
     'invitation_lifetime': 7,
-    # When anonymous usage statistics is enabled, vaultier periodically
+    # When anonymous usage statistics is enabled, Vaultier periodically
     # anonymously notifies its maintainer and developer about running
-    # instance of Valtier.
+    # instance of Vaultier.
     # As Vaultier is Open Source we kindly ask you to leave this option
     # enabled and let us know how many instances are deployed.
-    # We send these statistics data: count of workspaces, vaults,cards,
-    # secrets, users, members
+    # We send these statistics data: count of workspaces, vaults, cards,
+    # secrets, users and members
     'allow_anonymous_usage_statistics': True,
     'registration_allow': True
 }
