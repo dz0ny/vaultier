@@ -25,11 +25,12 @@ Docker Volumes
 ==============
 
 .. warning:: You will need to handle at least ``/var/lib/postgresql`` for
-    database backup (mount this in another container)
+    database backup (mount this in another container) and ``/opt/vaultier/data``
 
 * /var/log
 * /var/lib/postgresql
 * /opt/vaultier/logs
+* /opt/vaultier/data
 
 =====================
 Environment Variables

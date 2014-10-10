@@ -17,9 +17,13 @@ ALLOWED_HOSTS = [
     '$(DOMAIN)',
 ]
 
-FT_FEATURES.update({
+VAULTIER.update({
     'raven_key': ''
 })
+
+CONFIG_DIR = os.path.abspath(os.path.dirname(__file__))
+MEDIA_ROOT = os.path.join(CONFIG_DIR, 'data')
+
 
 SECRET_KEY = '$(SECRET_KEY)'
 
