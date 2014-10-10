@@ -26,7 +26,8 @@ router.register(r'lost_keys', LostKeyViewSet, base_name='lost_keys')
 
 urlpatterns = router.urls
 
-urlpatterns += patterns('',
+urlpatterns += patterns(
+    '',
     # search
     url(r'^search/search$', SearchView.as_view(), name='search-search'),
     # auth

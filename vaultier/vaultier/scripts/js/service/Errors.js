@@ -17,7 +17,7 @@ Service.Errors = Ember.Object.extend({
 
     init: function () {
         this._super();
-        var ravenKey = this.get('config.FT_FEATURES.raven_key');
+        var ravenKey = this.get('config.raven_key');
         if (ravenKey) {
             Raven.config(ravenKey, {
                 whitelistUrls: []

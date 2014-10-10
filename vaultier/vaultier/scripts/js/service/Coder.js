@@ -13,8 +13,8 @@ Service.Coder = Ember.Object.extend({
         },
 
         getKey: function (callback) {
-            this.private = $('div.vlt-test-private-key').text().trim()
-            this.public = $('div.vlt-test-public-key').text().trim()
+            this.private = $('div.vlt-test-private-key').text().trim();
+            this.public = $('div.vlt-test-public-key').text().trim();
 
             if (callback) {
                 return callback(this)
@@ -26,7 +26,7 @@ Service.Coder = Ember.Object.extend({
     }),
 
     generateKeys: function (callback) {
-        if (this.get('config.FT_FEATURES.dev_shared_key')) {
+        if (this.get('config.dev_shared_key')) {
             // development generator
             var generator = this.TestingGenerator.create();
         } else {
@@ -39,7 +39,7 @@ Service.Coder = Ember.Object.extend({
                 privateKey: generator.getPrivateKey(),
                 publicKey: generator.getPublicKey()
             }
-        }
+        };
 
         if (callback) {
             generator.getKey(function () {

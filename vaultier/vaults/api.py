@@ -1,8 +1,8 @@
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 from libs.version.context import VersionContextAwareApiViewMixin
-from vaultier.business.mixins import SoftDeleteModelMixin, RetrieveBySlugMixin, \
-    AtomicTransactionMixin
+from vaultier.business.mixins import SoftDeleteModelMixin, \
+    RetrieveBySlugMixin, AtomicTransactionMixin
 from vaults.business.permissions import CanManageVaultPermission
 from vaults.models import Vault
 from vaults.serializers import VaultSerializer
@@ -22,7 +22,7 @@ class VaultViewSet(AtomicTransactionMixin, RetrieveBySlugMixin,
     def pre_save(self, object):
         if object.pk is None:
             self.check_object_permissions(self.request, object)
-            object.created_by = self.request.user;
+            object.created_by = self.request.user
         return super(VaultViewSet, self).pre_save(object)
 
     def get_queryset(self):

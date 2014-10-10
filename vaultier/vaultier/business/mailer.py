@@ -13,7 +13,7 @@ class VaultierMailer(object):
 
     Base usage:
     >>> mailer = VaultierMailer(template='mailer/my_template',
-    >>>                        subject='[Vaultier] New folder')
+    >>>                         subject='[Vaultier] New folder')
     >>> mailer.add_to('john@doe.org').send()
 
     Note: pass template name without extension. Plaintext and html
@@ -30,7 +30,7 @@ class VaultierMailer(object):
     def __init__(self, **kwargs):
         self._to = kwargs.get('to', [])
         self.from_email = kwargs.get('from_email',
-                                     settings.BK_FEATURES.get('from_email'))
+                                     settings.VAULTIER.get('from_email'))
         self.subject = kwargs.get('subject', self.subject)
         self._template = kwargs.get('template', self._template)
         self.template_style = kwargs.get('template_style', self.template_style)
