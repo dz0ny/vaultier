@@ -996,9 +996,9 @@ a:hover {
     height: 53px;
 }
 /*************************************************************
-* frontend div
+* front div
 *************************************************************/
-.vlt-card-frontend-div {
+.vlt-card-front-div {
     border: 1px solid #CACDD0;
     position: absolute;
     top: 1px;
@@ -1008,10 +1008,10 @@ a:hover {
     z-index: 3;
     background-color: #ffffff;
 }
-.vlt-card-frontend-div .vlt-card-item-header {
+.vlt-card-front-div .vlt-card-item-header {
     height: 60px;
 }
-.vlt-card-frontend-div .vlt-card-item-header-icon {
+.vlt-card-front-div .vlt-card-item-header-icon {
     display: inline-block;
     width: 50px;
     height: 40px;
@@ -1022,7 +1022,7 @@ a:hover {
     background-size: 65%;
     background-repeat: no-repeat;
 }
-.vlt-card-frontend-div .vlt-card-item-header h2 {
+.vlt-card-front-div .vlt-card-item-header h2 {
     display: inline-block;
     position: absolute;
     top: -2px;
@@ -1040,15 +1040,15 @@ a:hover {
     overflow:hidden;
     vertical-align:middle
 }
-.vlt-card-frontend-div .vlt-card-item-header h2 span {
+.vlt-card-front-div .vlt-card-item-header h2 span {
     width: 210px;
     display:inline-block;
     vertical-align:middle;
 }
-.vlt-card-frontend-div .vlt-card-item-content {
+.vlt-card-front-div .vlt-card-item-content {
     margin: 10px 20px 10px 20px;
 }
-.vlt-card-frontend-div .vlt-card-item-footer {
+.vlt-card-front-div .vlt-card-item-footer {
     color: #A0A2A7;
     position: absolute;
     bottom: 0px;
@@ -1056,14 +1056,14 @@ a:hover {
     width: 100%;
     background-color: #F5F5F5;
 }
-.vlt-card-frontend-div .vlt-card-item-footer .vlt-card-item-footer-user {
+.vlt-card-front-div .vlt-card-item-footer .vlt-card-item-footer-user {
     display: inline-block;
     float: left;
 }
-.vlt-card-frontend-div .vlt-card-item-footer .vlt-card-item-footer-user .vlt-user {
+.vlt-card-front-div .vlt-card-item-footer .vlt-card-item-footer-user .vlt-user {
     font-size: 90%;
 }
-.vlt-card-frontend-div .vlt-card-item-footer .vlt-card-item-footer-time {
+.vlt-card-front-div .vlt-card-item-footer .vlt-card-item-footer-time {
     position: relative;
     top: 2px;
     display: inline-block;
