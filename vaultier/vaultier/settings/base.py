@@ -161,8 +161,17 @@ INSTALLED_APPS = (
     'vaults',
     'versions',
     'workspaces',
-    'slugs'
+    'slugs',
+    'news'
 )
+
+#Django cache settings
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'vaultier_cache',
+    }
+}
 
 
 # A sample logging configuration. The only tangible logging
@@ -262,3 +271,13 @@ CELERYBEAT_SCHEDULE = {
         'schedule': crontab(hour='1'),
     }
 }
+
+# Vaultier blog news API endpoint. Must end with trailing slash
+NEWS_URL = 'http://vaultier.org/api/v1/news/'
+
+# For how long wait for response in seconds.
+NEWS_CONNECTION_TIMEOUT = 2
+
+# For how long news should be hold in cache. Vaultier API provides ETag
+# functionality, so you can increase this value whatever you want.
+NEWS_CACHE_TIMEOUT = 60*60*24
