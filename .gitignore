@@ -23,14 +23,23 @@ nbproject/
 # development settings
 vaultier/vaultier/settings/dev_*.py
 
-
 # ignore node modules
 vaultier/vaultier/scripts/node_modules/
 
-#ignore bower componets
+# ignore bower componets
 vaultier/vaultier/scripts/bower_components/
+
+# ignore builded folder
+vaultier/vaultier/scripts/dist/
 
 # we can ignore builded handlebar templates
 vaultier/vaultier/scripts/tpl/
 
+# ignore media
 vaultier/vaultier/media
+
+# ignore egg
+vaultier/Vaultier.egg-info
+
+# ignore builded doc
+docs/_build
