@@ -169,7 +169,8 @@ var vaultierModulesConfig = {
                 "./js/model/Vault.js",
                 "./js/model/Card.js",
                 "./js/model/Secret.js",
-                "./js/model/LostKey.js"
+                "./js/model/LostKey.js",
+                "./js/model/News.js"
             ]
         },
         "layout": {

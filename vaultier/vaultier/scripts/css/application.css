@@ -736,6 +736,7 @@ a:hover {
     display: inline-block;
     position: absolute;
     top: -56px;
+    padding-bottom: 56px;
 }
 .vlt-hp .container {
     position: relative;
@@ -803,6 +804,10 @@ a:hover {
     color: #a9a9a9;
     cursor: pointer;
     font-size: 14px;
+}
+.vlt-hp .container .vlt-latest-news .vlt-latest-news-none {
+    color: #a9a9a9;
+    padding: 5px 0 15px 20px;
 }
 .vlt-hp .container .vlt-latest-news .vlt-latest-news-box:hover .vlt-latest-news-box-content span {
     text-decoration: underline;
@@ -1278,7 +1283,7 @@ span.vlt-user img {
 *************************************************************/
 .vlt-search-box {
     margin: 14px 0px 0px 25px;
-    width: 190px;
+    max-width: 190px;
 }
 
 @media (max-width: 768px) {

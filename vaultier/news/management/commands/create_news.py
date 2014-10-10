@@ -20,8 +20,8 @@ class Command(BaseCommand):
         for _ in xrange(0, count):
             data.append({
                 'id': randint(0, 999),
-                'text': 'Text bla bla bla bla',
-                'title': 'Peace for everyone',
+                'text': 'Description Description Description Description Description',
+                'title': 'Needs to do an upgrade to newer version. Then you have to reboot your server.',
                 'link': 'https://vaultier.org/blog',
                 'published_at': datetime.datetime.now()
             })
