@@ -42,7 +42,7 @@
         {{#with membersWithoutKey as members}}
             {{#view Vaultier.AnimatedIfView condition=members.length in="fadeIn" out="fadeOut"}}
                 {{#view Vaultier.MembersAdminListView members=membersWithoutKeys}}
-                    {{members.length}} {{pluralize members.length "member"}} without valid keys
+                    {{members.length}} {{pluralize members.length "member"}} without valid key
                 {{/view}}
             {{/view}}
         {{/with}}
