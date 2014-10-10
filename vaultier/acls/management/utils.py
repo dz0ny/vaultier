@@ -20,7 +20,7 @@ def cant_observe():
                         '"pyinotify" module istalled')
     else:
         try:
-            import pyinotify
+            import pyinotify  # noqa
         except ImportError:
             blockers.append('Missing "pyinotify" module')
     return blockers

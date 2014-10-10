@@ -1,4 +1,4 @@
-from base import *
+from base import *  # noqa
 
 # Sentry site_id
 SITE_ID = 1
@@ -19,12 +19,16 @@ SECRET_KEY = ''
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add  'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'vaultier',  # Or path to database file if using sqlite3.
+        # Add  'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        # Or path to database file if using sqlite3.
+        'NAME': 'vaultier',
         # The following settings are not used with sqlite3:
         'USER': 'vaultier',
         'PASSWORD': 'vaultier',
-        'HOST': '127.0.0.1',  # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+        # Empty for localhost through domain sockets or '127.0.0.1'
+        # for localhost through TCP.
+        'HOST': '127.0.0.1',
         'PORT': '',  # Set to empty string for default.
     }
 }

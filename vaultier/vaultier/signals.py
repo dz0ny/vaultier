@@ -1,7 +1,8 @@
 ##################################################
 #Perms signals registration
 ##################################################
-from acls.business.perms.signals import register_signals as perm_register_signals
+from acls.business.perms.signals import register_signals as \
+    perm_register_signals
 perm_register_signals()
 
 ##################################################
@@ -19,10 +20,14 @@ slug_register_signals(Slug, Card)
 ##################################################
 # Versioning signals
 ##################################################
-from workspaces.business.version import register_signals as workspace_register_version_signals
-from vaults.business.version import register_signals as vault_register_version_signals
-from cards.business.version import register_signals as card_register_version_signals
-from secrets.business.version import register_signals as secret_register_version_signals
+from workspaces.business.version import register_signals as \
+    workspace_register_version_signals
+from vaults.business.version import register_signals as \
+    vault_register_version_signals
+from cards.business.version import register_signals as \
+    card_register_version_signals
+from secrets.business.version import register_signals as \
+    secret_register_version_signals
 
 workspace_register_version_signals()
 vault_register_version_signals()
