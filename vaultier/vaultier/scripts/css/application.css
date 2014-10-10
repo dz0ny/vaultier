@@ -372,6 +372,11 @@ a:hover {
     padding-left: 0px;
     padding-right: 0px;
 }
+@media screen and (max-width: 450px) {
+    .container-full {
+        margin: 0;
+    }
+}
 /*************************************************************
 * background
 *************************************************************/
@@ -478,6 +483,7 @@ a:hover {
     border-bottom: 1px solid #E0DBDB;
     background-color: #F5F5F5;
     font-size: 25px;
+    min-width: 450px;
 }
 
 .vlt-breads .vlt-bread {
@@ -685,19 +691,22 @@ a:hover {
 
 .vlt-page.vlt-page-with-sidebar .vlt-page-content-responsive-header {
     margin: 0px;
-    padding: 30px 5px 5px 5px;
+    padding: 5px 5px 5px 5px;
     background-color: #eeeeee;
     border: 1px solid #E0DBDB;
     border-top: 0px;
     border-radius: 0px 0px 6px 6px;
-    margin-bottom: 30px;
 }
 
 .vlt-page.vlt-page-with-sidebar .vlt-page-content-responsive-header h2 {
     margin: 0px;
     padding: 0px;
 }
-
+@media screen and (max-width: 550px) {
+    .vlt-page.vlt-page-with-sidebar .vlt-page-content {
+        padding: 0px;
+    }
+}
 @media (min-width: 850px) {
     .vlt-page.vlt-page-with-sidebar .vlt-page-content-responsive-header {
         display: none;
@@ -740,6 +749,8 @@ a:hover {
 .vlt-hp .container {
     position: relative;
     top: 112px;
+    background: url('../images/topcover.png') no-repeat center center fixed;
+    background-size: cover;
 }
 .vlt-hp .container img {
     text-align: center;
@@ -768,6 +779,40 @@ a:hover {
 }
 .vlt-hp .container .vlt-dialog.vlt-login .vlt-dialog-body .tooltip .tooltip-inner {
     width: 200px;
+}
+@media screen and (max-width: 991px) {
+    .vlt-hp .container img {
+        width: 50%;
+    }
+    .vlt-hp .container .vlt-dialog.vlt-login .vlt-dialog-body .form-group label {
+        display: block;
+        text-align: left;
+        padding-left: 15px;
+    }
+    .vlt-hp .container .vlt-dialog.vlt-login .vlt-dialog-body .vlt-remember-body {
+        display: inline-block;
+        width: 89%;
+    }
+    .vlt-hp .container .vlt-dialog.vlt-login .vlt-dialog-body .vlt-remember-info {
+        display: inline-block;
+        width: 10%;
+        position: relative;
+        padding-left: 15px;
+        padding-right: 15px;
+        top: 8px;
+    }
+    .vlt-hp .container .vlt-dialog.vlt-login .vlt-dialog-body .vlt-remember-info span {
+        text-align: center;
+    }
+}
+@media screen and (max-width: 550px) {
+    .vlt-hp .container .vlt-dialog.vlt-login .vlt-dialog-body .vlt-remember-body {
+        display: inline-block;
+        width: 85%;
+    }
+    .vlt-hp .container .vlt-dialog.vlt-login .vlt-dialog-body .vlt-remember-info {
+        padding-left: 7px;
+    }
 }
 /*************************************************************
 * Latest news
@@ -850,13 +895,29 @@ a:hover {
     border-color: #4F4F4F;
     background-color: #4F4F4F;
 }
+@media screen and (max-width: 991px) {
+    .vlt-hp .container {
+        padding-bottom: 80px;
+    }
+    .vlt-hp .container .vlt-latest-news .vlt-latest-news-box {
+        width: 100%;
+    }
+    .vlt-hp .container .vlt-latest-news .vlt-latest-news-box .vlt-latest-news-box-date {
+        width: 25%;
+        display: inline-block;
+    }
+    .vlt-hp .container .vlt-latest-news .vlt-latest-news-box .vlt-latest-news-box-content {
+        width: 70%;
+        display: inline-block;
+    }
+}
 /*************************************************************
 **************************************************************
 * Vault
 *************************************************************
 *************************************************************/
 .vlt-vault-index .vlt-page-with-sidebar .vlt-page-content {
-    padding-top: 15px;
+    padding-top: 0px;
     padding-right: 0px;
 }
 /*************************************************************
@@ -954,9 +1015,11 @@ a:hover {
 *************************************************************
 *************************************************************/
 .vlt-card .vlt-page .vlt-page-content {
-    padding-top: 15px;
     padding-left: 12px;
     padding-right: 12px;
+}
+.vlt-card .vlt-page .vlt-page-content .vlt-card-items {
+    padding-top: 15px;
 }
 /*************************************************************
 * card item
@@ -1150,12 +1213,15 @@ footer .vlt-rclick img {
 }
 
 @media (max-width: 767px) {
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+        color: #C1C1C1;
+    }
     .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
     .navbar-default .navbar-nav .open .dropdown-menu > li > a:active,
     .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
         text-decoration: none;
-        color: #ffffff;
-        background-color: #44ADE9;
+        color: #000000;
+        background-color: #C1C1C1;
     }
 }
 

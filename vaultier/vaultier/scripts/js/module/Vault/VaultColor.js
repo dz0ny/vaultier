@@ -1,4 +1,4 @@
-Vaultier.VaultColor = Ember.View.extend({
+Vaultier.VaultColorView = Ember.View.extend({
     layoutName: 'Vault/VaultColor',
     init: function () {
         if (this.get('value') == null) {
