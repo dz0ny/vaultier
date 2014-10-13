@@ -1,4 +1,4 @@
-from base import *
+from base import *  # noqa
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -20,6 +20,7 @@ VAULTIER.update({
     'lostkey_hash_expiration_time': 3600000,
     # Default email address from which we send emails
     'from_email': 'info@rclick.com',
-    # Max difference between timestamp from server and from front-end in seconds
+    # Max difference between timestamp from server and from front-end
+    # (in seconds)
     'login_safe_timestamp': 15,
 })

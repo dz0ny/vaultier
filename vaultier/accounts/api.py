@@ -12,7 +12,7 @@ from accounts.business.authentication import TokenAuthentication, \
 from accounts.business.fields import MemberStatusField
 from accounts.business.permissions import CanManageUserPermission, \
     LostKeyPermission
-from accounts.models import Token, User, LostKey, Member
+from accounts.models import User, LostKey, Member
 from accounts.serializers import AuthSerializer, TokenSerializer, \
     UserSerializer, UserKeySerializer, LostKeySerializer, \
     LostKeyCreateSerializer, MemberInviteSerializer, MemberResendSerializer, \

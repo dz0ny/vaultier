@@ -11,7 +11,7 @@ class SecretSerializer(serializers.ModelSerializer):
 
     def restore_fields(self, data, files):
         if self.context.get('view').action == 'update' or \
-                        self.context.get('view').action == 'partial_update':
+                self.context.get('view').action == 'partial_update':
             self.fields.get('type').read_only = True
         return super(SecretSerializer, self).restore_fields(data, files)
 

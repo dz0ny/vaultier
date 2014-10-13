@@ -82,7 +82,8 @@ class LostKeyManager(Manager):
     @classmethod
     def _disable_memberships(cls, user):
         """
-        Set all membership of given user to MemberStatusField.STATUS_MEMBER_BROKEN
+        Set all membership of given user to
+        MemberStatusField.STATUS_MEMBER_BROKEN
         :param user:
         :return:
         """
@@ -93,8 +94,8 @@ class LostKeyManager(Manager):
     def find_workspace_is_recoverable(cls, workspace_id, user):
         """
         Return True if the workspace is recoverable.
-        A work space is recoverable when it share among any user and those users have
-        the status set to MemberStatusField.STATUS_MEMBER
+        A work space is recoverable when it share among any user and those
+        users have the status set to MemberStatusField.STATUS_MEMBER
         :param workspace_id: int
         :param user: vaultier.models.user.model.User
         :return: bool

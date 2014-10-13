@@ -32,14 +32,14 @@ class SearchResultSerializer(serializers.Serializer):
         }
 
         vaults = obj.get('vaults')
-        if (vaults and len(vaults)):
+        if vaults and len(vaults):
             for vault in vaults:
                 result.get('vaults').append(
                     SearchVaultSerializer(instance=vault,
                                           context=self.context).data)
 
         cards = obj.get('cards')
-        if (cards and len(cards)):
+        if cards and len(cards):
             for card in cards:
                 result.get('cards').append(
                     SearchCardSerializer(instance=card,

@@ -2,14 +2,9 @@ from libs.version.context import version_context_manager
 
 
 class BasicCondition(object):
-    def will_do_version(self,
-                        signal=None,
-                        sender=None,
-                        instance=None,
-                        event_type=None,
-                        overwritten_values=None,
-                        **kwargs
-    ):
+    def will_do_version(
+            self, signal=None, sender=None, instance=None, event_type=None,
+            overwritten_values=None, **kwargs):
         return version_context_manager.get_enabled()
 
 
@@ -24,14 +19,9 @@ class RequiredFieldEventCondition(BasicCondition):
         self.required_event = required_event
         self.required_sender = required_sender
 
-    def will_do_version(self,
-                        signal=None,
-                        sender=None,
-                        instance=None,
-                        event_type=None,
-                        overwritten_values=None,
-                        **kwargs
-    ):
+    def will_do_version(
+            self, signal=None, sender=None, instance=None, event_type=None,
+            overwritten_values=None, **kwargs):
         basic = super(RequiredFieldEventCondition, self).will_do_version(
             signal=signal,
             sender=sender,
@@ -43,7 +33,7 @@ class RequiredFieldEventCondition(BasicCondition):
 
         if basic \
             and event_type == self.required_event \
-            and sender == self.required_sender:
+                and sender == self.required_sender:
 
             saved_keys = overwritten_values.keys()
             do_save = False
@@ -66,5 +56,3 @@ class RequiredFieldEventCondition(BasicCondition):
                 return intersection
 
         return None
-
-

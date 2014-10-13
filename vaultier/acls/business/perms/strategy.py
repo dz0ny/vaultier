@@ -10,7 +10,7 @@ class ReadAclStrategy(object):
         acl.user = role.member.user
         return acl
 
-    def acl_for_child(self, role, object ):
+    def acl_for_child(self, role, object):
         acls = []
 
         acl = self.construct_acl(role, object)
@@ -30,7 +30,6 @@ class ReadAclStrategy(object):
 
         return acls
 
-
     def acl_for_object(self, role, object):
         acls = []
 
@@ -41,8 +40,9 @@ class ReadAclStrategy(object):
 
         return acls
 
+
 class WriteAclStrategy(ReadAclStrategy):
-    def acl_for_child(self, role, object ):
+    def acl_for_child(self, role, object):
         acls = super(WriteAclStrategy, self).acl_for_child(role, object)
 
         acl = self.construct_acl(role, object)
@@ -64,11 +64,11 @@ class WriteAclStrategy(ReadAclStrategy):
 
 
 class CreateAclStrategy(ReadAclStrategy):
-    def acl_for_child(self, role, object ):
+    def acl_for_child(self, role, object):
         return []
 
     def acl_for_object(self, role, object):
-        acls = super(CreateAclStrategy, self).acl_for_object(role, object);
+        acls = super(CreateAclStrategy, self).acl_for_object(role, object)
 
         acl = self.construct_acl(role, object)
         acl.direction = AclDirectionField.DIR_CURRENT

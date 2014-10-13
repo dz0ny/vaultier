@@ -1,10 +1,10 @@
 from django.db import models
 
-class AbstractTreeIterator(object):
 
+class AbstractTreeIterator(object):
     def __init__(self, object, *args, **kwargs):
-       self.object = object
-       super(AbstractTreeIterator, self).__init__(*args, **kwargs)
+        self.object = object
+        super(AbstractTreeIterator, self).__init__(*args, **kwargs)
 
     def get_object(self):
         return self.object
@@ -37,4 +37,3 @@ class TreeIterableModelMixin(models.Model):
         if not self._tree_iterator:
             self._tree_iterator = self.tree_iterator_class(self)
         return self._tree_iterator
-

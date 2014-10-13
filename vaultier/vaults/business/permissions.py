@@ -15,10 +15,10 @@ class CanManageVaultPermission(BasePermission):
 
         if view.action == 'create':
             # check permission to workspace
-            return has_object_acl(request.user, obj.workspace,
-                                  AclLevelField.LEVEL_WRITE) or \
-                   has_object_acl(request.user,obj.workspace,
-                                  AclLevelField.LEVEL_CREATE)
+            return has_object_acl(
+                request.user, obj.workspace, AclLevelField.LEVEL_WRITE) or \
+                has_object_acl(request.user, obj.workspace,
+                               AclLevelField.LEVEL_CREATE)
 
         if view.action == 'update' or view.action == 'partial_update':
             result = True

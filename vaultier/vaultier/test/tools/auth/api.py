@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from django.utils import timezone
 from rest_framework.test import APIClient
 
-from accounts.business.authentication import Backend, Authenticator
+from accounts.business.authentication import Authenticator
 from vaultier.test.tools import FileAccessMixin
 
 
@@ -20,7 +20,8 @@ def auth_api_call(email=None, date=None, signature=None):
         privkey = m.read_file('vaultier.key')
         signature = Authenticator.sign(privkey, email, date)
 
-    response = client.post(url, {'email': email, 'date': date, 'signature': signature})
+    response = client.post(
+        url, {'email': email, 'date': date, 'signature': signature})
     return response
 
 

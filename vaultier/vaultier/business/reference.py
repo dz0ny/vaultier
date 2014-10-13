@@ -39,7 +39,6 @@ class ObjectReference(object):
 
         raise RuntimeError('Role has no associated object')
 
-
     def set_object(self, object):
         self.to_workspace = None
         self.to_vault = None

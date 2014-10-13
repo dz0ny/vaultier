@@ -3,7 +3,7 @@ from cards.models import Card
 from libs.version.condition import RequiredFieldEventCondition
 from libs.changes.changes import SOFT_DELETE, INSERT, UPDATE
 from libs.version.manipulator import register_manipulator_signal, \
-    ModelCreatedManipulator,ModelUpdatedManipulator,\
+    ModelCreatedManipulator, ModelUpdatedManipulator, \
     ModelSoftDeletedManipulator, register_manipulator_class, \
     ModelMovedManipulator
 

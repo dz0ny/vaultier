@@ -115,8 +115,8 @@ class VaultierMailer(object):
     def _render(self, context):
         """
         Renders the plain and html versions of a template.
-        Return both in a tuple, where the first element is the plain text version
-        and the second element is the html version
+        Return both in a tuple, where the first element is the plain text
+        version and the second element is the html version
         :return: (str, str,)
         """
         if not context:

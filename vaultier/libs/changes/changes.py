@@ -26,7 +26,8 @@ SOFT_DELETE = 40
 
 class ChangesMixin(object):
     """
-    Mixin could be used on models to get access to model lifecycle. Generally mixin provides:
+    Mixin could be used on models to get access to model lifecycle.
+    Generally mixin provides:
      - dirtiness
      - access to overwritten values by latest save/delete call
      - signal when change happen
@@ -40,7 +41,8 @@ class ChangesMixin(object):
             car1 = models.CharField(max_length=255, default='')
             car2 = models.CharField(max_length=255, default='')
 
-            def on_post_change(self, sender=None,instance=None,overwritten_values=None,event_type=None,**kwargs):
+            def on_post_change(self, sender=None,instance=None,
+                    overwritten_values=None,event_type=None,**kwargs):
                 raise 'this is called when change happen'
 
             def on_pre_save(self, sender=None,instance=None**kwargs):
@@ -48,16 +50,19 @@ class ChangesMixin(object):
 
      Example to for connect signal
 
-        def on_change(self, sender=None,instance=None,overwritten_values=None,event_type=None,**kwargs):
+        def on_change(self, sender=None,instance=None,overwritten_values=None,
+                      event_type=None,**kwargs):
             // do something here
             pass
 
         post_change.connect(on_change, sender=Garage)
 
     Description of lifecycle
-        self.dirty_values()  - return dict of clean values before changed locally
+        self.dirty_values()  - return dict of clean values before changed
+            locally
         self.previous_values() - return dict of values before latest safe
-        self.clean_values() - return dict of values when new model was created or persisted model hydrated
+        self.clean_values() - return dict of values when new model was created
+            or persisted model hydrated
         self.current_values() - return dict of current values
 
 
@@ -70,7 +75,7 @@ class ChangesMixin(object):
     def __init__(self, *args, **kwargs):
         super(ChangesMixin, self).__init__(*args, **kwargs)
 
-        if self.pk == None:
+        if self.pk is None:
             # new
             self._clean_values = self._current_values()
         else:
@@ -120,7 +125,7 @@ class ChangesMixin(object):
     def _compute_changed_fields(self, current, previous):
         result = {}
         for key in current.keys():
-            if (previous.has_key(key) and previous[key] != current[key]):
+            if key in previous and previous[key] is not current[key]:
                 result[key] = previous[key]
 
         return result
@@ -149,8 +154,8 @@ class ChangesMixin(object):
         return dict
 
     def _post_delete(self, **kwargs):
-        overwritten_values = self._current_values();
-        self._save_state();
+        overwritten_values = self._current_values()
+        self._save_state()
 
         if self._post_change_signal_disabled == 0:
             post_change.send(
@@ -224,4 +229,3 @@ class ChangesMixin(object):
 
         if self._post_change_signal_disabled < 0:
             self._post_change_signal_disabled = 0
-

@@ -18,12 +18,14 @@ def delete_secret_api_call(token, id):
     response = client.delete(url)
     return response
 
+
 def retrieve_secret_api_call(token, id):
     url = reverse('secrets-detail', args=(id,))
     client = VaultierAPIClient()
     client.token(token)
     response = client.get(url)
     return response
+
 
 def list_secrets_api_call(token, card=None):
     url = reverse('secrets-list')
@@ -36,6 +38,7 @@ def list_secrets_api_call(token, card=None):
 
     response = client.get(url, **data)
     return response
+
 
 def update_secret_api_call(token, id, **kwargs):
     url = reverse('secrets-detail', args=(id,))

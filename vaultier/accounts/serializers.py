@@ -164,13 +164,12 @@ class LostKeySerializer(serializers.ModelSerializer):
         'is_recoverable': bool}
         """
         workspaces = Workspace.objects.all_for_user(obj.created_by)
-        return imap(lambda workspace:
-                    {'workspace_id': workspace.id,
-                     'workspace_name': workspace.name,
-                     'is_recoverable':
-                         LostKey.objects.find_workspace_is_recoverable(
-                             workspace.id, obj.created_by)
-                     }, workspaces)
+        return imap(
+            lambda workspace:
+            {'workspace_id': workspace.id, 'workspace_name': workspace.name,
+             'is_recoverable': LostKey.objects.find_workspace_is_recoverable(
+                 workspace.id, obj.created_by)},
+            workspaces)
 
     def save_object(self, obj, **kwargs):
         """

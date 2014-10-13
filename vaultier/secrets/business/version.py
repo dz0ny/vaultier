@@ -1,4 +1,3 @@
-
 from django.db.models.loading import get_model
 from libs.version.condition import RequiredFieldEventCondition
 from secrets.models import Secret

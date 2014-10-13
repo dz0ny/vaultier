@@ -12,7 +12,7 @@ class LowerCaseCharField(CharField):
         Converts the string to lowercase before saving.
         """
         current_value = getattr(model_instance, self.attname)
-        if (current_value):
+        if current_value:
             setattr(model_instance, self.attname, current_value.lower())
         return getattr(model_instance, self.attname)
 

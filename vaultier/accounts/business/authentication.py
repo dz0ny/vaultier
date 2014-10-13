@@ -5,8 +5,6 @@ from base64 import b64decode
 from datetime import datetime, timedelta
 from dateutil import parser as dateparser
 from django.utils import timezone
-from django.contrib.auth.backends import ModelBackend
-from django.db.models.loading import get_model
 from rest_framework.authentication import BaseAuthentication
 from rest_framework.exceptions import AuthenticationFailed
 from django.conf import settings

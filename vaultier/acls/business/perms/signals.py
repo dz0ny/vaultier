@@ -17,28 +17,32 @@ def on_role_created(signal=None, sender=None, instance=None, event_type=None,
         materializer = CreateRoleMaterializer(instance)
         materializer.materialize(instance.get_object())
 
+
 # when role level is updated
 def on_role_level_updated(signal=None, sender=None, instance=None,
                           event_type=None, overwritten_values=None, **kwargs):
-    if event_type == UPDATE and overwritten_values.has_key('level'):
+    if event_type == UPDATE and 'level' in overwritten_values:
         materializer = UpdateRoleLevelMaterializer(instance)
         materializer.materialize()
+
 
 # when member of role is updated
 def on_role_member_updated(signal=None, sender=None, instance=None,
                            event_type=None, overwritten_values=None, **kwargs):
-    if event_type == UPDATE and overwritten_values.has_key('member') and \
+    if event_type == UPDATE and 'member' in overwritten_values and \
             instance.member.user:
         materializer = UpdateRoleMemberMaterializer(instance)
         materializer.materialize()
 
+
 # when invited member becames regular member
 def on_member_is_regular(signal=None, sender=None, instance=None,
                          event_type=None, overwritten_values=None, **kwargs):
-    if event_type == UPDATE and overwritten_values.has_key('user') and \
+    if event_type == UPDATE and 'user' in overwritten_values and \
             instance.user:
         materializer = UpdateMemberUserMaterializer(instance)
         materializer.materialize()
+
 
 # when new object is inserted parent acls are inherited
 def on_object_inserted(signal=None, sender=None, instance=None,
@@ -60,10 +64,10 @@ def on_object_moved(signal=None, sender=None, instance=None, event_type=None,
         materializer = None
 
         if instance.__class__.__name__ == 'Card' and \
-                overwritten_values.has_key('vault'):
+                'vault' in overwritten_values:
             materializer = MovedObjectMaterializer(instance)
         if instance.__class__.__name__ == 'Secret' and \
-                overwritten_values.has_key('card'):
+                'card' in overwritten_values:
             materializer = MovedObjectMaterializer(instance.card)
 
         if materializer:
@@ -81,4 +85,3 @@ def register_signals():
 
     post_change.connect(on_object_moved, sender=Card)
     post_change.connect(on_object_moved, sender=Secret)
-

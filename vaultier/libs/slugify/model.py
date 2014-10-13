@@ -18,7 +18,7 @@ class SlugManagerMixin(object):
 
             # create slug when name of instance changed. Slugs are not
             # deleted (permalink pattern)
-            if event_type == UPDATE and overwritten_values.has_key('name'):
+            if event_type == UPDATE and 'name' in overwritten_values:
                 self.create_slug_for_model(instance)
             # handle only delete not softdelete
             if event_type == DELETE:

@@ -1,7 +1,7 @@
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.db import models
 from django.utils.encoding import smart_text
-from django.utils.translation import ugettext_lazy as _, ugettext_lazy
+from django.utils.translation import ugettext_lazy as _
 from rest_framework.fields import Field
 from rest_framework.relations import RelatedField
 from acls.business.fields import AclLevelField

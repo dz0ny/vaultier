@@ -39,7 +39,8 @@ class ApiWorkspaceKeyTest(TransactionTestCase):
         user3token = auth_api_call(email=email).data.get('token')
 
         # create workspace for user1
-        user1workspace = create_workspace_api_call(user1token, name='u1_workspace').data
+        user1workspace = create_workspace_api_call(
+            user1token, name='u1_workspace').data
         self.assertEqual(Role.objects.all().count(), 1)
         # approve workspace key for ourself (user1)
         response = set_workspace_key_api_call(user1token, 1, 'mockup')
@@ -50,11 +51,15 @@ class ApiWorkspaceKeyTest(TransactionTestCase):
         )
 
         #invite user 2
-        user2member = invite_member_api_call(user1token, 'jakub@rclick.cz', user1workspace.get('id')).data
-        user2invitation = Member.objects.get(pk=user2member.get('id')).invitation_hash
-        user2role = create_role_api_call(user1token, user2member.get('id'), to_workspace=user1workspace.get('id'),
+        user2member = invite_member_api_call(
+            user1token, 'jakub@rclick.cz', user1workspace.get('id')).data
+        user2invitation = Member.objects.get(
+            pk=user2member.get('id')).invitation_hash
+        user2role = create_role_api_call(user1token, user2member.get('id'),
+                                         to_workspace=user1workspace.get('id'),
                                          level=RoleLevelField.LEVEL_READ)
-        response = accept_invitation_api_call(user2token, user2member.get('id'), user2invitation)
+        response = accept_invitation_api_call(
+            user2token, user2member.get('id'), user2invitation)
         self.assertEquals(
             response.status_code,
             HTTP_200_OK,
@@ -62,11 +67,16 @@ class ApiWorkspaceKeyTest(TransactionTestCase):
         )
 
         #invite user 3
-        user3member = invite_member_api_call(user1token, 'marcel@rclick.cz', user1workspace.get('id')).data
-        user3invitation = Member.objects.get(pk=user3member.get('id')).invitation_hash
-        user3role = create_role_api_call(user1token, user3member.get('id'), to_workspace=user1workspace.get('id'),
-                                         level=RoleLevelField.LEVEL_READ)
-        response = accept_invitation_api_call(user3token, user3member.get('id'), user3invitation)
+        user3member = invite_member_api_call(
+            user1token, 'marcel@rclick.cz', user1workspace.get('id')).data
+        user3invitation = Member.objects.get(
+            pk=user3member.get('id')).invitation_hash
+        user3role = create_role_api_call(
+            user1token, user3member.get('id'),
+            to_workspace=user1workspace.get('id'),
+            level=RoleLevelField.LEVEL_READ)
+        response = accept_invitation_api_call(
+            user3token, user3member.get('id'), user3invitation)
         self.assertEquals(
             response.status_code,
             HTTP_200_OK,
@@ -75,7 +85,7 @@ class ApiWorkspaceKeyTest(TransactionTestCase):
 
         # user1 should see two members without workspace key
         # and one workspace key of himself
-        response = list_workspace_key_api_call(user1token);
+        response = list_workspace_key_api_call(user1token)
         self.assertEquals(
             len(response.data),
             3
@@ -83,7 +93,7 @@ class ApiWorkspaceKeyTest(TransactionTestCase):
 
         # user2 should see no members without workspace key
         # and one workspace key of himself
-        response = list_workspace_key_api_call(user2token);
+        response = list_workspace_key_api_call(user2token)
         self.assertEquals(
             len(response.data),
             1
@@ -110,7 +120,8 @@ class ApiWorkspaceKeyTest(TransactionTestCase):
         user3token = auth_api_call(email=email).data.get('token')
 
         # create workspace for user1
-        user1workspace = create_workspace_api_call(user1token, name='u1_workspace').data
+        user1workspace = create_workspace_api_call(
+            user1token, name='u1_workspace').data
         self.assertEqual(Role.objects.all().count(), 1)
 
         # approve workspace key for ourself (user1)
@@ -121,13 +132,17 @@ class ApiWorkspaceKeyTest(TransactionTestCase):
             format_response(response)
         )
 
-
         #invite user 2
-        user2member = invite_member_api_call(user1token, 'jakub@rclick.cz', user1workspace.get('id')).data
-        user2invitation = Member.objects.get(pk=user2member.get('id')).invitation_hash
-        user2role = create_role_api_call(user1token, user2member.get('id'), to_workspace=user1workspace.get('id'),
-                                         level=RoleLevelField.LEVEL_READ)
-        response = accept_invitation_api_call(user2token, user2member.get('id'), user2invitation)
+        user2member = invite_member_api_call(
+            user1token, 'jakub@rclick.cz', user1workspace.get('id')).data
+        user2invitation = Member.objects.get(
+            pk=user2member.get('id')).invitation_hash
+        user2role = create_role_api_call(
+            user1token, user2member.get('id'),
+            to_workspace=user1workspace.get('id'),
+            level=RoleLevelField.LEVEL_READ)
+        response = accept_invitation_api_call(
+            user2token, user2member.get('id'), user2invitation)
         self.assertEquals(
             response.status_code,
             HTTP_200_OK,
@@ -135,11 +150,16 @@ class ApiWorkspaceKeyTest(TransactionTestCase):
         )
 
         #invite user 3
-        user3member = invite_member_api_call(user1token, 'marcel@rclick.cz', user1workspace.get('id')).data
-        user3invitation = Member.objects.get(pk=user3member.get('id')).invitation_hash
-        user3role = create_role_api_call(user1token, user3member.get('id'), to_workspace=user1workspace.get('id'),
-                                         level=RoleLevelField.LEVEL_READ)
-        response = accept_invitation_api_call(user3token, user3member.get('id'), user3invitation)
+        user3member = invite_member_api_call(
+            user1token, 'marcel@rclick.cz', user1workspace.get('id')).data
+        user3invitation = Member.objects.get(
+            pk=user3member.get('id')).invitation_hash
+        user3role = create_role_api_call(
+            user1token, user3member.get('id'),
+            to_workspace=user1workspace.get('id'),
+            level=RoleLevelField.LEVEL_READ)
+        response = accept_invitation_api_call(
+            user3token, user3member.get('id'), user3invitation)
         self.assertEquals(
             response.status_code,
             HTTP_200_OK,
@@ -147,7 +167,8 @@ class ApiWorkspaceKeyTest(TransactionTestCase):
         )
 
         # user 3 cannot get workspace public key of member 2
-        response = get_workspace_key_api_call(user3token, user2member.get('id'))
+        response = get_workspace_key_api_call(
+            user3token, user2member.get('id'))
         self.assertEquals(
             response.status_code,
             HTTP_403_FORBIDDEN,
@@ -163,7 +184,8 @@ class ApiWorkspaceKeyTest(TransactionTestCase):
         )
 
         # user1 should be able to get workspace key of user 2
-        response = get_workspace_key_api_call(user1token, user2member.get('id'))
+        response = get_workspace_key_api_call(
+            user1token, user2member.get('id'))
         self.assertEquals(
             response.status_code,
             HTTP_200_OK,
@@ -171,7 +193,8 @@ class ApiWorkspaceKeyTest(TransactionTestCase):
         )
 
         # user1 will transfer keys to user2
-        response = set_workspace_key_api_call(user1token, user2member.get('id'), 'this-is-only-mockup-key')
+        response = set_workspace_key_api_call(
+            user1token, user2member.get('id'), 'this-is-only-mockup-key')
         self.assertEquals(
             response.status_code,
             HTTP_200_OK,
@@ -179,7 +202,8 @@ class ApiWorkspaceKeyTest(TransactionTestCase):
         )
 
         # user 2 should be able to read workspace_key of user 3
-        response = get_workspace_key_api_call(user2token, user3member.get('id'))
+        response = get_workspace_key_api_call(
+            user2token, user3member.get('id'))
         self.assertEquals(
             response.status_code,
             HTTP_200_OK,
@@ -210,7 +234,8 @@ class ApiWorkspaceKeyTest(TransactionTestCase):
         user3token = auth_api_call(email=email).data.get('token')
 
         # create workspace for user1
-        user1workspace = create_workspace_api_call(user1token, name='u1_workspace').data
+        user1workspace = create_workspace_api_call(
+            user1token, name='u1_workspace').data
         self.assertEqual(Role.objects.all().count(), 1)
         # approve workspace key for ourself (user1)
         response = set_workspace_key_api_call(user1token, 1, 'mockup')
@@ -221,11 +246,16 @@ class ApiWorkspaceKeyTest(TransactionTestCase):
         )
 
         #invite user 2
-        user2member = invite_member_api_call(user1token, 'jakub@rclick.cz', user1workspace.get('id')).data
-        user2invitation = Member.objects.get(pk=user2member.get('id')).invitation_hash
-        user2role = create_role_api_call(user1token, user2member.get('id'), to_workspace=user1workspace.get('id'),
-                                         level=RoleLevelField.LEVEL_READ)
-        response = accept_invitation_api_call(user2token, user2member.get('id'), user2invitation)
+        user2member = invite_member_api_call(
+            user1token, 'jakub@rclick.cz', user1workspace.get('id')).data
+        user2invitation = Member.objects.get(
+            pk=user2member.get('id')).invitation_hash
+        user2role = create_role_api_call(
+            user1token, user2member.get('id'),
+            to_workspace=user1workspace.get('id'),
+            level=RoleLevelField.LEVEL_READ)
+        response = accept_invitation_api_call(
+            user2token, user2member.get('id'), user2invitation)
         self.assertEquals(
             response.status_code,
             HTTP_200_OK,
@@ -233,11 +263,16 @@ class ApiWorkspaceKeyTest(TransactionTestCase):
         )
 
         #invite user 3
-        user3member = invite_member_api_call(user1token, 'marcel@rclick.cz', user1workspace.get('id')).data
-        user3invitation = Member.objects.get(pk=user3member.get('id')).invitation_hash
-        user3role = create_role_api_call(user1token, user3member.get('id'), to_workspace=user1workspace.get('id'),
-                                         level=RoleLevelField.LEVEL_READ)
-        response = accept_invitation_api_call(user3token, user3member.get('id'), user3invitation)
+        user3member = invite_member_api_call(
+            user1token, 'marcel@rclick.cz', user1workspace.get('id')).data
+        user3invitation = Member.objects.get(
+            pk=user3member.get('id')).invitation_hash
+        user3role = create_role_api_call(
+            user1token, user3member.get('id'),
+            to_workspace=user1workspace.get('id'),
+            level=RoleLevelField.LEVEL_READ)
+        response = accept_invitation_api_call(
+            user3token, user3member.get('id'), user3invitation)
         self.assertEquals(
             response.status_code,
             HTTP_200_OK,
@@ -245,7 +280,8 @@ class ApiWorkspaceKeyTest(TransactionTestCase):
         )
 
         # user 3 cannot set workspace key of user2
-        response = set_workspace_key_api_call(user3token, user2member.get('id'), 'mockup')
+        response = set_workspace_key_api_call(
+            user3token, user2member.get('id'), 'mockup')
         self.assertEquals(
             response.status_code,
             HTTP_403_FORBIDDEN,
@@ -261,7 +297,8 @@ class ApiWorkspaceKeyTest(TransactionTestCase):
         )
 
         # user1 should be able to set workspace key of user 2
-        response = set_workspace_key_api_call(user1token, user2member.get('id'), 'mockup')
+        response = set_workspace_key_api_call(
+            user1token, user2member.get('id'), 'mockup')
         self.assertEquals(
             response.status_code,
             HTTP_200_OK,
@@ -269,7 +306,8 @@ class ApiWorkspaceKeyTest(TransactionTestCase):
         )
 
         # user2 should be able to set workspace key of user3
-        response = set_workspace_key_api_call(user2token, user3member.get('id'), 'mockup')
+        response = set_workspace_key_api_call(
+            user2token, user3member.get('id'), 'mockup')
         self.assertEquals(
             response.status_code,
             HTTP_200_OK,
@@ -277,7 +315,8 @@ class ApiWorkspaceKeyTest(TransactionTestCase):
         )
 
         # user 2 should not be able to rewrite workspace_key of user 3
-        response = set_workspace_key_api_call(user2token, user3member.get('id'), 'mockup')
+        response = set_workspace_key_api_call(
+            user2token, user3member.get('id'), 'mockup')
         self.assertEquals(
             response.status_code,
             HTTP_403_FORBIDDEN,
@@ -285,8 +324,10 @@ class ApiWorkspaceKeyTest(TransactionTestCase):
         )
 
         # user1 should not be able to rewrite workspace key of user3
-        # workspace key can be overriden only in case status=withoutworkspacekey
-        response = set_workspace_key_api_call(user1token, user3member.get('id'), 'mockup')
+        # workspace key can be overriden only in case
+        # status=withoutworkspacekey
+        response = set_workspace_key_api_call(
+            user1token, user3member.get('id'), 'mockup')
         self.assertEquals(
             response.status_code,
             HTTP_403_FORBIDDEN,
@@ -296,5 +337,6 @@ class ApiWorkspaceKeyTest(TransactionTestCase):
 
 def workspacekey_suite():
     suite = TestSuite()
-    suite.addTest(unittest.TestLoader().loadTestsFromTestCase(ApiWorkspaceKeyTest))
+    suite.addTest(unittest.TestLoader().loadTestsFromTestCase(
+        ApiWorkspaceKeyTest))
     return suite

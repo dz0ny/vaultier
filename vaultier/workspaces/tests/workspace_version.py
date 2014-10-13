@@ -3,7 +3,8 @@ from django.utils import unittest
 from django.utils.unittest.suite import TestSuite
 from accounts.tests.api import register_api_call, auth_api_call
 from libs.version.context import version_context_manager
-from libs.version.manipulator import ACTION_CREATED, ACTION_UPDATED, ACTION_SOFTDELETED
+from libs.version.manipulator import ACTION_CREATED, ACTION_UPDATED,\
+    ACTION_SOFTDELETED
 from vaultier.test.tools import AssertionsMixin
 from versions.models import Version
 from workspaces.tests.api import create_workspace_api_call, \
@@ -22,9 +23,10 @@ class WorkspaceVersionTest(AssertionsMixin,  TransactionTestCase):
         user1token = auth_api_call(email=email).data.get('token')
 
         # create workspace
-        workspace = create_workspace_api_call(user1token,  name='workspace').data
+        workspace = create_workspace_api_call(
+            user1token,  name='workspace').data
 
-        return (user1, user1token, workspace,)
+        return user1, user1token, workspace
 
     def test_workspace_010_create(self):
         user1, user1token,  workspace = list(self.create_workspace())
@@ -45,7 +47,7 @@ class WorkspaceVersionTest(AssertionsMixin,  TransactionTestCase):
         })
 
         # assert user has been stored with version
-        self.assertEqual(versions[0].created_by.id, user1.get('id'));
+        self.assertEqual(versions[0].created_by.id, user1.get('id'))
 
         # compare revision data
         self.assert_dict(versions[0].revert_data, {})
@@ -58,9 +60,9 @@ class WorkspaceVersionTest(AssertionsMixin,  TransactionTestCase):
     def test_workspace_020_update(self):
         user1, user1token,  workspace = list(self.create_workspace())
 
-        workspace = update_workspace_api_call(user1token, workspace.get('id'),
-                                      name='renamed_workspace',
-                                      description="added_workspace_description"
+        workspace = update_workspace_api_call(
+            user1token, workspace.get('id'), name='renamed_workspace',
+            description="added_workspace_description"
         ).data
 
         #check version
@@ -131,13 +133,15 @@ class WorkspaceVersionTest(AssertionsMixin,  TransactionTestCase):
         self.assertEquals(versions.count(), 1)
 
         # compare revision data
-        self.assert_dict(versions[0].revert_data, {'deleted_at' : None})
+        self.assert_dict(versions[0].revert_data, {'deleted_at': None})
 
         # assert related id
         self.assertEqual(versions[0].versioned_related_type.model, 'workspace')
         self.assertEqual(versions[0].versioned_related_id, workspace.get('id'))
 
+
 def workspace_version_suite():
     suite = TestSuite()
-    suite.addTest(unittest.TestLoader().loadTestsFromTestCase(WorkspaceVersionTest))
+    suite.addTest(unittest.TestLoader().loadTestsFromTestCase(
+        WorkspaceVersionTest))
     return suite

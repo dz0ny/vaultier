@@ -3,14 +3,15 @@ from django.core.urlresolvers import reverse
 from vaultier.test.tools import VaultierAPIClient
 
 
-def create_role_api_call(token, member, to_workspace=None, to_vault=None, to_card=None, level=None):
+def create_role_api_call(token, member, to_workspace=None, to_vault=None,
+                         to_card=None, level=None):
     url = reverse('role-list')
     client = VaultierAPIClient()
     client.token(token)
 
     data = {
-        'member':member,
-        'level':level
+        'member': member,
+        'level': level
     }
 
     if to_workspace:
@@ -23,17 +24,19 @@ def create_role_api_call(token, member, to_workspace=None, to_vault=None, to_car
     response = client.post(url, data)
     return response
 
+
 def update_role_api_call(token, id, level):
     url = reverse('role-detail', args=(id,))
     client = VaultierAPIClient()
     client.token(token)
 
     data = {
-        'level':level
+        'level': level
     }
 
     response = client.put(url, data)
     return response
+
 
 def delete_role_api_call(token, id):
     url = reverse('role-detail', args=(id,))

@@ -1,7 +1,8 @@
 from time import time
 from django.core.urlresolvers import reverse
 from rest_framework.test import APIClient
-from accounts.business.authentication import Backend
+# todo: Backend?
+# from accounts.business.authentication import Backend
 from accounts.business.fields import RecoverTypeField
 from vaultier.test.tools import FileAccessMixin, VaultierAPIClient
 from django.utils import timezone
@@ -17,7 +18,9 @@ def auth_api_call(email=None, date=None, signature=None):
 
     if not signature:
         privkey = m.read_file('vaultier.key')
-        signature = Backend.sign(privkey, email, date)
+        # todo: Backend?
+        # signature = Backend.sign(privkey, email, date)
+        signature = None
 
     response = client.post(url, {'email': email,
                                  'date': date,
@@ -114,6 +117,7 @@ def update_lost_key_api_disable_call(lost_key_id, auth_hash=None,
                               auth_hash)
     return client.put(url, data={
         'public_key': public_key, 'recover_type': RecoverTypeField.DISABLE})
+
 
 def retrieve_lost_key_api_call(lost_key_id, auth_hash=None):
     """

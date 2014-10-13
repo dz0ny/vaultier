@@ -36,7 +36,7 @@ class InvitationSerializer(serializers.ModelSerializer):
     created_by = RelatedUserSerializer(read_only=True)
 
     class Meta(MemberSerializer.Meta):
-        fields = ('id', 'status','invitation_email', 'invitation_hash',
+        fields = ('id', 'status', 'invitation_email', 'invitation_hash',
                   'roles', 'created_by', 'created_at', 'updated_at')
 
     def get_roles(self, obj):

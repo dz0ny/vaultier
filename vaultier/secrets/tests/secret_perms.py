@@ -1,7 +1,8 @@
 from django.test.testcases import TransactionTestCase
 from django.utils import unittest
 from django.utils.unittest.suite import TestSuite
-from rest_framework.status import HTTP_403_FORBIDDEN, HTTP_200_OK, HTTP_204_NO_CONTENT
+from rest_framework.status import HTTP_403_FORBIDDEN, HTTP_200_OK, \
+    HTTP_204_NO_CONTENT
 from accounts.models import Member
 from accounts.tests.api import register_api_call, auth_api_call, \
     invite_member_api_call
@@ -25,9 +26,8 @@ class ApiSecretPermsTest(TransactionTestCase):
         version_context_manager.set_enabled(False)
 
     def test_000_secret_anonymous_access(self):
-        response = create_secret_api_call(None,
-                                          type=SecretTypeField.SECRET_TYPE_NOTE,
-                                          card=None)
+        response = create_secret_api_call(
+            None, type=SecretTypeField.SECRET_TYPE_NOTE, card=None)
         self.assertEqual(
             response.status_code,
             HTTP_403_FORBIDDEN,
@@ -42,13 +42,16 @@ class ApiSecretPermsTest(TransactionTestCase):
         user1token = auth_api_call(email=email).data.get('token')
 
         # create workspace
-        workspace = create_workspace_api_call(user1token, name='Workspace').data
+        workspace = create_workspace_api_call(
+            user1token, name='Workspace').data
 
         #create vault
-        vault = create_vault_api_call(user1token, name="vault_in_workspace", workspace=workspace.get('id')).data
+        vault = create_vault_api_call(user1token, name="vault_in_workspace",
+                                      workspace=workspace.get('id')).data
 
         #create card
-        card = create_card_api_call(user1token, name="card_in_vault", vault=vault.get('id')).data
+        card = create_card_api_call(user1token, name="card_in_vault",
+                                    vault=vault.get('id')).data
 
         #create secret
         secret = create_secret_api_call(
@@ -78,15 +81,19 @@ class ApiSecretPermsTest(TransactionTestCase):
         user2token = auth_api_call(email=email).data.get('token')
 
         # create workspace for user1
-        workspace1 = create_workspace_api_call(user1token, name='workspace').data
+        workspace1 = create_workspace_api_call(
+            user1token, name='workspace').data
 
         # create vault for user1
-        vault1 = create_vault_api_call(user1token, name='vault_in_workspace', workspace=workspace1.get('id')).data
+        vault1 = create_vault_api_call(user1token, name='vault_in_workspace',
+                                       workspace=workspace1.get('id')).data
 
         #create card
-        card1 = create_card_api_call(user1token, name="card_in_vault", vault=vault1.get('id')).data
+        card1 = create_card_api_call(user1token, name="card_in_vault",
+                                     vault=vault1.get('id')).data
 
-        # user2 tries to create secret in vault of user 2 which he has no access to
+        # user2 tries to create secret in vault of user 2
+        # which he has no access to
         response = create_card_api_call(
             user2token,
             type=SecretTypeField.SECRET_TYPE_NOTE,
@@ -111,13 +118,16 @@ class ApiSecretPermsTest(TransactionTestCase):
         user2token = auth_api_call(email=email).data.get('token')
 
         # create workspace for user1
-        workspace1 = create_workspace_api_call(user1token, name='Workspace').data
+        workspace1 = create_workspace_api_call(
+            user1token, name='Workspace').data
 
         # create vault
-        vault1 = create_vault_api_call(user1token, name="vault_in_workspace", workspace=workspace1.get('id')).data
+        vault1 = create_vault_api_call(user1token, name="vault_in_workspace",
+                                       workspace=workspace1.get('id')).data
 
         # create card
-        card1 = create_card_api_call(user1token, name='card_in_vault', vault=vault1.get('id')).data
+        card1 = create_card_api_call(user1token, name='card_in_vault',
+                                     vault=vault1.get('id')).data
 
         secret1 = create_secret_api_call(
             user2token,
@@ -125,10 +135,15 @@ class ApiSecretPermsTest(TransactionTestCase):
             card=card1.get('id')
         ).data
 
-        #user1 invites user and grant to user role READ to card1, this should also grant role to secret1
-        user2member = invite_member_api_call(user1token, email=user2.get('email'), workspace=workspace1.get('id')).data
-        user2hash = Member.objects.get(pk=user2member.get('id')).invitation_hash
-        user2accepted = accept_invitation_api_call(user2token, pk=user2member.get('id'), hash=user2hash)
+        #user1 invites user and grant to user role READ to card1,
+        # this should also grant role to secret1
+        user2member = invite_member_api_call(
+            user1token, email=user2.get('email'),
+            workspace=workspace1.get('id')).data
+        user2hash = Member.objects.get(
+            pk=user2member.get('id')).invitation_hash
+        user2accepted = accept_invitation_api_call(
+            user2token, pk=user2member.get('id'), hash=user2hash)
         user2role = create_role_api_call(
             user1token,
             member=user2member.get('id'),
@@ -161,7 +176,8 @@ class ApiSecretPermsTest(TransactionTestCase):
         )
 
         #user2 tries to read workspace, should be allowed
-        response = retrieve_workspace_api_call(user2token, workspace1.get('id'))
+        response = retrieve_workspace_api_call(
+            user2token, workspace1.get('id'))
         self.assertEqual(
             response.status_code,
             HTTP_200_OK,
@@ -176,7 +192,8 @@ class ApiSecretPermsTest(TransactionTestCase):
             format_response(response)
         )
 
-        #user2 tries to list workspace of vault1 of card1 of secret1, should be allowed
+        #user2 tries to list workspace of vault1 of card1 of secret1,
+        # should be allowed
         response = list_workspaces_api_call(user2token)
         self.assertEqual(
             len(response.data),
@@ -185,7 +202,8 @@ class ApiSecretPermsTest(TransactionTestCase):
         )
 
         #user2 tries to delete workspace of vault1, should be forbidden
-        response = delete_workspace_api_call(user2token, vault1.get('workspace'))
+        response = delete_workspace_api_call(
+            user2token, vault1.get('workspace'))
         self.assertEqual(
             response.status_code,
             HTTP_403_FORBIDDEN,
@@ -221,13 +239,16 @@ class ApiSecretPermsTest(TransactionTestCase):
         user2token = auth_api_call(email=email).data.get('token')
 
         # create workspace for user1
-        workspace1 = create_workspace_api_call(user1token, name='workspace').data
+        workspace1 = create_workspace_api_call(
+            user1token, name='workspace').data
 
         # create vault for user1
-        vault1 = create_vault_api_call(user1token, name='vault_in_workspace', workspace=workspace1.get('id')).data
+        vault1 = create_vault_api_call(user1token, name='vault_in_workspace',
+                                       workspace=workspace1.get('id')).data
 
         # create card1
-        card1 = create_card_api_call(user1token, name="card_in_vault", vault=vault1.get('id')).data
+        card1 = create_card_api_call(user1token, name="card_in_vault",
+                                     vault=vault1.get('id')).data
 
         # create secret1
         secret1 = create_secret_api_call(
@@ -253,26 +274,34 @@ class ApiSecretPermsTest(TransactionTestCase):
 
         # create user2
         email = 'marcel@rclick.cz'
-        user2  = register_api_call(email=email, nickname='Marcel').data
+        user2 = register_api_call(email=email, nickname='Marcel').data
         user2token = auth_api_call(email=email).data.get('token')
 
         # create workspace
-        workspace1 = create_workspace_api_call(user1token, name='workspace').data
+        workspace1 = create_workspace_api_call(
+            user1token, name='workspace').data
 
         # create vault for user1
-        vault1 = create_vault_api_call(user1token, name='vault1', workspace=workspace1.get('id')).data
+        vault1 = create_vault_api_call(user1token, name='vault1',
+                                       workspace=workspace1.get('id')).data
 
         # create card1
-        card1 = create_card_api_call(user1token, name="card1", vault=vault1.get('id')).data
+        card1 = create_card_api_call(
+            user1token, name="card1", vault=vault1.get('id')).data
 
         # create card2
-        card2 = create_card_api_call(user1token, name="card2", vault=vault1.get('id')).data
+        card2 = create_card_api_call(
+            user1token, name="card2", vault=vault1.get('id')).data
 
-
-        #user1 invites user and grant to user role READ to card1, this should also grant role to secret1
-        user2member = invite_member_api_call(user1token, email=user2.get('email'), workspace=workspace1.get('id')).data
-        user2hash = Member.objects.get(pk=user2member.get('id')).invitation_hash
-        user2accepted = accept_invitation_api_call(user2token, pk=user2member.get('id'), hash=user2hash)
+        #user1 invites user and grant to user role READ to card1,
+        # this should also grant role to secret1
+        user2member = invite_member_api_call(
+            user1token, email=user2.get('email'),
+            workspace=workspace1.get('id')).data
+        user2hash = Member.objects.get(
+            pk=user2member.get('id')).invitation_hash
+        user2accepted = accept_invitation_api_call(
+            user2token, pk=user2member.get('id'), hash=user2hash)
         user2role = create_role_api_call(
             user1token,
             member=user2member.get('id'),
@@ -296,12 +325,9 @@ class ApiSecretPermsTest(TransactionTestCase):
         )
 
         # move secret to card2
-        secret1 = update_secret_api_call(
-            user1token,
-            card=card2.get('id')
-        ).data
+        secret1 = update_secret_api_call(user1token, card=card2.get('id')).data
 
-        # user 2 tries to retrieve card1 should be allowrd
+        # user 2 tries to retrieve card1 should be allowed
         response = retrieve_secret_api_call(user2token, secret1.get('id'))
         self.assertEqual(
             response.status_code,
@@ -312,5 +338,6 @@ class ApiSecretPermsTest(TransactionTestCase):
 
 def secret_perms_suite():
     suite = TestSuite()
-    suite.addTest(unittest.TestLoader().loadTestsFromTestCase(ApiSecretPermsTest))
+    suite.addTest(unittest.TestLoader().loadTestsFromTestCase(
+        ApiSecretPermsTest))
     return suite

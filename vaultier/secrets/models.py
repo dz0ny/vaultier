@@ -40,6 +40,3 @@ class Secret(ChangesMixin, SoftDeleteMixin, TreeIterableModelMixin,
 
     class Meta:
         db_table = u'vaultier_secret'
-
-
-
