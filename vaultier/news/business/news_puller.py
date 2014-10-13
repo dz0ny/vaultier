@@ -4,8 +4,10 @@ from django.core.cache import cache
 from urlparse import urljoin
 
 
-class NewsSucker(object):
-
+class NewsPuller(object):
+    """
+    NewsPuller service return news list from vaultier.org API if any.
+    """
     PREFIX_KEY = '_news'
     ETAG_KEY = '{}-etag'.format(PREFIX_KEY)
     DATA_KEY = '{}-data'.format(PREFIX_KEY)
@@ -35,15 +37,15 @@ class NewsSucker(object):
         :param use_etag:
         :return:
         """
-        headers = {}
+        headers = {'content-type': 'application/json'}
         if use_etag and self.etag:
             headers.update({'If-None-Match': self.etag})
 
         try:
-            return requests.get(
-                urljoin(self._url, 'page_size={}'.format(count)),
-                headers=headers, timeout=self._connection_timeout)
-        except requests.exceptions.RequestException:
+            url = urljoin(self._url, '?page_size={}'.format(count))
+            return requests.get(url, headers=headers,
+                                timeout=self._connection_timeout)
+        except requests.exceptions.RequestException as e:
             return None
 
     def _load_from_cache(self):
@@ -67,22 +69,25 @@ class NewsSucker(object):
 
     def fetch(self, count=3):
         """
-        Fetch data from vaultier.org API or cache if nothing change
+        Fetch data from vaultier.org API or cache if nothing changed
 
         :param count: int
         :return: list
         """
 
+        data = self._load_from_cache()
+        if data:
+            return data
+
         response = self._invoke_api(count)
         if response and response.status_code == 200:
-            data = response.json()['results']
+            data = response.json()
             etag = response.headers['ETag']
             self._save(data, etag)
         else:
             data = self._load_from_cache()
-
         return data
 
 
-sucker = NewsSucker(settings.NEWS_URL, settings.NEWS_CONNECTION_TIMEOUT,
+puller = NewsPuller(settings.NEWS_URL, settings.NEWS_CONNECTION_TIMEOUT,
                     settings.NEWS_CACHE_TIMEOUT)
