@@ -14,7 +14,7 @@ Vaultier.SettingsKeysRoute = Ember.Route.extend(
                 Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
                     .addHome()
                     .addSettings()
-                    .addText('Regenerate private key')
+                    .addText('Regenerate key')
             );
         },
 

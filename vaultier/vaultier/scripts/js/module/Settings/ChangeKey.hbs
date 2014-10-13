@@ -1,7 +1,7 @@
 {{#if view.keys}}
 
     <p>
-        Your public and private keys have been generated.
+        Your key has been generated.
         Please follow given steps to finish the procedure.
     </p>
 
@@ -9,7 +9,7 @@
     <div class="bottom-15 top-30">
         <h4>
             <div class="label label-header">1</div>
-            Save private key to your computer
+            Save key to your computer
         </h4>
     </div>
 
@@ -17,7 +17,7 @@
 
         <div class="col-md-6 col-md-offset-1">
             <b>
-                Private key
+                Key
             </b>
             <br/>
                 <span class="help-block">
@@ -29,7 +29,7 @@
                 {{ action savePrivateKey target=view }}
                 {{bind-attr class=":btn view.privateKeySaved:btn-default:btn-primary"}}
                     >
-                Save private key
+                Save key
             </button>
         </div>
         <div class="clearfix"></div>
@@ -38,7 +38,7 @@
     <div class="bottom-15  top-30">
         <h4>
             <div class="label label-header">2</div>
-            Confirm sending the public key
+            Confirm sending the key
         </h4>
     </div>
 
@@ -46,11 +46,11 @@
 
         <div class="col-md-6 col-md-offset-1">
             <b>
-                Public key
+                Confirm
             </b>
             <br/>
                 <span class="help-block">
-                    Your public key will be sent to the server now.
+                    Confirm to server that you successfully downloaded the key
                 </span>
         </div>
         <div class="col-md-4">
@@ -69,7 +69,7 @@
 
 {{else}}
     <div class=" text-center top-30">
-        <h4>Please wait while we generate your keys...</h4>
+        <h4>Please wait while we generate your key...</h4>
 
         <div class="vlt-preloader vlt-preloader-small">
         </div>
