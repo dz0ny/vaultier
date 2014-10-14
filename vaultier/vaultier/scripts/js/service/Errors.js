@@ -15,13 +15,18 @@ Service.Errors = Ember.Object.extend({
 
     rendering: false,
 
+    /**
+     * Allow sentry logging
+     */
+    remoteLoggingToSentry: false,
+
     init: function () {
         this._super();
         var ravenKey = this.get('config.raven_key');
         if (ravenKey) {
-            Raven.config(ravenKey, {
-                whitelistUrls: []
-            }).install();
+            window.onerror = Raven.process;
+            Raven.config(ravenKey).install();
+            this.remoteLoggingToSentry = true;
         }
     },
 
@@ -80,32 +85,33 @@ Service.Errors = Ember.Object.extend({
         var c = this.get('container');
 
         this.consoleError(error);
+        if (this.remoteLoggingToSentry) {
+            // capture user
+            Raven.setUser(null);
+            var auth = c.lookup('service:auth');
+            var user;
+            if (auth && (user = auth.get('user'))) {
+                user = {
+                    email: user.get('email'),
+                    id: user.get('id')
+                };
+                Raven.setUser(user);
+            }
+            // capture current path
+            var a = c.lookup('controller:application');
+            var currentPath = '';
+            if (a) {
+                currentPath = a.get('currentPath');
+            }
 
-        // capture user
-        Raven.setUser(null);
-        var auth = c.lookup('service:auth');
-        var user;
-        if (auth && (user = auth.get('user'))) {
-            user = {
-                email: user.get('email'),
-                id: user.get('id')
-            };
-            Raven.setUser(user);
+            //capture tags
+            var tags = {};
+            tags['type'] = error.type;
+            tags['errorDuringRendering'] = this.get('rendering');
+            tags['currentPath'] = currentPath;
+
+            Raven.captureException(error, {extra: tags});
         }
-        // capture current path
-        var a = c.lookup('controller:application');
-        var currentPath = '';
-        if (a) {
-            currentPath = a.get('currentPath');
-        }
-
-        //capture tags
-        var tags = {};
-        tags['type'] = error.type;
-        tags['errorDuringRendering'] = this.get('rendering');
-        tags['currentPath'] = currentPath;
-
-        Raven.captureException(error, {extra: tags});
     },
 
     processError: function (error) {
