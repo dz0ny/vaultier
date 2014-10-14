@@ -55,17 +55,23 @@ class GrantedAccessMailer(VaultierMailer):
         :return: str
         """
         u = urlparse.urljoin(settings.SITE_URL, '/#/')
-        return {
-            'Workspace': urlparse.urljoin(
+
+        m = self.object.__class__.__name__
+
+        if m == 'Workspace':
+            return urlparse.urljoin(
                 u, 'workspaces/w/{}'.format(self.object.slug)
             ),
-            'Vault': urlparse.urljoin(
+        elif m == 'Vault':
+            return urlparse.urljoin(
                 u, 'workspaces/w/{}/vaults/v/{}'.format(
-                    self.object.workpsace.slug, self.object.slug)
+                    self.object.workspace.slug, self.object.slug)
             ),
-            'Card': urlparse.urljoin(
+        elif m == 'Card':
+            return urlparse.urljoin(
                 u, '/workspaces/w/{}/vaults/v/{}/cards/c/{}'.format(
                     self.object.vault.workspace.slug, self.object.vault.slug,
                     self.object.slug)
             ),
-        }[self.object.__class__.__name__]
+
+        return None
