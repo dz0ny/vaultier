@@ -4,6 +4,7 @@ from rest_framework import routers
 from accounts.api import UserViewSet, LostKeyViewSet, AuthView, MemberViewSet
 from acls.api import RoleViewSet
 from cards.api import CardViewSet
+from news.api import NewsApiView
 from search.api import SearchView
 from secrets.api import SecretViewSet, SecretBlobViewSet
 from vaults.api import VaultViewSet
@@ -26,8 +27,9 @@ router.register(r'lost_keys', LostKeyViewSet, base_name='lost_keys')
 
 urlpatterns = router.urls
 
-urlpatterns += patterns(
-    '',
+urlpatterns += patterns('',
+    # news
+    url(r'^news/$', NewsApiView.as_view(), name='news-list'),
     # search
     url(r'^search/search$', SearchView.as_view(), name='search-search'),
     # auth

@@ -42,6 +42,11 @@ Vaultier.AuthLoginRoute = Ember.Route.extend({
             ctrl.set('email', this.get('config.dev_email'));
             ctrl.set('privateKey', pkey);
             ctrl.set('registration_allow', this.get('config.registration_allow'));
+            this.get('storeNonPluralize')
+                .find('News')
+                .then(function(news){
+                    ctrl.set('news', news);
+                }.bind(this))
         }
 
         // remembering
