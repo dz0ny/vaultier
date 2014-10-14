@@ -84,10 +84,9 @@ class NewsPuller(object):
             data = response.json()
             etag = response.headers['ETag']
             self._save(data, etag)
-        else:
-            data = self._load_from_cache()
         return data
 
 
-puller = NewsPuller(settings.NEWS_URL, settings.NEWS_CONNECTION_TIMEOUT,
-                    settings.NEWS_CACHE_TIMEOUT)
+puller = NewsPuller(settings.VAULTIER.get('news_url'),
+                    settings.VAULTIER.get('news_connection_timeout'),
+                    settings.VAULTIER.get('news_cache_timeout'))

@@ -251,7 +251,16 @@ VAULTIER = {
     # We send these statistics data: count of workspaces, vaults, cards,
     # secrets, users and members
     'allow_anonymous_usage_statistics': True,
-    'registration_allow': True
+    'registration_allow': True,
+    # Vaultier blog news API endpoint. Must end with trailing slash
+    'news_url': 'http://vaultier.org/api/entries/',
+    # For how long wait for response in seconds.
+    'news_connection_timeout': 2,
+
+    # For how long news should be hold in cache in seconds. Vaultier API
+    # provides ETag functionality, so you can increase this
+    # value whatever you want.
+    'news_cache_timeout': 60*10,
 }
 
 #celery broker
@@ -270,13 +279,3 @@ CELERYBEAT_SCHEDULE = {
         'schedule': crontab(hour='1'),
     }
 }
-
-# Vaultier blog news API endpoint. Must end with trailing slash
-NEWS_URL = 'http://vaultier.org/api/v1/news/'
-
-# For how long wait for response in seconds.
-NEWS_CONNECTION_TIMEOUT = 2
-
-# For how long news should be hold in cache. Vaultier API provides ETag
-# functionality, so you can increase this value whatever you want.
-NEWS_CACHE_TIMEOUT = 60*10
