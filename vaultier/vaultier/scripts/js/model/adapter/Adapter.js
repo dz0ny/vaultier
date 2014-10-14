@@ -23,12 +23,7 @@ Vaultier.RESTAdapter = RL.RESTAdapter.extend({
     serializer: Vaultier.JSONSerializer.create(),
 
     buildUrl: function (model, key) {
-        var resourcePath = null;
-        if (this.get('nonPluralize')) {
-            resourcePath = Ember.String.decamelize(Ember.get(model.constructor, 'resourceName'));
-        } else {
-            resourcePath = this.resourcePath(Ember.get(model.constructor, 'resourceName'));
-        }
+        var resourcePath = this.resourcePath(Ember.get(model.constructor, 'resourceName'));
         var resourceListFormat = Ember.get(model.constructor, 'resourceListFormat');
         var resourceDetailFormat =  Ember.get(model.constructor, 'resourceDetailFormat');
         var resourceFormat
@@ -77,6 +72,10 @@ Vaultier.RESTAdapter.registerTransform('object', {
     }
 });
 
+Vaultier.RESTAdapter.configure("plurals", {
+   news: 'news'
+});
+
 Vaultier.Client = RL.Client.create({
     adapter: Vaultier.RESTAdapter,
 
@@ -91,20 +90,3 @@ Vaultier.Client = RL.Client.create({
     }
 
 });
-
-Vaultier.NonPluralizeClient = RL.Client.create({
-    adapter: Vaultier.RESTAdapter,
-
-    createRecord: function (cls, data) {
-        return Vaultier[cls].create(data);
-    },
-
-    find: function () {
-        var model = arguments[0];
-        var params = arguments[1];
-        this.adapter.set('nonPluralize', true);
-        return Vaultier[model].fetch(params)
-    }
-
-});
-
