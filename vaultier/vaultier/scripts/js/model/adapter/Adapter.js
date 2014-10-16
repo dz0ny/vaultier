@@ -72,6 +72,10 @@ Vaultier.RESTAdapter.registerTransform('object', {
     }
 });
 
+Vaultier.RESTAdapter.configure("plurals", {
+   news: 'news'
+});
+
 Vaultier.Client = RL.Client.create({
     adapter: Vaultier.RESTAdapter,
 
@@ -86,5 +90,3 @@ Vaultier.Client = RL.Client.create({
     }
 
 });
-
-
