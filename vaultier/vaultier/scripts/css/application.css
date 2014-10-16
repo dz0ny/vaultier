@@ -54,6 +54,10 @@ a:hover {
     transition: none;
 }
 
+textarea {
+    resize: none;
+}
+
 /*************************************************************
 **************************************************************
 * Bootstrap compatibility with ember "script element" issue
@@ -81,6 +85,7 @@ a:hover {
     border-top-color: #367EAC !important;
     border-bottom-color: #367EAC !important;
 }
+
 
 /*
 * Drop down carrets
@@ -640,7 +645,7 @@ a:hover {
 .vlt-page.vlt-page-with-sidebar .vlt-page-sidebar .vlt-sidebar-block .vlt-header,
 .vlt-page.vlt-page-with-sidebar .vlt-page-sidebar .vlt-sidebar-block .vlt-body,
 .vlt-page.vlt-page-with-sidebar .vlt-page-sidebar .vlt-sidebar-block .vlt-controls {
-    padding: 10px;
+    padding: 9px;
 }
 
 .vlt-page.vlt-page-with-sidebar .vlt-page-sidebar .vlt-sidebar-block .vlt-body {
@@ -882,6 +887,11 @@ a:hover {
 .vlt-vault-item-href {
     display: block;
     height: 198px;
+}
+.vlt-vault-item-href:active,
+.vlt-vault-item-href:visited,
+.vlt-vault-item-href:focus {
+    text-decoration: none;
 }
 .vlt-vault-item .vlt-vault-item-header-icon {
     display: inline-block;
@@ -1624,16 +1634,6 @@ span.vlt-user img {
 * Secret items - detail
 *************************************************************
 *************************************************************/
-
-/**
-* aspect ratio:
-* http://stackoverflow.com/questions/12121090/responsively-change-div-size-keeping-aspect-ratio
-**/
-.vlt-secret-box:after {
-    padding-top: 75%;
-    display: block;
-    content: '';
-}
 
 .vlt-secret-box .vlt-secret-item {
     position: relative;
