@@ -132,63 +132,45 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="vlt-latest-news">
-                <div class="vlt-latest-news-header">
-                    <h2>Latest news (from <a href="http://vaultier.org/">vaultier.org</a>)</h2>
-                </div>
-                <div class="row vlt-latest-news-body">
 
-                    <div class="col-md-4">
-                        <a href="#">
-                            <div class="vlt-latest-news-box">
-                                <div class="col-md-3 vlt-latest-news-box-date">
-                                    <h4>2014 Jan 14</h4>
+            <div class="row">
+                <div class="vlt-latest-news">
+                    <div class="vlt-latest-news-header">
+                        <h2>Latest news (from <a href="http://vaultier.org/">vaultier.org</a>)</h2>
+                    </div>
+                    <div class="row vlt-latest-news-body">
+                        {{#if news}}
+                            {{#each news}}
+                                <div class="col-md-4">
+                                    <a {{bind-attr href=link}}>
+                                        <div class="vlt-latest-news-box">
+                                            <div class="col-md-3 vlt-latest-news-box-date">
+                                                <h4>{{date published_at}}</h4>
+                                            </div>
+                                            <div class="col-md-9 vlt-latest-news-box-content">
+                                                {{dot-dot-dot value=title height=70 }}
+                                            </div>
+                                        </div>
+                                    </a>
                                 </div>
-                                <div class="col-md-9 vlt-latest-news-box-content">
-                                    {{dot-dot-dot value="Needs to do an upgrade to newer version. Then you have to reboot your server." height=70 }}
-                                </div>
-                            </div>
-                        </a>
+                            {{/each}}
+                        {{else}}
+                            <p class="vlt-latest-news-none">No news yet</p>
+                        {{/if}}
                     </div>
 
-                    <div class="col-md-4">
-                        <a href="#">
-                            <div class="vlt-latest-news-box">
-                                <div class="col-md-3 vlt-latest-news-box-date">
-                                    <h4>2014 Jan 14</h4>
-                                </div>
-                                <div class="col-md-9 vlt-latest-news-box-content">
-                                    {{dot-dot-dot value="Needs to do an upgrade to newer version. Then you have to reboot your server." height=70 }}
-                                </div>
-                            </div>
-                        </a>
-                    </div>
+                    {{#if news}}
+                        <div class="row vlt-latest-news-footer">
+                            <a class="btn btn-default pull-right" href="http://vaultier.org/blog">
+                                Read more
+                            </a>
+                        </div>
+                    {{/if}}
 
-                    <div class="col-md-4">
-                        <a href="#">
-                            <div class="vlt-latest-news-box">
-                                <div class="col-md-3 vlt-latest-news-box-date">
-                                    <h4>2014 Jan 14</h4>
-                                </div>
-                                <div class="col-md-9 vlt-latest-news-box-content">
-                                    {{dot-dot-dot value="Needs to do an upgrade to newer version." height=70 }}
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
+                    <div class="clearfix"></div>
                 </div>
-
-                <div class="row vlt-latest-news-footer">
-                    <a class="btn btn-default pull-right">
-                        Read more
-                    </a>
-                </div>
-
-                <div class="clearfix"></div>
             </div>
-        </div>
+
 
     </div>
 </div>

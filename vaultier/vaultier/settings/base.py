@@ -160,8 +160,17 @@ INSTALLED_APPS = (
     'vaults',
     'versions',
     'workspaces',
-    'slugs'
+    'slugs',
+    'news'
 )
+
+#Django cache settings
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'vaultier_cache',
+    }
+}
 
 
 # A sample logging configuration. The only tangible logging
@@ -242,7 +251,16 @@ VAULTIER = {
     # We send these statistics data: count of workspaces, vaults, cards,
     # secrets, users and members
     'allow_anonymous_usage_statistics': True,
-    'registration_allow': True
+    'registration_allow': True,
+    # Vaultier blog news API endpoint. Must end with trailing slash
+    'news_url': 'http://vaultier.org/api/entries/',
+    # For how long wait for response in seconds.
+    'news_connection_timeout': 2,
+
+    # For how long news should be hold in cache in seconds. Vaultier API
+    # provides ETag functionality, so you can increase this
+    # value whatever you want.
+    'news_cache_timeout': 60*10,
 }
 
 #celery broker
