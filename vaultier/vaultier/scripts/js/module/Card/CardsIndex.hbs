@@ -6,7 +6,7 @@
 
                 <div class="vlt-page-content-responsive-header">
                     <div class="row-fluid">
-                        <div class="col-xs-3">
+                        <div class="col-md-3">
                             {{#exp  "( vault.perms.update || vault.perms.delete || vault.perms.create || vault.perms.invite )"}}
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-default dropdown-toggle"
@@ -49,7 +49,7 @@
                             {{/exp}}
                         </div>
 
-                        <div class="col-xs-9">
+                        <div class="col-md-9">
                             <h2>Vault: {{vault.name}} </h2>
                         </div>
 
@@ -57,11 +57,13 @@
                     </div>
                 </div>
 
+                <!--<div class="vlt-card-items">-->
                 {{#if length}}
                     {{#each}}
                         {{view Vaultier.CardsIndexItemView}}
                     {{/each}}
                 {{else}}
+                    <!--</div>-->
 
                     <div class="jumbotron vlt-bigbox vlt-card top-50">
 
