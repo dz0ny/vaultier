@@ -31,15 +31,16 @@ Install Required Packages
     sudo pip install virtualenv
 
 
------------
-Create Venv
------------
+---------------------------------
+Create Venv and setup Environment
+---------------------------------
 ::
 
     virtualenv ./env
     source ./env/bin/activate
     pip install -r REQUIREMENTS
-
+    python setup.py develop
+    ./vaultier/manage.py setup
 
 ----------------------------------
 Install Frontend Development Tools
@@ -69,6 +70,7 @@ Run Development Instance
 
     # run server
     cd vaultier
+    ./manage.py setup
     ./manage.py runserver 127.0.0.0:8000
     http://127.0.0.0:8000
 

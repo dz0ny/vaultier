@@ -1,6 +1,8 @@
 from django.core import management
 from django.core.management import BaseCommand
 from django.db import OperationalError
+from django.core.cache import cache
+from django.db.utils import ProgrammingError
 
 
 class Command(BaseCommand):
@@ -10,6 +12,14 @@ class Command(BaseCommand):
         try:
             management.call_command('syncdb')
             management.call_command('migrate')
+            try:
+                # do we need cache table?
+                cache.get('', None)
+            except ProgrammingError:
+                # yes we do
+                management.call_command('createcachetable', 'vaultier_cache')
+
+            # public static files
             management.call_command('collectstatic', interactive=False)
         except OperationalError as e:
             msg = ">>> Your DB is not configured correctly: {}"
