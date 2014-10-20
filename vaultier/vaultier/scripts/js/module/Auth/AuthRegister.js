@@ -99,6 +99,10 @@ Vaultier.AuthRegisterKeysRoute = Ember.Route.extend({
     beforeModel: function (transition) {
         if (this.get('auth').get('isAuthenticated')) {
             transition.router.replaceWith('AuthRegister.sum');
+        } else if (!this.get('config.registration_allow')) {
+            var e = new Error('Registration is not allowed');
+            e.status = 400;
+            throw e;
         }
     },
 
@@ -162,6 +166,10 @@ Vaultier.AuthRegisterCredsRoute = Ember.Route.extend({
     beforeModel: function (transition) {
         if (this.get('auth').get('isAuthenticated')) {
             transition.router.replaceWith('AuthRegister.sum');
+        } else if (!this.get('config.registration_allow')) {
+            var e = new Error('Registration is not allowed');
+            e.status = 400;
+            throw e;
         }
     },
 
@@ -261,6 +269,13 @@ Vaultier.AuthRegisterCredsView = Ember.View.extend({
 Vaultier.AuthRegisterSumRoute = Ember.Route.extend({
     step: 'AuthRegisterSum',
 
+    beforeModel: function() {
+       if (!this.get('config.registration_allow')) {
+            var e = new Error('Registration is not allowed');
+            e.status = 400;
+            throw e;
+        }
+    },
     renderTemplate: function () {
         this.render(this.step, { outlet: 'AuthRegister'});
     },
