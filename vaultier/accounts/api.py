@@ -1,4 +1,5 @@
 from django.db.transaction import atomic
+from rest_framework.exceptions import MethodNotAllowed
 from rest_framework.filters import SearchFilter, DjangoFilterBackend, \
     OrderingFilter
 from rest_framework.mixins import UpdateModelMixin, RetrieveModelMixin, \
@@ -23,6 +24,7 @@ from rest_framework import mixins, viewsets
 from vaultier.business.mixins import AtomicTransactionMixin
 from workspaces.business.permissions import CanManageMemberPermission
 from .business.authentication import Authenticator
+from django.conf import settings
 
 
 class AuthView(APIView):
@@ -64,6 +66,14 @@ class UserViewSet(AtomicTransactionMixin,
     serializer_class = UserSerializer
     permission_classes = (CanManageUserPermission,)
     model = User
+
+    def create(self, request, *args, **kwargs):
+        """
+        Check if is registration allowed. If not raise 405 exception
+        """
+        if settings.VAULTIER.get('registration_allow'):
+            super(UserViewSet, self).create(request, *args, **kwargs)
+        raise MethodNotAllowed(method='POST')
 
     def get_serializer_class(self):
         """
