@@ -1,14 +1,118 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 
 . /usr/share/debconf/confmodule
 
-# db_get vaultier/database ... # and other questions
-# database_type="$RET"
+db_get vaultier/domain
+domain="$RET"
 
-# register vaultier as into init scripts
-update-rc.d django defaults 90 >/dev/null
-# start vaultier
-service vaultier start
+db_get vaultier/database_host
+database_host="$RET"
+db_get vaultier/database_port
+database_port="$RET"
+db_get vaultier/database_name
+database_name="$RET"
+db_get vaultier/database_user
+database_user="$RET"
+db_get vaultier/database_password
+database_password="$RET"
+
+db_get vaultier/email_host
+email_host="$RET"
+db_get vaultier/email_port
+email_port="$RET"
+if [ -z "$email_port" ]; then
+    email_port="25"
+fi
+db_get vaultier/email_user
+email_user="$RET"
+db_get vaultier/email_password
+email_password="$RET"
+db_get vaultier/email_tls
+email_tls="$RET"
+if $email_tls; then
+    email_tls="True"
+else
+    email_tls="False"
+fi
+
+
+# add Vaultier user, if it does not exists
+id -u vaultier &>/dev/null || useradd -r -d /opt/vaultier -s /bin/bash vaultier
+
+mkdir -p /opt/vaultier/logs/
+
+# Setup postgres account
+service postgresql start
+if sudo -u postgres psql postgres -tAc "SELECT 1 FROM pg_roles WHERE rolname='$database_user'" &>/dev/null | grep -q 1; then
+    sudo -u postgres psql --command "ALTER USER $database_user WITH PASSWORD '$database_password';" &>/dev/null
+else
+    sudo -u postgres psql --command "CREATE USER $database_user WITH SUPERUSER PASSWORD '$database_password';" &>/dev/null
+fi
+
+if ! sudo -u postgres psql ${database_name} -c '\q' &>/dev/null; then
+    sudo -u postgres createdb -E UTF-8 -O ${database_user} ${database_name}
+fi
+
+# install Vaultier
+mkdir -p /opt/vaultier
+cd /opt/vaultier
+virtualenv venv
+
+/opt/vaultier/venv/bin/pip install /usr/share/vaultier/source/Vaultier-0.7.0.tar.gz
+
+export PYTHONPATH=/opt/vaultier/venv/lib/python2.7/site-packages/vaultier
+
+# Create a configuration, if we don't have one
+if [ ! -f /opt/vaultier/vaultier_conf.py ]; then
+    /opt/vaultier/venv/bin/vaultier init --managed
+fi
+
+sed -i "s/os.getenv('VAULTIER_DATABASE_HOST', '127.0.0.1')/'${database_host}'/g" /opt/vaultier/vaultier_conf.py
+sed -i "s/os.getenv('VAULTIER_DATABASE_PORT', '')/'${database_port}'/g" /opt/vaultier/vaultier_conf.py
+sed -i "s/os.getenv('VAULTIER_DATABASE_NAME', 'vaultier')/'${database_name}'/g" /opt/vaultier/vaultier_conf.py
+sed -i "s/os.getenv('VAULTIER_DATABASE_USER', 'vaultier')/'${database_user}'/g" /opt/vaultier/vaultier_conf.py
+sed -i "s/os.getenv('VAULTIER_DATABASE_PASSWORD', 'vaultier')/'${database_password}'/g" /opt/vaultier/vaultier_conf.py
+
+if [ -f /etc/init.d/postgresql ]; then
+    /opt/vaultier/venv/bin/vaultier setup
+fi
+chown -R vaultier:vaultier /opt/vaultier
+
+# update configuration files
+sed -i "s/os.getenv('VAULTIER_DOMAIN', 'www.example.com'),/'${domain}',/g" /opt/vaultier/vaultier_conf.py
+sed -i "s/' + os.getenv('VAULTIER_DOMAIN', 'www.example.com') + '/${domain}/g" /opt/vaultier/vaultier_conf.py
+
+sed -i "s/os.getenv('VAULTIER_EMAIL_HOST', '')/'${email_host}'/g" /opt/vaultier/vaultier_conf.py
+sed -i "s/os.getenv('VAULTIER_EMAIL_PORT', 25)/${email_port}/g" /opt/vaultier/vaultier_conf.py
+sed -i "s/os.getenv('VAULTIER_EMAIL_USER', '')/'${email_user}'/g" /opt/vaultier/vaultier_conf.py
+sed -i "s/os.getenv('VAULTIER_EMAIL_PASSWORD', '')/'${email_password}'/g" /opt/vaultier/vaultier_conf.py
+sed -i "s/bool(os.getenv('VAULTIER_EMAIL_TLS', False))/${email_tls}/g" /opt/vaultier/vaultier_conf.py
+
+# copy config files
+cp /usr/share/vaultier/config/nginx/vaultier /etc/nginx/sites-available/vaultier
+cp /usr/share/vaultier/config/supervisor/vaultier.conf /etc/supervisor/conf.d/vaultier.conf
+cp /usr/share/vaultier/config/uwsgi/vaultier.ini /etc/uwsgi/apps-available/vaultier.ini
+sed -i "s/DEB_DOMAIN/${domain}/g" /etc/nginx/sites-available/vaultier
+
+# symlink configs
+ln -s /etc/nginx/sites-available/vaultier /etc/nginx/sites-enabled
+ln -s /etc/uwsgi/apps-available/vaultier.ini /etc/uwsgi/apps-enabled
+
+
+# start servers again
+if ! service uwsgi start &> /dev/null; then
+    echo "Starting uwsgi failed. Please try to start uwsgi manually."
+fi
+
+if ! service nginx start &> /dev/null; then
+    echo "Starting nginx failed. Please try to start nginx manually."
+fi
+
+if ! service supervisor start &> /dev/null; then
+    echo "Starting supervisor failed. Please try to start supervisor manually."
+else
+    supervisorctl update
+fi
 
 db_stop

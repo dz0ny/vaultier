@@ -123,6 +123,24 @@ def _generate_settings():
             "' + os.getenv('VAULTIER_DOMAIN', 'www.example.com') + '"
         )
 
+        # Update database settings
+        cfg = cfg.replace(
+            "'NAME': 'vaultier'",
+            "'NAME': os.getenv('VAULTIER_DATABASE_NAME', 'vaultier')")
+        cfg = cfg.replace(
+            "'USER': 'vaultier'",
+            "'USER': os.getenv('VAULTIER_DATABASE_USER', 'vaultier')")
+        cfg = cfg.replace(
+            "'PASSWORD': 'vaultier'",
+            "'PASSWORD': os.getenv('VAULTIER_DATABASE_PASSWORD', 'vaultier')")
+        cfg = cfg.replace(
+            "'HOST': '127.0.0.1'",
+            "'HOST': os.getenv('VAULTIER_DATABASE_HOST', '127.0.0.1')")
+        cfg = cfg.replace(
+            "'PORT': ''",
+            "'PORT': os.getenv('VAULTIER_DATABASE_PORT', '')")
+
+
         # Update email settings
         cfg = cfg.replace(
             "EMAIL_HOST = 'localhost'",

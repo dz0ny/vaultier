@@ -1,0 +1,41 @@
+#!/bin/sh -e
+
+. /usr/share/debconf/confmodule
+
+if [ ! -f /opt/vaultier/vaultier_conf.py ]; then
+    # FQDN
+    while true; do
+        db_input critical vaultier/domain
+        db_go
+        db_get vaultier/domain
+        if [ ! -z $RET ]; then
+            break
+        fi
+    done
+
+    # database settings
+    db_input high vaultier/database_host
+    db_input high vaultier/database_port
+    db_input high vaultier/database_name
+    db_input high vaultier/database_user
+    db_go
+
+    while true; do
+        db_input critical vaultier/database_password
+        db_go
+        db_get vaultier/database_password
+        if [ ! -z $RET ]; then
+            break
+        fi
+    done
+
+
+    # Email settings
+    db_input high vaultier/email_host
+    db_input high vaultier/email_port
+    db_input high vaultier/email_user
+    db_input high vaultier/email_password
+    db_input high vaultier/email_tls
+    db_go
+
+fi

@@ -117,7 +117,6 @@ WSGI_APPLICATION = 'vaultier.wsgi.application'
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'vaultier/tempates'),
     os.path.join(BASE_DIR, 'vaultier/business'),
-    os.path.join(PROJECT_PATH, 'vaultier'),
 
     # Put strings here, like "/home/html/django_templates" or
     # "C:/www/django/templates".
