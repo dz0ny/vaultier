@@ -17,7 +17,7 @@ class RoleViewSet(AtomicTransactionMixin, ModelViewSet):
         if self.action == 'update' or self.action == 'partial_update':
             return RoleUpdateSerializer
         elif self.action == 'list' and \
-                self.request.QUERY_PARAMS.get('to_member', None):
+                self.request.QUERY_PARAMS.get('member', None):
             return MemberRolesSerializer
         else:
             return super(RoleViewSet, self).get_serializer_class()
@@ -29,7 +29,7 @@ class RoleViewSet(AtomicTransactionMixin, ModelViewSet):
         return super(RoleViewSet, self).pre_save(object)
 
     def get_queryset(self):
-        member_id = self.request.QUERY_PARAMS.get('to_member')
+        member_id = self.request.QUERY_PARAMS.get('member')
         if member_id:
             queryset = Role.objects.all_for_member(member_id)
         else:

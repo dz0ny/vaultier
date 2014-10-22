@@ -209,10 +209,24 @@ class MemberSerializer(serializers.ModelSerializer):
     email = serializers.SerializerMethodField('get_email')
     nickname = serializers.SerializerMethodField('get_nickname')
 
+    roles_count = serializers.SerializerMethodField('get_roles_count')
+
+    def get_roles_count(self, obj):
+        """
+        Return total roles count for given member
+
+        :param obj:
+        :return: int
+        """
+        roles = obj.role_set.filter(to_workspace=obj.workspace).first()
+        if not roles:
+            return 0
+        return roles.acl_set.filter(to_workspace=None).count()
+
     class Meta:
         model = Member
         fields = ('id', 'status', 'email', 'nickname', 'workspace', 'user',
-                  'created_at', 'updated_at')
+                  'created_at', 'updated_at', 'roles_count')
 
     def get_email(self, obj):
         if obj:

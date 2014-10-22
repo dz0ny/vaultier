@@ -23,8 +23,8 @@ class RoleManager(Manager):
         sender.send()
 
     def all_for_member(self, member_id):
-        member = get_model('workspaces', 'Member').objects.get(pk=member_id)
-        return self.all_for_user(member.user)
+        member = get_model('accounts', 'Member').objects.get(pk=member_id)
+        return self.all_for_user(member.user).filter(member=member)
 
     def all_for_user(self, user):
         # all workspaces user has permission write
