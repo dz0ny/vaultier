@@ -72,7 +72,7 @@ class UserViewSet(AtomicTransactionMixin,
         Check if is registration allowed. If not raise 405 exception
         """
         if settings.VAULTIER.get('registration_allow'):
-            super(UserViewSet, self).create(request, *args, **kwargs)
+            return super(UserViewSet, self).create(request, *args, **kwargs)
         raise MethodNotAllowed(method='POST')
 
     def get_serializer_class(self):
