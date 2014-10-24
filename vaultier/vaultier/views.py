@@ -1,6 +1,5 @@
 from django.http.response import HttpResponse
 from django.shortcuts import render, redirect
-from django.template.context import Context
 from django.conf import settings
 import json
 import pkg_resources
@@ -9,9 +8,9 @@ from rest_framework.views import APIView
 
 def index(request):
 
-    return render(request, 'index.html', Context({
-        'dev_shared_key': settings.VAULTIER.get('dev_shared_key'),
-    }))
+    return render(request, 'index.html', {
+        'dev_shared_key': settings.VAULTIER.get('dev_shared_key')
+    })
 
 
 class ConfigView(APIView):

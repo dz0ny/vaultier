@@ -5,8 +5,7 @@ setup(
     name="Vaultier",
     install_requires=[
         'BeautifulSoup==3.2.1',
-        'Django==1.6',
-        'South==0.8.4',
+        'Django==1.7',
         'argparse==1.2.1',
         'cssutils==1.0',
         'django-appconf==0.6',

@@ -1,79 +1,35 @@
 # -*- coding: utf-8 -*-
-from south.utils import datetime_utils as datetime
-from south.db import db
-from south.v2 import SchemaMigration
-from django.db import models
+from __future__ import unicode_literals
+
+from django.db import models, migrations
+import django.db.models.deletion
+import libs.changes.changes
 
 
-class Migration(SchemaMigration):
+class Migration(migrations.Migration):
 
-    def forwards(self, orm):
-        # Adding model 'Card'
-        db.create_table(u'vaultier_card', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('deleted_at', self.gf('django.db.models.fields.DateTimeField')(null=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('slug', self.gf('django.db.models.fields.CharField')(default='', max_length=255)),
-            ('description', self.gf('django.db.models.fields.CharField')(max_length=1024, null=True, blank=True)),
-            ('vault', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['vaults.Vault'])),
-            ('created_by', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['accounts.User'], on_delete=models.PROTECT)),
-            ('created_at', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('updated_at', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
-        ))
-        db.send_create_signal(u'cards', ['Card'])
+    dependencies = [
+        ('accounts', '0002_auto_20141024_0838'),
+        ('vaults', '0001_initial'),
+    ]
 
-
-    def backwards(self, orm):
-        # Deleting model 'Card'
-        db.delete_table(u'vaultier_card')
-
-
-    models = {
-        u'accounts.user': {
-            'Meta': {'object_name': 'User', 'db_table': "u'vaultier_user'"},
-            'email': ('libs.lowercasefield.lowercasefield.LowerCaseCharField', [], {'unique': 'True', 'max_length': '255'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'last_login': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-            'nickname': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'password': ('django.db.models.fields.CharField', [], {'max_length': '128'}),
-            'public_key': ('django.db.models.fields.CharField', [], {'max_length': '1024'})
-        },
-        u'cards.card': {
-            'Meta': {'object_name': 'Card', 'db_table': "u'vaultier_card'"},
-            'created_at': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'created_by': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['accounts.User']", 'on_delete': 'models.PROTECT'}),
-            'deleted_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True'}),
-            'description': ('django.db.models.fields.CharField', [], {'max_length': '1024', 'null': 'True', 'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'slug': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '255'}),
-            'updated_at': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            'vault': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['vaults.Vault']"})
-        },
-        u'vaults.vault': {
-            'Meta': {'object_name': 'Vault', 'db_table': "u'vaultier_vault'"},
-            'created_at': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'created_by': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['accounts.User']", 'on_delete': 'models.PROTECT'}),
-            'deleted_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True'}),
-            'description': ('django.db.models.fields.CharField', [], {'max_length': '1024', 'null': 'True', 'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'slug': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '255'}),
-            'updated_at': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            'workspace': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['workspaces.Workspace']"})
-        },
-        u'workspaces.workspace': {
-            'Meta': {'object_name': 'Workspace', 'db_table': "u'vaultier_workspace'"},
-            'created_at': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'created_by': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['accounts.User']", 'on_delete': 'models.PROTECT'}),
-            'deleted_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True'}),
-            'description': ('django.db.models.fields.CharField', [], {'max_length': '1024', 'null': 'True', 'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'slug': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '255'}),
-            'updated_at': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'})
-        }
-    }
-
-    complete_apps = ['cards']
+    operations = [
+        migrations.CreateModel(
+            name='Card',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('deleted_at', models.DateTimeField(null=True)),
+                ('name', models.CharField(max_length=255)),
+                ('slug', models.CharField(default=b'', max_length=255)),
+                ('description', models.CharField(max_length=1024, null=True, blank=True)),
+                ('created_at', models.DateTimeField(auto_now_add=True)),
+                ('updated_at', models.DateTimeField(auto_now=True)),
+                ('created_by', models.ForeignKey(to='accounts.User', on_delete=django.db.models.deletion.PROTECT)),
+                ('vault', models.ForeignKey(to='vaults.Vault')),
+            ],
+            options={
+                'db_table': 'vaultier_card',
+            },
+            bases=(libs.changes.changes.ChangesMixin, models.Model),
+        ),
+    ]

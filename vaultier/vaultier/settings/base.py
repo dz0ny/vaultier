@@ -149,7 +149,6 @@ INSTALLED_APPS = (
     'raven.contrib.django.raven_compat',
     'kombu.transport.django',
     'vaultier',
-    'south',
     'rest_framework',
     'accounts',
     'acls',
