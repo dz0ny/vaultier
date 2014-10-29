@@ -59,7 +59,7 @@ mkdir -p /opt/vaultier
 cd /opt/vaultier
 virtualenv venv
 
-/opt/vaultier/venv/bin/pip install /usr/share/vaultier/source/Vaultier-0.7.0.tar.gz
+/opt/vaultier/venv/bin/pip install /usr/share/vaultier/source/Vaultier-latest.tar.gz
 
 export PYTHONPATH=/opt/vaultier/venv/lib/python2.7/site-packages/vaultier
 
