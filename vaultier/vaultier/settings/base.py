@@ -115,7 +115,6 @@ WSGI_APPLICATION = 'vaultier.wsgi.application'
 
 # Template settings
 TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR, 'vaultier/tempates'),
     os.path.join(BASE_DIR, 'vaultier/business'),
 
     # Put strings here, like "/home/html/django_templates" or
@@ -221,12 +220,23 @@ EMBER_TPL_CMPDIR = os.path.join(PROJECT_PATH, 'static/tpl')
 EMBER_TPL_MASK = "\w+.hbs$"
 
 VAULTIER = {
+    # frontend distribution path
+    'frontend_path': os.path.join(BASE_DIR, 'vaultier/scripts/dist'),
+
     # sentry key to be used for loggin errors on the frontend
     'raven_key': '',
     # 'email@example.com' to send all emails to this address
     'dev_mail_to': False,
-    # True to use/generate same key for all users
+
+    # current developer email used for default logging when developing
+    'dev_email': '',
+    # True to use/generate same key for all users, also keys will be prefiled
     'dev_shared_key': False,
+    # following public key used in case dev_shared_key enabled
+    'dev_shared_key_public': '',
+    # following private key used in case dev_shared_key enabled
+    'dev_shared_key_private': '',
+
     # 1 hour in milliseconds used to calculate the expiration time
     # on api.lostkey module
     'lostkey_hash_expiration_time': 60*60*1000,

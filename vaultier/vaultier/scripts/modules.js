@@ -124,6 +124,16 @@ var vaultierModulesConfig = {
            ]
         },
 
+        "resources": {
+            "resources": [
+                './images/**/*',
+                "./font/**/*"
+            ],
+            "styles": [
+                "./css/application.css"
+            ]
+        },
+
         "core": {
             "scripts": [
             /**************** Utils **/
@@ -193,13 +203,6 @@ var vaultierModulesConfig = {
                 "./js/module/Layout/WorkspaceBox.js",
                 "./js/module/Layout/Confirm.js",
                 "./js/module/Layout/PasswordField.js"
-            ],
-            "resources": [
-                './images/**/*',
-                "./font/**/*"
-            ],
-            "styles": [
-                "./css/application.css"
             ]
         },
         "error": {

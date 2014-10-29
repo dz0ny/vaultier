@@ -2,15 +2,17 @@ from django.http.response import HttpResponse
 from django.shortcuts import render, redirect
 from django.conf import settings
 import json
+import os
 import pkg_resources
 from rest_framework.views import APIView
-
+from django.views import static
 
 def index(request):
-
-    return render(request, 'index.html', {
-        'dev_shared_key': settings.VAULTIER.get('dev_shared_key')
-    })
+    """
+    For devel purposes we need also index.html of frontend to be executed
+    """
+    index =  os.path.join(settings.VAULTIER['frontend_path'], 'html/index.html')
+    return static.serve(request, index,document_root='/')
 
 
 class ConfigView(APIView):
@@ -30,6 +32,8 @@ class ConfigView(APIView):
             'registration_allow': settings.VAULTIER.get('registration_allow'),
             # dev
             'dev_shared_key': settings.VAULTIER.get('dev_shared_key'),
+            'dev_shared_key_private': settings.VAULTIER.get('dev_shared_key_private'),
+            'dev_shared_key_public': settings.VAULTIER.get('dev_shared_key_public'),
             'dev_show_token': settings.VAULTIER.get('dev_show_token'),
             'dev_email': settings.VAULTIER.get('dev_email')
         })
