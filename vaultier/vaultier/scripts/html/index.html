@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="shortcut icon" href="{destinationUrl}images/logo-black.png">
+
+    <title>Vaultier</title>
+
+    <script src="{destinationUrl}boot.js"></script>
+
+    <!--@todo: Move config to standard api endpoint -->
+    <script src="{configUrl}"></script>
+</head>
+
+<body>
+
+<script type="text/x-handlebars">
+    <div class="vlt-outlet-application">
+        {{ outlet }}
+    </div>
+    <div class="vlt-outlet-modal">
+        {{ outlet modal }}
+    </div>
+</script>
+
+</body>
+
+</html>

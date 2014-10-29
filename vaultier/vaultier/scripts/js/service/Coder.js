@@ -4,6 +4,8 @@ Service.Coder = Ember.Object.extend({
 
     TestingGenerator: Ember.Object.extend({
 
+        config: null,
+
         getPrivateKey: function () {
             return this.private
         },
@@ -13,22 +15,22 @@ Service.Coder = Ember.Object.extend({
         },
 
         getKey: function (callback) {
-            this.private = $('div.vlt-test-private-key').text().trim();
-            this.public = $('div.vlt-test-public-key').text().trim();
+            var config = this.get('config');
 
+            this.private = config.dev_shared_key_private;
+            this.public = config.dev_shared_key_public;
             if (callback) {
                 return callback(this)
             } else {
                 return this
             }
         }
-
     }),
 
     generateKeys: function (callback) {
         if (this.get('config.dev_shared_key')) {
             // development generator
-            var generator = this.TestingGenerator.create();
+            var generator = this.TestingGenerator.create({config: this.get('config')});
         } else {
             // production generator
             var generator = new JSEncrypt({default_key_size: 2048});

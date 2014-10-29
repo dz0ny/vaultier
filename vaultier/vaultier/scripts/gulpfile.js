@@ -12,6 +12,8 @@
     var sourcesDestination = destination;
     var includesFile = destination + 'includes.json';
     var environment = 'dev';
+    var indexFile = './html/index.html';
+    var configUrl = '/config/config.js';
 
     // Load modules definition
     var modulesFilename = './modules.js';
@@ -34,6 +36,7 @@
     var gulp_hbars = require('gulp-ember-handlebars');
     var gulp_watch = require('gulp-watch');
     var gulp_livereload = require('gulp-livereload');
+    var gulp_replace = require('gulp-replace');
 
 
     // Global requirements
@@ -144,6 +147,20 @@
             .pipe(gulp.dest(sourcesDestination));
     });
 
+    gulp.task('build-index', function() {
+         return gulp.src(indexFile, { base: './' })
+             .pipe(gulp_newer(destination))
+             // remove comments
+             .pipe(gulp_replace(/<!--[\s\S]*?-->/g, ''))
+             // add destination url
+             .pipe(gulp_replace(/{destinationUrl}/g, destinationUrl))
+             // add config url
+             .pipe(gulp_replace(/{configUrl}/g, configUrl))
+             // build
+             .pipe(gulp.dest(destination));
+
+    });
+
     gulp.task('build-includes', function (cb) {
         var modules = modulesDefinition[environment];
         var scripts = [];
@@ -205,6 +222,7 @@
 
         return runSequence(
             buildTasks,
+            'build-index',
             'build-includes'
         );
     });
@@ -213,7 +231,11 @@
         gulp_livereload.listen();
 
         var modules = modulesDefinition[environment];
-        var glob = [];
+
+        var glob = [
+            indexFile
+        ];
+
         for (var m in modules) {
             if (modules.hasOwnProperty(m)) {
                 var content = modules[m];
@@ -253,6 +275,7 @@
             'build'
         );
     });
+
 
     gulp.task('clean-watch', function () {
         return runSequence(
