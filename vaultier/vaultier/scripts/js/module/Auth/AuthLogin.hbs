@@ -145,7 +145,12 @@
                                     <a {{bind-attr href=link}} target="_blank">
                                         <div class="vlt-latest-news-box">
                                             <div class="col-md-3 vlt-latest-news-box-date">
-                                                <h4>{{date published_at}}</h4>
+                                                <div class="vlt-latest-news-box-date-year">
+                                                    {{date published_at format='YYYY'}}
+                                                </div>
+                                                <div class="vlt-latest-news-box-date-month-and-day">
+                                                    {{date published_at format='MMM D'}}
+                                                </div>
                                             </div>
                                             <div class="col-md-9 vlt-latest-news-box-content">
                                                 {{dot-dot-dot value=title height=70 }}

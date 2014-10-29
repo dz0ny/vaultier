@@ -827,7 +827,7 @@ textarea {
     border-color: white;
     background-color: rgba(0,0,0,0.4);
     border-radius: 8px;
-    margin: 30px 16px 20px 16px;
+    margin: 30px 16px 80px 16px;
 }
 .vlt-hp .container .vlt-latest-news .vlt-latest-news-header h2 {
     color: #a9a9a9;
@@ -864,13 +864,20 @@ textarea {
 }
 .vlt-hp .container .vlt-latest-news .vlt-latest-news-box .vlt-latest-news-box-date {
     text-align: right;
-    word-spacing: 30000px;
     padding: 8px;
 }
-.vlt-hp .container .vlt-latest-news .vlt-latest-news-box .vlt-latest-news-box-date h4 {
+.vlt-hp .container .vlt-latest-news .vlt-latest-news-box .vlt-latest-news-box-date .vlt-latest-news-box-date-year {
     text-align: center;
     font-size: 160%;
-    margin-top: 5px;
+    margin-top: 7px;
+    display: block;
+    width: 100%;
+}
+.vlt-hp .container .vlt-latest-news .vlt-latest-news-box .vlt-latest-news-box-date .vlt-latest-news-box-date-month-and-day {
+    text-align: center;
+    font-size: 160%;
+    display: block;
+    width: 100%;
 }
 .vlt-hp .container .vlt-latest-news .vlt-latest-news-box .vlt-latest-news-box-content {
     padding: 16px 10px 17px 5px;
@@ -919,6 +926,14 @@ textarea {
     .vlt-hp .container .vlt-latest-news .vlt-latest-news-box .vlt-latest-news-box-content {
         width: 70%;
         display: inline-block;
+    }
+}
+@media screen and (min-width: 992px) and (max-width: 1200px) {
+    .vlt-hp .container .vlt-latest-news .vlt-latest-news-box .vlt-latest-news-box-date .vlt-latest-news-box-date-year {
+        font-size: 150%;
+    }
+    .vlt-hp .container .vlt-latest-news .vlt-latest-news-box .vlt-latest-news-box-date .vlt-latest-news-box-date-month-and-day {
+        font-size: 150%;
     }
 }
 /*************************************************************
