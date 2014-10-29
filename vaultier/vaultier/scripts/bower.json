@@ -21,38 +21,38 @@
     "test",
     "tests"
   ],
-  "devDependencies": {
-    "ember": "~1.5.1",
-    "ember-animate": "~0.3.4",
+  "dependencies": {
+    "ember": "1.5.1",
+    "ember-animate": "0.3.4",
     "ember-restless": "0.5.1",
     "ember-selectize": "git+https://github.com/rclick-cz/ember-selectize.git",
 
-    "FileAPI": "~2.0.3",
+    "FileAPI": "2.0.3",
     "FileSaver": "*",
 
     "Keypress": "https://github.com/dmauro/Keypress.git#1.0.9",
     "bootstrap": "https://github.com/twbs/bootstrap.git#3.2",
-    "lgtm": "~0.3.5",
-    "marked": "~0.3.2",
-    "momentjs": "~2.6.0",
-    "jsep": "https://github.com/soney/jsep.git#0.2.0",
+    "lgtm": "1.0.0",
+    "marked": "0.3.2",
+    "momentjs": "2.8.3",
+    "jsep": "https://github.com/soney/jsep.git#0.2.9",
 
-    "jquery": "~2.1.0",
-    "jquery-cookie": "~1.4.1",
+    "jquery": "2.1.0",
+    "jquery-cookie": "1.4.1",
     "jquery.sessionstorage": "*",
-    "jquery.dotdotdot": "~1.6.16",
-    "jstorage": "~0.4.8",
-    "notifyjs": "https://github.com/jpillora/notifyjs.git#~0.3.1",
+    "jquery.dotdotdot": "1.6.16",
+    "jstorage": "0.4.8",
+    "notifyjs": "https://github.com/jpillora/notifyjs.git#0.3.1",
 
-    "select2": "~3.4.8",
-    "selectize": "~0.9.1",
+    "select2": "3.5.1",
+    "selectize": "0.9.1",
 
-    "jsencrypt": "~2.0.0",
-    "CryptoJS": "~3.1.12",
-    "jsrsasign": "https://github.com/kjur/jsrsasign.git#~4.2.2",
+    "jsencrypt": "2.1.0",
+    "CryptoJS": "3.1.12",
+    "jsrsasign": "https://github.com/kjur/jsrsasign.git#4.7.0",
 
-    "headjs": "~1.0.3",
+    "headjs": "1.0.3",
 
-    "raven-js": "~1.1.15"
+    "raven-js": "1.1.15"
   }
 }
