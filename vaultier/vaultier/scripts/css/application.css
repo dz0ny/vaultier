@@ -767,6 +767,12 @@ textarea {
 .vlt-hp .container .vlt-dialog .vlt-dialog-footer {
     padding: 8px;
 }
+.vlt-hp .container .vlt-dialog.vlt-login .vlt-login-no-users {
+    padding: 15px;
+}
+.vlt-hp .container .vlt-dialog.vlt-login .vlt-login-no-users .alert {
+    margin-bottom: 0;
+}
 .vlt-hp .container .vlt-dialog.vlt-login .vlt-dialog-body {
     padding-right: 25px;
 }

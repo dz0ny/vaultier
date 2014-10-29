@@ -69,9 +69,11 @@ class UserViewSet(AtomicTransactionMixin,
 
     def create(self, request, *args, **kwargs):
         """
-        Check if is registration allowed. If not raise 405 exception
+        Check if is registration allowed or if is any registered user in here.
+        Otherwise raise 405 exception
         """
-        if settings.VAULTIER.get('registration_allow'):
+        if settings.VAULTIER.get('registration_allow') or not \
+                bool(User.objects.all().count()):
             return super(UserViewSet, self).create(request, *args, **kwargs)
         raise MethodNotAllowed(method='POST')
 

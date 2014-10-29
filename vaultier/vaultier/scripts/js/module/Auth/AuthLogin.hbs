@@ -5,8 +5,40 @@
                 <img src="/static/vaultier/images/logobig.png"/>
             </div>
             <div class="col-md-5">
-                <div class="vlt-dialog  vlt-login top-50">
+                <div class="vlt-dialog vlt-login top-50">
                     <div class="vlt-dialog-content">
+                        {{#if registration_enforce }}
+                            <div class="vlt-login-no-users">
+                                <div class="vlt-dialog-header">
+                                    <h2>First User Registration</h2>
+                                </div>
+                                <div class="vlt-dialog-body">
+                                    <div class="alert alert-warning">
+                                        <div class="row top-15">
+                                            <div class="col-md-offset-1 col-md-10">
+                                                <p class="text-center">
+                                                    <b>
+                                                        Please, create first user account. Once you will do so, this option will disappear. Other people will need invitation from existing user.
+                                                    </b>
+                                                </p>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row top-15">
+                                            <div class="text-center">
+                                                {{#link-to 'AuthRegister' class="btn btn-lg btn-default" }}
+                                                    Register
+                                                {{/link-to}}
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        {{else}}
+                        <div class="vlt-login-form">
                         <form class="form-horizontal" role="form">
 
                             <div class="vlt-dialog-header">
@@ -124,6 +156,8 @@
 
                             </div>
                         </form>
+                        </div>
+                        {{/if}}
                     </div>
                 </div>
 
