@@ -75,3 +75,6 @@ Environment Variables
 
 *VAULTIER_ALLOW_STATISTICS*
     Send anonymous usage statistic to vaultier.org REST API
+
+*VAULTIER_FROM_EMAIL*
+    Email address where are all emails sending from
