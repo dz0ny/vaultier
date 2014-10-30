@@ -35,7 +35,7 @@ setup(
         "Intended Audience :: Information Technology",
         "Topic :: Security",
         "License :: OSI Approved :: BSD License",
-        "Natural Lanugage :: English",
+        "Natural Language :: English",
         "Operating System :: POSIX :: Linux",
         "Programming Language :: Python",
         "Programming Language :: Python :: 2.7",
