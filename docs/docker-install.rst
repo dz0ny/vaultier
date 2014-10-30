@@ -37,19 +37,41 @@ Environment Variables
 =====================
 
 *VAULTIER_DOMAIN*
-    Lipsum
+    Domain where is Vaultier accessible
 
 *VAULTIER_EMAIL_HOST*
-    Lipsum
+    Mailserver IP address or DNS
 
 *VAULTIER_EMAIL_PORT*
-    Lipsum
+    Mailserver port
 
 *VAULTIER_EMAIL_USER*
-    Lipsum
+    Mailserver user
 
 *VAULTIER_EMAIL_PASSWORD*
-    Lipsum
+    Mailserver password
 
 *VAULTIER_EMAIL_TLS*
-    Lipsum
+    Does mailserver use TLS (bool)
+
+*VAULTIER_DATABASE_NAME*
+    Database name
+
+*VAULTIER_DATABASE_USER*
+    Database user
+
+*VAULTIER_DATABASE_PASSWORD*
+    Database password
+
+*VAULTIER_DATABASE_HOST*
+    Database host
+
+*VAULTIER_DATABASE_PORT*
+    Database port
+
+*VAULTIER_ALLOW_REGISTRATION*
+    By default is registration allowed only for first user. Other people can
+    become user by getting invitation
+
+*VAULTIER_ALLOW_STATISTICS*
+    Send anonymous usage statistic to vaultier.org REST API
