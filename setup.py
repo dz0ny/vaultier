@@ -57,5 +57,12 @@ setup(
     zip_safe=True,
     include_package_data = True,
     description="Vaultier project backend",
-    version="0.7.0"
+    long_description="Vaultier combines strong security with the option to "
+                     "share sensitive data within the working teams, supliers "
+                     "and clients. Concept of Vaultier tool was based on our "
+                     "own needs and was designed to solve our problem to "
+                     "collaborate on hundreds of login credentials with the "
+                     "proper level of security and access control.",
+    version="0.7.0",
+    url="http://vaultier.org"
 )
