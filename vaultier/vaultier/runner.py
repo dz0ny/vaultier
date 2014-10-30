@@ -18,7 +18,8 @@ ALLOWED_HOSTS = [
 ]
 
 VAULTIER.update({
-    'raven_key': ''
+    'raven_key': '',
+    'registration_allow': False,
 })
 
 CONFIG_DIR = os.path.abspath(os.path.dirname(__file__))
