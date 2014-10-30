@@ -21,6 +21,7 @@ VAULTIER.update({
     'raven_key': '',
     'registration_allow': False,
     'allow_anonymous_usage_statistics': True,
+    'from_email': os.getenv('VAULTIER_FROM_EMAIL', 'noreply@$(DOMAIN)')
 })
 
 CONFIG_DIR = os.path.abspath(os.path.dirname(__file__))
