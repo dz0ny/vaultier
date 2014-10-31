@@ -9,27 +9,31 @@ Template: vaultier/database_host
 Default: localhost
 Type: string
 Description: Enter the domain name or IP address of your database
-  (PostgreSQL) server
+  PostgreSQL server setup
 
 Template: vaultier/database_port
 Default: 5432
 Type: string
 Description: What port does your database server listen at?
+  PostgreSQL server setup
 
 Template: vaultier/database_user
 Default: vaultier
 Type: string
 Description: Enter database user, who will be used to connect database. Will be created if does not exists
+  PostgreSQL server setup
 
 Template: vaultier/database_password
 Default: vaultier
 Type: password
 Description: Enter database user password.
+  PostgreSQL server setup
 
 Template: vaultier/database_name
 Default: vaultier
 Type: string
 Description: Enter database name. Database will be created if does not exists
+  PostgreSQL server setup
 
 Template: vaultier/email_host
 Type: string
@@ -63,3 +67,14 @@ Description: Does your mail server use TLS security?
   Emails are used to handle invitations and various workflow needs. Correctly
   configured mail server is essential for getting the most out of Vaultier.
 
+Template: vaultier/allow_registration
+Default: false
+Type: boolean
+Description: Allow registration for new users?
+  When registration is disabled, user can register only if was invited to vaultier.
+
+Template: vaultier/allow_statistics
+Default: true
+Type: boolean
+Description: Allow sending anonymous statistics to vaultier.org REST API?
+  Statistics does contain no sensitive data.

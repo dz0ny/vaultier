@@ -36,6 +36,10 @@ if [ ! -f /opt/vaultier/vaultier_conf.py ]; then
     db_input high vaultier/email_user
     db_input high vaultier/email_password
     db_input high vaultier/email_tls
+
+    # Application settings
+    db_input high vaultier/allow_registration
+    db_input high vaultier/allow_statistics
     db_go
 
 fi
