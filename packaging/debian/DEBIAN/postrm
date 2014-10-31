@@ -1,0 +1,77 @@
+#!/bin/bash
+set -e
+
+. /usr/share/debconf/confmodule
+
+# Remove configuration files
+echo -n "Removing config files.. "
+rm -f /etc/supervisor/conf.d/vaultier.conf
+rm -f /etc/nginx/sites-enabled/vaultier
+rm -f /etc/nginx/sites-available/vaultier
+rm -f /etc/uwsgi/apps-enabled/vaultier.ini
+rm -f /etc/uwsgi/apps-available/vaultier.ini
+echo "OK"
+
+# Remove logs
+echo -n "Removing logs.. "
+rm -rf /opt/vaultier/logs
+echo "OK"
+
+# Remove virtualenv
+echo -n "Removing virtual environment.. "
+rm -rf /opt/vaultier/venv
+echo "OK"
+
+# Remove orphans
+echo -n "Removing orpahns.. "
+rm -f /opt/vaultier/celerybeat-schedule
+rm -f /opt/vaultier/vaultier_conf.pyc
+echo "OK"
+
+if [ "$1" = "remove" ]; then
+   db_purge
+fi
+
+if [ "$1" = "purge" -a -e /usr/share/debconf/confmodule ]; then
+
+    database_name=$(cat /tmp/.vaultier_dbname)
+    database_user=$(cat /tmp/.vaultier_dbuser)
+
+    if sudo -u postgres psql ${database_name} -c '\q' &>/dev/null; then
+        sudo -u postgres dropdb $database_name
+        echo "Database $database_name droped successfully"
+    else
+        echo "Removing database failed."
+    fi
+
+    sudo -u postgres psql postgres -tAc "SELECT 1 FROM pg_roles WHERE rolname='$database_user'" | grep -q 1 && \
+        sudo -u postgres dropuser $database_user && echo "Database user $database_user deleted successfully"
+
+    echo -n "Removing group vaultier.. "
+    id -f vaultier &>/dev/null && delgroup vaultier
+    echo "OK"
+    echo -n "Removing user vaultier.. "
+    id -u vaultier &>/dev/null && deluser vaultier
+    echo "OK"
+    db_purge
+
+    rm -f /opt/vaultier/vaultier_conf.py
+    rm -rf /opt/vaultier/
+    rm -f /tmp/.vaultier_dbname
+    rm -f /tmp/.vaultier_dbuser
+fi
+
+# start servers again
+if ! service uwsgi start; then # &> /dev/null
+    echo "Starting uwsgi failed. Please try to start it manually."
+elsee
+    echo "Uwsgi started"
+fi
+
+if ! service nginx start; then # &> /dev/null
+    echo "Starting nginx failed. Please try to start it manually."
+else
+    echo "Nginx started"
+fi
+
+db_stop

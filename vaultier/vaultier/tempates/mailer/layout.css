@@ -1,0 +1,98 @@
+td {
+    padding: 0;
+}
+
+a {
+    color: #32a5e7;
+}
+
+h1 {
+    color: #32a5e7;
+    display: inline-block;
+    font-weight: normal;
+}
+
+h2 {
+    color: #32a5e7;
+    display: inline-block;
+    font-weight: normal;
+}
+
+h3 {
+    color: #32a5e7;
+    display: inline-block;
+    font-weight: normal;
+}
+
+ul li {
+    list-style: none;
+}
+
+p {
+    text-align: justify;
+}
+
+.mail-background {
+    background-color: #FFFFFF;
+}
+
+.mail-main-table {
+    font-family: "Open Sans", Helvetica, Arial, sans-serif;
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #EEE;
+}
+
+.mail-content-table {
+    background-color: #FFFFFF;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.mail-header {
+    width: 100%;
+    background-color: #4C4B4B;
+    border: 1px solid #D7DFE1;
+    border-top: none;
+}
+
+
+.mail-logo {
+    padding: 10px;
+    background-color: #4C4B4B;
+    color: #FFFFFF;
+    display: inline-block;
+    font-weight: normal;
+    font-size: 25px;
+}
+
+.mail-logo img {
+    background-color: #4C4B4B;
+    vertical-align: middle;
+    width: 40px;
+    height: 40px
+}
+
+.mail-wrapper {
+    padding: 0 30px 20px 30px;
+}
+
+.mail-content {
+    padding: 0;
+    border: 1px solid #D7DFE1;
+    color: #3E4959;
+}
+
+.mail-body-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.mail-body-content td {
+    padding: 20px 20px 20px 20px;
+    background-color: #FFFFFF;
+}
+
+.mail-footer {
+     border-radius: 0 0 6px 6px;
+}

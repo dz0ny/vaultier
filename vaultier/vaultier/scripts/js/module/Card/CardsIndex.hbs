@@ -1,0 +1,224 @@
+<div class="vlt-card container-full">
+    <div class="vlt-page vlt-page-with-sidebar">
+
+        <div class="vlt-page-content">
+            <div class="col-md-12">
+
+                <div class="vlt-page-content-responsive-header">
+                    <div class="row-fluid">
+                        <div class="col-md-3">
+                            {{#exp  "( vault.perms.update || vault.perms.delete || vault.perms.create || vault.perms.invite )"}}
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default dropdown-toggle"
+                                            data-toggle="dropdown">
+                                        <span class="glyphicon glyphicon-cog"></span>
+                                        Manage
+                                    </button>
+                                    <ul class="dropdown-menu caret-left">
+                                        {{#if vault.perms.update}}
+
+                                            <li>
+                                                {{#link-to "Vault.edit" vault}}
+                                                    Edit vault
+                                                {{/link-to}}
+                                            </li>
+
+                                            <li>
+                                                <a href="#" {{action deleteVault vault }} >Delete vault</a>
+                                            </li>
+                                        {{/if}}
+
+                                        {{#if vault.perms.invite}}
+                                            <li>
+                                                {{#link-to "Vault.rolesAdminIndex" vault}}
+                                                    Share
+                                                {{/link-to}}
+                                            </li>
+                                        {{/if}}
+
+                                        {{#if vault.perms.create}}
+                                            <li>
+                                                {{#link-to "Cards.create" }}
+                                                    Add card
+                                                {{/link-to}}
+                                            </li>
+                                        {{/if}}
+
+                                    </ul>
+                                </div>
+                            {{/exp}}
+                        </div>
+
+                        <div class="col-md-9">
+                            <h2>Vault: {{vault.name}} </h2>
+                        </div>
+
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+
+                <!--<div class="vlt-card-items">-->
+                {{#if length}}
+                    {{#each}}
+                        {{view Vaultier.CardsIndexItemView}}
+                    {{/each}}
+                {{else}}
+                    <!--</div>-->
+
+                    <div class="jumbotron vlt-bigbox vlt-card top-50">
+
+                        <div class="vlt-header">
+                            <div class="vlt-icon">
+
+                            </div>
+                            <div class="vlt-title">
+                                <h1>You do not have any cards yet</h1>
+                            </div>
+                        </div>
+
+                        {{#if vault.perms.create }}
+                            <p>
+                                A card is an analogy to a sheet in a folder. A Card lets you organize your secrets into groups.
+                                You can also collaborate with team on a card.
+                            </p>
+
+                            <p class="top-30">
+                                {{#link-to "Cards.create" class="btn btn-lg btn-primary" }}
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                    Add card
+                                {{/link-to}}
+                            </p>
+                        {{/if}}
+                    </div>
+                {{/if}}
+
+            </div>
+        </div>
+
+        <div class="vlt-page-sidebar">
+            <div class="vlt-sidebar-block">
+                <div class="vlt-sidebar-block-heading">
+                    <div class="vlt-header">
+                        <img src="/static/vaultier/images/icon-vault-grey.png" class="vlt-icon">
+
+                        <h3 class="vlt-title">
+                            {{vault.name}}
+                        </h3>
+                    </div>
+                    <div class="vlt-body">
+                        {{#if vault.description}}
+                            {{vault.description}}
+                        {{else}}
+                            No description given
+                        {{/if}}
+                    </div>
+                    <div class="vlt-controls">
+                        <div>
+
+                            {{#if vault.perms.create}}
+                                <div
+                                        class="vlt-button-wrapper"
+                                        data-toggle="tooltip"
+                                        title=
+                                                "
+                                    A card is an analogy to a sheet in a folder. A Card lets you organize your secrets into groups.
+                                You can also collaborate with team on a card.
+                                    "
+                                        data-placement="bottom"
+                                        >
+                                    {{#link-to "Cards.create" class="btn btn-primary"}}
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                        Add card
+                                    {{/link-to}}
+                                </div>
+                            {{/if}}
+
+                            {{#exp  "( vault.perms.update || vault.perms.delete)"}}
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default dropdown-toggle"
+                                            data-toggle="dropdown">
+                                        <span class="glyphicon glyphicon-cog"></span>
+                                        Properties
+                                    </button>
+                                    <ul class="dropdown-menu caret-left">
+
+                                        {{#if vault.perms.update}}
+                                            <li>
+                                                {{#link-to "Vault.edit" vault.slug}}
+                                                    Edit vault
+                                                {{/link-to}}
+                                            </li>
+                                        {{/if}}
+
+                                        {{#if vault.perms.delete}}
+                                            <li>
+                                                <a href="#" {{action deleteVault vault}}>Delete vault</a>
+                                            </li>
+                                        {{/if}}
+
+                                    </ul>
+                                </div>
+                            {{/exp}}
+
+                        </div>
+
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+
+                <div class="vlt-sidebar-block-sharing">
+                    <div class="vlt-header">
+                        <img src="/static/vaultier/images/icon-team-grey.png" class="vlt-icon">
+
+                        <h3 class="vlt-title">
+                            Sharing
+                        </h3>
+                    </div>
+                    <div class="vlt-body">
+                        {{roles-admin-box roles=memberships user=auth.user object=vault}}
+                    </div>
+                    <div class="vlt-controls">
+                        <div>
+                            {{#if vault.perms.invite}}
+                                <div
+                                        class="vlt-button-wrapper"
+                                        data-toggle="tooltip"
+                                        title=
+                                                "
+                             Invite new team members to collaborate on this vault
+                             or grant access permissions to existing team members
+                             "
+                                        data-placement="bottom"
+                                        >
+                                    {{#link-to "Vault.rolesAdminInvite" vault class="btn btn-default"}}
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                        Invite
+                                    {{/link-to}}
+                                </div>
+
+                                <div
+                                        class="vlt-button-wrapper"
+                                        data-toggle="tooltip"
+                                        title=
+                                                "
+                             Invite new team members to collaborate on this vault
+                             or grant access permissions to existing team members
+                             "
+                                        data-placement="bottom"
+                                        >
+                                    {{#link-to "Vault.rolesAdminIndex" vault class="btn btn-default"}}
+                                        <span class="glyphicon glyphicon-user"></span>
+                                        Team
+                                    {{/link-to}}
+                                </div>
+                            {{/if}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,25 @@
+#!/bin/bash
+set -e
+
+. /usr/share/debconf/confmodule
+
+# stop servers for a little while
+service uwsgi stop || true
+service nginx stop
+
+# stop vaultier background jobs
+echo  -n "Stopping Vaultier background services.. "
+
+if supervisorctl shutdown vaultier:* &> /dev/null; then
+    echo "OK"
+else
+    echo "Failed."
+fi
+
+db_get vaultier/database_name
+database_name="$RET"
+db_get vaultier/database_user
+database_user="$RET"
+
+echo $database_name >> /tmp/.vaultier_dbname
+echo $database_user >> /tmp/.vaultier_dbuser

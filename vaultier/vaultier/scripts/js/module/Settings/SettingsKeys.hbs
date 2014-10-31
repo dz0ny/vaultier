@@ -1,0 +1,53 @@
+<div class="vlt-dialog">
+    <div class="vlt-dialog-content">
+        <div class="vlt-dialog-header">
+            <h2>Regenerate key</h2>
+        </div>
+        <div class="vlt-dialog-body">
+
+            <div class="col-md-8 col-md-offset-2">
+                {{#if stepInfo}}
+                    <div class="vlt-dialog-body">
+                        <div class="text-center">
+                            If you want to generate new key,
+                            click the "generate" button and
+                            we will walk you through the process.
+                            <br/>
+                            <br/>
+                            <a {{action generate}} class="btn btn-primary">Generate new key</a>
+                        </div>
+                    </div>
+                {{/if}}
+
+                {{#if stepKeys }}
+                    {{change-key action="save"}}
+                {{/if}}
+
+                {{#if stepSuccess }}
+                    <div class="top-30 bottom-30">
+
+                        <div class=" alert alert-success">
+                            <b>
+                                Your key has been successfully changed.
+                            </b>
+                        </div>
+
+                        <div class=" bottom-30 text-center top-30">
+                            <span class="help-block">
+                                From now on, use the newly generated key. Please make sure you have saved your key.
+                            </span>
+
+                            <a class="btn btn-default" {{ action savePrivateKey }}>Save your new key</a>
+                        </div>
+
+                        <div class="clearfix"></div>
+                    </div>
+
+                {{/if}}
+
+
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,53 @@
+<div class="container">
+    <div class="vlt-page vlt-page-plain">
+        <div class="vlt-page-nav">
+
+            <div class="vlt-page-toolbar pull-right">
+                <div class="vlt-members-management-controls">
+                    <a href="javascript:window.history.go(-1)" class="btn btn-default">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                        Back
+                    </a>
+
+                    {{#link-to 'Workspace.rolesAdminInvite' class="btn btn-primary"}}
+                        <span class="glyphicon glyphicon-plus"></span>
+                        Invite
+                    {{/link-to}}
+
+                </div>
+            </div>
+            <div class="pull-left">
+                <h2>Members of workspace <strong>{{ content.workspace.name }}</strong></h2>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+
+        {{#with invitedMembers as members}}
+            {{#view Vaultier.AnimatedIfView condition=members.length in="fadeIn" out="fadeOut"}}
+                {{#view Vaultier.MembersAdminListView}}
+                    {{members.length}} invited only {{pluralize members.length "member"}}
+                {{/view}}
+            {{/view}}
+        {{/with}}
+
+        {{#with concreteMembers as members}}
+            {{#view Vaultier.AnimatedIfView condition=members.length in="fadeIn" out="fadeOut"}}
+                {{#view Vaultier.MembersAdminListView members=concreteMembers}}
+                    {{members.length}} concrete team {{pluralize members.length "member"}}
+                {{/view}}
+            {{/view}}
+        {{/with}}
+
+        {{#with membersWithoutKey as members}}
+            {{#view Vaultier.AnimatedIfView condition=members.length in="fadeIn" out="fadeOut"}}
+                {{#view Vaultier.MembersAdminListView members=membersWithoutKeys}}
+                    {{members.length}} {{pluralize members.length "member"}} without valid key
+                {{/view}}
+            {{/view}}
+        {{/with}}
+
+
+        <div class="clearfix"></div>
+    </div>
+</div>

@@ -1,0 +1,13 @@
+{% extends 'mailer/layout.html' %}
+
+{% block content %}
+  <h1>You can access now to {{ granted_workspace }} workspace</h1>
+
+  <p>You can access the workspace at the url:</p>
+
+    <p>
+       <a href="{{ url }}">{{ url }}</a>
+    </p>
+
+  <p>Thanks, you rock!</p>
+{% endblock %}

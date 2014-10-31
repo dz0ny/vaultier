@@ -20,15 +20,29 @@ logs/*
 nbproject/
 .idea/
 
-sources/app/settings.py
+# sdist target
+dist/
+
+# development settings
+vaultier/vaultier/settings/dev_*.py
 
 # ignore node modules
-sources/scripts/node_modules/
+vaultier/vaultier/scripts/node_modules/
 
-#ignore bower componets
-sources/scripts/bower_components/
+# ignore bower componets
+vaultier/vaultier/scripts/bower_components/
 
-# we can ignore builded handlebar templates
-sources/scripts/tpl/
+# ignore builded folder
+vaultier/vaultier/scripts/dist/
 
-sources/media/
+# we can ignore built handlebar templates
+vaultier/vaultier/scripts/tpl/
+
+# ignore media
+vaultier/vaultier/media
+
+# ignore egg
+Vaultier.egg-info
+
+# ignore builded doc
+docs/_build

@@ -1,0 +1,231 @@
+<div class="container-full vlt-vault-index">
+<div class="vlt-page vlt-page-with-sidebar">
+<div class="vlt-page-content">
+    <div class="col-md-12">
+
+            <div class="vlt-page-content-responsive-header">
+                <div class="row-fluid">
+                    <div class="col-xs-3">
+                        {{#exp  "( workspace.perms.update || workspace.perms.delete || workspace.perms.create || workspace.perms.invite )"}}
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default dropdown-toggle"
+                                        data-toggle="dropdown">
+                                    <span class="glyphicon glyphicon-cog"></span>
+                                    Manage
+                                </button>
+                                <ul class="dropdown-menu caret-left">
+                                    {{#if workspace.perms.update}}
+
+                                        <li>
+                                            {{#link-to "Workspace.edit" workspace}}
+                                                Edit workspace
+                                            {{/link-to}}
+                                        </li>
+
+                                        <li>
+                                            <a href="#" {{action deleteWorkspace workspace }} >Delete workspace</a>
+                                        </li>
+                                    {{/if}}
+
+                                    {{#if workspace.perms.invite}}
+                                        <li>
+                                            {{#link-to "Workspace.rolesAdminIndex" workspace}}
+                                                Share
+                                            {{/link-to}}
+                                        </li>
+                                    {{/if}}
+
+                                    {{#if workspace.perms.create}}
+                                        <li>
+                                            {{#link-to "Vaults.create" }}
+                                                Add vault
+                                            {{/link-to}}
+                                        </li>
+                                    {{/if}}
+
+                                </ul>
+                            </div>
+                        {{/exp}}
+                    </div>
+
+                    <div class="col-xs-9">
+                        <h2>Workspace: {{workspace.name}} </h2>
+                    </div>
+
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+
+
+        {{#if length}}
+            {{#each}}
+                {{view Vaultier.VaultIndexItemView}}
+            {{/each}}
+        {{else}}
+            <div class="top-50">
+                <div class="jumbotron vlt-bigbox vlt-vault">
+                    <div class="vlt-header">
+                        <div class="vlt-icon">
+
+                        </div>
+                        <div class="vlt-title">
+                            <h1>You do not have any vaults yet</h1>
+                        </div>
+                    </div>
+
+
+                    {{#if workspace.perms.create }}
+
+                        <p>
+                            Vaults are used to organize your secrets into cards in a given vault.
+                            You can also collaborate with other team members on the vault.
+                        </p>
+
+                        <p class="top-30">
+                            {{#link-to "Vaults.create" workspace class="btn btn-lg btn-primary" }}
+                                <span class="glyphicon glyphicon-plus"></span>
+                                Add vault
+                            {{/link-to}}
+                        </p>
+                    {{/if}}
+
+                </div>
+            </div>
+        {{/if}}
+
+    </div>
+</div>
+
+<div class="vlt-page-sidebar">
+    <div class="vlt-sidebar-block">
+        <div class="vlt-sidebar-block-heading">
+            <div class="vlt-header">
+                <img src="/static/vaultier/images/icon-workspace-grey.png" class="vlt-icon">
+
+                <h3 class="vlt-title">
+                    {{workspace.name}}
+                </h3>
+            </div>
+            <div class="vlt-body">
+                {{#if workspace.description}}
+                    {{workspace.description}}
+                {{else}}
+                    No description given
+                {{/if}}
+            </div>
+            <div class="vlt-controls">
+                <div>
+
+                    {{#if workspace.perms.create }}
+                        <div
+                                class="vlt-button-wrapper"
+                                data-toggle="tooltip"
+                                title=
+                                        "
+                                    Vaults are used to organize your secrets into cards in a given vault.
+                                    You can also collaborate with other team members on the vault.
+                                    "
+                                data-placement="bottom"
+                                >
+                            {{#link-to "Vaults.create" workspace.slug class="btn btn-primary"}}
+                                <span class="glyphicon glyphicon-plus"></span>
+                                Add vault
+                            {{/link-to}}
+                        </div>
+                    {{/if}}
+
+                    {{#exp  "( workspace.perms.update || workspace.perms.delete)"}}
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle"
+                                    data-toggle="dropdown">
+                                <span class="glyphicon glyphicon-cog"></span>
+                                Properties
+                            </button>
+                            <ul class="dropdown-menu caret-left">
+
+                                {{#if workspace.perms.update}}
+                                    <li>
+                                        {{#link-to "Workspace.edit" workspace.slug}}
+                                            Edit workspace
+                                        {{/link-to}}
+                                    </li>
+                                {{/if}}
+
+                                {{#if workspace.perms.delete}}
+                                    <li>
+                                        <a href="#" {{action deleteWorkspace workspace}}>Delete workspace</a>
+                                    </li>
+                                {{/if}}
+
+                            </ul>
+                        </div>
+                    {{/exp}}
+
+
+                </div>
+
+                <div class="clearfix"></div>
+            </div>
+        </div>
+
+        <div class="vlt-sidebar-block-sharing">
+            <div class="vlt-header">
+                <img src="/static/vaultier/images/icon-team-grey.png" class="vlt-icon">
+
+                <h3 class="vlt-title">
+                    Sharing
+                </h3>
+            </div>
+            <div class="vlt-body">
+                {{roles-admin-box roles=memberships user=auth.user object=workspace}}
+            </div>
+            <div class="vlt-controls">
+                <div>
+
+                    {{#if workspace.perms.invite }}
+                        <div
+                                class="vlt-button-wrapper"
+                                data-toggle="tooltip"
+                                title=
+                                        "
+                             Invite new team members to collaborate on this workspace
+                             or grant access permissions to existing team members
+                             "
+                                data-placement="bottom"
+                                >
+                            {{#link-to "Workspace.rolesAdminInvite" workspace.slug class="btn btn-default"}}
+                                <span class="glyphicon glyphicon-plus"></span>
+                                Invite
+                            {{/link-to}}
+                        </div>
+                    {{/if}}
+
+                    {{#if workspace.perms.invite }}
+                        <div
+                                class="vlt-button-wrapper"
+                                data-toggle="tooltip"
+                                title=
+                                        "
+                             Invite new team members to collaborate on this workspace
+                             or grant access permissions to existing team members
+                             "
+                                data-placement="bottom"
+                                >
+                            {{#link-to "Workspace.rolesAdminIndex" workspace.slug class="btn btn-default"}}
+                                <span class="glyphicon glyphicon-user"></span>
+                                Team
+                            {{/link-to}}
+                        </div>
+                    {{/if}}
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</div>
+
+</div>
+

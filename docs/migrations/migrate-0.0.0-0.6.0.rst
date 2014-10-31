@@ -1,6 +1,5 @@
-*************************************
-Migration scenario for 0.0.0 to 0.6.0
-*************************************
+Migrate 0.0.0 to 0.6.0
+**********************
 
 
 Before you start
@@ -13,6 +12,7 @@ Stop vaultier
 ::
 
     sudo supervisorctl stop vaultier
+    sudo service uwsgi stop vaultier
 
 
 Backup database
@@ -43,8 +43,9 @@ Migrate
     ./sources/manage.py rematerializeacl
 
 Start vaultier
-=============
+==============
 ::
 
+    sudo service uwsgi start vaultier
     sudo supervisorctl start vaultier
 

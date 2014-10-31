@@ -1,0 +1,16 @@
+[uwsgi]
+workers=4
+max-requests=1000
+chdir=/opt/vaultier
+module=vaultier.wsgi:application
+home=/opt/vaultier/venv
+pythonpath=/opt/vaultier
+pythonpath=/opt/vaultier/venv/lib/python2.7/site-packages/vaultier/
+env=DJANGO_SETTINGS_MODULE=vaultier_conf
+vacuum=true
+no-orphans=true
+uid=vaultier
+gid=vaultier
+chown-socket=vaultier:www-data
+listen=50
+logger=file:/opt/vaultier/logs/uwsgi.log

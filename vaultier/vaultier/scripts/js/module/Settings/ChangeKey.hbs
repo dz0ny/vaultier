@@ -1,0 +1,77 @@
+{{#if view.keys}}
+
+    <p>
+        Your key has been generated.
+        Please follow given steps to finish the procedure.
+    </p>
+
+
+    <div class="bottom-15 top-30">
+        <h4>
+            <div class="label label-header">1</div>
+            Save key to your computer
+        </h4>
+    </div>
+
+    <div class="top-15 padding-15 panel panel-default">
+
+        <div class="col-md-6 col-md-offset-1">
+            <b>
+                Key
+            </b>
+            <br/>
+                <span class="help-block">
+                    This file is used instead of a password. Please save the key.
+                </span>
+        </div>
+        <div class="col-md-4">
+            <button
+                {{ action savePrivateKey target=view }}
+                {{bind-attr class=":btn view.privateKeySaved:btn-default:btn-primary"}}
+                    >
+                Save key
+            </button>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+    <div class="bottom-15  top-30">
+        <h4>
+            <div class="label label-header">2</div>
+            Confirm sending the key
+        </h4>
+    </div>
+
+    <div class="top-15 padding-15 panel panel-default">
+
+        <div class="col-md-6 col-md-offset-1">
+            <b>
+                Confirm
+            </b>
+            <br/>
+                <span class="help-block">
+                    Confirm to server that you successfully downloaded the key
+                </span>
+        </div>
+        <div class="col-md-4">
+            <button
+                {{bind-attr disabled=view.publicButtonDisabled}}
+                {{bind-attr class=":btn view.privateKeySaved:btn-primary:btn-default"}}
+                {{ action savePublicKey target=view }}
+                    class="btn btn-default">
+                Confirm
+            </button>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+
+
+{{else}}
+    <div class=" text-center top-30">
+        <h4>Please wait while we generate your key...</h4>
+
+        <div class="vlt-preloader vlt-preloader-small">
+        </div>
+    </div>
+{{/if}}

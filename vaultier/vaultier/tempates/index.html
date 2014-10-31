@@ -1,0 +1,48 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="shortcut icon" href="{% static 'vaultier/images/logo-black.png'%}">
+
+    <title>Vaultier</title>
+
+    {####################################################################}
+    {# loader and core #}
+    {####################################################################}
+
+    <script src="{% static 'vaultier/boot.js' %}"></script>
+    {####################################################################}
+    {# config and start #}
+    {####################################################################}
+
+    <script src="{% url 'config' %}"></script>
+</head>
+
+<body>
+
+{% verbatim %}
+<script type="text/x-handlebars">
+    <div class="vlt-outlet-application">
+        {{ outlet }}
+    </div>
+    <div class="vlt-outlet-modal">
+        {{ outlet modal }}
+    </div>
+</script>
+
+{% endverbatim %}
+
+{% if dev_shared_key %}
+    {% include 'keys.html' %}
+{% endif %}
+
+</body>
+
+</html>

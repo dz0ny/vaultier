@@ -1,0 +1,46 @@
+<div class="vlt-register-sum">
+
+
+    <div class="row bottom-15">
+        <div class="col-md-8 col-md-offset-2">
+            <h4>Your account has been successfully created</h4>
+
+            <p>
+                Before you start usinging Vaultier, please review your account credentials.</b>
+            </p>
+        </div>
+    </div>
+
+    <div class="col-md-8 col-md-offset-2 alert alert-warning">
+
+        <div class="row bottom-5">
+            <div class="col-md-6 col-md-offset-1">
+                <b>
+                    Your email and username:
+                </b>
+            </div>
+            <div class="col-md-4">
+                {{ auth.user.email }}
+            </div>
+
+        </div>
+
+
+        <div class="row bottom-15">
+            <div class="col-md-6 col-md-offset-1">
+                <b>
+                    Your nickname:
+                </b>
+            </div>
+            <div class="col-md-4">
+                {{ auth.user.nickname }}
+            </div>
+
+        </div>
+
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+</div>

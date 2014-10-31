@@ -1,0 +1,64 @@
+<div class="vlt-register-key">
+
+    {{#if props.keysReady }}
+        <h4>We Have Generated Your Key</h4>
+    {{/if}}
+
+    <div class="row">
+        <div class="col-md-7">
+            {{#if props.keysReady }}
+
+                <div class="alert alert-warning">
+                    <div class="row top-15">
+                        <div class="col-md-offset-1 col-md-10">
+                            <p
+                                    class="text-center"
+                                    data-toggle="tooltip"
+                                    title="
+                                     The key is used instead of a password to log into Vaultier.
+                                     Please keep the key safe and do not give it to anybody.
+                                     Without the key, you will not be able to log into Vaultier
+                                     and your data will be effectively rendered unreadable.
+                                    ">
+
+                                <b>
+                                    Save the key to your computer and keep it. Do not loose the key, you will need it to subsequently log-in again.
+                                </b>
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <div class="row top-15">
+                        <div class="text-center">
+                            <a {{bind-attr class=":btn :btn-lg props.nextButtonDisabled:btn-primary:btn-default"}}
+                                {{ action downloadKey }}>
+                                <span class="glyphicon glyphicon-save"></span>
+                                Save the key
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="clearfix"></div>
+
+            {{else}}
+                <div class="generate">
+                    <h4>Please wait while we generate your key</h4>
+                    <div class="vlt-preloader vlt-preloader-small">
+                    </div>
+                </div>
+            {{/if}}
+        </div>
+
+        <div class="col-md-5">
+            <div {{bind-attr class=":callout :callout-info props.keysReady::vlt-register-key-info"}}>
+                <p>Because we care about strong security we use a key for login instead of apassword.</p>
+                <p>All secrets submited to Vaultier are encrypted by your key and can be read only by you and your team. members</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+</div>

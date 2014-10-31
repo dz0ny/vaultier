@@ -1,0 +1,6 @@
+You can access now to {{ granted_workspace }} workspace.
+You can access the workspace at the url:
+
+{{ url }}
+
+Thanks, you rock!

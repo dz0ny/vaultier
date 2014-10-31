@@ -1,0 +1,12 @@
+#!/bin/bash
+set -e
+
+# Stop uWSGI
+if [ -f /etc/init.d/uwsgi ]; then
+    service uwsgi stop
+fi
+
+# Stop Nginx
+if [ -f /etc/init.d/nginx ]; then
+    service nginx stop
+fi

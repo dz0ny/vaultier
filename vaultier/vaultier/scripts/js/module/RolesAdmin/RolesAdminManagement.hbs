@@ -1,0 +1,43 @@
+<div class="container">
+    <div class="vlt-page vlt-page-plain">
+        <div class="vlt-page-nav">
+
+            <div class="vlt-page-toolbar pull-right">
+                <div>
+                    <a href="javascript:window.history.go(-1)" class="btn btn-default">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                        Back
+                    </a>
+
+                    {{#link-to inviteRouteName class="btn btn-primary"}}
+                        <span class="glyphicon glyphicon-user"></span>
+                        Invite
+                    {{/link-to}}
+                </div>
+            </div>
+            <div class="pull-left">
+                <h2>{{ content.workspace.name }}</h2>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading ">
+                <div class="vlt-col col-md-8">
+                    <h4> {{members.length}} members at <strong>{{content.workspace.name}}</strong></h4>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <!-- End of heading -->
+            <div class="panel-body" id="collapse">
+                {{#each member in members }}
+                    {{roles-admin-manager-accordion member=member deleteMember="deleteMember" loadRoles="loadRoles" deleteRole="deleteRole"}}
+                {{/each}}
+            </div>
+            <!-- End of panel-body -->
+            <div class="clearfix"></div>
+
+        </div>
+
+        <div class="clearfix"></div>
+    </div>
+</div>

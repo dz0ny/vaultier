@@ -1,5 +1,0 @@
-You can rebuild your key on the url bellow
-
-Please do not follow the link if it was not you
-{{ url }}
-Thanks, you rock!

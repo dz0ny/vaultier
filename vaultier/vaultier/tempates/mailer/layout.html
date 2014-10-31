@@ -1,0 +1,42 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<table class="mail-main-table">
+    <tbody>
+    <tr>
+        <td class="mail-wrapper">
+            <table class="mail-content-table mail-background">
+                <tr class="mail-header">
+                    <td class="mail-logo">
+                        <img src="{{ SITE_URL }}{% static 'vaultier/images/logo-email.png'%}" alt="Vaultier"/>&nbsp;Vaultier
+                    </td>
+                </tr>
+                <tr class="mail-content">
+                    <td>
+                        <table class="mail-body-table">
+                            <tr class="mail-body-content">
+                                <td>
+                                    {% block content %}
+                                    {% endblock %}
+                                </td>
+                            </tr>
+                            <tr class="mail-footer">
+                                <td>
+                                    &nbsp;
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    </tbody>
+</table>
+</body>
+</html>

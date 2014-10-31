@@ -1,9 +1,9 @@
 *****************
-How to contribute
+How To Contribute
 *****************
 
 =========================
-Install devel environment
+Install Devel Environment
 =========================
 
 -----
@@ -19,7 +19,7 @@ Clone
 
 
 -------------------------
-Install required packages
+Install Required Packages
 -------------------------
 ::
 
@@ -31,18 +31,19 @@ Install required packages
     sudo pip install virtualenv
 
 
------------
-Create venv
------------
+---------------------------------
+Create Venv and setup Environment
+---------------------------------
 ::
 
     virtualenv ./env
     source ./env/bin/activate
-    pip install -r sources/REQUIREMENTS
-
+    pip install -r REQUIREMENTS
+    python setup.py develop
+    ./vaultier/manage.py setup
 
 ----------------------------------
-install frontend development tools
+Install Frontend Development Tools
 ----------------------------------
 ::
 
@@ -50,24 +51,29 @@ install frontend development tools
     sudo apt-get install nodejs
     sudo apt-get install npm
 
+    # install bower
+    sudo npm install -g bower
+
     # initialize sources and vendors
-    cd sources/vaultier/scripts
+    cd vaultier/vaultier/scripts
     npm install
     bower install
 
+    # install gulp
+    sudo npm install -g gulp
+
 
 ========================
-Run development instance
+Run Development Instance
 ========================
 ::
 
     # run server
-    cd sources
+    cd vaultier
+    ./manage.py setup
     ./manage.py runserver 127.0.0.0:8000
     http://127.0.0.0:8000
 
     # run frontend compiler
-    cd sources/vaultier/scripts
+    cd vaultier/scripts
     gulp watch
-
-

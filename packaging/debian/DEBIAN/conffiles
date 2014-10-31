@@ -1,0 +1,3 @@
+/usr/share/vaultier/config/nginx/vaultier
+/usr/share/vaultier/config/supervisor/vaultier.conf
+/usr/share/vaultier/config/uwsgi/vaultier.ini
