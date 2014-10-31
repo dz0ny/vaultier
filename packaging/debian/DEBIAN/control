@@ -9,4 +9,4 @@ Depends: python-virtualenv, python-dev, nginx, uwsgi, uwsgi-plugin-python,
 Maintainer: Rclick s.r.o. <info@rclick.cz>
 Description: Vaultier
  Easy and secure password and credentials sharing across teams.
-Installed-Size: 247808
+Installed-Size: 129688
