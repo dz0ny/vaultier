@@ -232,7 +232,7 @@ VAULTIER = {
     # on api.lostkey module
     'lostkey_hash_expiration_time': 60*60*1000,
     # Default email address from which we send emails
-    'from_email': 'info@rclick.com',
+    'from_email': 'noreply@vaultier.org',
     # Max difference between timestamp from server and from front-end
     # (in seconds)
     'login_safe_timestamp': 15,

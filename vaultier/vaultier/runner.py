@@ -20,6 +20,8 @@ ALLOWED_HOSTS = [
 VAULTIER.update({
     'raven_key': '',
     'registration_allow': False,
+    'allow_anonymous_usage_statistics': True,
+    'from_email': 'noreply@$(DOMAIN)',
 })
 
 CONFIG_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -112,6 +114,22 @@ def _generate_settings():
         replace('$(DB_TYPE)', str(db_type))
 
     if _managed:
+        # Update application settings
+        cfg = cfg.replace(
+            "'from_email': 'noreply@$(DOMAIN)'",
+            "'from_email': os.getenv('VAULTIER_FROM_EMAIL', "
+            "'noreply@{}')".format(domain),
+        )
+        cfg = cfg.replace(
+            "'registration_allow': False",
+            "'registration_allow': bool(os.getenv("
+            "'VAULTIER_ALLOW_REGISTRATION', False))",
+        )
+        cfg = cfg.replace(
+            "'allow_anonymous_usage_statistics': True",
+            "'allow_anonymous_usage_statistics': bool(os.getenv("
+            "'VAULTIER_ALLOW_STATISTICS', True))",
+        )
         # Update allowed hosts
         cfg = cfg.replace(
             '\'$(DOMAIN)\'',
@@ -158,6 +176,7 @@ def _generate_settings():
         cfg = cfg.replace(
             "EMAIL_USE_TLS = False",
             "EMAIL_USE_TLS = bool(os.getenv('VAULTIER_EMAIL_TLS', False))")
+
         return cfg
     else:
         return cfg.replace('$(DOMAIN)', domain)
