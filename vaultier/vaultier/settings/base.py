@@ -147,8 +147,9 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'raven.contrib.django.raven_compat',
     'kombu.transport.django',
-    'vaultier',
     'rest_framework',
+    'mptt',
+    'vaultier',
     'accounts',
     'acls',
     'cards',
@@ -158,7 +159,8 @@ INSTALLED_APPS = (
     'versions',
     'workspaces',
     'slugs',
-    'news'
+    'news',
+    'nodes'
 )
 
 #Django cache settings

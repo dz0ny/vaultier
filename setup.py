@@ -11,7 +11,7 @@ setup(
         'django-appconf==0.6',
         'django-extensions==1.2.5',
         'django-filter==0.7',
-        'djangorestframework==2.3.12',
+        'djangorestframework==2.4.3',
         'flup==1.0.2',
         'html2text==3.200.3',
         'jsonfield==0.9.20',
@@ -26,6 +26,7 @@ setup(
         'requests==2.3.0',
         'python-dateutil==2.2',
         'logan==0.5.10',
+        'django-mptt==0.6.1',
     ],
     classifiers=[
         "Development Status :: 5 - Production/Stable",
