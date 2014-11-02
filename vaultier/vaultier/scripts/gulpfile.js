@@ -11,13 +11,12 @@
     var destinationUrl = '/static/vaultier/';
     var sourcesDestination = destination;
     var includesFile = destination + 'includes.json';
-    var environment = 'dev';
     var indexFile = './html/index.html';
     var configUrl = '/config/config.js';
 
     // Load modules definition
     var modulesFilename = './modules.js';
-    var modulesDefinition = require(modulesFilename);
+    var modules = require(modulesFilename);
     var modulesTasks = [];
     var moduleTaskNameFormat = 'build-module-{name}';
     var moduleScriptFilenameFormat = '{name}.js';
@@ -90,8 +89,6 @@
 
 
     var createBuildTasksForModules = function () {
-        var modules = modulesDefinition[environment];
-
         for (var m in modules) {
             if (modules.hasOwnProperty(m)) {
                 var name = m;
@@ -122,7 +119,6 @@
     createBuildTasksForModules();
 
     gulp.task('build-resources', function () {
-        var modules = modulesDefinition[environment];
         var resources = [];
         for (var m in modules) {
             if (modules.hasOwnProperty(m)) {
@@ -162,51 +158,52 @@
     });
 
     gulp.task('build-includes', function (cb) {
-        var modules = modulesDefinition[environment];
-        var scripts = [];
-        var styles = [];
+
+        var resources = [];
+
+        var createResource = function (file, type, module) {
+                var destinationPath = path.resolve(destination) + '/';
+                var filepath = path.resolve(__dirname, file);
+                var mtime = fs.statSync(filepath).mtime.getTime();
+                var url = filepath.replace(destinationPath, destinationUrl);
+                url = url + '?t=' + mtime;
+
+                resources.push({
+                    url: url,
+                    type: type,
+                    skipLoading: module.skipLoading,
+                    environments: module.environments
+                });
+        };
+
+
         for (var m in modules) {
             if (modules.hasOwnProperty(m)) {
                 var name = m;
                 var content = modules[m];
-                if (content.scripts && !content.skipLoading) {
-                    scripts.push(
-                            destination + moduleScriptFilenameFormat.replace('{name}', name)
-                    );
+
+                if (content.scripts) {
+                    var file = destination + moduleScriptFilenameFormat.replace('{name}', name)
+                    createResource(file, 'js', content);
                 }
-                if (content.templates && !content.skipLoading) {
-                    scripts.push(
-                            destination + moduleTemplateFilenameFormat.replace('{name}', name)
-                    );
+                if (content.templates) {
+                     var file =  destination + moduleTemplateFilenameFormat.replace('{name}', name)
+                     createResource(file, 'js', content);
+
                 }
-                if (content.styles && !content.skipLoading) {
+                if (content.styles ) {
                     for (var i = 0; i < content.styles.length; i++) {
-                        styles.push(destination + content.styles[i].replace('./', ''));
+                        var file = destination + content.styles[i].replace('./', '');
+                        createResource(file, 'css', content);
                     }
                 }
             }
         }
 
-        var buildForFileType = function (urls, files, type) {
-            for (var i = 0; i < files.length; i++) {
-                var destinationPath = path.resolve(destination) + '/';
-                var filepath = path.resolve(__dirname, files[i]);
-                var mtime = fs.statSync(filepath).mtime.getTime();
-                var url = filepath.replace(destinationPath, destinationUrl);
-                url = url + '?t=' + mtime;
-
-                urls.push({file: url, type: type});
-            }
-        };
-
-        var urls = [];
-        buildForFileType(urls, scripts, 'scripts');
-        buildForFileType(urls, styles, 'styles');
-
 
         var pathname = path.resolve(includesFile);
         var file = fs.openSync(pathname, 'w');
-        fs.writeSync(file, JSON.stringify({modules: urls}));
+        fs.writeSync(file, JSON.stringify({resources: resources}));
         fs.close(file);
 
         cb();
@@ -229,8 +226,6 @@
 
     gulp.task('watch', ['build'], function () {
         gulp_livereload.listen();
-
-        var modules = modulesDefinition[environment];
 
         var glob = [
             indexFile

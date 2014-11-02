@@ -30,7 +30,8 @@ Vaultier = Ember.Application.create({
         InitializeConfig(this);
 
 
-        LGTM.configure('defer', Ember.RSVP.defer);
+        //@todo: lgtm does not work, was removed temporary
+        //LGTM.configure('defer', Ember.RSVP.defer);
 
         /**************************************************
          **************************************************
@@ -107,5 +108,11 @@ Vaultier = Ember.Application.create({
         Vaultier.AnimatedUnlessView = EmberExt.AnimatedIf.AnimatedUnlessView;
     }
 });
+
+Vaultier.runApplication = function() {
+    ApplicationLoader.hideLoader(1000);
+    this.advanceReadiness();
+}
+
 
 Vaultier.deferReadiness();

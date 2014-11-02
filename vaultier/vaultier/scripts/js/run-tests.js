@@ -1,0 +1,1 @@
+Vaultier.Test.runTests();

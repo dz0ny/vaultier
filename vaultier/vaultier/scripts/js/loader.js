@@ -69,7 +69,8 @@ ApplicationLoader = {
                     this.loaderEl = null;
                     $('.vlt-loading-overlay').trigger('ApplicationLoaderHide');
                 }.bind(this))
-        };
+        }
+        ;
     },
 
     promise: function (promise) {
@@ -79,7 +80,7 @@ ApplicationLoader = {
                 this.hideLoader()
                 return Ember.RSVP.resolve(result)
             }.bind(this))
-            .catch(function(error) {
+            .catch(function (error) {
                 this.hideLoader()
                 return Ember.RSVP.reject(error);
             }.bind(this));
@@ -124,10 +125,59 @@ ApplicationLoader = {
     }
 };
 
-$(document).ready(function(){
-    $.getJSON('/static/vaultier/includes.json', function(jsonData){
-        $.each(jsonData.modules, function(index, obj){
-            ApplicationLoader.queueFile(obj['file']);
+$(document).ready(function () {
+    var environment = 'default';
+
+    var parseUrl = function (url) {
+        var aURL = url || window.location.href;
+        var vars = {};
+        var hashes = aURL.slice(aURL.indexOf('#') + 1).split('?');
+        if (hashes.length > 1) {
+            vars['page'] = hashes[0];
+            hashes = hashes[1].split('&');
+        } else {
+            hashes = hashes[0].split('&');
+        }
+
+        for (var i = 0; i < hashes.length; i++) {
+            var hash = hashes[i].split('=');
+            if (hash.length > 1) {
+                vars[hash[0]] = hash[1];
+            } else {
+                vars[hash[0]] = null;
+            }
+        }
+
+        return vars;
+    }
+
+    var intendedForLoading = function (resource) {
+        var intended = true;
+
+        intended = intended && !resource.skipLoading;
+
+        if (!resource.environments) {
+            throw new Error('Resource {url} has undefined environments list, please check modules.js'.replace('{url}', resource.url))
+        }
+
+        intended = intended && ( resource.environments.indexOf('*') > -1 || resource.environments.indexOf(environment) > -1);
+
+        return intended;
+
+    }
+
+    // read environment from url
+    var params = parseUrl();
+    if (params.environment) {
+        environment = params.environment;
+    }
+
+
+    $.getJSON('/static/vaultier/includes.json', function (jsonData) {
+        $.each(jsonData.resources, function (index, resource) {
+            if (intendedForLoading(resource)) {
+                ApplicationLoader.queueFile(resource['url']);
+            }
         });
         ApplicationLoader.loadQueued();
     });
