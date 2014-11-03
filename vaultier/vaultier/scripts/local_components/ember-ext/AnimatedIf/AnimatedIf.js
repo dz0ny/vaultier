@@ -1,4 +1,4 @@
-Po.NS('EmberExt.AnimatedIf');
+ApplicationKernel.namespace('EmberExt.AnimatedIf');
 
 EmberExt.AnimatedIf.defaultDuration = 500;
 EmberExt.AnimatedIf.intendedToRemoveProperty = '_intendedToAnimatedRemove';

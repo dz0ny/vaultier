@@ -47,7 +47,7 @@ Vaultier.VaultRoute = Ember.Route.extend(
                                 $.notify('Ooops! Something went wrong.', 'error');
                             }.bind(this)
                         );
-                    ApplicationLoader.promise(promise);
+                    ApplicationKernel.UI.showLoaderUponPromise(promise);
 
                 }.bind(this));
 

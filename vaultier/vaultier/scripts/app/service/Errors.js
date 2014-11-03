@@ -1,4 +1,4 @@
-Po.NS('Service');
+ApplicationKernel.namespace('Service');
 
 Service.Errors = Ember.Object.extend({
 
@@ -78,7 +78,7 @@ Service.Errors = Ember.Object.extend({
         var router = this.get('router');
         var errorRoute = this.get('errorRoute');
         router.intermediateTransitionTo(errorRoute);
-        ApplicationLoader.hideLoader();
+        ApplicationKernel.UI.hideLoader();
     },
 
     logError: function (error) {

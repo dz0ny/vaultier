@@ -24,7 +24,7 @@ Vaultier.AuthLostKeyRecoveryResetRoute = Ember.Route.extend({
                         $.notify('How embarrassing! There was an error, please try again later', 'error');
                         this.get('errors').consoleError(error);
                     }.bind(this));
-                ApplicationLoader.promise(promise);
+                ApplicationKernel.UI.showLoaderUponPromise(promise);
             }.bind(this));
         }
 

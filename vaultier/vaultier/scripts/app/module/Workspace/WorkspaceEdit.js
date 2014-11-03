@@ -45,7 +45,7 @@ Vaultier.WorkspaceEditRoute = Ember.Route.extend(
                         this.get('errors').logError(error);
                     }.bind(this));
 
-                ApplicationLoader.promise(promise);
+                ApplicationKernel.UI.showLoaderUponPromise(promise);
             }
         }
     });

@@ -12,9 +12,6 @@ Vaultier.Test.createTest = function (fn) {
 }
 
 Vaultier.Test.runTests = function () {
-    // hide loader
-    ApplicationLoader.hideLoader(0);
-
     // create qunit div
     $('<div id="qunit"></div>')
         .css({

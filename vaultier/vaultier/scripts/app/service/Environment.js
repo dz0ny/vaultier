@@ -1,6 +1,6 @@
 'use strict';
 
-var Service = Po.NS('Service');
+var Service = ApplicationKernel.namespace('Service');
 
 Service.Environment = Ember.Object.extend({
 

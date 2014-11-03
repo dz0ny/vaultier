@@ -66,11 +66,11 @@ Vaultier.SecretIndexRoute = Ember.Route.extend(
         actions: {
 
             downloadBlob: function (secret) {
-                ApplicationLoader.showLoader();
+                ApplicationKernel.UI.showLoader();
                 secret
                     .loadBlob()
                     .finally(function () {
-                        ApplicationLoader.hideLoader();
+                        ApplicationKernel.UI.hideLoader();
                     })
                     .then(function () {
                         var data = secret.get('blob.filedata');
@@ -105,7 +105,7 @@ Vaultier.SecretIndexRoute = Ember.Route.extend(
                                 $.notify('Ooops! Something went wrong.', 'error');
                             }.bind(this)
                         );
-                    ApplicationLoader.promise(promise);
+                    ApplicationKernel.UI.showLoaderUponPromise(promise);
                 }.bind(this));
             }
 

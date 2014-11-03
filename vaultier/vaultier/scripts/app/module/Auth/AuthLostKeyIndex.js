@@ -28,7 +28,7 @@ Vaultier.AuthLostKeyIndexRoute = Ember.Route.extend({
                     ctrl.set('error', true);
                     $.notify('An error just happened please try again', 'error');
                 }.bind(this));
-            ApplicationLoader.promise(promise);
+            ApplicationKernel.UI.showLoaderUponPromise(promise);
         }
     }
 });

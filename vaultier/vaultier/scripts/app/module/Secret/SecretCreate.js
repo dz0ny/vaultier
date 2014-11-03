@@ -185,9 +185,9 @@ Vaultier.SecretCreateSubmitRoute = Ember.Route.extend(
                         }.bind(this))
                         .catch(notifyError);
 
-                    ApplicationLoader.promise(promise);
+                    ApplicationKernel.UI.showLoaderUponPromise(promise);
                 } catch (e) {
-                    ApplicationLoader.hideLoader();
+                    ApplicationKernel.UI.hideLoader();
                     notifyError(e);
                 }
             }

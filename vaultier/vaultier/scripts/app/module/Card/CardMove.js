@@ -78,7 +78,7 @@ Vaultier.CardMoveRoute = Ember.Route.extend(
                     }
                 )
 
-                ApplicationLoader.promise(promise)
+                ApplicationKernel.UI.showLoaderUponPromise(promise)
             }
         }
     });

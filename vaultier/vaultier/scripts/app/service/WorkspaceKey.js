@@ -1,4 +1,4 @@
-Po.NS('Service');
+ApplicationKernel.namespace('Service');
 
 Service.WorkspaceKeyDecryptSoftError = function () {
     var error = Error.apply(this, arguments);

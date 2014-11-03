@@ -1,4 +1,4 @@
-Po.NS('EmberExt.Tree');
+ApplicationKernel.namespace('EmberExt.Tree');
 
 EmberExt.Tree.TreeNodeView = Ember.View.extend({
     opened: false,

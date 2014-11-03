@@ -47,7 +47,7 @@ Vaultier.SettingsKeysRoute = Ember.Route.extend(
                         this.get('errors').consoleError(error)
                     }.bind(this));
 
-                ApplicationLoader.promise(promise);
+                ApplicationKernel.UI.showLoaderUponPromise(promise);
 
                 result.promise = promise;
 

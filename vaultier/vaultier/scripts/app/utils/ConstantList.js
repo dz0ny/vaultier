@@ -1,4 +1,4 @@
-Po.NS('Utils');
+ApplicationKernel.namespace('Utils');
 
 Utils.ConstantList = function(options) {
     Po.merge(this, options);

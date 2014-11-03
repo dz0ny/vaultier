@@ -27,7 +27,9 @@ Vaultier = Ember.Application.create({
          **************************************************
          **************************************************
          */
-        InitializeConfig(this);
+
+        //@todo: move to initializer
+        this.Config = Ember.Object.extend(ApplicationKernel.Config.applicationConfig);
 
 
         //@todo: lgtm does not work, was removed temporary
@@ -110,7 +112,6 @@ Vaultier = Ember.Application.create({
 });
 
 Vaultier.runApplication = function() {
-    ApplicationLoader.hideLoader(1000);
     this.advanceReadiness();
 }
 

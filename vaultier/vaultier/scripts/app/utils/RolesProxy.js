@@ -1,6 +1,6 @@
 'use strict';
 
-Po.NS('Utils');
+ApplicationKernel.namespace('Utils');
 
 /**
  * Util class to sort a collection of roles
