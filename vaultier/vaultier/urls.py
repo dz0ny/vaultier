@@ -9,8 +9,6 @@ handler404 = error404
 urlpatterns = patterns(
     '',
     url(r'^api/', include('vaultier.urls_api')),
-    url(r'^config/config.js$', ConfigView.as_view(), name='config'),
-
     url(r'^$', index, name='index')
     # Frontend
 )

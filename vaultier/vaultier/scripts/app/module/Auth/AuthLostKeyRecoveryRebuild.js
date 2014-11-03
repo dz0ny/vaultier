@@ -20,7 +20,7 @@ Vaultier.AuthLostKeyRecoveryRebuildRoute = Ember.Route.extend({
                     $.notify('There was an error during update of your key, please try again later', 'error');
                     this.get('errors').consoleError(error);
                 }.bind(this));
-            ApplicationLoader.promise(promise);
+            ApplicationKernel.UI.showLoaderUponPromise(promise);
             result.promise = promise;
         }
     }

@@ -50,7 +50,7 @@ Vaultier.RolesAdminManagementRoute = Vaultier.RolesAdminIndexRoute.extend({
                         this.get('errors').logError(error);
                     }.bind(this));
 
-                ApplicationLoader.promise(promise);
+                ApplicationKernel.UI.showLoaderUponPromise(promise);
             });
         },
         loadRoles: function (context, member) {
@@ -68,7 +68,7 @@ Vaultier.RolesAdminManagementRoute = Vaultier.RolesAdminIndexRoute.extend({
                     context.set('roles', memberRoles);
                     return memberRoles;
                 }.bind(this));
-            ApplicationLoader.promise(promise);
+            ApplicationKernel.UI.showLoaderUponPromise(promise);
         },
         deleteMember: function (context, member) {
 
@@ -86,7 +86,7 @@ Vaultier.RolesAdminManagementRoute = Vaultier.RolesAdminIndexRoute.extend({
                         this.get('errors').logError(error);
                     }.bind(this));
 
-                ApplicationLoader.promise(promise);
+                ApplicationKernel.UI.showLoaderUponPromise(promise);
             });
         }
     }

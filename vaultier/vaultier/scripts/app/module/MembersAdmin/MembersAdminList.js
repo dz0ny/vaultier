@@ -34,7 +34,7 @@ Vaultier.MembersAdminListActionsMixin = Ember.Mixin.create({
                             this.get('errors').logError(error);
                         }.bind(this));
 
-                    ApplicationLoader.promise(promise);
+                    ApplicationKernel.UI.showLoaderUponPromise(promise);
 
                 });
             }
@@ -69,7 +69,7 @@ Vaultier.MembersAdminListActionsMixin = Ember.Mixin.create({
                             //this.get('errors').logError(error);
                         }.bind(this));
 
-                    ApplicationLoader.promise(promise);
+                    ApplicationKernel.UI.showLoaderUponPromise(promise);
                 }.bind(this));
             }
         },
@@ -89,7 +89,7 @@ Vaultier.MembersAdminListActionsMixin = Ember.Mixin.create({
                     member.set('roles', roles)
                     member.set('roles_count', roles.get('length'));
                 }.bind(this));
-            ApplicationLoader.promise(promise);
+            ApplicationKernel.UI.showLoaderUponPromise(promise);
         }
     }
 });

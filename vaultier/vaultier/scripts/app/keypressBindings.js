@@ -28,10 +28,10 @@ Vaultier.keypressBindings = function () {
         keypress.unregister_many(keypressBindings);
     };
 
-    $(document).on('ApplicationLoaderShow', function (event) {
+    $(document).on('ApplicationKernel.UI.LoaderShown', function (event) {
         setKeypressBindings();
     });
-    $(document).on('ApplicationLoaderHide', function (event) {
+    $(document).on('ApplicationKernel.UI.LoaderHidden', function (event) {
         unsetKeypressBindings();
     });
 

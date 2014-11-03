@@ -1,4 +1,4 @@
-Po.NS('Utils');
+ApplicationKernel.namespace('Utils');
 
 Utils.E = {
 

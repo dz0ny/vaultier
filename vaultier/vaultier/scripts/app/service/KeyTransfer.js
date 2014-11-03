@@ -1,4 +1,4 @@
-Po.NS('Service');
+ApplicationKernel.namespace('Service');
 
 Service.KeyTransfer = Ember.Object.extend({
 

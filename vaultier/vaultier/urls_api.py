@@ -7,6 +7,7 @@ from cards.api import CardViewSet
 from news.api import NewsApiView
 from search.api import SearchView
 from secrets.api import SecretViewSet, SecretBlobViewSet
+from vaultier.views import ConfigView
 from vaults.api import VaultViewSet
 from workspaces.api import WorkspaceViewSet, WorkspaceKeyViewSet, \
     InvitationViewSet
@@ -29,6 +30,7 @@ urlpatterns = router.urls
 
 urlpatterns += patterns(
     '',
+    url(r'^config/', ConfigView.as_view(), name='config'),
     url(r'^news/$', NewsApiView.as_view(), name='news-list'),
     # search
     url(r'^search/search$', SearchView.as_view(), name='search-search'),

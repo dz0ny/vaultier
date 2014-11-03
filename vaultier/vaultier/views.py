@@ -24,7 +24,7 @@ class ConfigView(APIView):
         Get configuration from settings, format it and return
         """
         # get settings and transform it to json
-        conf_settings = json.dumps({
+        config = json.dumps({
             'VERSION': pkg_resources.get_distribution("Vaultier").version,
             'raven_key': settings.VAULTIER.get('raven_key'),
             'invitation_lifetime': settings.VAULTIER.get(
@@ -37,11 +37,8 @@ class ConfigView(APIView):
             'dev_show_token': settings.VAULTIER.get('dev_show_token'),
             'dev_email': settings.VAULTIER.get('dev_email')
         })
-        # add settings to script
-        script = 'InitializeConfig = function(app) { ' \
-                 'app.Config = Ember.Object.extend(%s); }' % conf_settings
 
-        return HttpResponse(script, content_type='text/javascript')
+        return HttpResponse(config, content_type='application/json')
 
 
 def error404(request):

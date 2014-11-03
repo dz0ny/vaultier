@@ -1,4 +1,4 @@
-Po.NS('Utils')
+ApplicationKernel.namespace('Utils')
 
 /**
   This mixin allows a class to return a singleton, as well as a method to quickly

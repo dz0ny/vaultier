@@ -1,4 +1,4 @@
-Po.NS('Utils');
+ApplicationKernel.namespace('Utils');
 /**
  * Wraps jquery ajax to Ember.RSVP compatibile promise
  * @param options $.ajax options

@@ -29,7 +29,7 @@ Vaultier.SettingsPersonalRoute = Ember.Route.extend(
                         $.notify('Ooops! Something went wrong.', 'error');
                     });
 
-                ApplicationLoader.promise(promise);
+                ApplicationKernel.UI.showLoaderUponPromise(promise);
             }
 
         }

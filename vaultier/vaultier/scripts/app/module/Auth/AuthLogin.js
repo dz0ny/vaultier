@@ -78,7 +78,7 @@ Vaultier.AuthLoginRoute = Ember.Route.extend({
         },
 
         loginUser: function () {
-            ApplicationLoader.showLoader();
+            ApplicationKernel.UI.showLoader();
 
             var ctrl = this.get('controller');
             var email = ctrl.get('email');
@@ -95,7 +95,7 @@ Vaultier.AuthLoginRoute = Ember.Route.extend({
                 .catch(function () {
                     auth.rememberUser(null);
                     this.loadRemebered();
-                    ApplicationLoader.hideLoader();
+                    ApplicationKernel.UI.hideLoader();
                     $.notify('We are sorry, but your login failed', 'error');
                 }.bind(this)
                 );

@@ -1,4 +1,4 @@
-Po.NS('Service');
+ApplicationKernel.namespace('Service');
 
 Service.Auth = Ember.Object.extend({
 

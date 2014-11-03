@@ -4,7 +4,7 @@ Vaultier.LayoutSecurityBoxView = Ember.View.extend({
 
     actions: {
         logout: function () {
-            ApplicationLoader.showLoader();
+            ApplicationKernel.UI.showLoader();
             var auth = this.get('controller.auth');
             auth.logout();
         }

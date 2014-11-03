@@ -12,7 +12,11 @@ var vaultierModulesConfig = {
             "./bower_components/headjs/dist/1.0.0/head.js",
             "./bower_components/raven-js/dist/raven.js",
             "./local_components/pohon/pohon.js",
-            "./app/loader.js"
+
+            "./kernel/ApplicationKernel.js",
+            "./kernel/ApplicationKernel.Config.js",
+            "./kernel/ApplicationKernel.Loader.js",
+            "./kernel/ApplicationKernel.UI.js"
         ]
     },
 

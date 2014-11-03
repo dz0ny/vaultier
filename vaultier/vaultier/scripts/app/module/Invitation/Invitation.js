@@ -68,7 +68,7 @@ Vaultier.InvitationAcceptRoute = Ember.Route.extend(
                         this.transitionTo('index')
                     }.bind(this));
 
-                ApplicationLoader.promise(promise);
+                ApplicationKernel.UI.showLoaderUponPromise(promise);
             },
 
             rejectInvitations: function () {
