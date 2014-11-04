@@ -16,6 +16,7 @@ Contents:
    contribute
    building
    migrations/index
+   api/index
 
 
 
