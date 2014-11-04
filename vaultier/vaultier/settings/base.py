@@ -269,7 +269,7 @@ CELERY_TASK_SERIALIZER = 'pickle'
 CELERY_RESULT_SERIALIZER = 'pickle'
 CELERYBEAT_SCHEDULE = {
     'garbage_collector_tokens': {
-        'task': 'accounts.tasks.task_token_garbage_collector',
+        'task': 'accounts.tasks.task_garbage_collector',
         'schedule': crontab(hour='*/6'),
     },
     'usage_statistics': {
