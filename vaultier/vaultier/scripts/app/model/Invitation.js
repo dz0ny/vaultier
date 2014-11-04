@@ -1,3 +1,8 @@
+/**
+ * @module model
+ * @class Vaultier.Invitation
+ * @extends RL.Model
+ */
 Vaultier.Invitation = RL.Model.extend(
     Vaultier.CreatedUpdatedMixin,
     {
@@ -11,6 +16,11 @@ Vaultier.Invitation.reopenClass({
     primaryKey: 'invitation_hash'
 });
 
+/**
+ * @module model
+ * @class Vaultier.InvitationRole
+ * @extends RL.Model
+ */
 Vaultier.InvitationRole = RL.Model.extend(
     Vaultier.CreatedUpdatedMixin,
     {

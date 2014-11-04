@@ -1,3 +1,8 @@
+/**
+ * @module model
+ * @class Vaultier.Card
+ * @extends RL.Model
+ */
 Vaultier.Card = RL.Model.extend(
     Vaultier.CreatedUpdatedMixin,
     Vaultier.RollbackMixin,

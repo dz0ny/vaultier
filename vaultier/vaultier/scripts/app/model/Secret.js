@@ -1,5 +1,10 @@
 var decryptedField = Vaultier.EncryptedModel.decryptedField;
 
+/**
+ * @module model
+ * @class Vaultier.Secret
+ * @extends RL.Model
+ */
 Vaultier.Secret = RL.Model.extend(
     Vaultier.CreatedUpdatedMixin,
     Vaultier.EncryptedModel.Mixin,
@@ -36,6 +41,10 @@ Vaultier.Secret = RL.Model.extend(
 
     });
 
+/**
+ * @module model
+ * @class Vaultier.SecretNoteMixin
+ */
 Vaultier.SecretNoteMixin = Ember.Mixin.create({
     note: decryptedField('data', 'note'),
 
@@ -45,6 +54,10 @@ Vaultier.SecretNoteMixin = Ember.Mixin.create({
 
 })
 
+/**
+ * @module model
+ * @class Vaultier.SecretPasswordMixin
+ */
 Vaultier.SecretPasswordMixin = Ember.Mixin.create({
     password: decryptedField('data', 'password'),
     username: decryptedField('data', 'username'),
@@ -56,6 +69,10 @@ Vaultier.SecretPasswordMixin = Ember.Mixin.create({
     }.property('type')
 })
 
+/**
+ * @module model
+ * @class Vaultier.SecretFileMixin
+ */
 Vaultier.SecretFileMixin = Ember.Mixin.create({
     /**
      * blob_meta encrypted attrs
@@ -125,6 +142,11 @@ Vaultier.SecretFileMixin = Ember.Mixin.create({
 
 })
 
+/**
+ * @module model
+ * @class Vaultier.SecretBlob
+ * @extends RL.Model
+ */
 Vaultier.SecretBlob = RL.Model.extend(
     Vaultier.EncryptedModel.Mixin,
     {

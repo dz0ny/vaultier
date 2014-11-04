@@ -4,6 +4,11 @@ var getEncryptedDataKey = function (encryptedField) {
     return '_decrypted-data-' + encryptedField;
 }
 
+/**
+ * @module model
+ * @submodule model-mixin
+ * @class Vaultier.EncryptedModel.Mixin
+ */
 Vaultier.EncryptedModel.Mixin = Ember.Mixin.create({
 
     EncryptedModelMixedIn: true,
@@ -16,6 +21,7 @@ Vaultier.EncryptedModel.Mixin = Ember.Mixin.create({
     /**
      * Overriden constructor
      * Retrieves dependencies from container
+     * @method init
      */
     init: function () {
         this.workspacekey = Vaultier.__container__.lookup('service:workspacekey');
@@ -27,9 +33,9 @@ Vaultier.EncryptedModel.Mixin = Ember.Mixin.create({
     },
 
     /**
-     map of all decrypted fields
-     @property fields
-     @type Ember.Map
+     * Map of all decrypted fields
+     * @property decryptedFields
+     * @type Ember.Map
      */
     decryptedFields: Ember.computed(function () {
         var map = Ember.Map.create();
@@ -42,14 +48,12 @@ Vaultier.EncryptedModel.Mixin = Ember.Mixin.create({
     }),
 
     /**
-     * map of all encrypted fields
+     * Map of all encrypted fields
      *
      * This is only solution how to retrieve properties in runtime (including mixed in computed properties over mixin.apply method)
      *
-     * @property fields
+     * @property encryptedFields
      * @type Ember.Map
-     *
-     *
      */
     encryptedFields: Ember.computed(function () {
         var props = Ember.meta(this, false).descs;
@@ -65,9 +69,9 @@ Vaultier.EncryptedModel.Mixin = Ember.Mixin.create({
 
 
     /**
-     map of all dirty encrypted fields
-     @property fields
-     @type Ember.Map
+     * Map of all dirty encrypted fields
+     * @method getDirtyEncryptedFields
+     * @return {Ember.Map}
      */
     getDirtyEncryptedFields: function () {
         var map = Ember.Map.create();
@@ -185,7 +189,35 @@ Vaultier.EncryptedModel.Mixin = Ember.Mixin.create({
 })
 
 /**
+ * @method generatePassword
+ * @returns {string}
+ */
+Vaultier.EncryptedModel.generatePassword = function() {
+    var chars = "ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
+    var string_length = 16;
+    var randomstring = '';
+    var charCount = 0;
+    var numCount = 0;
+
+    for (var i = 0; i < string_length; i++) {
+        // If random bit is 0, there are less than 3 digits already saved, and there are not already 5 characters saved, generate a numeric value.
+        if ((Math.floor(Math.random() * 2) == 0) && numCount < 3 || charCount >= 5) {
+            var rnum = Math.floor(Math.random() * 10);
+            randomstring += rnum;
+            numCount += 1;
+        } else {
+            // If any of the above criteria fail, go ahead and generate an alpha character from the chars string
+            var rnum2 = Math.floor(Math.random() * chars.length);
+            randomstring += chars.substring(rnum2, rnum2 + 1);
+            charCount += 1;
+        }
+    }
+    return randomstring;
+}
+
+/**
  * Each field to be automatically decrypted/encrypted should be marked by this model attribute decorator
+ * @method decryptedField
  * @param encryptedField {String} source encrypted field out of which decrypted field will be decrypted
  * @param decryptedField {String} name of decrypted field to be contained in decrypted {} out of encrypted field
  */
@@ -226,29 +258,6 @@ Vaultier.EncryptedModel.decryptedField = function (encryptedField, decryptedFiel
             encryptedField: encryptedField,
             isDecryptedField: true
         })
-}
-
-Vaultier.EncryptedModel.generatePassword = function() {
-    var chars = "ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
-    var string_length = 16;
-    var randomstring = '';
-    var charCount = 0;
-    var numCount = 0;
-
-    for (var i = 0; i < string_length; i++) {
-        // If random bit is 0, there are less than 3 digits already saved, and there are not already 5 characters saved, generate a numeric value.
-        if ((Math.floor(Math.random() * 2) == 0) && numCount < 3 || charCount >= 5) {
-            var rnum = Math.floor(Math.random() * 10);
-            randomstring += rnum;
-            numCount += 1;
-        } else {
-            // If any of the above criteria fail, go ahead and generate an alpha character from the chars string
-            var rnum2 = Math.floor(Math.random() * chars.length);
-            randomstring += chars.substring(rnum2, rnum2 + 1);
-            charCount += 1;
-        }
-    }
-    return randomstring;
 }
 
 

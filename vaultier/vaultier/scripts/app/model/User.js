@@ -1,3 +1,8 @@
+/**
+ * @module model
+ * @class Vaultier.User
+ * @extends RL.Model
+ */
 Vaultier.User = RL.Model.extend(
     Vaultier.CreatedUpdatedMixin,
     Vaultier.RollbackMixin,
@@ -17,7 +22,11 @@ Vaultier.User = RL.Model.extend(
     });
 
 
-
+/**
+ * @module model
+ * @class Vaultier.UserKey
+ * @extends RL.Model
+ */
 Vaultier.UserKey = RL.Model.extend({
         public_key: RL.attr('string'),
         membership: RL.attr('object')

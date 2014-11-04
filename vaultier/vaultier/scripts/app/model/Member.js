@@ -1,5 +1,10 @@
 'use strict';
 
+/**
+ * @module model
+ * @class Vaultier.Member
+ * @extends RL.Model
+ */
 Vaultier.Member = RL.Model.extend(
     Vaultier.CreatedUpdatedMixin,
     {

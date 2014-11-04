@@ -35,6 +35,9 @@ vaultier/vaultier/scripts/bower_components/
 # ignore builded folder
 vaultier/vaultier/scripts/dist/
 
+# ignore builded folder
+vaultier/vaultier/scripts/docs/
+
 # we can ignore built handlebar templates
 vaultier/vaultier/scripts/tpl/
 

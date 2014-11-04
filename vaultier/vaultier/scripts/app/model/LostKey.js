@@ -1,6 +1,10 @@
 'use strict';
 
-
+/**
+ * @module model
+ * @class Vaultier.LostKey
+ * @extends RL.Model
+ */
 Vaultier.LostKey = RL.Model.extend(
     Vaultier.CreatedUpdatedMixin,
     {
@@ -21,6 +25,11 @@ Vaultier.LostKey = RL.Model.extend(
         })
     });
 
+/**
+ * @module model
+ * @class Vaultier.LostKeyMemberships
+ * @extends RL.Model
+ */
 Vaultier.LostKeyMemberships = RL.Model.extend({
     workspace_name: RL.attr('string'),
     is_recoverable: RL.attr('boolean')

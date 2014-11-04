@@ -1,3 +1,8 @@
+/**
+ * @module model
+ * @class Vaultier.News
+ * @extends RL.Model
+ */
 Vaultier.News = RL.Model.extend(
     {
         title: RL.attr('string'),

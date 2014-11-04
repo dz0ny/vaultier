@@ -1,3 +1,8 @@
+/**
+ * @module model
+ * @class Vaultier.Role
+ * @extends RL.Model
+ */
 Vaultier.Role = RL.Model.extend(
     Vaultier.CreatedUpdatedMixin,
     Vaultier.RollbackMixin,
