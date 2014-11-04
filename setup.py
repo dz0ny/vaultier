@@ -27,6 +27,7 @@ setup(
         'requests==2.3.0',
         'python-dateutil==2.2',
         'logan==0.5.10',
+        'iso8601==0.1.10',
     ],
     classifiers=[
         "Development Status :: 5 - Production/Stable",
