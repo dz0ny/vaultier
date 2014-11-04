@@ -1,3 +1,9 @@
+/**
+ * @module model
+ * @submodule model-adapter
+ * @class Vaultier.JSONSerializer
+ * @extends RESTless.JSONSerializer
+ */
 Vaultier.JSONSerializer = RESTless.JSONSerializer.extend({
     // Vaultier posts are native jsons without root
     serialize: function (resource, options) {
@@ -16,6 +22,12 @@ Vaultier.JSONSerializer = RESTless.JSONSerializer.extend({
     }
 });
 
+/**
+ * @module model
+ * @submodule model-adapter
+ * @class Vaultier.RESTAdapter
+ * @extends RL.RESTAdapter
+ */
 Vaultier.RESTAdapter = RL.RESTAdapter.extend({
     url: '/',
     namespace: 'api',

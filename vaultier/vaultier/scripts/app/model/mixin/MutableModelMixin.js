@@ -1,5 +1,10 @@
 Vaultier.MutableModel = Vaultier.MutableModel || {}
 
+/**
+ * @module model
+ * @submodule model-mixin
+ * @class Vaultier.MutableModel.Mixin
+ */
 Vaultier.MutableModel.Mixin = Ember.Mixin.create({
 
     init: function () {

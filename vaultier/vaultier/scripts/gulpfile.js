@@ -36,6 +36,7 @@
     var gulp_watch = require('gulp-watch');
     var gulp_livereload = require('gulp-livereload');
     var gulp_replace = require('gulp-replace');
+    var gulp_yuidoc = require("gulp-yuidoc");
 
 
     // Global requirements
@@ -155,6 +156,22 @@
              // build
              .pipe(gulp.dest(destination));
 
+    });
+
+    gulp.task('build-doc', function() {
+         return gulp.src("./app/**/*.js")
+          .pipe(
+             gulp_yuidoc(
+                 {
+                     project: {
+                         "name": "Vaultier",
+                         "description": "Vaultier - Collaborative Password manager & file storage",
+                         "version": "1.0.0",
+                         "url": "http://vaultier.org/"
+                     }
+                 }
+             )
+         ).pipe(gulp.dest("./docs"));
     });
 
     gulp.task('build-includes', function (cb) {

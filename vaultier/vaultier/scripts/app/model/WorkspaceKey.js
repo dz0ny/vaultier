@@ -1,3 +1,8 @@
+/**
+ * @module model
+ * @class Vaultier.WorkspaceKey
+ * @extends RL.Model
+ */
 Vaultier.WorkspaceKey = RL.Model.extend(
     {
         public_key: RL.attr('string'),

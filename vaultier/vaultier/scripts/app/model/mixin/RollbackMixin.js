@@ -1,3 +1,8 @@
+/**
+ * @module model
+ * @submodule model-mixin
+ * @class Vaultier.RollbackMixin
+ */
 Vaultier.RollbackMixin = Ember.Mixin.create({
 
     init: function () {

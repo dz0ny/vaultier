@@ -1,5 +1,9 @@
 /**
  * Handles created_at updated_at and dateformats
+ *
+ * @module model
+ * @submodule model-mixin
+ * @class Vaultier.CreatedUpdatedMixin
  */
 Vaultier.CreatedUpdatedMixin = Ember.Mixin.create({
     created_at: RL.attr('date', { readOnly: true }),
