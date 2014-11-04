@@ -2,6 +2,11 @@
 Changelog
 *********
 
+Release 0.7.1
+-------------
+* [bugfix] Ubuntu/Debian package
+* [bugfix] Anonymous statistics
+
 Release 0.7.0
 -------------
 * [feature] #200 Update build system
