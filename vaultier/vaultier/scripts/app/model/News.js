@@ -13,3 +13,10 @@ Vaultier.News = RL.Model.extend(
     }
 );
 
+ApplicationKernel.namespace('Vaultier.dal.model.news');
+
+Vaultier.dal.model.news.Adapter = Vaultier.dal.adapter.RESTAdapter.extend({
+    pluralize: function (resourceName) {
+        return resourceName;
+    }
+})
