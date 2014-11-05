@@ -8,7 +8,7 @@ Running the Image
 
 To run the container, use this command::
 
-    sudo docker run --name vaultier -p 80:80 rclick/vaultier-omni
+    sudo docker run --name vaultier -p 80:80 rclick/vaultier:latest
 
 Of course, you can bind the internal 80 port to whatever you deem necessary.
 Mind, that you will probably want to run Vaultier on some domain, like
