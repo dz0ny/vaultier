@@ -1,3 +1,4 @@
 django-extensions==1.2.5
 mock==1.0.1
 Sphinx==1.2.3
+sphinxcontrib-httpdomain==1.2.0
