@@ -1,12 +1,13 @@
-#!/bin/sh -e
+#!/bin/bash
+set -e
 
 . /usr/share/debconf/confmodule
 
 if [ ! -f /opt/vaultier/vaultier_conf.py ]; then
     # FQDN
     while true; do
-        db_input critical vaultier/domain
-        db_go
+        db_input critical vaultier/domain || true
+        db_go || true
         db_get vaultier/domain
         if [ ! -z $RET ]; then
             break
@@ -14,15 +15,15 @@ if [ ! -f /opt/vaultier/vaultier_conf.py ]; then
     done
 
     # database settings
-    db_input high vaultier/database_host
-    db_input high vaultier/database_port
-    db_input high vaultier/database_name
-    db_input high vaultier/database_user
-    db_go
+    db_input high vaultier/database_host || true
+    db_input high vaultier/database_port || true
+    db_input high vaultier/database_name || true
+    db_input high vaultier/database_user || true
+    db_go || true
 
     while true; do
-        db_input critical vaultier/database_password
-        db_go
+        db_input critical vaultier/database_password || true
+        db_go || true
         db_get vaultier/database_password
         if [ ! -z $RET ]; then
             break
@@ -31,15 +32,15 @@ if [ ! -f /opt/vaultier/vaultier_conf.py ]; then
 
 
     # Email settings
-    db_input high vaultier/email_host
-    db_input high vaultier/email_port
-    db_input high vaultier/email_user
-    db_input high vaultier/email_password
-    db_input high vaultier/email_tls
+    db_input high vaultier/email_host || true
+    db_input high vaultier/email_port || true
+    db_input high vaultier/email_user || true
+    db_input high vaultier/email_password || true
+    db_input high vaultier/email_tls || true
 
     # Application settings
-    db_input high vaultier/allow_registration
-    db_input high vaultier/allow_statistics
-    db_go
+    db_input high vaultier/allow_registration || true
+    db_input high vaultier/allow_statistics || true
+    db_go || true
 
 fi
