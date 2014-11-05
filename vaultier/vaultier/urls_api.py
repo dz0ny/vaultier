@@ -10,6 +10,7 @@ from secrets.api import SecretViewSet, SecretBlobViewSet
 from vaults.api import VaultViewSet
 from workspaces.api import WorkspaceViewSet, WorkspaceKeyViewSet, \
     InvitationViewSet
+from vaultier.api import ServerTimeView
 
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet, base_name='user')
@@ -27,7 +28,11 @@ router.register(r'lost_keys', LostKeyViewSet, base_name='lost_keys')
 
 urlpatterns = router.urls
 
-urlpatterns += patterns('',
+urlpatterns += patterns(
+    '',
+    # server time
+    url(r'^server-time/$', ServerTimeView.as_view(),
+        name='server_time'),
     # news
     url(r'^news/$', NewsApiView.as_view(), name='news-list'),
     # search

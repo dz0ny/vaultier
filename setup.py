@@ -27,6 +27,7 @@ setup(
         'requests==2.3.0',
         'python-dateutil==2.2',
         'logan==0.5.10',
+        'iso8601==0.1.10',
     ],
     classifiers=[
         "Development Status :: 5 - Production/Stable",
@@ -35,7 +36,7 @@ setup(
         "Intended Audience :: Information Technology",
         "Topic :: Security",
         "License :: OSI Approved :: BSD License",
-        "Natural Lanugage :: English",
+        "Natural Language :: English",
         "Operating System :: POSIX :: Linux",
         "Programming Language :: Python",
         "Programming Language :: Python :: 2.7",
@@ -63,6 +64,6 @@ setup(
                      "own needs and was designed to solve our problem to "
                      "collaborate on hundreds of login credentials with the "
                      "proper level of security and access control.",
-    version="0.7.0",
+    version="0.7.1",
     url="http://vaultier.org"
 )

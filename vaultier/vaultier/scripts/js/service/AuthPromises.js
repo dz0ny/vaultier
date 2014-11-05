@@ -10,18 +10,16 @@ Service.AuthPromises = Ember.Object.extend({
      */
     coder: null,
 
-    _auth: function (email, privateKey) {
+    _auth: function (email, privateKey, datetime) {
         var coder = this.coder;
-        var date = new Date();
-        var dateInISO = date.toISOString();
-        var signature = coder.sign(email + dateInISO, privateKey);
+        var signature = coder.sign(email + datetime, privateKey);
 
         return Utils.RSVPAjax({
             url: '/api/auth/auth',
             type: 'post',
             data: {
                 email: email,
-                date: dateInISO,
+                date: datetime,
                 signature: signature
             }})
     },
@@ -34,6 +32,13 @@ Service.AuthPromises = Ember.Object.extend({
             .catch(function (error) {
                 throw Error('Cannot retrieve user with id {id}'.replace('{id}', id))
             })
+    },
+
+    _getDatetime: function () {
+        return Utils.RSVPAjax({
+            url: '/api/server-time',
+            type: 'GET'
+        }).then(function(response) { return response.datetime })
     },
 
     _useToken: function (token) {
@@ -80,7 +85,11 @@ Service.AuthPromises = Ember.Object.extend({
         var token;
         return Ember.RSVP.resolve()
             .then(function() {
-                return this._auth(email, privateKey)
+                return this._getDatetime();
+            }.bind(this))
+
+            .then(function(datetime) {
+                return this._auth(email, privateKey, datetime)
             }.bind(this))
 
             .then(function(response) {

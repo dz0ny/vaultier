@@ -1,10 +1,10 @@
 Package: vaultier
-Version: 0.7
+Version: 0.7.1
 Section: web
 Priority: optional
 Architecture: all
 Depends: python-virtualenv, python-dev, nginx, uwsgi, uwsgi-plugin-python,
-    supervisor, postgresql (>= 9.1.0), postgresql-client (>= 9.1.0), postgresql-contrib (>= 9.1.0),
+    supervisor, postgresql (>= 9.1), postgresql-client (>= 9.1), postgresql-contrib (>= 9.1),
     postgresql-server-dev-all
 Maintainer: Rclick s.r.o. <info@rclick.cz>
 Description: Vaultier
