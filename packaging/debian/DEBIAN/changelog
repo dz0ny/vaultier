@@ -1,9 +1,16 @@
+vaultier (0.7.1-1ubuntu2) trusty; urgency=medium
+
+  * Fixed registration error when timestamp to vary from server
+  * Feature - Favicon and page titles
+
+ -- Jakub Bokoc <jakub.bokoc@rclick.cz>  Wed, 05 Nov 2014 11:46:29 +0100
+
 vaultier (0.7.1-1ubuntu1) trusty; urgency=medium
 
   * Fixed ubuntu/debian package
   * Fixed anonymous statistics
 
- -- Jakub Bokoc <jbokoc@localhost>  Tue, 04 Nov 2014 10:10:55 +0100
+ -- Jakub Bokoc <jakub.bokoc@rclick.cz>  Tue, 04 Nov 2014 10:10:55 +0100
 
 vaultier (0.7.0-1) trusty; urgency=medium
 
