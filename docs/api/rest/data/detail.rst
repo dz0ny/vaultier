@@ -33,6 +33,7 @@ Returns data
   :status 400: Bad request (bad data, missing value/file, ...)
   :status 401: Unauthorized
   :status 403: Forbidden
+  :status 404: Document not found
 
 Upload Data
 -----------
@@ -64,5 +65,7 @@ Updates data for file document
   :status 400: Bad request (bad data, missing value/file, ...)
   :status 401: Unauthorized
   :status 403: Forbidden
+  :status 404: Document not found
+
 
 
