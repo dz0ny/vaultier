@@ -2,6 +2,11 @@
 Changelog
 *********
 
+Release 0.7.2
+-------------
+* [bugfix] Registration error when timestamp to vary from server
+* [feature] Favicon and page titles
+
 Release 0.7.1
 -------------
 * [bugfix] Ubuntu/Debian package
