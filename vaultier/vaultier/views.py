@@ -4,6 +4,7 @@ from django.conf import settings
 import json
 import pkg_resources
 from rest_framework.views import APIView
+from accounts.models import User
 
 
 def index(request):
@@ -28,6 +29,7 @@ class ConfigView(APIView):
             'invitation_lifetime': settings.VAULTIER.get(
                 'invitation_lifetime'),
             'registration_allow': settings.VAULTIER.get('registration_allow'),
+            'registration_enforce': not bool(User.objects.all().count()),
             # dev
             'dev_shared_key': settings.VAULTIER.get('dev_shared_key'),
             'dev_show_token': settings.VAULTIER.get('dev_show_token'),

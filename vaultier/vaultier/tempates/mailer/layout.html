@@ -1,4 +1,4 @@
-
+{% load staticfiles %}
 
 <!DOCTYPE html>
 <html>
@@ -12,8 +12,7 @@
             <table class="mail-content-table mail-background">
                 <tr class="mail-header">
                     <td class="mail-logo">
-                        <img src="{{ SITE_URL }}static/vaultier/images/logo.png" alt="Vaultier"/>
-                        Vaultier
+                        <img src="{{ SITE_URL }}{% static 'vaultier/images/logo-email.png'%}" alt="Vaultier"/>&nbsp;Vaultier
                     </td>
                 </tr>
                 <tr class="mail-content">
