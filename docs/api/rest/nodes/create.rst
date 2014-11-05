@@ -17,8 +17,11 @@ Creates new node
 
      {
         "meta" : "some-encrypted-data",
-        "type" : 1
+        "type" : 1,
         "parent" : 2,
+        "enc_version": 1,
+        "mime": null,
+        "color": "#ffcccc"
      }
 
   **Example Response**
