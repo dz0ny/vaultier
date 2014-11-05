@@ -1,6 +1,6 @@
 """Sphinx ReadTheDocs theme.
 
-From https://github.com/ryan-roemer/sphinx-bootstrap-theme.
+Based from https://github.com/ryan-roemer/sphinx-bootstrap-theme.
 
 """
 import os
