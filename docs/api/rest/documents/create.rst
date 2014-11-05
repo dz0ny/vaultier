@@ -1,17 +1,17 @@
-Create Node
-===========
-Creates new node
+Create Document
+===============
+Creates new document
 
 .. note::
-    To create file node, use POST /data/(int:pk)
+    To add data to document type=file
 
-.. http:post:: /nodes/
+.. http:post:: /documents/
 
   **Example Request**
 
   .. sourcecode:: http
 
-     POST /nodes/ HTTP/1.1
+     POST /documents/ HTTP/1.1
      Content-Type: application/json
      Accept: application/json
 
@@ -31,7 +31,7 @@ Creates new node
      HTTP/1.1 201 CREATED
      Content-Type: application/json
 
-  .. include:: _node_example.txt
+  .. include:: _document_example.txt
 
   :status 201: Created
   :status 400: Bad request (bad data, missing value/file, ...)

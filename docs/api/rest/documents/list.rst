@@ -1,19 +1,19 @@
-List of nodes
-=============
+List of Documents
+=================
 
-Retrieve list of Nodes in root.
+Retrieve list of documents in root.
 
-.. http:get:: /nodes/
+.. http:get:: /documents/
 
-Retrieves list of nodes with specific parent
+Retrieves list of documents with specific parent
 
-.. http:get:: /nodes/?parent=(int:pk)
+.. http:get:: /documents/?parent=(int:pk)
 
   **Example Request**
 
   .. sourcecode:: http
 
-     GET /nodes/?parent=1 HTTP/1.1
+     GET /documents/?parent=1 HTTP/1.1
      Accept: application/json
 
   **Example Response**

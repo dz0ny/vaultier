@@ -1,18 +1,18 @@
-Node detail and manage
-======================
-Working with specific Node.
+Document detail and manage
+==========================
+Working with specific document.
 
 Detail
 ------
-Retrieve Node detail.
+Retrieve document detail.
 
-.. http:get:: /nodes/(int:pk)
+.. http:get:: /documents/(int:pk)
 
   **Example Request**
 
   .. sourcecode:: http
 
-     GET /nodes/3 HTTP/1.1
+     GET /documents/3 HTTP/1.1
      Accept: application/json
 
   **Example Response**
@@ -22,28 +22,28 @@ Retrieve Node detail.
      HTTP/1.1 201 CREATED
      Content-Type: application/json
 
-  .. include:: _node_example.txt
+  .. include:: _document_example.txt
 
   :status 200: OK
   :status 401: Unauthorized
   :status 403: Forbidden
-  :status 404: Node not found
+  :status 404: document not found
 
 
 Update
 ------
-Updates Node.
+Updates document.
 
 .. note::
-    Changing "parent" field means that node will be moved.
+    Changing "parent" field means that document will be moved.
 
-.. http:put:: /nodes/(int:pk)
+.. http:put:: /documents/(int:pk)
 
   **Example Request**
 
   .. sourcecode:: http
 
-     PUT /nodes/3 HTTP/1.1
+     PUT /documents/3 HTTP/1.1
      Accept: application/json
 
      {
@@ -58,27 +58,27 @@ Updates Node.
      HTTP/1.1 200 OK
      Content-Type: application/json
 
-  .. include:: _node_example.txt
+  .. include:: _document_example.txt
 
 
   :status 200: OK
   :status 401: Unauthorized
   :status 403: Forbidden
-  :status 404: Node not found
+  :status 404: document not found
 
 
 Delete
 ------
-Removes Node.
+Removes document.
 
-.. http:delete:: /nodes/(int:pk)
+.. http:delete:: /documents/(int:pk)
 
 
   **Example Request**
 
   .. sourcecode:: http
 
-     DELETE /nodes/3 HTTP/1.1
+     DELETE /documents/3 HTTP/1.1
 
   **Example Response**
 
@@ -89,4 +89,4 @@ Removes Node.
   :status 204: No Content - Deleted
   :status 401: Unauthorized
   :status 403: Forbidden
-  :status 404: Node not found
+  :status 404: document not found

@@ -7,9 +7,9 @@ Download
 Returns data
 
 .. note::
-    Can be used only for nodes with type="file"
+    Can be used only for documents with type="file"
 
-.. http:get:: /data/(int:node_id)
+.. http:get:: /data/(int:document_id)
 
   **Example Request**
 
@@ -36,12 +36,12 @@ Returns data
 
 Upload Data
 -----------
-Updates data for file node
+Updates data for file document
 
 .. note::
-    Can be used only for nodes with type="file"
+    Can be used only for documents with type="file"
 
-.. http:put:: /data/(int:node_id)
+.. http:put:: /data/(int:document_id)
 
   **Example Request**
 
