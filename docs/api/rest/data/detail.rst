@@ -3,13 +3,12 @@ Data upload and download
 
 Download
 --------
-
-Returns data
+Returns data.
 
 .. note::
     Can be used only for documents with type="file"
 
-.. http:get:: /data/(int:document_id)
+.. http:get:: /documents/(int:pk)/data/
 
   **Example Request**
 
@@ -29,8 +28,7 @@ Returns data
      encrypted-data-here
 
 
-  :status 200: No content
-  :status 400: Bad request (bad data, missing value/file, ...)
+  :status 200: OK
   :status 401: Unauthorized
   :status 403: Forbidden
   :status 404: Document not found
@@ -42,7 +40,7 @@ Updates data for file document
 .. note::
     Can be used only for documents with type="file"
 
-.. http:put:: /data/(int:document_id)
+.. http:put:: /documents/(int:pk)/data/
 
   **Example Request**
 
@@ -61,11 +59,7 @@ Updates data for file document
 
      HTTP/1.1 204 NO CONTENT
 
-  :status 204: No content
-  :status 400: Bad request (bad data, missing value/file, ...)
+  :status 200: OK
+  :status 400: Bad request (bad data, ...)
   :status 401: Unauthorized
   :status 403: Forbidden
-  :status 404: Document not found
-
-
-

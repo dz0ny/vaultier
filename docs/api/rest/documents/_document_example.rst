@@ -3,11 +3,6 @@
     {
         "id": 3,
         "meta" : "some-encrypted-data",
-        "path" : [
-            1,
-            2,
-            10
-        ],
         "type" : 1,
         "data" : null,
         "color": "#ff6600",
@@ -18,7 +13,6 @@
     }
 
 :jsonparam string meta: encrypted-data about document
-:jsonparam array path: full path to document starting from root document, parent document is last
 :jsonparam string type: type of document (directory|file)
 :jsonparam string [color]: Folder hex color
 :jsonparam int enc_version: How was document encrypted
