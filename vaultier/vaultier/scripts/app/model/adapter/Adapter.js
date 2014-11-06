@@ -113,31 +113,4 @@ Vaultier.Client = RL.Client.create({
 });
 
 
-Vaultier.initializer({
-    name: 'adapters',
-
-    initialize: function (container, app) {
-
-        // example of mocking
-        var MockAdapter = Vaultier.dal.model.news.Adapter.extend({
-            find: function () {
-                // return mocked empty content
-                return RESTless.RecordArray.createWithContent();
-            }
-        });
-
-
-        app.register('adapter:user', Vaultier.dal.adapter.RESTAdapter);
-        app.register('adapter:workspace', Vaultier.dal.adapter.RESTAdapter);
-        app.register('adapter:workspacekey', Vaultier.dal.adapter.RESTAdapter);
-        app.register('adapter:role', Vaultier.dal.adapter.RESTAdapter);
-        app.register('adapter:vault', Vaultier.dal.adapter.RESTAdapter);
-        app.register('adapter:news', Vaultier.dal.model.news.Adapter);
-        // reregister mock adapter
-        app.register('adapter:news', MockAdapter);
-
-    }
-});
-
-
 

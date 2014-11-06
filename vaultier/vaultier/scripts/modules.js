@@ -156,6 +156,7 @@ var vaultierModulesConfig = {
             "./app/application.js",
             "./app/initializer/Boot.js",
             "./app/initializer/DI.js",
+            "./app/initializer/DAL.js",
             "./app/initializer/JQBindings.js",
             "./app/initializer/Handlebars.js",
             "./app/initializer/Keypress.js",
