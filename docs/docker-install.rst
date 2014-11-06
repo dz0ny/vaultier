@@ -8,7 +8,7 @@ Running the Image
 
 To run the container, use this command::
 
-    sudo docker run --name vaultier -p 80:80 rclick/vaultier-omni
+    sudo docker run --name vaultier -p 80:80 rclick/vaultier:latest
 
 Of course, you can bind the internal 80 port to whatever you deem necessary.
 Mind, that you will probably want to run Vaultier on some domain, like
@@ -37,19 +37,44 @@ Environment Variables
 =====================
 
 *VAULTIER_DOMAIN*
-    Lipsum
+    Domain where is Vaultier accessible
 
 *VAULTIER_EMAIL_HOST*
-    Lipsum
+    Mailserver IP address or DNS
 
 *VAULTIER_EMAIL_PORT*
-    Lipsum
+    Mailserver port
 
 *VAULTIER_EMAIL_USER*
-    Lipsum
+    Mailserver user
 
 *VAULTIER_EMAIL_PASSWORD*
-    Lipsum
+    Mailserver password
 
 *VAULTIER_EMAIL_TLS*
-    Lipsum
+    Does mailserver use TLS (bool)
+
+*VAULTIER_DATABASE_NAME*
+    Database name
+
+*VAULTIER_DATABASE_USER*
+    Database user
+
+*VAULTIER_DATABASE_PASSWORD*
+    Database password
+
+*VAULTIER_DATABASE_HOST*
+    Database host
+
+*VAULTIER_DATABASE_PORT*
+    Database port
+
+*VAULTIER_ALLOW_REGISTRATION*
+    By default is registration allowed only for first user. Other people can
+    become user by getting invitation
+
+*VAULTIER_ALLOW_STATISTICS*
+    Send anonymous usage statistic to vaultier.org REST API
+
+*VAULTIER_FROM_EMAIL*
+    Email address where are all emails sending from

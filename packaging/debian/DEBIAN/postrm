@@ -29,9 +29,7 @@ rm -f /opt/vaultier/vaultier_conf.pyc
 echo "OK"
 
 if [ "$1" = "remove" ]; then
-    echo "Purging db"
    db_purge
-   echo "DB purged"
 fi
 
 if [ "$1" = "purge" -a -e /usr/share/debconf/confmodule ]; then
@@ -49,9 +47,6 @@ if [ "$1" = "purge" -a -e /usr/share/debconf/confmodule ]; then
     sudo -u postgres psql postgres -tAc "SELECT 1 FROM pg_roles WHERE rolname='$database_user'" | grep -q 1 && \
         sudo -u postgres dropuser $database_user && echo "Database user $database_user deleted successfully"
 
-    rm -f /tmp/.vaultier_dbname
-    rm -f /tmp/.vaultier_dbuser
-
     echo -n "Removing group vaultier.. "
     id -f vaultier &>/dev/null && delgroup vaultier
     echo "OK"
@@ -62,6 +57,8 @@ if [ "$1" = "purge" -a -e /usr/share/debconf/confmodule ]; then
 
     rm -f /opt/vaultier/vaultier_conf.py
     rm -rf /opt/vaultier/
+    rm -f /tmp/.vaultier_dbname
+    rm -f /tmp/.vaultier_dbuser
 fi
 
 # start servers again

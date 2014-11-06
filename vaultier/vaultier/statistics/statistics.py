@@ -13,7 +13,7 @@ class StatisticsManager(object):
     Collects statistics about count of Vaultier objects and sends them
     to central endpoint.
     """
-    STATISTICS_ENDPOINT = 'http://vaultier.org/api/ping'
+    STATISTICS_ENDPOINT = 'http://www.vaultier.org/api/ping/'
 
     @staticmethod
     def send_statistics():
@@ -36,4 +36,5 @@ class StatisticsManager(object):
                    'users': user_count,
                    'members': member_count}
         requests.post(StatisticsManager.STATISTICS_ENDPOINT,
-                      data=json.dumps(payload))
+                      data=json.dumps(payload),
+                      headers={'content-type': 'application/json'})

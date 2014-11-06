@@ -49,7 +49,7 @@ VAULTIER.update({
     # of a lostkey resource
     'lostkey_hash_expiration_time': 3600000,
     # Default email address from which we send emails
-    'from_email': 'info@rclick.com',
+    'from_email': 'info@localhost',
     # Max difference between timestamp from server and from front-end
     # (in seconds)
     'login_safe_timestamp': 15,

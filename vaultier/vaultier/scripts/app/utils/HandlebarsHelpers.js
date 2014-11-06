@@ -329,8 +329,11 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
         /////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////
 
-        Ember.Handlebars.registerBoundHelper('date', function(date) {
-            return moment(date).format("YYYY MMM D");
+        Ember.Handlebars.registerBoundHelper('date', function(date, options) {
+            if (!options.hash.format) {
+                options.hash.format = "YYYY MMM D";
+            }
+            return moment(date).format(options.hash.format);
         });
 
         /////////////////////////////////////////////////////////////////

@@ -36,6 +36,21 @@ else
     email_tls="False"
 fi
 
+db_get vaultier/allow_registration
+allow_registration="$RET"
+if $allow_registration; then
+    allow_registration="True"
+else
+    allow_registration="False"
+fi
+
+db_get vaultier/allow_statistics
+allow_statistics="$RET"
+if $allow_statistics; then
+    allow_statistics="True"
+else
+    allow_statistics="False"
+fi
 
 # add Vaultier user, if it does not exists
 id -u vaultier &>/dev/null || useradd -r -d /opt/vaultier -s /bin/bash vaultier
@@ -44,8 +59,9 @@ mkdir -p /opt/vaultier/logs/
 
 # Setup postgres account
 service postgresql start
-if sudo -u postgres psql postgres -tAc "SELECT 1 FROM pg_roles WHERE rolname='$database_user'" &>/dev/null | grep -q 1; then
-    sudo -u postgres psql --command "ALTER USER $database_user WITH PASSWORD '$database_password';" &>/dev/null
+
+if sudo -u postgres psql postgres -tAc "SELECT 1 FROM pg_roles WHERE rolname='$database_user'" | grep -q 1; then
+    echo "Database user $database_user already exists."
 else
     sudo -u postgres psql --command "CREATE USER $database_user WITH SUPERUSER PASSWORD '$database_password';" &>/dev/null
 fi
@@ -59,7 +75,7 @@ mkdir -p /opt/vaultier
 cd /opt/vaultier
 virtualenv venv
 
-/opt/vaultier/venv/bin/pip install /usr/share/vaultier/source/Vaultier-0.7.0.tar.gz
+/opt/vaultier/venv/bin/pip install /usr/share/vaultier/source/Vaultier-latest.tar.gz
 
 export PYTHONPATH=/opt/vaultier/venv/lib/python2.7/site-packages/vaultier
 
@@ -82,12 +98,17 @@ chown -R vaultier:vaultier /opt/vaultier
 # update configuration files
 sed -i "s/os.getenv('VAULTIER_DOMAIN', 'www.example.com'),/'${domain}',/g" /opt/vaultier/vaultier_conf.py
 sed -i "s/' + os.getenv('VAULTIER_DOMAIN', 'www.example.com') + '/${domain}/g" /opt/vaultier/vaultier_conf.py
+sed -i "s/os.getenv('VAULTIER_FROM_EMAIL', 'noreply@www.example.com'),/'noreply@${domain}',/g" /opt/vaultier/vaultier_conf.py
 
 sed -i "s/os.getenv('VAULTIER_EMAIL_HOST', '')/'${email_host}'/g" /opt/vaultier/vaultier_conf.py
 sed -i "s/os.getenv('VAULTIER_EMAIL_PORT', 25)/${email_port}/g" /opt/vaultier/vaultier_conf.py
 sed -i "s/os.getenv('VAULTIER_EMAIL_USER', '')/'${email_user}'/g" /opt/vaultier/vaultier_conf.py
 sed -i "s/os.getenv('VAULTIER_EMAIL_PASSWORD', '')/'${email_password}'/g" /opt/vaultier/vaultier_conf.py
 sed -i "s/bool(os.getenv('VAULTIER_EMAIL_TLS', False))/${email_tls}/g" /opt/vaultier/vaultier_conf.py
+
+sed -i "s/bool(os.getenv('VAULTIER_ALLOW_REGISTRATION', False))/${allow_registration}/g" /opt/vaultier/vaultier_conf.py
+sed -i "s/bool(os.getenv('VAULTIER_ALLOW_STATISTICS', True))/${allow_statistics}/g" /opt/vaultier/vaultier_conf.py
+
 
 # copy config files
 cp /usr/share/vaultier/config/nginx/vaultier /etc/nginx/sites-available/vaultier

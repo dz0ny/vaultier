@@ -11,6 +11,7 @@ from vaultier.views import ConfigView
 from vaults.api import VaultViewSet
 from workspaces.api import WorkspaceViewSet, WorkspaceKeyViewSet, \
     InvitationViewSet
+from vaultier.api import ServerTimeView
 
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet, base_name='user')
@@ -31,6 +32,10 @@ urlpatterns = router.urls
 urlpatterns += patterns(
     '',
     url(r'^config/', ConfigView.as_view(), name='config'),
+    # server time
+    url(r'^server-time/$', ServerTimeView.as_view(),
+        name='server_time'),
+    # news
     url(r'^news/$', NewsApiView.as_view(), name='news-list'),
     # search
     url(r'^search/search$', SearchView.as_view(), name='search-search'),
