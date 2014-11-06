@@ -1,6 +1,20 @@
+/**
+ * Starting point for whole application. This script get loaded first, and creates Vaultier Ember.Application to be
+ * platform for all Vaultier components. When application is ready ApplicationKernel decides which runner to use to execute the application.
+ *
+ * Currently there are two runners
+ *  - run-default.js
+ *  - run-tests.js
+ *
+ * @module vaultier-application
+ * @main vaultier-application
+ * @class Vaultier
+ *
+ */
+
 /**************************************************
  **************************************************
- * Ember
+ * Emberjs initialization
  **************************************************
  **************************************************
  */
@@ -10,110 +24,37 @@ Ember.MODEL_FACTORY_INJECTIONS = true;
 
 /**************************************************
  **************************************************
- * Application
+ * Application initialization
  **************************************************
  **************************************************
  */
 
 Vaultier = Ember.Application.create({
     LOG_TRANSITIONS: true,
-    // LOG_TRANSITIONS_INTERNAL: true,
 
     ready: function () {
-
-        /**************************************************
-         **************************************************
-         * Initialize config
-         **************************************************
-         **************************************************
-         */
-
-        //@todo: move to initializer
-        this.Config = Ember.Object.extend(ApplicationKernel.Config.applicationConfig);
-
-
-        //@todo: lgtm does not work, was removed temporary
-        //LGTM.configure('defer', Ember.RSVP.defer);
-
-        /**************************************************
-         **************************************************
-         * Notifications
-         **************************************************
-         **************************************************
-         */
-
-        $.notify.defaults({
-            className: 'success',
-            style: 'bootstrap',
-            position: 'bottom center',
-            autoHideDelay: 7000,
-            css: "vlt-notification"
-        })
-
-        /**************************************************
-         **************************************************
-         * Handlebars
-         **************************************************
-         **************************************************
-         */
-        Utils.HandlebarsHelpers.current().register();
-
-        /**************************************************
-         **************************************************
-         * Cookies
-         **************************************************
-         **************************************************
-         */
-        $.cookie.json = true;
-
-        /**************************************************
-         **************************************************
-         * Tooltips
-         **************************************************
-         **************************************************
-         */
-
-        $('body').tooltip({
-            selector: '[data-toggle=tooltip]'
-        });
-
-        /**************************************************
-         **************************************************
-         * Sticky footer
-         **************************************************
-         **************************************************
-         */
-
-        setInterval(function () {
-            var body = $('body').height();
-            var win = $(window).height();
-            var footer = $('#vlt-footer').height();
-            if (body + footer < win) {
-                $('#vlt-footer').css({position: 'fixed'})
-            } else {
-                $('#vlt-footer').css({position: 'relative'})
-            }
-        }, 500)
-
-        /**************************************************
-         **************************************************
-         * Global UI bindings
-         **************************************************
-         **************************************************
-         */
-
-        this.keypressBindings();
-        this.registerDI(this);
-
-        //include components
-        Vaultier.AnimatedIfView = EmberExt.AnimatedIf.AnimatedIfView;
-        Vaultier.AnimatedUnlessView = EmberExt.AnimatedIf.AnimatedUnlessView;
+        // ready should be empty use initializers instead
     }
 });
 
-Vaultier.runApplication = function() {
-    this.advanceReadiness();
-}
+/**************************************************
+ **************************************************
+ * Namespace normalizations
+ **************************************************
+ **************************************************
+ */
 
+Vaultier.AnimatedIfView = EmberExt.AnimatedIf.AnimatedIfView;
+Vaultier.AnimatedUnlessView = EmberExt.AnimatedIf.AnimatedUnlessView;
+
+/**************************************************
+ **************************************************
+ * Defer application execution in favor of runner
+ * see vaultier-runner module
+ **************************************************
+ **************************************************
+ */
 
 Vaultier.deferReadiness();
+
+

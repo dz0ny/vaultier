@@ -154,7 +154,11 @@ var vaultierModulesConfig = {
             "./app/utils/RolesProxy.js",
         /**************** App **/
             "./app/application.js",
-            "./app/keypressBindings.js",
+            "./app/initializer/Boot.js",
+            "./app/initializer/DI.js",
+            "./app/initializer/JQBindings.js",
+            "./app/initializer/Handlebars.js",
+            "./app/initializer/Keypress.js",
             "./app/di.js",
             "./app/router.js",
         /**************** Services **/

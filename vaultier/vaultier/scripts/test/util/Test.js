@@ -3,7 +3,7 @@
  * @todo: document this class
  * namespace(Vaultier, Test);
  */
-Vaultier.Test = Ember.Namespace.create();
+ApplicationKernel.namespace('Vaultier.Test')
 
 Vaultier.Test.cases = [];
 

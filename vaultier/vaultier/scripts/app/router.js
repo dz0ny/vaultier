@@ -1,4 +1,14 @@
-var router = Vaultier.Router.map(function () {
+/**
+ * Vaultier router
+ *
+ * - define routing bindings here
+ * - define base route classes here
+ *
+ * @module vaultier-routing
+ * @class Vaultier.Router
+ *
+ */
+Vaultier.Router.map(function () {
 
     /************************************************************
      * REGISTRATION
@@ -173,9 +183,6 @@ Vaultier.ApplicationRoute = Ember.Route.extend(
 
             loading: function (transition, originRoute) {
                 ApplicationKernel.UI.showLoader();
-//                Ember.run.scheduleOnce('afterRender', this, function () {
-//                    ApplicationKernel.UI.hideLoader();
-//                })
                 transition.promise.finally(function () {
                     ApplicationKernel.UI.hideLoader();
                 }.bind(this))
