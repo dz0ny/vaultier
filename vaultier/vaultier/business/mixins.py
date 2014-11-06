@@ -2,6 +2,8 @@ from django.db.transaction import atomic
 from rest_framework.response import Response
 from rest_framework.status import HTTP_204_NO_CONTENT
 from slugs.models import Slug
+from rest_framework import mixins
+from rest_framework.exceptions import MethodNotAllowed
 
 
 class AtomicTransactionMixin(object):
@@ -37,3 +39,25 @@ class SoftDeleteModelMixin(object):
         obj.softdelete()
         self.post_delete(obj)
         return Response(status=HTTP_204_NO_CONTENT)
+
+
+class FullUpdateMixin(mixins.UpdateModelMixin):
+    """
+    Mixin based from UpdateModelMixin but supports PUT only
+    """
+
+    def filter_method(self, request):
+        """
+        Raise 405 whenever http method is patch
+        """
+        if request.method == "PATCH":
+            raise MethodNotAllowed("PATCH")
+
+    def filter_allowed_methods(self, methods):
+        """
+        Removes PATCH from allowed methods
+        """
+        try:
+            methods.remove('PATCH')
+        finally:
+            return methods
