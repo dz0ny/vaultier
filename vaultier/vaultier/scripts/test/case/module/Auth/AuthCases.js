@@ -10,7 +10,7 @@ Vaultier.Test.createTest(function () {
             Ember.run(function () {
                 visit("/auth/login");
                 //@todo: config retrieval and mocking must be normalized
-                var config = Vaultier.Config.create();
+                var config = Vaultier.Config;
                 andThen(function () {
                     equal(find(".vlt-dialog.vlt-login h2").text(), 'Login', "Should be on login page");
                     fillIn('#login-form-email', 'jan.misek@rclick.cz');
