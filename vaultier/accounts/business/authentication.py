@@ -121,7 +121,8 @@ class Authenticator(object):
         now = timezone.now()
 
         if safe_until < now:
-            raise Exception('Login timestamp to old')
+            # todo: this should raise something else than 400
+            raise Exception('Login timestamp too old')
 
         #check database for user
         try:
