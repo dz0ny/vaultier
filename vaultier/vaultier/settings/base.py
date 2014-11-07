@@ -1,6 +1,7 @@
 import os.path
 import sys
 from celery.schedules import crontab
+from datetime import timedelta
 
 DEBUG = False
 
@@ -285,7 +286,7 @@ CELERYBEAT_SCHEDULE = {
     },
     'usage_statistics': {
         'task': 'vaultier.tasks.task_statistics_collector',
-        # every day in 1 am
-        'schedule': crontab(hour='1'),
+        # every 24 hours
+        'schedule': timedelta(hours=24),
     }
 }
