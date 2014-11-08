@@ -48,7 +48,7 @@ var vaultierModulesConfig = {
         /**************** ember **/
             "./bower_components/handlebars/handlebars.js",
             "./bower_components/ember/ember.js",
-            "./bower_components/ember-restless/dist/ember-restless+extras.js",
+            "./bower_components/ember-restless/dist/ember-restless.js",
 
         /**************** ember extensions **/
             "./bower_components/ember-animate/ember-animate.js",

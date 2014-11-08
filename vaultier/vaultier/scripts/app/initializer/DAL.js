@@ -26,6 +26,8 @@ Vaultier.initializers.DAL = {
         app.register('adapter:workspacekey', Vaultier.dal.adapter.RESTAdapter);
         app.register('adapter:role', Vaultier.dal.adapter.RESTAdapter);
         app.register('adapter:vault', Vaultier.dal.adapter.RESTAdapter);
+        app.register('adapter:card', Vaultier.dal.adapter.RESTAdapter);
+        app.register('adapter:secret', Vaultier.dal.adapter.RESTAdapter);
         app.register('adapter:news', Vaultier.dal.model.news.Adapter);
 
         //@todo: not the final list more to come with every model

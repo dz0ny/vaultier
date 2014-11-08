@@ -40,13 +40,13 @@ Vaultier.dal.adapter.RESTAdapter = RL.RESTAdapter.extend({
 
     serializer: Vaultier.dal.adapter.JSONSerializer.create(),
 
-    buildUrl: function (model, key) {
-        var resourcePath = this.resourcePath(Ember.get(model.constructor, 'resourceName'));
-        var resourceListFormat = Ember.get(model.constructor, 'resourceListFormat');
-        var resourceDetailFormat = Ember.get(model.constructor, 'resourceDetailFormat');
+    buildUrl: function (model, key, klass) {
+        var resourcePath = this.resourcePath(Ember.get(klass, 'resourceName'));
+        var resourceListFormat = Ember.get(klass, 'resourceListFormat');
+        var resourceDetailFormat = Ember.get(klass, 'resourceDetailFormat');
         var resourceFormat
         var rootPath = this.get('rootPath');
-        var primaryKeyName = Ember.get(model.constructor, 'primaryKey');
+        var primaryKeyName = Ember.get(klass, 'primaryKey');
         var dataType = ''
         var url;
         var id = '';
