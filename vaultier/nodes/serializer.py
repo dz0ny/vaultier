@@ -6,7 +6,7 @@ class NodeSerializer(serializers.ModelSerializer):
     """
     Serializer for Node model
     """
-    created_by = serializers.RelatedField(read_only=True)
+    created_by = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
         model = Node
@@ -15,7 +15,7 @@ class NodeSerializer(serializers.ModelSerializer):
         """
         In case of 'field type Node' is data field required
         """
-        if attrs.get('type') == Node.TYPE_FILE:
+        if attrs.get('type') and int(attrs.get('type')) == Node.TYPE_FILE:
             if not attrs.get('data'):
                 msg = 'You have to provide file data.'
                 raise serializers.ValidationError(msg)

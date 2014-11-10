@@ -1,19 +1,21 @@
-from rest_framework.viewsets import GenericViewSet
 from .models import Node
 from .serializer import NodeSerializer
+from .business.permissions import NodePermission
 from rest_framework import mixins
 from rest_framework.permissions import IsAuthenticated
 from vaultier.business.mixins import FullUpdateMixin
+from vaultier.business.viewsets import RestfulGenericViewSet
 
 
-class NodeViewSet(GenericViewSet,
+class NodeViewSet(RestfulGenericViewSet,
                   mixins.CreateModelMixin,
                   mixins.DestroyModelMixin,
                   mixins.ListModelMixin,
+                  mixins.RetrieveModelMixin,
                   FullUpdateMixin):
     queryset = Node.objects.all()
     serializer_class = NodeSerializer
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, NodePermission)
 
     def pre_save(self, obj):
         """
