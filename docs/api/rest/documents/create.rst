@@ -16,6 +16,7 @@ Creates new document.
      Accept: application/json
 
      {
+        "name" : "some-encrypted-data",
         "meta" : "some-encrypted-data",
         "type" : 1,
         "parent" : 2,

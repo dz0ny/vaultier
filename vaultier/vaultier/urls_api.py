@@ -2,7 +2,7 @@ from django.conf.urls import patterns, url
 
 from rest_framework import routers
 from accounts.api import UserViewSet, LostKeyViewSet, AuthView, MemberViewSet
-from nodes.api import NodeViewSet
+from nodes.api import NodeViewSet, NodePathView, NodeDataView
 from acls.api import RoleViewSet
 from cards.api import CardViewSet
 from news.api import NewsApiView
@@ -34,6 +34,12 @@ urlpatterns = router.urls
 urlpatterns += patterns(
     '',
     url(r'^config/', ConfigView.as_view(), name='config'),
+    # node path
+    url(r'^documents/(?P<pk>\d+)/path/$', NodePathView.as_view(),
+        name='node-path'),
+    # node data
+    url(r'^documents/(?P<pk>\d+)/data/$', NodeDataView.as_view(),
+        name='node-data'),
     # server time
     url(r'^server-time/$', ServerTimeView.as_view(),
         name='server_time'),

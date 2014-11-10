@@ -10,6 +10,7 @@ from accounts.tests.conftest import user1  # noqa
 @pytest.fixture
 def node1(db, user1):
     node = {
+        "name": "they-call-me-document",
         "meta": "whatever",
         "type": Node.TYPE_DIRECTORY,
         "enc_version": 1,

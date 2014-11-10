@@ -15,6 +15,7 @@ class Node(mpttmodels.MPTTModel, TimestampableMixin):
         (TYPE_FILE, 'File')
     )
 
+    name = models.CharField(max_length=255)
     meta = models.TextField()
     type = models.IntegerField(choices=TYPE)
     data = models.FileField(upload_to='', blank=True, null=True)

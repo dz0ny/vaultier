@@ -19,7 +19,7 @@ Retrieve document detail.
 
   .. sourcecode:: http
 
-     HTTP/1.1 201 CREATED
+     HTTP/1.1 200 OK
      Content-Type: application/json
 
   .. include:: _document_example.rst
@@ -34,23 +34,23 @@ Path
 ----
 Retrieve list of path to current document.
 
-.. http:get:: /documents/(int:pk)/
+.. http:get:: /documents/(int:pk)/path/
 
   **Example Request**
 
   .. sourcecode:: http
 
-     GET /documents/3 HTTP/1.1
+     GET /documents/3/path/ HTTP/1.1
      Accept: application/json
 
   **Example Response**
 
   .. sourcecode:: http
 
-     HTTP/1.1 201 CREATED
+     HTTP/1.1 200 OK
      Content-Type: application/json
 
-  .. include:: _document_example.rst
+  .. include:: _document_list_example.rst
 
   :status 200: OK
   :status 401: Unauthorized

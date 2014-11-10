@@ -33,6 +33,24 @@ class TestNodesApi(object):
 
         assert response.status_code == status.HTTP_200_OK
 
+    def test_path(self, user1, node1):
+        client = APIClient()
+        client.force_authenticate(user=user1)
+
+        response = client.get(
+            reverse('node-path', kwargs={"pk": node1.id}))
+
+        assert response.status_code == status.HTTP_200_OK
+
+    def test_data(self, user1, node1):
+        client = APIClient()
+        client.force_authenticate(user=user1)
+
+        response = client.get(
+            reverse('node-data', kwargs={"pk": node1.id}))
+
+        assert response.status_code == status.HTTP_200_OK
+
     def test_update(self, user1, node1):
         client = APIClient()
         client.force_authenticate(user=user1)
@@ -49,9 +67,34 @@ class TestNodesApi(object):
         response = client.put(
             reverse('node-detail', kwargs={"pk": node1.id}),
             data={
-                "meta": "whatever",
+                "name": "whatever",
+                "meta": "different whatever",
                 "type": Node.TYPE_DIRECTORY,
-                "enc_version": 1,
+                "enc_version": 2,
+            })
+
+        assert response.status_code == status.HTTP_200_OK
+
+    def test_data_update(self, user1, node1):
+        client = APIClient()
+        client.force_authenticate(user=user1)
+
+        response = client.patch(
+            reverse('node-data', kwargs={"pk": node1.id}),
+            data={
+                "meta": "different whatever",
+                "enc_version": 2,
+            })
+
+        assert response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
+
+        response = client.put(
+            reverse('node-data', kwargs={"pk": node1.id}),
+            data={
+                "name": "whatever",
+                "meta": "different whatever",
+                "type": Node.TYPE_DIRECTORY,
+                "enc_version": 2,
             })
 
         assert response.status_code == status.HTTP_200_OK
@@ -75,6 +118,7 @@ class TestNodesApi(object):
         assert respone.status_code == status.HTTP_400_BAD_REQUEST
 
         respone = client.post(reverse('node-list'), data={
+            "name": "whatever",
             "meta": "whatever",
             "type": Node.TYPE_DIRECTORY,
             "enc_version": 1,
@@ -83,6 +127,7 @@ class TestNodesApi(object):
         assert respone.status_code == status.HTTP_201_CREATED
 
         respone = client.post(reverse('node-list'), data={
+            "name": "whatever",
             "meta": "whatever",
             "type": Node.TYPE_FILE,
             "enc_version": 1,
@@ -94,6 +139,7 @@ class TestNodesApi(object):
         with open("{}/{}".format(os.path.dirname(__file__), 'test.jpg')) as fl:
             respone = client.post(
                 reverse('node-list'), format='multipart', data={
+                    "name": "whatever",
                     "meta": "whatever",
                     "type": Node.TYPE_FILE,
                     "enc_version": 1,

@@ -9,6 +9,7 @@ class NodeSerializer(serializers.ModelSerializer):
     created_by = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
+        write_only_fields = ('lft', 'rght')
         model = Node
 
     def validate(self, attrs):
