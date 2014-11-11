@@ -145,7 +145,7 @@ Service.Auth = Ember.Object.extend({
                 ttl: ttl
             }, ttl);
         } else {
-            this.get('storage').remove('remember');
+            this.removeRememberedUser();
         }
     },
 
@@ -185,6 +185,7 @@ Service.Auth = Ember.Object.extend({
         return this.promises.logout()
             .then(function () {
                 this.setAuthenticatedUser(null);
+                this.removeRememberedUser();
             }.bind(this))
             .then(function() {
                 window.location = '/'
@@ -257,9 +258,11 @@ Service.Auth = Ember.Object.extend({
 
     loadFromSession: function () {
         return this.session.get('auth');
+    },
+
+    removeRememberedUser: function() {
+        this.get('storage').remove('remember');
     }
-
-
 
 })
 ;
