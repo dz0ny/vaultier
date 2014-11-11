@@ -14,7 +14,7 @@ Vaultier.AuthLostKeyRecoveryResetRoute = Ember.Route.extend({
             Vaultier.confirmModal(this, 'This action can not be undone. Are you sure that you want to continue?', function () {
 
                 model.set('public_key', '-'); // This can't be an empty string
-                model.set('recover_type', Vaultier.LostKey.proto().recoverType['DISABLE'].value);
+                model.set('recover_type', Vaultier.dal.model.LostKey.proto().recoverType['DISABLE'].value);
 
                 var promise = model.saveRecord()
                     .then(function (response) {

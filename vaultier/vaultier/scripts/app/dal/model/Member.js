@@ -1,12 +1,12 @@
-'use strict';
+ApplicationKernel.namespace('Vaultier.dal.model');
 
 /**
- * @module model
- * @class Vaultier.Member
+ * @module vaultier-dal-model
+ * @class Vaultier.dal.model.Member
  * @extends RL.Model
  */
-Vaultier.Member = RL.Model.extend(
-    Vaultier.CreatedUpdatedMixin,
+Vaultier.dal.model.Member = RL.Model.extend(
+    Vaultier.dal.mixin.CreatedUpdatedMixin,
     {
         status: RL.attr('number'),
         email: RL.attr('string'),

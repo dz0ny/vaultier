@@ -93,7 +93,7 @@ Service.Auth = Ember.Object.extend({
     /**
      * Logs in user promise
      *
-     * if success promise returns Vaultier.User model
+     * if success promise returns Vaultier.dal.model.User model
      * if error promise returns null
      *
      * @param email

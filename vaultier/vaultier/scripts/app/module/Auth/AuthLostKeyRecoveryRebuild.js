@@ -8,7 +8,7 @@ Vaultier.AuthLostKeyRecoveryRebuildRoute = Ember.Route.extend({
             this.set('controller.keys', keys);
             var content = this.modelFor('AuthLostKeyRecoveryRebuild');
             content.set('public_key', keys.publicKey);
-            content.set('recover_type', Vaultier.LostKey.proto().recoverType['REBUILD'].value);
+            content.set('recover_type', Vaultier.dal.model.LostKey.proto().recoverType['REBUILD'].value);
 
             var promise = content.saveRecord()
                 .then(function (response) {

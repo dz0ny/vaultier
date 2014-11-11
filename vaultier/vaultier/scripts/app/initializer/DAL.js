@@ -21,14 +21,20 @@ Vaultier.initializers.DAL = {
 
     initialize: function (container, app) {
 
-        app.register('adapter:user', Vaultier.dal.adapter.RESTAdapter);
-        app.register('adapter:workspace', Vaultier.dal.adapter.RESTAdapter);
-        app.register('adapter:workspacekey', Vaultier.dal.adapter.RESTAdapter);
-        app.register('adapter:role', Vaultier.dal.adapter.RESTAdapter);
-        app.register('adapter:vault', Vaultier.dal.adapter.RESTAdapter);
-        app.register('adapter:card', Vaultier.dal.adapter.RESTAdapter);
-        app.register('adapter:secret', Vaultier.dal.adapter.RESTAdapter);
-        app.register('adapter:news', Vaultier.dal.model.news.Adapter);
+        // registers adapters for each model
+        app.register('adapter:user', Vaultier.dal.core.RESTAdapter);
+        app.register('adapter:workspace', Vaultier.dal.core.RESTAdapter);
+        app.register('adapter:workspacekey', Vaultier.dal.core.RESTAdapter);
+        app.register('adapter:role', Vaultier.dal.core.RESTAdapter);
+        app.register('adapter:vault', Vaultier.dal.core.RESTAdapter);
+        app.register('adapter:card', Vaultier.dal.core.RESTAdapter);
+        app.register('adapter:secret', Vaultier.dal.core.RESTAdapter);
+        app.register('adapter:member', Vaultier.dal.core.RESTAdapter);
+        app.register('adapter:invitation', Vaultier.dal.core.RESTAdapter);
+        app.register('adapter:lostkey', Vaultier.dal.core.RESTAdapter);
+        app.register('adapter:lostkeymemberships', Vaultier.dal.core.RESTAdapter);
+
+        app.register('adapter:news', Vaultier.dal.adapter.NewsAdapter);
 
         //@todo: not the final list more to come with every model
 

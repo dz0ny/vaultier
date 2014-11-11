@@ -1,20 +1,22 @@
-var decryptedField = Vaultier.EncryptedModel.decryptedField;
+ApplicationKernel.namespace('Vaultier.dal.model');
+
+var decryptedField = Vaultier.dal.mixin.EncryptedModel.decryptedField;
 
 /**
- * @module model
- * @class Vaultier.Secret
+ * @module vaultier-dal-model
+ * @class Vaultier.dal.model.Secret
  * @extends RL.Model
  */
-Vaultier.Secret = RL.Model.extend(
-    Vaultier.CreatedUpdatedMixin,
-    Vaultier.EncryptedModel.Mixin,
-    Vaultier.MutableModel.Mixin,
+Vaultier.dal.model.Secret = RL.Model.extend(
+    Vaultier.dal.mixin.CreatedUpdatedMixin,
+    Vaultier.dal.mixin.EncryptedModel.Mixin,
+    Vaultier.dal.mixin.MutableModel,
     {
         mutableModelTypeField: 'type',
         mutableModelMapping: {
-            100: 'Vaultier.SecretNoteMixin',
-            200: 'Vaultier.SecretPasswordMixin',
-            300: 'Vaultier.SecretFileMixin'
+            100: 'Vaultier.dal.model.SecretNoteMixin',
+            200: 'Vaultier.dal.model.SecretPasswordMixin',
+            300: 'Vaultier.dal.model.SecretFileMixin'
         },
 
         types: new Utils.ConstantList({
@@ -43,9 +45,9 @@ Vaultier.Secret = RL.Model.extend(
 
 /**
  * @module model
- * @class Vaultier.SecretNoteMixin
+ * @class Vaultier.dal.model.SecretNoteMixin
  */
-Vaultier.SecretNoteMixin = Ember.Mixin.create({
+Vaultier.dal.model.SecretNoteMixin = Ember.Mixin.create({
     note: decryptedField('data', 'note'),
 
     isNote: function () {
@@ -56,9 +58,9 @@ Vaultier.SecretNoteMixin = Ember.Mixin.create({
 
 /**
  * @module model
- * @class Vaultier.SecretPasswordMixin
+ * @class Vaultier.dal.model.SecretPasswordMixin
  */
-Vaultier.SecretPasswordMixin = Ember.Mixin.create({
+Vaultier.dal.model.SecretPasswordMixin = Ember.Mixin.create({
     password: decryptedField('data', 'password'),
     username: decryptedField('data', 'username'),
     url: decryptedField('data', 'url'),
@@ -71,9 +73,9 @@ Vaultier.SecretPasswordMixin = Ember.Mixin.create({
 
 /**
  * @module model
- * @class Vaultier.SecretFileMixin
+ * @class Vaultier.dal.model.SecretFileMixin
  */
-Vaultier.SecretFileMixin = Ember.Mixin.create({
+Vaultier.dal.model.SecretFileMixin = Ember.Mixin.create({
     /**
      * blob_meta encrypted attrs
      */
@@ -108,7 +110,7 @@ Vaultier.SecretFileMixin = Ember.Mixin.create({
     }.property('type'),
 
     emptyBlob: function () {
-        this.set('blob', new Vaultier.SecretBlob({
+        this.set('blob', new Vaultier.dal.model.SecretBlob({
             id: this.get('id')
         }));
     },
@@ -144,11 +146,11 @@ Vaultier.SecretFileMixin = Ember.Mixin.create({
 
 /**
  * @module model
- * @class Vaultier.SecretBlob
+ * @class Vaultier.dal.model.SecretBlob
  * @extends RL.Model
  */
-Vaultier.SecretBlob = RL.Model.extend(
-    Vaultier.EncryptedModel.Mixin,
+Vaultier.dal.model.SecretBlob = RL.Model.extend(
+    Vaultier.dal.mixin.EncryptedModel.Mixin,
     {
         blob_meta: RL.attr('string'),
         blob_data: RL.attr('string'),

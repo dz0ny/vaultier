@@ -1,11 +1,13 @@
+ApplicationKernel.namespace('Vaultier.dal.mixin');
+
 /**
  * Handles created_at updated_at and dateformats
  *
- * @module model
- * @submodule model-mixin
- * @class Vaultier.CreatedUpdatedMixin
+ * @module vaultier-dal-mixin
+ * @class Vaultier.dal.mixin.CreatedUpdatedMixin
+ * @extends Ember.Mixin
  */
-Vaultier.CreatedUpdatedMixin = Ember.Mixin.create({
+Vaultier.dal.mixin.CreatedUpdatedMixin = Ember.Mixin.create({
     created_at: RL.attr('date', { readOnly: true }),
     updated_at: RL.attr('date', { readOnly: true }),
     created_by: RL.attr('object',{ readOnly: true }),

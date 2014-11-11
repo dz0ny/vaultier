@@ -1,9 +1,13 @@
+ApplicationKernel.namespace('Vaultier.dal.model');
+
 /**
- * @module model
- * @class Vaultier.News
+ * @module vaultier-dal-model
+ * @class Vaultier.dal.model.News
  * @extends RL.Model
  */
-Vaultier.News = RL.Model.extend(
+
+
+Vaultier.dal.model.News = RL.Model.extend(
     {
         title: RL.attr('string'),
         text: RL.attr('string'),
@@ -12,11 +16,3 @@ Vaultier.News = RL.Model.extend(
 
     }
 );
-
-ApplicationKernel.namespace('Vaultier.dal.model.news');
-
-Vaultier.dal.model.news.Adapter = Vaultier.dal.adapter.RESTAdapter.extend({
-    pluralize: function (resourceName) {
-        return resourceName;
-    }
-})

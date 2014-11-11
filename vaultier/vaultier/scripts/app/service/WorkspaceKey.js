@@ -57,7 +57,7 @@ Service.WorkspaceKey = Ember.Object.extend(
         checkWorkspaceKey: function (workspace) {
             this.get('store').find('Workspace', workspace.get('id'))
                 .then(function (workspaceCheck) {
-                    if (workspaceCheck.get('membership.status') == Vaultier.Member.proto().statuses['MEMBER'].value) {
+                    if (workspaceCheck.get('membership.status') == Vaultier.dal.model.Member.proto().statuses['MEMBER'].value) {
                         this.stopChecking();
                         workspace.reloadRecord()
                             .then(function () {
@@ -113,7 +113,7 @@ Service.WorkspaceKey = Ember.Object.extend(
          */
         hasValidWorkspaceKey: function () {
             var workspace = this.get('workspace');
-            return workspace.get('membership.status') == Vaultier.Member.proto().statuses['MEMBER'].value;
+            return workspace.get('membership.status') == Vaultier.dal.model.Member.proto().statuses['MEMBER'].value;
         },
 
         transferKeyToCreatedWorkspace: function (workspace) {

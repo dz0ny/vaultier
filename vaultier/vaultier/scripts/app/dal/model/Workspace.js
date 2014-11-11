@@ -1,11 +1,13 @@
+ApplicationKernel.namespace('Vaultier.dal.model');
+
 /**
- * @module model
- * @class Vaultier.Workspace
+ * @module vaultier-dal-model
+ * @class Vaultier.dal.model.Workspace
  * @extends RL.Model
  */
-Vaultier.Workspace = RL.Model.extend(
-    Vaultier.CreatedUpdatedMixin,
-    Vaultier.RollbackMixin,
+Vaultier.dal.model.Workspace = RL.Model.extend(
+    Vaultier.dal.mixin.CreatedUpdatedMixin,
+    Vaultier.dal.mixin.RollbackMixin,
     {
         init: function () {
             this.set('workspacekey', Vaultier.__container__.lookup('service:workspacekey'));
@@ -33,7 +35,7 @@ Vaultier.Workspace = RL.Model.extend(
          * Returns if user given by membership has workspacekey
          */
         hasValidKey: function () {
-            return this.get('membership.status') == Vaultier.Member.proto().statuses['MEMBER'].value;
+            return this.get('membership.status') == Vaultier.dal.model.Member.proto().statuses['MEMBER'].value;
         }.property('membership.status'),
 
 
@@ -56,7 +58,7 @@ Vaultier.Workspace = RL.Model.extend(
         },
 
         objectType: function () {
-            return Vaultier.Role.proto().types['TO_WORKSPACE'].value;
+            return Vaultier.dal.model.Role.proto().types['TO_WORKSPACE'].value;
         }.property()
 
 

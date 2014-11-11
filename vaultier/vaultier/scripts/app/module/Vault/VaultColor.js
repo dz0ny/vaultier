@@ -10,7 +10,7 @@ Vaultier.VaultColorView = Ember.View.extend({
     },
     prepareColorPicker: function () {
         var colorsAndSelected = [];
-        Vaultier.Color.proto().colors.forEach(function (color) {
+        Vaultier.dal.model.Color.proto().colors.forEach(function (color) {
             colorsAndSelected.addObject({
                 'value': color,
                 'selected': color == this.get('value'),

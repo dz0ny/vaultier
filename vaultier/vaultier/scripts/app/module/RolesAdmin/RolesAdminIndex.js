@@ -82,7 +82,7 @@ Vaultier.RolesAdminIndexRoute = Ember.Route.extend(
          * override this to setup invite breadcrumbs
          */
         setupRoleLevels: function () {
-            return Vaultier.Role.proto().roles.toArray();
+            return Vaultier.dal.model.Role.proto().roles.toArray();
         },
 
         /**
@@ -224,7 +224,7 @@ Vaultier.RolesAdminIndexView = Ember.View.extend({
                 didInsertElement: function() {
                     this.renderOptions = {
                         option: function (item, escape) {
-                            var item = Vaultier.Role.proto().roles.getByValue(item.value);
+                            var item = Vaultier.dal.model.Role.proto().roles.getByValue(item.value);
                             return [
                                 '<div>',
                                     '<div>' + item.text + '</div>',
@@ -236,7 +236,7 @@ Vaultier.RolesAdminIndexView = Ember.View.extend({
                     this._super();
                 },
                 changeData: function (obj) {
-                    var roleType = Vaultier.Role.proto().roles.getByValue(obj.value);
+                    var roleType = Vaultier.dal.model.Role.proto().roles.getByValue(obj.value);
                     set(this, 'selection', roleType);
                     set(this, 'data.level', obj.value);
                     get(this, 'controller').send('changeRole', get(this, 'data'));

@@ -1,11 +1,14 @@
+ApplicationKernel.namespace('Vaultier.dal.model');
+
 /**
- * @module model
- * @class Vaultier.Card
+ * @module vaultier-dal-model
+ * @class Vaultier.dal.model.Card
  * @extends RL.Model
+ * @deprecated
  */
-Vaultier.Card = RL.Model.extend(
-    Vaultier.CreatedUpdatedMixin,
-    Vaultier.RollbackMixin,
+Vaultier.dal.model.Card = RL.Model.extend(
+    Vaultier.dal.mixin.CreatedUpdatedMixin,
+    Vaultier.dal.mixin.RollbackMixin,
     {
         name: RL.attr('string'),
         slug: RL.attr('string'),
@@ -14,6 +17,6 @@ Vaultier.Card = RL.Model.extend(
         perms: RL.attr('object'),
 
         objectType: function () {
-            return Vaultier.Role.proto().types['TO_CARD'].value;
+            return Vaultier.dal.model.Role.proto().types['TO_CARD'].value;
         }.property()
     });

@@ -1,9 +1,11 @@
+ApplicationKernel.namespace('Vaultier.dal.model');
+
 /**
- * @module model
- * @class Vaultier.Color
+ * @module vaultier-dal-model
+ * @class Vaultier.dal.model.Color
  * @extends RL.Model
  */
-Vaultier.Color = RL.Model.extend({
+Vaultier.dal.model.Color = RL.Model.extend({
     colors: [
         'blue',
         'orange',

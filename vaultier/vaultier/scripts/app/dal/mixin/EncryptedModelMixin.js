@@ -1,15 +1,15 @@
-Vaultier.EncryptedModel = Vaultier.EncryptedModel || {};
+ApplicationKernel.namespace('Vaultier.dal.mixin.EncryptedModel');
 
 var getEncryptedDataKey = function (encryptedField) {
     return '_decrypted-data-' + encryptedField;
 }
 
 /**
- * @module model
- * @submodule model-mixin
- * @class Vaultier.EncryptedModel.Mixin
+ * @module vaultier-dal-mixin
+ * @class Vaultier.dal.mixin.EncryptedModel.Mixin
+ * @extends Ember.Mixin
  */
-Vaultier.EncryptedModel.Mixin = Ember.Mixin.create({
+Vaultier.dal.mixin.EncryptedModel.Mixin = Ember.Mixin.create({
 
     EncryptedModelMixedIn: true,
 
@@ -189,10 +189,11 @@ Vaultier.EncryptedModel.Mixin = Ember.Mixin.create({
 })
 
 /**
+ * @todo: should be moved to utils
  * @method generatePassword
  * @returns {string}
  */
-Vaultier.EncryptedModel.generatePassword = function() {
+Vaultier.dal.mixin.EncryptedModel.generatePassword = function() {
     var chars = "ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
     var string_length = 16;
     var randomstring = '';
@@ -221,9 +222,9 @@ Vaultier.EncryptedModel.generatePassword = function() {
  * @param encryptedField {String} source encrypted field out of which decrypted field will be decrypted
  * @param decryptedField {String} name of decrypted field to be contained in decrypted {} out of encrypted field
  */
-Vaultier.EncryptedModel.decryptedField = function (encryptedField, decryptedField) {
+Vaultier.dal.mixin.EncryptedModel.decryptedField = function (encryptedField, decryptedField) {
     return Ember.computed(function (key, value) {
-        if (!Vaultier.EncryptedModel.Mixin.detect(this)) {
+        if (!Vaultier.dal.mixin.EncryptedModel.Mixin.detect(this)) {
             throw new Error('Only models with mixin Vaultier.EncryptedModelMixin can have decryptedField');
         }
 

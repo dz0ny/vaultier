@@ -127,7 +127,7 @@ Vaultier.RolesAdminManagerAccordionComponent = Em.Component.extend({
     control: null,
     member: null,
     roleLevels: function () {
-        return Vaultier.Role.proto().roles.toArray();
+        return Vaultier.dal.model.Role.proto().roles.toArray();
     }.property('content.@each'),
     actions: {
 

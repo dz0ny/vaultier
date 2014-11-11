@@ -45,7 +45,7 @@ Vaultier.MembersAdminController = Ember.Controller.extend({
             {
                 sortProperties: ['nickname'],
                 content: this.get('content').filter(function (item, index, enumerable) {
-                    return item.get('status') == Vaultier.Member.proto().statuses.INVITED.value;
+                    return item.get('status') == Vaultier.dal.model.Member.proto().statuses.INVITED.value;
                 })
             })
     }.property('content.@each', 'content.@each.status'),
@@ -56,7 +56,7 @@ Vaultier.MembersAdminController = Ember.Controller.extend({
             {
                 sortProperties: ['nickname'],
                 content: this.get('content').filter(function (item, index, enumerable) {
-                    return item.get('status') == Vaultier.Member.proto().statuses.MEMBER_WITHOUT_WORKSPACE_KEY.value;
+                    return item.get('status') == Vaultier.dal.model.Member.proto().statuses.MEMBER_WITHOUT_WORKSPACE_KEY.value;
                 })
             })
     }.property('content.@each', 'content.@each.status'),
@@ -67,7 +67,7 @@ Vaultier.MembersAdminController = Ember.Controller.extend({
             {
                 sortProperties: ['nickname'],
                 content: this.get('content').filter(function (item, index, enumerable) {
-                    return item.get('status') == Vaultier.Member.proto().statuses.MEMBER.value;
+                    return item.get('status') == Vaultier.dal.model.Member.proto().statuses.MEMBER.value;
                 })
             })
     }.property('content.@each', 'content.@each.status')

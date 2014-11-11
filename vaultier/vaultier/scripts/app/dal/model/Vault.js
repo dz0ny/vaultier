@@ -1,11 +1,13 @@
+ApplicationKernel.namespace('Vaultier.dal.model');
+
 /**
- * @module model
- * @class Vaultier.Vault
+ * @module vaultier-dal-model
+ * @class Vaultier.dal.model.Vault
  * @extends RL.Model
  */
-Vaultier.Vault = RL.Model.extend(
-    Vaultier.CreatedUpdatedMixin,
-    Vaultier.RollbackMixin,
+Vaultier.dal.model.Vault = RL.Model.extend(
+    Vaultier.dal.mixin.CreatedUpdatedMixin,
+    Vaultier.dal.mixin.RollbackMixin,
     {
         name: RL.attr('string'),
         color: RL.attr('string'),
@@ -15,7 +17,7 @@ Vaultier.Vault = RL.Model.extend(
         perms: RL.attr('object'),
 
         objectType: function () {
-            return Vaultier.Role.proto().types['TO_VAULT'].value;
+            return Vaultier.dal.model.Role.proto().types['TO_VAULT'].value;
         }.property()
 
     });

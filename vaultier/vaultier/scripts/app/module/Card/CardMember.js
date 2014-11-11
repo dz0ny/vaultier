@@ -32,7 +32,7 @@ Vaultier.CardRolesAdminIndexRoute = Vaultier.RolesAdminIndexRoute.extend(
         },
 
         setupRoleLevels: function () {
-            var levels = Vaultier.Role.proto().roles.toArray().filter(function (item, index) {
+            var levels = Vaultier.dal.model.Role.proto().roles.toArray().filter(function (item, index) {
                 if (item.id == 'CREATE') {
                     return false;
                 }
@@ -76,7 +76,7 @@ Vaultier.CardRolesAdminInviteRoute = Vaultier.RolesAdminInviteRoute.extend(
         },
 
         setupRoleLevels: function () {
-            var levels = Vaultier.Role.proto().roles.toArray().filter(function (item, index) {
+            var levels = Vaultier.dal.model.Role.proto().roles.toArray().filter(function (item, index) {
                 if (item.id == 'CREATE') {
                     return false;
                 }
