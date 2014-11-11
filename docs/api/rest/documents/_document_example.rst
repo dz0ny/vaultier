@@ -16,10 +16,9 @@
         "level": 0
     }
 
-:jsonparam string meta: encrypted-data about name of document
+:jsonparam string name: encrypted-data about name of document
 :jsonparam string meta: encrypted-data about document
 :jsonparam string type: type of document (directory|file)
 :jsonparam string [color]: Folder hex color
 :jsonparam int enc_version: How was document encrypted
 :jsonparam string data: link to file content (only for type=file)
-:jsonparam int created_by: id of document creator

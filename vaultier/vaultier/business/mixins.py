@@ -1,9 +1,10 @@
 from django.db.transaction import atomic
+from django.http import Http404
 from rest_framework.response import Response
 from rest_framework.status import HTTP_204_NO_CONTENT
-from slugs.models import Slug
 from rest_framework import mixins
 from rest_framework.exceptions import MethodNotAllowed
+from slugs.models import Slug
 
 
 class AtomicTransactionMixin(object):
@@ -41,7 +42,22 @@ class SoftDeleteModelMixin(object):
         return Response(status=HTTP_204_NO_CONTENT)
 
 
-class FullUpdateMixin(mixins.UpdateModelMixin):
+class UpdateModelMixin(mixins.UpdateModelMixin):
+    """
+    Mixin based from UpdateModelMixin but raising 404 error,
+    when object not found
+    """
+    def get_object_or_none(self):
+        """
+        Removing different behaviour with 'put' method
+        """
+        try:
+            return self.get_object()
+        except Http404:
+            raise
+
+
+class FullUpdateMixin(UpdateModelMixin):
     """
     Mixin based from UpdateModelMixin but supports PUT only
     """

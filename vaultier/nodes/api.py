@@ -1,12 +1,11 @@
 from .models import Node
 from .serializer import NodeSerializer
 from .business.permissions import NodePermission
-from rest_framework import mixins
+from rest_framework import mixins, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.generics import GenericAPIView
-from rest_framework.mixins import UpdateModelMixin
-from vaultier.business.mixins import FullUpdateMixin
+from vaultier.business.mixins import FullUpdateMixin, UpdateModelMixin
 from vaultier.business.viewsets import RestfulGenericViewSet
 
 
@@ -38,11 +37,10 @@ class NodeDataView(GenericAPIView, UpdateModelMixin):
 
     def get(self, request, pk):
         """
-        Return data from Node
+        Return data from Node (download)
         """
-        node = self.get_object()
-        data = {"data": node.data or None}
-        return Response(data)
+        #todo: this method
+        return Response(status=status.HTTP_501_NOT_IMPLEMENTED)
 
     def put(self, request, pk):
         """
