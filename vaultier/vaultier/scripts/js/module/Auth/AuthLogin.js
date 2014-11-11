@@ -13,23 +13,40 @@ Vaultier.AuthLoginView = Ember.View.extend({
     templateName: 'Auth/AuthLogin',
     layoutName: 'Layout/LayoutStandard',
 
+    init: function() {
+        this.set('changeFileHandler',this.changeFileHandler.bind(this));
+        this._super();
+    },
+
     didInsertElement: function () {
-        var el = $(this.get('element'));
-        var input = el.find('.vlt-login-key');
+        this.configureChangeFileListener();
+    },
+
+    willDestroyElement: function() {
+        this.removeChangeFileListener();
+    },
+
+    configureChangeFileListener: function() {
+        this.removeChangeFileListener();
+        $(document).on("change", '.vlt-login-key', this.changeFileHandler);
+    }.observes('controller.latestUser'),
+
+    removeChangeFileListener: function() {
+        $(document).off("change", '.vlt-login-key', this.changeFileHandler);
+    },
+
+    changeFileHandler: function (e) {
         var controller = this.controller;
-
-        input.on('change', function (e) {
-
-            var files = FileAPI.getFiles(e);
-            FileAPI.readAsText(files[0], function (evt) {
-                if (evt.type == 'load') {
-                    // Success
-                    controller.set('privateKey', evt.result);
-                    controller.set('filename', files[0].name);
-                }
-            })
-        })
+        var files = FileAPI.getFiles(e);
+        FileAPI.readAsText(files[0], function (evt) {
+            if (evt.type == 'load') {
+                // Success
+                controller.set('privateKey', evt.result);
+                controller.set('filename', files[0].name);
+            }
+        });
     }
+
 });
 
 Vaultier.AuthLoginRoute = Ember.Route.extend({
