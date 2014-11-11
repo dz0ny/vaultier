@@ -114,7 +114,7 @@ Vaultier.SecretCreateSubmitRoute = Ember.Route.extend(
             var secret = model.secret;
             secret.set('card', this.modelFor('Card').get('id'));
 
-            var SecretClass = Vaultier.Secret.proto();
+            var SecretClass = Vaultier.dal.model.Secret.proto();
             switch (transition.params['Secret.createSubmit'].type.toUpperCase()) {
 
                 case SecretClass.types['FILE'].text :

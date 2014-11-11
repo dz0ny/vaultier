@@ -1,9 +1,11 @@
+ApplicationKernel.namespace('Vaultier.dal.model');
+
 /**
- * @module model
- * @class Vaultier.WorkspaceKey
+ * @module vaultier-dal-model
+ * @class Vaultier.dal.model.WorkspaceKey
  * @extends RL.Model
  */
-Vaultier.WorkspaceKey = RL.Model.extend(
+Vaultier.dal.model.WorkspaceKey = RL.Model.extend(
     {
         public_key: RL.attr('string'),
         workspace_key: RL.attr('longs'),

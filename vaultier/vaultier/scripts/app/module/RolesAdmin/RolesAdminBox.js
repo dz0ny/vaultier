@@ -12,11 +12,11 @@ Vaultier.RolesAdminBoxComponent = Ember.Component.extend({
         var roles = this.get('roles');
         var user = this.get('user');
         if (Object.prototype.toString.call(roles) != '[object Array]') {
-            throw new Error('Roles array has to be passed as roles=[Vaultier.Role] parameter');
+            throw new Error('Roles array has to be passed as roles=[Vaultier.dal.model.Role] parameter');
         }
 
-        if (!user || user.constructor != Vaultier.User) {
-            throw new Error('Current user has to be passed as user=Vaultier.User')
+        if (!user || user.constructor != Vaultier.dal.model.User) {
+            throw new Error('Current user has to be passed as user=Vaultier.dal.model.User')
         }
 
     },
@@ -57,7 +57,7 @@ Vaultier.RolesAdminBoxComponent = Ember.Component.extend({
 
     rolesRead: function () {
         return this.get('processedRoles').filter(function (role) {
-            if (role.get('level') == Vaultier.Role.proto().roles['READ'].value) {
+            if (role.get('level') == Vaultier.dal.model.Role.proto().roles['READ'].value) {
                 return role;
             }
         });
@@ -69,7 +69,7 @@ Vaultier.RolesAdminBoxComponent = Ember.Component.extend({
 
     rolesCreate: function () {
         return this.get('processedRoles').filter(function (role) {
-            if (role.get('level') == Vaultier.Role.proto().roles['CREATE'].value) {
+            if (role.get('level') == Vaultier.dal.model.Role.proto().roles['CREATE'].value) {
                 return role;
             }
         });
@@ -82,7 +82,7 @@ Vaultier.RolesAdminBoxComponent = Ember.Component.extend({
 
     rolesWrite: function () {
         return this.get('processedRoles').filter(function (role) {
-            if (role.get('level') == Vaultier.Role.proto().roles['WRITE'].value) {
+            if (role.get('level') == Vaultier.dal.model.Role.proto().roles['WRITE'].value) {
                 return role;
             }
         });

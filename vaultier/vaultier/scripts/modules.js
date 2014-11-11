@@ -48,7 +48,7 @@ var vaultierModulesConfig = {
         /**************** ember **/
             "./bower_components/handlebars/handlebars.js",
             "./bower_components/ember/ember.js",
-            "./bower_components/ember-restless/dist/ember-restless+extras.js",
+            "./bower_components/ember-restless/dist/ember-restless.js",
 
         /**************** ember extensions **/
             "./bower_components/ember-animate/ember-animate.js",
@@ -156,6 +156,7 @@ var vaultierModulesConfig = {
             "./app/application.js",
             "./app/initializer/Boot.js",
             "./app/initializer/DI.js",
+            "./app/initializer/DAL.js",
             "./app/initializer/JQBindings.js",
             "./app/initializer/Handlebars.js",
             "./app/initializer/Keypress.js",
@@ -175,24 +176,31 @@ var vaultierModulesConfig = {
             "./app/service/ChangeKey.js",
             "./app/service/NewUserInit.js",
 
-        /**************** Models **/
-            "./app/model/mixin/CreatedUpdatedMixin.js",
-            "./app/model/mixin/MutableModelMixin.js",
-            "./app/model/mixin/EncryptedModelMixin.js",
-            "./app/model/mixin/RollbackMixin.js",
-            "./app/model/adapter/Adapter.js",
-            "./app/model/Color.js",
-            "./app/model/User.js",
-            "./app/model/Workspace.js",
-            "./app/model/WorkspaceKey.js",
-            "./app/model/Member.js",
-            "./app/model/Invitation.js",
-            "./app/model/Role.js",
-            "./app/model/Vault.js",
-            "./app/model/Card.js",
-            "./app/model/Secret.js",
-            "./app/model/LostKey.js",
-            "./app/model/News.js"
+        /**************** DAL **/
+            "./app/dal/field/Object.js",
+            "./app/dal/core/BetterRestless.js",
+            "./app/dal/core/Adapter.js",
+            "./app/dal/core/Client.js",
+
+            "./app/dal/mixin/CreatedUpdatedMixin.js",
+            "./app/dal/mixin/MutableModelMixin.js",
+            "./app/dal/mixin/EncryptedModelMixin.js",
+            "./app/dal/mixin/RollbackMixin.js",
+
+            "./app/dal/adapter/NewsAdapter.js",
+
+            "./app/dal/model/Color.js",
+            "./app/dal/model/User.js",
+            "./app/dal/model/Workspace.js",
+            "./app/dal/model/WorkspaceKey.js",
+            "./app/dal/model/Member.js",
+            "./app/dal/model/Invitation.js",
+            "./app/dal/model/Role.js",
+            "./app/dal/model/Vault.js",
+            "./app/dal/model/Card.js",
+            "./app/dal/model/Secret.js",
+            "./app/dal/model/LostKey.js",
+            "./app/dal/model/News.js"
         ]
     },
     "layout": {

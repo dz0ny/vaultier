@@ -2,7 +2,7 @@ Vaultier.WorkspaceKeysMixin = Ember.Mixin.create({
 
     checkWorkspaceKeys: function () {
         var workspace = this.modelFor('Workspace');
-        if (workspace.get('membership.status') != Vaultier.Member.proto().statuses['MEMBER'].value) {
+        if (workspace.get('membership.status') != Vaultier.dal.model.Member.proto().statuses['MEMBER'].value) {
             this.transitionTo('Workspace.noKeys');
             return false;
         }
@@ -141,7 +141,7 @@ Vaultier.WorkspaceNoKeysRoute = Ember.Route.extend({
     },
 
     afterModel: function(model, transition) {
-        if (model.workspace.get('membership.status') == Vaultier.Member.proto().statuses.MEMBER.value) {
+        if (model.workspace.get('membership.status') == Vaultier.dal.model.Member.proto().statuses.MEMBER.value) {
             transition.abort();
             this.transitionTo('Workspace.index');
             $.notify('Your already have valid workspace keys.', 'success');

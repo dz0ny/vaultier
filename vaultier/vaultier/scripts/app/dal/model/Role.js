@@ -1,11 +1,13 @@
+ApplicationKernel.namespace('Vaultier.dal.model');
+
 /**
- * @module model
- * @class Vaultier.Role
+ * @module vaultier-dal-model
+ * @class Vaultier.dal.model.Role
  * @extends RL.Model
  */
-Vaultier.Role = RL.Model.extend(
-    Vaultier.CreatedUpdatedMixin,
-    Vaultier.RollbackMixin,
+Vaultier.dal.model.Role = RL.Model.extend(
+    Vaultier.dal.mixin.CreatedUpdatedMixin,
+    Vaultier.dal.mixin.RollbackMixin,
     {
 
         auth: null,
@@ -62,15 +64,15 @@ Vaultier.Role = RL.Model.extend(
         }.property('member.user'),
 
         isMember : function() {
-            return this.get('member.status') == Vaultier.Member.proto().statuses['MEMBER'].value;
+            return this.get('member.status') == Vaultier.dal.model.Member.proto().statuses['MEMBER'].value;
         }.property('member.status'),
 
         isInvited : function() {
-            return this.get('member.status') == Vaultier.Member.proto().statuses['INVITED'].value;
+            return this.get('member.status') == Vaultier.dal.model.Member.proto().statuses['INVITED'].value;
         }.property('member.status'),
 
         isMemberWithoutKeys : function() {
-            return this.get('member.status') == Vaultier.Member.proto().statuses['MEMBER_WITHOUT_WORKSPACE_KEY'].value;
+            return this.get('member.status') == Vaultier.dal.model.Member.proto().statuses['MEMBER_WITHOUT_WORKSPACE_KEY'].value;
         }.property('member.status'),
 
         printableDesc: function() {

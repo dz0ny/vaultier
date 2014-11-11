@@ -1,11 +1,11 @@
-Vaultier.MutableModel = Vaultier.MutableModel || {}
+ApplicationKernel.namespace('Vaultier.dal.mixin');
 
 /**
- * @module model
- * @submodule model-mixin
- * @class Vaultier.MutableModel.Mixin
+ * @module vaultier-dal-mixin
+ * @class Vaultier.dal.mixin.MutableModel
+ * @extends Ember.Mixin
  */
-Vaultier.MutableModel.Mixin = Ember.Mixin.create({
+Vaultier.dal.mixin.MutableModel = Ember.Mixin.create({
 
     init: function () {
         this._super.apply(this, arguments);

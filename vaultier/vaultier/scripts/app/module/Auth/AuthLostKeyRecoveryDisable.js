@@ -7,7 +7,7 @@ Vaultier.AuthLostKeyRecoveryDisableRoute = Ember.Route.extend({
 
             var content = this.modelFor('AuthLostKeyRecoveryDisable');
             content.set('public_key', '-'); // This can't be an empty string
-            content.set('recover_type', Vaultier.LostKey.proto().recoverType['DISABLE'].value);
+            content.set('recover_type', Vaultier.dal.model.LostKey.proto().recoverType['DISABLE'].value);
 
             var promise = content.saveRecord()
                 .then(function (response) {

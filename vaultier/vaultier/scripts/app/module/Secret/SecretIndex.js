@@ -135,7 +135,7 @@ Vaultier.SecretIndexView = Ember.View.extend({
 Vaultier.SecretIndexItemView = Ember.View.extend({
     classNames: ['vlt-secret-item'],
     templateName: function () {
-        var types = Vaultier.Secret.proto().types;
+        var types = Vaultier.dal.model.Secret.proto().types;
         switch (this.get('secret.type')) {
             case types['NOTE'].value:
                 return 'Secret/SecretIndexItemNote';

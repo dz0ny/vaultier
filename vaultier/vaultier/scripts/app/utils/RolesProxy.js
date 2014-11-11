@@ -57,7 +57,7 @@ Utils.RolesProxy = Em.ArrayProxy.extend(
          * @type {Number}
          */
         createLevelValue: function () {
-            return Vaultier.Role.proto().roles['CREATE'].value;
+            return Vaultier.dal.model.Role.proto().roles['CREATE'].value;
         }.property(),
 
         /**
@@ -110,7 +110,7 @@ Utils.RolesProxy = Em.ArrayProxy.extend(
         /**
          * Add a user to the sealedUsers array if the user is not yet there.
          *
-         * @param user {Vaultier.User}
+         * @param user {Vaultier.dal.model.User}
          * @returns {RolesProxy}
          */
         sealUser: function (user) {
@@ -123,7 +123,7 @@ Utils.RolesProxy = Em.ArrayProxy.extend(
 
         /**
          * Returns true if the user of role is not on the sealedUsers array
-         * @param role {Vaultier.Role}
+         * @param role {Vaultier.dal.model.Role}
          * @returns {boolean}
          */
         isRoleSealed: function (role) {

@@ -25,8 +25,8 @@ Service.NewUserInit = Ember.Object.extend({
 
     /**
      * Creates route transition function after initialization
-     * @param {Vaultier.Vault}vault
-     * @param {Vaultier.Workspace}workspace
+     * @param {Vaultier.dal.model.Vault}vault
+     * @param {Vaultier.dal.model.Workspace}workspace
      */
     createTransitionFunction: function (workspace, vault) {
         var router = this.get('router');
@@ -50,8 +50,8 @@ Service.NewUserInit = Ember.Object.extend({
      *
      * resolve({
      *          transitionAfterRegister: function,
-     *          createdWorkspace: Vaultier.Workspace
-     *          createdVault: Vaultier.Vault
+     *          createdWorkspace: Vaultier.dal.model.Workspace
+     *          createdVault: Vaultier.dal.model.Vault
      * })
      *
      * @return {Ember.RSVP.Promise}
@@ -78,13 +78,13 @@ Service.NewUserInit = Ember.Object.extend({
         var vaultDescription = '{nickname}\'s default vault to store cards and secrets';
 
         // prepare objects to save
-        var w = new Vaultier.Workspace()
+        var w = new Vaultier.dal.model.Workspace()
         w.setProperties({
             name: workspaceName.replace('{nickname}', nickname),
             description: workspaceDescription.replace('{nickname}', nickname)
         });
 
-        var v = new Vaultier.Vault();
+        var v = new Vaultier.dal.model.Vault();
         v.setProperties({
             name: vaultName.replace('{nickname}', nickname),
             description: vaultDescription.replace('{nickname}', nickname)

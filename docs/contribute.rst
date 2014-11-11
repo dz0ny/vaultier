@@ -51,16 +51,19 @@ Install Frontend Development Tools
     sudo apt-get install nodejs
     sudo apt-get install npm
 
+    # install gulp
+    sudo npm install -g gulp
+
+    # if you are on ubuntu (14.04) or get error node not found do
+    sudo ln -s /usr/bin/nodejs /usr/bin/node
+
     # install bower
     sudo npm install -g bower
 
     # initialize sources and vendors
     cd vaultier/vaultier/scripts
-    npm install
+    sudo npm install
     bower install
-
-    # install gulp
-    sudo npm install -g gulp
 
 
 ========================

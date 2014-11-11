@@ -204,6 +204,7 @@ Vaultier.AuthRegisterCredsRoute = Ember.Route.extend({
             var user = ctrl.get('content');
             var keys = ctrl.get('props.keys');
 
+
             // update model
             user.set('public_key', keys.publicKey);
 
@@ -218,7 +219,6 @@ Vaultier.AuthRegisterCredsRoute = Ember.Route.extend({
 
                 // login
                 .then(function (response) {
-                    console.log(response);
                     return auth.login(user.get('email'), keys.privateKey, false)
                         .then(function () {
                             auth.rememberUser(null);

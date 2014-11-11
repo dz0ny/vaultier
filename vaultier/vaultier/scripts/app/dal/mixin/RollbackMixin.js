@@ -1,9 +1,11 @@
+ApplicationKernel.namespace('Vaultier.dal.mixin');
+
 /**
- * @module model
- * @submodule model-mixin
- * @class Vaultier.RollbackMixin
+ * @module vaultier-dal-mixin
+ * @class Vaultier.dal.mixin.RollbackMixin
+ * @extends Ember.Mixin
  */
-Vaultier.RollbackMixin = Ember.Mixin.create({
+Vaultier.dal.mixin.RollbackMixin = Ember.Mixin.create({
 
     init: function () {
         this._super.apply(this, arguments);
