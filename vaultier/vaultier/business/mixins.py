@@ -51,10 +51,7 @@ class UpdateModelMixin(mixins.UpdateModelMixin):
         """
         Removing different behaviour with 'put' method
         """
-        try:
-            return self.get_object()
-        except Http404:
-            raise
+        return self.get_object()
 
 
 class FullUpdateMixin(UpdateModelMixin):

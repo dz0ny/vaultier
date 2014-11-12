@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework.generics import GenericAPIView
 from vaultier.business.mixins import FullUpdateMixin, UpdateModelMixin
 from vaultier.business.viewsets import RestfulGenericViewSet
+from django.http.response import Http404
 
 
 class NodeViewSet(RestfulGenericViewSet,
@@ -18,6 +19,19 @@ class NodeViewSet(RestfulGenericViewSet,
     queryset = Node.objects.all()
     serializer_class = NodeSerializer
     permission_classes = (IsAuthenticated, NodePermission)
+
+    def get_queryset(self):
+        """
+        Change queryset when parent URL param provided
+        """
+        parent = self.request.QUERY_PARAMS.get('parent')
+        if parent and parent.isdigit():
+            try:
+                node = Node.objects.get(id=parent)
+                return node.get_children()
+            except Node.DoesNotExist:
+                raise Http404("Node not found.")
+        return super(NodeViewSet, self).get_queryset()
 
     def pre_save(self, obj):
         """

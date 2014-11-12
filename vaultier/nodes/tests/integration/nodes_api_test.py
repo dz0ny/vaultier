@@ -24,6 +24,20 @@ class TestNodesApi(object):
 
         assert response.status_code == status.HTTP_200_OK
 
+    def test_list_children(self, user1, node1, node2):
+        # node1 is parent of node2
+        client = APIClient()
+        client.force_authenticate(user=user1)
+
+        urlparams = "?{}={}".format("parent", node1.id)
+        response = client.get(reverse('node-list')+urlparams)
+
+        assert response.status_code == status.HTTP_200_OK
+
+        assert len(response.data) == 1
+
+        assert response.data[0].get('id') == node2.id
+
     def test_detail(self, user1, node1):
         client = APIClient()
         client.force_authenticate(user=user1)
@@ -59,6 +73,8 @@ class TestNodesApi(object):
 
         response = client.get(
             reverse('node-path', kwargs={"pk": node1.id}))
+
+        assert response.status_code == status.HTTP_200_OK
 
         assert len(response.data) == 2
 
@@ -169,7 +185,7 @@ class TestNodesApi(object):
         })
 
         # data not provided
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
+        assert response.status_code == status.HTTP_201_CREATED
 
         with open("{}/{}".format(os.path.dirname(__file__), 'test.jpg')) as fl:
             response = client.post(
