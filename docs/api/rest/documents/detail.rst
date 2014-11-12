@@ -6,7 +6,7 @@ Detail
 ------
 Retrieve document detail.
 
-.. http:get:: /documents/(int:pk)
+.. http:get:: /documents/(int:pk)/
 
   **Example Request**
 
@@ -19,10 +19,38 @@ Retrieve document detail.
 
   .. sourcecode:: http
 
-     HTTP/1.1 201 CREATED
+     HTTP/1.1 200 OK
      Content-Type: application/json
 
-  .. include:: _document_example.txt
+  .. include:: _document_example.rst
+
+  :status 200: OK
+  :status 401: Unauthorized
+  :status 403: Forbidden
+  :status 404: Document not found
+
+
+Path
+----
+Retrieve list of path to current document.
+
+.. http:get:: /documents/(int:pk)/path/
+
+  **Example Request**
+
+  .. sourcecode:: http
+
+     GET /documents/3/path/ HTTP/1.1
+     Accept: application/json
+
+  **Example Response**
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+  .. include:: _document_list_example.rst
 
   :status 200: OK
   :status 401: Unauthorized
@@ -37,7 +65,7 @@ Updates document.
 .. note::
     Changing "parent" field means that document will be moved.
 
-.. http:put:: /documents/(int:pk)
+.. http:put:: /documents/(int:pk)/
 
   **Example Request**
 
@@ -58,7 +86,7 @@ Updates document.
      HTTP/1.1 200 OK
      Content-Type: application/json
 
-  .. include:: _document_example.txt
+  .. include:: _document_example.rst
 
 
   :status 200: OK
@@ -71,7 +99,7 @@ Delete
 ------
 Removes document.
 
-.. http:delete:: /documents/(int:pk)
+.. http:delete:: /documents/(int:pk)/
 
 
   **Example Request**

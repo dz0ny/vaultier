@@ -1,6 +1,6 @@
 Create Document
 ===============
-Creates new document
+Creates new document.
 
 .. note::
     To add data to document type=file
@@ -16,11 +16,12 @@ Creates new document
      Accept: application/json
 
      {
+        "name" : "some-encrypted-data",
         "meta" : "some-encrypted-data",
         "type" : 1,
         "parent" : 2,
         "enc_version": 1,
-        "mime": null,
+        "data": null,
         "color": "#ffcccc"
      }
 
@@ -31,10 +32,9 @@ Creates new document
      HTTP/1.1 201 CREATED
      Content-Type: application/json
 
-  .. include:: _document_example.txt
+  .. include:: _document_example.rst
 
   :status 201: Created
   :status 400: Bad request (bad data, missing value/file, ...)
   :status 401: Unauthorized
   :status 403: Forbidden
-

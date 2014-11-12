@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-from .views import index, ConfigView, error404
+from .views import index, error404
 
 admin.autodiscover()
 

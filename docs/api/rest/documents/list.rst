@@ -1,10 +1,37 @@
 List of Documents
 =================
+Retrieve lists of documents.
 
-Retrieve list of documents in root.
+
+All Documents
+-------------
+List of all documents
 
 .. http:get:: /documents/
 
+  **Example Request**
+
+  .. sourcecode:: http
+
+     GET /documents/ HTTP/1.1
+     Accept: application/json
+
+  **Example Response**
+
+  .. sourcecode:: http
+
+    HTTP/1.1 200 OK
+    Content-Type: application/json
+
+  .. include:: _document_list_example.rst
+
+  :status 200: OK
+  :status 401: Unauthorized
+  :status 403: Forbidden
+
+
+Children Documents
+------------------
 Retrieves list of documents with specific parent
 
 .. http:get:: /documents/?parent=(int:pk)
@@ -23,30 +50,9 @@ Retrieves list of documents with specific parent
     HTTP/1.1 200 OK
     Content-Type: application/json
 
-    [
+  .. include:: _document_list_example.rst
 
-      {
-        "id" : 3,
-        "meta" : "some-encrypted-data",
-        "path" : [1],
-        "created_by" : 1,
-        "data" : null,
-        "type" : 1,
-        "owner": 1,
-        "created_at": "2014-05-28T10:10:30.501Z",
-        "updated_at": "2014-05-28T10:10:30.501Z"
-      },
-
-      {
-        "id" : 4,
-        "meta" : "some-encrypted-data",
-        "path" : [1],
-        "created_by" : 1,
-        "data" : "http://example.com/1",
-        "type" : 2,
-        "owner": 1,
-        "created_at": "2014-05-28T10:10:30.501Z",
-        "updated_at": "2014-05-28T10:10:30.501Z"
-      }
-
-    ]
+  :status 200: OK
+  :status 401: Unauthorized
+  :status 403: Forbidden
+  :status 404: Document not found
