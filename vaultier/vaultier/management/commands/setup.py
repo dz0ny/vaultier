@@ -3,6 +3,7 @@ from django.core.management import BaseCommand
 from django.db import OperationalError
 from django.core.cache import cache
 from django.db.utils import ProgrammingError
+from vaultier.tasks import task_statistics_collector
 
 
 class Command(BaseCommand):
@@ -25,5 +26,6 @@ class Command(BaseCommand):
             msg = ">>> Your DB is not configured correctly: {}"
             print msg.format(e.message)
         else:
-            print ">>> DB is initialized, you can now try to run Vaultier " \
-                  "using 'vaultier runserver'"
+            task_statistics_collector.delay()
+            print (">>> DB is initialized, you can now try to run Vaultier "
+                   "using 'vaultier runserver'")

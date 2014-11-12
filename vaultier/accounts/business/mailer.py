@@ -38,5 +38,4 @@ class LostKeyMailer(VaultierMailer):
         """
         return urlparse.urljoin(
             settings.SITE_URL,
-            '#/lostkey/{}/{}/'.format(self.object.id, self.object.hash)
-        )
+            '#/lostkey/{}/{}/'.format(self.object.id, self.object.hash))

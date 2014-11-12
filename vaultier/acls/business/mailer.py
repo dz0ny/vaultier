@@ -42,7 +42,6 @@ class GrantedAccessMailer(VaultierMailer):
 
         kwargs.update({
             'type': self.object.__class__.__name__.lower(),
-            'SITE_URL': settings.SITE_URL,
             'name': getattr(self.object, 'name'),
             'url': self._build_url()
         })
@@ -61,17 +60,15 @@ class GrantedAccessMailer(VaultierMailer):
         if m == 'Workspace':
             return urlparse.urljoin(
                 u, 'workspaces/w/{}'.format(self.object.slug)
-            ),
+            )
         elif m == 'Vault':
             return urlparse.urljoin(
                 u, 'workspaces/w/{}/vaults/v/{}'.format(
-                    self.object.workspace.slug, self.object.slug)
-            ),
+                    self.object.workspace.slug, self.object.slug))
         elif m == 'Card':
             return urlparse.urljoin(
                 u, '/workspaces/w/{}/vaults/v/{}/cards/c/{}'.format(
                     self.object.vault.workspace.slug, self.object.vault.slug,
-                    self.object.slug)
-            ),
+                    self.object.slug))
 
         return None
