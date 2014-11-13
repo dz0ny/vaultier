@@ -37,44 +37,46 @@ Environment Variables
 =====================
 
 *VAULTIER_DOMAIN*
-    Domain where is Vaultier accessible
+    Domain where is Vaultier accessible (string)
+
+*VAULTIER_FROM_EMAIL*
+    Email address where are all emails sending from. By default it will stay
+    example.com (string)
 
 *VAULTIER_EMAIL_HOST*
-    Mailserver IP address or DNS
+    Mailserver IP address or DNS (string)
 
 *VAULTIER_EMAIL_PORT*
-    Mailserver port
+    Mailserver port (int)
 
 *VAULTIER_EMAIL_USER*
-    Mailserver user
+    Mailserver user (string)
 
 *VAULTIER_EMAIL_PASSWORD*
-    Mailserver password
+    Mailserver password (string)
 
 *VAULTIER_EMAIL_TLS*
     Does mailserver use TLS (bool)
 
 *VAULTIER_DATABASE_NAME*
-    Database name
+    Database name (string)
 
 *VAULTIER_DATABASE_USER*
-    Database user
+    Database user (string)
 
 *VAULTIER_DATABASE_PASSWORD*
-    Database password
+    Database password (string)
 
 *VAULTIER_DATABASE_HOST*
-    Database host
+    Database host (string)
 
 *VAULTIER_DATABASE_PORT*
-    Database port
+    Database port (int)
 
 *VAULTIER_ALLOW_REGISTRATION*
     By default is registration allowed only for first user. Other people can
-    become user by getting invitation
+    become user by getting invitation (bool)
 
 *VAULTIER_ALLOW_STATISTICS*
-    Send anonymous usage statistic to vaultier.org REST API
-
-*VAULTIER_FROM_EMAIL*
-    Email address where are all emails sending from
+    Send anonymous usage statistic to vaultier.org REST API. More information
+    :doc:`statistics`

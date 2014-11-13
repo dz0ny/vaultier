@@ -150,10 +150,11 @@ inspect it's contents. What you can configure:
   Otherwise, you will see an `www.example.com` entry that you should change to
   whatever your FQDN is.
 
-*FT_FEATURES*
-  This is a dictionary, in which you see the `raven_key` entry, set to empty
-  string. Again, you can set this to your Sentry DSN, if you want to monitor
-  _frontend_ errors
+*VAULTIER*
+  This is a dictionary which contain all application settings
+  (frontend and backend). By default you see the `raven_key` entry, set to
+  empty string. Again, you can set this to your Sentry DSN, if you want to
+  monitor _frontend_ errors
 
 *DATABASES*
   Fill out the connection details for your DB. You should focus on _NAME_,
