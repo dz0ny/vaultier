@@ -36,6 +36,9 @@ Docker Volumes
 Environment Variables
 =====================
 
+.. warning:: Write all variables without quotes! Otherwise you can expect wrong
+    behaviour.
+
 *VAULTIER_DOMAIN*
     Domain where is Vaultier accessible (string, default "example.com")
 
@@ -75,7 +78,7 @@ Environment Variables
 
 *VAULTIER_ALLOW_REGISTRATION*
     By default is registration allowed only for first user. Other people can
-    become user by getting invitation (bool, default "")
+    become user by getting invitation (bool, default "False")
 
 *VAULTIER_ALLOW_STATISTICS*
     Send anonymous usage statistic to vaultier.org REST API (bool,
