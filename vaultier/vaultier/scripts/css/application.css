@@ -1221,12 +1221,10 @@ footer .vlt-rclick img {
 }
 .vlt-navbar .vlt-navbar-brand {
     height: 100%;
-    padding: 12px 15px 12px 15px;
+    padding: 7px;
 }
 .vlt-navbar .vlt-logo {
-    width: 200px;
-    height: 40px;
-    padding: 0px;
+    height: 50px;
 }
 
 .vlt-navbar .navbar-right {
