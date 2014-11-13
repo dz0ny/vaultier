@@ -2,7 +2,7 @@ import pytest
 from django import setup
 
 from vaultier.test.tools import FileAccessMixin
-from accounts.models import User
+from accounts.models import User, LostKey
 
 
 def pytest_configure():
@@ -32,6 +32,22 @@ def user2(db):
 
 
 @pytest.fixture
+def lostkey1(db, user1):
+    user = {
+        "created_by": user1
+    }
+    return LostKey.objects.create(**user)
+
+
+@pytest.fixture
+def lostkey2(db, user2):
+    user = {
+        "created_by": user2
+    }
+    return LostKey.objects.create(**user)
+
+
+@pytest.fixture
 def pubkey():
     m = FileAccessMixin()
     return m.read_file('vaultier.pub')
@@ -41,3 +57,4 @@ def pubkey():
 def privkey():
     m = FileAccessMixin()
     return m.read_file('vaultier.key')
+

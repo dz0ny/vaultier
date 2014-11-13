@@ -1,3 +1,5 @@
+# todo: it seems that whole member thing is not to be included yet
+
 # from django.test.testcases import TransactionTestCase
 # from django.utils import unittest
 # from django.utils.unittest.suite import TestSuite

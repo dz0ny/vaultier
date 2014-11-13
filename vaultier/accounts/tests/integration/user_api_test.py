@@ -1,9 +1,5 @@
-from time import time
 from datetime import timedelta
 
-from django.utils import timezone
-from rest_framework.test import APIClient
-from django.core.urlresolvers import reverse
 import pytest
 from rest_framework.status import HTTP_201_CREATED, HTTP_200_OK, \
     HTTP_400_BAD_REQUEST
@@ -11,45 +7,13 @@ from django.conf import settings
 
 from accounts.models import User, Token
 from vaultier.test.tools import FileAccessMixin
-from accounts.business.authentication import Authenticator
-
-
-# helper methods
-def create_signature(key, email, date):
-    return Authenticator.sign(key, email, date)
-
-
-def register_user(public_key, nickname, email):
-    client = APIClient()
-    url = reverse('user-list')
-    response = client.post(url, {
-        "nickname": nickname,
-        "email": email,
-        "timestamp": int(time()),
-        "public_key": public_key,
-    })
-    return response
-
-
-def authenticate_user(email, date, private_key=None, signature=None):
-    client = APIClient()
-    url = reverse('auth-auth')
-    response = None
-    if not signature:
-        signature = create_signature(key=private_key, email=email,
-                                     date=date)
-
-    response = client.post(url, {'email': email,
-                                 'date': date,
-                                 'signature': signature
-    })
-    return response
+from accounts.tests.testutils.test_api_utils import *
 
 
 @pytest.mark.django_db
 class TestSignatures(object):
     def test_rsa(self):
-        email = "ondrej.kmoch@rclick.cz"
+        email = "duke.nukem@rclick.cz"
         m = FileAccessMixin()
         privkey = m.read_file('vaultier.key')
         pubkey = m.read_file('vaultier.pub')
@@ -90,13 +54,13 @@ class TestApiRegister(object):
 
         # try to login, check good signature
         response = authenticate_user(private_key=privkey,
-                                     email=user1.email, date=date)
+                                     email=user1.email)
 
         assert (response.status_code == HTTP_200_OK)
 
         # try to login, check wrong signature
         bad_signature = "DefinitelyBadSignature"
-        response = authenticate_user(email=user1.email, date=date,
+        response = authenticate_user(email=user1.email,
                                      signature=bad_signature)
 
         # todo: currently returns 400, ideally should 403
@@ -112,8 +76,7 @@ class TestApiRegister(object):
     def test_030_registration_should_be_case_insensitive(self, pubkey, privkey):
         # registration with multicase email and auth with lowercase
         # register user
-        client = APIClient()
-        date = timezone.now()
+
 
         email = 'TeSt.CaSe.InSeSiTiVe@rclick.cz'
 
@@ -124,13 +87,13 @@ class TestApiRegister(object):
 
         # try auth with same email in lower case
         response = authenticate_user(private_key=privkey,
-                                     email=email.lower(), date=date)
+                                     email=email.lower())
 
         assert (response.status_code == HTTP_200_OK)
 
         # login with the email in UPPER CASE
         response = authenticate_user(private_key=privkey,
-                                     email=email.upper(), date=date)
+                                     email=email.upper())
 
         assert (response.status_code == HTTP_200_OK)
 
@@ -143,7 +106,7 @@ class TestApiRegister(object):
 
         # login with the email to lower case
         response = authenticate_user(private_key=privkey,
-                                     email=email.lower(), date=date)
+                                     email=email.lower())
 
         assert (response.status_code == HTTP_200_OK)
 
@@ -172,9 +135,8 @@ class TestApiRegister(object):
 
 class TestTokenExpiration(object):
     def test_010_token_renewed(self, user1, privkey):
-        date = timezone.now()
         response = authenticate_user(private_key=privkey,
-                                     email=user1.email, date=date)
+                                     email=user1.email)
 
         token = response.data.get('token')
 
@@ -190,9 +152,8 @@ class TestTokenExpiration(object):
             (timezone.now() - token_model.last_used_at).total_seconds() < 60)
 
     def test_020_token_not_renewed_immediately(self, user1, privkey):
-        date = timezone.now()
         response = authenticate_user(private_key=privkey,
-                                     email=user1.email, date=date)
+                                     email=user1.email)
 
         token = response.data.get('token')
 
@@ -206,9 +167,8 @@ class TestTokenExpiration(object):
         assert (last_used_at == token_model.last_used_at)
 
     def test_030_old_token_cleaned_up(self, user1, privkey):
-        date = timezone.now()
         response = authenticate_user(private_key=privkey,
-                                     email=user1.email, date=date)
+                                     email=user1.email)
 
         token = response.data.get('token')
 
@@ -224,9 +184,8 @@ class TestTokenExpiration(object):
         assert (Token.objects.all().count() == 0)
 
     def test_040_recent_token_not_cleaned_up(self, user1, privkey):
-        date = timezone.now()
         response = authenticate_user(private_key=privkey,
-                                     email=user1.email, date=date)
+                                     email=user1.email)
 
         token = response.data.get('token')
 
