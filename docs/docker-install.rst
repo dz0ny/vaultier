@@ -37,46 +37,46 @@ Environment Variables
 =====================
 
 *VAULTIER_DOMAIN*
-    Domain where is Vaultier accessible (string)
+    Domain where is Vaultier accessible (string, default "example.com")
 
 *VAULTIER_FROM_EMAIL*
-    Email address where are all emails sending from. By default it will stay
-    example.com (string)
+    Email address where are all emails sending from. (string,
+    default="noreply@example.com" where example.com is VAULTIER_DOMAIN)
 
 *VAULTIER_EMAIL_HOST*
-    Mailserver IP address or DNS (string)
+    Mailserver IP address or DNS (string, default "")
 
 *VAULTIER_EMAIL_PORT*
-    Mailserver port (int)
+    Mailserver port (int, default "25")
 
 *VAULTIER_EMAIL_USER*
-    Mailserver user (string)
+    Mailserver user (string, default "")
 
 *VAULTIER_EMAIL_PASSWORD*
-    Mailserver password (string)
+    Mailserver password (string, default "")
 
 *VAULTIER_EMAIL_TLS*
-    Does mailserver use TLS (bool)
+    Does mailserver use TLS (bool, default "False")
 
 *VAULTIER_DATABASE_NAME*
-    Database name (string)
+    Database name (string, default "vaultier")
 
 *VAULTIER_DATABASE_USER*
-    Database user (string)
+    Database user (string, default "vaultier")
 
 *VAULTIER_DATABASE_PASSWORD*
-    Database password (string)
+    Database password (string, default "vaultier")
 
 *VAULTIER_DATABASE_HOST*
-    Database host (string)
+    Database host (string, default "127.0.0.1")
 
 *VAULTIER_DATABASE_PORT*
-    Database port (int)
+    Database port (int, default "")
 
 *VAULTIER_ALLOW_REGISTRATION*
     By default is registration allowed only for first user. Other people can
-    become user by getting invitation (bool)
+    become user by getting invitation (bool, default "")
 
 *VAULTIER_ALLOW_STATISTICS*
-    Send anonymous usage statistic to vaultier.org REST API. More information
-    :doc:`statistics`
+    Send anonymous usage statistic to vaultier.org REST API (bool,
+    default "True"). More information :doc:`statistics`
