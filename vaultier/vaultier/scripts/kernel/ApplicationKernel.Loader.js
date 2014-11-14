@@ -1,10 +1,14 @@
-//@todo: document this
+/**
+ * Loads resources defined by modules.js
+ *
+ * @class ApplicationKernel.Loader
+ */
 ApplicationKernel.Loader = {
 
     loaded: 0,
+    injected: 0,
     percent: 0,
     loadQueue: [],
-
 
     loadApplication: function () {
         var url = ApplicationKernel.Config.getIncludesUrl();
@@ -15,7 +19,7 @@ ApplicationKernel.Loader = {
                     ApplicationKernel.Config.environment = jsonData.environment;
                 }
                 if (this.isResourceIntendedForLoading(resource, ApplicationKernel.Config.environment)) {
-                    this.queueFile(resource['url']);
+                    this.queueFile(resource);
                 }
             }.bind(this));
             this.loadQueued();
@@ -25,25 +29,71 @@ ApplicationKernel.Loader = {
     },
 
     loadQueued: function () {
-        ApplicationKernel.UI.showLoader();
-        for (var i = 0; i < this.loadQueue.length; i++) {
-            this.loadQueue[i]();
-        }
+        var deferreds = [];
+        this.loaded = 0;
+
+        // load whole queue
+        $.each(this.loadQueue, function (idx, resource) {
+            deferreds.push(this.loadResource(resource));
+        }.bind(this));
+
+        // all done
+        return $.when.apply(this, deferreds)
     },
 
-    queueFile: function (file) {
-        this.loadQueue.push(function () {
-            head.load(file, function () {
+    loadResource: function (resource) {
+        ApplicationKernel.UI.showLoader();
+        ApplicationKernel.UI.showLoaderText(this.percent + '%');
+
+        var type = null, ele = null;
+
+        if (resource.type == 'js') {
+            var ele = document.createElement("script");
+            ele.type = "text/javascript";
+            ele.src = resource.url;
+        }
+
+        if (resource.type == 'css') {
+            var ele = document.createElement("link");
+            ele.rel = 'stylesheet';
+            ele.type = 'text/css'
+            ele.href = resource.url;
+        }
+
+        if (!ele) {
+            throw new Error('Unsupported type $type to load from url $url'.replace('$url', resource.url).replace('$type', resource.type));
+
+        }
+
+        // ASYNC: load in parallel and execute as soon as possible
+        ele.async = false;
+        // DEFER: load in parallel but maintain execution order
+        ele.defer = true;
+
+        // promise
+        var promise = $.Deferred()
+
+        // on load
+        ele.onload = function () {
                 this.loaded++;
                 this.percent = Math.round(this.loaded / this.loadQueue.length * 100);
-
                 ApplicationKernel.UI.showLoaderText(this.percent + '%');
-
                 if (this.loaded == this.loadQueue.length) {
-                    ApplicationKernel.UI.hideLoader(1000);
+                    ApplicationKernel.UI.hideLoader(500);
                 }
-            }.bind(this));
-        }.bind(this));
+                promise.resolve(resource);
+        }.bind(this);
+
+        // do load - insert to dom and load
+        var head = document.head || doc.getElementsByTagName("head")[0];
+        head.appendChild(ele);
+
+        return promise;
+    },
+
+
+    queueFile: function (resource) {
+        this.loadQueue.push(resource);
     },
 
 
