@@ -1,12 +1,23 @@
+from optparse import make_option
+
 from django.core import management
 from django.core.management import BaseCommand
 from django.db import OperationalError
 from django.core.cache import cache
 from django.db.utils import ProgrammingError
+
 from vaultier.tasks import task_statistics_collector
 
 
 class Command(BaseCommand):
+    option_list = BaseCommand.option_list + (
+        make_option('--no_statistics',
+                    action='store_true',
+                    dest='no_statistics',
+                    default=False,
+                    help='disable statistics'),
+    )
+
 
     def handle(self, *args, **options):
         print ">>> Initializing your database"
@@ -26,6 +37,7 @@ class Command(BaseCommand):
             msg = ">>> Your DB is not configured correctly: {}"
             print msg.format(e.message)
         else:
-            task_statistics_collector.delay()
+            if options.get('no_statistics'):
+                task_statistics_collector.delay()
             print (">>> DB is initialized, you can now try to run Vaultier "
                    "using 'vaultier runserver'")
