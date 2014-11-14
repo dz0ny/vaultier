@@ -171,6 +171,7 @@ var vaultierModulesConfig = {
             "./app/di.js",
             "./app/router.js",
         /**************** Services **/
+            "./app/service/vnl/Messaging.js",
             "./app/service/Tree.js",
             "./app/service/Errors.js",
             "./app/service/Environment.js",

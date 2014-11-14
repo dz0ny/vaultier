@@ -26,6 +26,12 @@ Vaultier.runner.DefaultRunner = function () {
     }
 
     Vaultier.advanceReadiness();
+
+    mess = Service.Messaging.create(null, null);
+    mess.on('keyRemoved', function() {
+        console.log('He is playing with fire!');
+    });
+    mess.setAuthenticationToken(null);
 };
 
 Vaultier.runner.DefaultRunner();

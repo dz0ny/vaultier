@@ -26,6 +26,9 @@ Vaultier.initializers.DI = {
         //also there lazy loading does not work properly with ember initialize:
         RESTless.set('client', Vaultier.dal.core.Client);
 
+        // vnl:messaging
+        app.register('vnl:messaging', Service.Messaging);
+
         // service:errors
         app.register('service:errors', Service.Errors);
         app.inject('route', 'errors', 'service:errors');
