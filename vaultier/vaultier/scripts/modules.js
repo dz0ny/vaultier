@@ -9,7 +9,6 @@ var vaultierModulesConfig = {
 
         /**************** boot **/
             "./bower_components/jquery/dist/jquery.js",
-            "./bower_components/headjs/dist/1.0.0/head.js",
             "./bower_components/raven-js/dist/raven.js",
             "./local_components/pohon/pohon.js",
 
@@ -19,6 +18,15 @@ var vaultierModulesConfig = {
             "./kernel/ApplicationKernel.UI.js"
         ]
     },
+
+//
+//    "qunit": {
+//        environments: [],
+//        skipLoading: true,
+//        scripts: [
+//            "./bower_components/qunit/qunit/qunit.js",
+//        ]
+//    },
 
     "vendors": {
         environments: ['*'],
@@ -400,7 +408,6 @@ var vaultierModulesConfig = {
         environments: ['test'],
         scripts: [
             "./bower_components/qunit/qunit/qunit.js",
-
             "./test/util/Test.js"
         ],
         "styles": [
