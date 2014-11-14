@@ -37,6 +37,10 @@
     var gulp_livereload = require('gulp-livereload');
     var gulp_replace = require('gulp-replace');
     var gulp_yuidoc = require("gulp-yuidoc");
+    var gulp_yargv = require('yargs').argv;
+
+
+    var environment = (gulp_yargv.env != undefined ? gulp_yargv.env : 'prod');
 
 
     // Global requirements
@@ -220,7 +224,12 @@
 
         var pathname = path.resolve(includesFile);
         var file = fs.openSync(pathname, 'w');
-        fs.writeSync(file, JSON.stringify({resources: resources}));
+        fs.writeSync(file, JSON.stringify(
+            {
+                environment: environment,
+                resources: resources
+            }
+        ));
         fs.close(file);
 
         cb();

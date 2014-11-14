@@ -38,6 +38,19 @@ Vaultier.initializers.Boot = {
         app.inject('controller', 'config', 'config:main');
         app.inject('view', 'config', 'config:main');
         app.inject('service', 'config', 'config:main');
+
+        /**************************************************
+         **************************************************
+         * Initialize kernel
+         **************************************************
+         **************************************************
+         */
+
+        app.register('kernel:main', ApplicationKernel, {instantiate: false});
+        app.inject('route', 'kernel', 'kernel:main');
+        app.inject('controller', 'kernel', 'kernel:main');
+        app.inject('view', 'kernel', 'kernel:main');
+        app.inject('service', 'kernel', 'kernel:main');
     }
 };
 

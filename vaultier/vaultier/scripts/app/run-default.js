@@ -20,6 +20,11 @@ ApplicationKernel.namespace('Vaultier.runner');
  */
 
 Vaultier.runner.DefaultRunner = function () {
+
+    if (ApplicationKernel.Config.environment == 'dev') {
+        Vaultier.Mock.MockManager.runMocks(Vaultier, Vaultier.__container__);
+    }
+
     Vaultier.advanceReadiness();
 };
 
