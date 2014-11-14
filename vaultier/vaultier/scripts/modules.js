@@ -393,7 +393,7 @@ var vaultierModulesConfig = {
             "./bower_components/jquery-mockajax/jquery.mockjax.js",
 
             "./mock/BaseMock.js",
-            "./mock/MockManager.js",
+            "./mock/MockManager.js"
         ]
     },
 
@@ -408,10 +408,16 @@ var vaultierModulesConfig = {
         environments: ['test'],
         scripts: [
             "./bower_components/qunit/qunit/qunit.js",
-            "./test/util/Test.js"
         ],
         "styles": [
             "./bower_components/qunit/qunit/qunit.css"
+        ]
+    },
+
+    "run-test": {
+        environments: ['test'],
+        "scripts": [
+            "./app/run-tests.js"
         ]
     },
 
@@ -421,13 +427,6 @@ var vaultierModulesConfig = {
             "./test/case/module/Auth/AuthCases.js"
         ]
     },
-
-    "run-test": {
-        environments: ['test'],
-        "scripts": [
-            "./app/run-tests.js"
-        ]
-    }
 
 };
 
