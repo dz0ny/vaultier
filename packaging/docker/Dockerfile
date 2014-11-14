@@ -9,6 +9,7 @@ RUN DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales && \
     locale-gen en_US.UTF-8 && \
     /usr/sbin/update-locale LANG=en_US.UTF-8
 
+
 ENV LC_ALL en_US.UTF-8
 
 # Install Postgres, Htop, Uwsgi, Nginx & Supervisor
