@@ -8,15 +8,13 @@ ApplicationKernel.Loader = {
 
     loadApplication: function () {
         var url = ApplicationKernel.Config.getIncludesUrl();
-        var environment = ApplicationKernel.Config.environment;
-
-        if (!environment) {
-            throw new Error('Environment must be defined to load resources');
-        }
 
         var promise = $.getJSON(url, function (jsonData) {
             $.each(jsonData.resources, function (index, resource) {
-                if (this.isResourceIntendedForLoading(resource, environment)) {
+                if (ApplicationKernel.Config.environment == null) {
+                    ApplicationKernel.Config.environment = jsonData.environment;
+                }
+                if (this.isResourceIntendedForLoading(resource, ApplicationKernel.Config.environment)) {
                     this.queueFile(resource['url']);
                 }
             }.bind(this));

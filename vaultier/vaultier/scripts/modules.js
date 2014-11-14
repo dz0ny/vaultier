@@ -163,6 +163,7 @@ var vaultierModulesConfig = {
             "./app/di.js",
             "./app/router.js",
         /**************** Services **/
+            "./app/service/Tree.js",
             "./app/service/Errors.js",
             "./app/service/Environment.js",
             "./app/service/Auth.js",
@@ -378,8 +379,18 @@ var vaultierModulesConfig = {
         ]
     },
 
+    "mock": {
+        environments: ['dev', 'test'],
+        "scripts": [
+            "./bower_components/jquery-mockajax/jquery.mockjax.js",
+
+            "./mock/BaseMock.js",
+            "./mock/MockManager.js",
+        ]
+    },
+
     "run-default": {
-        environments: ['default'],
+        environments: ['prod', 'dev'],
         "scripts": [
             "./app/run-default.js"
         ]
@@ -388,7 +399,6 @@ var vaultierModulesConfig = {
     "test-env": {
         environments: ['test'],
         scripts: [
-            "./bower_components/jquery-mockajax/jquery.mockjax.js",
             "./bower_components/qunit/qunit/qunit.js",
 
             "./test/util/Test.js"
@@ -401,7 +411,7 @@ var vaultierModulesConfig = {
     "test-case": {
         environments: ['test'],
         scripts: [
-            "./test/case/module/Auth/AuthCases.js",
+            "./test/case/module/Auth/AuthCases.js"
         ]
     },
 

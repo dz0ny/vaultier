@@ -37,6 +37,18 @@ Vaultier.dal.core.RESTAdapter = RL.RESTAdapter.extend(
 
         serializer: Vaultier.dal.core.JSONSerializer.create(),
 
+        /**
+         * Computed path based on host and namespace.
+         * @property rootPath
+         * @type String
+         * @final
+        */
+        rootPath: Ember.computed(function() {
+            var ns = this.get('namespace');
+            return '/' + ns;
+
+        }).property('host', 'namespace'),
+
         buildUrl: function (model, key, klass) {
             var resourcePath = this.resourcePath(Ember.get(klass, 'resourceName'));
             var resourceListFormat = Ember.get(klass, 'resourceListFormat');

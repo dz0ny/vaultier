@@ -1,7 +1,7 @@
 //@todo: document this
 ApplicationKernel.Config = {
 
-    environment: 'default',
+    environment: null,
 
     applicationConfig: {},
 
@@ -15,7 +15,7 @@ ApplicationKernel.Config = {
     },
 
     parseEnvironment: function () {
-        var environment = this.environment;
+        var environment = null;
 
         var parseUrl = function (url) {
             var aURL = url || window.location.href;
