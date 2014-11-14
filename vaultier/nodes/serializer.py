@@ -9,5 +9,5 @@ class NodeSerializer(serializers.ModelSerializer):
     created_by = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
-        write_only_fields = ('lft', 'rght')
+        write_only_fields = ('lft', 'rght', 'level', 'tree_id')
         model = Node
