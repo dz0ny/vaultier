@@ -40,7 +40,7 @@ and members.
 
      {}
 
-  :jsonparam string [uid]: hashed site url - we use it as unique ID, to be able to count Vaultier instances
+  :jsonparam string [uid]: hashed site url - we use it as unique ID, to differentiate Vaultier instances
   :jsonparam int workspaces: number of workspaces
   :jsonparam int vaults: number of vaults
   :jsonparam int cards: number of cards

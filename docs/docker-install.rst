@@ -32,6 +32,7 @@ Docker Volumes
 * /opt/vaultier/logs
 * /opt/vaultier/data
 
+
 =====================
 Environment Variables
 =====================
@@ -41,6 +42,9 @@ Environment Variables
 
 *VAULTIER_DOMAIN*
     Domain where is Vaultier accessible (string, default "example.com")
+
+*VAULTIER_HTTP_SCHEME*
+    Used http scheme by application (string, default "http")
 
 *VAULTIER_FROM_EMAIL*
     Email address where are all emails sending from. (string,
@@ -78,8 +82,20 @@ Environment Variables
 
 *VAULTIER_ALLOW_REGISTRATION*
     By default is registration allowed only for first user. Other people can
-    become user by getting invitation (bool, default "False")
+    become user by getting invitation (bool, default False)
 
 *VAULTIER_ALLOW_STATISTICS*
     Send anonymous usage statistic to vaultier.org REST API (bool,
-    default "True"). More information :doc:`statistics`
+    default True). More information :doc:`statistics`
+
+
+==========
+Dockerfile
+==========
+
+You can take a look how Dockerfile looks like
+
+.. literalinclude:: ../packaging/docker/Dockerfile
+    :language: dockerfile
+    :linenos:
+
