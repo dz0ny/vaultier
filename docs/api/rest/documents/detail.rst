@@ -40,7 +40,7 @@ Retrieve list of path to current document.
 
   .. sourcecode:: http
 
-     GET /documents/3/path/ HTTP/1.1
+     GET /documents/1/path/ HTTP/1.1
      Accept: application/json
 
   **Example Response**
@@ -50,7 +50,37 @@ Retrieve list of path to current document.
      HTTP/1.1 200 OK
      Content-Type: application/json
 
-  .. include:: _document_list_example.rst
+    [
+
+      {
+        "id": 2,
+        "name" : "some-encrypted-data",
+        "meta": "some-encrypted-data",
+        "type": 1,
+        "data": null,
+        "color": "#ff6600",
+        "enc_version": 1,
+        "created_by": 1,
+        "created_at": "2014-05-28T10:10:30.501Z",
+        "updated_at": "2014-05-28T10:10:30.501Z",
+        "parent": 1,
+      },
+
+      {
+        "id": 3,
+        "name" : "some-encrypted-data",
+        "meta" : "some-encrypted-data",
+        "type" : 2,
+        "data" : "http://example.com/1",
+        "color": "#ff6600",
+        "enc_version": 1,
+        "created_by": 1,
+        "created_at": "2014-05-30T22:22:22.501Z",
+        "updated_at": "2015-05-30T23:23:23.501Z",
+        "parent": 2,
+      }
+
+    ]
 
   :status 200: OK
   :status 401: Unauthorized

@@ -11,9 +11,7 @@
         "created_by": 1,
         "created_at": "2014-05-28T10:10:30.501Z",
         "updated_at": "2014-05-28T10:10:30.501Z",
-        "parent": null,
-        "tree_id": 1,
-        "level": 0
+        "parent": null
     }
 
 :jsonparam string name: encrypted-data about name of document
