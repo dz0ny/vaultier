@@ -14,6 +14,7 @@
 
 import sys
 import os
+from pygments import highlight
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -30,6 +31,7 @@ import os
 # ones.
 extensions = [
     'sphinx.ext.autodoc',
+    'sphinxcontrib.httpdomain'
 ]
 
 # Add any paths that contain templates here, relative to this directory.

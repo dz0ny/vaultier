@@ -2,6 +2,15 @@
 Changelog
 *********
 
+RELEASE 0.7.3
+-------------
+
+* [bugfix] Logout is working event if your key was remembered
+* [feature] Documentation improvements and fixes
+* [feature] UI fixes
+* [bugfix] Links and logo image in emails
+* [bugfix] Statistic crontab and added uid of vaultier instance base on SITE_URL
+
 Release 0.7.2
 -------------
 * [bugfix] Registration error when timestamp to vary from server

@@ -32,49 +32,70 @@ Docker Volumes
 * /opt/vaultier/logs
 * /opt/vaultier/data
 
+
 =====================
 Environment Variables
 =====================
 
+.. warning:: Write all variables without quotes! Otherwise you can expect wrong
+    behaviour.
+
 *VAULTIER_DOMAIN*
-    Domain where is Vaultier accessible
+    Domain where is Vaultier accessible (string, default "example.com")
+
+*VAULTIER_HTTP_SCHEME*
+    Used http scheme by application (string, default "http")
+
+*VAULTIER_FROM_EMAIL*
+    Email address where are all emails sending from. (string,
+    default="noreply@example.com" where example.com is VAULTIER_DOMAIN)
 
 *VAULTIER_EMAIL_HOST*
-    Mailserver IP address or DNS
+    Mailserver IP address or DNS (string, default "")
 
 *VAULTIER_EMAIL_PORT*
-    Mailserver port
+    Mailserver port (int, default "25")
 
 *VAULTIER_EMAIL_USER*
-    Mailserver user
+    Mailserver user (string, default "")
 
 *VAULTIER_EMAIL_PASSWORD*
-    Mailserver password
+    Mailserver password (string, default "")
 
 *VAULTIER_EMAIL_TLS*
-    Does mailserver use TLS (bool)
+    Does mailserver use TLS (bool, default "False")
 
 *VAULTIER_DATABASE_NAME*
-    Database name
+    Database name (string, default "vaultier")
 
 *VAULTIER_DATABASE_USER*
-    Database user
+    Database user (string, default "vaultier")
 
 *VAULTIER_DATABASE_PASSWORD*
-    Database password
+    Database password (string, default "vaultier")
 
 *VAULTIER_DATABASE_HOST*
-    Database host
+    Database host (string, default "127.0.0.1")
 
 *VAULTIER_DATABASE_PORT*
-    Database port
+    Database port (int, default "")
 
 *VAULTIER_ALLOW_REGISTRATION*
     By default is registration allowed only for first user. Other people can
-    become user by getting invitation
+    become user by getting invitation (bool, default False)
 
 *VAULTIER_ALLOW_STATISTICS*
-    Send anonymous usage statistic to vaultier.org REST API
+    Send anonymous usage statistic to vaultier.org REST API (bool,
+    default True). More information :doc:`statistics`
 
-*VAULTIER_FROM_EMAIL*
-    Email address where are all emails sending from
+
+==========
+Dockerfile
+==========
+
+You can take a look how Dockerfile looks like
+
+.. literalinclude:: ../packaging/docker/Dockerfile
+    :language: dockerfile
+    :linenos:
+
