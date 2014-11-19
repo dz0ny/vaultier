@@ -1,12 +1,10 @@
 from optparse import make_option
-
+from vaultier.tasks import task_statistics_collector
 from django.core import management
 from django.core.management import BaseCommand
 from django.db import OperationalError
 from django.core.cache import cache
 from django.db.utils import ProgrammingError
-
-from vaultier.tasks import task_statistics_collector
 
 
 class Command(BaseCommand):
@@ -17,7 +15,6 @@ class Command(BaseCommand):
                     default=False,
                     help='disable statistics'),
     )
-
 
     def handle(self, *args, **options):
         print ">>> Initializing your database"
