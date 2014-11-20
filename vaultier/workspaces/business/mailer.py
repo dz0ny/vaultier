@@ -30,7 +30,6 @@ class InvitationMailer(VaultierMailer):
         :return: Context
         """
         kwargs.update({
-            'SITE_URL': settings.SITE_URL,
             'url': self._build_url()
         })
         return super(InvitationMailer, self)._build_context(**kwargs)

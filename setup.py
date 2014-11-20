@@ -46,7 +46,7 @@ setup(
             'vaultier = vaultier.runner:main'
         ],
     },
-    data_files = [
+    data_files=[
         (
             'vaultier-config-examples',
             ['cfg/nginx', 'cfg/supervisord', 'cfg/uwsgi']
@@ -56,7 +56,7 @@ setup(
     author=u"rclick s.r.o.",
     author_email='info@rclick.cz',
     zip_safe=True,
-    include_package_data = True,
+    include_package_data=True,
     description="Vaultier project backend",
     long_description="Vaultier combines strong security with the option to "
                      "share sensitive data within the working teams, supliers "
@@ -64,6 +64,6 @@ setup(
                      "own needs and was designed to solve our problem to "
                      "collaborate on hundreds of login credentials with the "
                      "proper level of security and access control.",
-    version="0.7.2",
+    version="0.7.3",
     url="http://vaultier.org"
 )

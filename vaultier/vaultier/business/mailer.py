@@ -5,6 +5,7 @@ from django.template.loader import get_template
 from pynliner import Pynliner
 from celery.contrib.methods import task_method
 from celery import current_app as app
+from urlparse import urljoin
 
 
 class VaultierMailer(object):
@@ -137,5 +138,9 @@ class VaultierMailer(object):
         with the template variables set for each implementation
         :return: None
         """
-
+        # adding full url to logo
+        kwargs.update({
+            'logo_url': "{}vaultier/images/logo-email.png".format(
+                urljoin(settings.SITE_URL, settings.STATIC_URL))
+        })
         return Context(kwargs)
