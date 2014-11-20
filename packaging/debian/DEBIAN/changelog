@@ -1,10 +1,11 @@
 vaultier (0.7.3-1ubuntu3) trusty; urgency=medium
 
-  * [bugfix] Logout is working event if your key was remembered
-  * [feature] Documentation improvements and fixes
-  * [feature] UI fixes
-  * [bugfix] Links and logo image in emails
-  * [bugfix] Statistic crontab and added uid of vaultier instance base on SITE_URL
+* [bugfix] Logout feature remove all credentials from browser even if remembered
+* [feature] Documentation improvements and fixes
+* [feature] UI fixes
+* [bugfix] Links and logo image in emails
+* [bugfix] Statistic crontab fix.
+* [feature] Added hashed uid of vaultier instance based on SITE_URL to statistics
 
  -- Jakub Bokoc <jakub.bokoc@rclick.cz>  Fri, 14 Nov 2014 17:22:15 +0100
 
