@@ -5,11 +5,12 @@ Changelog
 RELEASE 0.7.3
 -------------
 
-* [bugfix] Logout is working event if your key was remembered
+* [bugfix] Logout feature remove all credentials from browser even if remembered
 * [feature] Documentation improvements and fixes
 * [feature] UI fixes
 * [bugfix] Links and logo image in emails
-* [bugfix] Statistic crontab and added uid of vaultier instance base on SITE_URL
+* [bugfix] Statistic crontab fix.
+* [feature] Added hashed uid of vaultier instance based on SITE_URL to statistics
 
 Release 0.7.2
 -------------
