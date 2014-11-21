@@ -192,7 +192,7 @@ var vaultierModulesConfig = {
             "./app/dal/core/Client.js",
 
             "./app/dal/mixin/CreatedUpdatedMixin.js",
-            "./app/dal/mixin/MutableModelMixin.js",
+            "./app/dal/mixin/PolymorphicModelMixin.js",
             "./app/dal/mixin/EncryptedModelMixin.js",
             "./app/dal/mixin/RollbackMixin.js",
 
@@ -209,7 +209,8 @@ var vaultierModulesConfig = {
             "./app/dal/model/Card.js",
             "./app/dal/model/Secret.js",
             "./app/dal/model/LostKey.js",
-            "./app/dal/model/News.js"
+            "./app/dal/model/News.js",
+            "./app/dal/model/Node.js"
         ]
     },
     "layout": {
@@ -426,7 +427,7 @@ var vaultierModulesConfig = {
         scripts: [
             "./test/case/module/Auth/AuthCases.js"
         ]
-    },
+    }
 
 };
 
