@@ -1,22 +1,21 @@
+from base64 import b64decode
+from datetime import datetime, timedelta
+
 from Crypto.Hash import SHA
 from Crypto.PublicKey import RSA
 from Crypto.Signature import PKCS1_v1_5
-from base64 import b64decode
-from datetime import datetime, timedelta
 from dateutil import parser as dateparser
 from django.utils import timezone
 from rest_framework.authentication import BaseAuthentication
 from rest_framework.exceptions import AuthenticationFailed
 from django.conf import settings
-from accounts.models import LostKey, Token, User
 from django.utils.timezone import utc
+
+from accounts.models import LostKey, Token, User
 
 
 class TokenAuthentication(BaseAuthentication):
-
-    def authenticate(self, request):
-        token = request.META.get('HTTP_X_VAULTIER_TOKEN')
-
+    def authenticate_token(self, token):
         if token is None or token == '' or token == 'null':
             return None, None
 
@@ -25,7 +24,7 @@ class TokenAuthentication(BaseAuthentication):
             """:type : Token"""
             token_renewal_interval = settings.VAULTIER.get(
                 'authentication_token_renewal_interval')
-            #convert to seconds
+            # convert to seconds
             token_renewal_interval *= 60
 
             td = timezone.now() - model.last_used_at
@@ -39,6 +38,10 @@ class TokenAuthentication(BaseAuthentication):
             raise AuthenticationFailed('User inactive or deleted')
 
         return model.user, token
+
+    def authenticate(self, request):
+        token = request.META.get('HTTP_X_VAULTIER_TOKEN')
+        return self.authenticate_token(token)
 
 
 class HashAuthentication(BaseAuthentication):
@@ -68,7 +71,6 @@ class HashAuthentication(BaseAuthentication):
 
 
 class Authenticator(object):
-
     @classmethod
     def verify(cls, public_key, content, date, signature):
         """
@@ -123,7 +125,7 @@ class Authenticator(object):
         if safe_until < now:
             raise Exception('Login timestamp to old')
 
-        #check database for user
+        # check database for user
         try:
             user = User.objects.get(email=email.lower())
         except User.DoesNotExist:

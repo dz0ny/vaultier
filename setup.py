@@ -43,7 +43,8 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'vaultier = vaultier.runner:main'
+            'vaultier = vaultier.runner:main',
+            'vaultier-websocket = vaultier.websocket.websocket:main'
         ],
     },
     data_files = [

@@ -163,14 +163,13 @@ INSTALLED_APPS = (
     'nodes'
 )
 
-#Django cache settings
+# Django cache settings
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
         'LOCATION': 'vaultier_cache',
     }
 }
-
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
@@ -289,3 +288,8 @@ CELERYBEAT_SCHEDULE = {
         'schedule': crontab(hour='1'),
     }
 }
+
+# redis setting
+REDIS_HOST = '127.0.0.1'
+REDIS_PORT = '6379'
+REDIS_DB = '0'

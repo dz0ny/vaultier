@@ -25,3 +25,5 @@ python-dateutil==2.2
 logan==0.5.10
 iso8601==0.1.10
 django-mptt==0.6.1
+redis==2.10.3
+gevent==1.0.1

@@ -1,6 +1,7 @@
 from mptt import models as mpttmodels
 from django.db import models
 from django.conf import settings
+
 from vaultier.business.db import TimestampableMixin
 
 
