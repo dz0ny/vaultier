@@ -743,7 +743,7 @@ textarea {
 *************************************************************
 *************************************************************/
 .vlt-hp {
-    background: url('../images/topcover.png') no-repeat center center fixed;
+    background: url('../images/topcover.jpg') no-repeat center center fixed;
     background-size: cover;
     min-height: 100%;
     width: 100%;
@@ -755,7 +755,7 @@ textarea {
 .vlt-hp .container {
     position: relative;
     top: 112px;
-    background: url('../images/topcover.png') no-repeat center center fixed;
+    background: url('../images/topcover.jpg') no-repeat center center fixed;
     background-size: cover;
 }
 .vlt-hp .container img {
