@@ -27,11 +27,11 @@ Vaultier.runner.DefaultRunner = function () {
 
     Vaultier.advanceReadiness();
 
-    mess = Service.Messaging.create(null, null);
-    mess.on('keyRemoved', function() {
+    var mess = Service.Messaging.create(null, null);
+    mess.on('nodeCreated', function() {
         console.log('He is playing with fire!');
     });
-    mess.setAuthenticationToken(null);
+    mess.connect();
 };
 
 Vaultier.runner.DefaultRunner();

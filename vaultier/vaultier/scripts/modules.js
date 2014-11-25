@@ -108,8 +108,10 @@ var vaultierModulesConfig = {
             "./bower_components/jsrsasign/jsrasign-latest-all.js",
 
         /**************** rsa keys generation **/
-            "./bower_components/jsencrypt/bin/jsencrypt.js"
+            "./bower_components/jsencrypt/bin/jsencrypt.js",
 
+        /**************** socket library **/
+            "./bower_components/socket.io/lib/*.js"
 
         ],
         "styles": [

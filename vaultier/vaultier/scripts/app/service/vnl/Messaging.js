@@ -3,6 +3,8 @@ ApplicationKernel.namespace('Service');
 Service.Messaging = Ember.Object.extend(
     Ember.Evented,
     {
+//        socket: io,
+
         setAuthenticationToken: function (token) {
             var id = null;
 
@@ -19,11 +21,20 @@ Service.Messaging = Ember.Object.extend(
             this.trigger('nodeCreated', id);
             this.trigger('nodeChanged', id);
             this.trigger('nodeRemoved', id);
+
+            return Ember.RSVP.resolve()
+                .then(function () {
+//                    this.socket.connect();
+                })
         },
         disconnect: function() {
+            return Ember.RSVP.resolve()
+                .then(function () {
+//                    this.socket.disconnect();
+                })
         },
         reconnect: function() {
-
+            return this.disconnect().then(this.connect())
         }
     }
 );
