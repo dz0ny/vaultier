@@ -10,7 +10,7 @@ var decryptedField = Vaultier.dal.mixin.EncryptedModel.decryptedField;
 Vaultier.dal.model.Secret = RL.Model.extend(
     Vaultier.dal.mixin.CreatedUpdatedMixin,
     Vaultier.dal.mixin.EncryptedModel.Mixin,
-    Vaultier.dal.mixin.MutableModel,
+    Vaultier.dal.mixin.PolymorphicModel.Mixin,
     {
         mutableModelTypeField: 'type',
         mutableModelMapping: {

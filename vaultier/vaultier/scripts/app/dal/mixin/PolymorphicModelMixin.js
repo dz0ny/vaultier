@@ -1,11 +1,11 @@
-ApplicationKernel.namespace('Vaultier.dal.mixin');
+ApplicationKernel.namespace('Vaultier.dal.mixin.PolymorphicModel');
 
 /**
  * @module vaultier-dal-mixin
  * @class Vaultier.dal.mixin.MutableModel
  * @extends Ember.Mixin
  */
-Vaultier.dal.mixin.MutableModel = Ember.Mixin.create({
+Vaultier.dal.mixin.PolymorphicModel.Mixin = Ember.Mixin.create({
 
     init: function () {
         this._super.apply(this, arguments);
@@ -45,15 +45,15 @@ Vaultier.dal.mixin.MutableModel = Ember.Mixin.create({
         var cls = Ember.get(clsName);
         if (!cls)
             throw new Error('Cannot instantiate secret class mixin {mixin} for type {type}'
-                .replace('{type}', type)
-                .replace('{mixin}', clsName)
+                    .replace('{type}', type)
+                    .replace('{mixin}', clsName)
             );
 
         var applied = cls.detect(this)
         if (applied) {
             throw new Error('Cannot apply mixin {mixin}, already applied {applied}'
-                .replace('{mixin}', clsName)
-                .replace('{applied}', appliedMixin)
+                    .replace('{mixin}', clsName)
+                    .replace('{applied}', appliedMixin)
             );
         }
 
