@@ -31,6 +31,7 @@ Vaultier.Mock.BaseMock = Ember.Object.extend({
     /**
      * Return one fixture from example data according to given id
      *
+     * @method findById
      * @param {Number} id
      * @returns {*}
      */

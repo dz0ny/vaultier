@@ -393,7 +393,8 @@ var vaultierModulesConfig = {
             "./bower_components/jquery-mockajax/jquery.mockjax.js",
 
             "./mock/BaseMock.js",
-            "./mock/MockManager.js"
+            "./mock/MockManager.js",
+            "./mock/NodeMock.js"
         ]
     },
 
