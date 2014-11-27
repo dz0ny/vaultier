@@ -2,6 +2,14 @@
 Changelog
 *********
 
+RELEASE 0.7.4
+-------------
+
+* [bugfix] SITE_URL http scheme in docker and deb package
+* [bugfix] Background image and css optimalizations
+* [bugfix] Roles read and create could not access any object
+* [bugfix] Role create could not be created
+
 RELEASE 0.7.3
 -------------
 
