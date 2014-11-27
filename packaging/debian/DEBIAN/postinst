@@ -115,7 +115,7 @@ sed -i "s/bool(os.getenv('VAULTIER_ALLOW_STATISTICS', True))/${allow_statistics}
 
 
 # copy config files
-if [ $http_scheme = 'http' ]; then
+if [ "$http_scheme" = 'http' ]; then
     cp /usr/share/vaultier/config/nginx/vaultier /etc/nginx/sites-available/vaultier
 else
     cp /usr/share/vaultier/config/nginx/vaultier-ssl /etc/nginx/sites-available/vaultier
