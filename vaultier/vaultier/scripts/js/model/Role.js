@@ -119,7 +119,7 @@ Vaultier.Role = RL.Model.extend(
          */
         isRelatedToObject: function (object) {
             return this.get('relatedObjectType') === object.get('objectType') &&
-                this.get('relatedObject.id') === object.get('id');
+                this.get('relatedObject') === object.get('id');
         }
 
     });

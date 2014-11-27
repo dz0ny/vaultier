@@ -22,7 +22,7 @@ class CanManageWorkspace(BasePermission):
 
     def has_object_permission(self, request, view, obj):
 
-        if view.action == ['retrieve', 'list']:
+        if view.action in ['retrieve', 'list']:
             required_level = AclLevelField.LEVEL_READ
         else:
             required_level = AclLevelField.LEVEL_WRITE
