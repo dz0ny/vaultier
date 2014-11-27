@@ -1202,10 +1202,14 @@ footer .vlt-version {
 footer .vlt-rclick a {
     color: white;
     font-size: 110%;
+    text-decoration: none;
 }
 footer .vlt-rclick img {
     border-radius: 3px;
     padding: 2px;
+}
+footer .vlt-enterprise {
+    padding-right: 10px;
 }
 
 /*************************************************************
