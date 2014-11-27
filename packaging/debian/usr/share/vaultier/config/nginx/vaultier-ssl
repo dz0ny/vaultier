@@ -1,0 +1,28 @@
+server {
+	server_name DEB_DOMAIN;
+	listen *:80;
+	return 301 https://$server_name$request_uri;
+}
+
+server {
+        server_name DEB_DOMAIN;
+        listen   *:443;
+        client_max_body_size 10M;
+
+        access_log /opt/vaultier/logs/nginx-access.log;
+        error_log /opt/vaultier/logs/nginx-error.log;
+
+        ssl on;
+        ssl_certificate PATH_TO_CERT_FILE;
+        ssl_certificate_key PATH_TO_KEY_FILE;
+
+
+        location / {
+            include uwsgi_params;
+            uwsgi_pass unix:/run/uwsgi/app/vaultier/socket;
+        }
+
+        location /static {
+            alias /opt/vaultier/venv/lib/python2.7/site-packages/vaultier/vaultier/static/;
+        }
+}

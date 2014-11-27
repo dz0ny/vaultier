@@ -707,6 +707,12 @@ textarea {
     margin: 0px;
     padding: 0px;
 }
+
+@media screen and (max-width: 850px) {
+  .vlt-page.vlt-page-with-sidebar .vlt-page-content-responsive-header h2 {
+      text-align: center;
+  }
+}
 @media screen and (max-width: 550px) {
     .vlt-page.vlt-page-with-sidebar .vlt-page-content {
         padding: 0px;
@@ -743,7 +749,7 @@ textarea {
 *************************************************************
 *************************************************************/
 .vlt-hp {
-    background: url('../images/topcover.png') no-repeat center center fixed;
+    background: url('../images/topcover.jpg') no-repeat center center fixed;
     background-size: cover;
     min-height: 100%;
     width: 100%;
@@ -755,7 +761,7 @@ textarea {
 .vlt-hp .container {
     position: relative;
     top: 112px;
-    background: url('../images/topcover.png') no-repeat center center fixed;
+    background: url('../images/topcover.jpg') no-repeat center center fixed;
     background-size: cover;
 }
 .vlt-hp .container img {
@@ -872,18 +878,16 @@ textarea {
     text-align: right;
     padding: 8px;
 }
-.vlt-hp .container .vlt-latest-news .vlt-latest-news-box .vlt-latest-news-box-date .vlt-latest-news-box-date-year {
-    text-align: center;
-    font-size: 160%;
-    margin-top: 7px;
-    display: block;
-    width: 100%;
-}
+.vlt-hp .container .vlt-latest-news .vlt-latest-news-box .vlt-latest-news-box-date .vlt-latest-news-box-date-year,
 .vlt-hp .container .vlt-latest-news .vlt-latest-news-box .vlt-latest-news-box-date .vlt-latest-news-box-date-month-and-day {
     text-align: center;
     font-size: 160%;
     display: block;
     width: 100%;
+    white-space: nowrap
+}
+.vlt-hp .container .vlt-latest-news .vlt-latest-news-box .vlt-latest-news-box-date .vlt-latest-news-box-date-year {
+    margin-top: 7px;
 }
 .vlt-hp .container .vlt-latest-news .vlt-latest-news-box .vlt-latest-news-box-content {
     padding: 16px 10px 17px 5px;
@@ -921,6 +925,10 @@ textarea {
 @media screen and (max-width: 991px) {
     .vlt-hp .container {
         padding-bottom: 80px;
+    }
+    .vlt-hp .container .vlt-latest-news .vlt-latest-news-header h2 {
+        text-align: center;
+        margin-bottom: 15px;
     }
     .vlt-hp .container .vlt-latest-news .vlt-latest-news-box {
         width: 100%;
@@ -1202,10 +1210,14 @@ footer .vlt-version {
 footer .vlt-rclick a {
     color: white;
     font-size: 110%;
+    text-decoration: none;
 }
 footer .vlt-rclick img {
     border-radius: 3px;
     padding: 2px;
+}
+footer .vlt-enterprise {
+    padding-right: 10px;
 }
 
 /*************************************************************

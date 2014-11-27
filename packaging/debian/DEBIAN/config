@@ -14,6 +14,8 @@ if [ ! -f /opt/vaultier/vaultier_conf.py ]; then
         fi
     done
 
+    db_input high vaultier/http_scheme || true
+
     # database settings
     db_input high vaultier/database_host || true
     db_input high vaultier/database_port || true

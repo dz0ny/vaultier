@@ -15,7 +15,4 @@ server {
             alias /opt/vaultier/venv/lib/python2.7/site-packages/vaultier/vaultier/static/;
         }
 
-        location /media {
-            alias /opt/vaultier/venv/lib/python2.7/site-packages/vaultier/vaultier/media/;
-        }
 }
