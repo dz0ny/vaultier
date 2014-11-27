@@ -15,6 +15,7 @@ from accounts.models import LostKey, Token, User
 
 
 class TokenAuthentication(BaseAuthentication):
+
     def authenticate_token(self, token):
         if token is None or token == '' or token == 'null':
             return None, None

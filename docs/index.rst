@@ -17,6 +17,8 @@ Contents:
    building
    migrations/index
    api/index
+   notifier/index
+   websocket/index
 
 
 

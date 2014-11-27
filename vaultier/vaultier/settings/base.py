@@ -290,6 +290,6 @@ CELERYBEAT_SCHEDULE = {
 }
 
 # redis setting
-REDIS_HOST = '127.0.0.1'
-REDIS_PORT = '6379'
-REDIS_DB = '0'
+REDIS_HOST = 'localhost'
+REDIS_PORT = 6379
+REDIS_DB = 0

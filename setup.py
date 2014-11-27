@@ -28,6 +28,9 @@ setup(
         'logan==0.5.10',
         'django-mptt==0.6.1',
         'iso8601==0.1.10',
+        'redis==2.10.3',
+        'gevent==1.0.1',
+        'gevent-websocket==0.9.3'
     ],
     classifiers=[
         "Development Status :: 5 - Production/Stable",
@@ -44,7 +47,6 @@ setup(
     entry_points={
         'console_scripts': [
             'vaultier = vaultier.runner:main',
-            'vaultier-websocket = vaultier.websocket.websocket:main'
         ],
     },
     data_files = [
