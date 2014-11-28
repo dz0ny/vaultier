@@ -129,7 +129,7 @@ class TestNodesApi(object):
         client = APIClient()
         client.force_authenticate(user=user1)
 
-        with open("{}/{}".format(os.path.dirname(__file__), 'test.jpg')) as fl:
+        with open("{}/{}".format(os.path.dirname(__file__), 'test.txt')) as fl:
             response = client.patch(
                 reverse('node-data', kwargs={"pk": node1.id}),
                 data={
@@ -160,6 +160,17 @@ class TestNodesApi(object):
                 }, format='multipart')
 
             assert response.status_code == status.HTTP_404_NOT_FOUND
+
+        with open("{}/{}".format(os.path.dirname(__file__), 'test.jpg')) as fl:
+
+            response = client.put(
+                reverse('node-data', kwargs={"pk": node1.id}),
+                data={
+                    "blob_data": fl,
+                    "blob_meta": "whatever"
+                }, format='multipart')
+
+            assert response.status_code == status.HTTP_400_BAD_REQUEST
 
     def test_delete(self, user1, node1):
         client = APIClient()

@@ -30,4 +30,9 @@ class BlobDataField(FileField):
         if data and not hasattr(data, 'size') and len(data) > max_size:
             raise ValidationError('Maximum blob size is 100K encrypted')
 
+        try:
+            data.read().decode('utf-8')
+        except UnicodeDecodeError:
+            raise ValidationError('Not valid data')
+
         return super(BlobDataField, self).from_native(data)

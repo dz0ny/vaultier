@@ -22,15 +22,9 @@ Returns data.
   .. sourcecode:: http
 
      HTTP/1.1 200 OK
-     Content-Type: text/text; charset=utf-8
-     Content-Length: length
+     Content-Type: application/json
 
-     {
-        "id": 3,
-        "blob_data" : "some-encrypted-data",
-        "blob_meta" : "some-encrypted-data",
-     }
-
+  .. include:: _data_example.rst
 
   :status 200: OK
   :status 401: Unauthorized
@@ -61,13 +55,10 @@ Updates data for file document
 
   .. sourcecode:: http
 
-     HTTP/1.1 200 NO CONTENT
+     HTTP/1.1 200 OK
+     Content-Type: application/json
 
-     {
-        "id": 3,
-        "blob_data" : "some-encrypted-data",
-        "blob_meta" : "some-encrypted-data",
-     }
+  .. include:: _data_example.rst
 
   :status 200: OK
   :status 400: Bad request (bad data, missing field, ...)

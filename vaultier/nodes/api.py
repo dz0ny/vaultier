@@ -1,7 +1,7 @@
 from .models import Node
 from .serializer import NodeSerializer, NodeBlobSerializer
 from .business.permissions import NodePermission
-from rest_framework import mixins
+from rest_framework import mixins, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.generics import GenericAPIView
@@ -61,7 +61,11 @@ class NodeDataView(GenericAPIView,
         """
         Added put method
         """
-        return self.update(request, pk)
+        response = self.update(request, pk)
+        # if success, clear data from response
+        if response.status_code == status.HTTP_200_OK:
+            response.data = None
+        return response
 
 
 class NodePathView(GenericAPIView):
