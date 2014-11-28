@@ -25,7 +25,11 @@ Returns data.
      Content-Type: text/text; charset=utf-8
      Content-Length: length
 
-     encrypted-data-here
+     {
+        "id": 3,
+        "blob_data" : "some-encrypted-data",
+        "blob_meta" : "some-encrypted-data",
+     }
 
 
   :status 200: OK
@@ -57,9 +61,15 @@ Updates data for file document
 
   .. sourcecode:: http
 
-     HTTP/1.1 204 NO CONTENT
+     HTTP/1.1 200 NO CONTENT
+
+     {
+        "id": 3,
+        "blob_data" : "some-encrypted-data",
+        "blob_meta" : "some-encrypted-data",
+     }
 
   :status 200: OK
-  :status 400: Bad request (bad data, ...)
+  :status 400: Bad request (bad data, missing field, ...)
   :status 401: Unauthorized
   :status 403: Forbidden

@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from accounts.serializers import RelatedUserSerializer
-from secrets.business.fields import SecretPermsField, BlobDataField
+from secrets.business.fields import SecretPermsField
+from nodes.business.fields import BlobDataField
 from secrets.models import Secret
 
 
