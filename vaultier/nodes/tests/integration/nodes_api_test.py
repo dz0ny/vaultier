@@ -88,8 +88,7 @@ class TestNodesApi(object):
         response = client.get(
             reverse('node-data', kwargs={"pk": node1.id}))
 
-        assert response.status_code == status.HTTP_501_NOT_IMPLEMENTED
-        # assert response.status_code == status.HTTP_200_OK
+        assert response.status_code == status.HTTP_200_OK
 
     def test_update(self, user1, node1):
         client = APIClient()
@@ -130,25 +129,48 @@ class TestNodesApi(object):
         client = APIClient()
         client.force_authenticate(user=user1)
 
-        response = client.patch(
-            reverse('node-data', kwargs={"pk": node1.id}),
-            data={
-                "meta": "different whatever",
-                "enc_version": 2,
-            })
+        with open("{}/{}".format(os.path.dirname(__file__), 'test.txt')) as fl:
+            response = client.patch(
+                reverse('node-data', kwargs={"pk": node1.id}),
+                data={
+                    "blob_data": fl,
+                    "blob_meta": "whatever"
+                }, format='multipart')
 
-        assert response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
+            assert response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
 
-        response = client.put(
-            reverse('node-data', kwargs={"pk": node1.id}),
-            data={
-                "name": "whatever",
-                "meta": "different whatever",
-                "type": Node.TYPE_DIRECTORY,
-                "enc_version": 2,
-            })
+            fl.seek(0)
 
-        assert response.status_code == status.HTTP_200_OK
+            response = client.put(
+                reverse('node-data', kwargs={"pk": node1.id}),
+                data={
+                    "blob_data": fl,
+                    "blob_meta": "whatever"
+                }, format='multipart')
+
+            assert response.status_code == status.HTTP_200_OK
+
+            fl.seek(0)
+
+            response = client.put(
+                reverse('node-data', kwargs={"pk": 9999}),
+                data={
+                    "blob_data": fl,
+                    "blob_meta": "whatever"
+                }, format='multipart')
+
+            assert response.status_code == status.HTTP_404_NOT_FOUND
+
+        with open("{}/{}".format(os.path.dirname(__file__), 'test.jpg')) as fl:
+
+            response = client.put(
+                reverse('node-data', kwargs={"pk": node1.id}),
+                data={
+                    "blob_data": fl,
+                    "blob_meta": "whatever"
+                }, format='multipart')
+
+            assert response.status_code == status.HTTP_400_BAD_REQUEST
 
     def test_delete(self, user1, node1):
         client = APIClient()
@@ -187,15 +209,14 @@ class TestNodesApi(object):
         # data not provided
         assert response.status_code == status.HTTP_201_CREATED
 
-        with open("{}/{}".format(os.path.dirname(__file__), 'test.jpg')) as fl:
-            response = client.post(
-                reverse('node-list'), format='multipart', data={
-                    "name": "whatever",
-                    "meta": "whatever",
-                    "type": Node.TYPE_FILE,
-                    "enc_version": 1,
-                    "data": fl
-                })
+        response = client.post(
+            reverse('node-list'), format='multipart', data={
+                "name": "whatever",
+                "meta": "whatever",
+                "type": Node.TYPE_FILE,
+                "enc_version": 1,
+                "data": "whatever"
+            })
 
         assert response.status_code == status.HTTP_201_CREATED
         created_node = response.data.get('id')

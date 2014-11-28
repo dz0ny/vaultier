@@ -1,5 +1,5 @@
 from .models import Node
-from .serializer import NodeSerializer
+from .serializer import NodeSerializer, NodeBlobSerializer
 from .business.permissions import NodePermission
 from rest_framework import mixins, status
 from rest_framework.permissions import IsAuthenticated
@@ -44,23 +44,28 @@ class NodeViewSet(RestfulGenericViewSet,
             obj.created_by = self.request.user
 
 
-class NodeDataView(GenericAPIView, UpdateModelMixin):
+class NodeDataView(GenericAPIView,
+                   mixins.RetrieveModelMixin,
+                   UpdateModelMixin):
     queryset = Node.objects.all()
-    serializer_class = NodeSerializer
+    serializer_class = NodeBlobSerializer
     permission_classes = (IsAuthenticated, NodePermission)
 
     def get(self, request, pk):
         """
-        Return data from Node (download)
+        Added get method
         """
-        #todo: this method
-        return Response(status=status.HTTP_501_NOT_IMPLEMENTED)
+        return self.retrieve(request, pk)
 
     def put(self, request, pk):
         """
         Added put method
         """
-        return self.update(request, pk)
+        response = self.update(request, pk)
+        # if success, clear data from response
+        if response.status_code == status.HTTP_200_OK:
+            response.data = None
+        return response
 
 
 class NodePathView(GenericAPIView):

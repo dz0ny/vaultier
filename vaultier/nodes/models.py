@@ -18,7 +18,10 @@ class Node(mpttmodels.MPTTModel, TimestampableMixin):
     name = models.CharField(max_length=255)
     meta = models.TextField()
     type = models.IntegerField(choices=TYPE)
-    data = models.FileField(upload_to='', blank=True, null=True)
+    data = models.TextField(null=True, blank=True)
+    blob_data = models.FileField(
+        upload_to='', null=True, blank=True)
+    blob_meta = models.TextField(null=True, blank=True)
     color = models.CharField(max_length=7, blank=True, null=True)
     parent = mpttmodels.TreeForeignKey(
         'self', null=True, blank=True, related_name='children')

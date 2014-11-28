@@ -22,11 +22,9 @@ Returns data.
   .. sourcecode:: http
 
      HTTP/1.1 200 OK
-     Content-Type: text/text; charset=utf-8
-     Content-Length: length
+     Content-Type: application/json
 
-     encrypted-data-here
-
+  .. include:: _data_example.rst
 
   :status 200: OK
   :status 401: Unauthorized
@@ -57,9 +55,12 @@ Updates data for file document
 
   .. sourcecode:: http
 
-     HTTP/1.1 204 NO CONTENT
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+  .. include:: _data_example.rst
 
   :status 200: OK
-  :status 400: Bad request (bad data, ...)
+  :status 400: Bad request (bad data, missing field, ...)
   :status 401: Unauthorized
   :status 403: Forbidden
