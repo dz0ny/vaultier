@@ -6,7 +6,7 @@ from vaultier.business.db import TimestampableMixin
 
 class Node(mpttmodels.MPTTModel, TimestampableMixin):
     """
-    Node (document) model
+    Node model
     """
     TYPE_DIRECTORY, TYPE_FILE = xrange(1, 3)
 
@@ -16,12 +16,11 @@ class Node(mpttmodels.MPTTModel, TimestampableMixin):
     )
 
     name = models.CharField(max_length=255)
-    meta = models.TextField()
+    meta = models.TextField(null=True, blank=True)
     type = models.IntegerField(choices=TYPE)
     data = models.TextField(null=True, blank=True)
     blob_data = models.FileField(
         upload_to='', null=True, blank=True)
-    blob_meta = models.TextField(null=True, blank=True)
     color = models.CharField(max_length=7, blank=True, null=True)
     parent = mpttmodels.TreeForeignKey(
         'self', null=True, blank=True, related_name='children')

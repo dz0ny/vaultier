@@ -6,9 +6,9 @@ Download
 Returns data.
 
 .. note::
-    Can be used only for documents with type="file"
+    Can be used only for nodes with type="file"
 
-.. http:get:: /documents/(int:pk)/data/
+.. http:get:: /nodes/(int:pk)/data/
 
   **Example Request**
 
@@ -29,16 +29,16 @@ Returns data.
   :status 200: OK
   :status 401: Unauthorized
   :status 403: Forbidden
-  :status 404: Document not found
+  :status 404: Node not found
 
 Upload Data
 -----------
-Updates data for file document
+Updates data for file nodes
 
 .. note::
-    Can be used only for documents with type="file"
+    Can be used only for nodes with type="file"
 
-.. http:put:: /documents/(int:pk)/data/
+.. http:put:: /nodes/(int:pk)/data/
 
   **Example Request**
 

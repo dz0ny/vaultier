@@ -1,19 +1,19 @@
-List of Documents
-=================
-Retrieve lists of documents.
+List of Nodes
+=============
+Retrieve lists of nodes.
 
 
-All Documents
--------------
-List of all documents
+All Nodes
+---------
+List of all nodes.
 
-.. http:get:: /documents/
+.. http:get:: /nodes/
 
   **Example Request**
 
   .. sourcecode:: http
 
-     GET /documents/ HTTP/1.1
+     GET /nodes/ HTTP/1.1
      Accept: application/json
 
   **Example Response**
@@ -60,17 +60,17 @@ List of all documents
   :status 403: Forbidden
 
 
-Children Documents
-------------------
-Retrieves list of documents with specific parent
+Children Nodes
+--------------
+Retrieves list of nodes with specific parent
 
-.. http:get:: /documents/?parent=(int:pk)
+.. http:get:: /nodes/?parent=(int:pk)
 
   **Example Request**
 
   .. sourcecode:: http
 
-     GET /documents/?parent=1 HTTP/1.1
+     GET /nodes/?parent=1 HTTP/1.1
      Accept: application/json
 
   **Example Response**
@@ -115,4 +115,4 @@ Retrieves list of documents with specific parent
   :status 200: OK
   :status 401: Unauthorized
   :status 403: Forbidden
-  :status 404: Document not found
+  :status 404: Node not found
