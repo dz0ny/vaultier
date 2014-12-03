@@ -10,7 +10,7 @@ class NodeSerializer(serializers.ModelSerializer):
     created_by = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
-        exclude = ('lft', 'rght', 'level', 'tree_id', 'blob_data', 'blob_meta')
+        exclude = ('lft', 'rght', 'level', 'tree_id', 'blob_data')
         model = Node
 
 
@@ -21,5 +21,5 @@ class NodeBlobSerializer(serializers.ModelSerializer):
     blob_data = BlobDataField()
 
     class Meta:
-        fields = ('id', 'blob_meta', 'blob_data')
+        fields = ('id', 'meta', 'blob_data')
         model = Node

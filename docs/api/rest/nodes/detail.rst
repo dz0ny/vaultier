@@ -1,18 +1,18 @@
-Document detail and manage
-==========================
-Working with specific document.
+Node detail and manage
+======================
+Working with specific node.
 
 Detail
 ------
-Retrieve document detail.
+Retrieve node detail.
 
-.. http:get:: /documents/(int:pk)/
+.. http:get:: /nodes/(int:pk)/
 
   **Example Request**
 
   .. sourcecode:: http
 
-     GET /documents/3 HTTP/1.1
+     GET /nodes/3 HTTP/1.1
      Accept: application/json
 
   **Example Response**
@@ -22,25 +22,25 @@ Retrieve document detail.
      HTTP/1.1 200 OK
      Content-Type: application/json
 
-  .. include:: _document_example.rst
+  .. include:: _node_example.rst
 
   :status 200: OK
   :status 401: Unauthorized
   :status 403: Forbidden
-  :status 404: Document not found
+  :status 404: Node not found
 
 
 Path
 ----
-Retrieve list of path to current document.
+Retrieve list of path to current node.
 
-.. http:get:: /documents/(int:pk)/path/
+.. http:get:: /nodes/(int:pk)/path/
 
   **Example Request**
 
   .. sourcecode:: http
 
-     GET /documents/1/path/ HTTP/1.1
+     GET /nodes/1/path/ HTTP/1.1
      Accept: application/json
 
   **Example Response**
@@ -85,23 +85,23 @@ Retrieve list of path to current document.
   :status 200: OK
   :status 401: Unauthorized
   :status 403: Forbidden
-  :status 404: document not found
+  :status 404: Node not found
 
 
 Update
 ------
-Updates document.
+Update node.
 
 .. note::
-    Changing "parent" field means that document will be moved.
+    Changing "parent" field means that node will be moved.
 
-.. http:put:: /documents/(int:pk)/
+.. http:put:: /nodes/(int:pk)/
 
   **Example Request**
 
   .. sourcecode:: http
 
-     PUT /documents/3 HTTP/1.1
+     PUT /nodes/3 HTTP/1.1
      Accept: application/json
 
      {
@@ -116,27 +116,27 @@ Updates document.
      HTTP/1.1 200 OK
      Content-Type: application/json
 
-  .. include:: _document_example.rst
+  .. include:: _node_example.rst
 
 
   :status 200: OK
   :status 401: Unauthorized
   :status 403: Forbidden
-  :status 404: document not found
+  :status 404: Node not found
 
 
 Delete
 ------
-Removes document.
+Removes node.
 
-.. http:delete:: /documents/(int:pk)/
+.. http:delete:: /nodes/(int:pk)/
 
 
   **Example Request**
 
   .. sourcecode:: http
 
-     DELETE /documents/3 HTTP/1.1
+     DELETE /nodes/3 HTTP/1.1
 
   **Example Response**
 
@@ -147,4 +147,4 @@ Removes document.
   :status 204: No Content - Deleted
   :status 401: Unauthorized
   :status 403: Forbidden
-  :status 404: document not found
+  :status 404: Node not found

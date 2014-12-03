@@ -1,13 +1,13 @@
 REST API
 ========
 
-Documents
----------
+Nodes
+-----
 .. toctree::
 
-    documents/create
-    documents/list
-    documents/detail
+    nodes/create
+    nodes/list
+    nodes/detail
 
 Data
 ----

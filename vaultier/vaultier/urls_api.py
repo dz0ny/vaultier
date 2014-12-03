@@ -16,7 +16,7 @@ from vaultier.api import ServerTimeView
 
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet, base_name='user')
-router.register(r'documents', NodeViewSet, base_name='node')
+router.register(r'nodes', NodeViewSet, base_name='node')
 router.register(r'workspaces', WorkspaceViewSet, base_name='workspace')
 router.register(r'vaults', VaultViewSet, base_name='vault')
 router.register(r'cards', CardViewSet, base_name='card')
@@ -35,10 +35,10 @@ urlpatterns += patterns(
     '',
     url(r'^config/', ConfigView.as_view(), name='config'),
     # node path
-    url(r'^documents/(?P<pk>\d+)/path/$', NodePathView.as_view(),
+    url(r'^nodes/(?P<pk>\d+)/path/$', NodePathView.as_view(),
         name='node-path'),
     # node data
-    url(r'^documents/(?P<pk>\d+)/data/$', NodeDataView.as_view(),
+    url(r'^nodes/(?P<pk>\d+)/data/$', NodeDataView.as_view(),
         name='node-data'),
     # server time
     url(r'^server-time/$', ServerTimeView.as_view(),

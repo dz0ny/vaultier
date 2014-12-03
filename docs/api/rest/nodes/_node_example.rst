@@ -14,9 +14,9 @@
         "parent": null
     }
 
-:jsonparam string name: encrypted-data about name of document
-:jsonparam string meta: encrypted-data about document
-:jsonparam string type: type of document (directory|file)
+:jsonparam string name: encrypted-data about name of node
+:jsonparam string meta: encrypted-data about node
+:jsonparam string type: type of nodes (directory|file)
 :jsonparam string [color]: Folder hex color
-:jsonparam int enc_version: How was document encrypted
+:jsonparam int enc_version: How was node encrypted
 :jsonparam string data: link to file content (only for type=file)
