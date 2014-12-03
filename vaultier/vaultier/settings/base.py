@@ -150,6 +150,7 @@ INSTALLED_APPS = (
     'kombu.transport.django',
     'rest_framework',
     'mptt',
+    'django_mptt_acl',
     'vaultier',
     'accounts',
     'acls',

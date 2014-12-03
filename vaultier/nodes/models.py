@@ -2,6 +2,7 @@ from mptt import models as mpttmodels
 from django.db import models
 from django.conf import settings
 from vaultier.business.db import TimestampableMixin
+from django_mptt_acl.models import PolicyModel, PolicyMeta as BasePolicyMeta
 
 
 class Node(mpttmodels.MPTTModel, TimestampableMixin):
@@ -27,3 +28,8 @@ class Node(mpttmodels.MPTTModel, TimestampableMixin):
     enc_version = models.IntegerField()
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, related_name="nodes")
+
+
+class TestPolicy(PolicyModel):
+    principal = models.ForeignKey(settings.AUTH_USER_MODEL)
+    subject = models.ForeignKey(Node, related_name="_policies")
