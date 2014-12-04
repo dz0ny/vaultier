@@ -57,7 +57,7 @@ class WorkspaceKeyTransferMailer(VaultierMailer):
 
         :return:
         """
-        return '[Vaultier] You can access the workspace: {}'.format(
+        return u'[Vaultier] You can access the workspace: {}'.format(
             self.object.workspace.name
         )
 
@@ -80,8 +80,8 @@ class WorkspaceKeyTransferMailer(VaultierMailer):
         :return: Context
         """
         kwargs.update({
-            'granted_workspace': self.object.workspace.name,
-            'url': self._build_url()
+            u'granted_workspace': self.object.workspace.name,
+            u'url': self._build_url()
         })
         return super(WorkspaceKeyTransferMailer, self)._build_context(**kwargs)
 

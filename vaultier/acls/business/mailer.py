@@ -17,7 +17,7 @@ class GrantedAccessMailer(VaultierMailer):
 
         :return:
         """
-        return '[Vaultier] You have been granted access to {}'.format(
+        return u'[Vaultier] You have been granted access to {}'.format(
             self.object.__class__.__name__.lower()
         )
 
@@ -41,9 +41,9 @@ class GrantedAccessMailer(VaultierMailer):
         """
 
         kwargs.update({
-            'type': self.object.__class__.__name__.lower(),
-            'name': getattr(self.object, 'name'),
-            'url': self._build_url()
+            u'type': self.object.__class__.__name__.lower(),
+            u'name': getattr(self.object, 'name'),
+            u'url': self._build_url()
         })
         return super(GrantedAccessMailer, self)._build_context(**kwargs)
 
