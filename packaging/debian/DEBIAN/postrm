@@ -28,10 +28,6 @@ rm -f /opt/vaultier/celerybeat-schedule
 rm -f /opt/vaultier/vaultier_conf.pyc
 echo "OK"
 
-if [ "$1" = "remove" ]; then
-   db_purge
-fi
-
 if [ "$1" = "purge" -a -e /usr/share/debconf/confmodule ]; then
 
     # force kill all user processes
