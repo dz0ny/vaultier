@@ -36,6 +36,9 @@ else
     email_tls="False"
 fi
 
+db_get vaultier/http_scheme
+http_scheme="$RET"
+
 db_get vaultier/allow_registration
 allow_registration="$RET"
 if $allow_registration; then
@@ -96,9 +99,10 @@ fi
 chown -R vaultier:vaultier /opt/vaultier
 
 # update configuration files
-sed -i "s/os.getenv('VAULTIER_DOMAIN', 'www.example.com'),/'${domain}',/g" /opt/vaultier/vaultier_conf.py
-sed -i "s/' + os.getenv('VAULTIER_DOMAIN', 'www.example.com') + '/${domain}/g" /opt/vaultier/vaultier_conf.py
-sed -i "s/os.getenv('VAULTIER_FROM_EMAIL', 'noreply@www.example.com'),/'noreply@${domain}',/g" /opt/vaultier/vaultier_conf.py
+sed -i "s/os.getenv('VAULTIER_DOMAIN', 'example.com'),/'${domain}',/g" /opt/vaultier/vaultier_conf.py
+sed -i "s/' + os.getenv('VAULTIER_DOMAIN', 'example.com') + '/${domain}/g" /opt/vaultier/vaultier_conf.py
+sed -i "s/os.getenv('VAULTIER_HTTP_SCHEME', 'http') + '/'${http_scheme}/g" /opt/vaultier/vaultier_conf.py
+sed -i "s/os.getenv('VAULTIER_FROM_EMAIL', 'noreply@example.com'),/'noreply@${domain}',/g" /opt/vaultier/vaultier_conf.py
 
 sed -i "s/os.getenv('VAULTIER_EMAIL_HOST', '')/'${email_host}'/g" /opt/vaultier/vaultier_conf.py
 sed -i "s/os.getenv('VAULTIER_EMAIL_PORT', 25)/${email_port}/g" /opt/vaultier/vaultier_conf.py
@@ -111,7 +115,11 @@ sed -i "s/bool(os.getenv('VAULTIER_ALLOW_STATISTICS', True))/${allow_statistics}
 
 
 # copy config files
-cp /usr/share/vaultier/config/nginx/vaultier /etc/nginx/sites-available/vaultier
+if [ "$http_scheme" = 'http' ]; then
+    cp /usr/share/vaultier/config/nginx/vaultier /etc/nginx/sites-available/vaultier
+else
+    cp /usr/share/vaultier/config/nginx/vaultier-ssl /etc/nginx/sites-available/vaultier
+fi
 cp /usr/share/vaultier/config/supervisor/vaultier.conf /etc/supervisor/conf.d/vaultier.conf
 cp /usr/share/vaultier/config/uwsgi/vaultier.ini /etc/uwsgi/apps-available/vaultier.ini
 sed -i "s/DEB_DOMAIN/${domain}/g" /etc/nginx/sites-available/vaultier

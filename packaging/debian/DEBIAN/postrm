@@ -28,11 +28,10 @@ rm -f /opt/vaultier/celerybeat-schedule
 rm -f /opt/vaultier/vaultier_conf.pyc
 echo "OK"
 
-if [ "$1" = "remove" ]; then
-   db_purge
-fi
-
 if [ "$1" = "purge" -a -e /usr/share/debconf/confmodule ]; then
+
+    # force kill all user processes
+    kill -9 `ps aux | awk '{print $2, $1}' | grep vaultier | awk '{print $1}'`
 
     database_name=$(cat /tmp/.vaultier_dbname)
     database_user=$(cat /tmp/.vaultier_dbuser)
@@ -48,10 +47,10 @@ if [ "$1" = "purge" -a -e /usr/share/debconf/confmodule ]; then
         sudo -u postgres dropuser $database_user && echo "Database user $database_user deleted successfully"
 
     echo -n "Removing group vaultier.. "
-    id -f vaultier &>/dev/null && delgroup vaultier
+    id -f vaultier &>/dev/null && delgroup -f vaultier
     echo "OK"
     echo -n "Removing user vaultier.. "
-    id -u vaultier &>/dev/null && deluser vaultier
+    id -u vaultier &>/dev/null && deluser -f vaultier
     echo "OK"
     db_purge
 

@@ -36,7 +36,7 @@ Vaultier.RolesAdminInviteRoute = Ember.Route.extend(
         },
 
         getDefaultRoleLevel: function() {
-            return Vaultier.Role.proto().roles['READ'].value
+            return Vaultier.Role.proto().roles.READ.value;
         },
 
         actions: {
@@ -79,7 +79,7 @@ Vaultier.RolesAdminInviteRoute = Ember.Route.extend(
             ctrl.set('invited', []);
             ctrl.set('role', {level: this.getDefaultRoleLevel()});
             ctrl.set('roleLevels', this.setupRoleLevels());
-            ctrl.set('defaultValue', Vaultier.Role.proto().roles.toArray()[0].value);
+            ctrl.set('defaultValue', this.getDefaultRoleLevel());
             ctrl.set('invitation_lifetime',this.get('config.invitation_lifetime'));
         },
 

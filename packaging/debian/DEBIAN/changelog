@@ -1,11 +1,21 @@
+vaultier (0.7.4-1ubuntu4) trusty; urgency=medium
+
+  * [bugfix] SITE_URL http scheme in docker and deb package
+  * [bugfix] Background image and css optimalizations
+  * [bugfix] Roles read and create could not access any object
+  * [bugfix] Role create could not be created
+  * [bugfix] User invited to vault with manage role can edit vault settings
+
+ -- Jakub Bokoc <jakub.bokoc@rclick.cz>  Thu, 27 Nov 2014 11:00:27 +0100
+
 vaultier (0.7.3-1ubuntu3) trusty; urgency=medium
 
-* [bugfix] Logout feature remove all credentials from browser even if remembered
-* [feature] Documentation improvements and fixes
-* [feature] UI fixes
-* [bugfix] Links and logo image in emails
-* [bugfix] Statistic crontab fix.
-* [feature] Added hashed uid of vaultier instance based on SITE_URL to statistics
+  * [bugfix] Logout feature remove all credentials from browser even if remembered
+  * [feature] Documentation improvements and fixes
+  * [feature] UI fixes
+  * [bugfix] Links and logo image in emails
+  * [bugfix] Statistic crontab fix.
+  * [feature] Added hashed uid of vaultier instance based on SITE_URL to statistics
 
  -- Jakub Bokoc <jakub.bokoc@rclick.cz>  Fri, 14 Nov 2014 17:22:15 +0100
 
