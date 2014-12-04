@@ -9,6 +9,7 @@ RELEASE 0.7.4
 * [bugfix] Background image and css optimalizations
 * [bugfix] Roles read and create could not access any object
 * [bugfix] Role create could not be created
+* [bugfix] User invited to vault with manage role can edit vault settings
 
 RELEASE 0.7.3
 -------------
