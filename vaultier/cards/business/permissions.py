@@ -22,8 +22,11 @@ class CanManageCardPermission(BasePermission):
                                                AclLevelField.LEVEL_WRITE)
 
             # check permission to vault
-            result = result and has_object_acl(request.user, obj.vault,
-                                               AclLevelField.LEVEL_WRITE)
+            result = result and \
+                has_object_acl(request.user, obj.vault,
+                               AclLevelField.LEVEL_WRITE) or \
+                has_object_acl(request.user, obj.vault,
+                               AclLevelField.LEVEL_CREATE)
 
             return result
 
