@@ -24,6 +24,10 @@ var vaultierModulesConfig = {
         environments: ['*'],
         "scripts": [
 
+        /**************** logger **/
+            "./bower_components/loglevel/dist/loglevel.js",
+            "./app/utils/Logger.js",
+
         /**************** jquery extensions **/
             "./bower_components/notifyjs/dist/notify.js",
             "./bower_components/notifyjs/dist/styles/bootstrap/notify-bootstrap.js",

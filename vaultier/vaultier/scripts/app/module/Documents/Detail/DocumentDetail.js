@@ -10,8 +10,8 @@ Vaultier.DocumentDetailRoute = Ember.Route.extend({
 
         this.get('tree').switchToVisibleAllNodes();
         model = this.get('tree').getSelectedNode();
-        console.log(model);
-        console.log(model.get('type'));
+        Utils.Logger.log.debug(model);
+        Utils.Logger.log.debug(model.get('type'));
         switch (model.get('type')) {
 
             case Vaultier.dal.model.Node.proto().types.NOTE.value:
@@ -34,11 +34,11 @@ Vaultier.DocumentDetailRoute = Ember.Route.extend({
                 this.typeName = null;
         }
 
-        console.log(this.typeTemplate);
+        Utils.Logger.log.debug(this.typeTemplate);
 
 
-        console.log('Vaultier.DocumentDetailRoute setupController');
-        console.log(model);
+        Utils.Logger.log.debug('Vaultier.DocumentDetailRoute setupController');
+        Utils.Logger.log.debug(model);
 
         ctrl.set('typeName', this.typeName);
         ctrl.set('content', model);
@@ -52,7 +52,7 @@ Vaultier.DocumentDetailRoute = Ember.Route.extend({
     },
 
     createToolbar: function () {
-        console.log('createToolbar');
+        Utils.Logger.log.debug('createToolbar');
         return Vaultier.Toolbar.create({router: this.get('router')})
             .prepareBuilder()
             .addParentsOfDocument(this.get('tree').getParents(this.get('tree').getSelectedNode()))

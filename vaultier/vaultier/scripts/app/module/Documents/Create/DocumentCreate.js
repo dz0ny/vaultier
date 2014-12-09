@@ -1,7 +1,7 @@
 Vaultier.DocumentCreateRoute = Ember.Route.extend(
     {
         model: function (params, transition) {
-            console.log('Vaultier.DocumentCreateRoute');
+            Utils.Logger.log.debug('Vaultier.DocumentCreateRoute');
 
             // check permissions
 //            if (!this.get('auth').checkPermissions(transition, function () {
@@ -48,12 +48,12 @@ Vaultier.DocumentCreateRoute = Ember.Route.extend(
                     this.typeName = null;
             }
 
-            console.log(this.typeTemplate);
+            Utils.Logger.log.debug(this.typeTemplate);
             return model;
         },
 
         setupController: function (ctrl, model) {
-            console.log('Vaultier.DocumentCreateController setupController');
+            Utils.Logger.log.debug('Vaultier.DocumentCreateController setupController');
 
 
             var parentTreeNode = this.get('tree').getSelectedNode();
@@ -70,7 +70,7 @@ Vaultier.DocumentCreateRoute = Ember.Route.extend(
         },
 
         createToolbar: function () {
-            console.log('createToolbar');
+            Utils.Logger.log.debug('createToolbar');
             return Vaultier.Toolbar.create({router: this.get('router')})
                 .prepareBuilder()
                 .addParentsOfDocument(this.get('tree').getParents(this.get('tree').getSelectedNode()))
@@ -97,7 +97,7 @@ Vaultier.DocumentCreateRoute = Ember.Route.extend(
                         .then(function (response) {
                             this.get('tree').addNode(record);
                             $.notify('Your secret has been created successfully.', 'success');
-                            console.log(record);
+                            Utils.Logger.log.debug(record);
                             if (record.get('type') == Vaultier.dal.model.Node.proto().types.FOLDER.value) {
                                 this.transitionTo('Document.list', record.get('id'));
                             } else {

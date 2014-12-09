@@ -7,8 +7,8 @@
 Vaultier.DocumentMoveRoute = Ember.Route.extend({
 
     setupController: function (ctrl, model) {
-        console.log('Vaultier.DocumentMoveRoute setupController');
-        console.log(model);
+        Utils.Logger.log.debug('Vaultier.DocumentMoveRoute setupController');
+        Utils.Logger.log.debug(model);
 
         var type = this.get('tree').getSelectedNode().get('type');
         var typeName = Vaultier.dal.model.Node.proto().types.getByValue(model.get('type')).text;
@@ -17,7 +17,7 @@ Vaultier.DocumentMoveRoute = Ember.Route.extend({
 
         ctrl.set('typeName', typeName);
         ctrl.set('content', this.get('tree').getAllTreeNodes());
-        console.log(ctrl.get('content'));
+        Utils.Logger.log.debug(ctrl.get('content'));
         ctrl.get('controllers.Document').set('toolbar', this.createToolbar(typeName));
 
         ctrl.set('nodeToMove', model);
@@ -73,19 +73,19 @@ Vaultier.DocumentMoveController = Vaultier.Document.TreeController.extend({
      * @param {Vaultier.Document.Node} node
      */
     nodeSelectionStateChanged: function (node) {
-        console.log('Vaultier.DocumentController zmena');
-        console.log(node);
+        Utils.Logger.log.debug('Vaultier.DocumentController zmena');
+        Utils.Logger.log.debug(node);
     },
 
     actions: {
 
         changeNode: function (node) {
-            console.log(node);
+            Utils.Logger.log.debug(node);
             this.set('destinationNode', node);
         },
 
         move: function () {
-            console.log(this.get('destinationNode'));
+            Utils.Logger.log.debug(this.get('destinationNode'));
 
 //            try {
             var promise = this.get('tree').moveNode(this.get('nodeToMove'), this.get('destinationNode'))

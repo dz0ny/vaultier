@@ -1,7 +1,7 @@
 Vaultier.DocumentsCreateRootRoute = Ember.Route.extend(
     {
         model: function (params, transition) {
-            console.log('Vaultier.DocumentsCreateRootRoute');
+            Utils.Logger.log.debug('Vaultier.DocumentsCreateRootRoute');
 
             var node = this.get('store').createRecord('Node');
 
@@ -10,7 +10,7 @@ Vaultier.DocumentsCreateRootRoute = Ember.Route.extend(
 
 
         setupController: function (ctrl, model) {
-            console.log('Vaultier.DocumentsCreateController setupController');
+            Utils.Logger.log.debug('Vaultier.DocumentsCreateController setupController');
 
             model.set('type', Vaultier.dal.model.Node.proto().types.FOLDER.value);
             ctrl.set('typeName', "Root Folder");
@@ -20,7 +20,7 @@ Vaultier.DocumentsCreateRootRoute = Ember.Route.extend(
         },
 
         createToolbar: function () {
-            console.log('createToolbar');
+            Utils.Logger.log.debug('createToolbar');
             return Vaultier.Toolbar.create({router: this.get('router')})
                 .prepareBuilder()
                 .addDocumentCreate("Root Folder")
@@ -43,7 +43,7 @@ Vaultier.DocumentsCreateRootRoute = Ember.Route.extend(
                     var promise = record
                         .saveRecord()
                         .then(function (response) {
-                            console.log(response);
+                            Utils.Logger.log.debug(response);
                             this.get('tree').addRootNode(record, response.id);
                             $.notify('Your folder has been created successfully.', 'success');
                             this.transitionTo('Document.list', record.get('id'));

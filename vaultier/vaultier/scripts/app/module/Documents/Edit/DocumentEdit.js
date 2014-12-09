@@ -2,7 +2,7 @@ Vaultier.DocumentEditRoute = Ember.Route.extend(
     {
 
         setupController: function (ctrl, model) {
-            console.log('Vaultier.DocumentEditController setupController');
+            Utils.Logger.log.debug('Vaultier.DocumentEditController setupController');
 
             var model = this.get('tree').getSelectedNode();
 
@@ -32,7 +32,7 @@ Vaultier.DocumentEditRoute = Ember.Route.extend(
                     this.typeTemplate = null;
                     this.typeName = null;
             }
-            console.log(model);
+            Utils.Logger.log.debug(model);
 
             ctrl.set('typeName', this.typeName);
             ctrl.set('content', model);
@@ -41,7 +41,7 @@ Vaultier.DocumentEditRoute = Ember.Route.extend(
         },
 
         createToolbar: function () {
-            console.log('createToolbar');
+            Utils.Logger.log.debug('createToolbar');
             return Vaultier.Toolbar.create({router: this.get('router')})
                 .prepareBuilder()
                 .addParentsOfDocument(this.get('tree').getParents(this.get('tree').getSelectedNode()))

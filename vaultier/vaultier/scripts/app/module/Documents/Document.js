@@ -1,18 +1,19 @@
 Vaultier.DocumentRoute = Ember.Route.extend({
 
     model: function (params, queryParams) {
+        Utils.Logger.log.debug('Vaultier.DocumentListRoute setupController');
         return ApplicationKernel.UI.showLoaderUponPromise(this.get('tree').getNodeById(params.document));
     },
 
     setupController: function (ctrl, model) {
-        console.log('Vaultier.DocumentRoute setupController');
-        console.log(model);
+        Utils.Logger.log.debug('Vaultier.DocumentRoute setupController');
+        Utils.Logger.log.debug(model);
         if (model) {
             this.get('tree').setSelectedNode(model);
         }
 
-        console.log(this.get('tree').nodes);
-        console.log(this.get('tree').getSelectedNode());
+        Utils.Logger.log.debug(this.get('tree').nodes);
+        Utils.Logger.log.debug(this.get('tree').getSelectedNode());
 
         var parents = this.get('tree').getParents(this.get('tree').getSelectedNode());
         if (parents) {
@@ -59,8 +60,8 @@ Vaultier.DocumentController = Vaultier.Document.TreeController.extend({
      * @param {Vaultier.Document.Node} node
      */
     nodeSelectionStateChanged: function (node) {
-        console.log('Vaultier.DocumentController zmena');
-        console.log(node);
+        Utils.Logger.log.debug('Vaultier.DocumentController zmena');
+        Utils.Logger.log.debug(node);
         this.get('tree').setSelectedNode(node);
         this.set('currentDocument', this.get('tree').getSelectedNode());
     },
@@ -90,8 +91,8 @@ Vaultier.DocumentController = Vaultier.Document.TreeController.extend({
                 .removeNode(removeNode)
                 .then(function () {
 
-                    console.log(newSelectedNode);
-                    console.log(this.get('tree').getAllTreeNodes());
+                    Utils.Logger.log.debug(newSelectedNode);
+                    Utils.Logger.log.debug(this.get('tree').getAllTreeNodes());
 
                     $.notify('Your ' + typeOfRemoveNode + ' has been deleted successfully.', 'success');
 

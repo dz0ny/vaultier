@@ -215,7 +215,7 @@ Vaultier.Document.Node = Ember.ObjectProxy.extend({
      * @type String
      */
     typeCss: function () {
-        console.log(this.get('type'));
+        Utils.Logger.log.debug(this.get('type'));
         if (this.get('type') == Vaultier.dal.model.Node.proto().types.FOLDER.value) {
             return Vaultier.dal.model.Node.proto().types.getByValue(this.get('type')).text
                 + '-' + this.get('color');
@@ -362,7 +362,7 @@ Vaultier.Document.TreeNodeContainer = Ember.View.extend(Ember.StyleBindingsMixin
     click: function (event) {
         var node = this.get('node');
         this.get('controller.tree').setSelectedNode(node);
-        console.log('Vaultier.Document.TreeNodeContainer zmena');
+        Utils.Logger.log.debug('Vaultier.Document.TreeNodeContainer zmena');
         this.get('controller').nodeSelectionStateChanged(node);
     }
 });

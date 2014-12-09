@@ -143,7 +143,7 @@ Vaultier.Toolbar = Ember.Object.extend({
      * @returns {Vaultier.Toolbar}
      */
     addParentsOfDocument: function (parentsNodes) {
-        console.log(parentsNodes);
+        Utils.Logger.log.debug(parentsNodes);
         if (!parentsNodes) {
             this.set('rootFolder', true);
             return this;

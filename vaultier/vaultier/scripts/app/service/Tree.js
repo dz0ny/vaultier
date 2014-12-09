@@ -45,7 +45,6 @@ Service.Tree = Ember.Object.extend({
     fullVisibilityOfTree: true,
 
     init: function () {
-        console.log('Service.Tree:init');
         this.nodes = Ember.ArrayProxy.create({ content: Ember.A()});
 
     },
@@ -68,7 +67,7 @@ Service.Tree = Ember.Object.extend({
     switchToVisibleAllNodes: function () {
         if (!this.fullVisibilityOfTree) {
             this.nodes.forEach(function (node) {
-                console.log(node);
+                Utils.Logger.log.debug(node);
                 if (!node.get('parent')) {
                     if (node.get('skipShow')) {
                         node.set('isOpened', false);
@@ -93,16 +92,16 @@ Service.Tree = Ember.Object.extend({
     switchToVisibleJustNodesInOneBranch: function (node) {
         var rootNode = this._getRootNodeForNode(node);
         this.nodes.forEach(function (node) {
-            console.log(node);
-            console.log(rootNode);
+            Utils.Logger.log.debug(node);
+            Utils.Logger.log.debug(rootNode);
             if (!node.get('parent') && node != rootNode) {
-                console.log('YES');
+                Utils.Logger.log.debug('YES');
                 node.set('skipShow', true);
                 node.set('isOpened', false);
             } else if (node.get('type') != Vaultier.dal.model.Node.proto().types.FOLDER.value) {
                 node.set('skipShow', true);
             }
-        });
+        }.bind(this));
         this.fullVisibilityOfTree = false;
     },
 
@@ -114,7 +113,7 @@ Service.Tree = Ember.Object.extend({
      * @returns {Ember.RSVP.Promise}
      */
     getNodeById: function (id) {
-        console.log(id);
+        Utils.Logger.log.debug(id);
         if (!this.loaded) {
             return this._loadRootNodes().then(function () {
                 this.loaded = true;
@@ -222,14 +221,14 @@ Service.Tree = Ember.Object.extend({
     moveNode: function (treeNodeToMove, destinationParentNode) {
         treeNodeToMove.get('parent').get('children').removeObject(treeNodeToMove);
 
-        console.log(this.nodes);
+        Utils.Logger.log.debug(this.nodes);
 
-        console.log(destinationParentNode.get('id'));
+        Utils.Logger.log.debug(destinationParentNode.get('id'));
         this.nodes.removeObject(treeNodeToMove);
         treeNodeToMove.set('parent', destinationParentNode);
 
         return treeNodeToMove.get('content').saveRecord().then(function (response) {
-            console.log(treeNodeToMove);
+            Utils.Logger.log.debug(treeNodeToMove);
             destinationParentNode.get('children').pushObject(treeNodeToMove);
             this._insertNodeOnRightPlace(treeNodeToMove, destinationParentNode);
             this._reinsertNodeChildrenToArray(treeNodeToMove);
@@ -245,17 +244,17 @@ Service.Tree = Ember.Object.extend({
      * @private
      */
     _reinsertNodeChildrenToArray: function (treeNode) {
-        console.log(this.nodes);
-        console.log(treeNode);
+        Utils.Logger.log.debug(this.nodes);
+        Utils.Logger.log.debug(treeNode);
 
         var i = 1;
         treeNode.get('children').forEach(function (child) {
-            console.log(child);
+            Utils.Logger.log.debug(child);
             this.nodes.removeObject(child);
 
             var indexToInputNode = this.nodes.get('content').indexOf(treeNode) + i++;
-            console.log(this.nodes.get('content').indexOf(treeNode));
-            console.log(indexToInputNode);
+            Utils.Logger.log.debug(this.nodes.get('content').indexOf(treeNode));
+            Utils.Logger.log.debug(indexToInputNode);
             this.nodes.insertAt(indexToInputNode, child);
 
 
@@ -303,10 +302,10 @@ Service.Tree = Ember.Object.extend({
      * @returns {Array}
      */
     _getAllLoadedChildrenForNode: function (treeNodeArray, treeNode) {
-        console.log(treeNode);
+        Utils.Logger.log.debug(treeNode);
 
         treeNode.get('children').forEach(function (child, index) {
-            console.log(child);
+            Utils.Logger.log.debug(child);
             treeNodeArray.pushObject(child);
             this._getAllLoadedChildrenForNode(treeNodeArray, child);
         }.bind(this));
@@ -325,20 +324,20 @@ Service.Tree = Ember.Object.extend({
         //try to find sibling
         var siblingTreeNode = this._getFirstSibling(treeNode);
         if (siblingTreeNode) {
-            console.log("sibling remove mode");
+            Utils.Logger.log.debug("sibling remove mode");
             return siblingTreeNode;
         }
 
         //try to find parent
         var parentTreeNode = treeNode.get('parent');
         if (parentTreeNode) {
-            console.log("parent remove mode");
+            Utils.Logger.log.debug("parent remove mode");
             return parentTreeNode;
         }
 
         //try to change to other root node
         if (this.nodes.get('length') > 1) {
-            console.log("other root remove mode");
+            Utils.Logger.log.debug("other root remove mode");
             var anotherRootNode = null;
             this.nodes.forEach(function (node) {
                 if (!node.get('parent') && node.get('id') != treeNode.get('id')) {
@@ -405,7 +404,7 @@ Service.Tree = Ember.Object.extend({
      * @return {Vaultier.Document.Node}
      */
     _createNode: function (model, parent) {
-        console.log(model);
+        Utils.Logger.log.debug(model);
         var node = Vaultier.Document.Node.create({
             children: [],
             isOpened: false,
@@ -444,7 +443,7 @@ Service.Tree = Ember.Object.extend({
     checkIfChildNodesAreLoaded: function (node) {
         var promises = [];
         node.get('children').forEach(function (childNode) {
-            console.log('childNode');
+            Utils.Logger.log.debug('childNode');
             if (childNode.get('isLoaded') == false
                 && childNode.get('type') == Vaultier.dal.model.Node.proto().types.FOLDER.value
                 ) {
@@ -464,19 +463,19 @@ Service.Tree = Ember.Object.extend({
      * @returns {Ember.RSVP.Promise}
      */
     _findNodeById: function (id) {
-        console.log(id);
+        Utils.Logger.log.debug(id);
         var foundedNode = null;
-        console.log(this.nodes);
+        Utils.Logger.log.debug(this.nodes);
         this.nodes.forEach(function (node) {
-            console.log(node.get('id'));
+            Utils.Logger.log.debug(node.get('id'));
             if (node.get('id') == id) {
-                console.log('YES');
+                Utils.Logger.log.debug('YES');
                 foundedNode = node;
             }
-        });
-        console.log(foundedNode);
+        }.bind(this));
+        Utils.Logger.log.debug(foundedNode);
         if (!foundedNode) {
-            console.log('if (!foundedNode) {');
+            Utils.Logger.log.debug('if (!foundedNode) {');
             return this._loadNodeById(id).then(function (node) {
                 return node;
             }.bind(this)).then(function (node) {
@@ -511,7 +510,7 @@ Service.Tree = Ember.Object.extend({
         return this.get('store')
             .find('Node', id)
             .then(function (model) {
-                console.log('_loadNodeById-then');
+                Utils.Logger.log.debug('_loadNodeById-then');
                 modelGlobal = model;
                 var parent = this._getNodeFromNodesArray(model.get('parent'));
                 if (parent && parent.get('isLoaded')) {
@@ -521,7 +520,7 @@ Service.Tree = Ember.Object.extend({
                         .then(this._addParentsToNodes.bind(this));
                 }
             }.bind(this)).then(function (parentTreeNode) {
-                console.log(this.nodes);
+                Utils.Logger.log.debug(this.nodes);
                 return this._convertNodeModelToTreeNode(parentTreeNode, [ modelGlobal ])[0];
             }.bind(this));
     },
@@ -593,7 +592,7 @@ Service.Tree = Ember.Object.extend({
                     parent: parentObject.parent
                 });
                 parentClasses.pushObject(parentModel);
-                console.log(parentModel);
+                Utils.Logger.log.debug(parentModel);
             });
             return parentClasses;
         });
@@ -610,7 +609,7 @@ Service.Tree = Ember.Object.extend({
     _addParentsToNodes: function (parentNodes) {
         var previous = null
         var promises = [];
-        console.log(parentNodes);
+        Utils.Logger.log.debug(parentNodes);
         parentNodes.forEach(function (parentNode) {
             if (previous) {
                 previous = this._convertNodeModelToTreeNode(previous, [parentNode])[0];
@@ -618,8 +617,8 @@ Service.Tree = Ember.Object.extend({
                     previous.set('isLoaded', true);
                 }));
             } else {
-                console.log(parentNode);
-                console.log(parentNode.get('id'));
+                Utils.Logger.log.debug(parentNode);
+                Utils.Logger.log.debug(parentNode.get('id'));
                 previous = this._getNodeFromNodesArray(parentNode.get('id'));
             }
         }.bind(this));
@@ -684,11 +683,11 @@ Service.Tree = Ember.Object.extend({
      * @return {Vaultier.Document.Node}
      */
     _addToNodes: function (modelNode, parentTreeNode) {
-        console.log(parentTreeNode);
+        Utils.Logger.log.debug(parentTreeNode);
         var nodeAlreadyInArray = this._getNodeFromNodesArray(modelNode.get('id'));
-        console.log(nodeAlreadyInArray);
+        Utils.Logger.log.debug(nodeAlreadyInArray);
         if (!nodeAlreadyInArray) {
-            console.log(modelNode);
+            Utils.Logger.log.debug(modelNode);
             var treeNode = this._createNode(modelNode, parentTreeNode);
             treeNode.id = modelNode.get('id');
 
@@ -711,8 +710,8 @@ Service.Tree = Ember.Object.extend({
         var indexToInputNode =
             this.nodes.get('content').indexOf(parentTreeNode)
             + parentTreeNode.get('children.length');
-        console.log(this.nodes.get('content').indexOf(parentTreeNode));
-        console.log(indexToInputNode);
+        Utils.Logger.log.debug(this.nodes.get('content').indexOf(parentTreeNode));
+        Utils.Logger.log.debug(indexToInputNode);
         this.nodes.insertAt(indexToInputNode, treeNode);
     },
 

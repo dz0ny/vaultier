@@ -46,6 +46,7 @@
     "jsrsasign": "https://github.com/kjur/jsrsasign.git#4.7.0",
     "raven-js": "1.1.15",
     "jquery-mockajax": "1.6.1",
-    "qunit": "1.15.0"
+    "qunit": "1.15.0",
+    "loglevel": "1.2.0"
   }
 }

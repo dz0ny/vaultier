@@ -7,7 +7,7 @@
 Vaultier.DocumentListRoute = Ember.Route.extend({
 
     setupController: function (ctrl, model) {
-        console.log('Vaultier.DocumentListRoute setupController');
+        Utils.Logger.log.debug('Vaultier.DocumentListRoute setupController');
         this.get('tree').switchToVisibleAllNodes();
         ctrl.get('controllers.Document').set('toolbar', this.createToolbar());
     },
@@ -43,9 +43,9 @@ Vaultier.DocumentListController = Ember.Controller.extend({
             this.get('tree')
                 .removeNode(node)
                 .then(function () {
-                    console.log('asdasd');
-                    console.log(this.get('controllers.Document').get('currentDocument'));
-                    console.log(this.get('tree').getSelectedNode());
+                    Utils.Logger.log.debug('asdasd');
+                    Utils.Logger.log.debug(this.get('controllers.Document').get('currentDocument'));
+                    Utils.Logger.log.debug(this.get('tree').getSelectedNode());
                     this.get('controllers.Document').set('currentDocument', parentNode)
                     $.notify('Your ' + typeOfRemoveNode + ' has been deleted successfully.', 'success');
 
