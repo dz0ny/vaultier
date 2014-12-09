@@ -9,6 +9,7 @@ var vaultierModulesConfig = {
 
         /**************** boot **/
             "./bower_components/jquery/dist/jquery.js",
+            "./bower_components/headjs/dist/1.0.0/head.js",
             "./bower_components/raven-js/dist/raven.js",
             "./local_components/pohon/pohon.js",
 
@@ -18,15 +19,6 @@ var vaultierModulesConfig = {
             "./kernel/ApplicationKernel.UI.js"
         ]
     },
-
-//
-//    "qunit": {
-//        environments: [],
-//        skipLoading: true,
-//        scripts: [
-//            "./bower_components/qunit/qunit/qunit.js",
-//        ]
-//    },
 
     "vendors": {
         environments: ['*'],
@@ -192,7 +184,7 @@ var vaultierModulesConfig = {
             "./app/dal/core/Client.js",
 
             "./app/dal/mixin/CreatedUpdatedMixin.js",
-            "./app/dal/mixin/PolymorphicModelMixin.js",
+            "./app/dal/mixin/MutableModelMixin.js",
             "./app/dal/mixin/EncryptedModelMixin.js",
             "./app/dal/mixin/RollbackMixin.js",
 
@@ -210,7 +202,7 @@ var vaultierModulesConfig = {
             "./app/dal/model/Secret.js",
             "./app/dal/model/LostKey.js",
             "./app/dal/model/News.js",
-            "./app/dal/model/Node.js"
+            "./app/dal/model/Document.js"
         ]
     },
     "layout": {
@@ -219,7 +211,7 @@ var vaultierModulesConfig = {
             "./app/module/Layout/SecurityBox.hbs",
             "./app/module/Layout/WorkspaceBox.hbs",
             "./app/module/Layout/SearchBox.hbs",
-            "./app/module/Layout/Breadcrumbs.hbs",
+            "./app/module/Layout/Toolbar.hbs",
             "./app/module/Layout/LayoutStandard.hbs",
             "./app/module/Layout/Confirm.hbs",
             "./app/module/Layout/Footer.hbs",
@@ -230,7 +222,7 @@ var vaultierModulesConfig = {
             "./app/module/Layout/SecurityBox.js",
             "./app/module/Layout/SearchBox.js",
             "./app/module/Layout/DotDotDot.js",
-            "./app/module/Layout/Breadcrumbs.js",
+            "./app/module/Layout/Toolbar.js",
             "./app/module/Layout/WorkspaceBox.js",
             "./app/module/Layout/Confirm.js",
             "./app/module/Layout/PasswordField.js"
@@ -290,6 +282,18 @@ var vaultierModulesConfig = {
             "./app/module/RolesAdmin/**/*.hbs",
             "./app/module/Invitation/**/*.hbs",
             "./app/module/MembersAdmin/**/*.hbs"
+        ]
+    },
+    "documents": {
+        environments: ['*'],
+        "templates": [
+            "./app/module/Documents/**/*.hbs"
+        ],
+        "scripts": [
+            "./app/module/Documents/Tree/DocumentsTree.js",
+            "./app/module/Documents/Detail/DocumentsDetail.js",
+            "./app/module/Documents/List/DocumentsList.js",
+            "./app/module/Documents/Documents.js"
         ]
     },
     "workspace": {
@@ -395,7 +399,7 @@ var vaultierModulesConfig = {
 
             "./mock/BaseMock.js",
             "./mock/MockManager.js",
-            "./mock/NodeMock.js"
+            "./mock/TreeMock.js"
         ]
     },
 
@@ -410,16 +414,11 @@ var vaultierModulesConfig = {
         environments: ['test'],
         scripts: [
             "./bower_components/qunit/qunit/qunit.js",
+
+            "./test/util/Test.js"
         ],
         "styles": [
             "./bower_components/qunit/qunit/qunit.css"
-        ]
-    },
-
-    "run-test": {
-        environments: ['test'],
-        "scripts": [
-            "./app/run-tests.js"
         ]
     },
 
@@ -427,6 +426,13 @@ var vaultierModulesConfig = {
         environments: ['test'],
         scripts: [
             "./test/case/module/Auth/AuthCases.js"
+        ]
+    },
+
+    "run-test": {
+        environments: ['test'],
+        "scripts": [
+            "./app/run-tests.js"
         ]
     }
 
