@@ -1,43 +1,148 @@
 <div class="vlt-roles-admin-box">
-    {{#unless hasAny}}
-        Not shared with anybody yet
-    {{/unless}}
+    <!--{ {#unless hasAny}}-->
+    <!--Not shared with anybody yet-->
+    <!--{ {/unless}}-->
 
 
-    {{#if hasWrite}}
+    <!--{ {#if hasWrite}}-->
+    <div class="vlt-roles-admin-box-block">
         <div class="vlt-perms-section">
             Users able to manage
+            <span class="glyphicon glyphicon-chevron-down pull-right"></span>
         </div>
         <div class="vlt-perms-roles">
-            {{#each role in rolesWrite}}
-                {{printUser role.member  size=50 disableName=1}}
-            {{/each}}
+            <div class="vlt-perms-role">
+                <div class="vlt-perms-role-image">
+                    <img style="width:35px; height:35px;" class="vlt-avatar"
+                         src="http://www.gravatar.com/avatar/c93ff91b31d2e8cf7bced46ef4393023?s=25&amp;d=mm">
+                </div>
+                <div class="vlt-perms-role-name">
+                    Vojtěch Knaisl
+                </div>
+            </div>
+            <div class="vlt-perms-role">
+                <div class="vlt-perms-role-image">
+                    <img style="width:35px; height:35px;" class="vlt-avatar"
+                         src="http://www.gravatar.com/avatar/c93ff91b31d2e8cf7bced46ef4393023?s=25&amp;d=mm">
+                </div>
+                <div class="vlt-perms-role-name">
+                    Jan Míšek
+                </div>
+            </div>
+            <div class="vlt-perms-role">
+                <div class="vlt-perms-role-image">
+                    <img style="width:35px; height:35px;" class="vlt-avatar"
+                         src="http://www.gravatar.com/avatar/c93ff91b31d2e8cf7bced46ef4393023?s=25&amp;d=mm">
+                </div>
+                <div class="vlt-perms-role-name">
+                    Štěpán Bokoč
+                </div>
+            </div>
+
         </div>
         <div class="clearfix"></div>
-    {{/if}}
+    </div>
 
-    {{#if hasRead}}
+    <div class="vlt-roles-admin-box-block">
         <div class="vlt-perms-section">
             Users able to read
+            <span class="glyphicon glyphicon-chevron-down pull-right"></span>
         </div>
         <div class="vlt-perms-roles">
-            {{#each role in rolesRead}}
-                {{printUser role.member  size=50 disableName=1}}
-            {{/each}}
-        </div>
-        <div class="clearfix"></div>
-    {{/if}}
+            <div class="vlt-perms-role">
+                <div class="vlt-perms-role-image">
+                    <img style="width:35px; height:35px;" class="vlt-avatar"
+                         src="http://www.gravatar.com/avatar/c93ff91b31d2e8cf7bced46ef4393023?s=25&amp;d=mm">
+                </div>
+                <div class="vlt-perms-role-name">
+                    Jakub Bokoč
+                </div>
+            </div>
+            <div class="vlt-perms-role">
+                <div class="vlt-perms-role-image">
+                    <img style="width:35px; height:35px;" class="vlt-avatar"
+                         src="http://www.gravatar.com/avatar/c93ff91b31d2e8cf7bced46ef4393023?s=25&amp;d=mm">
+                </div>
+                <div class="vlt-perms-role-name">
+                    Jakub Randák
+                </div>
+            </div>
+            <div class="vlt-perms-role">
+                <div class="vlt-perms-role-image">
+                    <img style="width:35px; height:35px;" class="vlt-avatar"
+                         src="http://www.gravatar.com/avatar/c93ff91b31d2e8cf7bced46ef4393023?s=25&amp;d=mm">
+                </div>
+                <div class="vlt-perms-role-name">
+                    Jan Dvořák
+                </div>
+            </div>
 
-    {{#if hasCreate}}
-        <div class="vlt-perms-section">
-            Users able to just create
-        </div>
-        <div class="vlt-perms-roles">
-            {{#each role in rolesCreate}}
-                {{printUser role.member  size=50 disableName=1}}
-            {{/each}}
         </div>
         <div class="clearfix"></div>
-    {{/if}}
+    </div>
+
+    <div class="vlt-roles-admin-box-block">
+        <div class="vlt-perms-section">
+            Users able to create
+            <span class="glyphicon glyphicon-chevron-down pull-right"></span>
+        </div>
+        <div class="vlt-perms-roles">
+            <div class="vlt-perms-role">
+                <div class="vlt-perms-role-image">
+                    <img style="width:35px; height:35px;" class="vlt-avatar"
+                         src="http://www.gravatar.com/avatar/c93ff91b31d2e8cf7bced46ef4393023?s=25&amp;d=mm">
+                </div>
+                <div class="vlt-perms-role-name">
+                    Tomáš Plešek
+                </div>
+            </div>
+            <div class="vlt-perms-role">
+                <div class="vlt-perms-role-image">
+                    <img style="width:35px; height:35px;" class="vlt-avatar"
+                         src="http://www.gravatar.com/avatar/c93ff91b31d2e8cf7bced46ef4393023?s=25&amp;d=mm">
+                </div>
+                <div class="vlt-perms-role-name">
+                    Ondřej Kmoch
+                </div>
+            </div>
+            <div class="vlt-perms-role">
+                <div class="vlt-perms-role-image">
+                    <img style="width:35px; height:35px;" class="vlt-avatar"
+                         src="http://www.gravatar.com/avatar/c93ff91b31d2e8cf7bced46ef4393023?s=25&amp;d=mm">
+                </div>
+                <div class="vlt-perms-role-name">
+                    Marcel Mika
+                </div>
+            </div>
+
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+    <!--{ {/if}}-->
+
+    <!--{ {#if hasRead}}-->
+    <!--<div class="vlt-perms-section">-->
+    <!--Users able to read-->
+    <!--</div>-->
+    <!--<div class="vlt-perms-roles">-->
+    <!--{ {#each role in rolesRead}}-->
+    <!--{ {printUser role.member  size=50 disableName=1}}-->
+    <!--{ {/each}}-->
+    <!--</div>-->
+    <!--<div class="clearfix"></div>-->
+    <!--{ {/if}}-->
+
+    <!--{ {#if hasCreate}}-->
+    <!--<div class="vlt-perms-section">-->
+    <!--Users able to just create-->
+    <!--</div>-->
+    <!--<div class="vlt-perms-roles">-->
+    <!--{ {#each role in rolesCreate}}-->
+    <!--{ {printUser role.member  size=50 disableName=1}}-->
+    <!--{ {/each}}-->
+    <!--</div>-->
+    <!--<div class="clearfix"></div>-->
+    <!--{ {/if}}-->
 
 </div>

@@ -1,0 +1,9 @@
+{{#if view.showLeftTreeNodePanel}}
+    <div class="col-md-2 vlt-col vlt-tree">
+        {{view Vaultier.Document.TreeContainer controllerBinding="treeController"}}
+    </div>
+{{/if}}
+
+<div {{bind-attr class="view.showLeftTreeNodePanel:col-md-10 view.showLeftTreeNodePanel:vlt-col"}}>
+    {{outlet content}}
+</div>

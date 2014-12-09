@@ -2,7 +2,7 @@ Vaultier.VaultEditRoute = Ember.Route.extend(
     Vaultier.WorkspaceKeysMixin,
     {
 
-        beforeModel: function() {
+        beforeModel: function () {
             this.checkWorkspaceKeys();
         },
 
@@ -25,7 +25,7 @@ Vaultier.VaultEditRoute = Ember.Route.extend(
             environment.set('vault', model);
             // set breadcrumbs
             ctrl.set('breadcrumbs',
-                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: environment})
+                Vaultier.Toolbar.create({router: this.get('router'), environment: environment})
                     .addHome()
                     .addWorkspace()
                     .addVault()
@@ -47,7 +47,7 @@ Vaultier.VaultEditRoute = Ember.Route.extend(
                         this.get('errors').logError(error)
                     }.bind(this))
 
-                 ApplicationKernel.UI.showLoaderUponPromise(promise);
+                ApplicationKernel.UI.showLoaderUponPromise(promise);
             }
         }
 

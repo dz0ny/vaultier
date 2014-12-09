@@ -2,34 +2,34 @@
  * Workspace memberships, because of nested routing in namespace of vault
  */
 Vaultier.WorkspaceMixin = Em.Mixin.create({
-        beforeModel: function () {
-            this.checkWorkspaceKeys();
-        },
+    beforeModel: function () {
+        this.checkWorkspaceKeys();
+    },
 
-        setupInviteData: function (params) {
-            var workspace = this.modelFor('Workspace');
-            return {
-                inviteObject: workspace
-            };
-        },
+    setupInviteData: function (params) {
+        var workspace = this.modelFor('Workspace');
+        return {
+            inviteObject: workspace
+        };
+    },
 
-        setupBlocks: function () {
-            return {workspace: true}
-        },
+    setupBlocks: function () {
+        return {workspace: true}
+    },
 
-        setupBreadcrumbs: function () {
-            return Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
-                .addHome()
-                .addWorkspace()
-                .addRolesAdminIndex('Workspace.rolesAdminIndex');
-        },
+    setupBreadcrumbs: function () {
+        return Vaultier.Toolbar.create({router: this.get('router'), environment: this.get('environment')})
+            .addHome()
+            .addWorkspace()
+            .addRolesAdminIndex('Workspace.rolesAdminIndex');
+    },
 
-        setupInviteRoute: function (models) {
-            return {
-                inviteRouteName: 'Workspace.rolesAdminInvite'
-            };
-        }
-    });
+    setupInviteRoute: function (models) {
+        return {
+            inviteRouteName: 'Workspace.rolesAdminInvite'
+        };
+    }
+});
 
 Vaultier.WorkspaceRolesAdminIndexRoute = Vaultier.RolesAdminIndexRoute.extend(
     Vaultier.WorkspaceKeysMixin,
@@ -59,7 +59,7 @@ Vaultier.WorkspaceRolesAdminInviteRoute = Vaultier.RolesAdminInviteRoute.extend(
         },
 
         setupBreadcrumbs: function () {
-            return Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
+            return Vaultier.Toolbar.create({router: this.get('router'), environment: this.get('environment')})
                 .addHome()
                 .addWorkspace()
                 .addRolesAdminIndex('Workspace.rolesAdminIndex')

@@ -23,7 +23,7 @@ Vaultier.CardEditRoute = Ember.Route.extend(
 
             // set breadcrumbs
             ctrl.set('breadcrumbs',
-                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: environment})
+                Vaultier.Toolbar.create({router: this.get('router'), environment: environment})
                     .addHome()
                     .addWorkspace()
                     .addVault()

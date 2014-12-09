@@ -17,7 +17,7 @@ Vaultier.VaultRolesAdminIndexRoute = Vaultier.RolesAdminIndexRoute.extend(
         },
 
         setupBreadcrumbs: function () {
-            return Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
+            return Vaultier.Toolbar.create({router: this.get('router'), environment: this.get('environment')})
                 .addHome()
                 .addWorkspace()
                 .addVault()
@@ -59,7 +59,7 @@ Vaultier.VaultRolesAdminInviteRoute = Vaultier.RolesAdminInviteRoute.extend(
         },
 
         setupBreadcrumbs: function () {
-            return Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
+            return Vaultier.Toolbar.create({router: this.get('router'), environment: this.get('environment')})
                 .addHome()
                 .addWorkspace()
                 .addVault()

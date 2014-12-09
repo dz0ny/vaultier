@@ -141,6 +141,7 @@ var vaultierModulesConfig = {
         ]
     },
 
+
     "core": {
         environments: ['*'],
         "scripts": [
@@ -162,20 +163,6 @@ var vaultierModulesConfig = {
             "./app/initializer/Keypress.js",
             "./app/di.js",
             "./app/router.js",
-        /**************** Services **/
-            "./app/service/Tree.js",
-            "./app/service/Errors.js",
-            "./app/service/Environment.js",
-            "./app/service/Auth.js",
-            "./app/service/AuthPromises.js",
-            "./app/service/Session.js",
-            "./app/service/Storage.js",
-            "./app/service/Coder.js",
-            "./app/service/Invitations.js",
-            "./app/service/WorkspaceKey.js",
-            "./app/service/KeyTransfer.js",
-            "./app/service/ChangeKey.js",
-            "./app/service/NewUserInit.js",
 
         /**************** DAL **/
             "./app/dal/field/Object.js",
@@ -184,11 +171,12 @@ var vaultierModulesConfig = {
             "./app/dal/core/Client.js",
 
             "./app/dal/mixin/CreatedUpdatedMixin.js",
-            "./app/dal/mixin/MutableModelMixin.js",
+            "./app/dal/mixin/PolymorphicModelMixin.js",
             "./app/dal/mixin/EncryptedModelMixin.js",
             "./app/dal/mixin/RollbackMixin.js",
 
             "./app/dal/adapter/NewsAdapter.js",
+            "./app/dal/adapter/NodeAdapter.js",
 
             "./app/dal/model/Color.js",
             "./app/dal/model/User.js",
@@ -202,9 +190,41 @@ var vaultierModulesConfig = {
             "./app/dal/model/Secret.js",
             "./app/dal/model/LostKey.js",
             "./app/dal/model/News.js",
-            "./app/dal/model/Document.js"
+            "./app/dal/model/Node.js"
         ]
     },
+
+    "service": {
+        environments: ['*'],
+        "scripts": [
+            "./app/service/Tree.js",
+            "./app/service/Errors.js",
+            "./app/service/Environment.js",
+            "./app/service/Auth.js",
+            "./app/service/AuthPromises.js",
+            "./app/service/Session.js",
+            "./app/service/Storage.js",
+            "./app/service/Coder.js",
+            "./app/service/Invitations.js",
+            "./app/service/WorkspaceKey.js",
+            "./app/service/KeyTransfer.js",
+            "./app/service/ChangeKey.js",
+            "./app/service/NewUserInit.js"
+        ]
+    },
+
+    "mock": {
+        environments: ['dev', 'test'],
+        "scripts": [
+            "./bower_components/jquery-mockajax/jquery.mockjax.js",
+
+            "./mock/BaseMock.js",
+            "./mock/MockManager.js",
+            "./mock/NodeMock.js",
+            "./mock/WorkspaceKeyMock.js"
+        ]
+    },
+
     "layout": {
         environments: ['*'],
         "templates": [
@@ -290,10 +310,17 @@ var vaultierModulesConfig = {
             "./app/module/Documents/**/*.hbs"
         ],
         "scripts": [
-            "./app/module/Documents/Tree/DocumentsTree.js",
-            "./app/module/Documents/Detail/DocumentsDetail.js",
-            "./app/module/Documents/List/DocumentsList.js",
-            "./app/module/Documents/Documents.js"
+            "./app/module/Documents/Color/DocumentColor.js",
+            "./app/module/Documents/Tree/DocumentTree.js",
+            "./app/module/Documents/Detail/DocumentDetail.js",
+            "./app/module/Documents/List/DocumentList.js",
+            "./app/module/Documents/Create/DocumentCreate.js",
+            "./app/module/Documents/Edit/DocumentEdit.js",
+            "./app/module/Documents/Move/DocumentMove.js",
+            "./app/module/Documents/TypeEditable/DocumentTypeEditable.js",
+            "./app/module/Documents/TypeStatic/DocumentTypeStatic.js",
+            "./app/module/Documents/CreateRoot/DocumentCreateRoot.js",
+            "./app/module/Documents/Document.js"
         ]
     },
     "workspace": {
@@ -318,7 +345,6 @@ var vaultierModulesConfig = {
     "vault": {
         environments: ['*'],
         "scripts": [
-            "./app/module/Vault/VaultColor.js",
             "./app/module/Vault/VaultsIndex.js",
             "./app/module/Vault/VaultsCreate.js",
             "./app/module/Vault/VaultIndex.js",
@@ -389,17 +415,6 @@ var vaultierModulesConfig = {
             "./app/module/Settings/SettingsIndex.hbs",
             "./app/module/Settings/SettingsPersonal.hbs",
             "./app/module/Settings/SettingsKeys.hbs"
-        ]
-    },
-
-    "mock": {
-        environments: ['dev', 'test'],
-        "scripts": [
-            "./bower_components/jquery-mockajax/jquery.mockjax.js",
-
-            "./mock/BaseMock.js",
-            "./mock/MockManager.js",
-            "./mock/TreeMock.js"
         ]
     },
 

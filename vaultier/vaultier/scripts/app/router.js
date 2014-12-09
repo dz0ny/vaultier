@@ -65,6 +65,21 @@ Vaultier.Router.map(function () {
 
     });
 
+    /************************************************************
+     * Documents
+     ************************************************************/
+
+    this.resource('Documents', {path: '/documents'}, function () {
+        this.resource('Document', {path: '/d/:document'}, function () {
+            this.route('list', { path: '/list'});
+            this.route('detail', { path: '/detail'});
+            this.route('edit', { path: '/edit'});
+            this.route('create', { path: '/create/:type'});
+            this.route('move', { path: '/move'});
+        });
+        this.route('createRoot', { path: '/create'});
+    });
+
 
     /************************************************************
      * Workspaces
@@ -182,9 +197,9 @@ Vaultier.ApplicationRoute = Ember.Route.extend(
             },
 
             loading: function (transition, originRoute) {
-                ApplicationKernel.UI.showLoader();
+//                ApplicationKernel.UI.showLoader();
                 transition.promise.finally(function () {
-                    ApplicationKernel.UI.hideLoader();
+//                    ApplicationKernel.UI.hideLoader();
                 }.bind(this))
             }
 

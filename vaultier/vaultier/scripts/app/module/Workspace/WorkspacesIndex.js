@@ -55,7 +55,7 @@ Vaultier.WorkspacesSelectRoute = Ember.Route.extend(
             this._super(ctrl, model);
 
             ctrl.set('breadcrumbs',
-                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
+                Vaultier.Toolbar.create({router: this.get('router'), environment: this.get('environment')})
                     .addHome()
                     .addText('List of workspaces', '/static/vaultier/images/icon-home-grey.png')
             );

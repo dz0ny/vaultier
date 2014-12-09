@@ -1,13 +1,14 @@
-Vaultier.VaultColorView = Ember.View.extend({
-    layoutName: 'Vault/VaultColor',
-    init: function () {
+Vaultier.DocumentColorView = Ember.View.extend({
+    layoutName: 'Documents/Color/DocumentColor',
+
+    didInsertElement: function () {
+        this._super();
         if (this.get('value') == null) {
             this.set('value', 'blue');
         }
         this.prepareColorPicker();
-
-        this._super();
     },
+
     prepareColorPicker: function () {
         var colorsAndSelected = [];
         Vaultier.dal.model.Color.proto().colors.forEach(function (color) {
@@ -21,6 +22,7 @@ Vaultier.VaultColorView = Ember.View.extend({
         }.bind(this));
         this.set('colors', colorsAndSelected);
     },
+
     actions: {
         changeColor: function (color) {
             this.set('value', Ember.get(color, 'value'));

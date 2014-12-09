@@ -152,6 +152,7 @@ Vaultier.dal.mixin.EncryptedModel.Mixin = Ember.Mixin.create({
 
     decryptFields: function () {
         this.get('encryptedFields').forEach(function (encryptedField) {
+            console.log(encryptedField);
             this.decryptField(encryptedField);
         }.bind(this))
     },
@@ -164,6 +165,7 @@ Vaultier.dal.mixin.EncryptedModel.Mixin = Ember.Mixin.create({
 
     deserialize: function (options) {
         var deserialized = this._super.apply(this, arguments);
+        console.log(deserialized);
         deserialized.clearDecryptedData();
 
         this.set('decrypted', false);
@@ -193,7 +195,7 @@ Vaultier.dal.mixin.EncryptedModel.Mixin = Ember.Mixin.create({
  * @method generatePassword
  * @returns {string}
  */
-Vaultier.dal.mixin.EncryptedModel.generatePassword = function() {
+Vaultier.dal.mixin.EncryptedModel.generatePassword = function () {
     var chars = "ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
     var string_length = 16;
     var randomstring = '';

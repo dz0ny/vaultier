@@ -1,0 +1,58 @@
+<div class="form-group" {{bind-attr class='errors.name:has-error'}}>
+    <label for="secret-name">Name</label>
+    {{errors.url}}
+    {{view Em.TextField elementId='secret-name' valueBinding='content.name' class="form-control"}}
+    <div class="help-block">
+        Informational field. Do not enter any sensitive information. This field is not encrypted!
+    </div>
+</div>
+
+<h4>Please fill in data for your file secret</h4>
+
+<div class="form-group" {{bind-attr class='errors.url:has-error'}}>
+    <label for="secret-url">URL</label>
+    {{errors.url}}
+    {{view Em.TextField elementId='secret-url' valueBinding='content.url' class="form-control"}}
+</div>
+
+<div class="form-group" {{bind-attr class='errors.username:has-error'}}>
+    <label for="secret-username">Username</label>
+    {{errors.username}}
+    {{view Em.TextField elementId='secret-username' valueBinding='content.username' class="form-control"}}
+</div>
+
+<div class="form-group" {{bind-attr class='errors.password:has-error'}}>
+    <label for="secret-password">Password</label>
+    {{errors.password}}
+    {{password-field elementId='secret-password-component' inputId='secret-password' value=content.password}}
+</div>
+
+<div class="form-group" {{bind-attr class='error:has-error'}}>
+    <label for="secret-file" class="control-label">Secret file</label>
+
+    <div class="input-group">
+        <input {{bind-attr value='content.filename'}}
+                type="text"
+                class="form-control vlt-filename"
+                readonly=""
+                placeholder="Select your key">
+
+        <span class="vlt-secret-type-file input-group-btn btn-file">
+            <a class="btn btn-default">
+                Browse <input type="file">
+            </a>
+        </span>
+
+    </div>
+    <div class="help-block">
+        Store a file up to 25 KB in size
+    </div>
+</div>
+
+
+<div class="form-group" {{bind-attr class='errors.name:has-error'}}>
+    <label for="secret-note">Note</label>
+    {{errors.name}}
+    {{view Em.TextArea elementId='secret-note' valueBinding='content.note' class="form-control" rows=5}}
+</div>
+

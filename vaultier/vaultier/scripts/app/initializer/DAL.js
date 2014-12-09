@@ -35,7 +35,7 @@ Vaultier.initializers.DAL = {
         app.register('adapter:lostkeymemberships', Vaultier.dal.core.RESTAdapter);
 
         app.register('adapter:news', Vaultier.dal.adapter.NewsAdapter);
-        app.register('adapter:node', Vaultier.dal.core.RESTAdapter);
+        app.register('adapter:node', Vaultier.dal.adapter.NodeAdapter);
 
         //@todo: not the final list more to come with every model
 

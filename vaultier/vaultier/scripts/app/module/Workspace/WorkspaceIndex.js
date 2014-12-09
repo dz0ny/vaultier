@@ -57,10 +57,10 @@ Vaultier.WorkspaceRoute = Ember.Route.extend(
                     var promise = workspace
                         .deleteRecord()
                         .then(
-                            function () {
-                                $.notify('Your workspace has been deleted successfully.', 'success');
-                                this.transitionTo('Workspaces.select');
-                            }.bind(this))
+                        function () {
+                            $.notify('Your workspace has been deleted successfully.', 'success');
+                            this.transitionTo('Workspaces.select');
+                        }.bind(this))
                         .catch(function (error) {
                             $.notify('Ooops! Something went wrong.', 'error');
                             throw error;
@@ -140,7 +140,7 @@ Vaultier.WorkspaceNoKeysRoute = Ember.Route.extend({
         });
     },
 
-    afterModel: function(model, transition) {
+    afterModel: function (model, transition) {
         if (model.workspace.get('membership.status') == Vaultier.dal.model.Member.proto().statuses.MEMBER.value) {
             transition.abort();
             this.transitionTo('Workspace.index');
@@ -158,7 +158,7 @@ Vaultier.WorkspaceNoKeysRoute = Ember.Route.extend({
 
         // set breadcrumbs
         ctrl.set('breadcrumbs',
-            Vaultier.Breadcrumbs.create({router: this.get('router'), environment: environment})
+            Vaultier.Toolbar.create({router: this.get('router'), environment: environment})
                 .addHome()
                 .addWorkspace()
                 .addText('Waiting for keys')

@@ -22,6 +22,7 @@ Vaultier.initializers.DI = {
         app.register('store:main', Vaultier.dal.core.Client, {instantiate: false});
         app.inject('route', 'store', 'store:main');
         app.inject('controller', 'store', 'store:main');
+        app.inject('controller', 'router', 'router:main');
         app.inject('component', 'store', 'store:main');
         //also there lazy loading does not work properly with ember initialize:
         RESTless.set('client', Vaultier.dal.core.Client);
@@ -49,8 +50,13 @@ Vaultier.initializers.DI = {
         app.inject('service:auth', 'session', 'service:session')
         app.inject('service:auth', 'storage', 'service:storage')
 
+        app.register('service:tree', Service.Tree);
+
         app.inject('route', 'auth', 'service:auth');
+        app.inject('route', 'tree', 'service:tree');
         app.inject('controller', 'auth', 'service:auth');
+        app.inject('controller', 'tree', 'service:tree');
+        app.inject('service:tree', 'store', 'store:main')
 
         // service:coder
         app.register('service:coder', Service.Coder)
@@ -76,7 +82,11 @@ Vaultier.initializers.DI = {
         app.inject('service:keytransfer', 'coder', 'service:coder');
 
         // service:workspacekey
-        app.register('service:workspacekey', Service.WorkspaceKey);
+        if (ApplicationKernel.Config.environment != 'dev') {
+            app.register('service:workspacekey', Service.WorkspaceKey);
+        } else {
+            app.register('service:workspacekey', Vaultier.Mock.WorkspaceKeyMock);
+        }
         app.inject('service:workspacekey', 'auth', 'service:auth');
         app.inject('service:workspacekey', 'store', 'store:main');
         app.inject('service:workspacekey', 'coder', 'service:coder');

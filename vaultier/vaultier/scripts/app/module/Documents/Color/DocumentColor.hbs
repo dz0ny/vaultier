@@ -1,7 +1,7 @@
 <div class="color-chooser">
     {{#each view.colors}}
         <a
-           {{bind-attr class=':color-picker this.selected:selected'}}
+            {{bind-attr class=':color-picker this.selected:selected'}}
             {{action changeColor this target=view}}>
             <div {{bind-attr class=this.css}}></div>
         </a>

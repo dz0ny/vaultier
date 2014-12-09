@@ -20,7 +20,7 @@ Vaultier.VaultsCreateRoute = Ember.Route.extend(
             // create record
             var vault = store.createRecord('Vault');
 
-                    // load memberships
+            // load memberships
             var memberships = store
                 .find('Role', {to_workspace: workspace.get('id') })
                 .then(function (memberships) {
@@ -57,7 +57,7 @@ Vaultier.VaultsCreateRoute = Ember.Route.extend(
         },
 
         setupController: function (ctrl, model) {
-             // set model
+            // set model
             ctrl.set('content', model.vault);
             ctrl.set('memberships', model.memberships);
 
@@ -68,7 +68,7 @@ Vaultier.VaultsCreateRoute = Ember.Route.extend(
 
             // set breadcrumbs
             ctrl.set('breadcrumbs',
-                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
+                Vaultier.Toolbar.create({router: this.get('router'), environment: this.get('environment')})
                     .addHome()
                     .addWorkspace()
                     .addText('Create new vault')

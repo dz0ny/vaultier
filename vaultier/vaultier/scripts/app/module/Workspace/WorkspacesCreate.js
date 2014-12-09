@@ -4,10 +4,10 @@ Vaultier.WorkspacesCreateRoute = Ember.Route.extend({
             var record = this.get('controller.content');
             var promise = record.saveRecord()
                 .then(
-                    function () {
-                        $.notify('You workspace has been created successfully.', 'success');
-                        this.transitionTo('Workspace.index', record.get('slug'));
-                    }.bind(this))
+                function () {
+                    $.notify('You workspace has been created successfully.', 'success');
+                    this.transitionTo('Workspace.index', record.get('slug'));
+                }.bind(this))
 
                 .catch(function (error) {
                     $.notify('Ooops! Something went wrong.', 'error');
@@ -25,7 +25,7 @@ Vaultier.WorkspacesCreateRoute = Ember.Route.extend({
 
         // set breadcrumbs
         ctrl.set('breadcrumbs',
-            Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
+            Vaultier.Toolbar.create({router: this.get('router'), environment: this.get('environment')})
                 .addHome()
                 .addText('Create new workspace')
         );

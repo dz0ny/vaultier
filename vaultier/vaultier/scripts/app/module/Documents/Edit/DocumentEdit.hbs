@@ -1,0 +1,41 @@
+<div class="container">
+    <div class="vlt-page vlt-page-plain">
+        <div class="vlt-dialog col-md-10 col-md-offset-1 top-50">
+            <div class="vlt-dialog-content">
+                <div class="vlt-dialog-header">
+                    <h2>Create New {{typeName}}</h2>
+                </div>
+                <div class="vlt-dialog-body">
+                    {{ outlet center }}
+
+                    {{#unless content.id}}
+                        <div class="col-md-5 bottom-15">
+                            <div class="vlt-dialog vlt-share-dialog">
+                                <div class="vlt-dialog-header">
+                                    <h4>Secret will be shared with:</h4>
+                                </div>
+                                <div class="vlt-dialog-content">
+                                    {{roles-admin-box roles=memberships user=auth.user object=membershipsScope}}
+                                </div>
+                            </div>
+                        </div>
+                    {{/unless}}
+
+                    <div class="clearfix"></div>
+
+                </div>
+                <div class="vlt-dialog-footer">
+                    <a href="javascript:history.go(-1)" class="btn btn-default btn-sm">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                        Back
+                    </a>
+                    <a {{ action submit }} class="btn btn-primary">
+                        <span class="glyphicon glyphicon-ok"></span>
+                        Submit
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
