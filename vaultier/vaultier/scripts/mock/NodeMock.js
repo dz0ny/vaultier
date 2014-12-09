@@ -20,11 +20,15 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
         this.mockGetParent();
         this.mockGetChildren();
         this.mockGet();
+        this.mockPost();
+        this.mockPut();
+        this.mockDelete();
+        this.lastId = 20
     },
 
     /**
      * Mock GET method for list root nodes
-     * url: /api/nodes/
+     * example url: /api/nodes/
      *
      * @method mockGet
      */
@@ -42,7 +46,7 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
 
     /**
      * Mock GET method for detail
-     * url: /api/nodes/1/
+     * example url: /api/nodes/1/
      *
      * @method mockGetDetail
      */
@@ -53,7 +57,6 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
             urlParams: ['nodeId'],
             type: 'GET',
             response: function (settings) {
-
                 this.responseText = that.findById(settings.urlParams.nodeId);
             }
         });
@@ -61,7 +64,7 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
 
     /**
      * Mock GET method for get parents of node
-     * url: /api/nodes/1/path
+     * example url: /api/nodes/1/path
      *
      * @method mockGetParent
      */
@@ -79,7 +82,7 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
 
     /**
      * Mock GET method for get childrens of node
-     * url: /api/nodes/?parent=1
+     * example url: /api/nodes/?parent=1
      *
      * @method mockGetChildren
      */
@@ -93,6 +96,125 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
                 this.responseText = that.findChildrenNodes(settings.data.parent);
             }
         });
+    },
+
+    /**
+     * Mock POST method for create node
+     * url: /api/nodes/1/
+     *
+     * @method mockGetParent
+     */
+    mockPost: function () {
+        var that = this;
+        Ember.$.mockjax({
+            url: /^\/api\/nodes\/$/,
+            urlParams: ['nodeId'],
+            type: 'POST',
+            response: function (settings) {
+                console.log(settings);
+                console.log(settings.data);
+
+                var node = JSON.parse(settings.data);
+
+                var fixtureNode = {};
+                fixtureNode.id = that.lastId++;
+                fixtureNode.name = node.name ? node.name : null;
+                fixtureNode.type = node.type ? node.type : null;
+                fixtureNode.data = node.data ? node.data : null;
+                fixtureNode.color = node.color ? node.color : null;
+                fixtureNode.enc_version = node.enc_version ? node.enc_version : null;
+                fixtureNode.created_by = node.created_by ? node.created_by : null;
+                fixtureNode.created_at = node.created_at ? node.created_at : null;
+                fixtureNode.updated_at = node.updated_at ? node.updated_at : null;
+                fixtureNode.parent = node.parent ? node.parent : null;
+
+                console.log(fixtureNode);
+
+                that.fixtures.pushObject(fixtureNode);
+                this.responseText = fixtureNode;
+            }
+        });
+    },
+
+    /**
+     * Mock PUT method for update node
+     * example: url: /api/nodes/1/
+     *
+     * @method mockGetParent
+     */
+    mockPut: function () {
+        var that = this;
+        Ember.$.mockjax({
+            url: /^\/api\/nodes\/([\d]+)\/$/,
+            urlParams: ['nodeId'],
+            type: 'PUT',
+            response: function (settings) {
+                console.log(settings);
+                console.log(settings.data);
+                var node = JSON.parse(settings.data);
+                console.log(node);
+
+                var fixtureNode = that.findById(node.id);
+                console.log(fixtureNode);
+                fixtureNode.id = node.id;
+                fixtureNode.name = node.name;
+                fixtureNode.type = node.type;
+                fixtureNode.data = node.data;
+                fixtureNode.color = node.color;
+                fixtureNode.enc_version = node.enc_version;
+                fixtureNode.created_by = node.created_by;
+                fixtureNode.created_at = node.created_at;
+                fixtureNode.updated_at = node.updated_at;
+                fixtureNode.parent = node.parent;
+                that.fixtures.pushObject(node);
+                this.responseText = node;
+            }
+        });
+    },
+
+    /**
+     * Mock DELETE method for detail
+     * example url: /api/nodes/1/
+     *
+     * @method mockGetDetail
+     */
+    mockDelete: function () {
+        var that = this;
+        Ember.$.mockjax({
+            url: /^\/api\/nodes\/([\d]+)\/$/,
+            urlParams: ['nodeId'],
+            type: 'DELETE',
+            response: function (settings) {
+                var fixtureNode = that.findById(settings.urlParams.nodeId);
+
+                //remove children
+                var childrenToRemove = that._removeNode(Ember.A(), fixtureNode);
+                childrenToRemove.forEach(function (child) {
+                    that.fixtures.removeObject(child);
+                });
+
+                //remove itself
+                that.fixtures.removeObject(fixtureNode);
+
+                this.responseText = null;
+            }
+        });
+    },
+
+    /**
+     * Return all child node (recursively) from example data according to given id
+     *
+     * @method findChildrenNodes
+     * @returns {*}
+     */
+    _removeNode: function (childrenArray, node) {
+        this.fixtures.forEach(function (fixture) {
+            if (fixture.parent == node.id) {
+                childrenArray.pushObject(fixture);
+                var children = this._removeNode(childrenArray, fixture);
+            }
+        }.bind(this));
+        return childrenArray;
     },
 
     /**
@@ -118,13 +240,38 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
      * @returns {*}
      */
     findParentNodes: function (id) {
-        var fixtureToReturn = Ember.A();
-        this.fixtures.forEach(function (fixture) {
-            if (fixture.parent == id) {
-                fixtureToReturn.pushObject(fixture);
-            }
-        });
+        var node = this.findById(id);
+        var fixtureToReturn = null;
+        if (node.parent) {
+            fixtureToReturn = this.getParents(this.findById(node.parent));
+        } else {
+            fixtureToReturn = [];
+        }
+
+        console.log(fixtureToReturn);
         return fixtureToReturn;
+    },
+
+    /**
+     * Recursive method for finding all parents for given node
+     *
+     * @method _getParents
+     * @param node
+     * @returns {Array}
+     * @private
+     */
+    getParents: function (node) {
+        var parents = null;
+        console.log(node);
+        if (node.parent) {
+            parents = this.getParents(this.findById(node.parent));
+            parents.pushObject(node);
+            return parents;
+        } else {
+            parents = new Ember.A();
+            parents.pushObject(node);
+            return parents;
+        }
     },
 
     /**
@@ -147,8 +294,7 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
         {
             "id": 1,
             "name": "rClick",
-            "meta": "some-encrypted-data",
-            "node_subtype": 100,
+            "type": 100,
             "data": null,
             "color": "blue",
             "enc_version": 1,
@@ -160,9 +306,8 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
         {
             "id": 2,
             "name": "Cloudsoftphone",
-            "meta": "some-encrypted-data",
-            "node_subtype": 100,
-            "data": "http://example.com/1",
+            "type": 100,
+            "data": null,
             "color": "blue",
             "enc_version": 1,
             "created_by": 1,
@@ -173,9 +318,8 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
         {
             "id": 3,
             "name": "Production server",
-            "meta": "some-encrypted-data",
-            "node_subtype": 100,
-            "data": "http://example.com/1",
+            "type": 100,
+            "data": null,
             "color": "green",
             "enc_version": 1,
             "created_by": 1,
@@ -184,11 +328,22 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
             "parent": 2
         },
         {
+            "id": 19,
+            "name": "Database",
+            "type": 100,
+            "data": null,
+            "color": "red",
+            "enc_version": 1,
+            "created_by": 1,
+            "created_at": "2014-05-30T22:22:22.501Z",
+            "updated_at": "2015-05-30T23:23:23.501Z",
+            "parent": 3
+        },
+        {
             "id": 4,
             "name": "Beta server",
-            "meta": "some-encrypted-data",
-            "node_subtype": 100,
-            "data": "http://example.com/1",
+            "type": 100,
+            "data": null,
             "color": "purple",
             "enc_version": 1,
             "created_by": 1,
@@ -199,9 +354,8 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
         {
             "id": 5,
             "name": "Jira",
-            "meta": "some-encrypted-data",
-            "node_subtype": 100,
-            "data": "http://example.com/1",
+            "type": 100,
+            "data": null,
             "color": "orange",
             "enc_version": 1,
             "created_by": 1,
@@ -212,9 +366,8 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
         {
             "id": 6,
             "name": "Sentry",
-            "meta": "some-encrypted-data",
-            "node_subtype": 100,
-            "data": "http://example.com/1",
+            "type": 100,
+            "data": null,
             "color": "red",
             "enc_version": 1,
             "created_by": 1,
@@ -225,9 +378,18 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
         {
             "id": 7,
             "name": "Readme",
-            "meta": "some-encrypted-data",
-            "node_subtype": 400,
-            "data": "http://example.com/1",
+            "type": 400,
+            "data": {
+                "password": "heslo",
+                "username": "uzivatelske jmeno",
+                "url": "adresa",
+                "note": "poznamka"
+            },
+            blob_meta: {
+                "filename": "nazev",
+                "filesize": "velikost",
+                "filetype": "typ"
+            },
             "color": "blue",
             "enc_version": 1,
             "created_by": 1,
@@ -238,9 +400,8 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
         {
             "id": 8,
             "name": "Vaultier",
-            "meta": "some-encrypted-data",
-            "node_subtype": 100,
-            "data": "http://example.com/1",
+            "type": 100,
+            "data": null,
             "color": "blue",
             "enc_version": 1,
             "created_by": 1,
@@ -251,9 +412,8 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
         {
             "id": 9,
             "name": "File server",
-            "meta": "some-encrypted-data",
-            "node_subtype": 100,
-            "data": "http://example.com/1",
+            "type": 100,
+            "data": null,
             "color": "blue",
             "enc_version": 1,
             "created_by": 1,
@@ -264,9 +424,8 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
         {
             "id": 10,
             "name": "Prod03",
-            "meta": "some-encrypted-data",
-            "node_subtype": 100,
-            "data": "http://example.com/1",
+            "type": 100,
+            "data": null,
             "color": "blue",
             "enc_version": 1,
             "created_by": 1,
@@ -277,9 +436,8 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
         {
             "id": 11,
             "name": "Confluence",
-            "meta": "some-encrypted-data",
-            "node_subtype": 100,
-            "data": "http://example.com/1",
+            "type": 100,
+            "data": null,
             "color": "blue",
             "enc_version": 1,
             "created_by": 1,
@@ -290,9 +448,8 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
         {
             "id": 12,
             "name": "CVUT",
-            "meta": "some-encrypted-data",
-            "node_subtype": 100,
-            "data": "http://example.com/1",
+            "type": 100,
+            "data": null,
             "color": "purple",
             "enc_version": 1,
             "created_by": 1,
@@ -303,9 +460,8 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
         {
             "id": 13,
             "name": "Personal",
-            "meta": "some-encrypted-data",
-            "node_subtype": 100,
-            "data": "http://example.com/1",
+            "type": 100,
+            "data": null,
             "color": "blue",
             "enc_version": 1,
             "created_by": 1,
@@ -315,10 +471,10 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
         },
         {
             "id": 14,
-            "name": "Certificate",
-            "meta": "some-encrypted-data",
-            "node_subtype": 400,
-            "data": "http://example.com/1",
+            "name": "Supr veci",
+            "type": 100,
+            "data": null,
+            "color": "green",
             "enc_version": 1,
             "created_by": 1,
             "created_at": "2014-05-30T22:22:22.501Z",
@@ -327,10 +483,19 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
         },
         {
             "id": 15,
-            "name": "Facebook",
-            "meta": "some-encrypted-data",
-            "node_subtype": 300,
-            "data": "http://example.com/1",
+            "name": "Certificate",
+            "type": 400,
+            "data": {
+                "password": "heslo",
+                "username": "uzivatelske jmeno",
+                "url": "adresa",
+                "note": "poznamka"
+            },
+            blob_meta: {
+                "filename": "nazev",
+                "filesize": "velikost",
+                "filetype": "typ"
+            },
             "enc_version": 1,
             "created_by": 1,
             "created_at": "2014-05-30T22:22:22.501Z",
@@ -339,10 +504,14 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
         },
         {
             "id": 16,
-            "name": "Readme",
-            "meta": "some-encrypted-data",
-            "node_subtype": 400,
-            "data": "http://example.com/1",
+            "name": "Facebook",
+            "type": 300,
+            "data": {
+                "username": "uzivatelske jmeno",
+                "password": "heslo",
+                "url": "adresa",
+                "note": "poznamka"
+            },
             "enc_version": 1,
             "created_by": 1,
             "created_at": "2014-05-30T22:22:22.501Z",
@@ -351,10 +520,32 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
         },
         {
             "id": 17,
+            "name": "Readme",
+            "type": 400,
+            "data": {
+                "username": "uzivatelske jmeno",
+                "password": "heslo",
+                "url": "adresa",
+                "note": "poznamka"
+            },
+            blob_meta: {
+                "filename": "nazev",
+                "filesize": "velikost",
+                "filetype": "typ"
+            },
+            "enc_version": 1,
+            "created_by": 1,
+            "created_at": "2014-05-30T22:22:22.501Z",
+            "updated_at": "2015-05-30T23:23:23.501Z",
+            "parent": 13
+        },
+        {
+            "id": 18,
             "name": "Certificate iOS",
-            "meta": "some-encrypted-data",
-            "node_subtype": 200,
-            "data": "http://example.com/1",
+            "type": 200,
+            "data": {
+                "note": "poznamka"
+            },
             "enc_version": 1,
             "created_by": 1,
             "created_at": "2014-05-30T22:22:22.501Z",
