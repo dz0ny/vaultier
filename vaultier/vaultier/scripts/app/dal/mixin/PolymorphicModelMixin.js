@@ -1,9 +1,35 @@
 ApplicationKernel.namespace('Vaultier.dal.mixin.PolymorphicModel');
 
 /**
+ * Mixin which gives you an option for create model with different fields according to model type
+ *
+ * Usage:
+ * 1. Create property 'polymorphicModelTypeField'. Its value has to be name of model's field
+ *  where is stored type of model.
+ *
+ *  Example:
+ *  ```javascript
+ *  polymorphicModelTypeField: 'type'
+ *  ```
+ *
+ * 2. Create property 'polymorphicModelMapping'. Its value will be object.
+ *  Keys of this object should be types according to which it selects mixins.
+ *  Values of Object should be fully-classified names of mixin which correspond to types.
+ *
+ *  Example:
+ *  ```javascript
+ *  polymorphicModelMapping: {
+ *      100: 'Vaultier.dal.model.NodeFolderMixin',
+ *      200: 'Vaultier.dal.model.NodeNoteMixin',
+ *      300: 'Vaultier.dal.model.NodePasswordMixin',
+ *      400: 'Vaultier.dal.model.NodeFileMixin'
+ *  },
+ *  ```
+ *
  * @module vaultier-dal-mixin
  * @class Vaultier.dal.mixin.PolymorphicModel
  * @extends Ember.Mixin
+ * @requires Vaultier.dal.mixin.EncryptedModel.Mixin
  */
 Vaultier.dal.mixin.PolymorphicModel.Mixin = Ember.Mixin.create({
 

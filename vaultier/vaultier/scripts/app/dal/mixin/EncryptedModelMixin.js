@@ -5,9 +5,12 @@ var getEncryptedDataKey = function (encryptedField) {
 }
 
 /**
+ * Encrypt and decrypt model after serialisation and deserialisation
+ *
  * @module vaultier-dal-mixin
  * @class Vaultier.dal.mixin.EncryptedModel.Mixin
  * @extends Ember.Mixin
+ * @requires Vaultier.dal.mixin.PolymorphicModel.Mixin
  */
 Vaultier.dal.mixin.EncryptedModel.Mixin = Ember.Mixin.create({
 
