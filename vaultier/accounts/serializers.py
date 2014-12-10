@@ -4,6 +4,7 @@ from accounts.business.fields import RecoverTypeField, MemberStatusField
 from accounts.models import Token, User, LostKey, Member
 from acls.models import Role
 from workspaces.models import Workspace
+from django.conf import settings
 
 
 class AuthSerializer(serializers.Serializer):
@@ -22,10 +23,44 @@ class TokenSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(required=True)
+    # invitation_hash = serializers.CharField(write_only=True, required=True)
 
     class Meta:
         model = User
         fields = ['id', 'email', 'nickname', 'public_key']
+
+    def get_fields(self):
+        """
+        Adds invitation_hash field in create action only if registration is
+        disabled
+        """
+        request = self.context.get('request')
+        ret = super(UserSerializer, self).get_fields()
+
+        if not request:
+            return ret
+
+        if request.method == 'POST' and \
+                not settings.VAULTIER.get('registration_allow'):
+            ret['invitation_hash'] = serializers.CharField(write_only=True,
+                                                           required=True)
+        return ret
+
+    def validate_invitation_hash(self, attrs, source):
+        """
+        Validate invitation hash validity
+        """
+        hash = attrs[source]
+        try:
+            Member.objects.get(invitation_hash=hash)
+        except Member.DoesNotExist:
+            # first your can register
+            if bool(User.objects.all().count()):
+                # kick the rest
+                raise serializers.ValidationError("Invitation not found")
+
+        del attrs[source]
+        return attrs
 
     def restore_fields(self, data, files):
         if self.context.get('view').action != 'create':
