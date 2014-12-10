@@ -49,6 +49,7 @@ Vaultier.InvitationAcceptRoute = Ember.Route.extend(
 
         setupController: function (ctrl, model) {
             ctrl.set('content', model);
+            console.log(model);
             var environment = this.get('environment');
             ctrl.set('breadcrumbs',
                 Vaultier.Breadcrumbs.create({router: this.get('router'), environment: environment})
