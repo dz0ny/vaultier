@@ -1,8 +1,26 @@
-from rest_framework.permissions import BasePermission
+from rest_framework.permissions import BasePermission, IsAuthenticated
 from accounts.models import Member
 from acls.business.fields import AclLevelField
 from acls.business.permissions import has_object_acl
 
+
+class InvitationPermission(IsAuthenticated):
+    
+    def has_permission(self, request, view):
+        """
+        Everyone can see detail if has invitation_hash. The rest has
+        to be authenticated
+
+        :param request:
+        :param view:
+        :return:
+        """
+        if view.action == 'retrieve':
+            return True
+        else:
+            return super(InvitationPermission, self).has_permission(
+                request, view)
+    
 
 class CanManageMemberPermission(BasePermission):
 
