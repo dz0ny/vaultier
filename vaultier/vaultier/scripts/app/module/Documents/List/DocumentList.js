@@ -18,8 +18,8 @@ Vaultier.DocumentListRoute = Ember.Route.extend({
     createToolbar: function () {
         return Vaultier.Toolbar.create({router: this.get('router')})
             .prepareBuilder()
-            .addParentsOfDocument(this.get('tree').getParents(this.get('tree').getSelectedNode()))
-            .addDocument(this.get('tree').getSelectedNode(), true)
+            .addBreadcrumbParentsOfDocument(this.get('tree').getParents(this.get('tree').getSelectedNode()))
+            .addBreadcrumbDocument(this.get('tree').getSelectedNode(), true)
             .addActionCreate()
             .addActionSettings();
     }

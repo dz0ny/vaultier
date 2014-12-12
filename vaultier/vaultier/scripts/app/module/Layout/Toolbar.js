@@ -137,11 +137,11 @@ Vaultier.Toolbar = Ember.Object.extend({
     /**
      * Add all parents of current document to breadcrumbs
      *
-     * @method addParentsOfDocument
+     * @method addBreadcrumbParentsOfDocument
      * @param parentsNodes
      * @returns {Vaultier.Toolbar}
      */
-    addParentsOfDocument: function (parentsNodes) {
+    addBreadcrumbParentsOfDocument: function (parentsNodes) {
         Utils.Logger.log.debug(parentsNodes);
         if (!parentsNodes) {
             this.set('rootFolder', true);
@@ -161,17 +161,68 @@ Vaultier.Toolbar = Ember.Object.extend({
     /**
      * Add one document to breadcrumb (for example the current document)
      *
-     * @method addDocument
+     * @method addBreadcrumbDocument
      * @param {Vaultier.Document.Node} currentDocument
      * @param {Boolean} last
      * @returns {Vaultier.Toolbar}
      */
-    addDocument: function (currentDocument, last) {
+    addBreadcrumbDocument: function (currentDocument, last) {
         this.get('breadcrumbs').pushObject({
             link: this.get('router').generate('Document.list', currentDocument.get('id')),
             title: Utils.HandlebarsHelpers.current().ellipsis(currentDocument.get('name'), 25),
             icon: '/static/vaultier/images/icon-' + currentDocument.get('typeCss') + '.png',
             last: last ? true : false
+        });
+        return this;
+    },
+
+    /**
+     * Add create document to breadcrumb
+     *
+     * @method addBreadcrumbDocumentCreate
+     * @param {String} title
+     * @returns {Vaultier.Toolbar}
+     */
+    addBreadcrumbDocumentCreate: function (title) {
+        this.get('breadcrumbs').pushObject({
+            link: 'link',
+            title: 'Create New ' + title,
+            icon: '/static/vaultier/images/icon-plus-gray.png',
+            last: true
+        });
+        return this;
+    },
+
+    /**
+     * Add edit document to breadcrumb
+     *
+     * @method addBreadcrumbDocumentEdit
+     * @param {String} title
+     * @returns {Vaultier.Toolbar}
+     */
+    addBreadcrumbDocumentEdit: function (title) {
+        this.get('breadcrumbs').pushObject({
+            link: 'link',
+            title: 'Edit ' + title,
+            icon: '/static/vaultier/images/icon-wrench-gray.png',
+            last: true
+        });
+        return this;
+    },
+
+    /**
+     * Add move document to breadcrumb
+     *
+     * @method addBreadcrumbDocumentMove
+     * @param {String} title
+     * @returns {Vaultier.Toolbar}
+     */
+    addBreadcrumbDocumentMove: function (title) {
+        this.get('breadcrumbs').pushObject({
+            link: 'link',
+            title: 'Move ' + title,
+            icon: '/static/vaultier/images/icon-wrench-gray.png',
+            last: true
         });
         return this;
     },
@@ -197,57 +248,6 @@ Vaultier.Toolbar = Ember.Object.extend({
      */
     addActionSettings: function (link) {
         this.get('actions').settings = true;
-        return this;
-    },
-
-    /**
-     * Add create document to breadcrumb
-     *
-     * @method addDocumentCreate
-     * @param {String} title
-     * @returns {Vaultier.Toolbar}
-     */
-    addDocumentCreate: function (title) {
-        this.get('breadcrumbs').pushObject({
-            link: 'link',
-            title: 'Create New ' + title,
-            icon: '/static/vaultier/images/icon-plus-gray.png',
-            last: true
-        });
-        return this;
-    },
-
-    /**
-     * Add edit document to breadcrumb
-     *
-     * @method addDocumentEdit
-     * @param {String} title
-     * @returns {Vaultier.Toolbar}
-     */
-    addDocumentEdit: function (title) {
-        this.get('breadcrumbs').pushObject({
-            link: 'link',
-            title: 'Edit ' + title,
-            icon: '/static/vaultier/images/icon-wrench-gray.png',
-            last: true
-        });
-        return this;
-    },
-
-    /**
-     * Add move document to breadcrumb
-     *
-     * @method addDocumentMove
-     * @param {String} title
-     * @returns {Vaultier.Toolbar}
-     */
-    addDocumentMove: function (title) {
-        this.get('breadcrumbs').pushObject({
-            link: 'link',
-            title: 'Move ' + title,
-            icon: '/static/vaultier/images/icon-wrench-gray.png',
-            last: true
-        });
         return this;
     }
 

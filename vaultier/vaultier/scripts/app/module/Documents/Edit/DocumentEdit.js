@@ -44,9 +44,9 @@ Vaultier.DocumentEditRoute = Ember.Route.extend(
             Utils.Logger.log.debug('createToolbar');
             return Vaultier.Toolbar.create({router: this.get('router')})
                 .prepareBuilder()
-                .addParentsOfDocument(this.get('tree').getParents(this.get('tree').getSelectedNode()))
-                .addDocument(this.get('tree').getSelectedNode())
-                .addDocumentEdit(this.typeName)
+                .addBreadcrumbParentsOfDocument(this.get('tree').getParents(this.get('tree').getSelectedNode()))
+                .addBreadcrumbDocument(this.get('tree').getSelectedNode())
+                .addBreadcrumbDocumentEdit(this.typeName)
         },
 
         renderTemplate: function () {

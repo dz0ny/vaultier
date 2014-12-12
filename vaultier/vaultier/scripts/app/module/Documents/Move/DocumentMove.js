@@ -30,9 +30,9 @@ Vaultier.DocumentMoveRoute = Ember.Route.extend({
     createToolbar: function (typeName) {
         return Vaultier.Toolbar.create({router: this.get('router')})
             .prepareBuilder()
-            .addParentsOfDocument(this.get('tree').getParents(this.get('tree').getSelectedNode()))
-            .addDocument(this.get('tree').getSelectedNode())
-            .addDocumentMove(typeName)
+            .addBreadcrumbParentsOfDocument(this.get('tree').getParents(this.get('tree').getSelectedNode()))
+            .addBreadcrumbDocument(this.get('tree').getSelectedNode())
+            .addBreadcrumbDocumentMove(typeName)
             .addActionSettings();
 
     }

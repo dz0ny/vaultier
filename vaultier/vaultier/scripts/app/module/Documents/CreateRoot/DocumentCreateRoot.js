@@ -23,7 +23,7 @@ Vaultier.DocumentsCreateRootRoute = Ember.Route.extend(
             Utils.Logger.log.debug('createToolbar');
             return Vaultier.Toolbar.create({router: this.get('router')})
                 .prepareBuilder()
-                .addDocumentCreate("Root Folder")
+                .addBreadcrumbDocumentCreate("Root Folder")
         },
 
         renderTemplate: function () {
