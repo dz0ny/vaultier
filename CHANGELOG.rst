@@ -2,6 +2,10 @@
 Changelog
 *********
 
+RELEASE 0.7.5
+-------------
+* [bugfix] Registration via invitation didn't work
+
 RELEASE 0.7.4
 -------------
 
