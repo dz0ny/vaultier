@@ -97,7 +97,6 @@ Vaultier.AuthRegisterKeysRoute = Ember.Route.extend({
     step: 'AuthRegisterKeys',
 
     beforeModel: function (transition) {
-        console.log('Vaultier.AuthRegisterKeysRoute beforeModel');
         return this.get('invitations')
             .fetchInvitationsInSession()
             .then(function(model) {
@@ -285,7 +284,7 @@ Vaultier.AuthRegisterCredsView = Ember.View.extend({
 Vaultier.AuthRegisterSumRoute = Ember.Route.extend({
     step: 'AuthRegisterSum',
 
-    beforeModel: function () {
+    beforeModel: function (transition) {
         return this.get('invitations')
             .fetchInvitationsInSession()
             .then(function (model) {
