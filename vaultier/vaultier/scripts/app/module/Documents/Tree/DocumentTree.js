@@ -54,7 +54,7 @@ Vaultier.Document = Ember.Namespace.create();
 /**
  * Object that represents one node
  *
- * @module vaultier-module-documents
+ * @module vaultier-ui-documents
  * @class Vaultier.Document.Node
  * @namespace Vaultier.Document
  */
@@ -237,7 +237,7 @@ Vaultier.Document.Node = Ember.ObjectProxy.extend({
 });
 
 /**
- * @module vaultier-module-documents
+ * @module vaultier-ui-documents
  * @class Vaultier.Document.TreeController
  * @extends Ember.Controller
  */
@@ -278,7 +278,7 @@ Vaultier.Document.TreeController = Ember.Controller.extend({
 });
 
 /**
- * @module vaultier-module-documents
+ * @module vaultier-ui-documents
  * @class Vaultier.Document.TreeContainer
  * @extends Ember.CollectionView
  */
@@ -292,7 +292,7 @@ Vaultier.Document.TreeContainer = Ember.CollectionView.extend({
 });
 
 /**
- * @module vaultier-module-documents
+ * @module vaultier-ui-documents
  * @class Vaultier.Document.TreeNodeContainer
  * @extends Ember.View
  */
@@ -368,7 +368,7 @@ Vaultier.Document.TreeNodeContainer = Ember.View.extend(Ember.StyleBindingsMixin
 });
 
 /**
- * @module vaultier-module-documents
+ * @module vaultier-ui-documents
  * @class Vaultier.Document.TreeNodeView
  * @extends Ember.View
  */
@@ -382,7 +382,7 @@ Vaultier.Document.TreeNodeView = Ember.View.extend({
 });
 
 /**
- * @module vaultier-module-documents
+ * @module vaultier-ui-documents
  * @class Vaultier.Document.TreeNode
  * @extends Vaultier.Document.TreeNodeView
  */

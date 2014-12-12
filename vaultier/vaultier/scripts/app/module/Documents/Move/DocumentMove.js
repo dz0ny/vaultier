@@ -1,6 +1,5 @@
 /**
- * @module module
- * @submodule module-documents
+ * @module vaultier-ui-documents
  * @class Vaultier.DocumentMoveRoute
  * @extends Ember.Route
  */
@@ -41,8 +40,7 @@ Vaultier.DocumentMoveRoute = Ember.Route.extend({
 });
 
 /**
- * @module module
- * @submodule module-documents
+ * @module vaultier-ui-documents
  * @class Vaultier.DocumentMoveController
  * @extends Ember.Controller
  */
@@ -121,8 +119,7 @@ Vaultier.DocumentMoveController = Vaultier.Document.TreeController.extend({
 });
 
 /**
- * @module module
- * @submodule module-documents
+ * @module vaultier-ui-documents
  * @class Vaultier.DocumentMoveView
  * @extends Ember.View
  */

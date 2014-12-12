@@ -1,6 +1,5 @@
 /**
- * @module module
- * @submodule module-documents
+ * @module vaultier-ui-documents
  * @class Vaultier.DocumentDetailRoute
  * @extends Ember.Route
  */
@@ -63,8 +62,7 @@ Vaultier.DocumentDetailRoute = Ember.Route.extend({
 });
 
 /**
- * @module module
- * @submodule module-documents
+ * @module vaultier-ui-documents
  * @class Vaultier.DocumentDetailController
  * @extends Ember.Controller
  */
@@ -77,8 +75,7 @@ Vaultier.DocumentDetailController = Ember.Controller.extend({
 });
 
 /**
- * @module module
- * @submodule module-documents
+ * @module vaultier-ui-documents
  * @class Vaultier.DocumentDetailView
  * @extends Ember.View
  */

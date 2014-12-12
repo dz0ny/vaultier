@@ -1,6 +1,5 @@
 /**
- * @module module
- * @submodule module-layout
+ * @module vaultier-ui-layout
  * @class Vaultier.Toolbar
  * @extends Ember.Object
  */

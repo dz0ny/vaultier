@@ -3,7 +3,7 @@ ApplicationKernel.namespace('Service');
 /**
  * Service logic for folder tree
  *
- * @module service
+ * @module vaultier-service
  * @class Service.Tree
  * @extends Ember.Object
  */
