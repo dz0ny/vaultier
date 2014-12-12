@@ -23,7 +23,6 @@ class TokenSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(required=True)
-    # invitation_hash = serializers.CharField(write_only=True, required=True)
 
     class Meta:
         model = User
@@ -41,6 +40,7 @@ class UserSerializer(serializers.ModelSerializer):
             return ret
 
         if request.method == 'POST' and \
+                bool(User.objects.all().count() is not 0) and \
                 not settings.VAULTIER.get('registration_allow'):
             ret['invitation_hash'] = serializers.CharField(write_only=True,
                                                            required=True)
@@ -54,7 +54,7 @@ class UserSerializer(serializers.ModelSerializer):
         try:
             Member.objects.get(invitation_hash=hash)
         except Member.DoesNotExist:
-            # first your can register
+            # first user can register
             if bool(User.objects.all().count()):
                 # kick the rest
                 raise serializers.ValidationError("Invitation not found")
