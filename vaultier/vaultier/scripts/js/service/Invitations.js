@@ -1,5 +1,12 @@
 Po.NS('Service');
 
+/**
+ * Invitation logic
+ *
+ * @module service
+ * @class Service.Tree
+ * @extends Ember.Object
+ */
 Service.Invitations = Ember.Object.extend({
 
     SESSION_KEY: 'invitations',
@@ -137,6 +144,9 @@ Service.Invitations = Ember.Object.extend({
 
     /**
      * Fetches all invitations stored in session from server
+     *
+     * @method fetchInvitationsInSession
+     * @returns {Ember.RSVP.Promise}
      */
     fetchInvitationsInSession: function () {
         var invitations = this.session.get(this.SESSION_KEY, {});
@@ -152,6 +162,30 @@ Service.Invitations = Ember.Object.extend({
         return Ember.RSVP.all(promises);
     },
 
+    /**
+     * Return the newest invitation from list of invitations which are stored in session
+     *
+     * @method getNewestInvitationFromSession
+     * @returns {Ember.RSVP.Promise}
+     */
+    getNewestInvitationFromSession: function () {
+        return this.fetchInvitationsInSession()
+            .then(function(invitations) {
+                var newestInvitation = null;
+                invitations.forEach(function(invitation) {
+                   if (!newestInvitation) {
+                       newestInvitation = invitation;
+                   } else {
+                       if (invitation.get('created_at') > newestInvitation.get('created_at')) {
+                           newestInvitation = invitation;
+                       }
+                   }
+                });
+                return newestInvitation;
+            });
+
+    },
+
 
     /**
      *   Function encapsulates using of url invitation
@@ -164,6 +198,7 @@ Service.Invitations = Ember.Object.extend({
      *   - if authenticated redirects to list of invitations to accept
      *   - if not authenticated, redirects to page, where user is required to login before use of invitation
      *
+     * @method useInvitation
      * @param id
      * @param hash
      * @returns {Ember.RSVP.Promise}
