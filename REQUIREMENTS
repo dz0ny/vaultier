@@ -1,5 +1,5 @@
 BeautifulSoup==3.2.1
-Django==1.7
+Django=>1.7
 South==0.8.4
 argparse==1.2.1
 cssutils==1.0
