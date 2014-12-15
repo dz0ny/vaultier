@@ -2,7 +2,7 @@ from mptt import models as mpttmodels
 from django.db import models
 from django.conf import settings
 from vaultier.business.db import TimestampableMixin
-from django_mptt_acl.models import PolicyModel, PolicyMeta as BasePolicyMeta
+from django_mptt_acl.models import PolicyModel
 
 
 class Node(mpttmodels.MPTTModel, TimestampableMixin):
@@ -16,6 +16,8 @@ class Node(mpttmodels.MPTTModel, TimestampableMixin):
         (TYPE_FILE, 'File')
     )
 
+    ENC_VERSION = 1
+
     name = models.CharField(max_length=255)
     meta = models.TextField(null=True, blank=True)
     type = models.IntegerField(choices=TYPE)
@@ -25,11 +27,14 @@ class Node(mpttmodels.MPTTModel, TimestampableMixin):
     color = models.CharField(max_length=7, blank=True, null=True)
     parent = mpttmodels.TreeForeignKey(
         'self', null=True, blank=True, related_name='children')
-    enc_version = models.IntegerField()
+    enc_version = models.IntegerField(default=ENC_VERSION)
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, related_name="nodes")
 
 
-class TestPolicy(PolicyModel):
+class Policy(PolicyModel):
     principal = models.ForeignKey(settings.AUTH_USER_MODEL)
     subject = models.ForeignKey(Node, related_name="_policies")
+
+    class PolicyMeta:
+        subject_owner_field = 'created_by'

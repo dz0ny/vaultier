@@ -15,3 +15,10 @@ class CustomAPIException(BaseAPIException):
                 self.detail = map(str, exception.messages)
             else:
                 self.detail = str(exception)
+
+
+class HttpStatusValidationError(Exception):
+
+    def __init__(self, *args, **kwargs):
+        self.http_status_code = kwargs.pop('http_status_code', 400)
+        super(HttpStatusValidationError, self).__init__(*args, **kwargs)
