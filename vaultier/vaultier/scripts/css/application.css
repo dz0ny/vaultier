@@ -2685,6 +2685,12 @@ span.vlt-user img {
     top: -4px
 }
 
+.vlt-document-detail h1 span {
+    font-size: 40%;
+    font-style: italic;
+    color:#BABABA;
+}
+
 .vlt-document-detail table tbody tr td:first-child {
     font-weight: bold;
 }
@@ -2736,6 +2742,11 @@ span.vlt-user img {
 
 .vlt-history-user .vlt-history-user-name {
     position: absolute;
-    top: 5px;
-    left: 52px;
+    top: 15px;
+    left: 48px;
+}
+
+.vlt-history-user .vlt-history-user-name .vlt-history-user-name-created-by {
+    font-style: italic;
+    color: #BABABA;
 }

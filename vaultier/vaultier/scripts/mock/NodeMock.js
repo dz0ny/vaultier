@@ -305,7 +305,11 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
             "data": null,
             "color": "blue",
             "enc_version": 1,
-            "created_by": 1,
+            "created_by": {
+                "id": 1,
+                "email": "vojtech.knaisl@rclick.cz",
+                "nickname": "Vojtech Knaisl"
+            },
             "created_at": "2014-05-28T10:10:30.501Z",
             "updated_at": "2014-05-28T10:10:30.501Z",
             "parent": null,
@@ -324,9 +328,13 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
             "data": null,
             "color": "blue",
             "enc_version": 1,
-            "created_by": 1,
+            "created_by": {
+                "id": 1,
+                "email": "jakub.bokoc@rclick.cz",
+                "nickname": "Jakub Bokoč"
+            },
             "created_at": "2014-05-30T22:22:22.501Z",
-            "updated_at": "2015-05-30T23:23:23.501Z",
+            "updated_at": "2014-12-15T23:23:23.501Z",
             "parent": 1,
             "perms": {
                 "read": true,
@@ -343,9 +351,13 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
             "data": null,
             "color": "green",
             "enc_version": 1,
-            "created_by": 1,
+            "created_by": {
+                "id": 1,
+                "email": "vojtech.knaisl@rclick.cz",
+                "nickname": "Vojtech Knaisl"
+            },
             "created_at": "2014-05-30T22:22:22.501Z",
-            "updated_at": "2015-05-30T23:23:23.501Z",
+            "updated_at": "2014-12-14T23:23:23.501Z",
             "parent": 2,
             "perms": {
                 "read": true,
@@ -362,9 +374,13 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
             "data": null,
             "color": "red",
             "enc_version": 1,
-            "created_by": 1,
+            "created_by": {
+                "id": 1,
+                "email": "stepan.bokoc@rclick.cz",
+                "nickname": "Štěpán Bokoč"
+            },
             "created_at": "2014-05-30T22:22:22.501Z",
-            "updated_at": "2015-05-30T23:23:23.501Z",
+            "updated_at": "2014-11-16T23:23:23.501Z",
             "parent": 3,
             "perms": {
                 "read": true,
@@ -381,9 +397,13 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
             "data": null,
             "color": "purple",
             "enc_version": 1,
-            "created_by": 1,
+            "created_by": {
+                "id": 1,
+                "email": "jan.misek@rclick.cz",
+                "nickname": "Jan Míšek"
+            },
             "created_at": "2014-05-30T22:22:22.501Z",
-            "updated_at": "2015-05-30T23:23:23.501Z",
+            "updated_at": "2014-12-16T23:23:23.501Z",
             "parent": 2,
             "perms": {
                 "read": true,
@@ -397,9 +417,13 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
             "data": null,
             "color": "orange",
             "enc_version": 1,
-            "created_by": 1,
+            "created_by": {
+                "id": 1,
+                "email": "vojtech.knaisl@rclick.cz",
+                "nickname": "Vojtech Knaisl"
+            },
             "created_at": "2014-05-30T22:22:22.501Z",
-            "updated_at": "2015-05-30T23:23:23.501Z",
+            "updated_at": "2014-12-16T23:23:23.501Z",
             "parent": 2,
             "perms": {
                 "read": true,
@@ -415,9 +439,13 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
             "data": null,
             "color": "red",
             "enc_version": 1,
-            "created_by": 1,
+            "created_by": {
+                "id": 1,
+                "email": "jakub.bokoc@rclick.cz",
+                "nickname": "Jakub Bokoč"
+            },
             "created_at": "2014-05-30T22:22:22.501Z",
-            "updated_at": "2015-05-30T23:23:23.501Z",
+            "updated_at": "2014-12-16T23:23:23.501Z",
             "parent": 2,
             "perms": {
                 "read": true,
@@ -441,9 +469,13 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
             },
             "color": "blue",
             "enc_version": 1,
-            "created_by": 1,
+            "created_by": {
+                "id": 1,
+                "email": "stepan.bokoc@rclick.cz",
+                "nickname": "Štěpán Bokoč"
+            },
             "created_at": "2014-05-30T22:22:22.501Z",
-            "updated_at": "2015-05-30T23:23:23.501Z",
+            "updated_at": "2014-12-16T23:23:23.501Z",
             "parent": 2,
             "perms": {
                 "read": true,
@@ -460,9 +492,13 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
             "data": null,
             "color": "blue",
             "enc_version": 1,
-            "created_by": 1,
+            "created_by": {
+                "id": 3,
+                "email": "vojtech.knaisl@rclick.cz",
+                "nickname": "Vojtech Knaisl"
+            },
             "created_at": "2014-05-30T22:22:22.501Z",
-            "updated_at": "2015-05-30T23:23:23.501Z",
+            "updated_at": "2014-05-16T23:23:23.501Z",
             "parent": 1,
             "perms": {
                 "read": true,
@@ -479,9 +515,13 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
             "data": null,
             "color": "blue",
             "enc_version": 1,
-            "created_by": 1,
+            "created_by": {
+                "id": 1,
+                "email": "jan.misek@rclick.cz",
+                "nickname": "Jan Míšek"
+            },
             "created_at": "2014-05-30T22:22:22.501Z",
-            "updated_at": "2015-05-30T23:23:23.501Z",
+            "updated_at": "2014-08-01T23:23:23.501Z",
             "parent": 1,
             "perms": {
                 "read": true,
@@ -498,9 +538,13 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
             "data": null,
             "color": "blue",
             "enc_version": 1,
-            "created_by": 1,
+            "created_by": {
+                "id": 1,
+                "email": "vojtech.knaisl@rclick.cz",
+                "nickname": "Vojtech Knaisl"
+            },
             "created_at": "2014-05-30T22:22:22.501Z",
-            "updated_at": "2015-05-30T23:23:23.501Z",
+            "updated_at": "2014-10-20T23:23:23.501Z",
             "parent": 1,
             "perms": {
                 "read": true,
@@ -517,9 +561,13 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
             "data": null,
             "color": "blue",
             "enc_version": 1,
-            "created_by": 1,
+            "created_by": {
+                "id": 1,
+                "email": "jan.misek@rclick.cz",
+                "nickname": "Jan Míšek"
+            },
             "created_at": "2014-05-30T22:22:22.501Z",
-            "updated_at": "2015-05-30T23:23:23.501Z",
+            "updated_at": "2014-12-16T23:23:23.501Z",
             "parent": 1,
             "perms": {
                 "read": true,
@@ -536,9 +584,13 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
             "data": null,
             "color": "purple",
             "enc_version": 1,
-            "created_by": 1,
+            "created_by": {
+                "id": 1,
+                "email": "vojtech.knaisl@rclick.cz",
+                "nickname": "Vojtech Knaisl"
+            },
             "created_at": "2014-05-30T22:22:22.501Z",
-            "updated_at": "2015-05-30T23:23:23.501Z",
+            "updated_at": "2014-12-16T23:23:23.501Z",
             "parent": null,
             "perms": {
                 "read": true,
@@ -555,9 +607,13 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
             "data": null,
             "color": "blue",
             "enc_version": 1,
-            "created_by": 1,
+            "created_by": {
+                "id": 1,
+                "email": "vojtech.knaisl@rclick.cz",
+                "nickname": "Vojtech Knaisl"
+            },
             "created_at": "2014-05-30T22:22:22.501Z",
-            "updated_at": "2015-05-30T23:23:23.501Z",
+            "updated_at": "2014-12-16T23:23:23.501Z",
             "parent": null,
             "perms": {
                 "read": true,
@@ -574,13 +630,44 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
             "data": null,
             "color": "green",
             "enc_version": 1,
-            "created_by": 1,
+            "created_by": {
+                "id": 1,
+                "email": "vojtech.knaisl@rclick.cz",
+                "nickname": "Vojtech Knaisl"
+            },
+            "created_at": "2014-05-30T22:22:22.501Z",
+            "updated_at": "2014-12-16T23:23:23.501Z",
+            "parent": 13,
+            "perms": {
+                "read": true,
+                "create": true
+            }
+        },
+        {
+            "id": 16,
+            "name": "Facebook",
+            "type": 300,
+            "data": {
+                "username": "uzivatelske jmeno",
+                "password": "heslo",
+                "url": "adresa",
+                "note": "poznamka"
+            },
+            "enc_version": 1,
+            "created_by": {
+                "id": 1,
+                "email": "vojtech.knaisl@rclick.cz",
+                "nickname": "Vojtech Knaisl"
+            },
             "created_at": "2014-05-30T22:22:22.501Z",
             "updated_at": "2015-05-30T23:23:23.501Z",
             "parent": 13,
             "perms": {
                 "read": true,
-                "create": true
+                "create": true,
+                "update": true,
+                "delete": true,
+                "invite": true
             }
         },
         {
@@ -599,35 +686,16 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
                 "filetype": "typ"
             },
             "enc_version": 1,
-            "created_by": 1,
+            "created_by": {
+                "id": 1,
+                "email": "vojtech.knaisl@rclick.cz",
+                "nickname": "Vojtech Knaisl"
+            },
             "created_at": "2014-05-30T22:22:22.501Z",
-            "updated_at": "2015-05-30T23:23:23.501Z",
+            "updated_at": "2014-12-16T23:23:23.501Z",
             "parent": 13,
             "perms": {
                 "read": true
-            }
-        },
-        {
-            "id": 16,
-            "name": "Facebook",
-            "type": 300,
-            "data": {
-                "username": "uzivatelske jmeno",
-                "password": "heslo",
-                "url": "adresa",
-                "note": "poznamka"
-            },
-            "enc_version": 1,
-            "created_by": 1,
-            "created_at": "2014-05-30T22:22:22.501Z",
-            "updated_at": "2015-05-30T23:23:23.501Z",
-            "parent": 13,
-            "perms": {
-                "read": true,
-                "create": true,
-                "update": true,
-                "delete": true,
-                "invite": true
             }
         },
         {
@@ -646,9 +714,13 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
                 "filetype": "typ"
             },
             "enc_version": 1,
-            "created_by": 1,
+            "created_by": {
+                "id": 1,
+                "email": "vojtech.knaisl@rclick.cz",
+                "nickname": "Vojtech Knaisl"
+            },
             "created_at": "2014-05-30T22:22:22.501Z",
-            "updated_at": "2015-05-30T23:23:23.501Z",
+            "updated_at": "2014-12-16T23:23:23.501Z",
             "parent": 13,
             "perms": {
                 "read": true,
@@ -666,9 +738,13 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
                 "note": "poznamka"
             },
             "enc_version": 1,
-            "created_by": 1,
+            "created_by": {
+                "id": 1,
+                "email": "vojtech.knaisl@rclick.cz",
+                "nickname": "Vojtech Knaisl"
+            },
             "created_at": "2014-05-30T22:22:22.501Z",
-            "updated_at": "2015-05-30T23:23:23.501Z",
+            "updated_at": "2014-12-16T23:23:23.501Z",
             "parent": 13,
             "perms": {
                 "read": true,

@@ -47,7 +47,7 @@ Vaultier.dal.model.Node = RL.Model.extend(
         blob_meta: RL.attr('object'),
 
         enc_version: RL.attr('number'),
-        created_by: RL.attr('number'),
+        created_by: RL.attr('object'),
         parent: RL.attr('number'),
         color: RL.attr('string'),
 

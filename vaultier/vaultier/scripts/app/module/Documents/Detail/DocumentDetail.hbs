@@ -3,14 +3,8 @@
     <h1>
         <img {{bind-attr src="view.typeCss"}}>
         {{content.name}}
+        <span>(Last updated: {{printAgo content.updated_at prefix='Last updated:' }})</span>
     </h1>
-
-    <div class="vlt-author col-md-9 pull-right">
-        <div class="vlt-footer-item help-block">
-
-        </div>
-    </div>
-
 
     <table class="table table-bordered">
         <colgroup>
@@ -31,21 +25,19 @@
                 <div class="vlt-header">
                     <img src="/static/vaultier/images/icon-clock.png" class="vlt-icon">
 
-                    <h3 class="vlt-title">Last edited by</h3>
+                    <h3 class="vlt-title">Created by</h3>
                 </div>
                 <div class="vlt-body">
                     <div class="vlt-history-user">
                         <div class="vlt-history-user-image">
-                            <img style="width:40px; height:40px;" class="vlt-avatar"
-                                 src="http://www.gravatar.com/avatar/c93ff91b31d2e8cf7bced46ef4393023?s=25&amp;d=mm">
+                            {{printUser content.created_by size=32 disableName=1}}
                         </div>
                         <div class="vlt-history-user-name">
-                            Jakub Randák <br>
-                            (last update {{printAgo updated_at}})
+                            {{content.created_by.nickname}}
+                            <span class="vlt-history-user-name-created-by" >({{printAgo content.created_at prefix='Created at:' }})</span>
                         </div>
                     </div>
                 </div>
-
             </div>
             <div class="vlt-sidebar-block-part">
                 <div class="vlt-header">
