@@ -2574,6 +2574,18 @@ span.vlt-user img {
     background-image: url(http://cdn2.iconfinder.com/data/icons/picol-vector/32/arrow_sans_down-16.png);
 }
 
+.vlt-tree .tree-node.is-selected .icon.file {
+    background-image: url('../images/icon-file-white.png');
+}
+
+.vlt-tree .tree-node.is-selected .icon.password {
+    background-image: url('../images/icon-password-white.png');
+}
+
+.vlt-tree .tree-node.is-selected .icon.note {
+    background-image: url('../images/icon-note-white.png');
+}
+
 .vlt-tree-move .vlt-tree {
     font-size: 110%;
     background: white;
@@ -2685,7 +2697,7 @@ span.vlt-user img {
     top: -4px
 }
 
-.vlt-document-detail h1 span {
+.vlt-document-detail h1 > span {
     font-size: 40%;
     font-style: italic;
     color:#BABABA;
