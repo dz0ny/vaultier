@@ -18,7 +18,7 @@
                                     <h4>Secret will be shared with:</h4>
                                 </div>
                                 <div class="vlt-dialog-content">
-                                    {{roles-admin-box roles=memberships user=auth.user object=membershipsScope}}
+                                    {{roles-admin-box user=auth.user roles=view.parentView.roles user=auth.user currentNode=content}}
                                 </div>
                             </div>
                         </div>

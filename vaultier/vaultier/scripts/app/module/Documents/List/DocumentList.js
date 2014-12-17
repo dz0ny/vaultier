@@ -16,12 +16,34 @@ Vaultier.DocumentListRoute = Ember.Route.extend({
     },
 
     createToolbar: function () {
-        return Vaultier.Toolbar.create({router: this.get('router')})
+        Utils.Logger.log.debug("createToolbar");
+        var selectedNode = this.get('tree').getSelectedNode();
+        Utils.Logger.log.debug(selectedNode);
+
+        var toolbar = Vaultier.Toolbar.create({router: this.get('router')})
             .prepareBuilder()
             .addBreadcrumbParentsOfDocument(this.get('tree').getParents(this.get('tree').getSelectedNode()))
-            .addBreadcrumbDocument(this.get('tree').getSelectedNode(), true)
-            .addActionCreate()
-            .addActionSettings();
+            .addBreadcrumbDocument(this.get('tree').getSelectedNode(), true);
+
+        if (selectedNode.get('perms.create')) {
+            toolbar.addActionCreate();
+        }
+
+        if (selectedNode.get('perms.update')
+            || selectedNode.get('perms.delete')) {
+            toolbar.addActionSettings();
+
+            if (selectedNode.get('perms.update')) {
+                toolbar.addActionSettingsMove();
+                toolbar.addActionSettingsEdit();
+            }
+
+            if (selectedNode.get('perms.delete')) {
+                toolbar.addActionSettingsDelete();
+            }
+        }
+
+        return toolbar;
     }
 
 });
@@ -59,9 +81,6 @@ Vaultier.DocumentListController = Ember.Controller.extend({
     },
 
 
-    /**
-     * @property {Array} needs
-     */
     needs: ['Document']
 });
 
@@ -72,9 +91,6 @@ Vaultier.DocumentListController = Ember.Controller.extend({
  */
 Vaultier.DocumentListView = Ember.View.extend({
 
-    /**
-     * @property {String} templateName
-     */
     templateName: 'Documents/List/DocumentList',
 
     didInsertElement: function () {

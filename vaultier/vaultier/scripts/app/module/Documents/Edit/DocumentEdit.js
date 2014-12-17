@@ -4,7 +4,8 @@ Vaultier.DocumentEditRoute = Ember.Route.extend(
         setupController: function (ctrl, model) {
             Utils.Logger.log.debug('Vaultier.DocumentEditController setupController');
 
-            var model = this.get('tree').getSelectedNode();
+            model = this.get('tree').getSelectedNode();
+            this.get('auth').checkPermissionsForNode(model, Vaultier.dal.model.Role.proto().permissions.UPDATE);
 
             switch (model.get('type')) {
 

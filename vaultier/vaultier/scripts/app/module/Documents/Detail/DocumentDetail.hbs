@@ -54,42 +54,46 @@
                     <h3 class="vlt-title">Sharing</h3>
                 </div>
                 <div class="vlt-body">
-                    {{roles-admin-box user=auth.user}}
+                    {{roles-admin-box user=auth.user roles=view.parentView.roles user=auth.user currentNode=view.parentView.currentDocument}}
                 </div>
                 <div class="vlt-controls">
                     <div>
 
-                        <div
-                                class="vlt-button-wrapper"
-                                data-toggle="tooltip"
-                                title=
-                                        "
-                             Invite new team members to collaborate on this workspace
-                             or grant access permissions to existing team members
-                             "
-                                data-placement="bottom"
-                                >
-                            <a href="#" class="btn btn-default">
-                                <span class="glyphicon glyphicon-plus"></span>
-                                Invite
-                            </a>
-                        </div>
+                        {{#if view.parentView.currentDocument.perms.invite}}
+                            <div
+                                    class="vlt-button-wrapper"
+                                    data-toggle="tooltip"
+                                    title=
+                                            "
+                                 Invite new team members to collaborate on this workspace
+                                 or grant access permissions to existing team members
+                                 "
+                                    data-placement="bottom"
+                                    >
+                                {{#link-to "Document.rolesAdminInvite" class="btn btn-default"}}
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                    Invite
+                                {{/link-to}}
+                            </div>
+                        {{/if}}
 
-                        <div
-                                class="vlt-button-wrapper"
-                                data-toggle="tooltip"
-                                title=
-                                        "
-                             Invite new team members to collaborate on this workspace
-                             or grant access permissions to existing team members
-                             "
-                                data-placement="bottom"
-                                >
-                            <a href="#" class="btn btn-default">
-                                <span class="glyphicon glyphicon-user"></span>
-                                Team
-                            </a>
-                        </div>
+                        {{#if view.parentView.currentDocument.perms.invite}}
+                            <div
+                                    class="vlt-button-wrapper"
+                                    data-toggle="tooltip"
+                                    title=
+                                            "
+                                 Invite new team members to collaborate on this workspace
+                                 or grant access permissions to existing team members
+                                 "
+                                    data-placement="bottom"
+                                    >
+                                {{#link-to "Document.rolesAdminIndex" class="btn btn-default"}}
+                                    <span class="glyphicon glyphicon-user"></span>
+                                    Team
+                                {{/link-to}}
+                            </div>
+                        {{/if}}
 
                     </div>
                 </div>

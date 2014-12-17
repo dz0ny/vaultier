@@ -127,6 +127,13 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
                 fixtureNode.created_at = node.created_at ? node.created_at : null;
                 fixtureNode.updated_at = node.updated_at ? node.updated_at : null;
                 fixtureNode.parent = node.parent ? node.parent : null;
+                fixtureNode.perms = {
+                    "read": true,
+                    "create": true,
+                    "update": true,
+                    "delete": true,
+                    "invite": true
+                };
 
                 console.log(fixtureNode);
 
@@ -301,7 +308,14 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
             "created_by": 1,
             "created_at": "2014-05-28T10:10:30.501Z",
             "updated_at": "2014-05-28T10:10:30.501Z",
-            "parent": null
+            "parent": null,
+            "perms": {
+                "read": true,
+                "create": true,
+                "update": true,
+                "delete": true,
+                "invite": true
+            }
         },
         {
             "id": 2,
@@ -313,7 +327,14 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
             "created_by": 1,
             "created_at": "2014-05-30T22:22:22.501Z",
             "updated_at": "2015-05-30T23:23:23.501Z",
-            "parent": 1
+            "parent": 1,
+            "perms": {
+                "read": true,
+                "create": true,
+                "update": true,
+                "delete": true,
+                "invite": true
+            }
         },
         {
             "id": 3,
@@ -325,7 +346,14 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
             "created_by": 1,
             "created_at": "2014-05-30T22:22:22.501Z",
             "updated_at": "2015-05-30T23:23:23.501Z",
-            "parent": 2
+            "parent": 2,
+            "perms": {
+                "read": true,
+                "create": true,
+                "update": true,
+                "delete": true,
+                "invite": true
+            }
         },
         {
             "id": 19,
@@ -337,7 +365,14 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
             "created_by": 1,
             "created_at": "2014-05-30T22:22:22.501Z",
             "updated_at": "2015-05-30T23:23:23.501Z",
-            "parent": 3
+            "parent": 3,
+            "perms": {
+                "read": true,
+                "create": true,
+                "update": true,
+                "delete": true,
+                "invite": true
+            }
         },
         {
             "id": 4,
@@ -349,7 +384,11 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
             "created_by": 1,
             "created_at": "2014-05-30T22:22:22.501Z",
             "updated_at": "2015-05-30T23:23:23.501Z",
-            "parent": 2
+            "parent": 2,
+            "perms": {
+                "read": true,
+                "create": true
+            }
         },
         {
             "id": 5,
@@ -361,7 +400,13 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
             "created_by": 1,
             "created_at": "2014-05-30T22:22:22.501Z",
             "updated_at": "2015-05-30T23:23:23.501Z",
-            "parent": 2
+            "parent": 2,
+            "perms": {
+                "read": true,
+                "create": true,
+                "update": true,
+                "delete": true
+            }
         },
         {
             "id": 6,
@@ -373,7 +418,11 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
             "created_by": 1,
             "created_at": "2014-05-30T22:22:22.501Z",
             "updated_at": "2015-05-30T23:23:23.501Z",
-            "parent": 2
+            "parent": 2,
+            "perms": {
+                "read": true,
+                "invite": true
+            }
         },
         {
             "id": 7,
@@ -395,7 +444,14 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
             "created_by": 1,
             "created_at": "2014-05-30T22:22:22.501Z",
             "updated_at": "2015-05-30T23:23:23.501Z",
-            "parent": 2
+            "parent": 2,
+            "perms": {
+                "read": true,
+                "create": true,
+                "update": true,
+                "delete": true,
+                "invite": true
+            }
         },
         {
             "id": 8,
@@ -407,7 +463,14 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
             "created_by": 1,
             "created_at": "2014-05-30T22:22:22.501Z",
             "updated_at": "2015-05-30T23:23:23.501Z",
-            "parent": 1
+            "parent": 1,
+            "perms": {
+                "read": true,
+                "create": true,
+                "update": true,
+                "delete": true,
+                "invite": true
+            }
         },
         {
             "id": 9,
@@ -419,7 +482,14 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
             "created_by": 1,
             "created_at": "2014-05-30T22:22:22.501Z",
             "updated_at": "2015-05-30T23:23:23.501Z",
-            "parent": 1
+            "parent": 1,
+            "perms": {
+                "read": true,
+                "create": true,
+                "update": true,
+                "delete": true,
+                "invite": true
+            }
         },
         {
             "id": 10,
@@ -431,7 +501,14 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
             "created_by": 1,
             "created_at": "2014-05-30T22:22:22.501Z",
             "updated_at": "2015-05-30T23:23:23.501Z",
-            "parent": 1
+            "parent": 1,
+            "perms": {
+                "read": true,
+                "create": true,
+                "update": true,
+                "delete": true,
+                "invite": true
+            }
         },
         {
             "id": 11,
@@ -443,7 +520,14 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
             "created_by": 1,
             "created_at": "2014-05-30T22:22:22.501Z",
             "updated_at": "2015-05-30T23:23:23.501Z",
-            "parent": 1
+            "parent": 1,
+            "perms": {
+                "read": true,
+                "create": true,
+                "update": true,
+                "delete": true,
+                "invite": true
+            }
         },
         {
             "id": 12,
@@ -455,7 +539,14 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
             "created_by": 1,
             "created_at": "2014-05-30T22:22:22.501Z",
             "updated_at": "2015-05-30T23:23:23.501Z",
-            "parent": null
+            "parent": null,
+            "perms": {
+                "read": true,
+                "create": true,
+                "update": true,
+                "delete": true,
+                "invite": true
+            }
         },
         {
             "id": 13,
@@ -467,7 +558,14 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
             "created_by": 1,
             "created_at": "2014-05-30T22:22:22.501Z",
             "updated_at": "2015-05-30T23:23:23.501Z",
-            "parent": null
+            "parent": null,
+            "perms": {
+                "read": true,
+                "create": true,
+                "update": true,
+                "delete": true,
+                "invite": true
+            }
         },
         {
             "id": 14,
@@ -479,7 +577,11 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
             "created_by": 1,
             "created_at": "2014-05-30T22:22:22.501Z",
             "updated_at": "2015-05-30T23:23:23.501Z",
-            "parent": 13
+            "parent": 13,
+            "perms": {
+                "read": true,
+                "create": true
+            }
         },
         {
             "id": 15,
@@ -500,7 +602,10 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
             "created_by": 1,
             "created_at": "2014-05-30T22:22:22.501Z",
             "updated_at": "2015-05-30T23:23:23.501Z",
-            "parent": 13
+            "parent": 13,
+            "perms": {
+                "read": true
+            }
         },
         {
             "id": 16,
@@ -516,7 +621,14 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
             "created_by": 1,
             "created_at": "2014-05-30T22:22:22.501Z",
             "updated_at": "2015-05-30T23:23:23.501Z",
-            "parent": 13
+            "parent": 13,
+            "perms": {
+                "read": true,
+                "create": true,
+                "update": true,
+                "delete": true,
+                "invite": true
+            }
         },
         {
             "id": 17,
@@ -537,7 +649,14 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
             "created_by": 1,
             "created_at": "2014-05-30T22:22:22.501Z",
             "updated_at": "2015-05-30T23:23:23.501Z",
-            "parent": 13
+            "parent": 13,
+            "perms": {
+                "read": true,
+                "create": true,
+                "update": true,
+                "delete": true,
+                "invite": true
+            }
         },
         {
             "id": 18,
@@ -550,7 +669,14 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
             "created_by": 1,
             "created_at": "2014-05-30T22:22:22.501Z",
             "updated_at": "2015-05-30T23:23:23.501Z",
-            "parent": 13
+            "parent": 13,
+            "perms": {
+                "read": true,
+                "create": true,
+                "update": true,
+                "delete": true,
+                "invite": true
+            }
         }
 
 

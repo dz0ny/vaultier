@@ -3,19 +3,13 @@ Vaultier.DocumentCreateRoute = Ember.Route.extend(
         model: function (params, transition) {
             Utils.Logger.log.debug('Vaultier.DocumentCreateRoute');
 
-            // check permissions
-//            if (!this.get('auth').checkPermissions(transition, function () {
-//                return this.modelFor('Card').get('perms.create');
-//            }.bind(this), true)) {
-//                return;
-//            }
-
-            var node = this.get('store').createRecord('Node');
-
-            return node;
+            return this.get('store').createRecord('Node');
         },
 
         afterModel: function (model, transition) {
+
+            var parentTreeNode = this.get('tree').getSelectedNode();
+            this.get('auth').checkPermissionsForNode(parentTreeNode, Vaultier.dal.model.Role.proto().permissions.CREATE);
 
             switch (transition.params['Document.create'].type) {
 

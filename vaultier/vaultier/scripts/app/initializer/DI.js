@@ -73,6 +73,7 @@ Vaultier.initializers.DI = {
         app.inject('route:WorkspaceRolesAdminInvite', 'invitations', 'service:invitations')
         app.inject('route:VaultRolesAdminInvite', 'invitations', 'service:invitations')
         app.inject('route:CardRolesAdminInvite', 'invitations', 'service:invitations');
+        app.inject('route', 'invitations', 'service:invitations');
         app.inject('route:Workspaces', 'invitations', 'service:invitations');
 
         // service:keytransfer

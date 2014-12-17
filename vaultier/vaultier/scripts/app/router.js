@@ -72,10 +72,14 @@ Vaultier.Router.map(function () {
     this.resource('Documents', {path: '/documents'}, function () {
         this.resource('Document', {path: '/d/:document'}, function () {
             this.route('list', { path: '/list'});
+
             this.route('detail', { path: '/detail'});
             this.route('edit', { path: '/edit'});
             this.route('create', { path: '/create/:type'});
             this.route('move', { path: '/move'});
+
+            this.route('rolesAdminIndex', { path: '/team'});
+            this.route('rolesAdminInvite', { path: '/team/invite'});
         });
         this.route('createRoot', { path: '/create'});
     });

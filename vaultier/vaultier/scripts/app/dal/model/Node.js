@@ -49,8 +49,9 @@ Vaultier.dal.model.Node = RL.Model.extend(
         enc_version: RL.attr('number'),
         created_by: RL.attr('number'),
         parent: RL.attr('number'),
-
         color: RL.attr('string'),
+
+        perms: RL.attr('object'),
 
         saveRecord: function () {
             var isNew = this.get('isNew');

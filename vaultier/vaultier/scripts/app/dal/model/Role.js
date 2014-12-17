@@ -20,26 +20,32 @@ Vaultier.dal.model.Role = RL.Model.extend(
 
         level: RL.attr('number'),
         member: RL.attr('object'),
-        to_workspace: RL.attr('object'),
-        to_vault: RL.attr('object'),
-        to_card: RL.attr('object'),
+        node: RL.attr('object'),
 
         roles: new Utils.ConstantList({
             'CREATE': {
-                value: 50,
+                value: 100,
                 text: 'Create new',
                 desc:'Can read this object. Can create new child objects. Can modify, delete, invite and grant permissions to created objects'
             },
             'READ': {
-                value: 100,
+                value: 200,
                 desc: 'Can read this object and all child objects',
                 text: 'View only'
             },
             'WRITE': {
-                value: 200,
+                value: 300,
                 text: 'Manage',
                 desc: 'Can create, modify, delete, invite and grant permissions to this object and all child objects'
             }
+        }),
+
+        permissions: new Utils.ConstantList({
+            'READ': "read",
+            'CREATE': "create",
+            'UPDATE': "update",
+            'DELETE': "delete",
+            'INVITE': "invite"
         }),
 
         types: new Utils.ConstantList({
@@ -95,38 +101,10 @@ Vaultier.dal.model.Role = RL.Model.extend(
         }.property('level'),
 
         /**
-         * Retrieve the type of the object related to this role
-         */
-        relatedObjectType: function() {
-
-            if (this.get('to_workspace')) {
-                return (this.get('types')['TO_WORKSPACE']).value;
-            } else if (this.get('to_vault')) {
-                return (this.get('types')['TO_VAULT']).value;
-            } else if (this.get('to_card')) {
-                return (this.get('types')['TO_CARD']).value;
-            }
-
-        }.property('to_vault', 'to_card', 'to_workspace'),
-
-        relatedObject: function () {
-
-            if (this.get('to_workspace')) {
-                return this.get('to_workspace');
-            } else if (this.get('to_vault')) {
-                return this.get('to_vault');
-            } else if (this.get('to_card')) {
-                return this.get('to_card');
-            }
-
-        }.property('to_vault', 'to_card', 'to_workspace'),
-
-        /**
          * Return true if the given object is related to this role
          */
         isRelatedToObject: function (object) {
-            return this.get('relatedObjectType') === object.get('objectType') &&
-                this.get('relatedObject.id') === object.get('id');
+            return this.get('node') === object.get('id');
         }
 
     });

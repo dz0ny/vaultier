@@ -26,7 +26,7 @@ Service.Invitations = Ember.Object.extend({
     },
 
 
-    _memberPromise: function (workspace, emailOrId, send, resend) {
+    _memberPromise: function (node, emailOrId, send, resend) {
         var id = emailOrId.indexOf('@') < 0 ? parseInt(emailOrId) : null;
 
         if (id) {
@@ -41,7 +41,7 @@ Service.Invitations = Ember.Object.extend({
                 url: '/api/members/',
                 type: 'post',
                 data: {
-                    workspace: Utils.E.recordId(workspace),
+                    node: node.get('id'),
                     email: emailOrId,
                     send: send,
                     resend: resend
@@ -56,9 +56,7 @@ Service.Invitations = Ember.Object.extend({
         var data = {
             member: member.id,
             level: role,
-            to_workspace: Utils.E.recordId(params.to_workspace),
-            to_vault: Utils.E.recordId(params.to_vault),
-            to_card: Utils.E.recordId(params.to_card)
+            node: params.node.get('id')
         };
         return  Utils.RSVPAjax({
             url: '/api/roles/',
@@ -68,14 +66,14 @@ Service.Invitations = Ember.Object.extend({
     },
 
 
-    invite: function (workspace, emailOrId, role, params, send, resend) {
+    invite: function (node, emailOrId, role, params, send, resend) {
         send = Po.F.optional(send, false);
         resend = Po.F.optional(resend, false);
 
         return Ember.RSVP.resolve()
             .then(
                 function () {
-                    return this._memberPromise(workspace, emailOrId, send, resend);
+                    return this._memberPromise(node, emailOrId, send, resend);
                 }.bind(this))
 
             .then(

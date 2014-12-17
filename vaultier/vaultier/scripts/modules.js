@@ -225,6 +225,8 @@ var vaultierModulesConfig = {
             "./mock/BaseMock.js",
             "./mock/MockManager.js",
             "./mock/NodeMock.js",
+            "./mock/MemberMock.js",
+            "./mock/RoleMock.js",
             "./mock/WorkspaceKeyMock.js"
         ]
     },
@@ -321,6 +323,8 @@ var vaultierModulesConfig = {
             "./app/module/Documents/Create/DocumentCreate.js",
             "./app/module/Documents/Edit/DocumentEdit.js",
             "./app/module/Documents/Move/DocumentMove.js",
+            "./app/module/Documents/RolesAdmin/DocumentRolesAdminIndex.js",
+            "./app/module/Documents/RolesAdmin/DocumentRolesAdminInvite.js",
             "./app/module/Documents/TypeEditable/DocumentTypeEditable.js",
             "./app/module/Documents/TypeStatic/DocumentTypeStatic.js",
             "./app/module/Documents/CreateRoot/DocumentCreateRoot.js",

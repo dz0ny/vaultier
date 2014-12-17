@@ -76,29 +76,37 @@
                         <img src="/static/vaultier/images/icon-settings.png"/>
                     </a>
                     <ul class="dropdown-menu caret-right vlt-dropdown" role="menu">
-                        <li>
-                            {{#link-to 'Document.edit'}}
-                                <span class="glyphicon glyphicon-wrench"></span>
 
-                                <p>Edit</p>
-                            {{/link-to}}
-                        </li>
-                        {{#unless toolbar.rootFolder }}
+                        {{#if toolbar.actions.settings.edit}}
                             <li>
-                                {{#link-to 'Document.move'}}
-                                    <span class="glyphicon glyphicon-folder-close"></span>
+                                {{#link-to 'Document.edit'}}
+                                    <span class="glyphicon glyphicon-wrench"></span>
 
-                                    <p>Move</p>
+                                    <p>Edit</p>
                                 {{/link-to}}
                             </li>
-                        {{/unless}}
-                        <li>
-                            <a href="#" {{action removeNode }} >
-                                <span class="glyphicon glyphicon-remove-circle"></span>
 
-                                <p>Delete</p>
-                            </a>
-                        </li>
+                            {{#unless toolbar.rootFolder }}
+                                <li>
+                                    {{#link-to 'Document.move'}}
+                                        <span class="glyphicon glyphicon-folder-close"></span>
+
+                                        <p>Move</p>
+                                    {{/link-to}}
+                                </li>
+                            {{/unless}}
+                        {{/if}}
+
+                        {{#if toolbar.actions.settings.delete}}
+                            <li>
+                                <a href="#" {{action removeNode }} >
+                                    <span class="glyphicon glyphicon-remove-circle"></span>
+
+                                    <p>Delete</p>
+                                </a>
+                            </li>
+                        {{/if}}
+
                     </ul>
                 </div>
             {{/if}}

@@ -1,16 +1,27 @@
 Vaultier.DocumentRoute = Ember.Route.extend({
 
     model: function (params, queryParams) {
-        Utils.Logger.log.debug('Vaultier.DocumentListRoute setupController');
-        return ApplicationKernel.UI.showLoaderUponPromise(this.get('tree').getNodeById(params.document));
+        Utils.Logger.log.debug('Vaultier.DocumentRoute setupController');
+
+        return ApplicationKernel.UI.showLoaderUponPromise(
+            Ember.RSVP
+                .hash({
+                    node: this.get('tree').getNodeById(params.document),
+                    role_node: this.get('store').find('Role', { node: params.document }),
+                    role_parent_node: this.get('store').find('Role', { parent_node: params.document })
+                })
+        );
     },
 
     setupController: function (ctrl, model) {
         Utils.Logger.log.debug('Vaultier.DocumentRoute setupController');
-        Utils.Logger.log.debug(model);
-        if (model) {
-            this.get('tree').setSelectedNode(model);
+        Utils.Logger.log.debug(model.node);
+        if (model.node) {
+            this.get('tree').setSelectedNode(model.node);
         }
+
+        var selectedNode = this.get('tree').getSelectedNode();
+        this.get('auth').checkPermissionsForNode(selectedNode, Vaultier.dal.model.Role.proto().permissions.READ);
 
         Utils.Logger.log.debug(this.get('tree').nodes);
         Utils.Logger.log.debug(this.get('tree').getSelectedNode());
@@ -23,6 +34,9 @@ Vaultier.DocumentRoute = Ember.Route.extend({
         }
         ctrl.set('currentDocument', this.get('tree').getSelectedNode());
         ctrl.set('content', this.get('tree').getAllTreeNodes());
+
+        var roles = [].concat(model.role_node.toArray(), model.role_parent_node.toArray());
+        ctrl.set('roles', roles);
 
         return model;
     }
@@ -128,6 +142,10 @@ Vaultier.DocumentView = Ember.View.extend({
 
     currentDocument: function () {
         return this.get('controller.currentDocument');
-    }.property('controller.currentDocument', 'controller.currentDocument.children.@each')
+    }.property('controller.currentDocument', 'controller.currentDocument.children.@each'),
+
+    roles: function () {
+        return this.get('controller.roles');
+    }.property('controller.roles')
 
 });

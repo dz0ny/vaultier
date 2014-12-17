@@ -7,18 +7,19 @@ Vaultier.RolesAdminInviteInput = Ember.Component.extend({
 
     auth: null,
 
-    workspace: null,
-
     tagName: "input",
+
+    init: function () {
+        this.set('tree', Vaultier.__container__.lookup('service:tree'));
+        return this._super.apply(this, arguments);
+    },
 
     didInsertElement: function () {
 
         if (!this.store) {
             throw 'RolesAdminInviteInput requires store to autocomplete. Inject store to component as store=store'
         }
-        if (!this.workspace) {
-            throw 'RolesAdminInviteInput requires workspace to autocomplete. Inject workspace to component as workspace=workspace'
-        }
+
         if (!this.auth) {
             throw 'RolesAdminInviteInput requires auth service to autocomplete. Inject auth to component as auth=auth'
         }
@@ -35,14 +36,16 @@ Vaultier.RolesAdminInviteInput = Ember.Component.extend({
 
 
         var ajaxQuery = function () {
+            var selectedNode = this.tree.getSelectedNode();
+            var rootNode = this.tree.getRootNodeForNode(selectedNode);
             var members = this.store.find('Member', {
-                workspace: Utils.E.recordId(this.workspace),
-                search: this.query.term,
-                ordering: '-status'
+                node: rootNode.get('id'),
+                search: this.query.term
             })
                 .then(function (members) {
                     var results = [];
                     members.forEach(function (member) {
+                        Utils.Logger.log.debug(member);
                         var invitation = member.get('status') == member.statuses['INVITED'].value;
 
                         // do not include current user
@@ -56,6 +59,7 @@ Vaultier.RolesAdminInviteInput = Ember.Component.extend({
                             });
                         }
                     }.bind(this));
+                    Utils.Logger.log.debug(results);
                     this.query.callback({results: results});
                 }.bind(this))
         };
@@ -91,6 +95,7 @@ Vaultier.RolesAdminInviteInput = Ember.Component.extend({
                 ajaxQueryContext.store = this.get('controller.store')
                 ajaxQueryContext.query = query;
                 ajaxQueryContext.auth = this.get('auth')
+                ajaxQueryContext.tree = this.get('tree');
                 ajaxQueryContext.workspace = this.get('workspace')
                 Ember.run.debounce(ajaxQueryContext, ajaxQuery, 500);
 

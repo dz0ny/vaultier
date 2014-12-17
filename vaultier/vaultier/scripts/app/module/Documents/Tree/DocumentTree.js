@@ -209,6 +209,17 @@ Vaultier.Document.Node = Ember.ObjectProxy.extend({
     }.property('children', 'children.@each'),
 
     /**
+     * True if user can update, delete node or invite to node
+     *
+     * @property hasEditableOrInvitePermissions
+     * @type boolean
+     */
+    hasEditableOrInvitePermissions: function () {
+        return this.get('perms.update') || this.get('perms.delete') || this.get('perms.invite');
+    }.property(),
+
+
+    /**
      * Property which converts node's color to css class
      *
      * @property folderColor

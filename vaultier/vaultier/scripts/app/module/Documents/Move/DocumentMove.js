@@ -9,7 +9,10 @@ Vaultier.DocumentMoveRoute = Ember.Route.extend({
         Utils.Logger.log.debug('Vaultier.DocumentMoveRoute setupController');
         Utils.Logger.log.debug(model);
 
-        var type = this.get('tree').getSelectedNode().get('type');
+        model = this.get('tree').getSelectedNode();
+        this.get('auth').checkPermissionsForNode(model, Vaultier.dal.model.Role.proto().permissions.UPDATE);
+
+        var type = model.get('type');
         var typeName = Vaultier.dal.model.Node.proto().types.getByValue(model.get('type')).text;
 
         this.get('tree').switchToVisibleJustNodesInOneBranch(model);

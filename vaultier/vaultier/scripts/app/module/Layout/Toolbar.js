@@ -88,7 +88,7 @@ Vaultier.Toolbar = Ember.Object.extend({
     },
 
     addRolesAdminIndex: function (route) {
-        return this.addLink(route, 'Team', null, '/static/vaultier/images/icon-user-grey.png')
+        return this.addLink(route, 'Team', null, '/static/vaultier/images/icon-user-gray.png')
     },
 
     addRolesAdminInvite: function (route) {
@@ -228,6 +228,40 @@ Vaultier.Toolbar = Ember.Object.extend({
     },
 
     /**
+     * Add link to team page for document to breadcrumb
+     *
+     * @method addBreadcrumbDocumentTeam
+     * @param {Vaultier.Document.Node} currentDocument
+     * @param {Boolean} last
+     * @returns {Vaultier.Toolbar}
+     */
+    addBreadcrumbDocumentTeam: function (currentDocument, last) {
+        this.get('breadcrumbs').pushObject({
+            link: this.get('router').generate('Document.rolesAdminIndex', currentDocument.get('id')),
+            title: 'Team',
+            icon: '/static/vaultier/images/icon-user-gray.png',
+            last: last ? true : false
+        });
+        return this;
+    },
+
+    /**
+     * Add invite option for document to breadcrumb
+     *
+     * @method addBreadcrumbDocumentTeamInvite
+     * @returns {Vaultier.Toolbar}
+     */
+    addBreadcrumbDocumentTeamInvite: function () {
+        this.get('breadcrumbs').pushObject({
+            link: 'link',
+            title: 'Invite',
+            icon: '/static/vaultier/images/icon-plus-gray.png',
+            last: true
+        });
+        return this;
+    },
+
+    /**
      * Add action to toolbar for creating new document
      *
      * @method addActionAddDocument
@@ -239,15 +273,46 @@ Vaultier.Toolbar = Ember.Object.extend({
     },
 
     /**
-     * Add action to toolbar for enter to settings (according to give link it could be settings
-     * for folder or document
+     * Add dropdown to toolbar for enter to settings
      *
      * @method addActionSettings
-     * @param link
      * @returns {Vaultier.Toolbar}
      */
-    addActionSettings: function (link) {
-        this.get('actions').settings = true;
+    addActionSettings: function () {
+        this.get('actions').settings = {};
+        return this;
+    },
+
+    /**
+     * Add action edit to settings dropdown in toolbar
+     *
+     * @method addActionSettingsEdit
+     * @returns {Vaultier.Toolbar}
+     */
+    addActionSettingsEdit: function () {
+        this.get('actions').settings.edit = true;
+        return this;
+    },
+
+    /**
+     * Add action move to settings dropdown in toolbar
+     *
+     * @method addActionSettingsMove
+     * @returns {Vaultier.Toolbar}
+     */
+    addActionSettingsMove: function () {
+        this.get('actions').settings.move = true;
+        return this;
+    },
+
+    /**
+     * Add action delete to settings dropdown in toolbar
+     *
+     * @method addActionSettingsDelete
+     * @returns {Vaultier.Toolbar}
+     */
+    addActionSettingsDelete: function () {
+        this.get('actions').settings.delete = true;
         return this;
     }
 

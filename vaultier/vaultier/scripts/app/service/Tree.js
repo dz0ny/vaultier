@@ -90,7 +90,7 @@ Service.Tree = Ember.Object.extend({
      * @param {Vaultier.Document.Node} node
      */
     switchToVisibleJustNodesInOneBranch: function (node) {
-        var rootNode = this._getRootNodeForNode(node);
+        var rootNode = this.getRootNodeForNode(node);
         this.nodes.forEach(function (node) {
             Utils.Logger.log.debug(node);
             Utils.Logger.log.debug(rootNode);
@@ -236,6 +236,19 @@ Service.Tree = Ember.Object.extend({
     },
 
     /**
+     * It returns the root node for given node
+     *
+     * @method getRootNodeForNode
+     * @param {Vaultier.Document.Node} treeNode
+     * @returns {Vaultier.Document.Node}
+     */
+    getRootNodeForNode: function (treeNode) {
+        return treeNode.get('parent')
+            ? this.getRootNodeForNode(treeNode.get('parent'))
+            : treeNode;
+    },
+
+    /**
      * It reinserts children of given node in nodes array. It is used when we move node
      * and we want to move the child nodes with him
      *
@@ -276,20 +289,6 @@ Service.Tree = Ember.Object.extend({
             }.bind(this))
         }
         this.nodes.get('content').removeObject(treeNode);
-    },
-
-    /**
-     * It returns the root node for given node
-     *
-     * @method _getRootNodeForNode
-     * @param {Vaultier.Document.Node} treeNode
-     * @private
-     * @returns {Vaultier.Document.Node}
-     */
-    _getRootNodeForNode: function (treeNode) {
-        return treeNode.get('parent')
-            ? this._getRootNodeForNode(treeNode.get('parent'))
-            : treeNode;
     },
 
     /**

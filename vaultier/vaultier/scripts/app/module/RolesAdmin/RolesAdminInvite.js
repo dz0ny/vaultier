@@ -1,62 +1,36 @@
 Vaultier.RolesAdminInviteRoute = Ember.Route.extend(
     {
 
-        inviteObject: null,
-
-        model: function (params, transition) {
-            this.setProperties(this.setupInviteData(params));
-
-            // check permissions
-            if (!this.get('auth').checkPermissions(transition, function () {
-                return this.get('inviteObject.perms.invite')
-            }.bind(this), true)) {
-                return;
-            }
-        },
-
-        /**
-         * override this to setup invite workspace and invite to object
-         */
-        setupInviteData: function (params) {
-            throw 'Please override this in your route'
-        },
-
-        /**
-         * override this to setup invite breadcrumbs
-         */
-        setupBreadcrumbs: function () {
-            throw 'Please override this in your route'
-        },
-
-        /**
-         * override this to setup invite breadcrumbs
-         */
         setupRoleLevels: function () {
             return Vaultier.dal.model.Role.proto().roles.toArray();
         },
 
-        getDefaultRoleLevel: function() {
+        getDefaultRoleLevel: function () {
             return Vaultier.dal.model.Role.proto().roles['READ'].value
         },
 
         actions: {
             save: function (invited, role, resend) {
-                var invitations = this.get('invitations');
+
+                Utils.Logger.log.debug(invited);
+                Utils.Logger.log.debug(role);
+                Utils.Logger.log.debug(resend);
+                Utils.Logger.log.debug(this.get('invitations'));
+                Utils.Logger.log.debug(this.get('store'));
+
                 var inviteWorkspace = this.get('inviteWorkspace');
-                var inviteParams = this.get('inviteParams');
                 var invitedPromises = [];
 
                 invited.forEach(function (emailOrId) {
                     invitedPromises.push(
-                        invitations.invite(
-                            inviteWorkspace,
+                        this.get('invitations').invite(
+                            this.get('tree').getSelectedNode(),
                             emailOrId,
                             role.level,
-                            inviteParams,
                             true,
                             resend
                         ));
-                });
+                }.bind(this));
 
                 var bulk = Ember.RSVP.all(invitedPromises)
                     .then(function () {
@@ -74,13 +48,14 @@ Vaultier.RolesAdminInviteRoute = Ember.Route.extend(
         },
 
         setupController: function (ctrl, model) {
+            Utils.Logger.log.debug('Vaultier.RolesAdminInviteRoute setupController');
+
             ctrl.set('workspace', this.modelFor('Workspace'))
-            ctrl.set('breadcrumbs', this.setupBreadcrumbs());
             ctrl.set('invited', []);
             ctrl.set('role', {level: this.getDefaultRoleLevel()});
             ctrl.set('roleLevels', this.setupRoleLevels());
-            ctrl.set('defaultValue', Vaultier.dal.model.Role.proto().roles.toArray()[0].value);
-            ctrl.set('invitation_lifetime',this.get('config.invitation_lifetime'));
+            ctrl.set('defaultValue', this.getDefaultRoleLevel());
+            ctrl.set('invitation_lifetime', this.get('config.invitation_lifetime'));
         },
 
         renderTemplate: function () {
@@ -105,10 +80,14 @@ Vaultier.RolesAdminInviteController = Ember.Controller.extend({
 
 Vaultier.RolesAdminInviteView = Ember.View.extend({
     templateName: 'RolesAdmin/RolesAdminInvite',
-    layoutName: 'Layout/LayoutStandard',
+
+    didInsertElement: function () {
+        Utils.Logger.log.debug(this.get('parentView'));
+        this.get('parentView').set('showLeftTreeNodePanel', false);
+    },
 
     Select: Ember.Selectize.extend({
-        didInsertElement: function() {
+        didInsertElement: function () {
             this.renderOptions = {
                 option: function (item, escape) {
                     var item = Vaultier.dal.model.Role.proto().roles.getByValue(item.data.value);
@@ -118,9 +97,9 @@ Vaultier.RolesAdminInviteView = Ember.View.extend({
                             '<div class="help-block">' + item.desc + '</div>',
                         '</div>'
                     ].join('')
-                  }
-              };
-              this._super();
+                }
+            };
+            this._super();
         },
 
         changeData: function (obj) {

@@ -203,6 +203,19 @@ textarea {
 }
 
 /*
+* Disable
+*/
+
+.btn.disable {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+.btn.disable:active {
+    box-shadow: none;
+}
+
+/*
 * Boostrap file input
 */
 
@@ -616,6 +629,10 @@ textarea {
     padding: 4px;
 }
 
+.vlt-toolbar .vlt-bread .vlt-bread-inner:focus {
+    text-decoration: none;
+}
+
 .vlt-toolbar .vlt-bread .vlt-bread-inner {
     border-radius: 4px;
     border: 1px solid transparent;
@@ -833,9 +850,6 @@ textarea {
 .vlt-sidebar {
     background: #F5F5F5;
     height: 100vh;
-}
-
-.vlt-page-sidebar .vlt-sidebar-block {
     border-left: 1px solid #E0DBDB;
 }
 
@@ -884,6 +898,10 @@ textarea {
     color: #555555;
 }
 
+.vlt-roles-admin-box {
+    margin-bottom: 10px;
+}
+
 .vlt-roles-admin-box .vlt-user {
     display: block;
     float: left;
@@ -907,22 +925,37 @@ textarea {
     cursor: pointer;
 }
 
+.vlt-roles-admin-box .vlt-roles-admin-box-block .vlt-perms-section a {
+    color: #454545;
+    display: inline-block;
+    width: 100%;
+}
+
 .vlt-roles-admin-box .vlt-roles-admin-box-block .vlt-perms-section span {
     position: relative;
     top: 4px;
 }
 
 .vlt-perms-roles {
-    margin-bottom: 10px;
+    /*margin-bottom: 10px;*/
 }
 
 .vlt-perms-role {
-    margin: 4px 4px 4px 8px;
+    margin-left: 8px;
+    margin-right: 4px;
+}
+
+.vlt-perms-role:first-of-type {
+    margin-top: 8px;
 }
 
 .vlt-perms-role .vlt-perms-role-image,
 .vlt-perms-role .vlt-perms-role-name {
     display: inline-block;
+}
+.vlt-perms-role .vlt-perms-role-name {
+    position: relative;
+    top: -15px;
 }
 
 /* Sidebar responsibility */
@@ -2598,10 +2631,9 @@ span.vlt-user img {
 .vlt-documents-table .vlt-documents-table-col-actions .btn-group {
     display: none;
     width: 50px;
-
 }
 
-.vlt-documents-table .vlt-documents-table-col-actions .btn-group {
+.vlt-documents-table .vlt-documents-table-row:hover .btn-group {
     display: inline-block;
 }
 
@@ -2620,12 +2652,17 @@ span.vlt-user img {
     font-size: 110%;
 }
 
-.vlt-documents-table .vlt-documents-table-col-actions .btn-group button {
+.vlt-documents-table .vlt-documents-table-col-actions .btn-group a.dropdown-toggle {
     padding: 2px 8px;
     background: #428BCA;
     border-color: #428BCA;
     border-radius: 5px;
     color: white;
+}
+
+.vlt-documents-table .vlt-documents-table-col-actions .btn-group a.dropdown-toggle:hover,
+.vlt-documents-table .vlt-documents-table-col-actions .btn-group a.dropdown-toggle:focus {
+    text-decoration: none;
 }
 
 /*************************************************************
