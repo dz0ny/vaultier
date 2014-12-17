@@ -224,7 +224,7 @@ Vaultier.IndexRoute = Ember.Route.extend(
         redirect: function () {
             var auth = this.get('auth');
             if (auth.get('isAuthenticated')) {
-                return this.transitionTo('Workspaces.index');
+                return this.transitionTo('Documents.index');
             } else {
                 return this.transitionTo('AuthLogin');
             }

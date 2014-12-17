@@ -36,7 +36,6 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
         var that = this;
         Ember.$.mockjax({
             url: /^\/api\/nodes\/$/,
-            urlParams: ['nodeId'],
             type: 'GET',
             response: function (settings) {
                 this.responseText = that.findRootNodes();

@@ -328,7 +328,9 @@ var vaultierModulesConfig = {
             "./app/module/Documents/TypeEditable/DocumentTypeEditable.js",
             "./app/module/Documents/TypeStatic/DocumentTypeStatic.js",
             "./app/module/Documents/CreateRoot/DocumentCreateRoot.js",
-            "./app/module/Documents/Document.js"
+            "./app/module/Documents/Document.js",
+            "./app/module/Documents/Documents.js"
+
         ]
     },
     "workspace": {
