@@ -1,8 +1,11 @@
+from django.db.models.loading import get_model
 from mptt import models as mpttmodels
 from django.db import models
 from django.conf import settings
+from nodes.business.managers import NodeManager
+from nodes.roles import ManageRole
 from vaultier.business.db import TimestampableMixin
-from django_mptt_acl.models import PolicyModel
+from django_mptt_acl.models import PolicyModel, ReadRole, CreateRole, WriteRole
 
 
 class Node(mpttmodels.MPTTModel, TimestampableMixin):
@@ -31,10 +34,26 @@ class Node(mpttmodels.MPTTModel, TimestampableMixin):
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, related_name="nodes")
 
+    # objects = NodeManager
+
+    def get_user_member(self, user):
+        model = get_model("accounts.Member")
+        return model.objects.get(user=user, node=self.get_root())
+
 
 class Policy(PolicyModel):
     principal = models.ForeignKey(settings.AUTH_USER_MODEL)
     subject = models.ForeignKey(Node, related_name="_policies")
 
+    def get_user_member(self, user):
+        model = get_model("accounts.Member")
+        return model.objects.get(user=user, node=self.subject.get_root())
+
     class PolicyMeta:
         subject_owner_field = 'created_by'
+        roles = {
+            'manage': ManageRole,
+            'read': ReadRole,
+            'create': CreateRole,
+            'write': WriteRole
+        }
