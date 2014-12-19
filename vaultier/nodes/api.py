@@ -111,7 +111,7 @@ class PolicyViewSet(ListModelMixin, UpdateModelMixin, RetrieveModelMixin,
         if 'node' in self.kwargs:
             return Policy.objects.filter(subject=self.kwargs['node'])
 
-        return Policy.objects.filter(subject__in=self.kwargs['parent_node'].get_ancestors(ascending=False, include_self=True))
+        return Policy.objects.filter(subject__in=self.kwargs['parent_node'].get_ancestors(ascending=False, include_self=True), role__isnull=False, mask__isnull=False)
 
     def initial(self, request, *args, **kwargs):
         """
