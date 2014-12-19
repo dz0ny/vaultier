@@ -213,11 +213,11 @@ class MemberManager(Manager):
 
         return hash
 
-    def get_concrete_member_to_workspace(self, workspace, user):
+    def get_concrete_member_to_workspace(self, node, user):
         member = None
         try:
             member = self.filter(
-                workspace=workspace,
+                node=node,
                 user=user,
                 status__gt=MemberStatusField.STATUS_INVITED
             )[0]
@@ -246,9 +246,8 @@ class MemberManager(Manager):
                 role.delete()
 
     def accept_invitation(self, member, user):
-        workspace = member.workspace
         existing_member = self.get_concrete_member_to_workspace(
-            workspace, user
+            member.node, user
         )
 
         # user membership does not exists, or it is only invite
@@ -277,7 +276,7 @@ class MemberManager(Manager):
             member = member_cls.objects.get(
                 status=MemberStatusField.STATUS_INVITED,
                 invitation_email=member.invitation_email,
-                workspace=member.workspace
+                node=member.node
             )
             if resend:
                 self.send_invitation(member)

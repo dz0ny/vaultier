@@ -31,9 +31,7 @@ class CanManageMemberPermission(BasePermission):
             return has_object_acl(request.user, workspace,
                                   AclLevelField.LEVEL_WRITE)
 
-        workspace = obj.workspace
-        return has_object_acl(request.user, workspace,
-                              AclLevelField.LEVEL_READ)
+        return obj.node.acl.has_permission('invite', request.user)
 
 
 class CanManageWorkspace(BasePermission):

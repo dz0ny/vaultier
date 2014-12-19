@@ -1,8 +1,10 @@
 from itertools import imap
 from rest_framework import serializers
+from rest_framework.request import Request
 from accounts.business.fields import RecoverTypeField, MemberStatusField
 from accounts.models import Token, User, LostKey, Member
 from acls.models import Role
+from nodes.models import Policy, Node
 from workspaces.models import Workspace
 from django.conf import settings
 
@@ -229,10 +231,22 @@ class LostKeySerializer(serializers.ModelSerializer):
 class MemberInviteSerializer(serializers.Serializer):
 
     email = serializers.EmailField(required=True)
-    workspace = serializers.PrimaryKeyRelatedField(
-        required=True, queryset=Workspace.objects.all())
+    node = serializers.PrimaryKeyRelatedField(queryset=Node.objects.all())
     send = serializers.BooleanField(required=False, default=True)
     resend = serializers.BooleanField(required=False, default=True)
+    
+    def get_fields(self):
+
+        request = self.context.get('request')
+        assert isinstance(self.context.get('request'), Request)
+        ret = super(MemberInviteSerializer, self).get_fields()
+
+        if request.method == "POST":
+            policy = Policy.objects.filter(principal=request.user, mask=Policy.mask.invite)
+            q = Node.objects.filter(level=0, _policies__in=policy)
+            ret.get('node').queryset = q
+
+        return ret
 
 
 class MemberResendSerializer(serializers.Serializer):
@@ -246,7 +260,7 @@ class MemberSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Member
-        fields = ('id', 'status', 'email', 'nickname', 'workspace', 'user',
+        fields = ('id', 'status', 'email', 'nickname', 'user',
                   'created_at', 'updated_at')
 
     def get_email(self, obj):

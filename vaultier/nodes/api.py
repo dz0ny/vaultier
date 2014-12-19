@@ -1,10 +1,15 @@
+from rest_framework.mixins import ListModelMixin, RetrieveModelMixin
+from rest_framework.viewsets import GenericViewSet
 from .models import Node, Policy
+from nodes.business.permissions import PolicyPermission
+from nodes.serializer import PolicySerializer
 from .serializer import NodeSerializer, NodeBlobSerializer
 from .business.permissions import NodePermission
 from rest_framework import mixins, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.generics import GenericAPIView
+from vaultier.business.exceptions import CustomAPIException
 from vaultier.business.mixins import FullUpdateMixin, UpdateModelMixin
 from vaultier.business.viewsets import RestfulGenericViewSet
 from django.http.response import Http404
@@ -38,13 +43,11 @@ class NodeViewSet(RestfulGenericViewSet,
         """
         Change queryset when parent URL param provided
         """
-
         if self.action != "list":
             return Node.objects.all()
 
         parent = self.kwargs.get('parent')
         policy = Policy.objects.filter(principal=self.request.user, mask=Policy.mask.read)
-        # print policy
         if not parent:
             return Node.objects.filter(level=0, _policies__in=policy).prefetch_related('_policies')
 
@@ -95,3 +98,30 @@ class NodePathView(GenericAPIView):
         descendants = node.get_descendants()
         serializer = self.get_serializer(descendants, many=True)
         return Response(serializer.data)
+
+
+class PolicyViewSet(ListModelMixin, UpdateModelMixin, RetrieveModelMixin,
+                    RestfulGenericViewSet):
+    model = Policy
+    serializer_class = PolicySerializer
+    permission_classes = (IsAuthenticated, NodePermission, PolicyPermission)
+
+    def get_queryset(self):
+        return Policy.objects.filter(subject=self.kwargs['node'])
+
+    def initial(self, request, *args, **kwargs):
+        """
+        Find parent if any
+        """
+        node_id = self.request.QUERY_PARAMS.get('node')
+        if node_id and node_id.isdigit():
+            try:
+                node = Node.objects.get(id=node_id)
+            except Node.DoesNotExist:
+                raise Http404("Parent node was not found.")
+            else:
+                self.kwargs['node'] = node
+        else:
+            detail = "Node query parameter is missing"
+            raise CustomAPIException(status_code=400, detail=detail)
+        return super(PolicyViewSet, self).initial(request, *args, **kwargs)

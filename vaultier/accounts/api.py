@@ -112,12 +112,12 @@ class MemberViewSet(AtomicTransactionMixin, ModelViewSet):
     ordering = ('status', )
 
     def invite(self, request, *args, **kwargs):
-        serializer = MemberInviteSerializer(data=request.DATA)
+        serializer = MemberInviteSerializer(data=request.DATA, context=self.get_serializer_context())
 
         if serializer.is_valid():
             member = Member(
                 invitation_email=serializer.object.get('email'),
-                workspace=serializer.object.get('workspace'),
+                node=serializer.object.get('node'),
                 created_by=request.user
             )
 

@@ -80,12 +80,14 @@ class LostKey(models.Model):
 
 class Member(ChangesMixin, models.Model):
 
-    workspace = models.ForeignKey(
-        'workspaces.Workspace', related_name='membership', on_delete=CASCADE)
+    # workspace = models.ForeignKey(
+    #     'workspaces.Workspace', related_name='membership', on_delete=CASCADE,
+    #     null=True, default=None)
 
+    node = models.ForeignKey('nodes.Node', on_delete=CASCADE)
     user = models.ForeignKey(
         'accounts.User', on_delete=CASCADE, null=True,
-        related_name='membership')
+        related_name='membership', default=None)
     invitation_hash = models.CharField(max_length=64, null=True, unique=True)
     invitation_email = LowerCaseCharField(max_length=1024, null=True)
     workspace_key = models.CharField(max_length=4096)

@@ -1,7 +1,10 @@
 from rest_framework import serializers
+from accounts.serializers import MemberSerializer
 from .business.fields import BlobDataField
-from accounts.models import User
+from accounts.models import User, Member
 from .models import Node
+from nodes.business.fields import RoleSerializer
+from nodes.models import Policy
 from vaultier.business.exceptions import HttpStatusValidationError
 
 
@@ -10,8 +13,9 @@ class NodeSerializer(serializers.ModelSerializer):
     Serializer for Node model
     """
     created_by = serializers.PrimaryKeyRelatedField(read_only=True)
-    roles = serializers.SerializerMethodField('get_roles')
     permissions = serializers.SerializerMethodField('get_permissions')
+    member = serializers.SerializerMethodField('get_member')
+    root = serializers.SerializerMethodField('get_root')
 
     def validate_parent(self, attrs, source):
         """
@@ -25,11 +29,21 @@ class NodeSerializer(serializers.ModelSerializer):
         if not node:
             return attrs
         user = self.context.get('request').user
-        assert isinstance(user, User)
         if not node.acl.has_permission('create', user):
             raise HttpStatusValidationError(http_status_code=403)
 
         return attrs
+
+    def get_root(self, obj):
+        return obj.get_root().pk
+
+    def get_member(self, obj):
+        user = self.context.get('request').user
+        return MemberSerializer(instance=obj.get_user_member(user)).data
+
+
+    # def get_member(self, obj):
+    #     user = self.context.get('request').user
 
     def get_roles(self, obj):
         user = self.context.get('request').user
@@ -53,3 +67,16 @@ class NodeBlobSerializer(serializers.ModelSerializer):
     class Meta:
         fields = ('id', 'meta', 'blob_data')
         model = Node
+
+
+class PolicySerializer(serializers.ModelSerializer):
+
+    member = serializers.SerializerMethodField('get_member')
+    node = serializers.IntegerField(source='subject.pk')
+
+    def get_member(self, obj):
+        return MemberSerializer(instance=obj.get_user_member(self.context.get('request').user), read_only=True).data
+
+    class Meta:
+        model = Policy
+        fields = ('id', 'role', 'member', 'node')
