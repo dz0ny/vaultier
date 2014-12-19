@@ -107,13 +107,17 @@ class PolicyViewSet(ListModelMixin, UpdateModelMixin, RetrieveModelMixin,
     permission_classes = (IsAuthenticated, NodePermission, PolicyPermission)
 
     def get_queryset(self):
-        return Policy.objects.filter(subject=self.kwargs['node'])
+        if 'node' in self.kwargs:
+            return Policy.objects.filter(subject=self.kwargs['node'])
+
+        return Policy.objects.filter(subject__in=self.kwargs['parent'].get_ancestors(ascending=False, include_self=True))
 
     def initial(self, request, *args, **kwargs):
         """
         Find parent if any
         """
         node_id = self.request.QUERY_PARAMS.get('node')
+        parent_id = self.request.QUERY_PARAMS.get('parent')
         if node_id and node_id.isdigit():
             try:
                 node = Node.objects.get(id=node_id)
@@ -121,6 +125,13 @@ class PolicyViewSet(ListModelMixin, UpdateModelMixin, RetrieveModelMixin,
                 raise Http404("Parent node was not found.")
             else:
                 self.kwargs['node'] = node
+        elif parent_id and parent_id.isdigit():
+            try:
+                node = Node.objects.get(id=parent_id)
+            except Node.DoesNotExist:
+                raise Http404("Parent node was not found.")
+            else:
+                self.kwargs['parent'] = node
         else:
             detail = "Node query parameter is missing"
             raise CustomAPIException(status_code=400, detail=detail)
