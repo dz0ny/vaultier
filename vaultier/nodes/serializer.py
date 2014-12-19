@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from accounts.serializers import MemberSerializer
+from accounts.serializers import MemberSerializer, UserSerializer
 from .business.fields import BlobDataField
 from accounts.models import User, Member
 from .models import Node
@@ -12,7 +12,7 @@ class NodeSerializer(serializers.ModelSerializer):
     """
     Serializer for Node model
     """
-    created_by = serializers.PrimaryKeyRelatedField(read_only=True)
+    created_by = UserSerializer(read_only=True)
     perms = serializers.SerializerMethodField('get_permissions')
     membership = serializers.SerializerMethodField('get_member')
     root = serializers.SerializerMethodField('get_root')
