@@ -96,8 +96,8 @@ class NodePathView(GenericAPIView):
         Return ordered list of path to all Node parents
         """
         node = self.get_object()
-        descendants = node.get_descendants()
-        serializer = self.get_serializer(descendants, many=True)
+        nodes = node.get_ancestors(ascending=False)
+        serializer = self.get_serializer(nodes, many=True)
         return Response(serializer.data)
 
 
