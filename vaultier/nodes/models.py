@@ -12,18 +12,12 @@ class Node(mpttmodels.MPTTModel, TimestampableMixin):
     """
     Node model
     """
-    TYPE_DIRECTORY, TYPE_FILE = xrange(1, 3)
-
-    TYPE = (
-        (TYPE_DIRECTORY, 'Directory'),
-        (TYPE_FILE, 'File')
-    )
 
     ENC_VERSION = 1
 
     name = models.CharField(max_length=255)
     meta = models.TextField(null=True, blank=True)
-    type = models.IntegerField(choices=TYPE)
+    type = models.IntegerField()
     data = models.TextField(null=True, blank=True)
     blob_data = models.FileField(
         upload_to='', null=True, blank=True)
