@@ -13,8 +13,8 @@ class NodeSerializer(serializers.ModelSerializer):
     Serializer for Node model
     """
     created_by = serializers.PrimaryKeyRelatedField(read_only=True)
-    permissions = serializers.SerializerMethodField('get_permissions')
-    member = serializers.SerializerMethodField('get_member')
+    perms = serializers.SerializerMethodField('get_permissions')
+    membership = serializers.SerializerMethodField('get_member')
     root = serializers.SerializerMethodField('get_root')
 
     def validate_parent(self, attrs, source):
