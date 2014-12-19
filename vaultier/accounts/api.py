@@ -118,7 +118,7 @@ class MemberViewSet(AtomicTransactionMixin, ModelViewSet):
     permission_classes = (IsAuthenticated, CanManageMemberPermission)
     filter_backends = (SearchFilter, DjangoFilterBackend, OrderingFilter,)
     search_fields = ('invitation_email', 'user__email', 'user__nickname',)
-    filter_fields = ('workspace', 'status')
+    filter_fields = ('node', 'status')
     ordering = ('status', )
 
     def invite(self, request, *args, **kwargs):
