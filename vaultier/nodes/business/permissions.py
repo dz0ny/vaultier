@@ -16,7 +16,7 @@ class NodePermission(permissions.BasePermission):
         """
         parent = view.kwargs.get('parent') or view.kwargs.get('node')
 
-        if view.action == "list" and parent:
+        if request.method == "GET" and parent:
             if not _has_membership(request.user, parent):
                 return
             return parent.acl.has_permission('read', request.user)
@@ -26,13 +26,12 @@ class NodePermission(permissions.BasePermission):
         """
         Grant object permission
         """
-        print obj
         if not _has_membership(request.user, obj):
             return
-        if view.action == "retrieve":
+        if request.method == "GET":
             return obj.acl.has_permission('read', request.user)
 
-        if view.action in ('update', 'partial_update'):
+        if request.method in ('PUT', 'PATCH'):
             return obj.acl.has_permission('update', request.user)
 
 
