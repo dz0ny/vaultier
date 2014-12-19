@@ -2,7 +2,7 @@ from django.db.models.loading import get_model
 from mptt import models as mpttmodels
 from django.db import models
 from django.conf import settings
-from nodes.business.managers import NodeManager
+from accounts.business.fields import MemberStatusField
 from nodes.roles import ManageRole
 from vaultier.business.db import TimestampableMixin
 from django_mptt_acl.models import PolicyModel, ReadRole, CreateRole, WriteRole
@@ -28,11 +28,20 @@ class Node(mpttmodels.MPTTModel, TimestampableMixin):
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, related_name="nodes")
 
-    # objects = NodeManager
-
     def get_user_member(self, user):
         model = get_model("accounts.Member")
         return model.objects.get(user=user, node=self.get_root())
+
+    def save(self, *args, **kwargs):
+        super(Node, self).save(*args, **kwargs)
+        if kwargs.get('force_insert') and not self.parent:
+            m = get_model('accounts', 'Member')(
+                node=self,
+                user=self.created_by,
+                status=MemberStatusField.STATUS_MEMBER_WITHOUT_WORKSPACE_KEY,
+                created_by=self.created_by
+            )
+            m.save()
 
 
 class Policy(PolicyModel):
