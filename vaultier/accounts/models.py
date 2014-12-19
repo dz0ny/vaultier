@@ -84,10 +84,10 @@ class Member(ChangesMixin, models.Model):
     #     'workspaces.Workspace', related_name='membership', on_delete=CASCADE,
     #     null=True, default=None)
 
-    node = models.ForeignKey('nodes.Node', on_delete=CASCADE)
+    node = models.ForeignKey('nodes.Node', on_delete=CASCADE, related_name='membership')
     user = models.ForeignKey(
         'accounts.User', on_delete=CASCADE, null=True,
-        related_name='membership', default=None)
+        default=None)
     invitation_hash = models.CharField(max_length=64, null=True, unique=True)
     invitation_email = LowerCaseCharField(max_length=1024, null=True)
     workspace_key = models.CharField(max_length=4096)

@@ -67,7 +67,7 @@ class WorkspaceSerializer(serializers.ModelSerializer):
 
     def get_membership(self, obj):
         member = Member.objects.\
-            get_concrete_member_to_workspace(obj, self.user)
+            get_concrete_member_to_node(obj, self.user)
         if member:
             return WorkspaceMembershipSerializer(member).data
         else:

@@ -91,9 +91,9 @@ class LostKeyManager(Manager):
             status=MemberStatusField.STATUS_MEMBER_BROKEN)
 
     @classmethod
-    def find_workspace_is_recoverable(cls, workspace_id, user):
+    def find_node_is_recoverable(cls, node_id, user):
         """
-        Return True if the workspace is recoverable.
+        Return True if the node is recoverable.
         A work space is recoverable when it share among any user and those
         users have the status set to MemberStatusField.STATUS_MEMBER
         :param workspace_id: int
@@ -101,7 +101,7 @@ class LostKeyManager(Manager):
         :return: bool
         """
         return 0 < get_model('accounts', 'Member').objects.filter(
-            workspace_id=workspace_id,
+            node_id=node_id,
             status=MemberStatusField.STATUS_MEMBER).exclude(user=user).count()
 
     def rebuild_lost_key(self, user):
@@ -170,16 +170,16 @@ class LostKeyManager(Manager):
 class MemberManager(Manager):
 
     def all_for_user(self, user):
-        from workspaces.models import Workspace
 
-        workspaces = Workspace.objects.all_for_user(user)
+
+        node = get_model('nodes', 'Node').objects.all_for_user(user)
         return get_model('accounts', 'Member').objects.\
-            filter(workspace__in=workspaces)
+            filter(node__in=node)
 
     def all_to_transfer_keys(self, user):
 
-        workspaces_where_user_is_member_with_keys = \
-            get_model('workspaces', 'Workspace').objects.filter(
+        node_where_user_is_member_with_keys = \
+            get_model('nodes', 'Node').objects.filter(
                 membership__status=MemberStatusField.STATUS_MEMBER,
                 membership__user=user
             ).distinct()
@@ -190,7 +190,7 @@ class MemberManager(Manager):
 
         query = self.all_for_user(user).filter(
             Q(
-                Q(workspace__in=workspaces_where_user_is_member_with_keys)
+                Q(node__in=node_where_user_is_member_with_keys)
                 &
                 Q(status=MemberStatusField.STATUS_MEMBER_WITHOUT_WORKSPACE_KEY)
             )
@@ -213,7 +213,7 @@ class MemberManager(Manager):
 
         return hash
 
-    def get_concrete_member_to_workspace(self, node, user):
+    def get_concrete_member_to_node(self, node, user):
         member = None
         try:
             member = self.filter(
@@ -246,7 +246,7 @@ class MemberManager(Manager):
                 role.delete()
 
     def accept_invitation(self, member, user):
-        existing_member = self.get_concrete_member_to_workspace(
+        existing_member = self.get_concrete_member_to_node(
             member.node, user
         )
 

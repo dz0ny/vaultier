@@ -3,6 +3,7 @@ from mptt import models as mpttmodels
 from django.db import models
 from django.conf import settings
 from accounts.business.fields import MemberStatusField
+from nodes.business.managers import NodeManager
 from nodes.roles import ManageRole
 from vaultier.business.db import TimestampableMixin
 from django_mptt_acl.models import PolicyModel, ReadRole, CreateRole, WriteRole
@@ -27,6 +28,8 @@ class Node(mpttmodels.MPTTModel, TimestampableMixin):
     enc_version = models.IntegerField(default=ENC_VERSION)
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, related_name="nodes")
+
+    objects = NodeManager()
 
     def get_user_member(self, user):
         model = get_model("accounts.Member")
