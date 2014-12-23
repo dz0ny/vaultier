@@ -16,7 +16,8 @@
                         {{#each invitation in content}}
                             {{#each role in invitation.roles}}
                                 <tr>
-                                    <td>{{role.name}} by user {{printUser role.created_by}} </td>
+                                    <td>
+                                        {{role.name}} by user {{printUser role.created_by}} </td>
                                 </tr>
                             {{/each}}
                         {{/each}}

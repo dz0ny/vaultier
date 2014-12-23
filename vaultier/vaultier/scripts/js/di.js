@@ -54,6 +54,11 @@ Vaultier.registerDI = function (app) {
 
     app.inject('route:InvitationUse', 'invitations', 'service:invitations')
     app.inject('route:InvitationAccept', 'invitations', 'service:invitations')
+
+    app.inject('route:AuthRegisterKeys', 'invitations', 'service:invitations')
+    app.inject('route:AuthRegisterCreds', 'invitations', 'service:invitations')
+    app.inject('route:AuthRegisterSum', 'invitations', 'service:invitations');
+
     app.inject('route:WorkspaceRolesAdminInvite', 'invitations', 'service:invitations')
     app.inject('route:VaultRolesAdminInvite', 'invitations', 'service:invitations')
     app.inject('route:CardRolesAdminInvite', 'invitations', 'service:invitations');
