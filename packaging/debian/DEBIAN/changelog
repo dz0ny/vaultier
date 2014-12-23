@@ -1,8 +1,8 @@
-vaultier (0.7.4-1ubuntu5) UNRELEASED; urgency=medium
+:vaultier (0.7.5-1ubuntu5) trusty; urgency=medium
 
   * [bugfix] Registration via invitation didn't work 
 
- -- Jakub Bokoc <jakub.bokoc@rclick.cz>  Fri, 12 Dec 2014 14:04:42 +0100
+ -- Jakub Bokoc <jakub.bokoc@rclick.cz>  Thu, 23 Dec 2014 16:46:42 +0100
 
 vaultier (0.7.4-1ubuntu4) trusty; urgency=medium
 
