@@ -34,20 +34,20 @@ class TestApiRegister(object):
                                  nickname="duke",
                                  email="duke.nukem@example.com")
         # test the response
-        assert (response.status_code == HTTP_201_CREATED)
-        assert (response.data.get('id') is not None)
+        assert response.status_code == HTTP_201_CREATED
+        assert response.data.get('id') is not None
         id = response.data.get('id')
 
         # test if user was created in database
-        assert (User.objects.filter(id=id).exists())
+        assert User.objects.filter(id=id).exists()
 
         # register user again should be forbidden
         response = register_user(public_key=pubkey,
                                  nickname="duke",
                                  email="duke.nukem@example.com")
 
-        assert (response.data.get('email') is not None)
-        assert (response.status_code == HTTP_400_BAD_REQUEST)
+        assert response.data.get('email') is not None
+        assert response.status_code == HTTP_400_BAD_REQUEST
 
     def test_020_auth(self, user1, privkey):
         date = timezone.now()
@@ -56,7 +56,7 @@ class TestApiRegister(object):
         response = authenticate_user(private_key=privkey,
                                      email=user1.email)
 
-        assert (response.status_code == HTTP_200_OK)
+        assert response.status_code == HTTP_200_OK
 
         # try to login, check wrong signature
         bad_signature = "DefinitelyBadSignature"
@@ -64,14 +64,14 @@ class TestApiRegister(object):
                                      signature=bad_signature)
 
         # todo: currently returns 400, ideally should 403
-        assert (response.status_code == HTTP_400_BAD_REQUEST)
+        assert response.status_code == HTTP_400_BAD_REQUEST
 
         # try to login, check wrong expired timestamp
         expired = timezone.now() - timedelta(days=15)
         response = authenticate_user(private_key=privkey,
                                      email=user1.email, date=expired)
 
-        assert (response.status_code == HTTP_400_BAD_REQUEST)
+        assert response.status_code == HTTP_400_BAD_REQUEST
 
     def test_030_registration_should_be_case_insensitive(self, pubkey, privkey):
         # registration with multicase email and auth with lowercase
@@ -83,32 +83,32 @@ class TestApiRegister(object):
         response = register_user(public_key=pubkey,
                                  nickname="case_insensitive", email=email)
 
-        assert (response.status_code == HTTP_201_CREATED)
+        assert response.status_code == HTTP_201_CREATED
 
         # try auth with same email in lower case
         response = authenticate_user(private_key=privkey,
                                      email=email.lower())
 
-        assert (response.status_code == HTTP_200_OK)
+        assert response.status_code == HTTP_200_OK
 
         # login with the email in UPPER CASE
         response = authenticate_user(private_key=privkey,
                                      email=email.upper())
 
-        assert (response.status_code == HTTP_200_OK)
+        assert response.status_code == HTTP_200_OK
 
         # register user
         email = 'TEST_UPPERCASE_REGISTRATION@rclick.cz'
         response = register_user(public_key=pubkey,
                                  nickname="UPPER_CASE_NICK", email=email)
 
-        assert (response.status_code == HTTP_201_CREATED)
+        assert response.status_code == HTTP_201_CREATED
 
         # login with the email to lower case
         response = authenticate_user(private_key=privkey,
                                      email=email.lower())
 
-        assert (response.status_code == HTTP_200_OK)
+        assert response.status_code == HTTP_200_OK
 
     def test_040_email_cannot_be_registered_more_than_once(self, user1, user2,
                                                            pubkey):
@@ -117,20 +117,18 @@ class TestApiRegister(object):
         response = register_user(public_key=pubkey, email=user1.email,
                                  nickname=user1.nickname)
 
-        assert (response.status_code == HTTP_400_BAD_REQUEST)
-        assert (
-            response.data.get('email') == [
-                u'User with this Email already exists.'])
+        assert response.status_code == HTTP_400_BAD_REQUEST
+        assert response.data.get('email') == \
+               [u'User with this Email already exists.']
 
         # try to register user2 from fixture with same but uppercase mail
         response = register_user(public_key=pubkey,
                                  email=user2.email.upper(),
                                  nickname=user2.nickname)
 
-        assert (response.status_code == HTTP_400_BAD_REQUEST)
-        assert (
-            response.data.get('email') == [
-                u'User with this Email already exists.'])
+        assert response.status_code == HTTP_400_BAD_REQUEST
+        assert response.data.get('email') == \
+               [u'User with this Email already exists.']
 
 
 class TestTokenExpiration(object):
@@ -148,8 +146,7 @@ class TestTokenExpiration(object):
         token_model.save()
 
         # current date should be set, limit 60 seconds in case of some slowdown
-        assert (
-            (timezone.now() - token_model.last_used_at).total_seconds() < 60)
+        assert (timezone.now() - token_model.last_used_at).total_seconds() < 60
 
     def test_020_token_not_renewed_immediately(self, user1, privkey):
         response = authenticate_user(private_key=privkey,
@@ -164,7 +161,7 @@ class TestTokenExpiration(object):
         token_model.save()
 
         # last_used_at not changed
-        assert (last_used_at == token_model.last_used_at)
+        assert last_used_at == token_model.last_used_at
 
     def test_030_old_token_cleaned_up(self, user1, privkey):
         response = authenticate_user(private_key=privkey,
@@ -181,7 +178,7 @@ class TestTokenExpiration(object):
         token_model.save()
 
         Token.objects.clean_old_tokens()
-        assert (Token.objects.all().count() == 0)
+        assert Token.objects.all().count() == 0
 
     def test_040_recent_token_not_cleaned_up(self, user1, privkey):
         response = authenticate_user(private_key=privkey,
@@ -200,4 +197,4 @@ class TestTokenExpiration(object):
 
         Token.objects.clean_old_tokens()
         # token not deleted
-        assert (Token.objects.all().count() == 1)
+        assert Token.objects.all().count() == 1
