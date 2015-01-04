@@ -13,7 +13,6 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('workspaces', '0001_initial'),
-        ('accounts', '0002_auto_20141024_0838'),
         ('cards', '0001_initial'),
         ('vaults', '0001_initial'),
     ]

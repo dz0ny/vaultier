@@ -8,7 +8,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('nodes', '0007_auto_20141217_1241'),
-        ('accounts', '0002_auto_20141024_0838'),
+        ('accounts', '0001_initial'),
     ]
 
     operations = [
