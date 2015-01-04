@@ -11,10 +11,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='member',
-            name='workspace',
-        ),
         migrations.AlterField(
             model_name='member',
             name='node',

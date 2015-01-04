@@ -40,6 +40,7 @@ class Migration(migrations.Migration):
                 ('updated_at', models.DateTimeField(auto_now=True)),
                 ('expires_at', models.DateTimeField()),
                 ('used', models.BooleanField(default=False)),
+                ('created_by', models.ForeignKey(related_name=b'distracted', on_delete=django.db.models.deletion.PROTECT, to='accounts.User'))
             ],
             options={
                 'db_table': 'vaultier_lost_key',

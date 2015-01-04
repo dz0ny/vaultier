@@ -152,13 +152,8 @@ INSTALLED_APPS = (
     'django_mptt_acl',
     'vaultier',
     'accounts',
-    'acls',
-    'cards',
     'search',
-    'secrets',
-    'vaults',
     'versions',
-    'workspaces',
     'slugs',
     'news',
     'nodes'
