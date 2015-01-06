@@ -31,9 +31,9 @@ echo "OK"
 if [ "$1" = "purge" -a -e /usr/share/debconf/confmodule ]; then
 
     # force kill all user processes
-    VP=$(ps aux | awk '{print $2, $1}' | grep vaultier | awk '{print $1}')
+    VP=$(ps aux | awk '{print $2, $1}' | grep vaultier | awk '{print $1}' ORS=' ') &>/dev/null
     if [ ! -z "$VP" ]; then
-        kill -9 "$VP"
+        kill -9 $VP
     fi
 
     database_name=$(cat /tmp/.vaultier_dbname)
