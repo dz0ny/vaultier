@@ -72,7 +72,7 @@ class NodeBlobSerializer(serializers.ModelSerializer):
 class PolicySerializer(serializers.ModelSerializer):
 
     member = serializers.SerializerMethodField('get_member')
-    node = serializers.IntegerField(source='subject.pk')
+    node = serializers.IntegerField(source='subject.pk', read_only=True)
 
     def get_member(self, obj):
         return MemberSerializer(instance=obj.get_user_member(self.context.get('request').user), read_only=True).data

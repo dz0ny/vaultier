@@ -137,3 +137,8 @@ class PolicyViewSet(ListModelMixin, UpdateModelMixin, RetrieveModelMixin,
             detail = "node or node_parent query parameter is missing"
             raise CustomAPIException(status_code=400, detail=detail)
         return super(PolicyViewSet, self).initial(request, *args, **kwargs)
+
+    def pre_save(self, obj):
+        if self.action in ['create', 'update', 'partial_update']:
+            obj.node = self.kwargs.get('node') or \
+                       self.kwargs.get('parent_node')
