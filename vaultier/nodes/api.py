@@ -1,5 +1,6 @@
 from django.db.models.query_utils import Q
-from rest_framework.mixins import ListModelMixin, RetrieveModelMixin
+from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, \
+    CreateModelMixin
 from rest_framework.viewsets import GenericViewSet
 from .models import Node, Policy
 from nodes.business.permissions import PolicyPermission
@@ -101,8 +102,8 @@ class NodePathView(GenericAPIView):
         return Response(serializer.data)
 
 
-class PolicyViewSet(ListModelMixin, UpdateModelMixin, RetrieveModelMixin,
-                    RestfulGenericViewSet):
+class PolicyViewSet(CreateModelMixin, ListModelMixin, UpdateModelMixin,
+                    RetrieveModelMixin, RestfulGenericViewSet):
     model = Policy
     serializer_class = PolicySerializer
     permission_classes = (IsAuthenticated, NodePermission, PolicyPermission)
@@ -140,5 +141,6 @@ class PolicyViewSet(ListModelMixin, UpdateModelMixin, RetrieveModelMixin,
 
     def pre_save(self, obj):
         if self.action in ['create', 'update', 'partial_update']:
-            obj.node = self.kwargs.get('node') or \
+            obj.subject = self.kwargs.get('node') or \
                        self.kwargs.get('parent_node')
+            obj.principal = self.request.user
