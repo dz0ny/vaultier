@@ -2,9 +2,12 @@ from rest_framework import serializers
 from accounts.serializers import MemberSerializer, UserSerializer, \
     MemberWorkspaceKeySerializer
 from .business.fields import BlobDataField
+from accounts.models import User, Member
 from .models import Node
+from nodes.business.fields import RoleSerializer
 from nodes.models import Policy
 from vaultier.business.exceptions import HttpStatusValidationError
+from vaultier.business.fields import SerializerMethodWriteableField
 
 
 class NodeSerializer(serializers.ModelSerializer):
@@ -38,8 +41,8 @@ class NodeSerializer(serializers.ModelSerializer):
 
     def get_member(self, obj):
         user = self.context.get('request').user
-        return MemberWorkspaceKeySerializer(
-            instance=obj.get_user_member(user)).data
+        s = MemberWorkspaceKeySerializer(instance=obj.get_user_member(user))
+        return s.data
 
     def get_roles(self, obj):
         user = self.context.get('request').user
@@ -67,11 +70,22 @@ class NodeBlobSerializer(serializers.ModelSerializer):
 
 class PolicySerializer(serializers.ModelSerializer):
 
-    member = serializers.SerializerMethodField('get_member')
+    member = SerializerMethodWriteableField('get_member')
     node = serializers.IntegerField(source='subject.pk', read_only=True)
 
     def get_member(self, obj):
         return MemberSerializer(instance=obj.get_user_member(self.context.get('request').user), read_only=True).data
+
+    def validate_member(self, attrs, source):
+        if source not in attrs:
+            raise serializers.ValidationError('Member is required')
+
+        try:
+            member = Member.objects.get(pk=attrs[source])
+        except Member.DoesNotExist:
+            raise serializers.ValidationError('Member object does not exist')
+        attrs['principal_id'] = member.user.pk
+        return attrs
 
     class Meta:
         model = Policy

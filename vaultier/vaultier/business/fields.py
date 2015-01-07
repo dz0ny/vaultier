@@ -2,7 +2,7 @@ from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.db import models
 from django.utils.encoding import smart_text
 from django.utils.translation import ugettext_lazy as _
-from rest_framework.fields import Field
+from rest_framework.fields import Field, WritableField, SerializerMethodField
 from rest_framework.relations import RelatedField
 from acls.business.fields import AclLevelField
 
@@ -83,3 +83,7 @@ class RelatedNestedField(RelatedField):
         except (TypeError, ValueError):
             msg = self.error_messages['invalid']
             raise ValidationError(msg)
+
+
+class SerializerMethodWriteableField(SerializerMethodField, WritableField):
+    pass

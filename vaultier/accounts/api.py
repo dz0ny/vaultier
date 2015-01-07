@@ -125,13 +125,14 @@ class MemberViewSet(AtomicTransactionMixin, ModelViewSet):
         serializer = MemberInviteSerializer(data=request.DATA, context=self.get_serializer_context())
 
         if serializer.is_valid():
+            node = serializer.object.get('node')
             member = Member(
                 invitation_email=serializer.object.get('email'),
-                node=serializer.object.get('node'),
+                node=node,
                 created_by=request.user
             )
 
-            self.check_object_permissions(request, member)
+            self.check_object_permissions(request, node)
 
             member = Member.objects.invite(
                 member,

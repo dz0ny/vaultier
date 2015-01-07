@@ -143,4 +143,3 @@ class PolicyViewSet(CreateModelMixin, ListModelMixin, UpdateModelMixin,
         if self.action in ['create', 'update', 'partial_update']:
             obj.subject = self.kwargs.get('node') or \
                        self.kwargs.get('parent_node')
-            obj.principal = self.request.user

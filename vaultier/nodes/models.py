@@ -48,7 +48,7 @@ class Node(mpttmodels.MPTTModel, TimestampableMixin):
 
 
 class Policy(PolicyModel):
-    principal = models.ForeignKey(settings.AUTH_USER_MODEL)
+    principal = models.ForeignKey("accounts.Member")
     subject = models.ForeignKey(Node, related_name="_policies")
 
     def get_user_member(self, user):

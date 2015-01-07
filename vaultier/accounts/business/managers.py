@@ -171,7 +171,6 @@ class MemberManager(Manager):
 
     def all_for_user(self, user):
 
-
         node = get_model('nodes', 'Node').objects.all_for_user(user)
         return get_model('accounts', 'Member').objects.\
             filter(node__in=node)
@@ -324,6 +323,16 @@ class MemberManager(Manager):
         self.filter(status=MemberStatusField.STATUS_INVITED,
                     created_at__lt=expired_date
                     ).delete()
+
+    def to_node(self, user, node):
+        """
+        Return Member to node. No matter where node is in tree
+
+        :param user: accounts.models.User
+        :param node: nodes.models.Node
+        :return:
+        """
+        return self.get(node=node.get_root(), user=user)
 
 
 class TokenManager(Manager):

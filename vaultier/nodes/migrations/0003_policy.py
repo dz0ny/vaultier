@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('role', models.CharField(max_length=30, null=True)),
                 ('mask', bitfield.models.BitField((b'read', b'write', b'create'), default=None)),
-                ('principal', models.ForeignKey(to='accounts.User')),
+                ('principal', models.ForeignKey(to='accounts.Member')),
                 ('subject', models.ForeignKey(related_name=b'_policies', to='nodes.Node')),
             ],
             options={
