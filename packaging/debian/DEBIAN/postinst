@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+#postinst for Vaultier
 
 . /usr/share/debconf/confmodule
 
@@ -54,6 +55,131 @@ if $allow_statistics; then
 else
     allow_statistics="False"
 fi
+
+if [ "$http_scheme" = "https" ] ; then
+     cp /usr/share/ssl-cert/ssleay.cnf /var/tmp
+     sed -i "/default_keyfile/c\default_keyfile = $domain.pem" /var/tmp/ssleay.cnf
+     sed -i "/commonName/c\commonName = $domain " /var/tmp/ssleay.cnf
+     make-ssl-cert /var/tmp/ssleay.cnf /etc/ssl/certs/$domain.pem
+     rm /var/tmp/ssleay.cnf
+fi
+
+
+db_get vaultier/reconfigure-webserver
+webservers="$RET"
+
+
+db_get vaultier/webpath
+
+#FIXME: http://git.rclick.cz/rclick/vaultier/issues/383 
+#if [ "$RET" == "/" ]
+#then
+    webpath1="/"
+    webpath2=""
+#else
+#    webpath1="$RET"
+#    webpath2="$RET"
+#fi
+
+
+for webserver in $webservers; do
+    webserver=${webserver%,}
+
+    echo "Configuring $webserver webserver ..."
+
+    if [ "$webserver" = "nginx" ] ; then
+	###################################### NGINX
+
+	if [ "$http_scheme" = 'http' ]; then
+	    cp /usr/share/vaultier/config/nginx/vaultier /etc/nginx/sites-available/vaultier
+	else
+	    cp /usr/share/vaultier/config/nginx/vaultier-ssl /etc/nginx/sites-available/vaultier
+	    sed -i "/ssl_certificate /c\		ssl_certificate /etc/ssl/certs/$domain.pem;" /etc/nginx/sites-available/vaultier
+	    sed -i "/ssl_certificate_key/c\		ssl_certificate_key /etc/ssl/certs/$domain.pem;" /etc/nginx/sites-available/vaultier
+	fi
+
+	sed -i "s/DEB_DOMAIN/${domain}/g" /etc/nginx/sites-available/vaultier
+	ln -s /etc/nginx/sites-available/vaultier /etc/nginx/sites-enabled
+    else 
+	###################################### APACHE 
+        mkdir -p /etc/apache2/conf-available
+	a2enmod uwsgi
+#	WEBCFG="/etc/apache2/conf-available/vaultier.conf"
+#	echo  "<Location $webpath1>" > $WEBCFG
+#	echo  "    SetHandler uwsgi-handler" >> $WEBCFG
+#	echo  "    uWSGISocket /run/uwsgi/app/vaultier/socket" >> $WEBCFG
+#	echo  "</Location>" >> $WEBCFG
+#	echo  "alias ${webpath2}/static /opt/vaultier/venv/lib/python2.7/site-packages/vaultier/vaultier/static/" >> $WEBCFG
+#	echo  "alias ${webpath2}/media  /opt/vaultier/venv/lib/python2.7/site-packages/vaultier/vaultier/media/" >> $WEBCFG
+#	a2enconf vaultier
+
+	if [ -n "$domain" ]; then
+	    SITECFG="/etc/apache2/sites-available/vaultier.conf"
+	    echo  > $SITECFG
+
+	    if [ "$http_scheme" = "https" ] ; then
+		a2enmod ssl
+	        echo  "<VirtualHost *:80>" >> $SITECFG
+	        echo  "        ServerName $domain" >> $SITECFG
+	        echo  "        Redirect permanent / https://$domain/$webpath2" >> $SITECFG
+	        echo  "</VirtualHost>" >> $SITECFG
+		echo  "<VirtualHost *:443>" >> $SITECFG
+		echo  "        SSLEngine on" >> $SITECFG
+		echo  "        SSLProtocol all -SSLv2" >> $SITECFG
+		echo  "        SSLCipherSuite ALL:!ADH:!EXPORT:!SSLv2:RC4+RSA:+HIGH:+MEDIUM" >> $SITECFG
+		echo  "        SSLCertificateFile /etc/ssl/certs/$domain.pem" >> $SITECFG
+	    else
+	        echo  "<VirtualHost *:80>" >> $SITECFG
+	    fi
+	    echo  "        ServerName $domain" >> $SITECFG
+	    echo  "        alias ${webpath2}/static /opt/vaultier/venv/lib/python2.7/site-packages/vaultier/vaultier/static/" >> $SITECFG
+	    echo  "        alias ${webpath2}/media  /opt/vaultier/venv/lib/python2.7/site-packages/vaultier/vaultier/media/" >> $SITECFG
+	    echo  "        <Location />" >> $SITECFG
+	    echo  "                SetHandler uwsgi-handler" >> $SITECFG
+	    echo  "                uWSGISocket /run/uwsgi/app/vaultier/socket" >> $SITECFG
+	    echo  "        </Location>" >> $SITECFG
+	    echo  '        ErrorLog ${APACHE_LOG_DIR}/error.log' >> $SITECFG
+	    echo  '        CustomLog ${APACHE_LOG_DIR}/access.log combined' >> $SITECFG
+	    echo  '        <Location /static>' >> $SITECFG
+	    echo  '                Order allow,deny' >> $SITECFG
+	    echo  '                Allow from all' >> $SITECFG
+	    echo  '                SetHandler none' >> $SITECFG
+	    echo  '        </Location>' >> $SITECFG
+	    echo  '        <Location /media>' >> $SITECFG
+	    echo  '                Order allow,deny' >> $SITECFG
+	    echo  '                Allow from all' >> $SITECFG
+	    echo  '                SetHandler none' >> $SITECFG
+	    echo  '         </Location>' >> $SITECFG
+	    echo  '        <Directory /opt/vaultier/venv/lib/python2.7/site-packages/vaultier/vaultier/static/>' >> $SITECFG
+	    echo  '            Order Allow,Deny' >> $SITECFG
+	    echo  '            Allow from all' >> $SITECFG
+	    echo  '            Require all granted' >> $SITECFG
+	    echo  '        </Directory>' >> $SITECFG
+	    echo  '        <Directory /opt/vaultier/venv/lib/python2.7/site-packages/vaultier/vaultier/media/>' >> $SITECFG
+	    echo  '            Order Allow,Deny' >> $SITECFG
+	    echo  '            Allow from all' >> $SITECFG
+	    echo  '            Require all granted' >> $SITECFG
+	    echo  '        </Directory>' >> $SITECFG
+	    echo  "</VirtualHost>" >> $SITECFG
+	    a2ensite vaultier
+	fi
+
+    fi
+
+    # Reload webserver in any case, configuration might have changed
+    # Redirection of 3 is needed because Debconf uses it and it might 
+    # be inherited by webserver. See bug #446324.
+    if [ -f /etc/init.d/$webserver ] ; then
+	if [ -x /usr/sbin/invoke-rc.d ]; then
+                invoke-rc.d $webserver reload 3>/dev/null || true
+        else
+                service $webserver reload 3>/dev/null || true
+        fi
+    fi
+done
+
+
+
 
 # add Vaultier user, if it does not exists
 id -u vaultier &>/dev/null || useradd -r -d /opt/vaultier -s /bin/bash vaultier
@@ -114,18 +240,10 @@ sed -i "s/bool(os.getenv('VAULTIER_ALLOW_REGISTRATION', False))/${allow_registra
 sed -i "s/bool(os.getenv('VAULTIER_ALLOW_STATISTICS', True))/${allow_statistics}/g" /opt/vaultier/vaultier_conf.py
 
 
-# copy config files
-if [ "$http_scheme" = 'http' ]; then
-    cp /usr/share/vaultier/config/nginx/vaultier /etc/nginx/sites-available/vaultier
-else
-    cp /usr/share/vaultier/config/nginx/vaultier-ssl /etc/nginx/sites-available/vaultier
-fi
 cp /usr/share/vaultier/config/supervisor/vaultier.conf /etc/supervisor/conf.d/vaultier.conf
 cp /usr/share/vaultier/config/uwsgi/vaultier.ini /etc/uwsgi/apps-available/vaultier.ini
-sed -i "s/DEB_DOMAIN/${domain}/g" /etc/nginx/sites-available/vaultier
 
 # symlink configs
-ln -s /etc/nginx/sites-available/vaultier /etc/nginx/sites-enabled
 ln -s /etc/uwsgi/apps-available/vaultier.ini /etc/uwsgi/apps-enabled
 
 
@@ -134,12 +252,21 @@ if ! service uwsgi start &> /dev/null; then
     echo "Starting uwsgi failed. Please try to start uwsgi manually."
 fi
 
-if ! service nginx start &> /dev/null; then
-    echo "Starting nginx failed. Please try to start nginx manually."
+if [ "$webserver" = "nginx" ] ; then
+    if ! service nginx start &> /dev/null; then
+	echo "Starting nginx failed. Please try to start nginx manually."
+    fi
+else
+    if ! service apache2 start &> /dev/null; then
+	echo "Starting Apache failed. Please try to start apache manually."
+    fi
 fi
 
+
 if ! service supervisor start &> /dev/null; then
-    echo "Starting supervisor failed. Please try to start supervisor manually."
+    if ! service supervisor restart &> /dev/null; then
+        echo "Starting supervisor failed. Please try to start supervisor manually."
+    fi
 else
     supervisorctl update
 fi

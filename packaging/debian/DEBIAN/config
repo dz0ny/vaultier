@@ -4,6 +4,21 @@ set -e
 . /usr/share/debconf/confmodule
 
 if [ ! -f /opt/vaultier/vaultier_conf.py ]; then
+
+while true; do
+    db_input high vaultier/reconfigure-webserver || true
+    db_go || true
+    db_get vaultier/reconfigure-webserver
+    if [ ! -z $RET ]; then
+        break
+    fi
+done
+
+
+#FIXME http://git.rclick.cz/rclick/vaultier/issues/383    db_input high vaultier/webpath || true
+#    db_input high vaultier/avahi || true
+    
+
     # FQDN
     while true; do
         db_input critical vaultier/domain || true

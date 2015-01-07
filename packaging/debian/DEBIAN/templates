@@ -85,3 +85,26 @@ Default: true
 Type: boolean
 Description: Allow sending anonymous statistics to vaultier.org REST API?
   Statistics does contain no sensitive data.
+
+Template: vaultier/reconfigure-webserver
+Type: multiselect
+Choices: apache2, nginx
+Description: Web server to reconfigure automatically:
+ Please choose the web server that should be automatically configured
+ to run Vaultier.
+ install apache2 libapache2-mod-uwsgi / nginx 
+
+Template: vaultier/webpath
+Type: string
+Default: /vaultier
+Description: Enter the path where the vaultier app will run. Use "/" if Vaultier
+  Is only one application using webserver or "/<somepath>" if there is another
+  content on webserver default host root.
+
+Template: vaultier/avahi
+Default: false
+Type: boolean
+Description: Perform Avahi service installation ?
+  Avahi daemon advertises the Vaultier existence and location to Bonjour capable
+  clients. (Running avahi daemon is required for this feature)
+

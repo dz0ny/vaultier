@@ -10,3 +10,9 @@ fi
 if [ -f /etc/init.d/nginx ]; then
     service nginx stop
 fi
+
+# Stop Apache2
+if [ -f /etc/init.d/apache2 ]; then
+    service apache2 stop
+fi
+
