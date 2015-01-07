@@ -8,7 +8,7 @@ import bitfield.models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('accounts', '0002_auto_20141024_0838'),
+        ('accounts', '0001_initial'),
         ('nodes', '0002_node_name'),
     ]
 
