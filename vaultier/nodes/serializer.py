@@ -31,7 +31,7 @@ class NodeSerializer(serializers.ModelSerializer):
         if not node:
             return attrs
         user = self.context.get('request').user
-        if not node.acl.has_permission('create', user):
+        if not node.acl.has_permission('create', Member.objects.to_node(user, node)):
             raise HttpStatusValidationError(http_status_code=403)
 
         return attrs
@@ -70,11 +70,12 @@ class NodeBlobSerializer(serializers.ModelSerializer):
 
 class PolicySerializer(serializers.ModelSerializer):
 
+    level = serializers.CharField(source='role')
     member = SerializerMethodWriteableField('get_member')
     node = serializers.IntegerField(source='subject.pk', read_only=True)
 
     def get_member(self, obj):
-        return MemberSerializer(instance=obj.get_user_member(self.context.get('request').user), read_only=True).data
+        return MemberSerializer(instance=obj.principal, read_only=True).data
 
     def validate_member(self, attrs, source):
         if source not in attrs:
@@ -84,9 +85,9 @@ class PolicySerializer(serializers.ModelSerializer):
             member = Member.objects.get(pk=attrs[source])
         except Member.DoesNotExist:
             raise serializers.ValidationError('Member object does not exist')
-        attrs['principal_id'] = member.user.pk
+        attrs['principal_id'] = member.pk
         return attrs
 
     class Meta:
         model = Policy
-        fields = ('id', 'role', 'member', 'node')
+        fields = ('id', 'level', 'member', 'node')

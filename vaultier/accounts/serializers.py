@@ -199,7 +199,7 @@ class MemberInviteSerializer(serializers.Serializer):
     node = serializers.PrimaryKeyRelatedField(queryset=Node.objects.all())
     send = serializers.BooleanField(required=False, default=True)
     resend = serializers.BooleanField(required=False, default=True)
-    
+
     def get_fields(self):
 
         request = self.context.get('request')
@@ -207,10 +207,14 @@ class MemberInviteSerializer(serializers.Serializer):
         ret = super(MemberInviteSerializer, self).get_fields()
 
         if request.method == "POST":
-            policy = Policy.objects.filter(principal=request.user, mask=Policy.mask.invite)
-            q = Node.objects.filter(level=0, _policies__in=policy)
-            ret.get('node').queryset = q
-
+            try:
+                node = Node.objects.get(id=request.DATA.get('node'))
+                member = Member.objects.to_node(request.user, node)
+                policy = Policy.objects.filter(principal=member, mask=Policy.mask.invite)
+                q = Node.objects.filter(level=0, _policies__in=policy)
+                ret.get('node').queryset = q
+            except Node.DoesNotExist:
+                pass
         return ret
 
 

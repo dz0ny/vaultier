@@ -55,7 +55,7 @@ class NodeViewSet(RestfulGenericViewSet,
 
         parent = self.kwargs.get('parent')
         policy = Policy.objects.filter(
-            principal=self.request.user, mask=Policy.mask.read)
+            principal__in=Member.objects.filter(user=self.request.user), mask=Policy.mask.read)
         if not parent:
             return Node.objects.filter(
                 level=0, _policies__in=policy).prefetch_related('_policies')
