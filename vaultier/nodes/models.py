@@ -36,21 +36,22 @@ class Node(mpttmodels.MPTTModel, TimestampableMixin):
         return model.objects.get(user=user, node=self.get_root())
 
     def save(self, *args, **kwargs):
-        if not self.pk and not self.parent:
-            self.acl_propagation_stopped = True
+        self.acl_propagation_stopped = True
+
         super(Node, self).save(*args, **kwargs)
 
-        if self.acl_propagation_stopped:
-
-            m = get_model('accounts', 'Member')(
+        if kwargs.get('force_insert') and not self.parent:
+            self.acl_principal = get_model('accounts', 'Member')(
                 node=self,
                 user=self.created_by,
                 status=MemberStatusField.STATUS_MEMBER,
                 created_by=self.created_by
             )
-            m.save()
-            self.acl_principal = m
-            self.acl.insert(created=True)
+            self.acl_principal.save()
+        else:
+            self.acl_principal = get_model('accounts', 'Member').objects.get(node=self.get_root(), user=self.created_by)
+
+        self.acl.insert(created=kwargs.get('force_insert'))
 
 
 class Policy(PolicyModel):
