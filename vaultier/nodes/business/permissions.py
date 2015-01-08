@@ -9,7 +9,6 @@ def _has_membership(user, node):
 def _get_membership(user, node):
     if not _has_membership(user, node):
         return
-
     return Member.objects.to_node(node, user)
 
 
@@ -27,7 +26,7 @@ class NodePermission(permissions.BasePermission):
             member = _get_membership(request.user, parent)
             if not member:
                 return
-            return parent.acl.has_permission('read', request.user)
+            return parent.acl.has_permission('read', member)
         return True
 
     def has_object_permission(self, request, view, obj):
