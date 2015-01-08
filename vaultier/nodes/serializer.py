@@ -31,7 +31,7 @@ class NodeSerializer(serializers.ModelSerializer):
         if not node:
             return attrs
         user = self.context.get('request').user
-        if not node.acl.has_permission('create', user):
+        if not node.acl.has_permission('create', Member.objects.to_node(user, node)):
             raise HttpStatusValidationError(http_status_code=403)
 
         return attrs
