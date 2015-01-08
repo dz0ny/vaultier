@@ -74,7 +74,7 @@ class PolicySerializer(serializers.ModelSerializer):
     node = serializers.IntegerField(source='subject.pk', read_only=True)
 
     def get_member(self, obj):
-        return MemberSerializer(instance=obj.get_user_member(self.context.get('request').user), read_only=True).data
+        return MemberSerializer(instance=obj.principal, read_only=True).data
 
     def validate_member(self, attrs, source):
         if source not in attrs:
