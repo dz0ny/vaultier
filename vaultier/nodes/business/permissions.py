@@ -9,7 +9,7 @@ def _has_membership(user, node):
 def _get_membership(user, node):
     if not _has_membership(user, node):
         return
-    return Member.objects.to_node(node, user)
+    return Member.objects.to_node(user, node)
 
 
 class NodePermission(permissions.BasePermission):
