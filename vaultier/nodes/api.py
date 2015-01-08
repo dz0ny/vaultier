@@ -15,6 +15,7 @@ from vaultier.business.viewsets import RestfulGenericViewSet
 from django.http.response import Http404
 from accounts.models import Member
 from accounts.business.fields import MemberStatusField
+from django.db import transaction
 
 
 class NodeViewSet(RestfulGenericViewSet,
@@ -26,6 +27,10 @@ class NodeViewSet(RestfulGenericViewSet,
     queryset = Node.objects.all()
     serializer_class = NodeSerializer
     permission_classes = (IsAuthenticated, NodePermission)
+
+    @transaction.atomic
+    def create(self, request, *args, **kwargs):
+        return super(NodeViewSet, self).create(request, *args, **kwargs)
 
     def initial(self, request, *args, **kwargs):
         """
@@ -64,18 +69,6 @@ class NodeViewSet(RestfulGenericViewSet,
         """
         if self.action == "create":
             obj.created_by = self.request.user
-
-    def post_save(self, obj, created=False):
-        """
-        For new Node without root create Member
-        """
-        if created:
-            # check if we got parent
-            if not obj.parent:
-                # create Member
-                Member.objects.create(
-                    node=obj, status=MemberStatusField.STATUS_MEMBER,
-                    created_by=obj.created_by, user=obj.created_by)
 
 
 class NodeDataView(GenericAPIView,

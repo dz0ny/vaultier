@@ -46,11 +46,11 @@ class NodeSerializer(serializers.ModelSerializer):
 
     def get_roles(self, obj):
         user = self.context.get('request').user
-        return obj.acl.get_roles(user)
+        return obj.acl.get_roles(obj.get_user_member(user))
 
     def get_permissions(self, obj):
         user = self.context.get('request').user
-        return obj.acl.get_permissions(user)
+        return obj.acl.get_permissions(obj.get_user_member(user))
 
     class Meta:
         exclude = ('lft', 'rght', 'level', 'tree_id', 'blob_data')
