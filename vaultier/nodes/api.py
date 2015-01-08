@@ -1,7 +1,5 @@
-from django.db.models.query_utils import Q
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, \
     CreateModelMixin
-from rest_framework.viewsets import GenericViewSet
 from .models import Node, Policy
 from nodes.business.permissions import PolicyPermission
 from nodes.serializer import PolicySerializer
@@ -15,6 +13,8 @@ from vaultier.business.exceptions import CustomAPIException
 from vaultier.business.mixins import FullUpdateMixin, UpdateModelMixin
 from vaultier.business.viewsets import RestfulGenericViewSet
 from django.http.response import Http404
+from accounts.models import Member
+from accounts.business.fields import MemberStatusField
 
 
 class NodeViewSet(RestfulGenericViewSet,
@@ -49,11 +49,14 @@ class NodeViewSet(RestfulGenericViewSet,
             return Node.objects.all()
 
         parent = self.kwargs.get('parent')
-        policy = Policy.objects.filter(principal=self.request.user, mask=Policy.mask.read)
+        policy = Policy.objects.filter(
+            principal=self.request.user, mask=Policy.mask.read)
         if not parent:
-            return Node.objects.filter(level=0, _policies__in=policy).prefetch_related('_policies')
+            return Node.objects.filter(
+                level=0, _policies__in=policy).prefetch_related('_policies')
 
-        return Node.objects.filter(parent=parent, _policies__in=policy).prefetch_related('_policies')
+        return Node.objects.filter(
+            parent=parent, _policies__in=policy).prefetch_related('_policies')
 
     def pre_save(self, obj):
         """
@@ -61,6 +64,12 @@ class NodeViewSet(RestfulGenericViewSet,
         """
         if self.action == "create":
             obj.created_by = self.request.user
+            # check if we got parent
+            if not obj.parent:
+                # create Member
+                Member.objects.create(
+                    node=obj, status=MemberStatusField.STATUS_MEMBER,
+                    created_by=obj.created_by)
 
 
 class NodeDataView(GenericAPIView,
@@ -110,9 +119,14 @@ class PolicyViewSet(CreateModelMixin, ListModelMixin, UpdateModelMixin,
 
     def get_queryset(self):
         if 'node' in self.kwargs:
-            return Policy.objects.filter(subject=self.kwargs['node'], role__isnull=False, mask__isnull=False)
+            return Policy.objects.filter(
+                subject=self.kwargs['node'],
+                role__isnull=False, mask__isnull=False)
 
-        return Policy.objects.filter(subject__in=self.kwargs['parent_node'].get_ancestors(ascending=False, include_self=False), role__isnull=False, mask__isnull=False)
+        return Policy.objects.filter(
+            subject__in=self.kwargs['parent_node'].get_ancestors(
+                ascending=False, include_self=False),
+            role__isnull=False, mask__isnull=False)
 
     def initial(self, request, *args, **kwargs):
         """
@@ -142,4 +156,4 @@ class PolicyViewSet(CreateModelMixin, ListModelMixin, UpdateModelMixin,
     def pre_save(self, obj):
         if self.action in ['create', 'update', 'partial_update']:
             obj.subject = self.kwargs.get('node') or \
-                       self.kwargs.get('parent_node')
+                self.kwargs.get('parent_node')

@@ -84,7 +84,9 @@ class Member(ChangesMixin, models.Model):
     #     'workspaces.Workspace', related_name='membership', on_delete=CASCADE,
     #     null=True, default=None)
 
-    node = models.ForeignKey('nodes.Node', on_delete=CASCADE, related_name='membership', default=None, null=True)
+    node = models.ForeignKey(
+        'nodes.Node', on_delete=CASCADE, related_name='membership',
+        default=None, null=True)
     user = models.ForeignKey(
         'accounts.User', on_delete=CASCADE, null=True,
         default=None)
