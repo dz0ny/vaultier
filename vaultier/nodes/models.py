@@ -35,17 +35,6 @@ class Node(mpttmodels.MPTTModel, TimestampableMixin):
         model = get_model("accounts.Member")
         return model.objects.get(user=user, node=self.get_root())
 
-    def save(self, *args, **kwargs):
-        super(Node, self).save(*args, **kwargs)
-        if kwargs.get('force_insert') and not self.parent:
-            m = get_model('accounts', 'Member')(
-                node=self,
-                user=self.created_by,
-                status=MemberStatusField.STATUS_MEMBER_WITHOUT_WORKSPACE_KEY,
-                created_by=self.created_by
-            )
-            m.save()
-
 
 class Policy(PolicyModel):
     principal = models.ForeignKey("accounts.Member")
