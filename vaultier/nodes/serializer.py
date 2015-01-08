@@ -84,7 +84,7 @@ class PolicySerializer(serializers.ModelSerializer):
             member = Member.objects.get(pk=attrs[source])
         except Member.DoesNotExist:
             raise serializers.ValidationError('Member object does not exist')
-        attrs['principal_id'] = member.user.pk
+        attrs['principal_id'] = member.pk
         return attrs
 
     class Meta:
