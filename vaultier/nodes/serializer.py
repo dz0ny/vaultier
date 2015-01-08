@@ -70,6 +70,7 @@ class NodeBlobSerializer(serializers.ModelSerializer):
 
 class PolicySerializer(serializers.ModelSerializer):
 
+    level = serializers.CharField(source='role')
     member = SerializerMethodWriteableField('get_member')
     node = serializers.IntegerField(source='subject.pk', read_only=True)
 
@@ -89,4 +90,4 @@ class PolicySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Policy
-        fields = ('id', 'role', 'member', 'node')
+        fields = ('id', 'level', 'member', 'node')
