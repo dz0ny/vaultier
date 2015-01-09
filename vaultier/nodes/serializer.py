@@ -18,6 +18,7 @@ class NodeSerializer(serializers.ModelSerializer):
     perms = serializers.SerializerMethodField('get_permissions')
     membership = serializers.SerializerMethodField('get_member')
     root = serializers.SerializerMethodField('get_root')
+    blob_meta = serializers.CharField(source='meta')
 
     def validate_parent(self, attrs, source):
         """
