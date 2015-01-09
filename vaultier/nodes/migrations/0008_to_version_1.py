@@ -2,10 +2,9 @@
 from __future__ import unicode_literals
 import json
 
-from django.db import models, migrations
-from django.db import connection
-from accounts.models import Member
+from django.db import migrations, connection
 from nodes.models import Node
+from . import workspace_exists
 
 
 def _dictfetchall(cursor):
@@ -80,7 +79,14 @@ def _migrate_members(workspace_node):
         [workspace_node.pk, workspace_node._workspace])
 
 
+
+
+
 def migrate_from_workspaces(apps, schema_editor):
+
+    if not workspace_exists():
+        return
+
     cursor = connection.cursor()
     cursor.execute("SELECT * FROM vaultier_workspace")
     nodes = []

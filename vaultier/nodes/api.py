@@ -147,6 +147,7 @@ class PolicyViewSet(CreateModelMixin, ListModelMixin, UpdateModelMixin,
                 raise Http404("Parent node was not found.")
             else:
                 self.kwargs['parent_node'] = node
+
         else:
             detail = "node or node_parent query parameter is missing"
             raise CustomAPIException(status_code=400, detail=detail)
