@@ -39,7 +39,7 @@ class NodePermission(permissions.BasePermission):
         if request.method == "GET":
             return obj.acl.has_permission('read', member)
 
-        if request.method in ('PUT', 'PATCH'):
+        if request.method in ('PUT', 'PATCH', 'DELETE'):
             return obj.acl.has_permission('update', member)
 
 
