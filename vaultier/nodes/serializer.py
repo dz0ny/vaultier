@@ -63,6 +63,7 @@ class NodeBlobSerializer(serializers.ModelSerializer):
     Blob Serializer for Node model
     """
     blob_data = BlobDataField()
+    blob_meta = serializers.CharField(source='meta', required=False)
 
     class Meta:
         fields = ('id', 'meta', 'blob_data')
