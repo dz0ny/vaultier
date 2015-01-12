@@ -10,10 +10,9 @@ from hashlib import sha1
 from django.utils.timezone import utc
 from django.conf import settings
 from accounts.business.fields import MemberStatusField
-from accounts.business.mailer import LostKeyMailer
-from django.db.models.aggregates import Count
-from workspaces.business.mailer import InvitationMailer, \
+from accounts.business.mailer import LostKeyMailer, InvitationMailer, \
     WorkspaceKeyTransferMailer
+from django.db.models.aggregates import Count
 
 
 class UserManager(BaseUserManager):
@@ -72,12 +71,12 @@ class LostKeyManager(Manager):
 
     def disable_lost_key(self, user):
         """
-        Soft delete nan shared workspaces of a given user
+        Soft delete nan shared nodes of a given user
         :param user:
         :return:
         """
         self._disable_memberships(user)
-        self._softdelete_unrecoverable_workspaces(user)
+        self._softdelete_unrecoverable_nodes(user)
 
     @classmethod
     def _disable_memberships(cls, user):
@@ -91,12 +90,12 @@ class LostKeyManager(Manager):
             status=MemberStatusField.STATUS_MEMBER_BROKEN)
 
     @classmethod
-    def find_node_is_recoverable(cls, node_id, user):
+    def is_recoverable(cls, node_id, user):
         """
         Return True if the node is recoverable.
         A work space is recoverable when it share among any user and those
         users have the status set to MemberStatusField.STATUS_MEMBER
-        :param workspace_id: int
+        :param node_id: int
         :param user: vaultier.models.user.model.User
         :return: bool
         """
@@ -109,9 +108,9 @@ class LostKeyManager(Manager):
         :param user:
         :return:
         """
-        self._set_unrecoverable_workspaces_broken(user)
+        self._set_unrecoverable_nodes_broken(user)
         self._set_status_member_without_workspace_key(user)
-        self._softdelete_unrecoverable_workspaces(user)
+        self._softdelete_unrecoverable_nodes(user)
 
     def _set_status_member_without_workspace_key(self, user):
         """
@@ -119,50 +118,49 @@ class LostKeyManager(Manager):
         :param user:
         :return:
         """
-        unrecoverable_workspaces = self._get_unrecoverable_workspaces(user)
+        unrecoverable_nodes = self._get_unrecoverable_nodes(user)
         get_model('accounts', 'Member').objects.filter(user=user) \
             .exclude(
-                workspace_id__in=unrecoverable_workspaces.
+                node_id__in=unrecoverable_nodes.
                 values_list('pk', flat=True)
             ).update(
                 status=MemberStatusField.STATUS_MEMBER_WITHOUT_WORKSPACE_KEY,
                 workspace_key=''
             )
 
-    def _set_unrecoverable_workspaces_broken(self, user):
+    def _set_unrecoverable_nodes_broken(self, user):
         """
         Set the membership status to broken
-        just for nonrecoverable workspaces
+        just for nonrecoverable nodes
         :param user:
         :return:
         """
-        unrecoverable_workspaces = self._get_unrecoverable_workspaces(user)
+        unrecoverable_nodes = self._get_unrecoverable_nodes(user)
         get_model('accounts', 'Member').objects.filter(
-            user=user,
-            workspace_id__in=unrecoverable_workspaces
+            user=user, node_id__in=unrecoverable_nodes
             .values_list('pk', flat=True)) \
             .update(status=MemberStatusField.STATUS_MEMBER_BROKEN)
 
-    def _softdelete_unrecoverable_workspaces(self, user):
+    def _softdelete_unrecoverable_nodes(self, user):
         """
-        Deletes workspaces whe
+        Deletes unrecoverable nodes
         :param user:
         :return:
         """
-        unrecoverable_workspaces = self._get_unrecoverable_workspaces(user)
-        get_model('workspaces', 'Workspace').bulk_delete(
-            unrecoverable_workspaces)
+        unrecoverable_nodes = self._get_unrecoverable_nodes(user)
+        # todo: should be soft!
+        unrecoverable_nodes.delete()
 
-    def _get_unrecoverable_workspaces(self, user):
+    def _get_unrecoverable_nodes(self, user):
         """
         Filter Workspace where the user is the only member
         :param user:
         :return: QuerySet
         """
         member_cls = get_model('accounts', 'Member')
-        return get_model('workspaces', 'Workspace').objects.filter(
+        return get_model('nodes', 'Node').objects.filter(
             pk__in=member_cls.objects.filter(user=user).values_list(
-                'workspace_id', flat=True)
+                'node_id', flat=True)
         ).annotate(is_recoverable=Count('membership')).exclude(
             is_recoverable__gt=1)
 
@@ -224,25 +222,6 @@ class MemberManager(Manager):
             pass
 
         return member
-
-    def join_member(self, source, target):
-        for role in source.role_set.all():
-            role.member = target
-            role.save()
-        source.delete()
-        self.remove_role_duplicatates(target)
-
-    def remove_role_duplicatates(self, member):
-        # @todo: optimize this, many queries done
-        for role in member.role_set.all():
-            delete = member.role_set.filter(
-                to_workspace=role.to_workspace,
-                to_vault=role.to_vault,
-                to_card=role.to_card,
-                level__gte=role.level
-            ).exclude(id=role.id).count() >= 1
-            if delete:
-                role.delete()
 
     def accept_invitation(self, member, user):
         existing_member = self.get_concrete_member_to_node(

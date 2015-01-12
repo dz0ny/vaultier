@@ -12,7 +12,7 @@ from accounts.business.authentication import TokenAuthentication, \
     HashAuthentication
 from accounts.business.fields import MemberStatusField
 from accounts.business.permissions import CanManageUserPermission, \
-    LostKeyPermission
+    LostKeyPermission, CanManageMemberPermission
 from accounts.models import User, LostKey, Member
 from accounts.serializers import AuthSerializer, TokenSerializer, \
     UserSerializer, UserKeySerializer, LostKeySerializer, \
@@ -22,7 +22,6 @@ from vaultier.business.exceptions import CustomAPIException
 from rest_framework import status
 from rest_framework import mixins, viewsets
 from vaultier.business.mixins import AtomicTransactionMixin
-from workspaces.business.permissions import CanManageMemberPermission
 from .business.authentication import Authenticator
 from django.conf import settings
 

@@ -2,8 +2,8 @@ from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, \
     CreateModelMixin
 from .models import Node, Policy
 from nodes.business.permissions import PolicyPermission
-from nodes.serializer import PolicySerializer
-from .serializer import NodeSerializer, NodeBlobSerializer
+from nodes.serializers import PolicySerializer
+from .serializers import NodeSerializer, NodeBlobSerializer
 from .business.permissions import NodePermission
 from rest_framework import mixins, status
 from rest_framework.permissions import IsAuthenticated

@@ -3,9 +3,7 @@ from rest_framework import serializers
 from rest_framework.request import Request
 from accounts.business.fields import RecoverTypeField, MemberStatusField
 from accounts.models import Token, User, LostKey, Member
-from acls.models import Role
 from nodes.models import Policy, Node
-from workspaces.models import Workspace
 
 
 class AuthSerializer(serializers.Serializer):
@@ -157,7 +155,7 @@ class LostKeySerializer(serializers.ModelSerializer):
 
     def get_memberships(self, obj):
         """
-        Retrieve all workspaces where user is a member.
+        Retrieve all nodes where user is a member.
         Returns an iterable of objects containing the name and id,
         plus a custom field is_recoverable for each workspace.
         A workspace is recoverable if it is share among any other user
@@ -165,13 +163,13 @@ class LostKeySerializer(serializers.ModelSerializer):
         :return :dict {'workspace_id': int, 'workspace_name': str,
         'is_recoverable': bool}
         """
-        workspaces = Workspace.objects.all_for_user(obj.created_by)
+        nodes = Node.objects.all_for_user(obj.created_by)
         return imap(
-            lambda workspace:
-            {'workspace_id': workspace.id, 'workspace_name': workspace.name,
-             'is_recoverable': LostKey.objects.find_workspace_is_recoverable(
-                 workspace.id, obj.created_by)},
-            workspaces)
+            lambda node:
+            {'workspace_id': node.id, 'workspace_name': node.name,
+             'is_recoverable': LostKey.objects.is_recoverable(
+                 node.id, obj.created_by)},
+            nodes)
 
     def save_object(self, obj, **kwargs):
         """
@@ -249,26 +247,6 @@ class MemberSerializer(serializers.ModelSerializer):
 
 class RelatedMemberSerializer(MemberSerializer):
     pass
-
-
-class MemberRoleSerializer(serializers.ModelSerializer):
-
-    created_by = serializers.SerializerMethodField('get_created_by')
-    to_type = serializers.SerializerMethodField('get_to_type')
-    to_name = serializers.SerializerMethodField('get_to_name')
-
-    def get_created_by(self, obj):
-        return RelatedUserSerializer(instance=obj.created_by).data
-
-    def get_to_type(self, obj):
-        return obj.type
-
-    def get_to_name(self, obj):
-        return obj.get_object().name
-
-    class Meta:
-        model = Role
-        fields = ('id', 'created_by', 'to_type', 'to_name')
 
 
 class MemberWorkspaceKeySerializer(serializers.ModelSerializer):

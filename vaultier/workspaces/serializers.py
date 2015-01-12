@@ -5,7 +5,7 @@ from accounts.models import Member
 from accounts.serializers import RelatedUserSerializer, MemberSerializer, \
     RelatedMemberSerializer
 from acls.models import Role
-from nodes.serializer import NodeSerializer
+from nodes.serializers import NodeSerializer
 from vaultier.business.fields import PermsField
 from workspaces.models import Workspace
 

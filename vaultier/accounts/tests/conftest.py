@@ -57,4 +57,3 @@ def pubkey():
 def privkey():
     m = FileAccessMixin()
     return m.read_file('vaultier.key')
-

@@ -5,13 +5,6 @@ from acls.business.fields import AclLevelField
 from acls.business.permissions import has_object_acl
 
 
-class CanManageMemberPermission(BasePermission):
-
-    def has_object_permission(self, request, view, obj):
-        member = Member.objects.to_node(request.user, obj)
-        return obj.acl.has_permission('invite', member)
-
-
 class CanManageWorkspace(BasePermission):
 
     def has_object_permission(self, request, view, obj):
