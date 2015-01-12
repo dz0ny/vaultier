@@ -42,6 +42,12 @@ Vaultier.DocumentCreateRoute = Ember.Route.extend(
                     this.typeName = null;
             }
 
+            var selectedNode = this.get('tree').getSelectedNode();
+            var rootNode = this.get('tree').getRootNodeForNode(selectedNode);
+            Utils.Logger.log.debug(rootNode.get('membership'));
+            model.set('membership', rootNode.get('membership'));
+
+
             Utils.Logger.log.debug(this.typeTemplate);
             return model;
         },
@@ -58,7 +64,9 @@ Vaultier.DocumentCreateRoute = Ember.Route.extend(
 
 
             ctrl.set('typeName', this.typeName);
-            ctrl.set('content', model);
+            ctrl.set('content', Vaultier.Document.Node.create({
+                content: model
+            }));
 
             ctrl.get('controllers.Document').set('toolbar', this.createToolbar());
         },
@@ -86,11 +94,11 @@ Vaultier.DocumentCreateRoute = Ember.Route.extend(
                 };
 
                 try {
-                    var promise = record
+                    var promise = record.get('content')
                         .saveRecord()
                         .then(function (response) {
-                            this.get('tree').addNode(record);
-                            $.notify('Your secret has been created successfully.', 'success');
+                            this.get('tree').addNode(record.get('content'));
+                            $.notify('Your ' + record.get('type') + ' has been created successfully.', 'success');
                             Utils.Logger.log.debug(record);
                             if (record.get('type') == Vaultier.dal.model.Node.proto().types.FOLDER.value) {
                                 this.transitionTo('Document.list', record.get('id'));
@@ -129,6 +137,35 @@ Vaultier.DocumentCreateView = Ember.View.extend({
 
     didInsertElement: function () {
         this.get('parentView').set('showLeftTreeNodePanel', false);
+
+        var el = $(this.get('element'));
+        var input = el.find('.vlt-secret-type-file');
+        var controller = this.get('controller');
+        input.on('change', function (e) {
+
+            var files = FileAPI.getFiles(e);
+            FileAPI.readAsBinaryString(files[0], function (evt) {
+                if (evt.type == 'load') {
+                    var data = evt.result;
+                    var size = evt.result.length;
+
+                    if (size > 10000000) {
+                        input.closest('.form-group').addClass('has-error');
+                        $.notify('Maximum filesize of 25K exceeded!', 'error');
+                    } else {
+                        // Success
+                        input.closest('.form-group').removeClass('has-error');
+                        controller.set('content.content.blob.filedata', data);
+                        controller.set('content.content.blob.filename', files[0].name);
+                        controller.set('content.content.blob.filesize', files[0].size);
+                        controller.set('content.content.blob.filetype', files[0].type);
+
+                        $(el).find('.vlt-filename').attr('value', files[0].name);
+
+                    }
+                }
+            })
+        })
     }
 
 });

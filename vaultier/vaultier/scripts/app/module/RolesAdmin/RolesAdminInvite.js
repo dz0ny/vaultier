@@ -37,7 +37,8 @@ Vaultier.RolesAdminInviteRoute = Ember.Route.extend(
                         $.notify('Your invitations have been saved', 'success');
                         window.history.go(-1);
                     })
-                    .catch(function () {
+                    .catch(function (e) {
+                        Utils.Logger.log.debug(e);
                         $.notify('Ooops! Something went wrong.', 'error');
                     })
 

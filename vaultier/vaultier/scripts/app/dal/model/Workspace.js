@@ -43,7 +43,7 @@ Vaultier.dal.model.Workspace = RL.Model.extend(
             var isNew = this.get('isNew');
             var promise = this._super.apply(this, arguments);
             var workspace = this;
-            if (isNew) {
+            if (isNew && !this.get('parent')) {
                 // after save, approve workspace
                 promise = promise
                     .then(function () {

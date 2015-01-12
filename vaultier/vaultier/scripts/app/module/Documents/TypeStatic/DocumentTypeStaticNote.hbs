@@ -1,8 +1,10 @@
-<tr>
-    <td>Note</td>
-    <td>
-        <div class="vlt-markdown">
-            {{content.note}}
-        </div>
-    </td>
-</tr>
+{{#if content.content.note}}
+    <tr>
+        <td>Note</td>
+        <td>
+            <div class="vlt-markdown">
+                {{content.content.note}}
+            </div>
+        </td>
+    </tr>
+{{/if}}

@@ -89,11 +89,11 @@ Vaultier.RolesAdminBoxComponent = Ember.Component.extend({
         var foundRoles = []
         roles = roles.filter(function (role) {
             var id = role.get('member.id');
-            if (foundRoles.indexOf(id) == -1) {
+            if (role.get('member.user') != this.get('auth.user.id') && foundRoles.indexOf(id) == -1) {
                 foundRoles.push(id);
                 return role;
             }
-        });
+        }.bind(this));
 
         return roles;
     }.property('roles'),
@@ -103,6 +103,9 @@ Vaultier.RolesAdminBoxComponent = Ember.Component.extend({
      * @type {boolean}
      */
     hasAny: function () {
+
+        Utils.Logger.log.debug(this.get('processedRoles'));
+
         return this.get('processedRoles').get('length') > 0;
 
     }.property('processedRoles'),

@@ -902,6 +902,11 @@ textarea {
     margin-bottom: 10px;
 }
 
+.vlt-roles-admin-box .vlt-roles-admin-box-no-shares {
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
 .vlt-roles-admin-box .vlt-user {
     display: block;
     float: left;
@@ -2720,6 +2725,15 @@ span.vlt-user img {
 .vlt-share-dialog .vlt-dialog-header h4 {
     margin-top: 0;
     margin-bottom: 0;
+}
+
+.vlt-share-dialog .vlt-roles-admin-box {
+    margin-left: 3px;
+}
+
+.vlt-roles-admin-box .vlt-roles-admin-box-no-shares {
+    margin-top: 0;
+    margin-left: 12px;
 }
 
 .vlt-share-dialog .vlt-roles-admin-box-block {

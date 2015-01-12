@@ -145,7 +145,13 @@ Vaultier.dal.mixin.EncryptedModel.Mixin = Ember.Mixin.create({
         var data;
 
         if (encryptedData) {
-            data = this.workspacekey.decryptWorkspaceData(encryptedData) || {};
+            Utils.Logger.log.debug(this);
+            Utils.Logger.log.debug(this.get('note'));
+            data = this.workspacekey.decryptWorkspaceData(
+                encryptedData,
+                this.get('membership.workspace_key'),
+                this.get('membership.id')) || {};
+            Utils.Logger.log.debug(this.get('note'));
         }
         else {
             data = null;
@@ -161,7 +167,11 @@ Vaultier.dal.mixin.EncryptedModel.Mixin = Ember.Mixin.create({
 
     encryptField: function (encryptedField) {
         var decryptedData = this.getDecryptedData(encryptedField);
-        var data = this.workspacekey.encryptWorkspaceData(decryptedData['data']);
+        var data = this.workspacekey.encryptWorkspaceData(
+            decryptedData['data'],
+            this.get('membership.workspace_key'),
+            this.get('membership.id')
+        );
         this.set(encryptedField, data);
     },
 

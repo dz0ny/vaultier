@@ -1,11 +1,11 @@
-Vaultier.DocumentTypeEditableFileView = Ember.View.extend({
-    templateName: 'Documents/TypeStatic/DocumentTypeEditableFile'
+Vaultier.DocumentTypeStaticFileView = Ember.View.extend({
+    templateName: 'Documents/TypeStatic/DocumentTypeStaticFile'
 });
 
-Vaultier.DocumentTypeEditableNoteView = Ember.View.extend({
-    templateName: 'Documents/TypeStatic/DocumentTypeEditableNote'
+Vaultier.DocumentTypeStaticNoteView = Ember.View.extend({
+    templateName: 'Documents/TypeStatic/DocumentTypeStaticNote'
 });
 
-Vaultier.DocumentTypeEditablePasswordView = Ember.View.extend({
-    templateName: 'Documents/TypeStatic/DocumentTypeEditablePassword'
+Vaultier.DocumentTypeStaticPasswordView = Ember.View.extend({
+    templateName: 'Documents/TypeStatic/DocumentTypeStaticPassword'
 });

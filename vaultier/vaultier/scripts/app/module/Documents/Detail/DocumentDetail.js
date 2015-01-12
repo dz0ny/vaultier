@@ -86,7 +86,31 @@ Vaultier.DocumentDetailController = Ember.Controller.extend({
     /**
      * @property {Array} needs
      */
-    needs: ['Document']
+    needs: ['Document'],
+
+    actions: {
+        downloadBlob: function(node) {
+            node.get('content')
+                .loadBlob()
+                .finally(function () {
+                    ApplicationKernel.UI.hideLoader();
+                })
+                .then(function () {
+                    var data = node.get('blob.filedata');
+                    var type = node.get('blob.filetype');
+                    var name = node.get('blob.filename');
+
+                    var byteArray = new Uint8Array(data.length);
+                    for (var i = 0; i < data.length; i++) {
+                        byteArray[i] = data.charCodeAt(i) & 0xff;
+                    }
+
+                    var blob = new Blob([byteArray.buffer], {type: type});
+                    saveAs(blob, name);
+                }.bind(this));
+        }
+    }
+
 });
 
 /**

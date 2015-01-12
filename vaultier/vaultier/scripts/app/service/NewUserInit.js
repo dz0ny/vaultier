@@ -25,19 +25,12 @@ Service.NewUserInit = Ember.Object.extend({
 
     /**
      * Creates route transition function after initialization
-     * @param {Vaultier.dal.model.Vault}vault
-     * @param {Vaultier.dal.model.Workspace}workspace
+     * @param {Vaultier.dal.model.Node}node
      */
-    createTransitionFunction: function (workspace, vault) {
+    createTransitionFunction: function (node) {
         var router = this.get('router');
-        if (!vault || !workspace) {
-            return function () {
-                router.transitionTo('index')
-            }
-        } else {
-            return function () {
-                router.transitionTo('Vault.index', workspace, vault);
-            }
+        return function () {
+            router.transitionTo('Document.list', node);
         }
     },
 
@@ -72,51 +65,44 @@ Service.NewUserInit = Ember.Object.extend({
         // prepare variables and copywriting
         var helpers = Utils.HandlebarsHelpers.create();
         var nickname = helpers.ucfirst(auth.get('user.nickname'));
-        var workspaceName = '{nickname}\'s workspace';
-        var workspaceDescription = '{nickname}\'s default workspace to store vaults, cards and secrets';
-        var vaultName = 'Default vault';
-        var vaultDescription = '{nickname}\'s default vault to store cards and secrets';
+
 
         // prepare objects to save
-        var w = new Vaultier.dal.model.Workspace()
-        w.setProperties({
-            name: workspaceName.replace('{nickname}', nickname),
-            description: workspaceDescription.replace('{nickname}', nickname)
+        var node = new Vaultier.dal.model.Node();
+        node.setProperties({
+            name: 'Default folder',
+            type: Vaultier.dal.model.Node.proto().types.FOLDER.value,
+            color: 'blue'
+
+
         });
 
-        var v = new Vaultier.dal.model.Vault();
-        v.setProperties({
-            name: vaultName.replace('{nickname}', nickname),
-            description: vaultDescription.replace('{nickname}', nickname)
-        });
-
+        var notifyError = function (error) {
+                    $.notify('Ooops! Something went wrong.', 'error');
+                    throw error;
+                };
 
         // saves the object
-        var promise = Ember.RSVP.resolve()
-            .then(function () {
-                return w.saveRecord()
-            })
-            .then(function () {
-                v.set('workspace', w.get('id'))
-                return v.saveRecord();
-            })
+        return node
+            .saveRecord()
+            .then(function (response) {
+                Utils.Logger.log.debug(response);
+                this.get('tree').addRootNode(node, response.id);
+            }.bind(this))
+            .catch(notifyError)
             .then(function () {
                 return new Ember.RSVP.Promise(function (resolve) {
                     resolve({
-                        transitionAfterRegister: this.createTransitionFunction(w,v),
+                        transitionAfterRegister: this.createTransitionFunction(node),
                         /**
-                         * Stores default workspace if created by newuserinitservice
+                         * Stores default node if created by newuserinitservice
                          */
-                        defaultWorkspace: w,
-                        /**
-                         * Stores default vault if created by newuserinitservice
-                         */
-                        defaultVault: v
+                        node: node,
+                        role_node: this.get('store').find('Role', { node: node.get('id') }),
+                        role_parent_node: this.get('store').find('Role', { parent_node: node.get('id') })
                     })
                 }.bind(this));
             }.bind(this))
-
-        return promise
     }
 
 })

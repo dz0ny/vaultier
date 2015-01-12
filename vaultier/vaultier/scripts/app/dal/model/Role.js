@@ -18,23 +18,23 @@ Vaultier.dal.model.Role = RL.Model.extend(
         },
 
 
-        level: RL.attr('number'),
+        level: RL.attr('text'),
         member: RL.attr('object'),
         node: RL.attr('object'),
 
         roles: new Utils.ConstantList({
             'CREATE': {
-                value: 100,
+                value: "create",
                 text: 'Create new',
                 desc:'Can read this object. Can create new child objects. Can modify, delete, invite and grant permissions to created objects'
             },
             'READ': {
-                value: 200,
+                value: "read",
                 desc: 'Can read this object and all child objects',
                 text: 'View only'
             },
             'WRITE': {
-                value: 300,
+                value: "manage",
                 text: 'Manage',
                 desc: 'Can create, modify, delete, invite and grant permissions to this object and all child objects'
             }
@@ -46,21 +46,6 @@ Vaultier.dal.model.Role = RL.Model.extend(
             'UPDATE': "update",
             'DELETE': "delete",
             'INVITE': "invite"
-        }),
-
-        types: new Utils.ConstantList({
-            'TO_WORKSPACE': {
-                value: 100,
-                text: 'TO_WORKSPACE'
-            },
-            'TO_VAULT': {
-                value: 200,
-                text: 'TO_VAULT'
-            },
-            'TO_CARD': {
-                value: 300,
-                text: 'TO_CARD'
-            }
         }),
 
         isCurrentUser: function() {
@@ -92,6 +77,7 @@ Vaultier.dal.model.Role = RL.Model.extend(
         }.property('level'),
 
         printableName: function() {
+            Utils.Logger.log.debug(this.get('level'));
             var val = this.roles.getByValue(this.get('level'));
             if (val) {
                 return val.text

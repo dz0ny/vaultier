@@ -226,8 +226,10 @@ Vaultier.Document.Node = Ember.ObjectProxy.extend({
      * @type String
      */
     typeCss: function () {
-        Utils.Logger.log.debug(this.get('type'));
-        if (this.get('type') == Vaultier.dal.model.Node.proto().types.FOLDER.value) {
+        if (this.get('membership.status') != Vaultier.dal.model.Member.proto().statuses['MEMBER'].value) {
+            return Vaultier.dal.model.Node.proto().types.getByValue(this.get('type')).text
+               + '-' + 'gray';
+        } else if (this.get('type') == Vaultier.dal.model.Node.proto().types.FOLDER.value) {
             return Vaultier.dal.model.Node.proto().types.getByValue(this.get('type')).text
                 + '-' + this.get('color');
         } else {

@@ -97,6 +97,8 @@ Service.Auth = Ember.Object.extend({
      * @returns {boolean}
      */
     checkPermissionsForNode: function (node, action) {
+        Utils.Logger.log.debug(node);
+        Utils.Logger.log.debug(action);
         if (node.get('content.perms.' + action)) {
             return true;
         } else {

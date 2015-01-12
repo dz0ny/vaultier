@@ -58,12 +58,12 @@ Service.KeyTransfer = Ember.Object.extend({
                         if (member.get('user') != this.get('auth.user.id')) {
 
                             // for each member
-                            var workspaceId = member.get('workspace');
-                            if (workspaceId) {
-                                this.get('store').find('Workspace', workspaceId)
-                                    .then(function (workspace) {
+                            var nodeId = member.get('node');
+                            if (nodeId) {
+                                this.get('store').find('Node', nodeId)
+                                    .then(function (node) {
                                         try {
-                                            var encryptedKey = workspace.get('membership.workspace_key');
+                                            var encryptedKey = node.get('membership.workspace_key');
                                             var decryptedKey = this.decryptWorkspaceKey(encryptedKey);
                                             promises.push(this.transferKeyToMember(member, decryptedKey));
                                         } catch (error) {
@@ -72,7 +72,7 @@ Service.KeyTransfer = Ember.Object.extend({
                                         }
                                     }.bind(this));
                             } else {
-                                console.error('missing workspace id')
+                                console.error('missing node id')
                             }
                         }
                     }.bind(this));
@@ -82,16 +82,21 @@ Service.KeyTransfer = Ember.Object.extend({
         }
     },
 
-    generateWorkspaceKey: function () {
-        return this.get('coder').generateWorkspaceKey();
+    generateNodeKey: function () {
+        return this.get('coder').generateNodeKey();
     },
 
     decryptWorkspaceKey: function (encryptedKey) {
         var key = encryptedKey;
 
+        Utils.Logger.log.debug(key);
+
         var coder = this.get('coder');
         var privateKey = this.get('auth.privateKey');
         key = coder.decryptWorkspaceKey(key, privateKey);
+        
+        Utils.Logger.log.debug(key);
+
         if (!key) {
             throw new Error('Cannot decrypt workspace key')
         }
@@ -99,20 +104,15 @@ Service.KeyTransfer = Ember.Object.extend({
     },
 
 
-    transferKeyToMember: function (member, decryptedKey) {
-        var id = Utils.E.recordId(member);
-        var store = this.get('store');
+    transferKeyToMember: function (memberId, decryptedKey) {
         var coder = this.get('coder');
-        var promise =
-            store.find('WorkspaceKey', id)
-                .then(function (member) {
-                    var publicKey = member.get('public_key')
-                    var wk = coder.encryptWorkspaceKey(decryptedKey, publicKey);
-                    member.set('workspace_key', wk)
-                    return member.saveRecord()
-                })
-
-        return promise
+        return this.get('store').find('WorkspaceKey', memberId)
+            .then(function (member) {
+                var publicKey = member.get('public_key')
+                var wk = coder.encryptWorkspaceKey(decryptedKey, publicKey);
+                member.set('workspace_key', wk)
+                return member.saveRecord()
+            });
     }
 
 });

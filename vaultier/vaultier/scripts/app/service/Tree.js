@@ -182,6 +182,7 @@ Service.Tree = Ember.Object.extend({
         treeRootNode.set('id', id);
         treeRootNode.set('isLoaded', true);
         this.nodes.pushObject(treeRootNode);
+        return treeRootNode;
     },
 
     /**
@@ -588,7 +589,9 @@ Service.Tree = Ember.Object.extend({
                     created_by: parentObject.created_by,
                     created_at: parentObject.created_at,
                     updated_at: parentObject.updated_at,
-                    parent: parentObject.parent
+                    parent: parentObject.parent,
+                    membership: parentObject.membership,
+                    perms: parentObject.perms
                 });
                 parentClasses.pushObject(parentModel);
                 Utils.Logger.log.debug(parentModel);

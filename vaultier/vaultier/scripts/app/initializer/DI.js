@@ -67,6 +67,7 @@ Vaultier.initializers.DI = {
         app.inject('service:invitations', 'session', 'service:session')
         app.inject('service:invitations', 'auth', 'service:auth');
         app.inject('service:invitations', 'router', 'router:main');
+        app.inject('service:invitations', 'tree', 'service:tree');
 
         app.inject('route:InvitationUse', 'invitations', 'service:invitations')
         app.inject('route:InvitationAccept', 'invitations', 'service:invitations')
@@ -83,11 +84,11 @@ Vaultier.initializers.DI = {
         app.inject('service:keytransfer', 'coder', 'service:coder');
 
         // service:workspacekey
-        if (ApplicationKernel.Config.environment != 'dev') {
+//        if (ApplicationKernel.Config.environment != 'dev') {
             app.register('service:workspacekey', Service.WorkspaceKey);
-        } else {
-            app.register('service:workspacekey', Vaultier.Mock.WorkspaceKeyMock);
-        }
+//        } else {
+//            app.register('service:workspacekey', Vaultier.Mock.WorkspaceKeyMock);
+//        }
         app.inject('service:workspacekey', 'auth', 'service:auth');
         app.inject('service:workspacekey', 'store', 'store:main');
         app.inject('service:workspacekey', 'coder', 'service:coder');
@@ -110,6 +111,8 @@ Vaultier.initializers.DI = {
         app.inject('service:newuserinit', 'auth', 'service:auth');
         app.inject('service:newuserinit', 'router', 'router:main');
         app.inject('service:newuserinit', 'invitations', 'service:invitations');
+        app.inject('service:newuserinit', 'tree', 'service:tree');
+        app.inject('service:newuserinit', 'store', 'store:main')
         app.inject('route:AuthRegisterCreds', 'newuserinit', 'service:newuserinit')
 
 

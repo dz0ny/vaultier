@@ -237,7 +237,9 @@ Vaultier.AuthRegisterCredsRoute = Ember.Route.extend({
 
                 // create default user environment
                 .then(function () {
-                    return this.get('newuserinit').initializeUser();
+                    Ember.RSVP.hash({
+                        node: this.get('newuserinit').initializeUser()
+                    });
                 }.bind(this))
 
                 // save transition and created workspace and vault

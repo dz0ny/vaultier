@@ -53,6 +53,7 @@ Utils.HandlebarsHelpers = Ember.Object.extend({
     },
 
     printUser: function (user, options) {
+        Utils.Logger.log.debug(user);
         if (!user) {
             user = {
                 email: 'deleteduser@vaultier.org',

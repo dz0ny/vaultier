@@ -12,6 +12,16 @@ Vaultier.dal.model.Node = RL.Model.extend(
     Vaultier.dal.mixin.EncryptedModel.Mixin,
     Vaultier.dal.mixin.PolymorphicModel.Mixin,
     {
+        init: function () {
+            this.set('workspacekey', Vaultier.__container__.lookup('service:workspacekey'));
+            return this._super.apply(this, arguments);
+        },
+
+        /**
+         * @DI service:workspacekey
+         */
+        workspacekey: null,
+
         polymorphicModelTypeField: 'type',
         polymorphicModelMapping: {
             100: 'Vaultier.dal.model.NodeFolderMixin',
@@ -52,21 +62,38 @@ Vaultier.dal.model.Node = RL.Model.extend(
         color: RL.attr('string'),
 
         perms: RL.attr('object'),
+        membership: RL.attr('object', { readOnly: true }),
+
+        /**
+         * Managed by Service.WorkspaceKey, True when key cannot be decrypted
+         */
+        keyError: false,
 
         saveRecord: function () {
             var isNew = this.get('isNew');
-            console.log(this);
-            var promise = this._super.apply(this, arguments);
-            var workspace = this;
+            Utils.Logger.log.debug(this.get('workspacekey'));
+
             if (isNew) {
-                // after save, approve workspace
+                //set enc_version when we create new node
                 this.set('enc_version', 1);
+            }
+
+            //save
+            var promise = this._super.apply(this, arguments);
+
+
+            var node = this;
+            Utils.Logger.log.debug(node);
+            if (isNew && !this.get('parent')) {
+                // after save, approve workspace
                 promise = promise
                     .then(function () {
-                        return this.get('workspacekey').transferKeyToCreatedWorkspace(workspace);
+                        Utils.Logger.log.debug("promise = promise.then(function () {");
+                        Utils.Logger.log.debug(this.get('workspacekey'));
+                        return this.get('workspacekey').transferKeyToCreatedNode(node);
                     }.bind(this))
                     .then(function () {
-                        return workspace.reloadRecord();
+                        return node.reloadRecord();
                     }.bind(this))
             }
 
@@ -141,7 +168,11 @@ Vaultier.dal.model.NodeFileMixin = Ember.Mixin.create({
     emptyBlob: function () {
         this.set('blob', new Vaultier.dal.model.NodeBlob({
             id: this.get('id')
+
         }));
+        this.set('blob.membership', this.get('membership'));
+        Utils.Logger.log.debug(this.get('blob'));
+        Utils.Logger.log.debug(this.get('membership'));
     },
 
 
@@ -150,18 +181,32 @@ Vaultier.dal.model.NodeFileMixin = Ember.Mixin.create({
         if (!blob.get('isNew')) {
             return Ember.RSVP.resolve(blob)
         } else {
-            var promise = this.get('store')
-                .find('SecretBlob', this.get('id'))
-                .then(function (blob) {
-                    this.set('blob', blob);
-                    return blob;
-                }.bind(this));
-            return promise;
+            Utils.Logger.log.debug("Tadada");
+            return Utils.RSVPAjax({
+                url: '/api/nodes/' + this.get('id') + '/data/',
+                type: 'GET'
+            }).then(function(nodeBlobData) {
+                nodeBlobData.membership = this.get('membership');
+                var nodeBlob = Vaultier.dal.model.NodeBlob.load(nodeBlobData);
+                this.set('blob', nodeBlob);
+                return nodeBlob;
+            }.bind(this));
         }
     },
 
     saveRecord: function () {
         var blob = this.get('blob');
+        Utils.Logger.log.debug(blob);
+//        if (blob.get('_decrypted-data-blob_meta.data.filename')) {
+//            this.set('filename', blob.get('_decrypted-data-blob_meta.data.filename'));
+//        }
+//        if (blob.get('_decrypted-data-blob_meta.data.filesize')) {
+//            this.set('filesize', blob.get('_decrypted-data-blob_meta.data.filesize'));
+//        }
+//        if (blob.get('_decrypted-data-blob_meta.data.filetype')) {
+//            this.set('filetype', blob.get('_decrypted-data-blob_meta.data.filetype'));
+//        }
+        Utils.Logger.log.debug(this.get('filename'));
         return this
             ._super.apply(this, arguments)
             .then(function () {
@@ -193,8 +238,10 @@ Vaultier.dal.model.NodeBlob = RL.Model.extend(
          */
         workspacekey: null,
 
+        membership: RL.attr('object', { readOnly: true }),
+
         serialize: function () {
-            data = this._super.apply(this, arguments)
+            var data = this._super.apply(this, arguments)
             var formData = new FormData()
             formData.append('blob_data', new Blob([data['blob_data']], { type: 'application/octet-stream'}))
             formData.append('blob_meta', data['blob_meta']);
@@ -204,7 +251,7 @@ Vaultier.dal.model.NodeBlob = RL.Model.extend(
         saveRecord: function () {
             if (this.get('isDirty')) {
                 var params = {
-                    url: '/api/secret_blobs/' + this.get('id') + '/',
+                    url: '/api/nodes/' + this.get('id') + '/data/',
                     type: 'PUT',
                     data: this.serialize(),
                     processData: false,

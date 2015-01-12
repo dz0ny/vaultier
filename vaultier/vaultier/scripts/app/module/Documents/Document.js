@@ -1,7 +1,7 @@
 Vaultier.DocumentRoute = Ember.Route.extend({
 
     model: function (params, queryParams) {
-        Utils.Logger.log.debug('Vaultier.DocumentRoute setupController');
+        Utils.Logger.log.debug('Vaultier.DocumentRoute model');
 
         return ApplicationKernel.UI.showLoaderUponPromise(
             Ember.RSVP
@@ -15,6 +15,7 @@ Vaultier.DocumentRoute = Ember.Route.extend({
 
     setupController: function (ctrl, model) {
         Utils.Logger.log.debug('Vaultier.DocumentRoute setupController');
+        Utils.Logger.log.debug(model);
         Utils.Logger.log.debug(model.node);
         if (model.node) {
             this.get('tree').setSelectedNode(model.node);
