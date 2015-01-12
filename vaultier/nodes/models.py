@@ -49,9 +49,16 @@ class Node(mpttmodels.MPTTModel, TimestampableMixin):
             )
             self.acl_principal.save()
         else:
-            self.acl_principal = get_model('accounts', 'Member').objects.get(node=self.get_root(), user=self.created_by)
+            self.acl_principal = get_model('accounts', 'Member').objects.get(
+                node=self.get_root(), user=self.created_by)
 
         self.acl.insert(created=kwargs.get('force_insert'))
+
+    def delete(self, *args, **kwargs):
+        self.acl_principal = get_model('accounts', 'Member').objects.get(
+            node=self.get_root(), user=self.created_by)
+
+        super(Node, self).delete(*args, **kwargs)
 
 
 class Policy(PolicyModel):

@@ -71,14 +71,14 @@ class TestNodesApi(object):
         client.force_authenticate(user=user1)
 
         response = client.get(
-            reverse('node-path', kwargs={"pk": node1.id}))
+            reverse('node-path', kwargs={"pk": node3.id}))
 
         assert response.status_code == status.HTTP_200_OK
 
         assert len(response.data) == 2
 
-        assert response.data[0].get('id') == node2.id
-        assert response.data[1].get('id') == node3.id
+        assert response.data[0].get('id') == node1.id
+        assert response.data[1].get('id') == node2.id
 
     def test_data(self, user1, node1):
         client = APIClient()

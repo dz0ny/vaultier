@@ -14,7 +14,6 @@ from vaultier.business.mixins import FullUpdateMixin, UpdateModelMixin
 from vaultier.business.viewsets import RestfulGenericViewSet
 from django.http.response import Http404
 from accounts.models import Member
-from accounts.business.fields import MemberStatusField
 from django.db import transaction
 
 
