@@ -12,7 +12,7 @@ def node1(db, user1):
     node = {
         "name": "they-call-me-document",
         "meta": "whatever",
-        "type": Node.TYPE_DIRECTORY,
+        "type": 1,
         "enc_version": 1,
         "created_by": user1,
     }
@@ -24,7 +24,7 @@ def node2(db, user1, node1):
     node = {
         "name": "they-call-me-document",
         "meta": "whatever",
-        "type": Node.TYPE_DIRECTORY,
+        "type": 1,
         "enc_version": 1,
         "created_by": user1,
         "parent": node1,
@@ -37,7 +37,7 @@ def node3(db, user1, node2):
     node = {
         "name": "they-call-me-document",
         "meta": "whatever",
-        "type": Node.TYPE_DIRECTORY,
+        "type": 1,
         "enc_version": 1,
         "created_by": user1,
         "parent": node2,

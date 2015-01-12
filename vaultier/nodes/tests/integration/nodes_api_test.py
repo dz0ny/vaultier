@@ -2,7 +2,6 @@ import pytest
 from rest_framework.test import APIClient
 from rest_framework.reverse import reverse
 from rest_framework import status
-from nodes.models import Node
 import os
 
 
@@ -108,7 +107,7 @@ class TestNodesApi(object):
             data={
                 "name": "whatever",
                 "meta": "different whatever",
-                "type": Node.TYPE_DIRECTORY,
+                "type": 1,
                 "enc_version": 2,
             })
 
@@ -119,7 +118,7 @@ class TestNodesApi(object):
             data={
                 "name": "whatever",
                 "meta": "different whatever",
-                "type": Node.TYPE_DIRECTORY,
+                "type": 1,
                 "enc_version": 2,
             })
 
@@ -193,27 +192,17 @@ class TestNodesApi(object):
         response = client.post(reverse('node-list'), data={
             "name": "whatever",
             "meta": "whatever",
-            "type": Node.TYPE_DIRECTORY,
+            "type": 1,
             "enc_version": 1,
         })
 
-        assert response.status_code == status.HTTP_201_CREATED
-
-        response = client.post(reverse('node-list'), data={
-            "name": "whatever",
-            "meta": "whatever",
-            "type": Node.TYPE_FILE,
-            "enc_version": 1,
-        })
-
-        # data not provided
         assert response.status_code == status.HTTP_201_CREATED
 
         response = client.post(
             reverse('node-list'), format='multipart', data={
                 "name": "whatever",
                 "meta": "whatever",
-                "type": Node.TYPE_FILE,
+                "type": 1,
                 "enc_version": 1,
                 "data": "whatever"
             })
@@ -224,7 +213,7 @@ class TestNodesApi(object):
         response = client.post(reverse('node-list'), data={
             "name": "whatever",
             "meta": "whatever",
-            "type": Node.TYPE_DIRECTORY,
+            "type": 1,
             "enc_version": 1,
             "parent": created_node
         })
