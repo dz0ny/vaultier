@@ -318,6 +318,11 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
                 "update": true,
                 "delete": true,
                 "invite": true
+            },
+            "membership": {
+                "id": 23,
+                "status": 300,
+                "workspace_key": "QiJIXGEj0tMPllpksp/0lTBy6HaxmaEVhqAWrtwgdvkm0"
             }
         },
         {
@@ -341,6 +346,11 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
                 "update": true,
                 "delete": true,
                 "invite": true
+            },
+            "membership": {
+                "id": 23,
+                "status": 300,
+                "workspace_key": "QiJIXGEj0tMPllpksp/0lTBy6HaxmaEVhqAWrtwgdvkm0"
             }
         },
         {
@@ -364,6 +374,11 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
                 "update": true,
                 "delete": true,
                 "invite": true
+            },
+            "membership": {
+                "id": 23,
+                "status": 300,
+                "workspace_key": "QiJIXGEj0tMPllpksp/0lTBy6HaxmaEVhqAWrtwgdvkm0"
             }
         },
         {
@@ -387,6 +402,11 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
                 "update": true,
                 "delete": true,
                 "invite": true
+            },
+            "membership": {
+                "id": 23,
+                "status": 300,
+                "workspace_key": "QiJIXGEj0tMPllpksp/0lTBy6HaxmaEVhqAWrtwgdvkm0"
             }
         },
         {
@@ -407,6 +427,11 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
             "perms": {
                 "read": true,
                 "create": true
+            },
+            "membership": {
+                "id": 23,
+                "status": 300,
+                "workspace_key": "QiJIXGEj0tMPllpksp/0lTBy6HaxmaEVhqAWrtwgdvkm0"
             }
         },
         {
@@ -429,6 +454,11 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
                 "create": true,
                 "update": true,
                 "delete": true
+            },
+            "membership": {
+                "id": 23,
+                "status": 300,
+                "workspace_key": "QiJIXGEj0tMPllpksp/0lTBy6HaxmaEVhqAWrtwgdvkm0"
             }
         },
         {
@@ -449,6 +479,11 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
             "perms": {
                 "read": true,
                 "invite": true
+            },
+            "membership": {
+                "id": 23,
+                "status": 300,
+                "workspace_key": "QiJIXGEj0tMPllpksp/0lTBy6HaxmaEVhqAWrtwgdvkm0"
             }
         },
         {
@@ -482,6 +517,11 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
                 "update": true,
                 "delete": true,
                 "invite": true
+            },
+            "membership": {
+                "id": 23,
+                "status": 300,
+                "workspace_key": "QiJIXGEj0tMPllpksp/0lTBy6HaxmaEVhqAWrtwgdvkm0"
             }
         },
         {
@@ -505,6 +545,11 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
                 "update": true,
                 "delete": true,
                 "invite": true
+            },
+            "membership": {
+                "id": 23,
+                "status": 300,
+                "workspace_key": "QiJIXGEj0tMPllpksp/0lTBy6HaxmaEVhqAWrtwgdvkm0"
             }
         },
         {
@@ -528,6 +573,11 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
                 "update": true,
                 "delete": true,
                 "invite": true
+            },
+            "membership": {
+                "id": 23,
+                "status": 300,
+                "workspace_key": "QiJIXGEj0tMPllpksp/0lTBy6HaxmaEVhqAWrtwgdvkm0"
             }
         },
         {
@@ -551,6 +601,11 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
                 "update": true,
                 "delete": true,
                 "invite": true
+            },
+            "membership": {
+                "id": 23,
+                "status": 300,
+                "workspace_key": "QiJIXGEj0tMPllpksp/0lTBy6HaxmaEVhqAWrtwgdvkm0"
             }
         },
         {
@@ -574,6 +629,11 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
                 "update": true,
                 "delete": true,
                 "invite": true
+            },
+            "membership": {
+                "id": 23,
+                "status": 300,
+                "workspace_key": "QiJIXGEj0tMPllpksp/0lTBy6HaxmaEVhqAWrtwgdvkm0"
             }
         },
         {
@@ -597,6 +657,11 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
                 "update": true,
                 "delete": true,
                 "invite": true
+            },
+            "membership": {
+                "id": 23,
+                "status": 300,
+                "workspace_key": "QiJIXGEj0tMPllpksp/0lTBy6HaxmaEVhqAWrtwgdvkm0"
             }
         },
         {
@@ -620,6 +685,11 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
                 "update": true,
                 "delete": true,
                 "invite": true
+            },
+            "membership": {
+                "id": 23,
+                "status": 300,
+                "workspace_key": "QiJIXGEj0tMPllpksp/0lTBy6HaxmaEVhqAWrtwgdvkm0"
             }
         },
         {
@@ -640,6 +710,11 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
             "perms": {
                 "read": true,
                 "create": true
+            },
+            "membership": {
+                "id": 23,
+                "status": 300,
+                "workspace_key": "QiJIXGEj0tMPllpksp/0lTBy6HaxmaEVhqAWrtwgdvkm0"
             }
         },
         {
@@ -667,6 +742,11 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
                 "update": true,
                 "delete": true,
                 "invite": true
+            },
+            "membership": {
+                "id": 23,
+                "status": 300,
+                "workspace_key": "QiJIXGEj0tMPllpksp/0lTBy6HaxmaEVhqAWrtwgdvkm0"
             }
         },
         {
@@ -695,6 +775,11 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
             "parent": 13,
             "perms": {
                 "read": true
+            },
+            "membership": {
+                "id": 23,
+                "status": 300,
+                "workspace_key": "QiJIXGEj0tMPllpksp/0lTBy6HaxmaEVhqAWrtwgdvkm0"
             }
         },
         {
@@ -727,6 +812,11 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
                 "update": true,
                 "delete": true,
                 "invite": true
+            },
+            "membership": {
+                "id": 23,
+                "status": 300,
+                "workspace_key": "QiJIXGEj0tMPllpksp/0lTBy6HaxmaEVhqAWrtwgdvkm0"
             }
         },
         {
@@ -751,6 +841,11 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
                 "update": true,
                 "delete": true,
                 "invite": true
+            },
+            "membership": {
+                "id": 23,
+                "status": 300,
+                "workspace_key": "QiJIXGEj0tMPllpksp/0lTBy6HaxmaEVhqAWrtwgdvkm0"
             }
         }
 
