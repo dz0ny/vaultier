@@ -7,8 +7,8 @@ from libs.changes.changes import ChangesMixin
 from libs.lowercasefield.lowercasefield import LowerCaseCharField
 from .business.managers import UserManager, LostKeyManager, MemberManager, \
     TokenManager
-from django.utils import timezone
 import random
+from datetime import datetime
 
 
 class User(ChangesMixin, AbstractBaseUser):
@@ -49,7 +49,7 @@ class Token(ChangesMixin, models.Model):
         if not self.token:
             self.token = self.generate_token()
         if not self.last_used_at:
-            self.last_used_at = timezone.now()
+            self.last_used_at = datetime.utcnow()
         return super(Token, self).save(*args, **kwargs)
 
     def generate_token(self):
