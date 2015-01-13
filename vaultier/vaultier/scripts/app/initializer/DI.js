@@ -84,11 +84,11 @@ Vaultier.initializers.DI = {
         app.inject('service:keytransfer', 'coder', 'service:coder');
 
         // service:workspacekey
-//        if (ApplicationKernel.Config.environment != 'dev') {
+        if (ApplicationKernel.Config.environment != 'dev') {
             app.register('service:workspacekey', Service.WorkspaceKey);
-//        } else {
-//            app.register('service:workspacekey', Vaultier.Mock.WorkspaceKeyMock);
-//        }
+        } else {
+            app.register('service:workspacekey', Vaultier.Mock.WorkspaceKeyMock);
+        }
         app.inject('service:workspacekey', 'auth', 'service:auth');
         app.inject('service:workspacekey', 'store', 'store:main');
         app.inject('service:workspacekey', 'coder', 'service:coder');
