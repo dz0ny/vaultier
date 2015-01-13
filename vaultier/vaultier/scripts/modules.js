@@ -118,7 +118,10 @@ var vaultierModulesConfig = {
         /**************** select2 and selectize styles **/
             "./bower_components/select2/select2.css",
             "./bower_components/select2/select2-bootstrap.css",
-            "./bower_components/selectize/dist/css/selectize.bootstrap3.css"
+            "./bower_components/selectize/dist/css/selectize.bootstrap3.css",
+
+        /**************** font-awesome **/
+            "./bower_components/fontawesome/css/font-awesome.css"
 
         ],
 
@@ -130,7 +133,10 @@ var vaultierModulesConfig = {
         /**************** select2 resources **/
             "./bower_components/select2/*.png",
             "./bower_components/select2/*.jpg",
-            "./bower_components/select2/*.gif"
+            "./bower_components/select2/*.gif",
+
+        /**************** font-awesome **/
+            "./bower_components/fontawesome/fonts/*.*"
         ]
     },
 
