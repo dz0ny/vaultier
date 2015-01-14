@@ -12,7 +12,7 @@ from accounts.business.authentication import TokenAuthentication, \
     HashAuthentication
 from accounts.business.fields import MemberStatusField
 from accounts.business.permissions import CanManageUserPermission, \
-    LostKeyPermission
+    LostKeyPermission, CanManageMemberPermission
 from accounts.models import User, LostKey, Member
 from accounts.serializers import AuthSerializer, TokenSerializer, \
     UserSerializer, UserKeySerializer, LostKeySerializer, \
@@ -22,7 +22,6 @@ from vaultier.business.exceptions import CustomAPIException
 from rest_framework import status
 from rest_framework import mixins, viewsets
 from vaultier.business.mixins import AtomicTransactionMixin
-from workspaces.business.permissions import CanManageMemberPermission
 from .business.authentication import Authenticator
 from django.conf import settings
 
@@ -108,20 +107,21 @@ class MemberViewSet(AtomicTransactionMixin, ModelViewSet):
     permission_classes = (IsAuthenticated, CanManageMemberPermission)
     filter_backends = (SearchFilter, DjangoFilterBackend, OrderingFilter,)
     search_fields = ('invitation_email', 'user__email', 'user__nickname',)
-    filter_fields = ('workspace', 'status')
+    filter_fields = ('node', 'status')
     ordering = ('status', )
 
     def invite(self, request, *args, **kwargs):
-        serializer = MemberInviteSerializer(data=request.DATA)
+        serializer = MemberInviteSerializer(data=request.DATA, context=self.get_serializer_context())
 
         if serializer.is_valid():
+            node = serializer.object.get('node')
             member = Member(
                 invitation_email=serializer.object.get('email'),
-                workspace=serializer.object.get('workspace'),
+                node=node,
                 created_by=request.user
             )
 
-            self.check_object_permissions(request, member)
+            self.check_object_permissions(request, node)
 
             member = Member.objects.invite(
                 member,

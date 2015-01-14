@@ -1,13 +1,20 @@
-from .models import Node
-from .serializer import NodeSerializer, NodeBlobSerializer
+from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, \
+    CreateModelMixin
+from .models import Node, Policy
+from nodes.business.permissions import PolicyPermission
+from nodes.serializers import PolicySerializer
+from .serializers import NodeSerializer, NodeBlobSerializer
 from .business.permissions import NodePermission
 from rest_framework import mixins, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.generics import GenericAPIView
+from vaultier.business.exceptions import CustomAPIException
 from vaultier.business.mixins import FullUpdateMixin, UpdateModelMixin
 from vaultier.business.viewsets import RestfulGenericViewSet
 from django.http.response import Http404
+from accounts.models import Member
+from django.db import transaction
 
 
 class NodeViewSet(RestfulGenericViewSet,
@@ -20,27 +27,46 @@ class NodeViewSet(RestfulGenericViewSet,
     serializer_class = NodeSerializer
     permission_classes = (IsAuthenticated, NodePermission)
 
+    @transaction.atomic
+    def create(self, request, *args, **kwargs):
+        return super(NodeViewSet, self).create(request, *args, **kwargs)
+
+    def initial(self, request, *args, **kwargs):
+        """
+        Find parent if any
+        """
+        parent_id = self.request.QUERY_PARAMS.get('parent')
+        if parent_id and parent_id.isdigit():
+            try:
+                node = Node.objects.get(id=parent_id)
+            except Node.DoesNotExist:
+                raise Http404("Parent node was not found.")
+            else:
+                self.kwargs['parent'] = node
+        return super(NodeViewSet, self).initial(request, *args, **kwargs)
+
     def get_queryset(self):
         """
         Change queryset when parent URL param provided
         """
-        parent = self.request.QUERY_PARAMS.get('parent')
-        if parent and parent.isdigit():
-            try:
-                node = Node.objects.get(id=parent)
-                return node.get_children()
-            except Node.DoesNotExist:
-                raise Http404("Node not found.")
-        return super(NodeViewSet, self).get_queryset()
+        if self.action != "list":
+            return Node.objects.all()
+
+        parent = self.kwargs.get('parent')
+        policy = Policy.objects.filter(
+            principal__in=Member.objects.filter(user=self.request.user), mask=Policy.mask.read)
+        if not parent:
+            return Node.objects.filter(
+                level=0, _policies__in=policy).prefetch_related('_policies')
+
+        return Node.objects.filter(
+            parent=parent, _policies__in=policy).prefetch_related('_policies')
 
     def pre_save(self, obj):
         """
         In action 'create' assign creator
         """
         if self.action == "create":
-            if not self.request.user:
-                msg = "User have to be logged in at this point!"
-                raise RuntimeError(msg)
             obj.created_by = self.request.user
 
 
@@ -78,6 +104,55 @@ class NodePathView(GenericAPIView):
         Return ordered list of path to all Node parents
         """
         node = self.get_object()
-        descendants = node.get_descendants()
-        serializer = self.get_serializer(descendants, many=True)
+        nodes = node.get_ancestors(ascending=False)
+        serializer = self.get_serializer(nodes, many=True)
         return Response(serializer.data)
+
+
+class PolicyViewSet(CreateModelMixin, ListModelMixin, UpdateModelMixin,
+                    RetrieveModelMixin, RestfulGenericViewSet):
+    model = Policy
+    serializer_class = PolicySerializer
+    permission_classes = (IsAuthenticated, NodePermission, PolicyPermission)
+
+    def get_queryset(self):
+        if 'node' in self.kwargs:
+            return Policy.objects.filter(
+                subject=self.kwargs['node'],
+                role__isnull=False, mask__isnull=False)
+
+        return Policy.objects.filter(
+            subject__in=self.kwargs['parent_node'].get_ancestors(
+                ascending=False, include_self=False),
+            role__isnull=False, mask__isnull=False)
+
+    def initial(self, request, *args, **kwargs):
+        """
+        Find parent if any
+        """
+        node_id = self.request.QUERY_PARAMS.get('node')
+        parent_id = self.request.QUERY_PARAMS.get('parent_node')
+        if node_id and node_id.isdigit():
+            try:
+                node = Node.objects.get(id=node_id)
+            except Node.DoesNotExist:
+                raise Http404("Parent node was not found.")
+            else:
+                self.kwargs['node'] = node
+        elif parent_id and parent_id.isdigit():
+            try:
+                node = Node.objects.get(id=parent_id)
+            except Node.DoesNotExist:
+                raise Http404("Parent node was not found.")
+            else:
+                self.kwargs['parent_node'] = node
+
+        else:
+            detail = "node or node_parent query parameter is missing"
+            raise CustomAPIException(status_code=400, detail=detail)
+        return super(PolicyViewSet, self).initial(request, *args, **kwargs)
+
+    def pre_save(self, obj):
+        if self.action in ['create', 'update', 'partial_update']:
+            obj.subject = self.kwargs.get('node') or \
+                self.kwargs.get('parent_node')

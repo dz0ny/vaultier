@@ -94,4 +94,4 @@ class WorkspaceKeyViewSet(AtomicTransactionMixin,
         if self.action == 'list':
             return Member.objects.all_to_transfer_keys(self.request.user)
         else:
-            return Member.objects.all_for_user(self.request.user)
+            return Member.objects.filter(user=self.request.user, status=MemberStatusField.STATUS_MEMBER)

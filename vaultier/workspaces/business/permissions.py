@@ -1,4 +1,5 @@
 from rest_framework.permissions import BasePermission, IsAuthenticated
+from accounts.business.fields import MemberStatusField
 from accounts.models import Member
 from acls.business.fields import AclLevelField
 from acls.business.permissions import has_object_acl
@@ -54,5 +55,7 @@ class CanManageWorkspace(BasePermission):
 class CanManageWorkspaceKey(BasePermission):
 
     def has_object_permission(self, request, view, obj):
-        return Member.objects.\
-            all_to_transfer_keys(request.user).filter(id=obj.id).count() > 0
+
+        return Member.objects.filter(
+            user=request.user,
+            status=MemberStatusField.STATUS_MEMBER).count() > 0

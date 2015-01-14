@@ -9,7 +9,6 @@ import libs.changes.changes
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('accounts', '0002_auto_20141024_0838'),
         ('vaults', '0001_initial'),
     ]
 

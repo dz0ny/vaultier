@@ -116,6 +116,7 @@ WSGI_APPLICATION = 'vaultier.wsgi.application'
 
 # Template settings
 TEMPLATE_DIRS = (
+    os.path.join(BASE_DIR, 'vaultier/tempates'),
     os.path.join(BASE_DIR, 'vaultier/business'),
 
     # Put strings here, like "/home/html/django_templates" or
@@ -150,15 +151,11 @@ INSTALLED_APPS = (
     'kombu.transport.django',
     'rest_framework',
     'mptt',
+    'django_mptt_acl',
     'vaultier',
     'accounts',
-    'acls',
-    'cards',
     'search',
-    'secrets',
-    'vaults',
     'versions',
-    'workspaces',
     'slugs',
     'news',
     'nodes'

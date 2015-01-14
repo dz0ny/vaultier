@@ -1,5 +1,5 @@
 BeautifulSoup==3.2.1
-Django==1.7
+Django==1.7.2
 South==0.8.4
 argparse==1.2.1
 cssutils==1.0
@@ -25,3 +25,4 @@ python-dateutil==2.2
 logan==0.5.10
 iso8601==0.1.10
 django-mptt==0.6.1
+-e git+git@git.rclick.cz:jakub.bokoc/django-mptt-acl.git#egg=Django_MPTT_ACL

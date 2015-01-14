@@ -1,9 +1,9 @@
 from itertools import imap
 from rest_framework import serializers
+from rest_framework.request import Request
 from accounts.business.fields import RecoverTypeField, MemberStatusField
 from accounts.models import Token, User, LostKey, Member
-from acls.models import Role
-from workspaces.models import Workspace
+from nodes.models import Policy, Node
 from django.conf import settings
 
 
@@ -190,7 +190,7 @@ class LostKeySerializer(serializers.ModelSerializer):
 
     def get_memberships(self, obj):
         """
-        Retrieve all workspaces where user is a member.
+        Retrieve all nodes where user is a member.
         Returns an iterable of objects containing the name and id,
         plus a custom field is_recoverable for each workspace.
         A workspace is recoverable if it is share among any other user
@@ -198,13 +198,13 @@ class LostKeySerializer(serializers.ModelSerializer):
         :return :dict {'workspace_id': int, 'workspace_name': str,
         'is_recoverable': bool}
         """
-        workspaces = Workspace.objects.all_for_user(obj.created_by)
+        nodes = Node.objects.all_for_user(obj.created_by)
         return imap(
-            lambda workspace:
-            {'workspace_id': workspace.id, 'workspace_name': workspace.name,
-             'is_recoverable': LostKey.objects.find_workspace_is_recoverable(
-                 workspace.id, obj.created_by)},
-            workspaces)
+            lambda node:
+            {'workspace_id': node.id, 'workspace_name': node.name,
+             'is_recoverable': LostKey.objects.is_recoverable(
+                 node.id, obj.created_by)},
+            nodes)
 
     def save_object(self, obj, **kwargs):
         """
@@ -229,10 +229,26 @@ class LostKeySerializer(serializers.ModelSerializer):
 class MemberInviteSerializer(serializers.Serializer):
 
     email = serializers.EmailField(required=True)
-    workspace = serializers.PrimaryKeyRelatedField(
-        required=True, queryset=Workspace.objects.all())
+    node = serializers.PrimaryKeyRelatedField(queryset=Node.objects.all())
     send = serializers.BooleanField(required=False, default=True)
     resend = serializers.BooleanField(required=False, default=True)
+
+    def get_fields(self):
+
+        request = self.context.get('request')
+        assert isinstance(self.context.get('request'), Request)
+        ret = super(MemberInviteSerializer, self).get_fields()
+
+        if request.method == "POST":
+            try:
+                node = Node.objects.get(id=request.DATA.get('node'))
+                member = Member.objects.to_node(request.user, node)
+                policy = Policy.objects.filter(principal=member, mask=Policy.mask.invite)
+                q = Node.objects.filter(level=0, _policies__in=policy)
+                ret.get('node').queryset = q
+            except Node.DoesNotExist:
+                pass
+        return ret
 
 
 class MemberResendSerializer(serializers.Serializer):
@@ -246,7 +262,7 @@ class MemberSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Member
-        fields = ('id', 'status', 'email', 'nickname', 'workspace', 'user',
+        fields = ('id', 'status', 'email', 'nickname', 'user',
                   'created_at', 'updated_at')
 
     def get_email(self, obj):
@@ -266,26 +282,6 @@ class MemberSerializer(serializers.ModelSerializer):
 
 class RelatedMemberSerializer(MemberSerializer):
     pass
-
-
-class MemberRoleSerializer(serializers.ModelSerializer):
-
-    created_by = serializers.SerializerMethodField('get_created_by')
-    to_type = serializers.SerializerMethodField('get_to_type')
-    to_name = serializers.SerializerMethodField('get_to_name')
-
-    def get_created_by(self, obj):
-        return RelatedUserSerializer(instance=obj.created_by).data
-
-    def get_to_type(self, obj):
-        return obj.type
-
-    def get_to_name(self, obj):
-        return obj.get_object().name
-
-    class Meta:
-        model = Role
-        fields = ('id', 'created_by', 'to_type', 'to_name')
 
 
 class MemberWorkspaceKeySerializer(serializers.ModelSerializer):
