@@ -46,7 +46,7 @@ DATABASES = {
 }
 
 # url of site used in emailing, templates and so.
-SITE_URL = 'https://$(DOMAIN)/'
+SITE_URL = '$(SCHEME)://$(DOMAIN)/'
 
 # Email configuration
 EMAIL_HOST = 'localhost'
@@ -81,6 +81,27 @@ def _db_choice():
     return db_driver
 
 
+def _scheme_choice():
+    """
+    Http scheme choice helper method
+    """
+    a = raw_input(">>> Please enter http schema that will be used by your "
+                  "webserver: 1 - http, 2 - https. [default: 1]: ")
+    try:
+        if not a:
+            return 'http'
+        a = int(a)
+    except ValueError:
+        return None
+
+    scheme = {
+        1: 'http',
+        2: 'https'
+    }[a]
+
+    return scheme
+
+
 def _generate_settings():
     """
     Generate the settings from template
@@ -102,13 +123,20 @@ def _generate_settings():
 
     # Input domain
     domain = None
+    scheme = 'http'
     if not _managed:
         domain = raw_input(
             ">>> Please enter the domain where your project is going to "
             "reside. [example: vaultier.mydomain.com]: "
         )
+
+        while True:
+            scheme = _scheme_choice()
+            if scheme:
+                break
+
     if not domain:
-        domain = "www.example.com"
+        domain = "example.com"
 
     cfg = CONFIG_TEMPLATE.replace('$(SECRET_KEY)', secret_key). \
         replace('$(DB_TYPE)', str(db_type))
@@ -133,13 +161,17 @@ def _generate_settings():
         # Update allowed hosts
         cfg = cfg.replace(
             '\'$(DOMAIN)\'',
-            "os.getenv('VAULTIER_DOMAIN', 'www.example.com')",
+            "os.getenv('VAULTIER_DOMAIN', 'example.com')",
             1
         )
         # Update site url
         cfg = cfg.replace(
             '$(DOMAIN)',
-            "' + os.getenv('VAULTIER_DOMAIN', 'www.example.com') + '"
+            "' + os.getenv('VAULTIER_DOMAIN', 'example.com') + '"
+        )
+        cfg = cfg.replace(
+            '\'$(SCHEME)',
+            "os.getenv('VAULTIER_HTTP_SCHEME', '{}') + '".format(scheme)
         )
 
         # Update database settings
@@ -179,7 +211,9 @@ def _generate_settings():
 
         return cfg
     else:
-        return cfg.replace('$(DOMAIN)', domain)
+        cfg = cfg.replace('$(DOMAIN)', domain)
+
+        return cfg.replace('$(SCHEME)', scheme)
 
 
 def main():
@@ -201,3 +235,4 @@ def main():
 # Execute if run from console
 if __name__ == '__main__':
     main()
+

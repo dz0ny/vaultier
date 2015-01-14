@@ -32,11 +32,11 @@ Vaultier.RolesAdminInviteRoute = Ember.Route.extend(
          * override this to setup invite breadcrumbs
          */
         setupRoleLevels: function () {
-            return Vaultier.dal.model.Role.proto().roles.toArray();
+                return Vaultier.dal.model.Role.proto().roles.toArray();
         },
 
         getDefaultRoleLevel: function() {
-            return Vaultier.dal.model.Role.proto().roles['READ'].value
+            return Vaultier.Role.proto().roles.READ.value;
         },
 
         actions: {
@@ -79,7 +79,7 @@ Vaultier.RolesAdminInviteRoute = Ember.Route.extend(
             ctrl.set('invited', []);
             ctrl.set('role', {level: this.getDefaultRoleLevel()});
             ctrl.set('roleLevels', this.setupRoleLevels());
-            ctrl.set('defaultValue', Vaultier.dal.model.Role.proto().roles.toArray()[0].value);
+            ctrl.set('defaultValue', this.getDefaultRoleLevel());
             ctrl.set('invitation_lifetime',this.get('config.invitation_lifetime'));
         },
 

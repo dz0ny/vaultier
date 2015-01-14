@@ -9,6 +9,7 @@ RUN DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales && \
     locale-gen en_US.UTF-8 && \
     /usr/sbin/update-locale LANG=en_US.UTF-8
 
+
 ENV LC_ALL en_US.UTF-8
 
 # Install Postgres, Htop, Uwsgi, Nginx & Supervisor
@@ -40,7 +41,7 @@ COPY Vaultier-latest.tar.gz /opt/vaultier/Vaultier-latest.tar.gz
 RUN virtualenv venv && /opt/vaultier/venv/bin/pip install Vaultier-latest.tar.gz && rm /opt/vaultier/Vaultier-latest.tar.gz
 ENV PYTHONPATH /opt/vaultier/venv/lib/python2.7/site-packages/vaultier
 RUN /etc/init.d/postgresql start && /opt/vaultier/venv/bin/vaultier init --managed && \
-    /opt/vaultier/venv/bin/vaultier setup && \
+    /opt/vaultier/venv/bin/vaultier setup --no_statistics && \
     chown -R vaultier:vaultier /opt/vaultier
 
 # Setup configuration for services

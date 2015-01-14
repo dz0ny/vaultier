@@ -1,6 +1,7 @@
 import os.path
 import sys
 from celery.schedules import crontab
+from datetime import timedelta
 
 DEBUG = False
 
@@ -115,6 +116,7 @@ WSGI_APPLICATION = 'vaultier.wsgi.application'
 
 # Template settings
 TEMPLATE_DIRS = (
+    os.path.join(BASE_DIR, 'vaultier/tempates'),
     os.path.join(BASE_DIR, 'vaultier/business'),
 
     # Put strings here, like "/home/html/django_templates" or
@@ -254,8 +256,8 @@ VAULTIER = {
     # instance of Vaultier.
     # As Vaultier is Open Source we kindly ask you to leave this option
     # enabled and let us know how many instances are deployed.
-    # We send these statistics data: count of workspaces, vaults, cards,
-    # secrets, users and members
+    # We send these statistics data: hashed id, version, count of workspaces,
+    # vaults, cards, secrets, users and members
     'allow_anonymous_usage_statistics': True,
     'registration_allow': True,
     # Vaultier blog news API endpoint. Must end with trailing slash
@@ -281,7 +283,7 @@ CELERYBEAT_SCHEDULE = {
     },
     'usage_statistics': {
         'task': 'vaultier.tasks.task_statistics_collector',
-        # every day in 1 am
-        'schedule': crontab(hour='1'),
+        # every 24 hours
+        'schedule': timedelta(hours=24),
     }
 }

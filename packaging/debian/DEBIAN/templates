@@ -5,6 +5,13 @@ Description: Enter the FQDN where Vaultier will run (without slashes)
   to prevent some forms of malicious attacks on the application, as well as for
   setting up nginx for you. Example: vaultier.mycompany.com
 
+Template: vaultier/http_scheme
+Type: select
+Choices: http, https
+Description: Choose whether you want to user http or https
+  Do not forget to set path to your .key and .crt file in
+  /etc/ngnix/sites-available/vaultier in case you choose https scheme.
+
 Template: vaultier/database_host
 Default: localhost
 Type: string

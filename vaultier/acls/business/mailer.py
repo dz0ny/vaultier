@@ -17,7 +17,7 @@ class GrantedAccessMailer(VaultierMailer):
 
         :return:
         """
-        return '[Vaultier] You have been granted access to {}'.format(
+        return u'[Vaultier] You have been granted access to {}'.format(
             self.object.__class__.__name__.lower()
         )
 
@@ -41,10 +41,9 @@ class GrantedAccessMailer(VaultierMailer):
         """
 
         kwargs.update({
-            'type': self.object.__class__.__name__.lower(),
-            'SITE_URL': settings.SITE_URL,
-            'name': getattr(self.object, 'name'),
-            'url': self._build_url()
+            u'type': self.object.__class__.__name__.lower(),
+            u'name': getattr(self.object, 'name'),
+            u'url': self._build_url()
         })
         return super(GrantedAccessMailer, self)._build_context(**kwargs)
 
@@ -61,17 +60,15 @@ class GrantedAccessMailer(VaultierMailer):
         if m == 'Workspace':
             return urlparse.urljoin(
                 u, 'workspaces/w/{}'.format(self.object.slug)
-            ),
+            )
         elif m == 'Vault':
             return urlparse.urljoin(
                 u, 'workspaces/w/{}/vaults/v/{}'.format(
-                    self.object.workspace.slug, self.object.slug)
-            ),
+                    self.object.workspace.slug, self.object.slug))
         elif m == 'Card':
             return urlparse.urljoin(
                 u, '/workspaces/w/{}/vaults/v/{}/cards/c/{}'.format(
                     self.object.vault.workspace.slug, self.object.vault.slug,
-                    self.object.slug)
-            ),
+                    self.object.slug))
 
         return None

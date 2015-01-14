@@ -25,9 +25,6 @@ class CanManageVaultPermission(BasePermission):
             # check permission to vault
             result = result and has_object_acl(request.user, obj,
                                                AclLevelField.LEVEL_WRITE)
-            # check permission to workspace
-            result = result and has_object_acl(request.user, obj.workspace,
-                                               AclLevelField.LEVEL_WRITE)
             return result
 
         return False

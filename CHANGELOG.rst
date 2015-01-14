@@ -2,6 +2,29 @@
 Changelog
 *********
 
+RELEASE 0.7.5
+-------------
+* [bugfix] Registration via invitation didn't work
+
+RELEASE 0.7.4
+-------------
+
+* [bugfix] SITE_URL http scheme in docker and deb package
+* [bugfix] Background image and css optimalizations
+* [bugfix] Roles read and create could not access any object
+* [bugfix] Role create could not be created
+* [bugfix] User invited to vault with manage role can edit vault settings
+
+RELEASE 0.7.3
+-------------
+
+* [bugfix] Logout feature remove all credentials from browser even if remembered
+* [feature] Documentation improvements and fixes
+* [feature] UI fixes
+* [bugfix] Links and logo image in emails
+* [bugfix] Statistic crontab fix.
+* [feature] Added hashed uid of vaultier instance based on SITE_URL to statistics
+
 Release 0.7.2
 -------------
 * [bugfix] Registration error when timestamp to vary from server

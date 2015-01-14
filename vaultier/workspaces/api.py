@@ -12,7 +12,7 @@ from libs.version.context import VersionContextAwareApiViewMixin
 from vaultier.business.mixins import AtomicTransactionMixin, \
     RetrieveBySlugMixin, SoftDeleteModelMixin
 from workspaces.business.permissions import CanManageWorkspace, \
-    CanManageWorkspaceKey
+    CanManageWorkspaceKey, InvitationPermission
 from workspaces.models import Workspace
 from workspaces.serializers import InvitationSerializer, WorkspaceSerializer, \
     ShortenedWorkspaceKeySerializer, WorkspaceKeySerializer
@@ -24,7 +24,7 @@ class InvitationViewSet(AtomicTransactionMixin, UpdateModelMixin,
     model = Member
     serializer_class = InvitationSerializer
     authentication_classes = (TokenAuthentication, )  # todo: remove this
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (InvitationPermission,)
     lookup_field = 'invitation_hash'
 
     def partial_update(self, request, *args, **kwargs):
