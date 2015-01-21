@@ -31,6 +31,9 @@ class Node(mpttmodels.MPTTModel, TimestampableMixin):
 
     objects = NodeManager()
 
+    # class Meta:
+    #     db_table = u'vaultier_node'
+
     def get_user_member(self, user):
         model = get_model("accounts.Member")
         return model.objects.get(user=user, node=self.get_root())
@@ -64,6 +67,9 @@ class Node(mpttmodels.MPTTModel, TimestampableMixin):
 class Policy(PolicyModel):
     principal = models.ForeignKey("accounts.Member")
     subject = models.ForeignKey(Node, related_name="_policies")
+
+    # class Meta:
+    #     db_table = u'vaultier_policy'
 
     def get_user_member(self, user):
         model = get_model("accounts.Member")

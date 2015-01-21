@@ -2,10 +2,7 @@ import requests
 import json
 from django.conf import settings
 from accounts.models import User, Member
-from cards.models import Card
-from secrets.models import Secret
-from vaults.models import Vault
-from workspaces.models import Workspace
+from nodes.models import Node
 import pkg_resources
 import hashlib
 
@@ -25,20 +22,14 @@ class StatisticsManager(object):
             return
 
         uid = hashlib.sha256(settings.SITE_URL).hexdigest()
-        workspace_count = Workspace.objects.all().count()
-        vault_count = Vault.objects.all().count()
-        card_count = Card.objects.all().count()
-        secret_count = Secret.objects.all().count()
+        nodes = Node.objects.all().count()
         user_count = User.objects.all().count()
         member_count = Member.objects.all().count()
         version = pkg_resources.get_distribution("Vaultier").version
 
         payload = {
             'uid': uid,
-            'workspaces': workspace_count,
-            'vaults': vault_count,
-            'cards': card_count,
-            'secrets': secret_count,
+            'nodes': nodes,
             'users': user_count,
             'members': member_count,
             'version': version

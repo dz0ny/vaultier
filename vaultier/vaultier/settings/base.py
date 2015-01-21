@@ -154,9 +154,12 @@ INSTALLED_APPS = (
     'django_mptt_acl',
     'vaultier',
     'accounts',
-    'search',
     'versions',
-    'slugs',
+    # todo: remove
+    'acls',
+    'workspaces',
+    # todo: fix
+    'search',
     'news',
     'nodes'
 )

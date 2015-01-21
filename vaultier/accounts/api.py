@@ -1,5 +1,4 @@
 from django.db.transaction import atomic
-from rest_framework.exceptions import MethodNotAllowed
 from rest_framework.filters import SearchFilter, DjangoFilterBackend, \
     OrderingFilter
 from rest_framework.mixins import UpdateModelMixin, RetrieveModelMixin, \
@@ -23,7 +22,6 @@ from rest_framework import status
 from rest_framework import mixins, viewsets
 from vaultier.business.mixins import AtomicTransactionMixin
 from .business.authentication import Authenticator
-from django.conf import settings
 
 
 class AuthView(APIView):

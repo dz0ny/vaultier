@@ -2,19 +2,16 @@ from rest_framework.mixins import UpdateModelMixin, RetrieveModelMixin, \
     ListModelMixin
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.viewsets import GenericViewSet, ModelViewSet
+from rest_framework.viewsets import GenericViewSet
 from rest_framework import status
 
 from accounts.business.authentication import TokenAuthentication
 from accounts.business.fields import MemberStatusField
 from accounts.models import Member
-from libs.version.context import VersionContextAwareApiViewMixin
-from vaultier.business.mixins import AtomicTransactionMixin, \
-    RetrieveBySlugMixin, SoftDeleteModelMixin
-from workspaces.business.permissions import CanManageWorkspace, \
-    CanManageWorkspaceKey, InvitationPermission
-from workspaces.models import Workspace
-from workspaces.serializers import InvitationSerializer, WorkspaceSerializer, \
+from vaultier.business.mixins import AtomicTransactionMixin
+from workspaces.business.permissions import CanManageWorkspaceKey, \
+    InvitationPermission
+from workspaces.serializers import InvitationSerializer, \
     ShortenedWorkspaceKeySerializer, WorkspaceKeySerializer
 
 
@@ -41,37 +38,6 @@ class InvitationViewSet(AtomicTransactionMixin, UpdateModelMixin,
         return Member.objects.filter(status=MemberStatusField.STATUS_INVITED)
 
 
-class WorkspaceViewSet(AtomicTransactionMixin, RetrieveBySlugMixin,
-                       SoftDeleteModelMixin, VersionContextAwareApiViewMixin,
-                       ModelViewSet):
-    """
-    API endpoint that allows workspaces to be viewed or edited.
-    """
-    model = Workspace
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated, CanManageWorkspace)
-    serializer_class = WorkspaceSerializer
-
-    def get_serializer(self, *args, **kwargs):
-        serializer = super(WorkspaceViewSet, self).\
-            get_serializer(*args, **kwargs)
-        serializer.user = self.request.user
-        return serializer
-
-    def pre_save(self, object):
-        if object.pk is None:
-            object._user = self.request.user
-            object.created_by = self.request.user
-        return super(WorkspaceViewSet, self).pre_save(object)
-
-    def get_queryset(self):
-        if self.action == 'list':
-            queryset = Workspace.objects.all_for_user(self.request.user)
-        else:
-            queryset = Workspace.objects.all()
-        return queryset
-
-
 class WorkspaceKeyViewSet(AtomicTransactionMixin,
                           RetrieveModelMixin,
                           ListModelMixin,
@@ -94,4 +60,5 @@ class WorkspaceKeyViewSet(AtomicTransactionMixin,
         if self.action == 'list':
             return Member.objects.all_to_transfer_keys(self.request.user)
         else:
-            return Member.objects.filter(user=self.request.user, status=MemberStatusField.STATUS_MEMBER)
+            return Member.objects.filter(
+                user=self.request.user, status=MemberStatusField.STATUS_MEMBER)

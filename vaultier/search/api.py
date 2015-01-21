@@ -2,9 +2,7 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from cards.models import Card
 from search.serializers import SearchSerializer, SearchResultSerializer
-from vaults.models import Vault
 from vaultier.business.exceptions import CustomAPIException
 
 
@@ -29,14 +27,7 @@ class SearchView(APIView):
                 type = serializer.data.get('type')
 
                 vaults = []
-                if self.include_type(type, 'vaults'):
-                    vaults = Vault.objects.search(request.user, query,
-                                                  max_results=max_results)
-
                 cards = []
-                if self.include_type(type, 'cards'):
-                    cards = Card.objects.search(request.user, query,
-                                                max_results=max_results)
 
                 results = SearchResultSerializer(instance={'vaults': vaults,
                                                            'cards': cards},
