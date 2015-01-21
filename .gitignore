@@ -44,6 +44,9 @@ vaultier/vaultier/scripts/tpl/
 # ignore media
 vaultier/vaultier/media
 
+# ignore static
+vaultier/vaultier/static
+
 # ignore egg
 Vaultier.egg-info
 

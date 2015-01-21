@@ -1,5 +1,5 @@
 from django.http.response import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.conf import settings
 import json
 import os
@@ -8,12 +8,13 @@ from rest_framework.views import APIView
 from accounts.models import User
 from django.views import static
 
+
 def index(request):
     """
     For devel purposes we need also index.html of frontend to be executed
     """
-    index =  os.path.join(settings.VAULTIER['frontend_path'], 'html/index.html')
-    return static.serve(request, index,document_root='/')
+    index = os.path.join(settings.VAULTIER['frontend_path'], 'html/index.html')
+    return static.serve(request, index, document_root='/')
 
 
 class ConfigView(APIView):

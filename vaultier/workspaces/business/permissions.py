@@ -1,8 +1,6 @@
 from rest_framework.permissions import BasePermission, IsAuthenticated
 from accounts.business.fields import MemberStatusField
 from accounts.models import Member
-from acls.business.fields import AclLevelField
-from acls.business.permissions import has_object_acl
 
 
 class InvitationPermission(IsAuthenticated):
@@ -21,35 +19,6 @@ class InvitationPermission(IsAuthenticated):
         else:
             return super(InvitationPermission, self).has_permission(
                 request, view)
-    
-
-class CanManageMemberPermission(BasePermission):
-
-    def has_object_permission(self, request, view, obj):
-
-        if view.action == 'destroy':
-            workspace = obj.workspace
-            return has_object_acl(request.user, workspace,
-                                  AclLevelField.LEVEL_WRITE)
-
-        workspace = obj.workspace
-        return has_object_acl(request.user, workspace,
-                              AclLevelField.LEVEL_READ)
-
-
-class CanManageWorkspace(BasePermission):
-
-    def has_object_permission(self, request, view, obj):
-
-        if view.action in ['retrieve', 'list']:
-            required_level = AclLevelField.LEVEL_READ
-        else:
-            required_level = AclLevelField.LEVEL_WRITE
-
-        if not obj.pk:
-            return True
-        else:
-            return has_object_acl(request.user, obj, required_level)
 
 
 class CanManageWorkspaceKey(BasePermission):

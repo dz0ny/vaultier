@@ -79,11 +79,6 @@ class LostKey(models.Model):
 
 
 class Member(ChangesMixin, models.Model):
-
-    # workspace = models.ForeignKey(
-    #     'workspaces.Workspace', related_name='membership', on_delete=CASCADE,
-    #     null=True, default=None)
-
     node = models.ForeignKey(
         'nodes.Node', on_delete=CASCADE, related_name='membership',
         default=None, null=True)

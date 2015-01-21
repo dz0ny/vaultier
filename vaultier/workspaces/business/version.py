@@ -4,7 +4,6 @@ from libs.version.condition import RequiredFieldEventCondition
 from libs.version.manipulator import register_manipulator_signal, \
     ModelCreatedManipulator, ModelUpdatedManipulator, \
     ModelSoftDeletedManipulator, register_manipulator_class
-from ..models import Workspace
 
 
 class WorkspaceSoftDeletedManipulator(ModelSoftDeletedManipulator):
@@ -31,7 +30,7 @@ def register_signals():
         condition=RequiredFieldEventCondition(
             required_fields=['deleted_at'],
             required_event=SOFT_DELETE,
-            required_sender=Workspace,
+            required_sender=None, # used to be workspace
         ),
     )
 
@@ -39,7 +38,7 @@ def register_signals():
         version_cls=version_cls,
         manipulator_id='workspace_updated_manipulator',
         condition=RequiredFieldEventCondition(
-            required_sender=Workspace,
+            required_sender=None, # used to be workspace
             required_fields=['name', 'description'],
             required_event=UPDATE,
         ),
@@ -49,7 +48,7 @@ def register_signals():
         version_cls=version_cls,
         manipulator_id='workspace_created_manipulator',
         condition=RequiredFieldEventCondition(
-            required_sender=Workspace,
+            required_sender=None, # used to be workspace
             required_fields=None,
             required_event=INSERT,
         ),
