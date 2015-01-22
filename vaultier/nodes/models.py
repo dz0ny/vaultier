@@ -83,3 +83,6 @@ class Policy(PolicyModel):
             'create': CreateRole,
             'write': WriteRole
         }
+
+    class Meta:
+        unique_together = ('subject', 'principal')
