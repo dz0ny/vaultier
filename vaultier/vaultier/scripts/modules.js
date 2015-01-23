@@ -184,9 +184,14 @@ var vaultierModulesConfig = {
             "./app/dal/mixin/PolymorphicModelMixin.js",
             "./app/dal/mixin/EncryptedModelMixin.js",
             "./app/dal/mixin/RollbackMixin.js",
+            "./app/dal/mixin/NodeFolderMixin.js",
+            "./app/dal/mixin/NodeNoteMixin.js",
+            "./app/dal/mixin/NodePasswordMixin.js",
+            "./app/dal/mixin/NodeFileMixin.js",
 
             "./app/dal/adapter/NewsAdapter.js",
             "./app/dal/adapter/NodeAdapter.js",
+            "./app/dal/adapter/NodeBlobAdapter.js",
 
             "./app/dal/model/Color.js",
             "./app/dal/model/User.js",
@@ -200,7 +205,8 @@ var vaultierModulesConfig = {
             "./app/dal/model/Secret.js",
             "./app/dal/model/LostKey.js",
             "./app/dal/model/News.js",
-            "./app/dal/model/Node.js"
+            "./app/dal/model/Node.js",
+            "./app/dal/model/NodeBlob.js"
         ]
     },
 

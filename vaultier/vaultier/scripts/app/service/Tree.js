@@ -46,7 +46,7 @@ Service.Tree = Ember.Object.extend({
 
     init: function () {
         this.nodes = Ember.ArrayProxy.create({ content: Ember.A()});
-
+        Utils.Logger.log.debug(this.get('adapter'));
     },
 
     /**
@@ -571,33 +571,7 @@ Service.Tree = Ember.Object.extend({
      * @returns {Ember.RSVP.Promise}
      */
     _loadParents: function (node) {
-        return Utils.RSVPAjax({
-            url: '/api/nodes/' + node.get('id') + '/path',
-            type: 'get'
-        }).then(function (parentObjects) {
-            //TODO temporary solution
-            var parentClasses = [];
-            parentObjects.forEach(function (parentObject) {
-                var parentModel = Vaultier.dal.model.Node.load({
-                    id: parentObject.id,
-                    name: parentObject.name,
-                    meta: parentObject.meta,
-                    type: parentObject.type,
-                    data: parentObject.data,
-                    color: parentObject.color,
-                    enc_version: parentObject.enc_version,
-                    created_by: parentObject.created_by,
-                    created_at: parentObject.created_at,
-                    updated_at: parentObject.updated_at,
-                    parent: parentObject.parent,
-                    membership: parentObject.membership,
-                    perms: parentObject.perms
-                });
-                parentClasses.pushObject(parentModel);
-                Utils.Logger.log.debug(parentModel);
-            });
-            return parentClasses;
-        });
+        return this.get('adapter').loadParents(node.get('id'));
     },
 
     /**

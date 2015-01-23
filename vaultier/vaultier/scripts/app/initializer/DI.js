@@ -56,7 +56,8 @@ Vaultier.initializers.DI = {
         app.inject('route', 'tree', 'service:tree');
         app.inject('controller', 'auth', 'service:auth');
         app.inject('controller', 'tree', 'service:tree');
-        app.inject('service:tree', 'store', 'store:main')
+        app.inject('service:tree', 'store', 'store:main');
+        app.inject('service:tree', 'adapter', 'adapter:node')
 
         // service:coder
         app.register('service:coder', Service.Coder)
