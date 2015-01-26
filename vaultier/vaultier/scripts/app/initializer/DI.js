@@ -85,7 +85,7 @@ Vaultier.initializers.DI = {
         app.inject('service:keytransfer', 'coder', 'service:coder');
 
         // service:workspacekey
-        if (ApplicationKernel.Config.environment != 'dev') {
+        if (ApplicationKernel.Config.environment != 'dev-mock') {
             app.register('service:workspacekey', Service.WorkspaceKey);
         } else {
             app.register('service:workspacekey', Vaultier.Mock.WorkspaceKeyMock);
