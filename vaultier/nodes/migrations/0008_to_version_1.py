@@ -93,7 +93,6 @@ def _migrate_acl(col, pk, node):
     cursor.execute("SELECT * FROM vaultier_role WHERE to_{}_id=%s".format(col), [pk])
 
     for r in _dictfetchall(cursor):
-        print r
         node.acl.allow(roles[r['level']], Member.objects.get(pk=r['member_id']))
 
 
