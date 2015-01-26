@@ -250,6 +250,44 @@ Service.Tree = Ember.Object.extend({
     },
 
     /**
+     * Try to find candidate when we want to remove give node. If no nodes are left, it returns null
+     *
+     * @method findCandidateForReplaceSelectedNode
+     * @param {Vaultier.Document.Node} treeNode
+     * @returns {Vaultier.Document.Node|null}
+     */
+    findCandidateForReplaceSelectedNode: function (treeNode) {
+        //try to find sibling
+        var siblingTreeNode = this._getFirstSibling(treeNode);
+        if (siblingTreeNode) {
+            Utils.Logger.log.debug("sibling remove mode");
+            return siblingTreeNode;
+        }
+
+        //try to find parent
+        var parentTreeNode = treeNode.get('parent');
+        if (parentTreeNode) {
+            Utils.Logger.log.debug("parent remove mode");
+            return parentTreeNode;
+        }
+
+        //try to change to other root node
+        if (this.nodes.get('length') > 1) {
+            Utils.Logger.log.debug("other root remove mode");
+            var anotherRootNode = null;
+            this.nodes.forEach(function (node) {
+                if (!node.get('parent') && node.get('id') != treeNode.get('id')) {
+                    anotherRootNode = node;
+                }
+            });
+            return anotherRootNode;
+        }
+
+        //we remove last node, we do not have any other node, we have to return null
+        return null;
+    },
+
+    /**
      * It reinserts children of given node in nodes array. It is used when we move node
      * and we want to move the child nodes with him
      *
@@ -310,45 +348,6 @@ Service.Tree = Ember.Object.extend({
             this._getAllLoadedChildrenForNode(treeNodeArray, child);
         }.bind(this));
 
-    },
-
-    /**
-     * Try to find candidate when we want to remove give node. If no nodes are left, it returns null
-     *
-     * @method _findCandidateForReplaceSelectedNode
-     * @param {Vaultier.Document.Node} treeNode
-     * @private
-     * @returns {Vaultier.Document.Node|null}
-     */
-    _findCandidateForReplaceSelectedNode: function (treeNode) {
-        //try to find sibling
-        var siblingTreeNode = this._getFirstSibling(treeNode);
-        if (siblingTreeNode) {
-            Utils.Logger.log.debug("sibling remove mode");
-            return siblingTreeNode;
-        }
-
-        //try to find parent
-        var parentTreeNode = treeNode.get('parent');
-        if (parentTreeNode) {
-            Utils.Logger.log.debug("parent remove mode");
-            return parentTreeNode;
-        }
-
-        //try to change to other root node
-        if (this.nodes.get('length') > 1) {
-            Utils.Logger.log.debug("other root remove mode");
-            var anotherRootNode = null;
-            this.nodes.forEach(function (node) {
-                if (!node.get('parent') && node.get('id') != treeNode.get('id')) {
-                    anotherRootNode = node;
-                }
-            });
-            return anotherRootNode;
-        }
-
-        //we remove last node, we do not have any other node, we have to return null
-        return null;
     },
 
     /**

@@ -100,7 +100,7 @@ Vaultier.DocumentController = Vaultier.Document.TreeController.extend({
 
         removeNode: function () {
             var removeNode = this.get('tree').getSelectedNode();
-            var newSelectedNode = this.get('tree')._findCandidateForReplaceSelectedNode(removeNode);
+            var newSelectedNode = this.get('tree').findCandidateForReplaceSelectedNode(removeNode);
             var typeOfRemoveNode = Vaultier.dal.model.Node.proto().types.getByValue(removeNode.get('type')).text;
             this.get('tree')
                 .removeNode(removeNode)
