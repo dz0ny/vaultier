@@ -328,6 +328,7 @@ var vaultierModulesConfig = {
             "./app/module/Documents/**/*.hbs"
         ],
         "scripts": [
+            "./app/module/Documents/DocumentKeysMixin.js",
             "./app/module/Documents/Color/DocumentColor.js",
             "./app/module/Documents/Tree/Mixin/StyleBindingsMixin.js",
             "./app/module/Documents/Tree/DocumentNode.js",
@@ -338,6 +339,7 @@ var vaultierModulesConfig = {
             "./app/module/Documents/Create/DocumentCreate.js",
             "./app/module/Documents/Edit/DocumentEdit.js",
             "./app/module/Documents/Move/DocumentMove.js",
+            "./app/module/Documents/NoKeys/DocumentNoKeys.js",
             "./app/module/Documents/RolesAdmin/DocumentRolesAdminIndex.js",
             "./app/module/Documents/RolesAdmin/DocumentRolesAdminInvite.js",
             "./app/module/Documents/TypeStatic/DocumentTypeStatic.js",

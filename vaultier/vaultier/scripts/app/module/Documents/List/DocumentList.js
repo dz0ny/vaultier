@@ -3,12 +3,17 @@
  * @class Vaultier.DocumentListRoute
  * @extends Ember.Route
  */
-Vaultier.DocumentListRoute = Ember.Route.extend({
+Vaultier.DocumentListRoute = Ember.Route.extend(
+    Vaultier.DocumentKeysMixin,
+    {
 
     setupController: function (ctrl, model) {
         Utils.Logger.log.debug('Vaultier.DocumentListRoute setupController');
         this.get('tree').switchToVisibleAllNodes();
         ctrl.get('controllers.Document').set('toolbar', this.createToolbar());
+
+        //check keys
+        this.checkNodeKeys();
     },
 
     renderTemplate: function () {

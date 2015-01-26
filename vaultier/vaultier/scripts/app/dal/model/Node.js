@@ -76,6 +76,9 @@ Vaultier.dal.model.Node = RL.Model.extend(
          */
         keyError: false,
 
+        membership: RL.attr('object', { readOnly: true }),
+
+
         saveRecord: function () {
             var isNew = this.get('isNew');
             Utils.Logger.log.debug(this.get('workspacekey'));

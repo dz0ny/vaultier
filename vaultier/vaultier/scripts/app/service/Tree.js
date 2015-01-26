@@ -538,6 +538,9 @@ Service.Tree = Ember.Object.extend({
                 var treeNodes = this._convertNodeModelToTreeRootNode(modelNodes);
                 var promises = [];
                 treeNodes.forEach(function (treeNode) {
+                    if (treeNode.get('membership.status') != Vaultier.dal.model.Member.proto().statuses['MEMBER'].value) {
+                        return;
+                    }
                     promises.pushObject(this._loadChildren(treeNode));
                 }.bind(this));
                 return Ember.RSVP.Promise.all(promises);

@@ -3,7 +3,9 @@
  * @class Vaultier.DocumentDetailRoute
  * @extends Ember.Route
  */
-Vaultier.DocumentDetailRoute = Ember.Route.extend({
+Vaultier.DocumentDetailRoute = Ember.Route.extend(
+    Vaultier.DocumentKeysMixin,
+    {
 
     setupController: function (ctrl, model) {
 
@@ -43,6 +45,9 @@ Vaultier.DocumentDetailRoute = Ember.Route.extend({
         ctrl.set('content', model);
 
         ctrl.get('controllers.Document').set('toolbar', this.createToolbar());
+
+        //check keys
+        this.checkNodeKeys();
     },
 
     renderTemplate: function () {

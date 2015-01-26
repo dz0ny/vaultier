@@ -1,4 +1,6 @@
-Vaultier.DocumentRoute = Ember.Route.extend({
+Vaultier.DocumentRoute = Ember.Route.extend(
+    Vaultier.DocumentKeysMixin,
+    {
 
     model: function (params, queryParams) {
         Utils.Logger.log.debug('Vaultier.DocumentRoute model');
@@ -38,6 +40,11 @@ Vaultier.DocumentRoute = Ember.Route.extend({
 
         var roles = [].concat(model.role_node.toArray(), model.role_parent_node.toArray());
         ctrl.set('roles', roles);
+
+        Utils.Logger.log.debug(selectedNode);
+
+        //check keys
+        this.checkNodeKeys();
 
         return model;
     }

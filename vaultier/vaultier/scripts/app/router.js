@@ -80,6 +80,8 @@ Vaultier.Router.map(function () {
 
             this.route('rolesAdminIndex', { path: '/team'});
             this.route('rolesAdminInvite', { path: '/team/invite'});
+
+            this.route('noKeys', { path: '/waiting-for-keys'});
         });
         this.route('createRoot', { path: '/create'});
     });

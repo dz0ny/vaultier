@@ -3,7 +3,9 @@
  * @class Vaultier.DocumentMoveRoute
  * @extends Ember.Route
  */
-Vaultier.DocumentMoveRoute = Ember.Route.extend({
+Vaultier.DocumentMoveRoute = Ember.Route.extend(
+    Vaultier.DocumentKeysMixin,
+    {
 
     setupController: function (ctrl, model) {
         Utils.Logger.log.debug('Vaultier.DocumentMoveRoute setupController');
@@ -24,6 +26,9 @@ Vaultier.DocumentMoveRoute = Ember.Route.extend({
 
         ctrl.set('nodeToMove', model);
         ctrl.set('destinationNode', model.get('parent'));
+
+        //check keys
+        this.checkNodeKeys();
     },
 
     renderTemplate: function () {

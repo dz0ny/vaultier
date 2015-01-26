@@ -557,6 +557,11 @@ textarea {
     background-size: 100%;
 }
 
+.icon.folder-gray {
+    background-image: url('../images/icon-folder-gray.png');
+    background-size: 100%;
+}
+
 .icon.file {
     background-image: url('../images/icon-file.png');
     background-size: 100%;

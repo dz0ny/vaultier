@@ -1,4 +1,5 @@
 Vaultier.DocumentCreateRoute = Ember.Route.extend(
+    Vaultier.DocumentKeysMixin,
     {
         model: function (params, transition) {
             Utils.Logger.log.debug('Vaultier.DocumentCreateRoute');
@@ -69,6 +70,9 @@ Vaultier.DocumentCreateRoute = Ember.Route.extend(
             }));
 
             ctrl.get('controllers.Document').set('toolbar', this.createToolbar());
+
+            //check keys
+            this.checkNodeKeys();
         },
 
         createToolbar: function () {
