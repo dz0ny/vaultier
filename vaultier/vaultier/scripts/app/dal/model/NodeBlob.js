@@ -1,3 +1,7 @@
+ApplicationKernel.namespace('Vaultier.dal.model');
+
+var decryptedField = Vaultier.dal.mixin.EncryptedModel.decryptedField;
+
 /**
  * @module vaultier-dal-model
  * @class Vaultier.dal.model.NodeBlob

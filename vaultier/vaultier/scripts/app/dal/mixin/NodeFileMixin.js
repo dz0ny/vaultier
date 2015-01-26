@@ -1,10 +1,12 @@
+ApplicationKernel.namespace('Vaultier.dal.mixin');
+
 var decryptedField = Vaultier.dal.mixin.EncryptedModel.decryptedField;
 
 /**
- * @module vaultier-dal-model
- * @class Vaultier.dal.model.NodeFileMixin
+ * @module vaultier-dal-mixin
+ * @class Vaultier.dal.mixin.NodeFileMixin
  */
-Vaultier.dal.model.NodeFileMixin = Ember.Mixin.create({
+Vaultier.dal.mixin.NodeFileMixin = Ember.Mixin.create({
 
     /**
      * blob_meta encrypted attrs

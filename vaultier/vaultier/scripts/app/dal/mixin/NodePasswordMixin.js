@@ -1,10 +1,12 @@
+ApplicationKernel.namespace('Vaultier.dal.mixin');
+
 var decryptedField = Vaultier.dal.mixin.EncryptedModel.decryptedField;
 
 /**
- * @module vaultier-dal-model
- * @class Vaultier.dal.model.NodePasswordMixin
+ * @module vaultier-dal-mixin
+ * @class Vaultier.dal.mixin.NodePasswordMixin
  */
-Vaultier.dal.model.NodePasswordMixin = Ember.Mixin.create({
+Vaultier.dal.mixin.NodePasswordMixin = Ember.Mixin.create({
     password: decryptedField('data', 'password'),
     username: decryptedField('data', 'username'),
     url: decryptedField('data', 'url'),

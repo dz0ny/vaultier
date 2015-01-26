@@ -31,10 +31,10 @@ Vaultier.dal.model.Node = RL.Model.extend(
 
         polymorphicModelTypeField: 'type',
         polymorphicModelMapping: {
-            100: 'Vaultier.dal.model.NodeFolderMixin',
-            200: 'Vaultier.dal.model.NodeNoteMixin',
-            300: 'Vaultier.dal.model.NodePasswordMixin',
-            400: 'Vaultier.dal.model.NodeFileMixin'
+            100: 'Vaultier.dal.mixin.NodeFolderMixin',
+            200: 'Vaultier.dal.mixin.NodeNoteMixin',
+            300: 'Vaultier.dal.mixin.NodePasswordMixin',
+            400: 'Vaultier.dal.mixin.NodeFileMixin'
         },
 
         types: new Utils.ConstantList({
