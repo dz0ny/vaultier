@@ -49,7 +49,7 @@ Ember.StyleBindingsMixin = Ember.Mixin.create({
     }
 });
 
-Vaultier.Document = Ember.Namespace.create();
+ApplicationKernel.namespace('Vaultier.Document');
 
 /**
  * Object that represents one node
