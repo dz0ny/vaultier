@@ -86,14 +86,6 @@ Service.Coder = Ember.Object.extend({
     },
 
     generateNodeKey: function () {
-//        var length = 32;
-//        var text = '';
-//        for (var i = 0; i < length; i++) {
-//            text = text + String.fromCharCode(
-//                Math.floor(Math.random() * (255))
-//            )
-//       }
-//        return text;
         var chars = "ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
         var string_length = 32;
         var randomstring = '';
