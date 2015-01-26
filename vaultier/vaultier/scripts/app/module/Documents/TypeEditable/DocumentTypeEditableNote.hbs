@@ -1,0 +1,23 @@
+<h4>Title</h4>
+<hr class="top-0"/>
+
+<div class="form-group" {{bind-attr class='errors.name:has-error'}}>
+    {{view Em.TextField elementId='secret-name' valueBinding='content.name' class="form-control"}}
+    <span class="error">{{errors.name}}</span>
+</div>
+<div class="help-block">
+    Informational field. Do not enter any sensitive information. This field is not encrypted!!!
+</div>
+
+<div class="form-group" {{bind-attr class='errors.note:has-error'}}>
+    <label for="secret-note">Note</label>
+    {{errors.note}}
+    {{textarea value=content.content.note rows="5" class="form-control" }}
+</div>
+<div class="help-block">
+    Markdown is available. Markdown manual can be found<a
+        href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet"
+        target="_blank">
+    here
+</a>
+</div>

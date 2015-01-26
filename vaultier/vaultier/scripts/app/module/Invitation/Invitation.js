@@ -51,7 +51,7 @@ Vaultier.InvitationAcceptRoute = Ember.Route.extend(
             ctrl.set('content', model);
             var environment = this.get('environment');
             ctrl.set('breadcrumbs',
-                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: environment})
+                Vaultier.Toolbar.create({router: this.get('router'), environment: environment})
                     .addHome()
                     .addText('List of invitations to accept')
             );
@@ -86,7 +86,7 @@ Vaultier.InvitationAnonymousRoute = Ember.Route.extend(
             ctrl.set('content', model);
             var environment = this.get('environment');
             ctrl.set('breadcrumbs',
-                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: environment})
+                Vaultier.Toolbar.create({router: this.get('router'), environment: environment})
                     .addHome()
                     .addText('Accept invitation')
             );

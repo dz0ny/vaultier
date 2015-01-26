@@ -1,43 +1,89 @@
 <div class="vlt-roles-admin-box">
+
     {{#unless hasAny}}
+        <div class="vlt-roles-admin-box-no-shares">
         Not shared with anybody yet
+        </div>
     {{/unless}}
 
-
     {{#if hasWrite}}
-        <div class="vlt-perms-section">
-            Users able to manage
+        <div class="vlt-roles-admin-box-block">
+            <div class="vlt-perms-section">
+                <a {{action "toggleRolesManage"}}>
+                    Users able to manage
+                    <span {{bind-attr class=":glyphicon rolesManageOpen:glyphicon-chevron-up:glyphicon-chevron-down :pull-right"}}></span>
+                </a>
+            </div>
+            <div class="vlt-perms-roles vlt-perms-roles-manage">
+
+                {{#each role in rolesWrite}}
+                    <div class="vlt-perms-role">
+                        <div class="vlt-perms-role-image">
+                            {{printUser role.member  size=35 disableName=1}}
+                        </div>
+                        <div class="vlt-perms-role-name">
+                            {{role.member.nickname}}
+                        </div>
+                    </div>
+                {{/each}}
+
+            </div>
+            <div class="clearfix"></div>
         </div>
-        <div class="vlt-perms-roles">
-            {{#each role in rolesWrite}}
-                {{printUser role.member  size=50 disableName=1}}
-            {{/each}}
-        </div>
-        <div class="clearfix"></div>
     {{/if}}
 
     {{#if hasRead}}
-        <div class="vlt-perms-section">
-            Users able to read
+        <div class="vlt-roles-admin-box-block">
+            <div class="vlt-perms-section">
+                <a {{action "toggleRolesRead"}}>
+                    Users able to read
+                    <span {{bind-attr class=":glyphicon rolesReadOpen:glyphicon-chevron-up:glyphicon-chevron-down :pull-right"}}></span>
+                </a>
+            </div>
+            <div class="vlt-perms-roles vlt-perms-roles-read">
+
+                {{#each role in rolesRead}}
+                    <div class="vlt-perms-role">
+                        <div class="vlt-perms-role-image">
+                            {{printUser role.member  size=35 disableName=1}}
+                        </div>
+                        <div class="vlt-perms-role-name">
+                            {{role.member.nickname}}
+                        </div>
+                    </div>
+                {{/each}}
+
+            </div>
+            <div class="clearfix"></div>
         </div>
-        <div class="vlt-perms-roles">
-            {{#each role in rolesRead}}
-                {{printUser role.member  size=50 disableName=1}}
-            {{/each}}
-        </div>
-        <div class="clearfix"></div>
     {{/if}}
 
     {{#if hasCreate}}
-        <div class="vlt-perms-section">
-            Users able to just create
+        <div class="vlt-roles-admin-box-block">
+            <div class="vlt-perms-section">
+                <a {{action "toggleRolesCreate"}}>
+                    Users able to create
+                    <span {{bind-attr class=":glyphicon rolesCreateOpen:glyphicon-chevron-up:glyphicon-chevron-down :pull-right"}}></span>
+                </a>
+            </div>
+            <div class="vlt-perms-roles vlt-perms-roles-create">
+
+                {{#each role in rolesCreate}}
+                    <div class="vlt-perms-role">
+                        <div class="vlt-perms-role-image">
+                            {{printUser role.member  size=35 disableName=1}}
+                        </div>
+                        <div class="vlt-perms-role-name">
+                            {{role.member.nickname}}
+                        </div>
+                    </div>
+                {{/each}}
+
+            </div>
+            <div class="clearfix"></div>
         </div>
-        <div class="vlt-perms-roles">
-            {{#each role in rolesCreate}}
-                {{printUser role.member  size=50 disableName=1}}
-            {{/each}}
-        </div>
-        <div class="clearfix"></div>
     {{/if}}
 
 </div>
+
+

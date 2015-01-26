@@ -23,7 +23,7 @@ class BlobDataField(FileField):
         File upload
         """
         # in bytes
-        max_size = 10 * 1024 * 1024  # 10 mb
+        max_size = 2 * 10 * 1024 * 1024  # 10 mb
         if not data:
             raise ValidationError('At least blob_data must be specified')
 

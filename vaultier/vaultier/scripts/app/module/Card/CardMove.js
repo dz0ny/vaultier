@@ -45,7 +45,7 @@ Vaultier.CardMoveRoute = Ember.Route.extend(
 
             // set breadcrumbs
             ctrl.set('breadcrumbs',
-                Vaultier.Breadcrumbs.create({router: this.get('router')})
+                Vaultier.Toolbar.create({router: this.get('router')})
                     .addHome()
                     .addWorkspace()
                     .addVault()
@@ -65,14 +65,14 @@ Vaultier.CardMoveRoute = Ember.Route.extend(
                         return this.get('store').find('Vault', record.get('vault'))
                     }.bind(this))
                     .then(function (vault) {
-                    $.notify('Your card has been moved successfully.', 'success');
-                    this.transitionTo(
-                        'Secret.index',
-                        this.modelFor('Workspace').get('slug'),
-                        vault.get('slug'),
-                        this.modelFor('Card').get('slug')
-                    )
-                }.bind(this),
+                        $.notify('Your card has been moved successfully.', 'success');
+                        this.transitionTo(
+                            'Secret.index',
+                            this.modelFor('Workspace').get('slug'),
+                            vault.get('slug'),
+                            this.modelFor('Card').get('slug')
+                        )
+                    }.bind(this),
                     function () {
                         $.notify('Ooops! Something went wrong.', 'error');
                     }

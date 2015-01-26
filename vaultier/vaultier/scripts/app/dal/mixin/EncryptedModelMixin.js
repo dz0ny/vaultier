@@ -5,9 +5,12 @@ var getEncryptedDataKey = function (encryptedField) {
 }
 
 /**
+ * Encrypt and decrypt model after serialisation and deserialisation
+ *
  * @module vaultier-dal-mixin
  * @class Vaultier.dal.mixin.EncryptedModel.Mixin
  * @extends Ember.Mixin
+ * @requires Vaultier.dal.mixin.PolymorphicModel.Mixin
  */
 Vaultier.dal.mixin.EncryptedModel.Mixin = Ember.Mixin.create({
 
@@ -142,7 +145,13 @@ Vaultier.dal.mixin.EncryptedModel.Mixin = Ember.Mixin.create({
         var data;
 
         if (encryptedData) {
-            data = this.workspacekey.decryptWorkspaceData(encryptedData) || {};
+            Utils.Logger.log.debug(this);
+            Utils.Logger.log.debug(this.get('note'));
+            data = this.workspacekey.decryptWorkspaceData(
+                encryptedData,
+                this.get('membership.workspace_key'),
+                this.get('membership.id')) || {};
+            Utils.Logger.log.debug(this.get('note'));
         }
         else {
             data = null;
@@ -158,7 +167,11 @@ Vaultier.dal.mixin.EncryptedModel.Mixin = Ember.Mixin.create({
 
     encryptField: function (encryptedField) {
         var decryptedData = this.getDecryptedData(encryptedField);
-        var data = this.workspacekey.encryptWorkspaceData(decryptedData['data']);
+        var data = this.workspacekey.encryptWorkspaceData(
+            decryptedData['data'],
+            this.get('membership.workspace_key'),
+            this.get('membership.id')
+        );
         this.set(encryptedField, data);
     },
 
@@ -193,7 +206,7 @@ Vaultier.dal.mixin.EncryptedModel.Mixin = Ember.Mixin.create({
  * @method generatePassword
  * @returns {string}
  */
-Vaultier.dal.mixin.EncryptedModel.generatePassword = function() {
+Vaultier.dal.mixin.EncryptedModel.generatePassword = function () {
     var chars = "ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
     var string_length = 16;
     var randomstring = '';

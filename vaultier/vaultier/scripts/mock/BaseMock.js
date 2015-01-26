@@ -15,7 +15,7 @@ Vaultier.Mock.BaseMock = Ember.Object.extend({
      * @property fixtures
      * @type Array
      */
-    fixtures:  [],
+    fixtures: [],
 
     /**
      * An abstract method which must be implemented. It is the start point for running mock
@@ -24,7 +24,7 @@ Vaultier.Mock.BaseMock = Ember.Object.extend({
      * @param {Ember.Application} app
      * @param {mixed} container
      */
-    run: function(app, container) {
+    run: function (app, container) {
         throw new Exception("This method should be implemented");
     },
 
@@ -35,12 +35,12 @@ Vaultier.Mock.BaseMock = Ember.Object.extend({
      * @param {Number} id
      * @returns {*}
      */
-    findById: function(id) {
+    findById: function (id) {
         var fixtureToReturn = null;
-        this.fixtures.forEach(function(fixture) {
-           if (fixture.id == id) {
-               fixtureToReturn = fixture;
-           }
+        this.fixtures.forEach(function (fixture) {
+            if (fixture.id == id) {
+                fixtureToReturn = fixture;
+            }
         });
         return fixtureToReturn;
     }

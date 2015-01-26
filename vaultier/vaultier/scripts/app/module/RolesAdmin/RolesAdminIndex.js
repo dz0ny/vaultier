@@ -4,137 +4,61 @@ Vaultier.RolesAdminIndexRoute = Ember.Route.extend(
         inviteObject: null,
 
         model: function (params, transition) {
+            Utils.Logger.log.debug("Vaultier.RolesAdminIndexRoute model");
+
             // setup invite data
-            this.setProperties(this.setupInviteData(params))
+            this.setProperties(this.setupInviteData(params));
 
-            // check permissions
-            if (!this.get('auth').checkPermissions(transition, function () {
-                return this.get('inviteObject.perms.invite')
-            }.bind(this), true)) {
-                return;
-            }
-
-            // do lookup
-            var blocks = this.setupBlocks();
-            var workspace = this.modelFor('Workspace');
-            var vault = this.modelFor('Vault');
-            var card = this.modelFor('Card');
+            var selectedNode = this.get('tree').getSelectedNode();
 
             var store = this.get('store')
 
-            var queries = {
-                workspace: null,
-                workspaceRoles: null,
-                vault: null,
-                vaultRoles: null,
-                card: null,
-                cardRoles: null
-            };
+            var queries = {};
 
-            if (blocks.workspace) {
-                queries.workspace = workspace
-                queries.workspaceRoles = store.find('Role', {
-                    to_workspace: workspace.get('id')
-                })
-            }
+            queries.node = selectedNode;
+            queries.nodeRoles = store.find('Role', {
+                node: selectedNode.get('id')
+            });
 
-            if (blocks.vault) {
-                queries.vault = vault
-                queries.vaultRoles = store.find('Role', {
-                    to_vault: vault.get('id')
-                })
-            }
-
-            if (blocks.card) {
-                queries.card = card
-                queries.cardRoles = store.find('Role', {
-                    to_card: card.get('id')
-                })
-            }
+            queries.parent = selectedNode;
+            queries.parentRoles = store.find('Role', {
+                parent_node: selectedNode.get('id')
+            });
 
             var models = Ember.RSVP.hash(queries);
 
             return models;
         },
 
-        /**
-         * override this to setup invite breadcrumbs
-         */
-        setupBlocks: function () {
-            throw 'Please override this in your route'
-        },
-
-        /**
-         * override this to setup invite breadcrumbs
-         */
-        setupInviteRoute: function (models) {
-            throw 'Please override this in your route'
-        },
-
-        /**
-         * override this to setup invite breadcrumbs
-         */
-        setupInviteData: function (params) {
-            throw 'Please override this in your route'
-        },
-
-        /**
-         * override this to setup invite breadcrumbs
-         */
         setupRoleLevels: function () {
             return Vaultier.dal.model.Role.proto().roles.toArray();
         },
 
-        /**
-         * override this to setup invite breadcrumbs
-         */
-        setupBreadcrumbs: function () {
-            throw 'Please override this in your route'
-        },
-
         setupController: function (ctrl, models) {
+            Utils.Logger.log.debug("Vaultier.RolesAdminIndexRoute setupController");
+            Utils.Logger.log.debug(models);
+
             var blocks = [];
 
+            blocks.push(Ember.Object.create({
+                type: 'node',
+                object: models.node,
+                roles: models.nodeRoles
+            }));
 
-            if (models.card) {
-                blocks.push(Ember.Object.create({
-                    url: null,
-                    type: 'card',
-                    object: models.card,
-                    roles: models.cardRoles
-                }));
-            }
-
-            if (models.vault) {
-                blocks.push(Ember.Object.create({
-                    type: 'vault',
-                    url: this.get('router').generate('Vault.rolesAdminIndex', models.vault),
-                    object: models.vault,
-                    roles: models.vaultRoles
-                }));
-            }
-
-            if (models.workspace) {
-                blocks.push(Ember.Object.create({
-                    type: 'workspace',
-                    url: this.get('router').generate('Workspace.rolesAdminIndex', models.workspace),
-                    object: models.workspace,
-                    roles: models.workspaceRoles
-                }));
-            }
-
+            blocks.push(Ember.Object.create({
+                type: 'parent',
+                object: models.parent,
+                roles: models.parentRoles
+            }));
 
             ctrl.set('content', blocks)
 
             // setup roles
             ctrl.set('roleLevels', this.setupRoleLevels());
             ctrl.set('controller', this);
+            ctrl.get('controllers.Document').set('toolbar', this.createToolbar());
 
-            // set invite route
-            ctrl.setProperties(this.setupInviteRoute(models));
-
-            // set breadcrumbs
-            ctrl.set('breadcrumbs', this.setupBreadcrumbs(models))
         },
 
         renderTemplate: function () {
@@ -215,13 +139,17 @@ Vaultier.RolesAdminIndexController = Ember.Controller.extend({
 
 Vaultier.RolesAdminIndexView = Ember.View.extend({
     templateName: 'RolesAdmin/RolesAdminIndex',
-    layoutName: 'Layout/LayoutStandard',
+
+    didInsertElement: function () {
+        Utils.Logger.log.debug(this.get('parentView'));
+        this.get('parentView').set('showLeftTreeNodePanel', false);
+    },
 
     AnimatedItemWrapper: Ember.View.extend({
         Item: Ember.View.extend({
             tagName: 'div',
             Select: Ember.Selectize.extend({
-                didInsertElement: function() {
+                didInsertElement: function () {
                     this.renderOptions = {
                         option: function (item, escape) {
                             var item = Vaultier.dal.model.Role.proto().roles.getByValue(item.value);

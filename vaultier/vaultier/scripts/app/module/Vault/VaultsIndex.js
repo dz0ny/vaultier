@@ -39,7 +39,7 @@ Vaultier.VaultsIndexRoute = Ember.Route.extend(
 
             // set breadcrumbs
             ctrl.set('breadcrumbs',
-                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
+                Vaultier.Toolbar.create({router: this.get('router'), environment: this.get('environment')})
                     .addHome()
                     .addWorkspace()
             );
@@ -61,10 +61,10 @@ Vaultier.VaultsIndexView = Ember.View.extend({
 Vaultier.VaultIndexItemView = Ember.View.extend({
     templateName: 'Vault/VaultsIndexItem',
     classNameBindings: ['selected:selected'],
-    mouseEnter: function() {
+    mouseEnter: function () {
         this.set('selected', 'selected');
     },
-    mouseLeave: function() {
+    mouseLeave: function () {
         this.set('selected', null);
     }
 });

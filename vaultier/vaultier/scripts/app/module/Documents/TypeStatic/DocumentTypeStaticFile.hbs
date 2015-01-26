@@ -1,0 +1,55 @@
+{{#if content.content.url}}
+    <tr>
+        <td>URL</td>
+        <td>{{content.content.url}}</td>
+    </tr>
+{{/if}}
+
+{{#if content.content.username}}
+    <tr>
+        <td>Username</td>
+        <td>{{content.content.username}}</td>
+    </tr>
+{{/if}}
+
+{{#if content.content.password}}
+    <tr>
+        <td>Password</td>
+        <td>{{content.content.password}}</td>
+    </tr>
+{{/if}}
+
+{{#if content.content.filename}}
+    <tr>
+        <td>Filename</td>
+        <td>
+            {{log content}}
+            {{log content.content}}
+            {{log content.blob}}
+            {{log content.content.blob}}
+            {{content.content.filename}}
+            <a {{action downloadBlob content}} class="btn btn-default btn-sm pull-right">
+                <span class="glyphicon glyphicon-save"></span>
+                Save to computer
+            </a>
+        </td>
+    </tr>
+{{/if}}
+
+{{#if content.content.filesize}}
+    <tr>
+        <td>Filesize</td>
+        <td>{{humanFilesize content.content.filesize}}</td>
+    </tr>
+{{/if}}
+
+{{#if content.content.note}}
+    <tr>
+        <td>Note</td>
+        <td>
+            <div class="vlt-markdown">
+                {{content.content.note}}
+            </div>
+        </td>
+    </tr>
+{{/if}}

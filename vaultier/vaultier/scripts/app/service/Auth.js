@@ -89,6 +89,26 @@ Service.Auth = Ember.Object.extend({
 
     },
 
+    /**
+     * Check if user can perform action on node. If not it redirect to error page.
+     *
+     * @param {Vaultier.Document.Node} node
+     * @param action
+     * @returns {boolean}
+     */
+    checkPermissionsForNode: function (node, action) {
+        Utils.Logger.log.debug(node);
+        Utils.Logger.log.debug(action);
+        if (node.get('content.perms.' + action)) {
+            return true;
+        } else {
+
+            var e = new Error('Missing client permission');
+            e.status = 403;
+            throw e;
+        }
+    },
+
 
     /**
      * Logs in user promise

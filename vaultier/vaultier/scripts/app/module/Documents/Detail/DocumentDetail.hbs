@@ -1,0 +1,96 @@
+<div class="col-md-9 vlt-document-detail">
+
+    <h1>
+        <img {{bind-attr src="view.typeCss"}}>
+        {{content.name}}
+        <span>(Last updated: {{printAgo content.updated_at prefix='Last updated:' }})</span>
+    </h1>
+
+    <table class="table table-bordered">
+        <colgroup>
+            <col class="col-lg-2">
+            <col class="col-lg-7">
+        </colgroup>
+        <tbody>
+        {{outlet center}}
+        </tbody>
+    </table>
+
+</div>
+
+<div class="col-md-3 vlt-col vlt-sidebar">
+    <div class="vlt-page-sidebar">
+        <div class="vlt-sidebar-block">
+            <div class="vlt-sidebar-block-part">
+                <div class="vlt-header">
+                    <img src="/static/vaultier/images/icon-clock.png" class="vlt-icon">
+
+                    <h3 class="vlt-title">Created by</h3>
+                </div>
+                <div class="vlt-body">
+                    <div class="vlt-history-user">
+                        <div class="vlt-history-user-image">
+                            {{printUser content.created_by size=32 disableName=1}}
+                        </div>
+                        <div class="vlt-history-user-name">
+                            {{content.created_by.nickname}}
+                            <span class="vlt-history-user-name-created-by" >({{printAgo content.created_at prefix='Created at:' }})</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="vlt-sidebar-block-part">
+                <div class="vlt-header">
+                    <img src="/static/vaultier/images/icon-team-grey.png" class="vlt-icon">
+
+                    <h3 class="vlt-title">Sharing</h3>
+                </div>
+                <div class="vlt-body">
+                    {{roles-admin-box user=auth.user roles=view.parentView.roles user=auth.user currentNode=view.parentView.currentDocument}}
+                </div>
+                <div class="vlt-controls">
+                    <div>
+
+                        {{#if view.parentView.currentDocument.perms.invite}}
+                            <div
+                                    class="vlt-button-wrapper"
+                                    data-toggle="tooltip"
+                                    title=
+                                            "
+                                 Invite new team members to collaborate on this workspace
+                                 or grant access permissions to existing team members
+                                 "
+                                    data-placement="bottom"
+                                    >
+                                {{#link-to "Document.rolesAdminInvite" class="btn btn-default"}}
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                    Invite
+                                {{/link-to}}
+                            </div>
+                        {{/if}}
+
+                        {{#if view.parentView.currentDocument.perms.invite}}
+                            <div
+                                    class="vlt-button-wrapper"
+                                    data-toggle="tooltip"
+                                    title=
+                                            "
+                                 Invite new team members to collaborate on this workspace
+                                 or grant access permissions to existing team members
+                                 "
+                                    data-placement="bottom"
+                                    >
+                                {{#link-to "Document.rolesAdminIndex" class="btn btn-default"}}
+                                    <span class="glyphicon glyphicon-user"></span>
+                                    Team
+                                {{/link-to}}
+                            </div>
+                        {{/if}}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

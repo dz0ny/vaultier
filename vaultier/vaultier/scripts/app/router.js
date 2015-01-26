@@ -65,6 +65,25 @@ Vaultier.Router.map(function () {
 
     });
 
+    /************************************************************
+     * Documents
+     ************************************************************/
+
+    this.resource('Documents', {path: '/documents'}, function () {
+        this.resource('Document', {path: '/d/:document'}, function () {
+            this.route('list', { path: '/list'});
+
+            this.route('detail', { path: '/detail'});
+            this.route('edit', { path: '/edit'});
+            this.route('create', { path: '/create/:type'});
+            this.route('move', { path: '/move'});
+
+            this.route('rolesAdminIndex', { path: '/team'});
+            this.route('rolesAdminInvite', { path: '/team/invite'});
+        });
+        this.route('createRoot', { path: '/create'});
+    });
+
 
     /************************************************************
      * Workspaces
@@ -182,9 +201,9 @@ Vaultier.ApplicationRoute = Ember.Route.extend(
             },
 
             loading: function (transition, originRoute) {
-                ApplicationKernel.UI.showLoader();
+//                ApplicationKernel.UI.showLoader();
                 transition.promise.finally(function () {
-                    ApplicationKernel.UI.hideLoader();
+//                    ApplicationKernel.UI.hideLoader();
                 }.bind(this))
             }
 
@@ -205,7 +224,7 @@ Vaultier.IndexRoute = Ember.Route.extend(
         redirect: function () {
             var auth = this.get('auth');
             if (auth.get('isAuthenticated')) {
-                return this.transitionTo('Workspaces.index');
+                return this.transitionTo('Documents.index');
             } else {
                 return this.transitionTo('AuthLogin');
             }

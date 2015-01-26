@@ -17,7 +17,7 @@
                         </a>
                     </div>
 
-                    {{#link-to inviteRouteName class="btn btn-primary"}}
+                    {{#link-to "Document.rolesAdminInvite" class="btn btn-primary"}}
                         <span class="glyphicon glyphicon-plus"></span>
                         Invite
                     {{/link-to}}
@@ -51,24 +51,9 @@
                         <div class="panel-heading">
                             <div class="col-md-8">
                                 <h4>
-                                    {{block.roles.length}} collaborators &mdash; {{block.type}} <b>{{block.object.name}}</b>
+                                    {{block.roles.length}} collaborators
                                 </h4>
                             </div>
-                            <div class="col-md-4 vlt-controls">
-                                {{#if block.readOnly }}
-                                    {{#if block.object.perms.invite}}
-                                        <a class="btn btn-default btn-sm pull-right"
-                                            {{bind-attr href=block.url}}
-                                           data-toggle="tooltip"
-                                           title="Edit inherited roles"
-                                                >
-                                            <span class="glyphicon glyphicon-edit"></span>
-                                        </a>
-                                    {{/if}}
-                                {{/if}}
-
-                            </div>
-
                             <div class="clearfix"></div>
                         </div>
                         <div class="table vlt-table">
@@ -129,13 +114,13 @@
                                                     </div>
                                                     <div class="pull-right">
                                                         {{view view.Select
-                                                          dataBinding='role'
-                                                          controllerBinding="controller"
-                                                          contentBinding="roleLevels"
-                                                          optionValuePath="content.value"
-                                                          optionLabelPath="content.text"
-                                                          selectionBinding="role.level"
-                                                          placeholder="Select an option" }}
+                                                        dataBinding='role'
+                                                        controllerBinding="controller"
+                                                        contentBinding="roleLevels"
+                                                        optionValuePath="content.value"
+                                                        optionLabelPath="content.text"
+                                                        selectionBinding="role.level"
+                                                        placeholder="Select an option" }}
                                                     </div>
 
                                                 </div>

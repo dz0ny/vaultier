@@ -12,7 +12,7 @@ Vaultier.dal.model.Member = RL.Model.extend(
         email: RL.attr('string'),
         nickname: RL.attr('string'),
         user: RL.attr('object'),
-        workspace: RL.attr('object'),
+        node: RL.attr('object'),
         roles_count: RL.attr('number'),
 
         statuses: new Utils.ConstantList({

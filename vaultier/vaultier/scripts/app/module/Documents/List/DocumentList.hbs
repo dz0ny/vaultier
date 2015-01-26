@@ -1,0 +1,184 @@
+<div class="col-md-9 vlt-documents-list">
+    <table class="table vlt-documents-table">
+        <thead>
+        <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Created by</th>
+            <th>Last modified</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <colgroup>
+            <col>
+            <col class="col-md-7">
+            <col class="col-md-2">
+            <col class="col-md-2">
+            <col class="col-md-1">
+        </colgroup>
+        <tbody>
+        {{#each node in view.parentView.currentDocument.children}}
+            <tr class="vlt-documents-table-row">
+                <td class="vlt-documents-table-col-icon">
+                    <img class="vlt-documents-table-icon"
+                         src="/static/vaultier/images/icon-{{unbound node.typeCss}}.png">
+                </td>
+                <td class="vlt-documents-table-col-name">
+                    {{#if node.folder}}
+                        {{#link-to 'Document.list' node.id}}
+                            {{node.name}}
+                        {{/link-to}}
+                    {{else}}
+                        {{#link-to 'Document.detail' node.id}}
+                            {{node.name}}
+                        {{/link-to}}
+                    {{/if}}
+                </td>
+                <td class="vlt-documents-table-col-last-person">
+                    {{node.created_by.nickname}}
+                </td>
+                <td class="vlt-documents-table-col-last-modified">
+                    {{printAgo node.updated_at prefix='Latest modification at:' }}
+                </td>
+
+                <td class="vlt-documents-table-col-actions">
+                    <div class="btn-group btn-group-sm">
+                        {{#if node.hasEditableOrInvitePermissions}}
+                            <a class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                Actions <span class="caret"></span>
+                            </a>
+                        {{else}}
+                            <a class="btn btn-default dropdown-toggle disable"
+                               data-toggle="tooltip"
+                               data-placement="bottom"
+                               title="You do not have permissions to perform any action"
+                                    >
+                                Actions <span class="caret"></span>
+                            </a>
+                        {{/if}}
+                        <ul class="dropdown-menu caret-right vlt-dropdown" role="menu">
+
+                            {{#if node.perms.invite}}
+                                <li>
+                                    {{#link-to "Document.rolesAdminIndex" node.id}}
+                                        <span class="glyphicon glyphicon-user"></span>
+                                        Invite
+                                    {{/link-to}}
+                                </li>
+                            {{/if}}
+
+                            {{#if node.perms.update}}
+                                <li>
+                                    {{#link-to 'Document.edit' node.id}}
+                                        <span class="glyphicon glyphicon-wrench"></span>
+                                        Edit
+                                    {{/link-to}}
+                                </li>
+                            {{/if}}
+
+                            {{#if node.perms.update}}
+                                <li>
+                                    {{#link-to 'Document.move' node.id}}
+                                        <span class="glyphicon glyphicon-folder-close"></span>
+                                        Move
+                                    {{/link-to}}
+                                </li>
+                            {{/if}}
+
+                            {{#if node.perms.delete}}
+                                <li>
+                                    <a href="#" {{action removeNode node }}>
+                                        <span class="glyphicon glyphicon-remove-circle"></span>
+                                        Delete
+                                    </a>
+                                </li>
+                            {{/if}}
+
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        {{/each}}
+        </tbody>
+    </table>
+
+</div>
+
+
+<div class="col-md-3 vlt-col vlt-sidebar">
+    <div class="vlt-page-sidebar">
+        <div class="vlt-sidebar-block">
+
+            <div class="vlt-sidebar-block-part">
+                <div class="vlt-header">
+                    <img src="/static/vaultier/images/icon-clock.png" class="vlt-icon">
+
+                    <h3 class="vlt-title">Created by</h3>
+                </div>
+                <div class="vlt-body">
+                    <div class="vlt-history-user">
+                        <div class="vlt-history-user-image">
+                            {{printUser view.parentView.currentDocument.created_by size=32 disableName=1}}
+                        </div>
+                        <div class="vlt-history-user-name">
+                            {{view.parentView.currentDocument.created_by.nickname}}
+                            <span class="vlt-history-user-name-created-by" style="font-style: italic; color: #BABABA">({{printAgo view.parentView.currentDocument.created_at prefix='Created at:' }})</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="vlt-sidebar-block-part">
+                <div class="vlt-header">
+                    <img src="/static/vaultier/images/icon-team-grey.png" class="vlt-icon">
+
+                    <h3 class="vlt-title">Sharing</h3>
+                </div>
+                <div class="vlt-body">
+                    {{roles-admin-box user=auth.user roles=view.parentView.roles user=auth.user currentNode=view.parentView.currentDocument}}
+                </div>
+                <div class="vlt-controls">
+                    <div>
+                        {{#if view.parentView.currentDocument.perms.invite}}
+                            <div
+                                    class="vlt-button-wrapper"
+                                    data-toggle="tooltip"
+                                    title=
+                                            "
+                                 Invite new team members to collaborate on this workspace
+                                 or grant access permissions to existing team members
+                                 "
+                                    data-placement="bottom"
+                                    >
+                                {{#link-to "Document.rolesAdminInvite" class="btn btn-default"}}
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                    Invite
+                                {{/link-to}}
+                            </div>
+                        {{/if}}
+
+                        {{#if view.parentView.currentDocument.perms.invite}}
+                            <div
+                                    class="vlt-button-wrapper"
+                                    data-toggle="tooltip"
+                                    title=
+                                            "
+                                 Invite new team members to collaborate on this workspace
+                                 or grant access permissions to existing team members
+                                 "
+                                    data-placement="bottom"
+                                    >
+                                {{#link-to "Document.rolesAdminIndex" class="btn btn-default"}}
+                                    <span class="glyphicon glyphicon-user"></span>
+                                    Team
+                                {{/link-to}}
+                            </div>
+                        {{/if}}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

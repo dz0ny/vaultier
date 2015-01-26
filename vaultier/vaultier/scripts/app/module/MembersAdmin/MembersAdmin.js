@@ -26,7 +26,7 @@ Vaultier.MembersAdminRoute = Ember.Route.extend(
             ctrl.set('content', model.members);
             ctrl.set('workspace', model.workspace)
             ctrl.set('breadcrumbs',
-                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
+                Vaultier.Toolbar.create({router: this.get('router'), environment: this.get('environment')})
                     .addHome()
                     .addWorkspace()
                     .addText('Members of workspace')

@@ -8,11 +8,13 @@
         </a>
 
         <ul class="dropdown-menu caret-right vlt-dropdown">
+            <li>{{#link-to 'Documents.createRoot'}}Create new root folder{{/link-to}}</li>
+            <li class="divider"></li>
             <li>{{#link-to 'Settings.index'}}Settings{{/link-to}}</li>
-            <li><a {{ action logout target=view }} href="" >Logout</a></li>
+            <li><a {{ action logout target=view }} href="">Logout</a></li>
 
             {{#if showToken}}
-                <li><a {{bind-attr  href=auth.token}} class="copy-token" >Copy token to clipboard</a></li>
+                <li><a {{bind-attr  href=auth.token}} class="copy-token">Copy token to clipboard</a></li>
             {{/if}}
         </ul>
     </div>

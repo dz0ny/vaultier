@@ -22,6 +22,7 @@ Vaultier.initializers.DI = {
         app.register('store:main', Vaultier.dal.core.Client, {instantiate: false});
         app.inject('route', 'store', 'store:main');
         app.inject('controller', 'store', 'store:main');
+        app.inject('controller', 'router', 'router:main');
         app.inject('component', 'store', 'store:main');
         //also there lazy loading does not work properly with ember initialize:
         RESTless.set('client', Vaultier.dal.core.Client);
@@ -49,8 +50,14 @@ Vaultier.initializers.DI = {
         app.inject('service:auth', 'session', 'service:session')
         app.inject('service:auth', 'storage', 'service:storage')
 
+        app.register('service:tree', Service.Tree);
+
         app.inject('route', 'auth', 'service:auth');
+        app.inject('route', 'tree', 'service:tree');
         app.inject('controller', 'auth', 'service:auth');
+        app.inject('controller', 'tree', 'service:tree');
+        app.inject('service:tree', 'store', 'store:main');
+        app.inject('service:tree', 'adapter', 'adapter:node')
 
         // service:coder
         app.register('service:coder', Service.Coder)
@@ -61,12 +68,14 @@ Vaultier.initializers.DI = {
         app.inject('service:invitations', 'session', 'service:session')
         app.inject('service:invitations', 'auth', 'service:auth');
         app.inject('service:invitations', 'router', 'router:main');
+        app.inject('service:invitations', 'tree', 'service:tree');
 
         app.inject('route:InvitationUse', 'invitations', 'service:invitations')
         app.inject('route:InvitationAccept', 'invitations', 'service:invitations')
         app.inject('route:WorkspaceRolesAdminInvite', 'invitations', 'service:invitations')
         app.inject('route:VaultRolesAdminInvite', 'invitations', 'service:invitations')
         app.inject('route:CardRolesAdminInvite', 'invitations', 'service:invitations');
+        app.inject('route', 'invitations', 'service:invitations');
         app.inject('route:Workspaces', 'invitations', 'service:invitations');
 
         // service:keytransfer
@@ -76,7 +85,11 @@ Vaultier.initializers.DI = {
         app.inject('service:keytransfer', 'coder', 'service:coder');
 
         // service:workspacekey
-        app.register('service:workspacekey', Service.WorkspaceKey);
+        if (ApplicationKernel.Config.environment != 'dev') {
+            app.register('service:workspacekey', Service.WorkspaceKey);
+        } else {
+            app.register('service:workspacekey', Vaultier.Mock.WorkspaceKeyMock);
+        }
         app.inject('service:workspacekey', 'auth', 'service:auth');
         app.inject('service:workspacekey', 'store', 'store:main');
         app.inject('service:workspacekey', 'coder', 'service:coder');
@@ -99,6 +112,8 @@ Vaultier.initializers.DI = {
         app.inject('service:newuserinit', 'auth', 'service:auth');
         app.inject('service:newuserinit', 'router', 'router:main');
         app.inject('service:newuserinit', 'invitations', 'service:invitations');
+        app.inject('service:newuserinit', 'tree', 'service:tree');
+        app.inject('service:newuserinit', 'store', 'store:main')
         app.inject('route:AuthRegisterCreds', 'newuserinit', 'service:newuserinit')
 
 

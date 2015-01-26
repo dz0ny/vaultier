@@ -7,9 +7,9 @@ Vaultier.SettingsPersonalRoute = Ember.Route.extend(
         setupController: function (ctrl) {
             ctrl.set('content', this.get('auth.user'));
 
-                        // set breadcrumbs
+            // set breadcrumbs
             ctrl.get('controllers.Settings').set('breadcrumbs',
-                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
+                Vaultier.Toolbar.create({router: this.get('router'), environment: this.get('environment')})
                     .addHome()
                     .addSettings()
                     .addText('Personal settings')

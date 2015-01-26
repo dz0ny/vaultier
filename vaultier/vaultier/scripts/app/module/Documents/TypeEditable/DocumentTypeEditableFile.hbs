@@ -1,0 +1,54 @@
+<div class="form-group" {{bind-attr class='errors.name:has-error'}}>
+    <label for="secret-name">Name</label>
+    {{errors.name}}
+    {{view Em.TextField elementId='secret-name' valueBinding='content.name' class="form-control"}}
+    <div class="help-block">
+        Informational field. Do not enter any sensitive information. This field is not encrypted!
+    </div>
+</div>
+
+<h4>Please fill in data for your file secret</h4>
+
+<div class="form-group" {{bind-attr class='errors.url:has-error'}}>
+    <label for="secret-url">URL</label>
+    {{errors.url}}
+    {{input valueBinding=content.content.url class='form-control'}}
+</div>
+
+<div class="form-group" {{bind-attr class='errors.username:has-error'}}>
+    <label for="secret-username">Username</label>
+    {{errors.username}}
+    {{input valueBinding=content.content.username class='form-control'}}
+</div>
+
+<div class="form-group" {{bind-attr class='errors.password:has-error'}}>
+    <label for="secret-password">Password</label>
+    {{errors.password}}
+    {{password-field elementId='secret-password-component' inputId='secret-password' value=content.content.password}}
+</div>
+
+<div class="form-group" {{bind-attr class='error:has-error'}}>
+    <label for="secret-file" class="control-label">Secret file</label>
+
+    <div class="input-group">
+        {{input valueBinding=view.filename2 class="form-control vlt-filename" placeholder="Select your key" readonly=""}}
+
+        <span class="vlt-secret-type-file input-group-btn btn-file">
+            <a class="btn btn-default">
+                Browse <input type="file">
+            </a>
+        </span>
+
+    </div>
+    <div class="help-block">
+        Store a file up to 10 MB in size
+    </div>
+</div>
+
+
+<div class="form-group" {{bind-attr class='errors.name:has-error'}}>
+    <label for="secret-note">Note</label>
+    {{errors.name}}
+    {{textarea value=content.content.note rows="5" class="form-control" }}
+</div>
+

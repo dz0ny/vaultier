@@ -4,22 +4,24 @@
 *************************************************************
 *************************************************************/
 @font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Open Sans'), local('OpenSans'), url('../font/open-sans-400.woff') format('woff');
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Open Sans'), local('OpenSans'), url('../font/open-sans-400.woff') format('woff');
 }
+
 @font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 700;
-  src: local('Open Sans Bold'), local('OpenSans-Bold'), url('../font/open-sans-700.woff') format('woff');
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 700;
+    src: local('Open Sans Bold'), local('OpenSans-Bold'), url('../font/open-sans-700.woff') format('woff');
 }
+
 @font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 800;
-  src: local('Open Sans Extrabold'), local('OpenSans-Extrabold'), url('../font/open-sans-800.woff') format('woff');
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 800;
+    src: local('Open Sans Extrabold'), local('OpenSans-Extrabold'), url('../font/open-sans-800.woff') format('woff');
 }
 
 /*************************************************************
@@ -32,7 +34,10 @@ body {
     margin: 0px;
     overflow-y: scroll;
     word-wrap: break-word !important;
-    font-family: 'Open Sans', sans-serif;
+    /*font-family: 'Open Sans', sans-serif;*/
+    font: 14px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #777;
+    font-weight: 300;
 }
 
 html {
@@ -70,6 +75,7 @@ textarea {
 .dropdown-menu a, {
     transition: none;
 }
+
 .dropdown-menu li a:hover, .dropdown-menu li a:focus {
     background-color: #C1C1C1;
 }
@@ -85,7 +91,6 @@ textarea {
     border-top-color: #367EAC !important;
     border-bottom-color: #367EAC !important;
 }
-
 
 /*
 * Drop down carrets
@@ -183,6 +188,7 @@ textarea {
     margin-left: -50% !important;
     width: 100% !important;;
 }
+
 .notifyjs-corner {
     margin-bottom: 100px !important;
     left: 50% !important;
@@ -194,6 +200,19 @@ textarea {
 
 .has-error .error {
     color: #C84A48;
+}
+
+/*
+* Disable
+*/
+
+.btn.disable {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+.btn.disable:active {
+    box-shadow: none;
 }
 
 /*
@@ -377,62 +396,79 @@ textarea {
     padding-left: 0px;
     padding-right: 0px;
 }
+
 @media screen and (max-width: 450px) {
     .container-full {
         margin: 0;
     }
 }
+
 /*************************************************************
 * background
 *************************************************************/
 .vlt-background-blue {
     background-color: #32A5E7;
 }
+
 .vlt-background-blue-light {
     background-color: #8DCDF2;
 }
+
 .vlt-background-orange {
     background-color: #F99820;
 }
+
 .vlt-background-orange-light {
     background-color: #FCC582;
 }
+
 .vlt-background-purple {
     background-color: #AF57AE;
 }
+
 .vlt-background-purple-light {
     background-color: #CF9BCE;
 }
+
 .vlt-background-green {
     background-color: #65AF26;
 }
+
 .vlt-background-green-light {
     background-color: #9ADC60;
 }
+
 .vlt-background-red {
     background-color: #E14342;
 }
+
 .vlt-background-red-light {
     background-color: #EC8383;
 }
+
 /*************************************************************
 * font
 *************************************************************/
 .vlt-font-blue {
     color: #32A5E7;
 }
+
 .vlt-font-orange {
     color: #F99820;
 }
+
 .vlt-font-purple {
     color: #AF57AE;
 }
+
 .vlt-font-green {
     color: #65AF26;
 }
+
 .vlt-font-red {
     color: #E14342;
 }
+
 /*************************************************************
 * border
 *************************************************************/
@@ -440,78 +476,152 @@ textarea {
     box-shadow: 0px 0px 1px 1px rgba(95, 185, 236, 0.34);
     border: 1px solid #5FB9EC;
 }
+
 .selected .vlt-border-blue-light {
-    box-shadow:         0px 0px 1px 1px rgba(95, 185, 236, 0.34);
+    box-shadow: 0px 0px 1px 1px rgba(95, 185, 236, 0.34);
     border-color: #8DCDF2;
 }
+
 .selected .vlt-border-orange {
     box-shadow: 0px 0px 1px 1px rgba(251, 174, 81, 0.34);
     border: 1px solid #F99820;
 }
+
 .selected .vlt-border-orange-light {
-    box-shadow:         0px 0px 1px 1px rgba(251, 174, 81, 0.34);
+    box-shadow: 0px 0px 1px 1px rgba(251, 174, 81, 0.34);
     border-color: #FCC582;
 }
+
 .selected .vlt-border-purple {
     box-shadow: 0px 0px 1px 1px rgba(190, 121, 189, 0.34);
     border: 1px solid #BE79BD;
 }
+
 .selected .vlt-border-purple-light {
-    box-shadow:         0px 0px 1px 1px rgba(190, 121, 189, 0.34);
+    box-shadow: 0px 0px 1px 1px rgba(190, 121, 189, 0.34);
     border-color: #CF9BCE;
 }
+
 .selected .vlt-border-green {
     box-shadow: 0px 0px 1px 1px rgba(127, 211, 54, 0.34);
     border: 1px solid #7FD336;
 }
+
 .selected .vlt-border-green-light {
-    box-shadow:         0px 0px 1px 1px rgba(127, 211, 54, 0.34);
+    box-shadow: 0px 0px 1px 1px rgba(127, 211, 54, 0.34);
     border-color: #9ADC60;
 }
+
 .selected .vlt-border-red {
     box-shadow: 0px 0px 1px 1px rgba(232, 107, 107, 0.34);
     border: 1px solid #E86D6D;
 }
+
 .selected .vlt-border-red-light {
-    box-shadow:         0px 0px 1px 1px rgba(127, 211, 54, 0.34);
+    box-shadow: 0px 0px 1px 1px rgba(127, 211, 54, 0.34);
     border-color: #EC8383;
 }
 
 /*************************************************************
+* icon
+*************************************************************/
+.icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+    display: inline-block;
+}
+
+.icon.folder-blue {
+    background-image: url('../images/icon-folder-blue.png');
+    background-size: 100%;
+}
+
+.icon.folder-orange {
+    background-image: url('../images/icon-folder-orange.png');
+    background-size: 100%;
+}
+
+.icon.folder-purple {
+    background-image: url('../images/icon-folder-purple.png');
+    background-size: 100%;
+}
+
+.icon.folder-green {
+    background-image: url('../images/icon-folder-green.png');
+    background-size: 100%;
+}
+
+.icon.folder-red {
+    background-image: url('../images/icon-folder-red.png');
+    background-size: 100%;
+}
+
+.icon.file {
+    background-image: url('../images/icon-file.png');
+    background-size: 100%;
+    background-position: 0px 1px;
+    background-repeat: no-repeat;
+}
+
+.icon.password {
+    background-image: url('../images/icon-password.png');
+    background-size: 98%;
+    background-position: 0px 2px;
+    background-repeat: no-repeat;
+}
+
+.icon.note {
+    background-image: url('../images/icon-note.png');
+    background-size: 100%;
+    background-position: 0px 2px;
+    background-repeat: no-repeat;
+}
+
+/*************************************************************
 **************************************************************
-* breadcrumbs
+* toolbar
 *************************************************************
 *************************************************************/
 
-.vlt-breads {
-    padding: 10px 10px 10px 0px;
+.vlt-toolbar {
     border-bottom: 1px solid #E0DBDB;
     background-color: #F5F5F5;
     font-size: 25px;
     min-width: 450px;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
-.vlt-breads .vlt-bread {
+.vlt-toolbar .vlt-bread {
     float: left;
 }
 
-.vlt-bread a {
+.vlt-toolbar .vlt-bread a {
     color: #545454;
 }
-.vlt-breads .container-full .vlt-bread:first-of-type a {
+
+.vlt-toolbar .vlt-bread img {
+    margin-top: 8px;
+    margin-right: 9px;
+    height: 21px;
+    width: 23px;
+}
+
+.vlt-toolbar .container-full .vlt-bread:first-of-type a {
     font-weight: bold;
 }
 
-.vlt-breads .vlt-separator {
-    margin-top: 2px;
-    padding: 2px 5px 2px 5px;
+.vlt-toolbar .vlt-separator {
+    margin-top: 5px;
+    padding: 2px 0px 2px 0px;
     font-size: 25px;
     font-weight: bold;
     color: #e0dbdb;
     float: left;
 }
 
-.vlt-breads .vlt-bread .vlt-bread-inner {
+.vlt-toolbar .vlt-bread .vlt-bread-inner {
     display: block;
     border-radius: 4px;
     border: 1px solid transparent;
@@ -519,31 +629,119 @@ textarea {
     padding: 4px;
 }
 
-.vlt-breads .vlt-bread .vlt-bread-inner {
+.vlt-toolbar .vlt-bread .vlt-bread-inner:focus {
+    text-decoration: none;
+}
+
+.vlt-toolbar .vlt-bread .vlt-bread-inner {
     border-radius: 4px;
     border: 1px solid transparent;
     transition: border-color 500ms, background-color 500ms;
     padding: 4px;
 }
 
-.vlt-breads .vlt-bread a.vlt-bread-inner:hover {
+.vlt-toolbar .vlt-bread a.vlt-bread-inner:hover {
     border: 1px solid #317EB2;
     transition: border-color 500ms, background-color 500ms;
     background-color: #FFFFFF;
 }
 
-.vlt-breads .vlt-bread .vlt-bread-inner .vlt-icon {
+.vlt-toolbar .vlt-bread .vlt-bread-inner .vlt-icon {
     margin: -3px 2px 0px 0px;
     width: 20px;
     height: 20px;
 }
 
+.vlt-toolbar .vlt-toolbar-actions {
+    font-size: 110%;
+    margin-top: 3px;
+}
+
+.vlt-toolbar .vlt-toolbar-actions .dropdown-menu li a {
+    padding: 5px 20px;
+}
+
+.vlt-toolbar .vlt-toolbar-actions .dropdown-menu li img {
+    margin-right: 10px;
+    height: 20px;
+}
+
+.vlt-toolbar .vlt-toolbar-actions .dropdown-menu li span {
+    font-size: 130%;
+    color: #4c4c4c;
+    margin-right: 10px;
+}
+
+.vlt-toolbar .vlt-toolbar-actions .dropdown-menu li p {
+    display: inline;
+    position: relative;
+    top: -3px;
+}
+
+.vlt-toolbar .vlt-toolbar-actions .btn-group > a {
+    display: inline-block;
+    height: 35px;
+    cursor: pointer;
+}
+
+.vlt-toolbar .vlt-toolbar-actions .btn-group > a:hover {
+    box-shadow: 0px 0px 2px #8C8C8C;
+}
+
+.vlt-toolbar .vlt-toolbar-actions .btn-group.open > a {
+    box-shadow: 0px 0px 2px #5C5C5C;
+}
+
+.vlt-toolbar .vlt-toolbar-actions-add {
+    padding: 0 6px 0 0;
+    position: relative;
+    /*top: -2px;*/
+}
+
+.vlt-toolbar .vlt-toolbar-actions-add img {
+    color: #4D4D4D;
+    position: relative;
+    top: -6px;
+    left: 4px;
+    padding-left: 2px;
+    padding-right: 4px;
+    height: 28px;
+}
+
+.vlt-toolbar .vlt-toolbar-actions .vlt-toolbar-actions-add-folder {
+    padding-bottom: 2px;
+    padding-right: 2px;
+}
+
+.vlt-toolbar .vlt-toolbar-actions .vlt-toolbar-actions-add-folder img {
+    height: 25px;
+    position: relative;
+    top: -4px;
+    left: 4px;
+    padding-left: 2px;
+    padding-right: 7px;
+}
+
+.vlt-toolbar .vlt-toolbar-actions .vlt-toolbar-actions-settings {
+    padding-right: 4px;
+}
+
+.vlt-toolbar .vlt-toolbar-actions .vlt-toolbar-actions-settings img {
+    height: 30px;
+    position: relative;
+    left: 4px;
+    top: -6px;
+    color: #4D4D4D;
+    padding-left: 0px;
+    padding-right: 4px;
+}
+
 @media (max-width: 767px) {
-    .vlt-breads .vlt-bread {
+    .vlt-toolbar .vlt-bread {
         float: none;
     }
 
-    .vlt-breads .vlt-separator {
+    .vlt-toolbar .vlt-separator {
         float: none;
         margin-top: 5px;
         overflow: hidden;
@@ -563,6 +761,11 @@ textarea {
     display: inline-block;
 }
 
+/*************************************************************
+**************************************************************
+* page and page section
+*************************************************************
+*************************************************************/
 /*************************************************************
 **************************************************************
 * page and page section
@@ -644,42 +847,64 @@ textarea {
 
 /* Sidebar css */
 
-.vlt-page.vlt-page-with-sidebar .vlt-page-sidebar .vlt-sidebar-block {
-    display: block;
+.vlt-sidebar {
+    background: #F5F5F5;
+    height: 100vh;
+    border-left: 1px solid #E0DBDB;
 }
 
-.vlt-page.vlt-page-with-sidebar .vlt-page-sidebar .vlt-sidebar-block .vlt-header,
-.vlt-page.vlt-page-with-sidebar .vlt-page-sidebar .vlt-sidebar-block .vlt-body,
-.vlt-page.vlt-page-with-sidebar .vlt-page-sidebar .vlt-sidebar-block .vlt-controls {
-    padding: 9px;
+.vlt-sidebar-block-part {
+    padding-bottom: 10px;
+    border-top: 1px solid #E0DBDB;
 }
 
-.vlt-page.vlt-page-with-sidebar .vlt-page-sidebar .vlt-sidebar-block .vlt-body {
+.vlt-sidebar-block-part:first-of-type {
+    border-top: none;
+}
+
+.vlt-page-sidebar .vlt-sidebar-block .vlt-body {
     text-align: left;
 }
 
-.vlt-page.vlt-page-with-sidebar .vlt-page-sidebar .vlt-sidebar-block .vlt-controls {
+.vlt-page-sidebar .vlt-sidebar-block .vlt-controls {
     text-align: left;
     padding-bottom: 25px;
+    padding-left: 9px;
 }
 
-.vlt-page.vlt-page-with-sidebar .vlt-page-sidebar .vlt-sidebar-block .vlt-header {
+.vlt-page-sidebar .vlt-sidebar-block .vlt-header {
     padding: 10px;
+    padding-left: 20px;
     position: relative;
     background-color: #eeeeee;
     border-bottom: 1px solid #E0DBDB;
 }
 
-.vlt-page.vlt-page-with-sidebar .vlt-page-sidebar .vlt-sidebar-block .vlt-header .vlt-icon {
+.vlt-page-sidebar .vlt-sidebar-block .vlt-header .vlt-icon {
     position: absolute;
     width: 32px;
     height: 32px;
+}
+
+.vlt-page-sidebar .vlt-sidebar-block .vlt-header .vlt-title {
+    margin: 4px 0px 0px 40px;
+    min-height: 32px;
+    color: #555555;
 }
 
 .vlt-page.vlt-page-with-sidebar .vlt-page-sidebar .vlt-sidebar-block .vlt-header .vlt-title {
     margin: 4px 0px 0px 40px;
     min-height: 32px;
     color: #555555;
+}
+
+.vlt-roles-admin-box {
+    margin-bottom: 10px;
+}
+
+.vlt-roles-admin-box .vlt-roles-admin-box-no-shares {
+    margin-top: 10px;
+    margin-left: 10px;
 }
 
 .vlt-roles-admin-box .vlt-user {
@@ -690,6 +915,52 @@ textarea {
 .vlt-roles-admin-box .vlt-user img {
     margin-right: 2px;
     margin-bottom: 2px;
+}
+
+.vlt-roles-admin-box .vlt-roles-admin-box-block {
+    border-top: 1px solid #E0DBDB;
+}
+
+.vlt-roles-admin-box .vlt-roles-admin-box-block .vlt-perms-section {
+    background: #E0E0E0;
+    padding-left: 8px;
+    padding-right: 10px;
+    padding-bottom: 2px;
+    color: #454545;
+    cursor: pointer;
+}
+
+.vlt-roles-admin-box .vlt-roles-admin-box-block .vlt-perms-section a {
+    color: #454545;
+    display: inline-block;
+    width: 100%;
+}
+
+.vlt-roles-admin-box .vlt-roles-admin-box-block .vlt-perms-section span {
+    position: relative;
+    top: 4px;
+}
+
+.vlt-perms-roles {
+    /*margin-bottom: 10px;*/
+}
+
+.vlt-perms-role {
+    margin-left: 8px;
+    margin-right: 4px;
+}
+
+.vlt-perms-role:first-of-type {
+    margin-top: 8px;
+}
+
+.vlt-perms-role .vlt-perms-role-image,
+.vlt-perms-role .vlt-perms-role-name {
+    display: inline-block;
+}
+.vlt-perms-role .vlt-perms-role-name {
+    position: relative;
+    top: -15px;
 }
 
 /* Sidebar responsibility */
@@ -718,6 +989,7 @@ textarea {
         padding: 0px;
     }
 }
+
 @media (min-width: 850px) {
     .vlt-page.vlt-page-with-sidebar .vlt-page-content-responsive-header {
         display: none;
@@ -743,6 +1015,7 @@ textarea {
         margin-left: 399px;
     }
 }
+
 /*************************************************************
 **************************************************************
 * Homepage
@@ -758,59 +1031,74 @@ textarea {
     top: -56px;
     padding-bottom: 56px;
 }
+
 .vlt-hp .container {
     position: relative;
     top: 112px;
     background: url('../images/topcover.jpg') no-repeat center center fixed;
     background-size: cover;
 }
+
 .vlt-hp .container img {
     text-align: center;
     margin: 3em auto auto auto;
     display: block;
     width: 85%;
 }
+
 .vlt-hp .container .vlt-dialog .vlt-dialog-footer {
     padding: 8px;
 }
+
 .vlt-hp .container .vlt-dialog.vlt-login .vlt-login-no-users {
     padding: 15px;
 }
+
 .vlt-hp .container .vlt-dialog.vlt-login .vlt-login-no-users .alert {
     margin-bottom: 0;
 }
+
 .vlt-hp .container .vlt-dialog.vlt-login .vlt-dialog-body {
     padding-right: 25px;
 }
+
 .vlt-hp .container .vlt-dialog.vlt-login .vlt-dialog-body .form-group label {
     padding-left: 0px;
     padding-right: 0px;
 }
+
 .vlt-hp .container .vlt-dialog.vlt-login .vlt-dialog-body .vlt-remember-body {
     padding-right: 0px;
 }
+
 .vlt-hp .container .vlt-dialog.vlt-login .vlt-dialog-body .vlt-remember-info {
     padding-right: 0px;
 }
+
 .vlt-hp .container .vlt-dialog.vlt-login .vlt-dialog-body .glyphicon {
     font-size: 210%;
 }
+
 .vlt-hp .container .vlt-dialog.vlt-login .vlt-dialog-body .tooltip .tooltip-inner {
     width: 200px;
 }
+
 @media screen and (max-width: 991px) {
     .vlt-hp .container img {
         width: 50%;
     }
+
     .vlt-hp .container .vlt-dialog.vlt-login .vlt-dialog-body .form-group label {
         display: block;
         text-align: left;
         padding-left: 15px;
     }
+
     .vlt-hp .container .vlt-dialog.vlt-login .vlt-dialog-body .vlt-remember-body {
         display: inline-block;
         width: 89%;
     }
+
     .vlt-hp .container .vlt-dialog.vlt-login .vlt-dialog-body .vlt-remember-info {
         display: inline-block;
         width: 10%;
@@ -819,66 +1107,86 @@ textarea {
         padding-right: 15px;
         top: 8px;
     }
+
     .vlt-hp .container .vlt-dialog.vlt-login .vlt-dialog-body .vlt-remember-info span {
         text-align: center;
     }
 }
+
 @media screen and (max-width: 550px) {
     .vlt-hp .container .vlt-dialog.vlt-login .vlt-dialog-body .vlt-remember-body {
         display: inline-block;
         width: 85%;
     }
+
     .vlt-hp .container .vlt-dialog.vlt-login .vlt-dialog-body .vlt-remember-info {
         padding-left: 7px;
     }
 }
+
 /*************************************************************
 * Latest news
 *************************************************************/
 .vlt-hp .container .vlt-latest-news {
     border-color: white;
-    background-color: rgba(0,0,0,0.4);
+    background-color: rgba(0, 0, 0, 0.4);
     border-radius: 8px;
     margin: 30px 16px 80px 16px;
 }
+
 .vlt-hp .container .vlt-latest-news .vlt-latest-news-header h2 {
     color: #a9a9a9;
     padding: 15px 0 0 25px;
     font-size: 33px;
 }
+
 .vlt-hp .container .vlt-latest-news .vlt-latest-news-header h2 a {
     color: #a9a9a9;
 }
+
 .vlt-hp .container .vlt-latest-news .vlt-latest-news-header h2 a:hover {
     color: darkgray;
     text-decoration: underline;
 }
+
 .vlt-hp .container .vlt-latest-news .vlt-latest-news-body {
     margin-left: 13px;
     margin-right: 13px;
     width: 96%;
 }
+
 .vlt-hp .container .vlt-latest-news .vlt-latest-news-box {
     border-radius: 0px;
-    background-color: rgba(0,0,0,0.4);
+    background-color: rgba(0, 0, 0, 0.4);
     height: 100px;
     width: 105%;
     color: #a9a9a9;
     cursor: pointer;
     font-size: 14px;
 }
+
 .vlt-hp .container .vlt-latest-news .vlt-latest-news-none {
     color: #a9a9a9;
     padding: 5px 0 15px 20px;
 }
+
 .vlt-hp .container .vlt-latest-news .vlt-latest-news-box:hover .vlt-latest-news-box-content span {
     text-decoration: underline;
 }
+
 .vlt-hp .container .vlt-latest-news .vlt-latest-news-box .vlt-latest-news-box-date {
     text-align: right;
     padding: 8px;
 }
-.vlt-hp .container .vlt-latest-news .vlt-latest-news-box .vlt-latest-news-box-date .vlt-latest-news-box-date-year,
+
+.vlt-hp .container .vlt-latest-news .vlt-latest-news-box .vlt-latest-news-box-date .vlt-latest-news-box-date-year {
+    text-align: center;
+    font-size: 160%;
+    margin-top: 7px;
+    display: block;
+    width: 100%;
+}
+
 .vlt-hp .container .vlt-latest-news .vlt-latest-news-box .vlt-latest-news-box-date .vlt-latest-news-box-date-month-and-day {
     text-align: center;
     font-size: 160%;
@@ -889,6 +1197,7 @@ textarea {
 .vlt-hp .container .vlt-latest-news .vlt-latest-news-box .vlt-latest-news-box-date .vlt-latest-news-box-date-year {
     margin-top: 7px;
 }
+
 .vlt-hp .container .vlt-latest-news .vlt-latest-news-box .vlt-latest-news-box-content {
     padding: 16px 10px 17px 5px;
     display: inline-block;
@@ -896,6 +1205,7 @@ textarea {
     height: 80px;
     width: 73%;
 }
+
 .vlt-hp .container .vlt-latest-news .vlt-latest-news-box .vlt-latest-news-box-content:after {
     display: inline-block;
     line-height: 55px;
@@ -904,24 +1214,29 @@ textarea {
     overflow: hidden;
     vertical-align: middle
 }
+
 .vlt-hp .container .vlt-latest-news .vlt-latest-news-box .vlt-latest-news-box-content span {
     display: inline-block;
     vertical-align: middle;
     height: 60px;
 }
+
 .vlt-hp .container .vlt-latest-news .vlt-latest-news-footer {
     margin: 10px 28px 15px 10px;
 }
+
 .vlt-hp .container .vlt-latest-news .vlt-latest-news-footer a {
     border-color: #696969;
     background-color: #696969;
     color: #d3d3d3;
     padding: 2px 8px;
 }
+
 .vlt-hp .container .vlt-latest-news .vlt-latest-news-footer a:hover {
     border-color: #4F4F4F;
     background-color: #4F4F4F;
 }
+
 @media screen and (max-width: 991px) {
     .vlt-hp .container {
         padding-bottom: 80px;
@@ -933,23 +1248,28 @@ textarea {
     .vlt-hp .container .vlt-latest-news .vlt-latest-news-box {
         width: 100%;
     }
+
     .vlt-hp .container .vlt-latest-news .vlt-latest-news-box .vlt-latest-news-box-date {
         width: 25%;
         display: inline-block;
     }
+
     .vlt-hp .container .vlt-latest-news .vlt-latest-news-box .vlt-latest-news-box-content {
         width: 70%;
         display: inline-block;
     }
 }
+
 @media screen and (min-width: 992px) and (max-width: 1200px) {
     .vlt-hp .container .vlt-latest-news .vlt-latest-news-box .vlt-latest-news-box-date .vlt-latest-news-box-date-year {
         font-size: 150%;
     }
+
     .vlt-hp .container .vlt-latest-news .vlt-latest-news-box .vlt-latest-news-box-date .vlt-latest-news-box-date-month-and-day {
         font-size: 150%;
     }
 }
+
 /*************************************************************
 **************************************************************
 * Vault
@@ -959,6 +1279,7 @@ textarea {
     padding-top: 0px;
     padding-right: 0px;
 }
+
 /*************************************************************
 * Vault item
 *************************************************************/
@@ -974,15 +1295,18 @@ textarea {
     background-color: #ffffff;
     height: 200px;
 }
+
 .vlt-vault-item-href {
     display: block;
     height: 198px;
 }
+
 .vlt-vault-item-href:active,
 .vlt-vault-item-href:visited,
 .vlt-vault-item-href:focus {
     text-decoration: none;
 }
+
 .vlt-vault-item .vlt-vault-item-header-icon {
     display: inline-block;
     width: 85px;
@@ -992,6 +1316,7 @@ textarea {
     background-size: 50%;
     background-repeat: no-repeat;
 }
+
 .vlt-vault-item .vlt-vault-item-header h2 {
     display: inline-block;
     position: absolute;
@@ -1001,24 +1326,28 @@ textarea {
     width: 290px;
     height: 60px;
 }
+
 .vlt-vault-item .vlt-vault-item-header h2:after {
-    display:inline-block;
+    display: inline-block;
     line-height: 63px;
-    width:0;
-    content:"\00A0";
-    overflow:hidden;
-    vertical-align:middle
+    width: 0;
+    content: "\00A0";
+    overflow: hidden;
+    vertical-align: middle
 }
+
 .vlt-vault-item .vlt-vault-item-header h2 span {
-    display:inline-block;
-    vertical-align:middle;
+    display: inline-block;
+    vertical-align: middle;
     width: 290px;
 }
+
 .vlt-vault-item .vlt-vault-item-content {
     margin-top: 10px;
     margin-left: 90px;
     font-size: 115%;
 }
+
 .vlt-vault-item .vlt-vault-item-footer {
     color: #A0A2A7;
     position: absolute;
@@ -1027,10 +1356,12 @@ textarea {
     width: 100%;
     background-color: #F5F5F5;
 }
+
 .vlt-vault-item .vlt-vault-item-footer .vlt-vault-item-footer-user {
     display: inline-block;
     float: left;
 }
+
 .vlt-vault-item .vlt-vault-item-footer .vlt-vault-item-footer-time {
     display: inline-block;
     float: right;
@@ -1045,10 +1376,12 @@ textarea {
     width: 60px;
     height: 60px;
 }
+
 .color-chooser .color-picker-base {
     width: 60px;
     height: 60px;
 }
+
 .color-chooser .color-picker.selected .color-picker-base {
     border: 2px solid #555555;
 }
@@ -1062,9 +1395,11 @@ textarea {
     padding-left: 12px;
     padding-right: 12px;
 }
+
 .vlt-card .vlt-page .vlt-page-content .vlt-card-items {
     padding-top: 15px;
 }
+
 /*************************************************************
 * card item
 *************************************************************/
@@ -1076,9 +1411,11 @@ textarea {
     width: 275px;
     height: 320px;
 }
+
 .vlt-card-item-href {
     height: 320px;
 }
+
 /*************************************************************
 * background divs
 *************************************************************/
@@ -1092,16 +1429,20 @@ textarea {
     z-index: 1;
     background-color: white;
 }
+
 .vlt-card-background-div.vlt-card-background-div-left {
     transform: rotate(-4deg);
 }
+
 .vlt-card-background-div.vlt-card-background-div-right {
     transform: rotate(4deg);
 }
+
 .vlt-card-background-div .vlt-card-item-header {
     width: 100%;
     height: 53px;
 }
+
 /*************************************************************
 * front div
 *************************************************************/
@@ -1115,9 +1456,11 @@ textarea {
     z-index: 3;
     background-color: #ffffff;
 }
+
 .vlt-card-front-div .vlt-card-item-header {
     height: 60px;
 }
+
 .vlt-card-front-div .vlt-card-item-header-icon {
     display: inline-block;
     width: 50px;
@@ -1129,6 +1472,7 @@ textarea {
     background-size: 65%;
     background-repeat: no-repeat;
 }
+
 .vlt-card-front-div .vlt-card-item-header h2 {
     display: inline-block;
     position: absolute;
@@ -1139,22 +1483,26 @@ textarea {
     width: 210px;
     height: 49px;
 }
+
 .vlt-card-item .vlt-card-item-header h2:after {
-    display:inline-block;
+    display: inline-block;
     line-height: 63px;
-    width:0;
-    content:"\00A0";
-    overflow:hidden;
-    vertical-align:middle
+    width: 0;
+    content: "\00A0";
+    overflow: hidden;
+    vertical-align: middle
 }
+
 .vlt-card-front-div .vlt-card-item-header h2 span {
     width: 210px;
-    display:inline-block;
-    vertical-align:middle;
+    display: inline-block;
+    vertical-align: middle;
 }
+
 .vlt-card-front-div .vlt-card-item-content {
     margin: 10px 20px 10px 20px;
 }
+
 .vlt-card-front-div .vlt-card-item-footer {
     color: #A0A2A7;
     position: absolute;
@@ -1163,13 +1511,16 @@ textarea {
     width: 100%;
     background-color: #F5F5F5;
 }
+
 .vlt-card-front-div .vlt-card-item-footer .vlt-card-item-footer-user {
     display: inline-block;
     float: left;
 }
+
 .vlt-card-front-div .vlt-card-item-footer .vlt-card-item-footer-user .vlt-user {
     font-size: 90%;
 }
+
 .vlt-card-front-div .vlt-card-item-footer .vlt-card-item-footer-time {
     position: relative;
     top: 2px;
@@ -1186,6 +1537,7 @@ textarea {
 .clearfooter {
     height: 56px;
 }
+
 footer {
     display: block;
     z-index: 9999;
@@ -1207,11 +1559,13 @@ footer .vlt-version {
     color: #928787;
     padding: 8px 30px 0px 8px;
 }
+
 footer .vlt-rclick a {
     color: white;
     font-size: 110%;
     text-decoration: none;
 }
+
 footer .vlt-rclick img {
     border-radius: 3px;
     padding: 2px;
@@ -1231,10 +1585,12 @@ footer .vlt-enterprise {
     background-color: #555555;
     border-bottom: 1px solid #474747;
 }
+
 .vlt-navbar .vlt-navbar-brand {
     height: 100%;
     padding: 7px;
 }
+
 .vlt-navbar .vlt-logo {
     height: 50px;
 }
@@ -1262,6 +1618,7 @@ footer .vlt-enterprise {
     .navbar-default .navbar-nav .open .dropdown-menu > li > a {
         color: #C1C1C1;
     }
+
     .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
     .navbar-default .navbar-nav .open .dropdown-menu > li > a:active,
     .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
@@ -1291,11 +1648,13 @@ footer .vlt-enterprise {
     border-radius: 4px;
     margin: 5px;
 }
+
 .vlt-wspace-box p {
     display: inline;
     position: relative;
     top: 1px;
 }
+
 .vlt-wspace-box a.vlt-wspacename {
     border-radius: 4px;
     vertical-align: middle;
@@ -1308,10 +1667,12 @@ footer .vlt-enterprise {
     padding-right: 10px;
     background-color: #262626;
 }
+
 .vlt-wspace-box a:focus.vlt-spacename {
     text-decoration: none;
     background-color: #262626;
 }
+
 .vlt-wspace-box .vlt-wspaceimg {
     margin-left: 10px;
     margin-right: 10px;
@@ -1319,6 +1680,7 @@ footer .vlt-enterprise {
     width: 25px;
     height: 25px;
 }
+
 .vlt-wspace-box .dropdown-menu {
     text-align: right;
 }
@@ -1351,12 +1713,14 @@ span.vlt-user img {
     border: 0px;
     padding: 7px 10px 10px 10px;
 }
+
 .vlt-security-box {
     font-weight: bold;
     background-color: #262626;
     border-radius: 4px;
     margin: 5px;
 }
+
 .vlt-security-box a.vlt-username {
     color: #FFFFFF;
     vertical-align: middle;
@@ -1367,18 +1731,22 @@ span.vlt-user img {
     padding-right: 10px;
     background-color: #262626;
 }
+
 .vlt-security-box a:focus.vlt-username {
     text-decoration: none;
     background-color: #262626;
 }
+
 .vlt-security-box img {
     margin: 10px;
 }
+
 .vlt-security-box p {
     display: inline;
     position: relative;
     top: 1px;
 }
+
 .vlt-security-box .dropdown-menu {
     text-align: right;
 }
@@ -1404,18 +1772,22 @@ span.vlt-user img {
         width: 480px;
     }
 }
+
 .vlt-search-box .selectize-input input {
     color: #E5E5E5;
     font-family: 'Open Sans', sans-serif;
 }
+
 .vlt-search-box .selectize-input input::-webkit-input-placeholder {
     color: #E5E5E5;
     font-family: 'Open Sans', sans-serif;
 }
+
 .vlt-search-box .selectize-input input::-moz-placeholder {
     color: #E5E5E5;
     font-family: 'Open Sans', sans-serif;
 }
+
 .vlt-search-box .selectize-input,
 .vlt-search-box .selectize-control.single .selectize-input.input-active {
     font-family: 'Open Sans', sans-serif;
@@ -1512,6 +1884,7 @@ span.vlt-user img {
     width: 45px;
     display: inline-block;
 }
+
 .vlt-search-box .vlt-search-result .vlt-right-panel {
     display: inline-block;
     position: absolute;
@@ -1642,10 +2015,12 @@ span.vlt-user img {
 .vlt-register .modal-body {
     padding: 25px 50px 25px 50px;
 }
+
 .vlt-register .vlt-register-key {
     margin-left: 8.4%;
     margin-right: 8.4%;
 }
+
 .vlt-register .vlt-register-key .vlt-register-key-info {
     margin-top: 10px;
 }
@@ -1740,10 +2115,12 @@ span.vlt-user img {
     margin-bottom: 1em;
     height: 100%;
 }
+
 .vlt-secret-box .vlt-secret-item-base {
     margin: 7px;
     min-height: 300px;
 }
+
 /*************************************************************
 * Secret left panel
 *************************************************************/
@@ -1755,20 +2132,24 @@ span.vlt-user img {
     left: 7px;
     top: 7px;
 }
+
 .vlt-secret-box .vlt-secret-item .vlt-left-panel .vlt-wrapper {
     margin: 10px;
     position: absolute;
     top: 0px;
     left: 0px;
 }
+
 .vlt-secret-box .vlt-secret-item .vlt-left-panel .vlt-icon {
     background-size: 100% 100%;
     height: 100px;
     width: 100px;
 }
+
 .vlt-secret-box .vlt-secret-item .vlt-secret-item-password .vlt-left-panel .vlt-icon {
     background-image: url('../images/icon-password-white.png');
 }
+
 .vlt-secret-box .vlt-secret-item .vlt-secret-item-note .vlt-left-panel .vlt-icon {
     background-image: url('../images/icon-note-white.png');
 }
@@ -1776,12 +2157,14 @@ span.vlt-user img {
 .vlt-secret-box .vlt-secret-item .vlt-secret-item-file .vlt-left-panel .vlt-icon {
     background-image: url('../images/icon-file-white.png');
 }
+
 .vlt-secret-box .vlt-secret-item .vlt-left-panel .vlt-type {
     color: #ffffff;
     font-size: 20px;
     text-align: center;
     font-weight: bold;
 }
+
 /*************************************************************
 * Secret right panel
 *************************************************************/
@@ -1792,6 +2175,7 @@ span.vlt-user img {
     position: relative;
     height: 100%;
 }
+
 .vlt-secret-box .vlt-secret-item .vlt-right-panel h3 {
     margin-top: 8px;
 }
@@ -1801,17 +2185,21 @@ span.vlt-user img {
     position: absolute;
     bottom: 0px;
 }
+
 .vlt-secret-box .vlt-secret-item .vlt-footer-item.help-block {
     margin-bottom: 0px;
     margin-top: 0px;
 }
+
 .vlt-secret-box .vlt-secret-item .vlt-footer-item.help-block {
     margin-bottom: 0px;
     margin-top: 0px;
 }
+
 .vlt-secret-box .vlt-secret-item .vlt-secret-item-controls .vlt-author {
     padding-left: 0px;
 }
+
 .vlt-secret-box .vlt-secret-item .vlt-secret-item-controls .vlt-buttons {
     padding-right: 0px;
     padding-bottom: 5px;
@@ -1963,17 +2351,21 @@ span.vlt-user img {
 .vlt-panel-members .vlt-panel-members-body {
     padding: 0px;
 }
+
 .vlt-panel-members .vlt-panel-members-body .vlt-table > .row > .vlt-actions {
     padding-right: 30px;
 }
+
 .vlt-panel-members .vlt-panel-members-body .vlt-table {
     border-bottom: 2px solid #F5F5F5;
     padding: 15px;
     margin-bottom: 0px;
 }
+
 .vlt-panel-members .vlt-panel-members-body .ember-view:last-of-type .vlt-table {
     border-bottom: none;
 }
+
 .vlt-panel-members .vlt-panel-members-body .vlt-table .label {
     display: inline-block;
     padding: 8px;
@@ -1981,13 +2373,16 @@ span.vlt-user img {
     word-wrap: normal;
     white-space: normal;
 }
+
 .vlt-panel-members .vlt-panel-members-body .vlt-table .vlt-actions .btn {
     margin-bottom: 3px;
     margin-left: 3px;
 }
+
 .vlt-panel-members .vlt-panel-members-body .vlt-controls {
     text-align: right;
 }
+
 /*************************************************************
 * Roles
 *************************************************************/
@@ -2000,76 +2395,92 @@ span.vlt-user img {
     border: 1px solid #dddddd;
     border-radius: 6px;
 }
+
 .vlt-panel-members .vlt-panel-members-body .vlt-table .vlt-panel-members-roles:after,
 .vlt-panel-members .vlt-panel-members-body .vlt-table .vlt-panel-members-roles:before {
-	bottom: 100%;
-	left: 23px;
-	border: solid transparent;
-	content: " ";
-	height: 0;
-	width: 0;
-	position: absolute;
-	pointer-events: none;
+    bottom: 100%;
+    left: 23px;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
 }
+
 .vlt-panel-members .vlt-panel-members-body .vlt-table .vlt-panel-members-roles:after {
-	border-color: rgba(77, 131, 213, 0);
-	border-bottom-color: #F5F5F5;
-	border-width: 20px;
-	margin-left: -20px;
+    border-color: rgba(77, 131, 213, 0);
+    border-bottom-color: #F5F5F5;
+    border-width: 20px;
+    margin-left: -20px;
 }
+
 .vlt-panel-members .vlt-panel-members-body .vlt-table .vlt-panel-members-roles:before {
-	border-color: rgba(194, 225, 245, 0);
-	border-bottom-color: #dddddd;
-	border-width: 21px;
-	margin-left: -21px;
+    border-color: rgba(194, 225, 245, 0);
+    border-bottom-color: #dddddd;
+    border-width: 21px;
+    margin-left: -21px;
 }
+
 .vlt-panel-members .vlt-panel-members-body .vlt-panel-members-role {
     margin: 6px;
     background: white;
 }
+
 .vlt-panel-members .vlt-panel-members-body .vlt-panel-members-role .vlt-labels {
     padding-right: 0px;
 }
+
 .vlt-panel-members .vlt-panel-members-body .vlt-panel-members-roles .vlt-actions {
     padding-right: 0px;
 }
+
 /*************************************************************
 * Permissions
 *************************************************************/
 .vlt-panel-permissions .panel-heading {
     padding-left: 0px;
 }
+
 .vlt-panel-permissions .vlt-panel-permissions-body {
     padding: 0px;
 }
+
 .vlt-panel-permissions .vlt-table {
     padding-left: 15px;
     padding-right: 15px;
     margin-bottom: 0px
 }
+
 .vlt-panel-permissions .vlt-table .vlt-row {
     padding-top: 15px;
     padding-bottom: 15px;
     border-bottom: 2px solid #F5F5F5;
 }
+
 .vlt-panel-permissions .vlt-table .ember-view:last-of-type .vlt-row {
     border-bottom: none;
 }
+
 .vlt-panel-permissions .vlt-panel-permissions-body .vlt-table .vlt-actions .btn {
     margin-bottom: 3px;
     margin-left: 3px;
 }
+
 .vlt-panel-permissions .vlt-table .vlt-actions {
     padding-right: 30px;
 }
+
 .vlt-panel-permissions .vlt-table .vlt-row .vlt-actions .selectize-control {
     float: right;
     width: 150px;
 }
+
 .vlt-panel-permissions .vlt-table .vlt-row .vlt-actions .vlt-delete {
     margin-left: 5px;
     min-height: 35px;
 }
+
 .vlt-panel-permissions .vlt-table .label {
     display: inline-block;
     padding: 8px;
@@ -2086,8 +2497,9 @@ span.vlt-user img {
 .vaultier-roles-admin-invite-input .select2-choices {
     min-height: 150px;
 }
+
 .vaultier-roles-admin-invite-input .select2-search-choice-close {
-    top:7px;
+    top: 7px;
 }
 
 /*************************************************************
@@ -2121,50 +2533,260 @@ span.vlt-user img {
 
 /*************************************************************
 **************************************************************
-* Tree nodes
+* Tree
 *************************************************************
 *************************************************************/
-.vlt-tree ul {
-    padding-left: 25px;
+.vlt-tree {
+    background: #F5F5F5;
+    height: 100vh;
+    padding-left: 15px;
+    border-right: 1px solid #ECE9E9;
 }
 
-.vlt-tree li {
-    list-style: none;
+.vlt-tree .tree-container {
+    float: left;
+    padding-top: 10px;
+    padding-right: 0px;
 }
 
-.vlt-tree > .treebranch {
-    padding: 20px;
-    margin-left: 5px;
+.vlt-tree .tree-node-header {
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+}
+
+.vlt-tree .tree-node {
+    display: block;
+    cursor: pointer;
+    padding-right: 15px;
+}
+
+.vlt-tree a,
+.vlt-tree .is-active a {
+    color: #777;
+}
+
+.vlt-tree .tree-node:hover {
+    background-color: #D9D9D9;
+}
+
+.vlt-tree .tree-node a:focus {
+    text-decoration: none;
+}
+
+.vlt-tree .tree-node.is-selected {
+    background-color: #227ECB;
+    color: white;
+    padding-right: 15px;
+    text-decoration: none;
+}
+
+.vlt-tree .tree-node.is-selected a {
+    color: white;
+}
+
+.vlt-tree .folder.is-closed .tree-node-header.not-empty {
+    background-image: url(http://cdn2.iconfinder.com/data/icons/picol-vector/32/arrow_sans_right-16.png);
+}
+
+.vlt-tree .folder.is-opened .tree-node-header.not-empty {
+    background-image: url(http://cdn2.iconfinder.com/data/icons/picol-vector/32/arrow_sans_down-16.png);
+}
+
+.vlt-tree .tree-node.is-selected .icon.file {
+    background-image: url('../images/icon-file-white.png');
+}
+
+.vlt-tree .tree-node.is-selected .icon.password {
+    background-image: url('../images/icon-password-white.png');
+}
+
+.vlt-tree .tree-node.is-selected .icon.note {
+    background-image: url('../images/icon-note-white.png');
+}
+
+.vlt-tree-move .vlt-tree {
+    font-size: 110%;
+    background: white;
+    border-right: none;
+    height: 100%;
+}
+
+.vlt-tree-move .top-0 {
+    margin-bottom: 5px;
+}
+
+/*************************************************************
+**************************************************************
+* Documents list
+*************************************************************
+*************************************************************/
+.vlt-documents-list {
+    padding-right: 30px;
+}
+
+.vlt-documents-table .vlt-documents-table-row {
+    height: 41px;
+}
+
+.vlt-documents-table .vlt-documents-table-row:hover {
+    background: #E4E4E4;
+    cursor: pointer;
+}
+
+.vlt-documents-table a {
+    color: #777;
+}
+
+.vlt-documents-table a:hover {
+    text-decoration: underline;
+}
+
+.vlt-documents-table .vlt-documents-table-col-icon {
+    max-width: 20px;
+    padding-top: 6px;
+    padding-bottom: 0px;
+    padding-right: 30px;
+}
+
+.vlt-documents-table .vlt-documents-table-col-icon img {
+    width: 20px;
+}
+
+.vlt-documents-table .vlt-documents-table-col-actions {
+    width: 100%;
+    min-width: 80px;
+    padding-left: 0px;
+}
+
+.vlt-documents-table .vlt-documents-table-col-actions .btn-group {
+    display: none;
+    width: 50px;
+}
+
+.vlt-documents-table .vlt-documents-table-row:hover .btn-group {
+    display: inline-block;
+}
+
+.vlt-documents-table .vlt-documents-table-col-actions .btn-group ul {
+    right: -20px;
+    left: auto;
+}
+
+.vlt-documents-table .vlt-documents-table-col-actions .btn-group ul a {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.vlt-documents-table .vlt-documents-table-col-actions .btn-group ul span.glyphicon {
+    margin-right: 10px;
+    font-size: 110%;
+}
+
+.vlt-documents-table .vlt-documents-table-col-actions .btn-group a.dropdown-toggle {
+    padding: 2px 8px;
+    background: #428BCA;
+    border-color: #428BCA;
+    border-radius: 5px;
+    color: white;
+}
+
+.vlt-documents-table .vlt-documents-table-col-actions .btn-group a.dropdown-toggle:hover,
+.vlt-documents-table .vlt-documents-table-col-actions .btn-group a.dropdown-toggle:focus {
+    text-decoration: none;
+}
+
+/*************************************************************
+**************************************************************
+* Document detail
+*************************************************************
+*************************************************************/
+.vlt-document-detail {
+
+}
+
+.vlt-document-detail h1 {
+    margin-top: 10px;
+    color: #666;
+}
+
+.vlt-document-detail h1 img {
+    height: 32px;
+    position: relative;
+    top: -4px
+}
+
+.vlt-document-detail h1 > span {
+    font-size: 40%;
+    font-style: italic;
+    color:#BABABA;
+}
+
+.vlt-document-detail table tbody tr td:first-child {
+    font-weight: bold;
+}
+
+/*************************************************************
+**************************************************************
+* Share dialog
+*************************************************************
+*************************************************************/
+
+.vlt-share-dialog .vlt-dialog-header {
+    border-bottom: 0px;
+}
+
+.vlt-share-dialog .vlt-dialog-header h4 {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.vlt-share-dialog .vlt-roles-admin-box {
+    margin-left: 3px;
+}
+
+.vlt-roles-admin-box .vlt-roles-admin-box-no-shares {
+    margin-top: 0;
+    margin-left: 12px;
+}
+
+.vlt-share-dialog .vlt-roles-admin-box-block {
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    background-color: #ffffff;
     border: 1px solid #E0DBDB;
+    border-radius: 6px;
 }
 
-.vlt-tree li .vlt-node {
-    line-height: 35px;
-    padding-left: 25px;
-    cursor: pointer;
-    background-repeat: no-repeat;
-    background-position: 0px 6px;
-    background-size: 20px 20px;
-    transition: background-image 1s ease-in-out;
+.vlt-share-dialog .vlt-roles-admin-box-block .vlt-perms-section {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background: #F2F2F2;
+    border-bottom: 1px solid #E0DBDB;
 }
 
-.vlt-tree li .vlt-node,
-.vlt-tree li .vlt-node label {
-    cursor: pointer;
+/*************************************************************
+**************************************************************
+* History user
+*************************************************************
+*************************************************************/
+.vlt-history-user {
+    padding: 8px 4px 4px 8px;
+    position: relative;
 }
 
-.vlt-tree li .vlt-node.vlt-vault {
-    background-image: url('../images/icon-vault-grey.png');
+.vlt-history-user .vlt-history-user-image {
+
 }
 
-.vlt-tree li .vlt-node.vlt-loading {
-    background-image: url('../images/preloader_100x100.gif');
+.vlt-history-user .vlt-history-user-name {
+    position: absolute;
+    top: 15px;
+    left: 48px;
 }
 
-.vlt-tree li .vlt-node.vlt-card {
-    __background-image: url('../images/icon-card-grey.png');
-}
-
-.vlt-inline * {
-    display: inline;
+.vlt-history-user .vlt-history-user-name .vlt-history-user-name-created-by {
+    font-style: italic;
+    color: #BABABA;
 }

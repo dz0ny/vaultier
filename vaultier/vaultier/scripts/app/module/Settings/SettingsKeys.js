@@ -11,7 +11,7 @@ Vaultier.SettingsKeysRoute = Ember.Route.extend(
 
             // set breadcrumbs
             ctrl.get('controllers.Settings').set('breadcrumbs',
-                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
+                Vaultier.Toolbar.create({router: this.get('router'), environment: this.get('environment')})
                     .addHome()
                     .addSettings()
                     .addText('Regenerate key')

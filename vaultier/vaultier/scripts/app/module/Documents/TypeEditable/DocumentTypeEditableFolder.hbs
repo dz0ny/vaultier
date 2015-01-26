@@ -1,0 +1,21 @@
+<h4>Title</h4>
+<hr class="top-0"/>
+
+<div class="form-group" {{bind-attr class='errors.name:has-error'}}>
+    {{view Em.TextField elementId='secret-name' valueBinding='content.name' class="form-control"}}
+    <span class="error">{{errors.name}}</span>
+</div>
+<div class="help-block">
+    Informational field. Do not enter any sensitive information. This field is not encrypted!!!
+</div>
+
+<div class="form-group"  {{bind-attr class='content.errors.color:has-error'}}>
+    <label for="vault-color">Color</label>
+    {{view Vaultier.DocumentColorView valueBinding='content.color'}}
+    <span class="error">
+        {{content.errors.name}}
+    </span>
+</div>
+
+
+

@@ -23,7 +23,7 @@ Vaultier.CardsIndexRoute = Ember.Route.extend(
                     return [].concat(memberships.to_workspace.toArray(), memberships.to_vault.toArray());
                 });
 
-             // return promise for all requests
+            // return promise for all requests
             return Ember.RSVP.hash({
                 cards: cards,
                 memberships: memberships
@@ -48,7 +48,7 @@ Vaultier.CardsIndexRoute = Ember.Route.extend(
 
             // set breadcrumbs
             ctrl.set('breadcrumbs',
-                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
+                Vaultier.Toolbar.create({router: this.get('router'), environment: this.get('environment')})
                     .addHome()
                     .addWorkspace()
                     .addVault()
@@ -81,10 +81,10 @@ Vaultier.CardsIndexView = Ember.View.extend({
 Vaultier.CardsIndexItemView = Ember.View.extend({
     templateName: 'Card/CardsIndexItem',
     classNameBindings: [':vlt-card-item', 'selected:selected'],
-    mouseEnter: function() {
+    mouseEnter: function () {
         this.set('selected', 'selected');
     },
-    mouseLeave: function() {
+    mouseLeave: function () {
         this.set('selected', null);
     }
 });

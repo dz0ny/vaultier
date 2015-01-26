@@ -1,50 +1,76 @@
 ApplicationKernel.namespace('Vaultier.dal.mixin.PolymorphicModel');
 
 /**
+ * Mixin which gives you an option for create model with different fields according to model type
+ *
+ * Usage:
+ * 1. Create property 'polymorphicModelTypeField'. Its value has to be name of model's field
+ *  where is stored type of model.
+ *
+ *  Example:
+ *  ```javascript
+ *  polymorphicModelTypeField: 'type'
+ *  ```
+ *
+ * 2. Create property 'polymorphicModelMapping'. Its value will be object.
+ *  Keys of this object should be types according to which it selects mixins.
+ *  Values of Object should be fully-classified names of mixin which correspond to types.
+ *
+ *  Example:
+ *  ```javascript
+ *  polymorphicModelMapping: {
+ *      100: 'Vaultier.dal.model.NodeFolderMixin',
+ *      200: 'Vaultier.dal.model.NodeNoteMixin',
+ *      300: 'Vaultier.dal.model.NodePasswordMixin',
+ *      400: 'Vaultier.dal.model.NodeFileMixin'
+ *  },
+ *  ```
+ *
  * @module vaultier-dal-mixin
- * @class Vaultier.dal.mixin.MutableModel
+ * @class Vaultier.dal.mixin.PolymorphicModel
  * @extends Ember.Mixin
+ * @requires Vaultier.dal.mixin.EncryptedModel.Mixin
  */
 Vaultier.dal.mixin.PolymorphicModel.Mixin = Ember.Mixin.create({
 
     init: function () {
         this._super.apply(this, arguments);
 
-        var typeField = this.get('mutableModelTypeField');
+        var typeField = this.get('polymorphicModelTypeField');
         if (!typeField) {
-            throw new Error('mutableModelTypeField must be specified');
+            throw new Error('polymorphicModelTypeField must be specified');
         }
 
-        var mapping = this.get('mutableModelMapping');
+        var mapping = this.get('polymorphicModelMapping');
         if (!mapping) {
-            throw new Error('mutableModelMapping has to be specified ')
+            throw new Error('polymorphicModelMapping has to be specified ')
         }
 
         this.addObserver(typeField, this, function () {
-            this.applyMutableMixin(this.getMutableType());
+            this.applyPolymorphicMixin(this.getPolymorphicType());
         })
 
     },
 
-    getMutableType: function () {
-        var typeField = this.get('mutableModelTypeField');
+    getPolymorphicType: function () {
+        var typeField = this.get('polymorphicModelTypeField');
         return this.get(typeField);
     },
 
-    getMutableClass: function (type) {
-        var mapping = this.get('mutableModelMapping');
+    getPolymorphicClass: function (type) {
+        var mapping = this.get('polymorphicModelMapping');
         var cls = mapping[type];
         if (!cls) {
-            throw new Error('Mutation mixin class not found for type {type}'.replace('{type}', type));
+            throw new Error('Polymorphic mixin class not found for type {type}'.replace('{type}', type));
         }
         return cls;
     },
 
-    applyMutableMixin: function (type) {
-        var clsName = this.getMutableClass(type);
+    applyPolymorphicMixin: function (type) {
+        var clsName = this.getPolymorphicClass(type);
         var cls = Ember.get(clsName);
         if (!cls)
-            throw new Error('Cannot instantiate secret class mixin {mixin} for type {type}'
+            throw new Error('Cannot instantiate node class mixin {mixin} for type {type}'
                     .replace('{type}', type)
                     .replace('{mixin}', clsName)
             );
@@ -64,7 +90,7 @@ Vaultier.dal.mixin.PolymorphicModel.Mixin = Ember.Mixin.create({
                 mixin.properties.init.apply(this);
             }
         }.bind(this));
-        this.set('mutableMixinApplied', clsName);
+        this.set('polymorphicMixinApplied', clsName);
 
     }
 

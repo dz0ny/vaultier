@@ -97,19 +97,13 @@ Vaultier.AuthRegisterKeysRoute = Ember.Route.extend({
     step: 'AuthRegisterKeys',
 
     beforeModel: function (transition) {
-        return this.get('invitations')
-            .fetchInvitationsInSession()
-            .then(function(model) {
-                if (!model.get('length')) {
-                    if (this.get('auth').get('isAuthenticated')) {
-                        transition.router.replaceWith('AuthRegister.sum');
-                    } else if (!this.get('config.registration_allow') && !this.get('config.registration_enforce')) {
-                        var e = new Error('Registration is not allowed');
-                        e.status = 400;
-                        throw e;
-                    }
-                }
-            }.bind(this));
+        if (this.get('auth').get('isAuthenticated')) {
+            transition.router.replaceWith('AuthRegister.sum');
+        } else if (!this.get('config.registration_allow') && !this.get('config.registration_enforce')) {
+            var e = new Error('Registration is not allowed');
+            e.status = 400;
+            throw e;
+        }
     },
 
     renderTemplate: function () {
@@ -170,19 +164,13 @@ Vaultier.AuthRegisterCredsRoute = Ember.Route.extend({
     newuserinit: null,
 
     beforeModel: function (transition) {
-        return this.get('invitations')
-            .fetchInvitationsInSession()
-            .then(function (model) {
-                if (!model.get('length')) {
-                    if (this.get('auth').get('isAuthenticated')) {
-                        transition.router.replaceWith('AuthRegister.sum');
-                    } else if (!this.get('config.registration_allow') && !this.get('config.registration_enforce')) {
-                        var e = new Error('Registration is not allowed');
-                        e.status = 400;
-                        throw e;
-                    }
-                }
-            }.bind(this));
+        if (this.get('auth').get('isAuthenticated')) {
+            transition.router.replaceWith('AuthRegister.sum');
+        } else if (!this.get('config.registration_allow') && !this.get('config.registration_enforce')) {
+            var e = new Error('Registration is not allowed');
+            e.status = 400;
+            throw e;
+        }
     },
 
     renderTemplate: function () {
@@ -223,42 +211,40 @@ Vaultier.AuthRegisterCredsRoute = Ember.Route.extend({
             // preapre controller
             ctrl.set('props.nextButtonDisabled', true);
 
-            var promise = this.get('invitations')
-                .getNewestInvitationFromSession()
-                .then(function (invitation) {
-                    return user
+            // register promise
+            var promise = user
 
-                        // save record
-                        .saveRecord(invitation)
+                // save record
+                .saveRecord()
 
-                        // login
-                        .then(function (response) {
-                            console.log(response);
-                            return auth.login(user.get('email'), keys.privateKey, false)
-                                .then(function () {
-                                    auth.rememberUser(null);
-                                    this.transitionTo('AuthRegister.sum');
-                                }.bind(this));
-                        }.bind(this))
-
-                        // unsuccessfull login
-                        .catch(function (errors) {
-                            console.log(errors);
-                            ctrl.set('errors', Ember.Object.create(errors.errors));
-                            ctrl.set('props.nextButtonDisabled', false);
-                            $.notify('We are sorry, but your account cannot be created', 'error');
-                            return Ember.RSVP.reject(errors);
-                        }.bind(this))
-
-                        // create default user environment
+                // login
+                .then(function (response) {
+                    return auth.login(user.get('email'), keys.privateKey, false)
                         .then(function () {
-                            return this.get('newuserinit').initializeUser();
-                        }.bind(this))
-
-                        // save transition and created workspace and vault
-                        .then(function (newuservalues) {
-                            ctrl.get('props').setProperties(newuservalues);
+                            auth.rememberUser(null);
+                            this.transitionTo('AuthRegister.sum');
                         }.bind(this));
+                }.bind(this))
+
+                // unsuccessfull login
+                .catch(function (errors) {
+                    console.log(errors);
+                    ctrl.set('errors', Ember.Object.create(errors.errors));
+                    ctrl.set('props.nextButtonDisabled', false);
+                    $.notify('We are sorry, but your account cannot be created', 'error');
+                    return Ember.RSVP.reject(errors);
+                }.bind(this))
+
+                // create default user environment
+                .then(function () {
+                    Ember.RSVP.hash({
+                        node: this.get('newuserinit').initializeUser()
+                    });
+                }.bind(this))
+
+                // save transition and created workspace and vault
+                .then(function (newuservalues) {
+                    ctrl.get('props').setProperties(newuservalues);
                 }.bind(this));
 
             ApplicationKernel.UI.showLoaderUponPromise(promise);
@@ -285,20 +271,12 @@ Vaultier.AuthRegisterCredsView = Ember.View.extend({
 Vaultier.AuthRegisterSumRoute = Ember.Route.extend({
     step: 'AuthRegisterSum',
 
-    beforeModel: function (transition) {
-        return this.get('invitations')
-            .fetchInvitationsInSession()
-            .then(function (model) {
-                if (!model.get('length')) {
-                    if (this.get('auth').get('isAuthenticated')) {
-                        transition.router.replaceWith('AuthRegister.sum');
-                    } else if (!this.get('config.registration_allow') && !this.get('config.registration_enforce')) {
-                        var e = new Error('Registration is not allowed');
-                        e.status = 400;
-                        throw e;
-                    }
-                }
-            }.bind(this));
+    beforeModel: function() {
+       if (!this.get('config.registration_allow') && !this.get('config.registration_enforce')) {
+            var e = new Error('Registration is not allowed');
+            e.status = 400;
+            throw e;
+        }
     },
     renderTemplate: function () {
         this.render(this.step, { outlet: 'AuthRegister'});

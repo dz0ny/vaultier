@@ -60,8 +60,8 @@
                     outputType: 'browser',
                     processTemplatePath: function (file) {
                         var path = file.path;
-                        var dirs = path.split('/');
-                        return dirs.slice(-2).join('/');
+                        var dirs = path.split('module/');
+                        return dirs[1];
                     }
                 }))
 //                .pipe(gulp_sourcemaps.init())

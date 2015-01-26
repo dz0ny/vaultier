@@ -55,7 +55,7 @@ Vaultier.SecretIndexRoute = Ember.Route.extend(
 
             // set breadcrumbs
             ctrl.set('breadcrumbs',
-                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: this.get('environment')})
+                Vaultier.Toolbar.create({router: this.get('router'), environment: this.get('environment')})
                     .addHome()
                     .addWorkspace()
                     .addVault()
@@ -96,15 +96,15 @@ Vaultier.SecretIndexRoute = Ember.Route.extend(
                     var promise = secret
                         .deleteRecord()
                         .then(
-                            function () {
-                                $.notify('Your secret has been deleted successfully.', 'success');
-                            }.bind(this),
+                        function () {
+                            $.notify('Your secret has been deleted successfully.', 'success');
+                        }.bind(this),
 
-                            function (error) {
-                                secret.rollback();
-                                $.notify('Ooops! Something went wrong.', 'error');
-                            }.bind(this)
-                        );
+                        function (error) {
+                            secret.rollback();
+                            $.notify('Ooops! Something went wrong.', 'error');
+                        }.bind(this)
+                    );
                     ApplicationKernel.UI.showLoaderUponPromise(promise);
                 }.bind(this));
             }

@@ -36,7 +36,7 @@ Vaultier.SecretEditRoute = Ember.Route.extend(
             var environment = this.get('environment');
 
             ctrl.set('breadcrumbs',
-                Vaultier.Breadcrumbs.create({router: this.get('router'), environment: environment})
+                Vaultier.Toolbar.create({router: this.get('router'), environment: environment})
                     .addHome()
                     .addWorkspace()
                     .addVault()
