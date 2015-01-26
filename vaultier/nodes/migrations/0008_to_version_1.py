@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 import json
 
 from django.db import migrations, connection
+from accounts.models import Member
 from nodes.models import Node
 from . import workspace_exists
 
@@ -33,7 +34,7 @@ def _migrate_secret(card_node):
             parent=card_node,
             type=2
         )
-        node.save()
+        node.save(force_insert=True)
 
 
 def _migrate_cards(vault_node):
@@ -50,8 +51,9 @@ def _migrate_cards(vault_node):
             type=1
         )
         node._card = c['id']
-        node.save()
+        node.save(force_insert=True)
         _migrate_secret(node)
+        _migrate_acl('card', c['id'], node)
 
 
 def _migrate_vaults(workspace_node):
@@ -67,9 +69,10 @@ def _migrate_vaults(workspace_node):
             parent=workspace_node,
             type=1
         )
-        node.save()
+        node.save(force_insert=True)
         node._vault = v['id']
         _migrate_cards(node)
+        _migrate_acl('vault', v['id'], node)
 
 
 def _migrate_members(workspace_node):
@@ -79,7 +82,18 @@ def _migrate_members(workspace_node):
         [workspace_node.pk, workspace_node._workspace])
 
 
+def _migrate_acl(col, pk, node):
+    cursor = connection.cursor()
 
+    roles = {
+        50: 'create',
+        100: 'read',
+        200: 'write'
+    }
+    cursor.execute("SELECT * FROM vaultier_role WHERE to_{}_id=%s".format(col), [pk])
+
+    for r in _dictfetchall(cursor):
+        node.acl.allow(roles[r['level']], Member.objects.get(pk=r['member_id']))
 
 
 def migrate_from_workspaces(apps, schema_editor):
@@ -88,6 +102,7 @@ def migrate_from_workspaces(apps, schema_editor):
         return
 
     cursor = connection.cursor()
+    cursor.execute("ALTER TABLE public.vaultier_member ALTER COLUMN workspace_id DROP NOT NULL;")
     cursor.execute("SELECT * FROM vaultier_workspace")
     nodes = []
     for w in _dictfetchall(cursor):
@@ -100,18 +115,24 @@ def migrate_from_workspaces(apps, schema_editor):
 
         )
         node.save()
+        node.acl.initialize_node()
         node._workspace = w['id']
         nodes.append(node)
-        _migrate_vaults(node)
         _migrate_members(node)
+        _migrate_vaults(node)
+        _migrate_acl('workspace', w['id'], node)
 
 
 class Migration(migrations.Migration):
     dependencies = [
         ('nodes', '0007_auto_20141217_1241'),
-        ('accounts', '0004_auto_20141217_1338')
+        ('accounts', '0006_auto_20150122_1320')
     ]
 
     operations = [
+        migrations.AlterUniqueTogether(
+            name='policy',
+            unique_together=set([('subject', 'principal')]),
+        ),
         migrations.RunPython(migrate_from_workspaces),
     ]

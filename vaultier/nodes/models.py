@@ -52,8 +52,12 @@ class Node(mpttmodels.MPTTModel, TimestampableMixin):
             )
             self.acl_principal.save()
         else:
-            self.acl_principal = get_model('accounts', 'Member').objects.get(
-                node=self.get_root(), user=self.created_by)
+            try:
+                member = get_model('accounts', 'Member').objects.get(
+                    node=self.get_root(), user=self.created_by)
+                self.acl_principal = member
+            except:
+                pass
 
         self.acl.insert(created=kwargs.get('force_insert'))
 
@@ -83,3 +87,6 @@ class Policy(PolicyModel):
             'create': CreateRole,
             'write': WriteRole
         }
+
+    class Meta:
+        unique_together = ('subject', 'principal')

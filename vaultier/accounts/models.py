@@ -97,6 +97,7 @@ class Member(ChangesMixin, models.Model):
 
     class Meta:
         db_table = u'vaultier_member'
+        unique_together = ('user', 'node')
 
     def is_invitation(self):
         if self.status == MemberStatusField.STATUS_INVITED:
