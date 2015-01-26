@@ -88,7 +88,6 @@ Vaultier.DocumentMoveController = Vaultier.Document.TreeController.extend({
         move: function () {
             Utils.Logger.log.debug(this.get('destinationNode'));
 
-//            try {
             var promise = this.get('tree').moveNode(this.get('nodeToMove'), this.get('destinationNode'))
                 .then(function () {
                     this.get('destinationNode').set('isOpened', true);
@@ -106,11 +105,6 @@ Vaultier.DocumentMoveController = Vaultier.Document.TreeController.extend({
                     }
                 }.bind(this));
             ApplicationKernel.UI.showLoaderUponPromise(promise);
-//            } catch (e) {
-//                ApplicationKernel.UI.hideLoader();
-//                $.notify('Ooops! Something went wrong.', 'error');
-//                throw error;
-//            }
         }
 
     },
