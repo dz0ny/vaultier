@@ -10,6 +10,12 @@ var decryptedField = Vaultier.dal.mixin.EncryptedModel.decryptedField;
 Vaultier.dal.model.NodeBlob = RL.Model.extend(
     Vaultier.dal.mixin.EncryptedModel.Mixin,
     {
+        init: function () {
+            this.set('adapter', Vaultier.__container__.lookup('adapter:nodeblob'));
+            Utils.Logger.log.debug(this.get('adapter'));
+            return this._super.apply(this, arguments);
+        },
+
         blob_meta: RL.attr('string'),
         blob_data: RL.attr('string'),
 
@@ -17,11 +23,6 @@ Vaultier.dal.model.NodeBlob = RL.Model.extend(
         filesize: decryptedField('blob_meta', 'filesize'),
         filetype: decryptedField('blob_meta', 'filetype'),
         filedata: decryptedField('blob_data', 'filedata'),
-
-        /**
-         * @DI service:workspacekey
-         */
-        workspacekey: null,
 
         /**
          * @DI adapter:nodeblob

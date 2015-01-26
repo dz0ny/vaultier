@@ -16,7 +16,7 @@ Vaultier.dal.adapter.NodeBlobAdapter = Vaultier.dal.core.RESTAdapter.extend({
      */
     saveDirtyBlob: function (nodeBlob) {
         var params = {
-            url: '/api/nodes/' + this.get('id') + '/data/',
+            url: '/api/nodes/' + nodeBlob.get('id') + '/data/',
             type: 'PUT',
             data: nodeBlob.serialize(),
             processData: false,

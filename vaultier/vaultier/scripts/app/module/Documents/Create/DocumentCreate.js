@@ -98,7 +98,9 @@ Vaultier.DocumentCreateRoute = Ember.Route.extend(
                         .saveRecord()
                         .then(function (response) {
                             this.get('tree').addNode(record.get('content'));
-                            $.notify('Your ' + record.get('type') + ' has been created successfully.', 'success');
+                            $.notify('Your '
+                                + Vaultier.dal.model.Node.proto().types.getByValue(record.get('type') ).text
+                                + ' has been created successfully.', 'success');
                             Utils.Logger.log.debug(record);
                             if (record.get('type') == Vaultier.dal.model.Node.proto().types.FOLDER.value) {
                                 this.transitionTo('Document.list', record.get('id'));
@@ -159,6 +161,9 @@ Vaultier.DocumentCreateView = Ember.View.extend({
                         controller.set('content.content.blob.filename', files[0].name);
                         controller.set('content.content.blob.filesize', files[0].size);
                         controller.set('content.content.blob.filetype', files[0].type);
+
+                        controller.set('content.content.filename', files[0].name);
+                        controller.set('content.content.filesize', files[0].size);
 
                         $(el).find('.vlt-filename').attr('value', files[0].name);
 

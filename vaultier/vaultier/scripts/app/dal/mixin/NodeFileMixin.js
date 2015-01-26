@@ -75,7 +75,8 @@ Vaultier.dal.mixin.NodeFileMixin = Ember.Mixin.create({
             ._super.apply(this, arguments)
             .then(function () {
                 blob.set('id', this.get('id'))
-                return blob.saveRecord();
+                blob.set('membership', this.get('membership'))
+                return blob.saveRecord(this);
             }.bind(this))
             .then(this.emptyBlob.bind(this))
     }
