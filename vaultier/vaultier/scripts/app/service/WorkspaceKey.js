@@ -80,35 +80,6 @@ Service.WorkspaceKey = Ember.Object.extend(
 
         },
 
-//        selectWorkspace: function (rootNode) {
-//
-//            this.set('membersToApprove', null);
-//            this.set('workspace', rootNode);
-//
-//            if (rootNode) {
-//                this.stopChecking();
-//
-//                var cryptedKey = rootNode.get('membership.workspace_key');
-//                var workspaceKey = null;
-//                rootNode.set('keyError', false);
-//
-//                if (this.hasValidWorkspaceKey()) {
-//                    try {
-//                        workspaceKey = this.get('keytransfer').decryptWorkspaceKey(cryptedKey)
-//                    } catch (error) {
-//                        console.error(error.stack)
-//                        rootNode.set('keyError', true);
-//                    }
-//
-//                    this.set('workspaceKey', workspaceKey)
-//                } else {
-//                    this.startChecking(rootNode);
-//                }
-//            } else {
-//                this.set('workspaceKey', null)
-//            }
-//        },
-
         transferKeyToCreatedNode: function (node) {
             Utils.Logger.log.debug("transferKeyToCreatedNode");
             var keytransfer = this.get('keytransfer');
