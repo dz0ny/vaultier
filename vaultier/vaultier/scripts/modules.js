@@ -329,6 +329,8 @@ var vaultierModulesConfig = {
         ],
         "scripts": [
             "./app/module/Documents/Color/DocumentColor.js",
+            "./app/module/Documents/Tree/Mixin/StyleBindingsMixin.js",
+            "./app/module/Documents/Tree/DocumentNode.js",
             "./app/module/Documents/Tree/DocumentTree.js",
             "./app/module/Documents/Detail/DocumentDetail.js",
             "./app/module/Documents/List/DocumentList.js",
