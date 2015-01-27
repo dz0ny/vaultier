@@ -5,7 +5,7 @@ setup(
     name="Vaultier",
     install_requires=[
         'BeautifulSoup==3.2.1',
-        'Django==1.7.2',
+        'Django==1.7.3',
         'argparse==1.2.1',
         'cssutils==1.0',
         'django-appconf==0.6',
@@ -29,6 +29,7 @@ setup(
         'django-mptt==0.6.1',
         'iso8601==0.1.10',
     ],
+    dependency_links=['git+git@git.rclick.cz:jakub.bokoc/django-mptt-acl.git#egg=Django_MPTT_ACL'],
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Environment :: Web Environment",
@@ -64,6 +65,6 @@ setup(
                      "own needs and was designed to solve our problem to "
                      "collaborate on hundreds of login credentials with the "
                      "proper level of security and access control.",
-    version="0.7.5",
+    version="1.0.0",
     url="https://www.vaultier.org"
 )
