@@ -10,7 +10,7 @@ Utils.Logger = {
     log: null,
 
     init: function () {
-        if (ApplicationKernel.Config.environment != 'dev') {
+        if (ApplicationKernel.Config.environment == 'prod') {
             this.log = {
                 trace: function (msg) {
 

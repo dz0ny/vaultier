@@ -230,7 +230,7 @@ var vaultierModulesConfig = {
     },
 
     "mock": {
-        environments: ['dev', 'test'],
+        environments: ['test', 'dev-mock'],
         "scripts": [
             "./bower_components/jquery-mockajax/jquery.mockjax.js",
 
@@ -445,7 +445,7 @@ var vaultierModulesConfig = {
     },
 
     "run-default": {
-        environments: ['prod', 'dev'],
+        environments: ['prod', 'dev', 'dev-mock'],
         "scripts": [
             "./app/run-default.js"
         ]
