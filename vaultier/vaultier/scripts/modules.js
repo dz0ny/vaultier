@@ -344,9 +344,9 @@ var vaultierModulesConfig = {
             "./app/module/Documents/RolesAdmin/DocumentRolesAdminInvite.js",
             "./app/module/Documents/TypeStatic/DocumentTypeStatic.js",
             "./app/module/Documents/CreateRoot/DocumentCreateRoot.js",
+            "./app/module/Documents/NoNodes/DocumentsNoNodes.js",
             "./app/module/Documents/Document.js",
             "./app/module/Documents/Documents.js"
-
         ]
     },
     "workspace": {

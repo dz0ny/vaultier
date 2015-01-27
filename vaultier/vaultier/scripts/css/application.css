@@ -2323,6 +2323,14 @@ span.vlt-user img {
     background-image: url('../images/icon-locked-grey.png')
 }
 
+.vlt-bigbox.jumbotron.vlt-no-nodes .fa {
+    font-size: 900%;
+}
+.vlt-bigbox.jumbotron.vlt-no-nodes h1 {
+    font-size: 40px
+}
+
+
 /*************************************************************
 **************************************************************
 * Workspace item
