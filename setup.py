@@ -28,6 +28,7 @@ setup(
         'logan==0.5.10',
         'django-mptt==0.6.1',
         'iso8601==0.1.10',
+        'django-mptt-acl==0.1.0'
     ],
     dependency_links=['git+git@git.rclick.cz:jakub.bokoc/django-mptt-acl.git#egg=Django_MPTT_ACL'],
     classifiers=[
