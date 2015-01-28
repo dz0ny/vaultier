@@ -163,6 +163,7 @@ var vaultierModulesConfig = {
             "./app/utils/RSVPAjax.js",
             "./app/utils/MutableAdapterMixin.js",
             "./app/utils/RolesProxy.js",
+            "./app/utils/Security.js",
         /**************** App **/
             "./app/application.js",
             "./app/initializer/Boot.js",
