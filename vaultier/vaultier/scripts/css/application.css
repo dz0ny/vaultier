@@ -1879,6 +1879,7 @@ span.vlt-user img {
     padding: 6px;
     border-bottom: 1px solid #E0DBDB;
     position: relative;
+    padding-bottom: 0;
 }
 
 /**
@@ -1893,6 +1894,8 @@ span.vlt-user img {
 .vlt-search-box .vlt-search-result .vlt-right-panel {
     display: inline-block;
     position: absolute;
+    top: 7px;
+    padding-left: 6px;
 }
 
 .vlt-search-box .vlt-search-result {
@@ -1939,22 +1942,46 @@ span.vlt-user img {
     background-color: #31A5E7;
 }
 
-.vlt-search-box .vlt-search-result.vlt-card .vlt-icon {
-    background-image: url('../images/icon-card-white.png');
+.vlt-search-box .vlt-search-result .vlt-icon {
     background-repeat: no-repeat;
     background-size: 33px 33px;
     background-position: 3px 3px;
     height: 40px;
     width: 40px;
+    background-color: white;
+    border-radius: 6px;
 }
 
-.vlt-search-box .vlt-search-result.vlt-vault .vlt-icon {
-    background-image: url('../images/icon-vault-white.png');
-    background-repeat: no-repeat;
-    background-size: 33px 33px;
-    background-position: 3px 3px;
-    height: 40px;
-    width: 40px;
+.vlt-search-box .vlt-search-result.vlt-folder-blue .vlt-icon {
+    background-image: url('../images/icon-folder-blue.png');
+}
+
+.vlt-search-box .vlt-search-result.vlt-folder-orange .vlt-icon {
+    background-image: url('../images/icon-folder-orange.png');
+}
+
+.vlt-search-box .vlt-search-result.vlt-folder-purple .vlt-icon {
+    background-image: url('../images/icon-folder-purple.png');
+}
+
+.vlt-search-box .vlt-search-result.vlt-folder-green .vlt-icon {
+    background-image: url('../images/icon-folder-green.png');
+}
+
+.vlt-search-box .vlt-search-result.vlt-folder-red .vlt-icon {
+    background-image: url('../images/icon-folder-red.png');
+}
+
+.vlt-search-box .vlt-search-result.vlt-note .vlt-icon {
+    background-image: url('../images/icon-note.png');
+}
+
+.vlt-search-box .vlt-search-result.vlt-password .vlt-icon {
+    background-image: url('../images/icon-password.png');
+}
+
+.vlt-search-box .vlt-search-result.vlt-file .vlt-icon {
+    background-image: url('../images/icon-file.png');
 }
 
 /*************************************************************

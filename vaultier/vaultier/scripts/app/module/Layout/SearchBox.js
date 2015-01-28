@@ -1,40 +1,30 @@
-Vaultier.LayoutSearchBoxViewVaultTpl = null;
-Vaultier.LayoutSearchBoxViewCardTpl = null;
+Vaultier.LayoutSearchBoxViewNodeTpl = null;
 
 Vaultier.LayoutSearchBoxView = Ember.View.extend({
     tagName: 'span',
     templateName: 'Layout/SearchBox',
 
-    vaultTpl: [
-        '<div class="vlt-search-result vlt-{{type}}">',
-            '<div class="vlt-left-panel">',
-                '<div class="vlt-icon vlt-background-{{color}}"></div>',
-            '</div>',
-            '<div class="vlt-right-panel">',
-                '<div class="vlt-name">{{name}}</div>',
-                '<div class="vlt-path help-block">{{workspace.name}} >  {{name}}</div>',
-                '<div class="vlt-desc help-block">{{description}}</div>',
-            '</div>',
-        '</div>'
-    ].join(''),
+    /**
+     * @DI adapter:node
+     */
+    adapter: null,
 
-    cardTpl: [
-        '<div class="vlt-search-result vlt-{{type}}">',
-            '<div class="vlt-left-panel">',
-                '<div class="vlt-icon vlt-background-{{vault.color}}"></div>',
-            '</div>',
-            '<div class="vlt-right-panel">',
-                '<div class="vlt-name">{{name}}</div>',
-                '<div class="vlt-path help-block">{{workspace.name}} > {{vault.name}} > {{name}}</div>',
-                '<div class="vlt-desc help-block">{{description}}</div>',
-            '</div>',
+    nodeTpl: [
+        '<div class="vlt-search-result vlt-{{typeCss}}">',
+        '<div class="vlt-left-panel">',
+        '<div class="vlt-icon"></div>',
+        '</div>',
+        '<div class="vlt-right-panel">',
+        '<div class="vlt-name">{{name}}</div>',
+        '<div class="vlt-path help-block">{{path}}</div>',
+        '</div>',
         '</div>'
     ].join(''),
 
     init: function () {
         this._super.apply(this, arguments);
-        Vaultier.LayoutSearchBoxViewVaultTpl = this.vaultTpl = Vaultier.LayoutSearchBoxViewVaultTpl || Handlebars.compile(this.vaultTpl);
-        Vaultier.LayoutSearchBoxViewCardTpl = this.cardTpl = Vaultier.LayoutSearchBoxViewCardTpl || Handlebars.compile(this.cardTpl);
+        Vaultier.LayoutSearchBoxViewNodeTpl = this.nodeTpl = Vaultier.LayoutSearchBoxViewNodeTpl || Handlebars.compile(this.nodeTpl);
+        this.set('adapter', Vaultier.__container__.lookup('adapter:node'));
     },
 
     willDestroyElement: function () {
@@ -48,27 +38,26 @@ Vaultier.LayoutSearchBoxView = Ember.View.extend({
         var ctrl = this.get('controller')
         var el = $(this.get('element'));
         var input = el.find('select');
-        var vaultTpl = this.get('vaultTpl')
-        var cardTpl = this.get('cardTpl')
+        var nodeTpl = this.get('nodeTpl')
         var sort = 0;
 
         var navigate = function (item) {
-            if (item.type == 'card') {
-                ctrl.transitionToRoute('Secret.index', item.workspace.slug, item.vault.slug, item.slug)
+            if (item.type == Vaultier.dal.model.Node.proto().types.FOLDER.value) {
+                ctrl.transitionToRoute('Document.list', item.id);
             } else {
-                ctrl.transitionToRoute('Cards.index', item.workspace.slug, item.slug)
+                ctrl.transitionToRoute('Document.detail', item.id);
             }
         }
 
         input.selectize({
-            valueField: 'uid',
+            valueField: 'id',
             labelField: 'name',
             searchField: 'keywords',
             sortField: 'sort',
             highlight: false,
             options: [],
             create: false,
-            onChange: function(){
+            onChange: function () {
                 "use strict";
                 this.clearCache();
             },
@@ -85,50 +74,49 @@ Vaultier.LayoutSearchBoxView = Ember.View.extend({
             },
             render: {
                 option: function (item, escape) {
-                    var html = '';
-                    if (item.get('type') == 'card') {
-                        html = cardTpl(item)
-                    } else {
-                        html = vaultTpl(item)
-                    }
-                    return html
+                    return nodeTpl(item);
                 }
             },
             load: function (query, callback) {
                 if (!query.length) return callback();
-                $.ajax({
-                    url: '/api/search/search',
-                    type: 'GET',
-                    data: {
-                        query: query
-                    },
-                    error: function () {
-                        callback();
-                    },
-                    success: function (data) {
-                        var result = [];
-                        data.cards.forEach(function (card) {
-                            sort++;
-                            card.id = card.slug;
-                            card.sort = sort;
-                            card.type = 'card';
-                            card.uid = 'c-' + card.id;
-                            result.push(Ember.Object.create(card));
+                this.get('adapter')
+                    .searchNodesByQuery(query)
+                    .then(function (nodes) {
+                        //prepare node
+                        var searchedNodes = [];
+                        nodes.forEach(function (node) {
+                            var treeNode = Vaultier.Document.Node.create({ content: node});
+                            searchedNodes.pushObject({
+                                id: treeNode.get('id'),
+                                name: treeNode.get('name'),
+                                type: treeNode.get('type'),
+                                typeCss: treeNode.get('typeCss')
+                            });
                         });
-
-                        data.vaults.forEach(function (vault) {
-                            sort++;
-                            vault.id = vault.slug;
-                            vault.sort = sort;
-                            vault.type = 'vault';
-                            vault.uid = 'v-' + vault.id;
-                            result.push(Ember.Object.create(vault));
-                        });
-
-                        callback(result);
-                    }
-                });
-            }
+                        return searchedNodes;
+                    }).then(function (searchedNodes) {
+                        //assign path to root for every node in result
+                        var promises = [];
+                        searchedNodes.forEach(function (searchedNode) {
+                            var promise = this.get('adapter').loadParents(searchedNode.id).
+                                then(function (parents) {
+                                    //build path string to which it will be shown
+                                    var path = [];
+                                    parents.forEach(function (parent) {
+                                        path.pushObject(parent.get('name'));
+                                    });
+                                    searchedNode.path = path.join(' > ');
+                                    return searchedNode;
+                                });
+                            promises.pushObject(promise);
+                        }.bind(this));
+                        return Ember.RSVP.Promise.all(promises);
+                    }.bind(this))
+                    .then(function (searchedNodes) {
+                        //show result
+                        callback(searchedNodes);
+                    });
+            }.bind(this)
         });
 
         var selectize = input[0].selectize;
@@ -144,7 +132,7 @@ Vaultier.LayoutSearchBoxView = Ember.View.extend({
             navigate(item);
         });
 
-        selectize.on('load', function(result){
+        selectize.on('load', function (result) {
             "use strict";
             var $control = selectize.$control;
             if (!result || result.length) {
