@@ -55,6 +55,46 @@ Vaultier.dal.adapter.NodeAdapter = Vaultier.dal.core.RESTAdapter.extend({
             });
             return parentClasses;
         });
+    },
+
+    /**
+     * Search nodes by given query string
+     *
+     * @method searchNodesByQuery
+     * @param {String} queryString
+     * @returns {Ember.RSVP.Promise}
+     */
+    searchNodesByQuery: function(queryString) {
+        return Utils.RSVPAjax({
+            url: '/api/nodes/',
+            type: 'GET',
+            data: {
+                search: queryString
+            }
+        }).then(function(nodeObjects) {
+            var nodes = [];
+            nodeObjects.forEach(function (nodeObject) {
+                var nodeModel = Vaultier.dal.model.Node.load({
+                    id: nodeObject.id,
+                    name: nodeObject.name,
+                    meta: nodeObject.meta,
+                    type: nodeObject.type,
+                    data: nodeObject.data,
+                    color: nodeObject.color,
+                    enc_version: nodeObject.enc_version,
+                    created_by: nodeObject.created_by,
+                    created_at: nodeObject.created_at,
+                    updated_at: nodeObject.updated_at,
+                    parent: nodeObject.parent,
+                    membership: nodeObject.membership,
+                    perms: nodeObject.perms
+                });
+
+                nodes.pushObject(nodeModel);
+            });
+            Utils.Logger.log.debug(nodes);
+            return nodes;
+        });
     }
 
 });
