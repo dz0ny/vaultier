@@ -16,6 +16,7 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
      * @param {mixed} container
      */
     run: function (app, container) {
+        this.mockSearch();
         this.mockGetDetail();
         this.mockGetParent();
         this.mockGetChildren();
@@ -203,6 +204,33 @@ Vaultier.Mock.NodeMock = Vaultier.Mock.BaseMock.create({
                 that.fixtures.removeObject(fixtureNode);
 
                 this.responseText = null;
+            }
+        });
+    },
+
+    /**
+     * Mock GET method for searching nodes
+     * example url: /api/nodes/?search=facebook
+     *
+     * @method mockSearch
+     */
+    mockSearch: function () {
+        var that = this;
+        Ember.$.mockjax({
+            url: /^\/api\/nodes\/$/,
+            type: 'GET',
+            data: { search: /([\w]*)/ },
+            response: function (settings) {
+                this.responseText = [];
+                for (var i = 0; i < that.fixtures.length; i++) {
+                    if (that.fixtures[i].name.toLowerCase().search(settings.data.search.toLowerCase()) >= 0) {
+                        if (this.responseText.length == 4) {
+                            break;
+                        }
+                        this.responseText.pushObject(that.fixtures[i]);
+                    }
+                }
+                Utils.Logger.log.debug(this.responseText);
             }
         });
     },
