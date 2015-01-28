@@ -27,8 +27,12 @@ Vaultier.DocumentsIndexRoute = Ember.Route.extend(
             return store
                 .find('Node')
                 .then(function (nodes) {
-                    var node = nodes.objectAt(0);
-                    this.transitionTo('Document.list', node.get('id'));
+                    if (nodes.get('content.length') == 0) {
+                        this.transitionTo('Documents.noNodes');
+                    } else {
+                        var node = nodes.objectAt(0);
+                        this.transitionTo('Document.list', node.get('id'));
+                    }
                 }.bind(this));
         }
 

@@ -118,14 +118,13 @@ Vaultier.DocumentController = Vaultier.Document.TreeController.extend({
 
                     $.notify('Your ' + typeOfRemoveNode + ' has been deleted successfully.', 'success');
 
-                    if (newSelectedNode.get('type') == Vaultier.dal.model.Node.proto().types.FOLDER.value) {
+                    if (newSelectedNode == null) {
+                        this.transitionTo('Documents.noNodes');
+                    } else if (newSelectedNode.get('type') == Vaultier.dal.model.Node.proto().types.FOLDER.value) {
                         this.transitionTo('Document.list', newSelectedNode.get('id'));
                     } else {
                         this.transitionTo('Document.detail', newSelectedNode.get('id'));
                     }
-
-                    //TODO if we remove last node we have to show it to user
-
 
                 }.bind(this),
 

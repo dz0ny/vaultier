@@ -84,6 +84,7 @@ Vaultier.Router.map(function () {
             this.route('noKeys', { path: '/waiting-for-keys'});
         });
         this.route('createRoot', { path: '/create'});
+        this.route('noNodes', { path: '/no-nodes'});
     });
 
 
