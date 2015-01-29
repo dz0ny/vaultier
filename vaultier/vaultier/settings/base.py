@@ -154,7 +154,6 @@ INSTALLED_APPS = (
     'django_mptt_acl',
     'vaultier',
     'accounts',
-    'versions',
     # todo: remove
     'acls',
     'workspaces',
