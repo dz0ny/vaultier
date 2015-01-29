@@ -220,13 +220,18 @@ Service.Tree = Ember.Object.extend({
      * @param {Vaultier.Document.Node} destinationParentNode
      */
     moveNode: function (treeNodeToMove, destinationParentNode) {
-        treeNodeToMove.get('parent').get('children').removeObject(treeNodeToMove);
+
+        this.nodes.get('content').removeObject(treeNodeToMove);
 
         Utils.Logger.log.debug(this.nodes);
 
+        treeNodeToMove.get('parent').get('children').removeObject(treeNodeToMove);
+
         Utils.Logger.log.debug(destinationParentNode.get('id'));
-        this.nodes.removeObject(treeNodeToMove);
         treeNodeToMove.set('parent', destinationParentNode);
+        treeNodeToMove.set('content.parent', destinationParentNode.get('id'));
+
+        Utils.Logger.log.debug(this.nodes);
 
         return treeNodeToMove.get('content').saveRecord().then(function (response) {
             Utils.Logger.log.debug(treeNodeToMove);
@@ -685,9 +690,12 @@ Service.Tree = Ember.Object.extend({
      * @return {Vaultier.Document.Node}
      */
     _insertNodeOnRightPlace: function (treeNode, parentTreeNode) {
+        Utils.Logger.log.debug(parentTreeNode.get('name'));
+        var childrenCount = this._computeCountOfChildren(parentTreeNode);
         var indexToInputNode =
             this.nodes.get('content').indexOf(parentTreeNode)
-            + parentTreeNode.get('children.length');
+            + childrenCount;
+        Utils.Logger.log.debug(childrenCount);
         Utils.Logger.log.debug(this.nodes.get('content').indexOf(parentTreeNode));
         Utils.Logger.log.debug(indexToInputNode);
         this.nodes.insertAt(indexToInputNode, treeNode);
@@ -709,6 +717,26 @@ Service.Tree = Ember.Object.extend({
             }
         });
         return nodeAlreadyInArray;
+    },
+
+    /**
+     * Compute all children nodes for given node
+     *
+     * @method _computeCountOfChildren
+     * @param {Vaultier.Document.Node} node
+     * @private
+     * @returns {Integer}
+     */
+    _computeCountOfChildren: function(node) {
+        if (node.get('children.length') == 0) {
+            return 0;
+        }
+        var count = 0;
+        node.get('children').forEach(function(children) {
+            count += this._computeCountOfChildren(children);
+            count++;
+        }.bind(this));
+        return count;
     }
 
 });
