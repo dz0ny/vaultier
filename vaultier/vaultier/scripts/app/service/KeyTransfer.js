@@ -64,7 +64,7 @@ Service.KeyTransfer = Ember.Object.extend({
                                     .then(function (node) {
                                         try {
                                             var encryptedKey = node.get('membership.workspace_key');
-                                            var decryptedKey = this.decryptWorkspaceKey(encryptedKey);
+                                            var decryptedKey = this.decryptNodeKey(encryptedKey);
                                             promises.push(this.transferKeyToMember(member, decryptedKey));
                                         } catch (error) {
                                             console.error('Keytransfer failed for member {id}'.replace('{id}', member.get('id')))
@@ -86,14 +86,14 @@ Service.KeyTransfer = Ember.Object.extend({
         return this.get('coder').generateNodeKey();
     },
 
-    decryptWorkspaceKey: function (encryptedKey) {
+    decryptNodeKey: function (encryptedKey) {
         var key = encryptedKey;
 
         Utils.Logger.log.debug(key);
 
         var coder = this.get('coder');
         var privateKey = this.get('auth.privateKey');
-        key = coder.decryptWorkspaceKey(key, privateKey);
+        key = coder.decryptNodeKey(key, privateKey);
         
         Utils.Logger.log.debug(key);
 
@@ -109,7 +109,7 @@ Service.KeyTransfer = Ember.Object.extend({
         return this.get('store').find('WorkspaceKey', memberId)
             .then(function (member) {
                 var publicKey = member.get('public_key')
-                var wk = coder.encryptWorkspaceKey(decryptedKey, publicKey);
+                var wk = coder.encryptNodeKey(decryptedKey, publicKey);
                 member.set('workspace_key', wk)
                 return member.saveRecord()
             });

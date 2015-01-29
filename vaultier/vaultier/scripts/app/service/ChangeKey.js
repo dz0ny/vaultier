@@ -42,22 +42,22 @@ Service.ChangeKey = Ember.Object.extend({
                 // set public key for user
                 user.set('public_key', incomingPublicKey)
 
-                // update all workspace keys
+                // update all nodes keys
                 user.get('membership').forEach(function (member) {
 
-                    //decode current workspace key
-                    var workspaceKey = coder.decryptWorkspaceKey(
+                    //decode current node key
+                    var nodeKey = coder.decryptNodeKey(
                         member.workspace_key,
                         currentPrivateKey
                     )
 
-                    // encode new workspace key
-                    var incomingWorkspaceKey = coder.encryptWorkspaceKey(
-                        workspaceKey,
+                    // encode new node key
+                    var incomingNodeKey = coder.encryptNodeKey(
+                        nodeKey,
                         incomingPublicKey
                     )
 
-                    member.workspace_key = incomingWorkspaceKey
+                    member.workspace_key = incomingNodeKey
                 }.bind(this));
 
 

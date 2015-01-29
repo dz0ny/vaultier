@@ -13,16 +13,16 @@ Vaultier.dal.model.Node = RL.Model.extend(
     Vaultier.dal.mixin.PolymorphicModel.Mixin,
     {
         init: function () {
-            this.set('workspacekey', Vaultier.__container__.lookup('service:workspacekey'));
+            this.set('nodekey', Vaultier.__container__.lookup('service:nodekey'));
             this.set('adapter', Vaultier.__container__.lookup('adapter:node'));
             Utils.Logger.log.debug(this.get('adapter'));
             return this._super.apply(this, arguments);
         },
 
         /**
-         * @DI service:workspacekey
+         * @DI service:nodekey
          */
-        workspacekey: null,
+        nodekey: null,
 
         /**
          * @DI adapter:node
@@ -72,16 +72,13 @@ Vaultier.dal.model.Node = RL.Model.extend(
         membership: RL.attr('object', { readOnly: true }),
 
         /**
-         * Managed by Service.WorkspaceKey, True when key cannot be decrypted
+         * Managed by Service.NodeKey, True when key cannot be decrypted
          */
         keyError: false,
 
-        membership: RL.attr('object', { readOnly: true }),
-
-
         saveRecord: function () {
             var isNew = this.get('isNew');
-            Utils.Logger.log.debug(this.get('workspacekey'));
+            Utils.Logger.log.debug(this.get('nodekey'));
 
             if (isNew) {
                 //set enc_version when we create new node
@@ -95,12 +92,11 @@ Vaultier.dal.model.Node = RL.Model.extend(
             var node = this;
             Utils.Logger.log.debug(node);
             if (isNew && !this.get('parent')) {
-                // after save, approve workspace
                 promise = promise
                     .then(function () {
                         Utils.Logger.log.debug("promise = promise.then(function () {");
-                        Utils.Logger.log.debug(this.get('workspacekey'));
-                        return this.get('workspacekey').transferKeyToCreatedNode(node);
+                        Utils.Logger.log.debug(this.get('nodekey'));
+                        return this.get('nodekey').transferKeyToCreatedNode(node);
                     }.bind(this))
                     .then(function () {
                         return node.reloadRecord();

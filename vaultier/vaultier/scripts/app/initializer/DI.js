@@ -72,11 +72,7 @@ Vaultier.initializers.DI = {
 
         app.inject('route:InvitationUse', 'invitations', 'service:invitations')
         app.inject('route:InvitationAccept', 'invitations', 'service:invitations')
-        app.inject('route:WorkspaceRolesAdminInvite', 'invitations', 'service:invitations')
-        app.inject('route:VaultRolesAdminInvite', 'invitations', 'service:invitations')
-        app.inject('route:CardRolesAdminInvite', 'invitations', 'service:invitations');
         app.inject('route', 'invitations', 'service:invitations');
-        app.inject('route:Workspaces', 'invitations', 'service:invitations');
 
         // service:keytransfer
         app.register('service:keytransfer', Service.KeyTransfer)
@@ -84,20 +80,16 @@ Vaultier.initializers.DI = {
         app.inject('service:keytransfer', 'auth', 'service:auth');
         app.inject('service:keytransfer', 'coder', 'service:coder');
 
-        // service:workspacekey
+        // service:nodekey
         if (ApplicationKernel.Config.environment != 'dev-mock') {
-            app.register('service:workspacekey', Service.WorkspaceKey);
+            app.register('service:nodekey', Service.NodeKey);
         } else {
-            app.register('service:workspacekey', Vaultier.Mock.WorkspaceKeyMock);
+            app.register('service:nodekey', Vaultier.Mock.NodeKeyMock);
         }
-        app.inject('service:workspacekey', 'auth', 'service:auth');
-        app.inject('service:workspacekey', 'store', 'store:main');
-        app.inject('service:workspacekey', 'coder', 'service:coder');
-        app.inject('service:workspacekey', 'keytransfer', 'service:keytransfer');
-
-        app.inject('route:WorkspacesCreate', 'workspacekey', 'service:workspacekey');
-        app.inject('route:Workspace', 'workspacekey', 'service:workspacekey');
-        app.inject('route:WorkspaceNoKeys', 'workspacekey', 'service:workspacekey');
+        app.inject('service:nodekey', 'auth', 'service:auth');
+        app.inject('service:nodekey', 'store', 'store:main');
+        app.inject('service:nodekey', 'coder', 'service:coder');
+        app.inject('service:nodekey', 'keytransfer', 'service:keytransfer');
 
         // service:changekey
         app.register('service:changekey', Service.ChangeKey);
@@ -119,12 +111,6 @@ Vaultier.initializers.DI = {
 
         // components injections
         app.inject('component:change-key', 'changekey', 'service:changekey');
-
-        // service:environment
-        app.register('service:environment', Service.Environment);
-        app.inject('route', 'environment', 'service:environment');
-        app.inject('controller:LayoutWorkspaceBox', 'environment', 'service:environment');
-        app.inject('service:invitations', 'env', 'service:environment');
 
         app.inject('component:roles-admin-box', 'auth', 'service:auth');
         // model injections - it is done in model inits

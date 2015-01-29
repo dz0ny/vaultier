@@ -11,16 +11,7 @@ var RegisterProps = Ember.Object.extend({
     /**
      * Stores transition created by newuserinit service to redirect to proper page after success registration
      */
-    transitionAfterRegister: false,
-    /**
-     * Stores default workspace if created by newuserinitservice
-     */
-    defaultWorkspace: false,
-    /**
-     * Stores default vault if created by newuserinitservice
-     */
-    defaultVault: false
-
+    transitionAfterRegister: false
 });
 
 RegisterProps.reopenClass(Utils.Singleton);
@@ -242,7 +233,7 @@ Vaultier.AuthRegisterCredsRoute = Ember.Route.extend({
                     });
                 }.bind(this))
 
-                // save transition and created workspace and vault
+                // save transition and created root node
                 .then(function (newuservalues) {
                     ctrl.get('props').setProperties(newuservalues);
                 }.bind(this));

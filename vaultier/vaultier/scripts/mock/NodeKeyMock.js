@@ -1,7 +1,7 @@
 ApplicationKernel.namespace('Vaultier.Mock');
 
 
-Vaultier.Mock.WorkspaceKeyMock = Ember.Object.extend(
+Vaultier.Mock.NodeKeyMock = Ember.Object.extend(
     Ember.Evented,
     {
 
@@ -94,7 +94,7 @@ Vaultier.Mock.WorkspaceKeyMock = Ember.Object.extend(
 
                 if (this.hasValidWorkspaceKey()) {
                     try {
-                        workspaceKey = this.get('keytransfer').decryptWorkspaceKey(cryptedKey)
+                        workspaceKey = this.get('keytransfer').decryptNodeKey(cryptedKey)
                     } catch (error) {
                         console.error(error.stack)
                         workspace.set('keyError', true);

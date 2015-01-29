@@ -41,9 +41,6 @@ Vaultier.dal.model.InvitationRole = RL.Model.extend(
                 return 'Invited to vault "{to_name}"'.replace('{to_name}', to_name)
             }
 
-            if (type == Role.types['TO_CARD'].value) {
-                return 'Invited to card "{to_name}"'.replace('{to_name}', to_name)
-            }
 
         }.property('to_name', 'to_type')
 

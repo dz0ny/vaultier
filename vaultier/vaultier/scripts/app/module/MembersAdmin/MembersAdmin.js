@@ -56,7 +56,7 @@ Vaultier.MembersAdminController = Ember.Controller.extend({
             {
                 sortProperties: ['nickname'],
                 content: this.get('content').filter(function (item, index, enumerable) {
-                    return item.get('status') == Vaultier.dal.model.Member.proto().statuses.MEMBER_WITHOUT_WORKSPACE_KEY.value;
+                    return item.get('status') == Vaultier.dal.model.Member.proto().statuses.MEMBER_WITHOUT_NODE_KEY.value;
                 })
             })
     }.property('content.@each', 'content.@each.status'),

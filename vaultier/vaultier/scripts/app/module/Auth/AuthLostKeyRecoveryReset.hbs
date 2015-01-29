@@ -11,12 +11,12 @@
                         <div class="row bottom-15">
 
                             <div class="col-md-10 col-md-offset-1">
-                                <h3>Workspace Data Recovery</h3>
+                                <h3>Document Data Recovery</h3>
 
                                 <p>
-                                    Recovery is possible only for workspaces where there is 
+                                    Recovery is possible only for documents where there is
                                     more than one member. This is because only other members 
-                                    of your workspaces can confirm your new key.
+                                    of your documents can confirm your new key.
                                 </p>
                             </div>
                         </div>
@@ -25,7 +25,7 @@
                                 <table class="table table-condensed">
                                     <thead>
                                     <tr>
-                                        <th>Workspace</th>
+                                        <th>Document</th>
                                         <th>Recovery Possible</th>
                                     </tr>
                                     </thead>
@@ -33,7 +33,7 @@
                                     {{#each content.memberships }}
                                         <tr>
                                             <td>
-                                                {{ workspace_name }}
+                                                {{ document_name }}
                                             </td>
                                             <td>
                                                 {{#if is_recoverable }}

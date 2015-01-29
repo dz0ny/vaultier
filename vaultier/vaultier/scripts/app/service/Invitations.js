@@ -32,9 +32,18 @@ Service.Invitations = Ember.Object.extend({
         this._super();
     },
 
-
-    _memberPromise: function (workspace, emailOrId, send, resend) {
-        var id = emailOrId.indexOf('@') < 0 ? parseInt(emailOrId) : null;
+    /**
+     * Make API call to create new member with state INVITED
+     *
+     * @param {Vaultier.Document.Node} node
+     * @param {String} email
+     * @param {Boolean} send
+     * @param {Boolean} resend
+     * @returns {Ember.RSVP.Promise}
+     * @private
+     */
+    _memberPromise: function (node, email, send, resend) {
+        var id = email.indexOf('@') < 0 ? parseInt(emailOrId) : null;
 
         if (id) {
             // do get - resend invitation
@@ -44,50 +53,71 @@ Service.Invitations = Ember.Object.extend({
             });
         } else {
             // do post - invite - send invitation
+
+            //If it is root node it will send id. If not it will send id of root node
+            var nodeIdToSend = null;
+            if (node.get('parent')) {
+                nodeIdToSend = this.get('tree').getRootNodeForNode(node).get('id');
+            } else {
+                nodeIdToSend = node.get('id');
+            }
+
             return Utils.RSVPAjax({
                 url: '/api/members/',
                 type: 'post',
                 data: {
-                    workspace: Utils.E.recordId(workspace),
-                    email: emailOrId,
+                    node: nodeIdToSend,
+                    email: email,
                     send: send,
                     resend: resend
                 }
             });
         }
-
-
     },
 
-    _invitePromise: function (member, role, params) {
-        var data = {
-            member: member.id,
-            level: role,
-            to_workspace: Utils.E.recordId(params.to_workspace),
-            to_vault: Utils.E.recordId(params.to_vault),
-            to_card: Utils.E.recordId(params.to_card)
-        };
+    /**
+     * Make API call to invite member to node
+     *
+     * @param {Vaultier.Document.Node} node
+     * @param {Vaultier.dal.mode.Member} member
+     * @param {Integer} roleLevel
+     * @returns {Ember.RSVP.Promise}
+     * @private
+     */
+    _invitePromise: function (node, member, roleLevel) {
         return  Utils.RSVPAjax({
-            url: '/api/roles/',
+            url: '/api/roles/?node=' + node.get('id'),
             type: 'post',
-            data: data
+            data: {
+                member: member.id,
+                level: roleLevel
+            }
         });
     },
 
-
-    invite: function (workspace, emailOrId, role, params, send, resend) {
+    /**
+     * Invite new or already registered user
+     *
+     * @param {Vaultier.Document.Node} node
+     * @param {String|Integer} emailOrId
+     * @param {Integer} roleLevel
+     * @param {Boolean} send
+     * @param {Boolean} resend
+     * @returns {*}
+     */
+    invite: function (node, emailOrId, roleLevel, send, resend) {
         send = Po.F.optional(send, false);
         resend = Po.F.optional(resend, false);
 
         return Ember.RSVP.resolve()
             .then(
                 function () {
-                    return this._memberPromise(workspace, emailOrId, send, resend);
+                    return this._memberPromise(node, emailOrId, send, resend);
                 }.bind(this))
 
             .then(
                 function (member) {
-                    return this._invitePromise(member, role, params);
+                    return this._invitePromise(node, member, roleLevel);
                 }.bind(this));
     },
 

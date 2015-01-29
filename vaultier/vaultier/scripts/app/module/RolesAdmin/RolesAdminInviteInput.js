@@ -96,7 +96,6 @@ Vaultier.RolesAdminInviteInput = Ember.Component.extend({
                 ajaxQueryContext.query = query;
                 ajaxQueryContext.auth = this.get('auth')
                 ajaxQueryContext.tree = this.get('tree');
-                ajaxQueryContext.workspace = this.get('workspace')
                 Ember.run.debounce(ajaxQueryContext, ajaxQuery, 500);
 
             }.bind(this),
