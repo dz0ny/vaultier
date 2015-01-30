@@ -27,7 +27,7 @@ Utils.RolesProxy = Em.ArrayProxy.extend(
         sealedUsers: [],
 
         /**
-         * Current object {Workspace, Vault or Card}
+         * Current object {Node}
          * {Em.Object}
          */
         objectScope: null,

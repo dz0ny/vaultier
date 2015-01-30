@@ -69,7 +69,7 @@ Service.Coder = Ember.Object.extend({
         return result;
     },
 
-    encryptWorkspaceKey: function(value, publicKey) {
+    encryptNodeKey: function(value, publicKey) {
         return this.encryptRSA(value, publicKey);
     },
 
@@ -81,7 +81,7 @@ Service.Coder = Ember.Object.extend({
         return result;
     },
 
-    decryptWorkspaceKey: function(value, privateKey) {
+    decryptNodeKey: function(value, privateKey) {
         return this.decryptRSA(value, privateKey);
     },
 
@@ -117,12 +117,12 @@ Service.Coder = Ember.Object.extend({
         return CryptoJS.AES.encrypt(value, passPhrase).toString()
     },
 
-    decryptWorkspaceData: function(data, workspaceKey) {
-        return this.decryptAES(data, workspaceKey)
+    decryptNodeData: function(data, nodeKey) {
+        return this.decryptAES(data, nodeKey)
     },
 
-    encryptWorkspaceData: function(data, workspaceKey) {
-        return this.encryptAES(data, workspaceKey)
+    encryptNodeData: function(data, nodeKey) {
+        return this.encryptAES(data, nodeKey)
     }
 
 

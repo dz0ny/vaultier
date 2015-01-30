@@ -204,9 +204,6 @@ Vaultier.MembersAdminRoleItemView = Ember.View.extend({
 
     icon: function () {
         var types = Vaultier.dal.model.Role.proto().types;
-        if (this.get('role.relatedObjectType') == types.TO_CARD.value) {
-            return '/static/vaultier/images/icon-card-grey.png';
-        }
         if (this.get('role.relatedObjectType') == types.TO_VAULT.value) {
             return '/static/vaultier/images/icon-vault-grey.png';
         }

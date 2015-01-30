@@ -29,95 +29,8 @@ Vaultier.Toolbar = Ember.Object.extend({
      */
     rootFolder: false,
 
-    /**
-     * @TODO will be removed with cards, vault,..
-     */
-    environment: null,
-
     init: function () {
         this.set('breadcrumbs', Ember.ArrayProxy.create({ content: Ember.A()}));
-    },
-
-    addLink: function (link, title, params, icon) {
-        this.breadcrumbs.forEach(function (item) {
-            delete item.last
-        });
-        if (link) {
-            try {
-                if (params) {
-                    args = [link, params];
-                } else {
-                    args = [link];
-                }
-                link = this.router.generate.apply(this.router, args);
-            } catch (e) {
-                console.error(e.message);
-                console.error('Breadcrumbs error during generate route (' + link + ')');
-            }
-        }
-
-        title = Utils.HandlebarsHelpers.current().ellipsis(title, 25);
-
-        if (!icon) {
-            icon = '/static/vaultier/images/icon-wrench-grey.png';
-        }
-
-        this.breadcrumbs.pushObject({
-            link: link,
-            title: title,
-            icon: icon,
-            last: true
-        });
-        return this;
-    },
-
-    addText: function (text, icon) {
-        this.addLink(null, text, null, icon);
-        return this;
-    },
-
-    addHome: function () {
-        // disabled for better user experience
-        // this.addLink('index', 'Home');
-        return this;
-    },
-
-    addSettings: function () {
-        //return this.addLink('Settings.index', 'Settings')
-        return this
-    },
-
-    addRolesAdminIndex: function (route) {
-        return this.addLink(route, 'Team', null, '/static/vaultier/images/icon-user-gray.png')
-    },
-
-    addRolesAdminInvite: function (route) {
-        return this.addLink(route, 'Invite', null, '/static/vaultier/images/icon-plus-grey.png')
-    },
-
-    addVault: function () {
-        var vault = this.get('environment.vault');
-        if (vault) {
-            this.addLink('Vault.index', vault.get('name'), vault, '/static/vaultier/images/icon-vault-grey.png')
-        }
-        return this;
-    },
-
-    addCard: function () {
-        var card = this.get('environment.card');
-        if (card) {
-            this.addLink('Card.index', card.get('name'), card, '/static/vaultier/images/icon-card-grey.png')
-        }
-        return this;
-    },
-
-
-    addWorkspace: function () {
-        var workspace = this.get('environment.workspace');
-        if (workspace) {
-            this.addLink('Workspace.index', workspace.get('name'), workspace, '/static/vaultier/images/icon-workspace-grey.png')
-        }
-        return this;
     },
 
     /**
@@ -133,6 +46,87 @@ Vaultier.Toolbar = Ember.Object.extend({
         this.set('actions', []);
         return this;
     },
+
+    /**
+     * Add Vaultier settings to breadcrumbs
+     *
+     * @method addBreadcrumbSettings
+     * @returns {Vaultier.Toolbar}
+     */
+    addBreadcrumbSettings: function() {
+        this.get('breadcrumbs').pushObject({
+                link: this.get('router').generate('Settings.index'),
+                title: 'Settings',
+                icon: '/static/vaultier/images/icon-wrench-gray.png',
+                last: false
+            });
+        return this;
+    },
+
+    /**
+     * Add Vaultier personal settings to breadcrumbs
+     *
+     * @method addBreadcrumbSettingsPersonal
+     * @returns {Vaultier.Toolbar}
+     */
+    addBreadcrumbSettingsPersonal: function() {
+        this.get('breadcrumbs').pushObject({
+                link: this.get('router').generate('Settings.index'),
+                title: 'Personal',
+                icon: '/static/vaultier/images/icon-avatar-gray.png',
+                last: true
+            });
+        return this;
+    },
+
+    /**
+     * Add Vaultier key settings to breadcrumbs
+     *
+     * @method addBreadcrumbSettingsKey
+     * @returns {Vaultier.Toolbar}
+     */
+    addBreadcrumbSettingsKey: function() {
+        this.get('breadcrumbs').pushObject({
+                link: this.get('router').generate('Settings.index'),
+                title: 'Key',
+                icon: '/static/vaultier/images/icon-locked-gray.png',
+                last: true
+            });
+        return this;
+    },
+
+    /**
+     * Add Vaultier Accept invitation page to breadcrumbs
+     *
+     * @method addBreadcrumbInvitationAnonymous
+     * @returns {Vaultier.Toolbar}
+     */
+    addBreadcrumbInvitationAnonymous: function() {
+        this.get('breadcrumbs').pushObject({
+                link: this.get('router').generate('Settings.index'),
+                title: 'Accept invitation',
+                icon: '/static/vaultier/images/icon-wrench-gray.png',
+                last: false
+            });
+        return this;
+    },
+
+    /**
+     * Add Vaultier List of invitations page to breadcrumbs
+     *
+     * @method addBreadcrumbInvitationAccept
+     * @returns {Vaultier.Toolbar}
+     */
+    addBreadcrumbInvitationAccept: function() {
+        this.get('breadcrumbs').pushObject({
+                link: this.get('router').generate('Settings.index'),
+                title: 'List of invitations to accept',
+                icon: '/static/vaultier/images/icon-wrench-gray.png',
+                last: false
+            });
+        return this;
+    },
+
 
     /**
      * Add all parents of current document to breadcrumbs

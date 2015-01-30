@@ -11,13 +11,13 @@
                         <div class="row bottom-15">
 
                             <div class="col-md-10 col-md-offset-1">
-                                <h3>Workspace Data Recovery</h3>
+                                <h3>Documents Data Recovery</h3>
 
                                 <p>
-                                    After you rebuild your key, access to encrypted workspace data has to be
+                                    After you rebuild your key, access to encrypted document data has to be
                                     renewed.
-                                    Recovery is possible only with workspaces, where more than one member exists.
-                                    Your access will be restored once at least one of your workspace collaborators goes
+                                    Recovery is possible only with documents, where more than one member exists.
+                                    Your access will be restored once at least one of your document collaborators goes
                                     online.
                                 </p>
                             </div>
@@ -27,7 +27,7 @@
                                 <table class="table table-condensed">
                                     <thead>
                                     <tr>
-                                        <th>Workspace</th>
+                                        <th>Document</th>
                                         <th>Recovery Possible</th>
                                     </tr>
                                     </thead>
@@ -35,7 +35,7 @@
                                     {{#each content.memberships }}
                                         <tr>
                                             <td>
-                                                {{ workspace_name }}
+                                                {{ document_name }}
                                             </td>
                                             <td>
                                                 {{#if is_recoverable }}

@@ -2,10 +2,14 @@ ApplicationKernel.namespace('Service');
 
 /**
  * Service is responsible of new user environment initialization
- * e.g. when user registers and has  no invitation new workspace and default vault is created
+ * e.g. when user registers and has no invitation new document and default vault is created
  *
+ * @module vaultier-service
+ * @class Service.NewUserInit
+ * @extends Ember.Object
  */
 Service.NewUserInit = Ember.Object.extend({
+
     /**
      * @DI service:auth
      */
@@ -22,10 +26,11 @@ Service.NewUserInit = Ember.Object.extend({
      */
     router: null,
 
-
     /**
      * Creates route transition function after initialization
+     * @method createTransitionFunction
      * @param {Vaultier.dal.model.Node}node
+     * @return {function}
      */
     createTransitionFunction: function (node) {
         var router = this.get('router');
@@ -36,17 +41,12 @@ Service.NewUserInit = Ember.Object.extend({
 
 
     /**
-     * if condition met function creates workspace and vault for new user
+     * If there is no invitation in session it will create default root folder for user
      *
      * returns success promise with desired transition function,
      * which executed transition router to page desired by initialization
      *
-     * resolve({
-     *          transitionAfterRegister: function,
-     *          createdWorkspace: Vaultier.dal.model.Workspace
-     *          createdVault: Vaultier.dal.model.Vault
-     * })
-     *
+     * @method initializeUser
      * @return {Ember.RSVP.Promise}
      */
     initializeUser: function () {
@@ -62,19 +62,12 @@ Service.NewUserInit = Ember.Object.extend({
             return Ember.RSVP.resolve(this.createTransitionFunction());
         }
 
-        // prepare variables and copywriting
-        var helpers = Utils.HandlebarsHelpers.create();
-        var nickname = helpers.ucfirst(auth.get('user.nickname'));
-
-
         // prepare objects to save
         var node = new Vaultier.dal.model.Node();
         node.setProperties({
             name: 'Default folder',
             type: Vaultier.dal.model.Node.proto().types.FOLDER.value,
             color: 'blue'
-
-
         });
 
         var notifyError = function (error) {

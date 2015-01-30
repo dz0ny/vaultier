@@ -20,9 +20,9 @@ Vaultier.dal.model.Member = RL.Model.extend(
                 value: 100,
                 text: 'INVITED'
             },
-            'MEMBER_WITHOUT_WORKSPACE_KEY': {
+            "MEMBER_WITHOUT_NODE_KEY": {
                 value: 200,
-                text: 'MEMBER_WITHOUT_WORKSPACE_KEY'
+                text: 'MEMBER_WITHOUT_NODE_KEY'
             },
             'MEMBER': {
                 value: 300,
@@ -45,7 +45,7 @@ Vaultier.dal.model.Member = RL.Model.extend(
          * @return {Boolean}
          */
         hasNokey: function () {
-            return this.get('status') === this.get('statuses')['MEMBER_WITHOUT_WORKSPACE_KEY'].value;
+            return this.get('status') === this.get('statuses')['MEMBER_WITHOUT_NODE_KEY'].value;
         }.property('status')
 
     });

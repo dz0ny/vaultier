@@ -161,7 +161,6 @@ var vaultierModulesConfig = {
             "./app/utils/Singleton.js",
             "./app/utils/HandlebarsHelpers.js",
             "./app/utils/RSVPAjax.js",
-            "./app/utils/MutableAdapterMixin.js",
             "./app/utils/RolesProxy.js",
             "./app/utils/Security.js",
         /**************** App **/
@@ -196,14 +195,10 @@ var vaultierModulesConfig = {
 
             "./app/dal/model/Color.js",
             "./app/dal/model/User.js",
-            "./app/dal/model/Workspace.js",
             "./app/dal/model/WorkspaceKey.js",
             "./app/dal/model/Member.js",
             "./app/dal/model/Invitation.js",
             "./app/dal/model/Role.js",
-            "./app/dal/model/Vault.js",
-            "./app/dal/model/Card.js",
-            "./app/dal/model/Secret.js",
             "./app/dal/model/LostKey.js",
             "./app/dal/model/News.js",
             "./app/dal/model/Node.js",
@@ -216,14 +211,13 @@ var vaultierModulesConfig = {
         "scripts": [
             "./app/service/Tree.js",
             "./app/service/Errors.js",
-            "./app/service/Environment.js",
             "./app/service/Auth.js",
             "./app/service/AuthPromises.js",
             "./app/service/Session.js",
             "./app/service/Storage.js",
             "./app/service/Coder.js",
             "./app/service/Invitations.js",
-            "./app/service/WorkspaceKey.js",
+            "./app/service/NodeKey.js",
             "./app/service/KeyTransfer.js",
             "./app/service/ChangeKey.js",
             "./app/service/NewUserInit.js"
@@ -240,21 +234,14 @@ var vaultierModulesConfig = {
             "./mock/NodeMock.js",
             "./mock/MemberMock.js",
             "./mock/RoleMock.js",
-            "./mock/WorkspaceKeyMock.js"
+            "./mock/NodeKeyMock.js"
         ]
     },
 
     "layout": {
         environments: ['*'],
         "templates": [
-            "./app/module/Layout/SecurityBox.hbs",
-            "./app/module/Layout/WorkspaceBox.hbs",
-            "./app/module/Layout/SearchBox.hbs",
-            "./app/module/Layout/Toolbar.hbs",
-            "./app/module/Layout/LayoutStandard.hbs",
-            "./app/module/Layout/Confirm.hbs",
-            "./app/module/Layout/Footer.hbs",
-            "./app/module/Layout/PasswordField.hbs"
+            "./app/module/Layout/**/*.hbs"
         ],
         "scripts": [
             "./app/module/Layout/LayoutStandard.js",
@@ -262,7 +249,6 @@ var vaultierModulesConfig = {
             "./app/module/Layout/SearchBox.js",
             "./app/module/Layout/DotDotDot.js",
             "./app/module/Layout/Toolbar.js",
-            "./app/module/Layout/WorkspaceBox.js",
             "./app/module/Layout/Confirm.js",
             "./app/module/Layout/PasswordField.js"
         ]
@@ -270,9 +256,7 @@ var vaultierModulesConfig = {
     "error": {
         environments: ['*'],
         "templates": [
-            "./app/module/Error/Error404.hbs",
-            "./app/module/Error/ErrorGeneric.hbs",
-            "./app/module/Error/Layout.hbs"
+            "./app/module/Error/**/*.hbs"
         ],
         "scripts": [
             "./app/module/Error/Error.js"
@@ -280,6 +264,9 @@ var vaultierModulesConfig = {
     },
     "auth": {
         environments: ['*'],
+        "templates": [
+            "./app/module/Auth/**/*.hbs"
+        ],
         "scripts": [
             "./app/module/Auth/AuthLogin.js",
             "./app/model/LostKey.js",
@@ -289,24 +276,15 @@ var vaultierModulesConfig = {
             "./app/module/Auth/AuthLostKeyRecoveryReset.js",
             "./app/module/Auth/AuthLostKeyRecoveryRebuild.js",
             "./app/module/Auth/AuthLostKeyRecoveryDisable.js"
-        ],
-        "templates": [
-            "./app/module/Auth/AuthLogin.hbs",
-            "./app/module/Auth/AuthRegister.hbs",
-            "./app/module/Auth/AuthRegisterBefore.hbs",
-            "./app/module/Auth/AuthRegisterKeys.hbs",
-            "./app/module/Auth/AuthRegisterCreds.hbs",
-            "./app/module/Auth/AuthLostKeyIndex.hbs",
-            "./app/module/Auth/AuthLostKeySuccess.hbs",
-            "./app/module/Auth/AuthRegisterSum.hbs",
-            "./app/module/Auth/AuthLostKeyRecoveryReset.hbs",
-            "./app/module/Auth/AuthLostKeyRecoveryRebuild.hbs",
-            "./app/module/Auth/AuthLostKeyRecoveryDisable.hbs",
-            "./app/module/Auth/AuthLostKeyRecoverySuccess.hbs"
         ]
     },
     "membership": {
         environments: ['*'],
+        "templates": [
+            "./app/module/RolesAdmin/**/*.hbs",
+            "./app/module/Invitation/**/*.hbs",
+            "./app/module/MembersAdmin/**/*.hbs"
+        ],
         "scripts": [
             "./app/module/Invitation/Invitation.js",
             "./app/module/RolesAdmin/RolesAdminInviteInput.js",
@@ -316,11 +294,6 @@ var vaultierModulesConfig = {
             "./app/module/RolesAdmin/RolesAdminManagement.js",
             "./app/module/MembersAdmin/MembersAdminList.js",
             "./app/module/MembersAdmin/MembersAdmin.js"
-        ],
-        "templates": [
-            "./app/module/RolesAdmin/**/*.hbs",
-            "./app/module/Invitation/**/*.hbs",
-            "./app/module/MembersAdmin/**/*.hbs"
         ]
     },
     "documents": {
@@ -350,98 +323,16 @@ var vaultierModulesConfig = {
             "./app/module/Documents/Documents.js"
         ]
     },
-    "workspace": {
-        environments: ['*'],
-        "scripts": [
-            "./app/module/Workspace/WorkspacesIndex.js",
-            "./app/module/Workspace/WorkspacesCreate.js",
-            "./app/module/Workspace/WorkspaceIndex.js",
-            "./app/module/Workspace/WorkspaceEdit.js",
-            "./app/module/Workspace/WorkspaceRolesAdmin.js",
-            "./app/module/Workspace/WorkspaceRolesAdminManagement.js"
-        ],
-        "templates": [
-            "./app/module/Workspace/WorkspacesIndex.hbs",
-            "./app/module/Workspace/WorkspacesIndexItem.hbs",
-            "./app/module/Workspace/WorkspacesIndexWithoutKeys.hbs",
-            "./app/module/Workspace/WorkspacesCreate.hbs",
-            "./app/module/Workspace/WorkspaceEdit.hbs",
-            "./app/module/Workspace/WorkspaceNoKeys.hbs"
-        ]
-    },
-    "vault": {
-        environments: ['*'],
-        "scripts": [
-            "./app/module/Vault/VaultsIndex.js",
-            "./app/module/Vault/VaultsCreate.js",
-            "./app/module/Vault/VaultIndex.js",
-            "./app/module/Vault/VaultEdit.js",
-            "./app/module/Vault/VaultMember.js",
-            "./app/module/Vault/VaultHistory.js"
-        ],
-        "templates": [
-            "./app/module/Vault/**/*.hbs"
-        ]
-    },
-    "card": {
-        environments: ['*'],
-        "scripts": [
-            "./app/module/Card/CardsIndex.js",
-            "./app/module/Card/CardsCreate.js",
-            "./app/module/Card/CardEdit.js",
-            "./app/module/Card/CardIndex.js",
-            "./app/module/Card/CardMember.js",
-            "./app/module/Card/CardMove.js"
-        ],
-        "templates": [
-            "./app/module/Card/CardsIndex.hbs",
-            "./app/module/Card/CardsIndexItem.hbs",
-            "./app/module/Card/CardsCreate.hbs",
-            "./app/module/Card/CardEdit.hbs",
-            "./app/module/Card/CardMove.hbs",
-            "./app/module/Card/CardMoveVaultNode.hbs"
-        ]
-    },
-    "secret": {
-        environments: ['*'],
-        "scripts": [
-            "./app/module/Secret/EditorInput.js",
-            "./app/module/Secret/SecretCreate.js",
-            "./app/module/Secret/SecretEdit.js",
-            "./app/module/Secret/SecretType.js",
-            "./app/module/Secret/SecretIndex.js",
-            "./app/module/Secret/SecretMove.js"
-        ],
-        "templates": [
-            "./app/module/Secret/SecretIndex.hbs",
-            "./app/module/Secret/SecretEdit.hbs",
-            "./app/module/Secret/SecretCreate.hbs",
-            "./app/module/Secret/SecretTypeSelect.hbs",
-            "./app/module/Secret/SecretTypeNote.hbs",
-            "./app/module/Secret/SecretTypePassword.hbs",
-            "./app/module/Secret/SecretTypeFile.hbs",
-            "./app/module/Secret/SecretIndexItemNote.hbs",
-            "./app/module/Secret/SecretIndexItemPassword.hbs",
-            "./app/module/Secret/SecretIndexItemFile.hbs",
-            "./app/module/Secret/SecretIndexItemControls.hbs",
-            "./app/module/Secret/SecretMove.hbs",
-            "./app/module/Secret/SecretMoveVaultNode.hbs",
-            "./app/module/Secret/SecretMoveCardNode.hbs"
-        ]
-    },
     "settings": {
         environments: ['*'],
+        "templates": [
+            "./app/module/Settings/**/*.hbs"
+        ],
         "scripts": [
             "./app/module/Settings/ChangeKey.js",
             "./app/module/Settings/SettingsIndex.js",
             "./app/module/Settings/SettingsPersonal.js",
             "./app/module/Settings/SettingsKeys.js"
-        ],
-        "templates": [
-            "./app/module/Settings/ChangeKey.hbs",
-            "./app/module/Settings/SettingsIndex.hbs",
-            "./app/module/Settings/SettingsPersonal.hbs",
-            "./app/module/Settings/SettingsKeys.hbs"
         ]
     },
 

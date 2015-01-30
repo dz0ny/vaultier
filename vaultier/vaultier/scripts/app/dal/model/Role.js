@@ -63,7 +63,7 @@ Vaultier.dal.model.Role = RL.Model.extend(
         }.property('member.status'),
 
         isMemberWithoutKeys : function() {
-            return this.get('member.status') == Vaultier.dal.model.Member.proto().statuses['MEMBER_WITHOUT_WORKSPACE_KEY'].value;
+            return this.get('member.status') == Vaultier.dal.model.Member.proto().statuses['MEMBER_WITHOUT_NODE_KEY'].value;
         }.property('member.status'),
 
         printableDesc: function() {

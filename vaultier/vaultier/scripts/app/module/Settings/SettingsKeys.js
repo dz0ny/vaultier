@@ -9,13 +9,14 @@ Vaultier.SettingsKeysRoute = Ember.Route.extend(
             ctrl.set('stepSuccess', false);
             ctrl.set('stepKeys', false);
 
-            // set breadcrumbs
-            ctrl.get('controllers.Settings').set('breadcrumbs',
-                Vaultier.Toolbar.create({router: this.get('router'), environment: this.get('environment')})
-                    .addHome()
-                    .addSettings()
-                    .addText('Regenerate key')
-            );
+            ctrl.get('controllers.Settings').set('toolbar', this.createToolbar());
+        },
+
+        createToolbar: function () {
+            return Vaultier.Toolbar.create({router: this.get('router')})
+                .prepareBuilder()
+                .addBreadcrumbSettings()
+                .addBreadcrumbSettingsKey();
         },
 
         actions: {

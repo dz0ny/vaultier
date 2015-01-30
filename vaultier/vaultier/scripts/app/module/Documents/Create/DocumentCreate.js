@@ -145,7 +145,7 @@ Vaultier.DocumentCreateView = Ember.View.extend({
         this.get('parentView').set('showLeftTreeNodePanel', false);
 
         var el = $(this.get('element'));
-        var input = el.find('.vlt-secret-type-file');
+        var input = el.find('.vlt-document-type-file');
         var controller = this.get('controller');
         input.on('change', function (e) {
 

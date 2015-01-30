@@ -17,9 +17,9 @@ Vaultier.dal.mixin.EncryptedModel.Mixin = Ember.Mixin.create({
     EncryptedModelMixedIn: true,
 
     /**
-     * @DI service:workspacekey
+     * @DI service:nodekey
      */
-    workspacekey: null,
+    nodekey: null,
 
     /**
      * Overriden constructor
@@ -27,7 +27,7 @@ Vaultier.dal.mixin.EncryptedModel.Mixin = Ember.Mixin.create({
      * @method init
      */
     init: function () {
-        this.workspacekey = Vaultier.__container__.lookup('service:workspacekey');
+        this.nodekey = Vaultier.__container__.lookup('service:nodekey');
         this._super.apply(this, arguments);
 
         if (this.get('isNew')) {
@@ -147,7 +147,8 @@ Vaultier.dal.mixin.EncryptedModel.Mixin = Ember.Mixin.create({
         if (encryptedData) {
             Utils.Logger.log.debug(this);
             Utils.Logger.log.debug(this.get('note'));
-            data = this.workspacekey.decryptWorkspaceData(
+            Utils.Logger.log.debug(this.get('membership.workspace_key'));
+            data = this.nodekey.decryptNodeData(
                 encryptedData,
                 this.get('membership.workspace_key'),
                 this.get('membership.id')) || {};
@@ -167,9 +168,9 @@ Vaultier.dal.mixin.EncryptedModel.Mixin = Ember.Mixin.create({
 
     encryptField: function (encryptedField) {
         var decryptedData = this.getDecryptedData(encryptedField);
-        var data = this.workspacekey.encryptWorkspaceData(
+        var data = this.nodekey.encryptNodeData(
             decryptedData['data'],
-            this.get('membership.workspace_key'),
+            this.get('membership.node_key'),
             this.get('membership.id')
         );
         this.set(encryptedField, data);
@@ -185,7 +186,7 @@ Vaultier.dal.mixin.EncryptedModel.Mixin = Ember.Mixin.create({
             this.set('decrypted', true);
         } catch (e) {
             this.set('decrypted', false);
-            console.error('Secret decryption failed');
+            console.error('Document decryption failed');
             console.error(e.stack);
             throw e;
         }

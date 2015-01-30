@@ -31,6 +31,6 @@ Vaultier.dal.model.LostKey = RL.Model.extend(
  * @extends RL.Model
  */
 Vaultier.dal.model.LostKeyMemberships = RL.Model.extend({
-    workspace_name: RL.attr('string'),
+    document_name: RL.attr('string'),
     is_recoverable: RL.attr('boolean')
 });

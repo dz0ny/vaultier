@@ -1,11 +1,6 @@
 ApplicationKernel.namespace('Service');
 
-Service.WorkspaceKeyDecryptSoftError = function () {
-    var error = Error.apply(this, arguments);
-    this.stack = error.stack
-}
-
-Service.WorkspaceKey = Ember.Object.extend(
+Service.NodeKey = Ember.Object.extend(
     Ember.Evented,
     {
 
@@ -30,8 +25,7 @@ Service.WorkspaceKey = Ember.Object.extend(
         keytransfer: null,
 
         membersToApprove: null,
-        workspace: null,
-        workspaceKey: null,
+        nodeKey: null,
 
         checkInterval: 60000,
         checkIntervalId: null,
@@ -42,11 +36,11 @@ Service.WorkspaceKey = Ember.Object.extend(
             this._super(this, arguments);
         },
 
-        startChecking: function (workspace) {
+        startChecking: function (node) {
             // start checking interval
             this.set('checkIntervalId', setInterval(
                 function () {
-                    this.checkWorkspaceKey(workspace);
+                    this.checkNodeKey(node);
                 }.bind(this),
                 this.get('checkInterval')
             ));
@@ -56,17 +50,17 @@ Service.WorkspaceKey = Ember.Object.extend(
             clearInterval(this.get('checkIntervalId'));
         },
 
-        checkWorkspaceKey: function (rootNode) {
+        checkNodeKey: function (rootNode) {
             this.get('store').find('Node', rootNode.get('id'))
                 .then(function (rootNodeCheck) {
                     if (rootNodeCheck.get('membership.status') == Vaultier.dal.model.Member.proto().statuses['MEMBER'].value) {
                         this.stopChecking();
                         rootNode.reloadRecord()
                             .then(function () {
-                                this.selectWorkspace(rootNode);
+//                                this.selectWorkspace(rootNode);
                                 $.notify(
                                     ['Keys to root node "{rootNode}" have been transfered to you. ',
-                                        'You can now fully work with this workspace']
+                                        'You can now fully work with this folder']
                                         .join('')
                                         .replace('{rootNode}', rootNode.get('name')),
                                     {
@@ -88,9 +82,9 @@ Service.WorkspaceKey = Ember.Object.extend(
             return keytransfer.transferKeyToMember(node.get('membership.id'), decryptedKey)
         },
 
-        decryptWorkspaceData: function (data, encryptedKey, membershipId) {
+        decryptNodeData: function (data, encryptedKey, membershipId) {
             if (!this.keys[membershipId]) {
-                this.keys[membershipId] = this.get('keytransfer').decryptWorkspaceKey(encryptedKey);
+                this.keys[membershipId] = this.get('keytransfer').decryptNodeKey(encryptedKey);
             }
             var coder = this.get('coder');
 
@@ -102,25 +96,25 @@ Service.WorkspaceKey = Ember.Object.extend(
             Utils.Logger.log.debug(this.get('auth.privateKey'));
 
 
-            data = coder.decryptWorkspaceData(data, this.keys[membershipId]);
+            data = coder.decryptNodeData(data, this.keys[membershipId]);
             Utils.Logger.log.debug(data);
             data = JSON.parse(data)
             return data
         },
 
-        encryptWorkspaceData: function (data, encryptedKey, membershipId) {
+        encryptNodeData: function (data, encryptedKey, membershipId) {
             Utils.Logger.log.debug(this.keys);
             if (!this.keys[membershipId]) {
-                this.keys[membershipId] = this.get('keytransfer').decryptWorkspaceKey(encryptedKey);
+                this.keys[membershipId] = this.get('keytransfer').decryptNodeKey(encryptedKey);
             }
             Utils.Logger.log.debug(this.keys[membershipId]);
 
             var coder = this.get('coder');
-            var workspaceKey = this.get('workspaceKey');
+            var nodeKey = this.get('nodeKey');
             data = JSON.stringify(data)
             Utils.Logger.log.debug(data);
 
-            return coder.encryptWorkspaceData(data, this.keys[membershipId])
+            return coder.encryptNodeData(data, this.keys[membershipId])
 
         }
 

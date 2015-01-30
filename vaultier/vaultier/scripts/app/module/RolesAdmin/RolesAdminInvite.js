@@ -18,7 +18,6 @@ Vaultier.RolesAdminInviteRoute = Ember.Route.extend(
                 Utils.Logger.log.debug(this.get('invitations'));
                 Utils.Logger.log.debug(this.get('store'));
 
-                var inviteWorkspace = this.get('inviteWorkspace');
                 var invitedPromises = [];
 
                 invited.forEach(function (emailOrId) {
@@ -51,7 +50,6 @@ Vaultier.RolesAdminInviteRoute = Ember.Route.extend(
         setupController: function (ctrl, model) {
             Utils.Logger.log.debug('Vaultier.RolesAdminInviteRoute setupController');
 
-            ctrl.set('workspace', this.modelFor('Workspace'))
             ctrl.set('invited', []);
             ctrl.set('role', {level: this.getDefaultRoleLevel()});
             ctrl.set('roleLevels', this.setupRoleLevels());
@@ -67,7 +65,6 @@ Vaultier.RolesAdminInviteRoute = Ember.Route.extend(
     });
 
 Vaultier.RolesAdminInviteController = Ember.Controller.extend({
-    workspace: null,
     role: null,
     invited: [],
     resend: true,
