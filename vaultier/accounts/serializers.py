@@ -77,6 +77,7 @@ class RelatedUserSerializer(UserSerializer):
 
 
 class MemberKeySerializer(serializers.ModelSerializer):
+    node_key = serializers.CharField(source='workspace_key')
 
     class Meta(UserSerializer.Meta):
         model = Member

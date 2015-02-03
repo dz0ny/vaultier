@@ -155,7 +155,7 @@ INSTALLED_APPS = (
     'vaultier',
     'accounts',
     # todo: remove
-    'acls',
+    # 'acls',
     'workspaces',
     # todo: fix
     'search',
