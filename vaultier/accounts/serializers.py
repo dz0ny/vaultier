@@ -77,6 +77,7 @@ class RelatedUserSerializer(UserSerializer):
 
 
 class MemberKeySerializer(serializers.ModelSerializer):
+    node_key = serializers.CharField(source='workspace_key')
 
     class Meta(UserSerializer.Meta):
         model = Member
@@ -288,10 +289,11 @@ class MemberWorkspaceKeySerializer(serializers.ModelSerializer):
 
     public_key = serializers.SerializerMethodField('get_public_key')
     status = serializers.IntegerField(read_only=True)
+    node_key = serializers.CharField(source='workspace_key')
 
     class Meta:
         model = Member
-        fields = ('id', 'public_key', 'workspace_key', 'status')
+        fields = ('id', 'public_key', 'node_key', 'status')
 
     def validate_workspace_key(self, attrs, source):
         return attrs
