@@ -14,10 +14,10 @@
   "forin": false,
   "immed": false,
   "laxbreak": false,
-  "newcap": true,
+  "newcap": false,
   "noarg": true,
   "noempty": false,
-  "nonew": false,
+  "nonew": true,
   "nomen": false,
   "onevar": false,
   "plusplus": false,
@@ -28,5 +28,5 @@
   "white": false,
   "eqnull": true,
   "esnext": true,
-  "unused": true
+  "unused": false
 }

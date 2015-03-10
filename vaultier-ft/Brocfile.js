@@ -2,7 +2,18 @@
 
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
-var app = new EmberApp();
+var app = new EmberApp({
+  name: 'vaultier/app',
+  outputPaths: {
+    app: {
+      html: 'index.html',
+      css: {
+        'app': '/assets/vaultier.css'
+      },
+      js: '/assets/vaultier.js'
+    }
+  }
+});
 
 // Use `app.import` to add additional libraries to the generated
 // output files.

@@ -1,0 +1,120 @@
+{{#if toolbar }}
+    <div class="vlt-toolbar">
+        {{#each toolbar.breadcrumbs }}
+            {{#if last}}
+                <div class="vlt-bread active">
+                    <span class="vlt-bread-inner">
+                        {{#if icon}}
+                            <img class="vlt-icon" {{bind-attr src=icon}}>
+                        {{/if}}
+
+                        {{ title }}
+                     </span>
+                </div>
+            {{else}}
+                <div class="vlt-bread">
+                    <a {{bind-attr href=link}} class="vlt-bread-inner">
+                        {{#if icon}}
+                            <img class="vlt-icon" {{bind-attr src=icon}}>
+                        {{/if}}
+
+                        {{ title }}
+                    </a>
+                </div>
+            {{/if}}
+
+            {{#unless last}}
+                <div class="vlt-separator">
+                    <svg x="0px" y="0px" width="20px" height="20px" viewBox="0 0 20 20" focusable="false">
+                        <polygon fill="#000000" points="14,10 8,16 6.5,14.5 11,10 6.5,5.5 8,4 "></polygon>
+                    </svg>
+                </div>
+            {{/unless}}
+        {{/each}}
+
+
+        <div class="vlt-toolbar-actions pull-right navbar-right">
+
+            {{#if toolbar.actions.create}}
+                <div class="btn-group">
+                    <a class="dropdown-toggle vlt-toolbar-actions-add" data-toggle="dropdown" aria-expanded="false">
+                        <img src="images/icon-create.png"/>
+                    </a>
+                    <ul class="dropdown-menu caret-right vlt-dropdown" role="menu">
+                        <li>
+                            {{#link-to 'Document.create' 'folder'}}
+                                <img src="images/icon-folder-add.png"/>
+                                Folder
+                            {{/link-to}}
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            {{#link-to 'Document.create' 'note'}}
+                                <img src="images/icon-note.png"/>
+                                Note
+                            {{/link-to}}
+                        </li>
+                        <li>
+                            {{#link-to 'Document.create' 'password'}}
+                                <img src="images/icon-password.png"/>
+                                Password
+                            {{/link-to}}
+                        </li>
+                        <li>
+                            {{#link-to 'Document.create' 'file'}}
+                                <img src="images/icon-file.png"/>
+                                File
+                            {{/link-to}}
+                        </li>
+                    </ul>
+                </div>
+            {{/if}}
+
+            {{#if toolbar.actions.settings}}
+                <div class="btn-group">
+                    <a class="dropdown-toggle vlt-toolbar-actions-add" data-toggle="dropdown" aria-expanded="false">
+                        <img src="images/icon-settings.png"/>
+                    </a>
+                    <ul class="dropdown-menu caret-right vlt-dropdown" role="menu">
+
+                        {{#if toolbar.actions.settings.edit}}
+                            <li>
+                                {{#link-to 'Document.edit'}}
+                                    <span class="glyphicon glyphicon-wrench"></span>
+
+                                    <p>Edit</p>
+                                {{/link-to}}
+                            </li>
+
+                            {{#unless toolbar.rootFolder }}
+                                <li>
+                                    {{#link-to 'Document.move'}}
+                                        <span class="glyphicon glyphicon-folder-close"></span>
+
+                                        <p>Move</p>
+                                    {{/link-to}}
+                                </li>
+                            {{/unless}}
+                        {{/if}}
+
+                        {{#if toolbar.actions.settings.delete}}
+                            <li>
+                                <a href="#" {{action removeNode }} >
+                                    <span class="glyphicon glyphicon-remove-circle"></span>
+
+                                    <p>Delete</p>
+                                </a>
+                            </li>
+                        {{/if}}
+
+                    </ul>
+                </div>
+            {{/if}}
+
+        </div>
+
+
+        <div class="clearfix"></div>
+
+    </div>
+{{/if}}

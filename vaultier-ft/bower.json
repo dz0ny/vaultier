@@ -1,5 +1,19 @@
 {
-  "name": "vaultier-ft",
+  "name": "vaultier",
+  "version": "0.2.0-alpha1",
+  "authors": [
+    "rclick.cz"
+  ],
+  "description": "Secret manager",
+  "keywords": [
+    "rclick",
+    "vaultier",
+    "secrect",
+    "privacy"
+  ],
+  "license": "All Rights Reserved - rclick.cz",
+  "homepage": "vaultier.rclick.cz",
+  "private": true,
   "dependencies": {
     "jquery": "^1.11.1",
     "ember": "1.10.0",
@@ -10,6 +24,32 @@
     "ember-load-initializers": "ember-cli/ember-load-initializers#0.0.2",
     "ember-qunit": "0.2.8",
     "ember-qunit-notifications": "0.0.7",
-    "qunit": "~1.17.1"
+    "qunit": "~1.17.1",
+    "ember-animate": "0.3.4",
+    "ember-restless": "0.6.0",
+    "ember-selectize": "git+https://github.com/rclick-cz/ember-selectize.git",
+    "FileAPI": "2.0.3",
+    "FileSaver": "*",
+    "Keypress": "https://github.com/dmauro/Keypress.git#1.0.9",
+    "bootstrap": "https://github.com/twbs/bootstrap.git#3.2",
+    "marked": "0.3.2",
+    "momentjs": "2.8.3",
+    "jsep": "https://github.com/soney/jsep.git#0.2.9",
+    "jquery-cookie": "1.4.1",
+    "jquery.sessionstorage": "*",
+    "jquery.dotdotdot": "1.6.16",
+    "jstorage": "0.4.8",
+    "notifyjs": "https://github.com/jpillora/notifyjs.git#0.3.1",
+    "select2": "3.5.1",
+    "selectize": "0.9.1",
+    "jsencrypt": "2.1.0",
+    "CryptoJS": "3.1.12",
+    "jsrsasign": "https://github.com/kjur/jsrsasign.git#4.7.0",
+    "raven-js": "1.1.15",
+    "jquery-mockajax": "1.6.1",
+    "qunit": "1.15.0",
+    "loglevel": "1.2.0",
+    "fontawesome": "~4.2.0"
   }
 }
+
