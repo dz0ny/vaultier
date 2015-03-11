@@ -9,11 +9,20 @@ Unable to find a suitable version for ember, please choose one:
 #### layout
 
 
+
+
+#### Global disablements
+- BetterRestless to migrate from deprecated phone repository
+- Utils.Logger has been commented - migrate to service
+- $.notify has been commented - migrate to service
+- Kernel.loader has been commented
+- this.nodekey = this.get('container').lookup('service:nodekey');  / Vaultier.__container__.lookup('service:nodekey') will not work on the models/modelsmixin because there is no container on model - use application global workeround will be used
+- Po (Pohon) would be global for first version, but must be removed later
+
+
 #### Fix the login
 - http://localhost:4200/#/auth/login/index
 - FileAPI not imported
 - News are commented out
-- Kernel and notifications are commented out
 - loadRemembered is commented out
 - DEPRECATION: Global lookup of Ember.Select from a Handlebars template is
-- missing images

@@ -7,21 +7,21 @@
     font-family: 'Open Sans';
     font-style: normal;
     font-weight: 400;
-    src: local('Open Sans'), local('OpenSans'), url('../../../../vaultier-ft/public/font/open-sans-400.woff') format('woff');
+    src: local('Open Sans'), local('OpenSans'), url('/font/open-sans-400.woff') format('woff');
 }
 
 @font-face {
     font-family: 'Open Sans';
     font-style: normal;
     font-weight: 700;
-    src: local('Open Sans Bold'), local('OpenSans-Bold'), url('../../../../vaultier-ft/public/font/open-sans-700.woff') format('woff');
+    src: local('Open Sans Bold'), local('OpenSans-Bold'), url('/font/open-sans-700.woff') format('woff');
 }
 
 @font-face {
     font-family: 'Open Sans';
     font-style: normal;
     font-weight: 800;
-    src: local('Open Sans Extrabold'), local('OpenSans-Extrabold'), url('../../../../vaultier-ft/public/font/open-sans-800.woff') format('woff');
+    src: local('Open Sans Extrabold'), local('OpenSans-Extrabold'), url('/font/open-sans-800.woff') format('woff');
 }
 
 /*************************************************************
