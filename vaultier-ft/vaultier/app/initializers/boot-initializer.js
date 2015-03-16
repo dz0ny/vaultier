@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import KernelWrapper from 'vaultier/app/services/kernel/kernel-wrapper';
 /* global ApplicationKernel */
 
 
@@ -20,10 +21,13 @@ export default {
          **************************************************
          **************************************************
          */
+        // kernel
+        var kernel = KernelWrapper.create({kernel: window['Kernel']});
+        kernel.register(container, app);
 
-        app.Config = Ember.Object.extend(ApplicationKernel.Config.applicationConfig).create();
+        app.register('config:main', kernel.get('config'), {instantiate: false});
 
-        app.register('config:main', app.Config, {instantiate: false});
+        //@todo: use lazy injections instead
         app.inject('route', 'config', 'config:main');
         app.inject('controller', 'config', 'config:main');
         app.inject('view', 'config', 'config:main');
@@ -36,7 +40,6 @@ export default {
          **************************************************
          */
 
-        app.register('kernel:main', ApplicationKernel, {instantiate: false});
         app.inject('route', 'kernel', 'kernel:main');
         app.inject('controller', 'kernel', 'kernel:main');
         app.inject('view', 'kernel', 'kernel:main');

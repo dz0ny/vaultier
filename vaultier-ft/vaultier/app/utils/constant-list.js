@@ -1,7 +1,7 @@
-/* global Po */
+import {merge} from './tools/object';
 
 var ConstantList = function(options) {
-    Po.merge(this, options);
+    merge(this, options);
 };
 
 ConstantList.prototype.toArray = function() {

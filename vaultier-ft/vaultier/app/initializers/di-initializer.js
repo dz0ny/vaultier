@@ -4,7 +4,7 @@ import Session from 'vaultier/app/services/session/session';
 import Storage from 'vaultier/app/services/session/storage';
 import Auth from 'vaultier/app/services/auth/auth';
 import Tree from 'vaultier/app/services/tree';
-import Invitations from 'vaultier/app/services/invotations';
+import Invitations from 'vaultier/app/services/invitations';
 import Coder from 'vaultier/app/services/key/coder';
 import KeyTransfer from 'vaultier/app/services/key/key-transfer';
 import NodeKey from 'vaultier/app/services/key/node-key';
@@ -38,13 +38,13 @@ export default {
         RL.set('client', DALClient);
 
         // service:errors
-        app.register('service:errors', Errors);
-        app.inject('route', 'errors', 'service:errors');
-        app.inject('component', 'errors', 'service:errors');
-        app.inject('view', 'errors', 'service:errors');
-
-        app.inject('service:errors', 'errorController', 'controller:ErrorGeneric');
-        app.inject('service:errors', 'router', 'router:main');
+        //app.register('service:errors', Errors);
+        //app.inject('route', 'errors', 'service:errors');
+        //app.inject('component', 'errors', 'service:errors');
+        //app.inject('view', 'errors', 'service:errors');
+        //
+        //app.inject('service:errors', 'errorController', 'controller:ErrorGeneric');
+        //app.inject('service:errors', 'router', 'router:main');
 //    app.inject('controller', 'errors', 'service:errors');
 
 
@@ -91,12 +91,11 @@ export default {
         app.inject('service:keytransfer', 'coder', 'service:coder');
 
         // service:nodekey
-        if (ApplicationKernel.Config.environment !== 'dev-mock') {
+        //if (ApplicationKernel.Config.environment !== 'dev-mock') {
             app.register('service:nodekey', NodeKeyMock);
-        } else {
-          app.register('service:nodekey', NodeKey);
-
-        }
+        //} else {
+        //  app.register('service:nodekey', NodeKey);
+        //}
         app.inject('service:nodekey', 'auth', 'service:auth');
         app.inject('service:nodekey', 'store', 'store:main');
         app.inject('service:nodekey', 'coder', 'service:coder');

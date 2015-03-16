@@ -49,7 +49,9 @@
     "jquery-mockajax": "1.6.1",
     "qunit": "1.15.0",
     "loglevel": "1.2.0",
-    "fontawesome": "~4.2.0"
-  }
+    "fontawesome": "~4.2.0",
+
+    "uberproto": "~1.1.2",
+    "rsvp": "~3.0.17"  }
 }
 

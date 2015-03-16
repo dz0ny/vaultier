@@ -1,8 +1,50 @@
 /* global require, module */
 
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
+var util = require('util');
+var webpackify = require('broccoli-webpack');
+var path = require('path');
+var webpack = require("webpack");
 
-var app = new EmberApp({
+// Custom inherited EmberApp to include own compilations
+var VaultierApp = function () {
+  return VaultierApp.super_.apply(this, arguments);
+};
+util.inherits(VaultierApp, EmberApp);
+
+VaultierApp.prototype.kernelJavascript = function () {
+
+  var bundler = webpackify(path.resolve('kernel'), {
+    entry: './main',
+    output: {filename: './assets/kernel.js'},
+    devtool: 'eval',
+
+    module: {
+      loaders: [
+        {test: /\.js$/, loader: 'babel-loader' },
+        {test: /\.hbs$/, loader: "handlebars-loader"}
+      ]
+    },
+    plugins: [
+      //@todo: maybe uglify and minifi
+      // if (this.options.minifyJS.enabled === true) >>>
+      new webpack.optimize.DedupePlugin(),
+      new webpack.optimize.UglifyJsPlugin()
+    ]
+  });
+
+  return bundler;
+};
+
+VaultierApp.prototype.toArray = function () {
+  var trees = EmberApp.prototype.toArray.apply(this, arguments);
+
+  trees.push(this.kernelJavascript());
+
+  return trees;
+};
+
+var app = new VaultierApp({
   name: 'vaultier/app',
   outputPaths: {
     app: {
@@ -30,10 +72,26 @@ app.import('bower_components/bootstrap/dist/js/bootstrap.js');
 
 /**********************************************************************************
  **********************************************************************************
+ * Ember RESTLess
+ **********************************************************************************
+ **********************************************************************************/
+app.import('bower_components/ember-restless/dist/ember-restless.js');
+
+/**********************************************************************************
+ **********************************************************************************
  * Momentjs
  **********************************************************************************
  **********************************************************************************/
-app.import('bower_components/moment/moment.js');
+app.import('bower_components/momentjs/moment.js');
+
+
+/**********************************************************************************
+ **********************************************************************************
+ * Keypress
+ **********************************************************************************
+ **********************************************************************************/
+app.import('bower_components/Keypress/keypress.js');
+
 
 /**********************************************************************************
  **********************************************************************************

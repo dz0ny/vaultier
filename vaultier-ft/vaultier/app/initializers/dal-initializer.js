@@ -1,7 +1,8 @@
-import StandardRESTAdapter from 'vaultier/app/models/core/Adapter';
+import StandardRESTAdapter from 'vaultier/app/models/core/rest-adapter';
 import NodeAdapter from 'vaultier/app/models/adapter/node-adapter';
 import NodeBlobAdapter from 'vaultier/app/models/adapter/node-blob-adapter';
 import NewsAdapter from 'vaultier/app/models/adapter/news-adapter';
+import PerModelAdapter from 'vaultier/app/models/core/per-model-adapter';
 
 /**
  * Setup all Data object layer stuff here including dependency injection
@@ -20,6 +21,8 @@ export default {
 
     initialize: function (container, app) {
 
+      PerModelAdapter.initializerInstall(container, app);
+
         // registers adapters for each model
         app.register('adapter:user', StandardRESTAdapter);
         app.register('adapter:workspacekey', StandardRESTAdapter);
@@ -36,7 +39,6 @@ export default {
     }
 };
 
-Vaultier.initializer(Vaultier.initializers.DAL);
 
 
 
