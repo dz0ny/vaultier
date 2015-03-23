@@ -2,67 +2,69 @@
     <div class="vlt-page vlt-page-plain">
 
 
-<div class="vlt-dialog vlt-register col-xs-12 col-md-10 col-md-offset-1 top-50">
-    <div class="vlt-dialog-content">
-        <div class="vlt-dialog-header">
-            <h2>Sign up for Vaultier</h2>
+        <div class="vlt-dialog vlt-register col-xs-12 col-md-10 col-md-offset-1 top-50">
+            <div class="vlt-dialog-content">
+                <div class="vlt-dialog-header">
+                    <h2>Sign up for Vaultier</h2>
 
-            <ul class="nav nav-pills nav-justified vlt-wizard-steps">
-                {{#view view.TabView tab="keys" }}
-                    <a>
-                        Generate Key
-                        <span class="glyphicon glyphicon glyphicon-chevron-right"></span>
-                    </a>
-                {{/view}}
 
-                {{#view view.TabView tab="creds" }}
-                    <a>
-                        Your Credentials
-                        <span class="glyphicon glyphicon glyphicon-chevron-right"></span>
-                    </a>
-                {{/view}}
+                    <ul class="nav nav-pills nav-justified vlt-wizard-steps">
+                      {{#view 'shared-view/tab-view' pathToken="keys" }}
+                          <a>
+                              Generate Key
+                              <span class="glyphicon glyphicon glyphicon-chevron-right"></span>
+                          </a>
+                      {{/view}}
 
-                {{#view view.TabView tab="sum" }}
-                    <a>
-                        Finish Registration
-                        <span class="glyphicon glyphicon glyphicon-chevron-right"></span>
-                    </a>
-                {{/view}}
+                      {{#view 'shared-view/tab-view' pathToken="creds" }}
+                          <a>
+                              Your Credentials
+                              <span class="glyphicon glyphicon glyphicon-chevron-right"></span>
+                          </a>
+                      {{/view}}
 
-            </ul>
-        </div>
+                      {{#view 'shared-view/tab-view' pathToken="sum" }}
+                          <a>
+                              Finish Registration
+                              <span class="glyphicon glyphicon glyphicon-chevron-right"></span>
+                          </a>
+                      {{/view}}
 
-        <div class="vlt-dialog-body">
-            {{outlet}}
-        </div>
+                    </ul>
+                </div>
 
-        <div class="vlt-dialog-footer">
+                <div class="vlt-dialog-body">
+                  {{outlet}}
+                </div>
 
-            <div class="pull-right vlt-right-buttons">
-                <button {{action next}} {{bind-attr disabled=props.nextButtonDisabled}} class="btn btn-primary">
-                    <span class="glyphicon glyphicon glyphicon-chevron-right"></span>
-                    {{#if props.nextButtonTitle }}
-                        {{ props.nextButtonTitle }}
-                    {{else}}
-                        Next
-                    {{/if}}
-                </button>
-            </div>
+                <div class="vlt-dialog-footer">
 
-            <div class="vlt-left-buttons pull-left">
-                    {{#unless props.loginButtonHidden}}
-                        Do you have an account already?
-                        {{#link-to 'AuthLogin' class="btn btn-default btn-sm" }}
+                    <div class="pull-right vlt-right-buttons">
+                        <button {{action 'next'}} {{bind-attr disabled=content.nextButtonDisabled}}
+                                class="btn btn-primary">
+                            <span class="glyphicon glyphicon glyphicon-chevron-right"></span>
+                          {{#if content.nextButtonTitle }}
+                            {{ content.nextButtonTitle }}
+                          {{else}}
+                              Next
+                          {{/if}}
+                        </button>
+                    </div>
+
+                    <div class="vlt-left-buttons pull-left">
+                      {{#unless content.loginButtonHidden}}
+                          Do you have an account already?
+                        {{#link-to 'auth-login' class="btn btn-default btn-sm" }}
                             Login to your account here
                         {{/link-to}}
-                    {{/unless}}
+                      {{/unless}}
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                </div>
             </div>
-
-            <div class="clearfix"></div>
-
         </div>
-    </div>
-</div>
 
 
         <div class="clearfix"></div>

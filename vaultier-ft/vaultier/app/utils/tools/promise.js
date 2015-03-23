@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { requireClass, requireType, requireVar } from 'phone/app/utils/syntaxsugar/types';
+import { requireClass, requireType, requireVar } from './../syntaxsugar/types';
 
 /**
  * @class phone.utils.tools.Promise

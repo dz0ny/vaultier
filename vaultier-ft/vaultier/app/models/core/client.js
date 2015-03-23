@@ -12,15 +12,16 @@
  */
 export default RL.Client.create({
 
+
+
     createRecord: function (cls, data) {
-        throw new Error('Refactor me. we do not have model globals');
-        //return Vaultier.dal.model[cls].create(data);
+       return this.get('container').lookupFactory('model:'+cls).create(data);
     },
 
     find: function () {
-        var model = arguments[0];
+        var cls = arguments[0];
         var params = arguments[1];
-        return Vaultier.dal.model[model].fetch(params);
+        return this.get('container').lookupFactory('model:'+cls).fetch(params);
     }
 
 });

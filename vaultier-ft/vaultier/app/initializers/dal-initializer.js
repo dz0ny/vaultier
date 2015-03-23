@@ -4,6 +4,8 @@ import NodeBlobAdapter from 'vaultier/app/models/adapter/node-blob-adapter';
 import NewsAdapter from 'vaultier/app/models/adapter/news-adapter';
 import PerModelAdapter from 'vaultier/app/models/core/per-model-adapter';
 
+import UserModel from 'vaultier/app/models/model/user';
+
 /**
  * Setup all Data object layer stuff here including dependency injection
  *
@@ -31,6 +33,8 @@ export default {
         app.register('adapter:invitation', StandardRESTAdapter);
         app.register('adapter:lostkey', StandardRESTAdapter);
         app.register('adapter:lostkeymemberships', StandardRESTAdapter);
+
+       app.register('model:user', UserModel, {instantiate: false});
 
         app.register('adapter:news', NewsAdapter);
         app.register('adapter:node', NodeAdapter);

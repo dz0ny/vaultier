@@ -46,6 +46,7 @@ VaultierApp.prototype.toArray = function () {
 
 var app = new VaultierApp({
   name: 'vaultier/app',
+  hinting: false,
   outputPaths: {
     app: {
       html: 'index.html',
@@ -100,6 +101,68 @@ app.import('bower_components/Keypress/keypress.js');
  **********************************************************************************/
 //@todo: elaborate to import over AMD
 app.import('bower_components/jsep/build/jsep.js');
+
+
+/**********************************************************************************
+ **********************************************************************************
+ * FILE UTILITIES
+ **********************************************************************************
+ **********************************************************************************/
+
+app.import('bower_components/FileSaver/FileSaver.js');
+app.import('bower_components/FileAPI/dist/FileAPI.js');
+
+/**********************************************************************************
+ **********************************************************************************
+ * ENCRYPTION
+ **********************************************************************************
+ **********************************************************************************/
+
+/**************** encryption core **/
+app.import('bower_components/CryptoJS/build/components/core.js');
+app.import('bower_components/CryptoJS/build/components/enc-base64.js');
+app.import('bower_components/CryptoJS/build/components/md5.js');
+app.import('bower_components/CryptoJS/build/components/sha1.js');
+app.import('bower_components/CryptoJS/build/components/sha256.js');
+app.import('bower_components/CryptoJS/build/components/ripemd160.js');
+app.import('bower_components/CryptoJS/build/components/x64-core.js');
+app.import('bower_components/CryptoJS/build/components/sha512.js');
+app.import('bower_components/CryptoJS/build/rollups/aes.js');
+
+/**************** rsa encryptions **/
+app.import('bower_components/jsrsasign/ext/jsbn.js');
+app.import('bower_components/jsrsasign/ext/jsbn2.js');
+app.import('bower_components/jsrsasign/ext/rsa.js');
+app.import('bower_components/jsrsasign/ext/rsa2.js');
+app.import('bower_components/jsrsasign/ext/base64.js');
+app.import('bower_components/jsrsasign/rsapem-1.1.js');
+app.import('bower_components/jsrsasign/rsasign-1.2.js');
+app.import('bower_components/jsrsasign/asn1hex-1.1.js');
+app.import('bower_components/jsrsasign/x509-1.1.js');
+app.import('bower_components/jsrsasign/crypto-1.1.js');
+
+
+/**************** rsa signatures **/
+app.import('bower_components/jsrsasign/jsrsasign-latest-all-min.js');
+
+/**************** rsa keys generation **/
+app.import('bower_components/jsencrypt/bin/jsencrypt.js');
+
+
+/**********************************************************************************
+ **********************************************************************************
+ * JQUERY EXTENSIONS
+ **********************************************************************************
+ **********************************************************************************/
+
+//@todo: get rid of sessionStorage jstorage and other nonsenses
+app.import('bower_components/notifyjs/dist/notify.js');
+app.import('bower_components/notifyjs/dist/styles/bootstrap/notify-bootstrap.js');
+app.import('bower_components/jstorage/jstorage.js');
+app.import('bower_components/jquery-cookie/jquery.cookie.js');
+app.import('bower_components/jquery.dotdotdot/src/js/jquery.dotdotdot.js');
+app.import('bower_components/jquery.sessionstorage/jquery.sessionStorage.js');
+
 
 
 // Use `app.import` to add additional libraries to the generated

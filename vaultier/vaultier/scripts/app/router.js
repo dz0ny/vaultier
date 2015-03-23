@@ -26,7 +26,7 @@ Vaultier.Router.map(function () {
      * Login
      ************************************************************/
 
-    this.route('AuthLogin', {path: '/auth/login'});
+    //this.route('AuthLogin', {path: '/auth/login'});
 
     /*************************************************************
      * Recovery Key

@@ -42,6 +42,9 @@ var Kernel = BaseKernel.extend({
 }).create();
 
 window.onload = function () {
+
+  Error.stackTraceLimit = Infinity;
+
   window['Kernel'] = Kernel;
   Kernel.load();
 };

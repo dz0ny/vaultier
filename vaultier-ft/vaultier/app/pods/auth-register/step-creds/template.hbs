@@ -17,7 +17,7 @@
                     <label for="register-form-email" class="control-label">Email *</label>
 
                     <div>
-                        {{ view Ember.TextField
+                        {{input
                         elementId='register-form-email'
                         valueBinding='content.email'
                         class="form-control"
@@ -33,7 +33,7 @@
                     <label for="register-form-nickname" class="control-label">Your nickname *</label>
 
                     <div>
-                        {{ view Ember.TextField
+                        {{input
                         elementId='register-form-nickname'
                         valueBinding='content.nickname'
                         class="form-control"

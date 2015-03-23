@@ -34,7 +34,7 @@
     "ember-cli-qunit": "0.3.9",
     "ember-cli-uglify": "1.0.1",
     "ember-export-application-global": "^1.0.2",
-    "express": "^4.12.2",
+    "express": "^4.12.3",
     "glob": "^4.5.3",
     "handlebars": "^2.0.0",
     "handlebars-loader": "^0.1.8",

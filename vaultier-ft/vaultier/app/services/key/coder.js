@@ -47,6 +47,7 @@ export default Ember.Object.extend({
             };
         };
 
+
         if (callback) {
             generator.getKey(function () {
                 callback(build());

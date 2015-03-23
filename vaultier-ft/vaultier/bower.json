@@ -26,7 +26,7 @@
     "ember-qunit-notifications": "0.0.7",
     "qunit": "~1.17.1",
     "ember-animate": "0.3.4",
-    "ember-restless": "0.6.0",
+    "ember-restless": "0.6.1",
     "ember-selectize": "git+https://github.com/rclick-cz/ember-selectize.git",
     "FileAPI": "2.0.3",
     "FileSaver": "*",

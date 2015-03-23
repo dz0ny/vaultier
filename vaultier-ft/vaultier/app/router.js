@@ -12,7 +12,6 @@ Router.map(function() {
    ************************************************************/
 
   this.resource('auth-register', {path: '/auth/register'}, function () {
-    this.route('step-before', { path: 'overview' });
     this.route('step-keys', { path: 'generate-keys' });
     this.route('step-creds', { path: 'submit-credentials' });
     this.route('step-sum', { path: 'registration-done' });
@@ -39,3 +38,5 @@ Router.map(function() {
 });
 
 export default Router;
+
+

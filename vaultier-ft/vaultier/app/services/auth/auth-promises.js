@@ -1,25 +1,22 @@
 import Ember from 'ember';
 import RSVPAjax from 'vaultier/app/utils/rsvp-ajax';
+import {inject, factory} from 'vaultier/app/utils/tools/di';
 /** global $ **/
 
 export default Ember.Object.extend({
 
     token: null,
-    /**
-     * @DI Vaultier.store.
-     */
-    store: null,
-    /**
-     * @DI Service.Coder
-     */
-    coder: null,
+
+    store: inject('store:main'),
+
+    coder: inject('service:coder'),
 
     _auth: function (email, privateKey, datetime) {
         var coder = this.coder;
         var signature = coder.sign(email + datetime, privateKey);
 
         return RSVPAjax({
-            url: '/api/auth/auth',
+            url: '/api/tokens',
             type: 'post',
             data: {
                 email: email,
@@ -29,9 +26,11 @@ export default Ember.Object.extend({
     },
 
     _retrieveUser: function (id) {
+
         if (!id) {
            return Ember.RSVP.reject('User id not specified');
         }
+
         return this.get('store').find('User', id)
             .catch(function (error) {
                 throw Error('Cannot retrieve user with id {id}'.replace('{id}', id));
@@ -67,9 +66,10 @@ export default Ember.Object.extend({
     },
 
     _unauth: function () {
+        throw new Error('Logout must be regactored');
         return RSVPAjax({
             url: '/api/auth/logout',
-            type: 'post'
+            type: 'delete'
         });
     },
 
@@ -103,7 +103,7 @@ export default Ember.Object.extend({
             }.bind(this))
 
             .then(function() {
-                return this._retrieveUser(user);
+                return this._retrieveUser(user)
             }.bind(this));
     }
 

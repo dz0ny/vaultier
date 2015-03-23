@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { requireClass } from 'phone/app/utils/syntaxsugar/types';
+import { requireClass } from './../syntaxsugar/types';
 
 var defaultFactory = function (cls, context) {
   return cls.create();

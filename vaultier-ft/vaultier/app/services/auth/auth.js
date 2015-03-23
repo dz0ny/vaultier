@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import AuthPromises from './auth-promises';
+import {inject, factory} from 'vaultier/app/utils/tools/di';
 
 export default Ember.Object.extend({
 
@@ -12,30 +13,15 @@ export default Ember.Object.extend({
 
     },
 
-    /**
-     * @DI store:main
-     */
-    store: null,
+    store: inject('store:main'),
 
-    /**
-     * @DI service:coder
-     */
-    coder: null,
+    coder: inject('service:coder'),
 
-    /**
-     * @DI router:main
-     */
-    router: null,
+    router: inject('router:main'),
 
-    /**
-     * @DI service:session
-     */
-    session: null,
+    session: inject('service:session'),
 
-    /**
-     * @DI service:storage
-     */
-    storage: null,
+    storage: inject('service:storage'),
 
     token: null,
 
@@ -134,7 +120,7 @@ export default Ember.Object.extend({
                     .then(
                     // successfull login
                     function (user) {
-                        // save credentials
+                            // save credentials
                         this.setAuthenticatedUser(user, privateKey, this.promises.get('token'));
 
                         // transition to previously requested page
@@ -143,10 +129,9 @@ export default Ember.Object.extend({
                             if (transition) {
                                 transition.retry();
                             } else {
-                                this.get('router').transitionTo('index');
+                                return this.get('router').transitionTo('index');
                             }
                         }
-
                         return user;
                     }.bind(this),
 
@@ -269,7 +254,7 @@ export default Ember.Object.extend({
     },
 
     saveToSession: function () {
-        this.session.set('auth', {
+        this.get('session').set('auth', {
             token: this.get('token'),
             email: this.get('user.email'),
             user: this.get('user.id'),
@@ -278,7 +263,7 @@ export default Ember.Object.extend({
     },
 
     loadFromSession: function () {
-        return this.session.get('auth');
+        return this.get('session').get('auth');
     },
 
     removeRememberedUser: function() {
