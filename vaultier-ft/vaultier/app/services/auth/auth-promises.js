@@ -26,7 +26,6 @@ export default Ember.Object.extend({
     },
 
     _retrieveUser: function (id) {
-
         if (!id) {
            return Ember.RSVP.reject('User id not specified');
         }

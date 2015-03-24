@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import Member from 'vaultier/app/models/model/member';
+import {inject, factory} from 'vaultier/app/utils/tools/di';
 
 export default Ember.Object.extend(
     Ember.Evented,
@@ -8,16 +9,16 @@ export default Ember.Object.extend(
         /**
          * @DI Service.Coder
          */
-        coder: null,
+        coder: inject('service:coder'),
         /**
          * @DI Service.Auth
          */
-        auth: null,
+        auth: inject('service:auth'),
 
         /**
          * @DI store:main
          */
-        store: null,
+        store: inject('store:main'),
 
         /**
          * @DI service:keytransfer
@@ -83,7 +84,6 @@ export default Ember.Object.extend(
             //Utils.Logger.log.debug("transferKeyToCreatedNode");
             var keytransfer = this.get('keytransfer');
             var decryptedKey = keytransfer.generateNodeKey();
-            //Utils.Logger.log.debug(decryptedKey);
             return keytransfer.transferKeyToMember(node.get('membership.id'), decryptedKey);
         },
 
@@ -93,14 +93,6 @@ export default Ember.Object.extend(
             }
             var coder = this.get('coder');
 
-            //Utils.Logger.log.debug(this.keys);
-            //Utils.Logger.log.debug(encryptedKey);
-            //Utils.Logger.log.debug(data);
-            //Utils.Logger.log.debug(this.keys[membershipId]);
-            //
-            //Utils.Logger.log.debug(this.get('auth.privateKey'));
-
-
             data = coder.decryptNodeData(data, this.keys[membershipId]);
             //Utils.Logger.log.debug(data);
             data = JSON.parse(data);
@@ -108,16 +100,13 @@ export default Ember.Object.extend(
         },
 
         encryptNodeData: function (data, encryptedKey, membershipId) {
-            //Utils.Logger.log.debug(this.keys);
             if (!this.keys[membershipId]) {
                 this.keys[membershipId] = this.get('keytransfer').decryptNodeKey(encryptedKey);
             }
-            //Utils.Logger.log.debug(this.keys[membershipId]);
 
             var coder = this.get('coder');
             var nodeKey = this.get('nodeKey');
             data = JSON.stringify(data);
-            //Utils.Logger.log.debug(data);
 
             return coder.encryptNodeData(data, this.keys[membershipId]);
 

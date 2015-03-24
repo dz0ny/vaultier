@@ -19,9 +19,14 @@ export default RL.Client.create({
     },
 
     find: function () {
-        var cls = arguments[0];
+        var cls = arguments[0].toLowerCase();
         var params = arguments[1];
+      try {
         return this.get('container').lookupFactory('model:'+cls).fetch(params);
+      } catch (error) {
+        console.error(`Cannot retrieve model ${cls}`);
+        throw error;
+      }
     }
 
 });

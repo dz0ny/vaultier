@@ -68,14 +68,7 @@ export default Ember.Mixin.create({
     },
 
     applyPolymorphicMixin: function (type) {
-        var clsName = this.getPolymorphicClass(type);
-        var cls = Ember.get(clsName);
-        if (!cls) {
-            throw new Error('Cannot instantiate node class mixin {mixin} for type {type}'
-                    .replace('{type}', type)
-                    .replace('{mixin}', clsName)
-            );
-        }
+        var cls = this.getPolymorphicClass(type);
 
         var applied = cls.detect(this);
         if (applied) {
@@ -87,12 +80,14 @@ export default Ember.Mixin.create({
 
 
         cls.apply(this);
-        cls.mixins.forEach(function (mixin) {
+        if (cls.mixins) {
+          cls.mixins.forEach(function (mixin) {
             if (mixin.properties.init) {
-                mixin.properties.init.apply(this);
+              mixin.properties.init.apply(this);
             }
-        }.bind(this));
-        this.set('polymorphicMixinApplied', clsName);
+          }.bind(this));
+        }
+        this.set('polymorphicMixinApplied', true);
 
     }
 

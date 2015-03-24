@@ -1,5 +1,7 @@
 import Ember from 'ember';
 import Node from 'vaultier/app/models/model/node';
+import {inject, factory} from 'vaultier/app/utils/tools/di';
+
 /**
  * Service is responsible of new user environment initialization
  * e.g. when user registers and has no invitation new document and default vault is created
@@ -13,18 +15,18 @@ export default Ember.Object.extend({
     /**
      * @DI service:auth
      */
-    auth: null,
+    auth: inject('service:auth'),
 
     /**
      * @DI service:invitations
      */
-    invitations: null,
+    invitations: inject('service:invitations'),
 
 
     /**
      * @DI service:router
      */
-    router: null,
+    router: inject('router:main'),
 
     /**
      * Creates route transition function after initialization
@@ -63,8 +65,8 @@ export default Ember.Object.extend({
         }
 
         // prepare objects to save
-        var node = Node.create();
-        node.setProperties({
+        var node = this.get('store').createRecord('Node');
+      node.setProperties({
             name: 'Default folder',
             type: Node.proto().types.FOLDER.value,
             color: 'blue'

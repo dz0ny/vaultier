@@ -32,7 +32,7 @@ var User = RL.Model.extend(
   });
 
 User.reopenClass({
-  resourceName: 'user'
+  resourceName: 'User'
 });
 
 export default User;

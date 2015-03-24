@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import {inject, factory} from 'vaultier/app/utils/tools/di';
 
 export default Ember.Object.extend({
 
@@ -6,17 +7,17 @@ export default Ember.Object.extend({
     /**
      * @DI Service.Coder
      */
-    coder: null,
+    coder: inject('service:coder'),
 
     /**
      * @DI service:auth
      */
-    auth: null,
+    auth: inject('service:auth'),
 
     /**
      * @DI store:main
      */
-    store: null,
+    store: inject('store:main'),
 
     interval: 60000,
 

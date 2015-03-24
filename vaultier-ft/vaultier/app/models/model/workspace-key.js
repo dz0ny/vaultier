@@ -1,11 +1,14 @@
-ApplicationKernel.namespace('Vaultier.dal.model');
+/* global RL */
+
+import Ember from 'ember';
+import RollbackMixin from '../mixin/rollback-mixin';
 
 /**
  * @module vaultier-dal-model
  * @class Vaultier.dal.model.WorkspaceKey
  * @extends RL.Model
  */
-Vaultier.dal.model.WorkspaceKey = RL.Model.extend(
+var WorkspaceKey = RL.Model.extend(
     {
         public_key: RL.attr('string'),
         node_key: RL.attr('longs'),
@@ -14,3 +17,8 @@ Vaultier.dal.model.WorkspaceKey = RL.Model.extend(
         user: RL.attr('object')
     });
 
+WorkspaceKey.reopenClass({
+  resourceName: 'WorkspaceKey'
+});
+
+export default WorkspaceKey;

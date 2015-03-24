@@ -3,6 +3,7 @@ import props from './../props';
 import {inject, factory} from 'vaultier/app/utils/tools/di';
 
 export default Ember.Route.extend({
+
   newuserinit: inject('service:newuserinit'),
 
   auth: inject('auth'),
@@ -68,8 +69,6 @@ export default Ember.Route.extend({
 
         .then(function () {
           // create default user environment
-          //@todo: it fails here, we must fix initializeUser first
-          throw new Error('it fails here, we must fix initializeUser first');
           return Ember.RSVP.hash({
             node: this.get('newuserinit').initializeUser()
           });
@@ -84,6 +83,7 @@ export default Ember.Route.extend({
 
         .catch(function (errors) {
           // unsuccessfull login
+          this.get('auth').setAuthenticatedUser(null);
           console.log(errors);
           ctrl.set('errors', Ember.Object.create(errors.errors));
           ctrl.set('props.nextButtonDisabled', false);

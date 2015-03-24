@@ -1,8 +1,7 @@
 import Ember from 'ember';
 import Member from 'vaultier/app/models/model/member';
 import RSVPAjax from 'vaultier/app/utils/rsvp-ajax';
-/* global Po */
-//@todo: get rid of global Po
+import {inject, factory} from 'vaultier/app/utils/tools/di';
 
 /**
  * Manage invitation
@@ -18,23 +17,20 @@ export default Ember.Object.extend({
     /**
      * @DI service:session
      */
-    session: null,
+    session: inject('service:session'),
     /**
      * @DI service:auth
      */
-    auth: null,
+    auth: inject('service:auth'),
     /**
      * @DI store:main
      */
-    store: null,
+    store: inject('store:main'),
     /**
      * @DI router:main
      */
-    router: null,
+    router: inject('router:main'),
 
-    init: function () {
-        this._super();
-    },
 
     /**
      * Make API call to create new member with state INVITED
@@ -48,6 +44,7 @@ export default Ember.Object.extend({
      */
     _memberPromise: function (node, email, send, resend) {
         //@todo: this code cannot work, because emailOrId is not defined, used id=null during refactoring, but must be fixed
+       throw new Error('readme!');
         //var id = email.indexOf('@') < 0 ? parseInt(emailOrId) : null;
         var id = null;
 
@@ -111,18 +108,14 @@ export default Ember.Object.extend({
      * @param {Boolean} resend
      * @returns {*}
      */
-    invite: function (node, emailOrId, roleLevel, send, resend) {
-        send = Po.F.optional(send, false);
-        resend = Po.F.optional(resend, false);
+    invite: function (node, emailOrId, roleLevel, send = false, resend = false) {
 
         return Ember.RSVP.resolve()
-            .then(
-                function () {
+            .then(function () {
                     return this._memberPromise(node, emailOrId, send, resend);
                 }.bind(this))
 
-            .then(
-                function (member) {
+            .then(function (member) {
                     return this._invitePromise(node, member, roleLevel);
                 }.bind(this));
     },
@@ -138,14 +131,14 @@ export default Ember.Object.extend({
 
             var invitations = this.get('session').get(this.SESSION_KEY, {});
             invitations[id] = invitation;
-            this.session.set(this.SESSION_KEY, invitations);
+            this.get('session').set(this.SESSION_KEY, invitations);
 
             resolve(invitation);
         }.bind(this));
     },
 
     hasInvitationsInSession: function () {
-        var invitations = this.session.get(this.SESSION_KEY, null);
+        var invitations = this.get('session').get(this.SESSION_KEY, null);
         return invitations !== null;
     },
 
@@ -169,7 +162,7 @@ export default Ember.Object.extend({
     },
 
     clearInvitationsInSession: function () {
-        this.session.set(this.SESSION_KEY, null);
+        this.get('session').set(this.SESSION_KEY, null);
     },
 
 
@@ -182,7 +175,7 @@ export default Ember.Object.extend({
      * Fetches all invitations stored in session from server
      */
     fetchInvitationsInSession: function () {
-        var invitations = this.session.get(this.SESSION_KEY, {});
+        var invitations = this.get('session').get(this.SESSION_KEY, {});
         var promises = [];
         var store = this.get('store');
 

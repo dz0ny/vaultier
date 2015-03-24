@@ -107,17 +107,19 @@ Vaultier.ApplicationRoute = Ember.Route.extend(
     {
         actions: {
 
-            error: function (error, transition) {
-                this.get('errors').processError(error);
-                return false;
-            },
+            //error: function (error, transition) {
+            //    //console.error(error);
+            //    //console.error(error.stack)
+            //    //this.get('errors').processError(error);
+            //    return false;
+            //},
 
-            loading: function (transition, originRoute) {
-//                ApplicationKernel.UI.showLoader();
-                transition.promise.finally(function () {
-//                    ApplicationKernel.UI.hideLoader();
-                }.bind(this))
-            }
+//            loading: function (transition, originRoute) {
+////                ApplicationKernel.UI.showLoader();
+//                transition.promise.finally(function () {
+////                    ApplicationKernel.UI.hideLoader();
+//                }.bind(this))
+//            }
 
         },
 

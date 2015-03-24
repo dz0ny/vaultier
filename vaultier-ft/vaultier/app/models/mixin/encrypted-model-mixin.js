@@ -18,17 +18,11 @@ export var EncryptedModelMixin = Ember.Mixin.create({
     EncryptedModelMixedIn: true,
 
     /**
-     * @DI service:nodekey
-     */
-    nodekey: null,
-
-    /**
      * Overriden constructor
      * Retrieves dependencies from container
      * @method init
      */
     init: function () {
-        this.nodekey = Vaultier.__container__.lookup('service:nodekey');
         this._super.apply(this, arguments);
 
         if (this.get('isNew')) {

@@ -172,16 +172,18 @@ export default Ember.Object.extend({
 
         return this.promises.user(sessionUser, sessionToken)
             .then(
-                //success
                 function (user) {
+
+                  //success
                     return this.setAuthenticatedUser(
                         user,
                         sessionPrivateKey,
                         sessionToken
                     );
                 }.bind(this),
-                //fail
                 function () {
+                  //fail
+                  // @todo: do not consume errors here
                     return this.setAuthenticatedUser(null);
                 }.bind(this));
     },

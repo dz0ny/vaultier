@@ -8,7 +8,6 @@ import Invitations from 'vaultier/app/services/invitations';
 import Coder from 'vaultier/app/services/key/coder';
 import KeyTransfer from 'vaultier/app/services/key/key-transfer';
 import NodeKey from 'vaultier/app/services/key/node-key';
-import NodeKeyMock from 'vaultier/app/mock/node-key-mock';
 import ChangeKey from 'vaultier/app/services/key/change-key';
 import NewUserInit from 'vaultier/app/services/new-user-init';
 /* global ApplicationKernel, RL */
@@ -26,6 +25,8 @@ export default {
   after: 'vaultier-boot',
 
   initialize: function (container, app) {
+
+    //@todo: remove injects, use only lazy injections
 
     // service:store
     app.register('store:main', DALClient, {instantiate: false});
@@ -92,12 +93,8 @@ export default {
     app.inject('service:keytransfer', 'auth', 'service:auth');
     app.inject('service:keytransfer', 'coder', 'service:coder');
 
-    // service:nodekey
-    //if (ApplicationKernel.Config.environment !== 'dev-mock') {
-    app.register('service:nodekey', NodeKeyMock);
-    //} else {
-    //  app.register('service:nodekey', NodeKey);
-    //}
+    app.register('service:nodekey', NodeKey);
+
     app.inject('service:nodekey', 'auth', 'service:auth');
     app.inject('service:nodekey', 'store', 'store:main');
     app.inject('service:nodekey', 'coder', 'service:coder');
