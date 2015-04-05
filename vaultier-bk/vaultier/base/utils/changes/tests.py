@@ -1,13 +1,10 @@
 import collections
 import types
-from django.test.testcases import TransactionTestCase
-from django.utils import unittest
-from django.utils.unittest.suite import TestSuite
-from libs.changes.changes import post_change, INSERT, UPDATE, DELETE
-from libs.models import Garage
+from django.test import TestCase
+from vaultier.base.utils.changes.changes import INSERT, UPDATE, DELETE, post_change
+from vaultier.base.utils.changes.models import Garage
 
-
-class ChangesMixinTest(TransactionTestCase):
+class ChangesMixinTestCase(TestCase):
     def assertDictEqual(self, d1, d2, msg=None):  # assertEqual uses for dicts
         for k, v1 in d1.iteritems():
             self.assertIn(k, d2, msg)
@@ -104,9 +101,3 @@ class ChangesMixinTest(TransactionTestCase):
         self.assertEqual(g.post_change_hook, 'ok')
         self.assertEqual(g.pre_save_hook, 'ok')
 
-
-def changes_suite():
-    suite = TestSuite()
-    suite.addTest(unittest.TestLoader().loadTestsFromTestCase(
-        ChangesMixinTest))
-    return suite

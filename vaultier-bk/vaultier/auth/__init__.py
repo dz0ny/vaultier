@@ -1,0 +1,1 @@
+default_app_config = 'vaultier.auth.apps.AppConfig'

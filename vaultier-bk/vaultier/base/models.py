@@ -1,0 +1,1 @@
+from vaultier.base.utils.changes.models import Garage

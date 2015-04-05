@@ -1,36 +1,9 @@
+from rest_framework.fields import EmailField, CharField
 from rest_framework.mixins import DestroyModelMixin, CreateModelMixin
+from rest_framework.serializers import ModelSerializer, Serializer
+from rest_framework.viewsets import GenericViewSet
 from vaultier.auth.models.token.model import Token
-
-
-class AuthSerializer(serializers.Serializer):
-
-    email = serializers.EmailField(required=True)
-    signature = serializers.CharField(required=True)
-    date = serializers.CharField(required=True)
-
-
-class TokenSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Token
-        fields = ('token', 'user')
-
-
-class TokenViewSet(AtomicTransactionMixin,
-                  CreateModelMixin,
-                  DestroyModelMixin
-                  GenericViewSet):
-
-    serializer_class = TokenSerializer
-    model = Token
-
-    def create(self, request):
-        pass
-
-
-    def destroy(self, request, pk=None):
-        pass
-
+from vaultier.base.utils.rest.atomictransaction import AtomicTransactionMixin
 
 
 
