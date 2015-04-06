@@ -5,9 +5,9 @@ from vaultier.auth.models.token.model import Token
 
 class AuthSerializer(Serializer):
 
-    email = EmailField(required=True)
-    signature = CharField(required=True)
-    date = CharField(required=True)
+    email = EmailField(required=True, max_length=1024)
+    signature = CharField(required=True, max_length=4096)
+    servertime = CharField(required=True, max_length=256)
 
 
 class TokenSerializer(ModelSerializer):

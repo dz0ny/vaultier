@@ -4,7 +4,7 @@ from rest_framework.test import APIClient
 
 # def auth_api_call(email=None, signature=None):
 # url = reverse('auth-auth')
-#     client = APIClient()
+# client = APIClient()
 #     m = FileAccessMixin()
 #
 #     if not signature:
@@ -14,7 +14,7 @@ from rest_framework.test import APIClient
 #     response = client.post(url, {'email': email, 'signature':signature})
 #     return response
 
-def public_key(*args, **kwargs):
+def public_key_fixture(*args, **kwargs):
     currdir = os.path.dirname(__file__)
     filename = os.path.join(currdir, '../fixture/vaultier.pub')
     file = open(filename, 'r')
@@ -23,7 +23,20 @@ def public_key(*args, **kwargs):
     return data
 
 
+def private_key_fixture(*args, **kwargs):
+    currdir = os.path.dirname(__file__)
+    filename = os.path.join(currdir, '../fixture/vaultier.key')
+    file = open(filename, 'r')
+    data = file.read()
+    file.close()
+    return data
+
+
 def create_user_api_call(*args, **kwargs):
+    kwargs.setdefault('public_key', public_key_fixture())
+    kwargs.setdefault('email', 'jan@rclick.cz')
+    kwargs.setdefault('nickname', 'jan')
+
     url = reverse('user-list')
     client = APIClient()
     response = client.post(url, kwargs)

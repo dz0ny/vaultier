@@ -10,8 +10,24 @@ from vaultier.auth.models.token.model import Token
 from vaultier.auth.models.user.model import User
 
 
-class Authenticator(object):
+class InvalidServerTimeException(Exception):
+    message = 'Invalid server time'
+    pass
 
+
+class InvalidSignatureException(Exception):
+    message = 'Invalid signature'
+    pass
+
+class InvalidUserException(Exception):
+    message = 'Invalid user'
+    pass
+
+class CannotAuthenticateException(Exception):
+    message = 'Cannot authenticate'
+    pass
+
+class Authenticator(object):
     @classmethod
     def verify(cls, public_key, content, date, signature):
         """
@@ -26,6 +42,7 @@ class Authenticator(object):
         h = SHA.new(content + str(date))
         verifier = PKCS1_v1_5.new(key)
         return verifier.verify(h, signature)
+
 
     @classmethod
     def sign(cls, private_key, content, timestamp):
@@ -57,23 +74,30 @@ class Authenticator(object):
     @classmethod
     def authenticate(cls, email=None, date=None, signature=None):
 
-        date_parsed = dateparser.parse(date)
-        safe_delta = timedelta(
-            seconds=settings.VAULTIER.get('login_safe_timestamp'))
-        safe_until = date_parsed + safe_delta
-        now = timezone.now()
+        # parse server time
+        try:
+            date_parsed = dateparser.parse(date)
+            safe_delta = timedelta(seconds=settings.VAULTIER.get('login_safe_timestamp'))
+            safe_until = date_parsed + safe_delta
+            now = timezone.now()
+        except Exception, e:
+            raise InvalidServerTimeException(e)
 
+        # validate server time
         if safe_until < now:
-            # todo: this should raise something else than 400
-            raise Exception('Login timestamp too old')
+            raise InvalidServerTimeException()
 
-        #check database for user
+        # check database for user
         try:
             user = User.objects.get(email=email.lower())
-        except User.DoesNotExist:
-            return None
+        except User.DoesNotExist, e:
+            raise InvalidUserException(e)
 
         # verify signature
-        if cls.verify(user.public_key, email, date, signature):
-            return cls._create_token(user)
-        return None
+        try:
+            if cls.verify(user.public_key, email, date, signature):
+                return cls._create_token(user)
+        except Exception, e:
+            raise InvalidSignatureException(e)
+
+        raise CannotAuthenticateException()

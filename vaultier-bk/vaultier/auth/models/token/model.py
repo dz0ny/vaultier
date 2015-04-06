@@ -1,5 +1,5 @@
-import datetime
 import random
+from datetime import datetime
 from django.db.models.base import Model
 from django.db.models.deletion import CASCADE
 from django.db.models.fields import CharField, DateTimeField

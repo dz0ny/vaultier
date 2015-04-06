@@ -14,9 +14,8 @@ class TokenAuthentication(BaseAuthentication):
 
         try:
             model = Token.objects.get(token=token)
-            """:type : Token"""
-            token_renewal_interval = settings.VAULTIER.get(
-                'authentication_token_renewal_interval')
+            token_renewal_interval = settings.VAULTIER.get('authentication_token_renewal_interval')
+
             #convert to seconds
             token_renewal_interval *= 60
 
@@ -24,6 +23,7 @@ class TokenAuthentication(BaseAuthentication):
             if td.total_seconds() > token_renewal_interval:
                 model.last_used_at = timezone.now()
                 model.save()
+
         except Token.DoesNotExist:
             raise AuthenticationFailed('Invalid token')
 

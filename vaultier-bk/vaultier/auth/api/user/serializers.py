@@ -18,6 +18,6 @@ class UserSerializer(ModelSerializer):
 
     def restore_fields(self, data, files):
         if self.context.get('view').action != 'create':
-            self.fields.get('public_key').read_only = True
+            self.fields.get('public_key_fixture').read_only = True
         return super(UserSerializer, self).restore_fields(data, files)
 

@@ -1,6 +1,6 @@
 from django.test import TestCase
 from rest_framework.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST
-from vaultier.auth.tests.tool.users_api import create_user_api_call, public_key
+from vaultier.auth.tests.tool.users_api import create_user_api_call, public_key_fixture
 from vaultier.base.utils.testtools.rest import response_to_message
 
 
@@ -15,7 +15,7 @@ class Test(TestCase):
 
         data = {
             'email':'jany@rclick.cz',
-            'public_key': public_key(),
+            'public_key': public_key_fixture(),
             'nickname': 'jan'
         }
 
@@ -30,13 +30,13 @@ class Test(TestCase):
 
         response = create_user_api_call(
             email='jany@rclick.cz',
-            public_key=public_key(),
+            public_key=public_key_fixture(),
             nickname='jan'
         )
 
         response = create_user_api_call(
             email='jany@rclick.cz',
-            public_key=public_key(),
+            public_key=public_key_fixture(),
             nickname='jan'
         )
         self.assertEqual(response.status_code, HTTP_400_BAD_REQUEST, msg=response_to_message(response, 'should not create same user twice'))
@@ -45,7 +45,7 @@ class Test(TestCase):
 
         response = create_user_api_call(
             email='',
-            public_key=public_key(),
+            public_key=public_key_fixture(),
             nickname='jan'
         )
 
@@ -61,7 +61,7 @@ class Test(TestCase):
 
         response = create_user_api_call(
             email='jany@rclick.cz',
-            public_key=public_key(),
+            public_key=public_key_fixture(),
             nickname=''
         )
 
