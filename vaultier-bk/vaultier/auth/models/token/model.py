@@ -16,7 +16,7 @@ class Token(ChangesMixin, Model):
     """
     token = CharField(max_length=TOKEN_LENGTH, unique=True,
                              db_index=True)
-    user = ForeignKey('accounts.User', on_delete=CASCADE)
+    user = ForeignKey('vaultier_auth.User', on_delete=CASCADE)
     created_at = DateTimeField(auto_now_add=True)
     updated_at = DateTimeField(auto_now=True)
     last_used_at = DateTimeField(null=True)
@@ -25,6 +25,7 @@ class Token(ChangesMixin, Model):
 
     class Meta:
         db_table = u'vaultier_token'
+        app_label = 'vaultier_auth'
 
     def save(self, *args, **kwargs):
         if not self.token:

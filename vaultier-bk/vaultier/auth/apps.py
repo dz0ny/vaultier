@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 class AppConfig(AppConfig):
-    label = 'vaultier-auth',
+    verbose_name = 'vaultier-auth',
+    label = 'vaultier_auth'
     name = 'vaultier.auth'
-    verbose_name = "Vaultier - Auth"

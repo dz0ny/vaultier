@@ -19,3 +19,4 @@ class User(ChangesMixin, AbstractBaseUser):
 
     class Meta:
         db_table = u'vaultier_user'
+        app_label = 'vaultier_auth'

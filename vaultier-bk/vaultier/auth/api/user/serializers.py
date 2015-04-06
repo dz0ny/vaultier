@@ -1,10 +1,16 @@
-from django.db.models.fields import EmailField
+from rest_framework.fields import EmailField
 from rest_framework.serializers import ModelSerializer
+from rest_framework.validators import UniqueValidator
 from vaultier.auth.models.user.model import User
 
 
 class UserSerializer(ModelSerializer):
-    email = EmailField(required=True)
+    email = EmailField(
+        required=True,
+        validators=[
+            UniqueValidator(queryset=User.objects.all())
+        ]
+    )
 
     class Meta:
         model = User

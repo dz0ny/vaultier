@@ -33,11 +33,10 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
     'django.contrib.staticfiles',
 
     'rest_framework',
+    'django_extensions',
 
     'vaultier.base',
     'vaultier.auth',
@@ -75,19 +74,24 @@ WSGI_APPLICATION = 'vaultier.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'vaultier',  # Or path to database file if using sqlite3.
+        # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        # Or path to database file if using sqlite3.
+        'NAME': 'vaultier2',
         # The following settings are not used with sqlite3:
         'USER': 'root',
         'PASSWORD': 'password',
-        'HOST': '',  # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': '',  # Set to empty string for default.
+        # Empty for localhost through domain sockets or           '127.0.0.1' for localhost through TCP.
+        'HOST': 'localhost',
+        # Set to empty string for default.
+        'PORT': '',
     }
 }
 if 'test' in sys.argv or 'test_coverage' in sys.argv:  # Covers regular testing and django-coverage
     DATABASES['default']['ENGINE'] = 'django.db.backends.sqlite3'
 
+
+AUTH_USER_MODEL = 'vaultier_auth.User'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/

@@ -4,7 +4,6 @@ from vaultier.auth.api.token.serializers import TokenSerializer
 from vaultier.auth.models.token.model import Token
 from vaultier.base.utils.rest.atomictransaction import AtomicTransactionMixin
 
-
 class TokenViewSet(AtomicTransactionMixin,
                   CreateModelMixin,
                   DestroyModelMixin,
