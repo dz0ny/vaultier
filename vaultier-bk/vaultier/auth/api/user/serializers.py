@@ -1,10 +1,10 @@
-from rest_framework.fields import EmailField
+from rest_framework.fields import EmailField, BooleanField
 from rest_framework.serializers import ModelSerializer
 from rest_framework.validators import UniqueValidator
 from vaultier.auth.models.user.model import User
 
-
 class UserSerializer(ModelSerializer):
+    is_superuser = BooleanField(read_only=True)
     email = EmailField(
         required=True,
         validators=[
@@ -14,7 +14,7 @@ class UserSerializer(ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'email', 'nickname', 'public_key']
+        fields = ['id', 'email', 'nickname', 'public_key', 'is_superuser']
 
     def restore_fields(self, data, files):
         if self.context.get('view').action != 'create':

@@ -8,7 +8,8 @@ from django.utils import timezone
 from django.conf import settings
 from vaultier.auth.models.token.model import Token
 from vaultier.auth.models.user.model import User
-
+from datetime import datetime
+import iso8601
 
 class InvalidServerTimeException(Exception):
     message = 'Invalid server time'
@@ -28,6 +29,11 @@ class CannotAuthenticateException(Exception):
     pass
 
 class Authenticator(object):
+
+    @classmethod
+    def get_servertime(self):
+       return iso8601.parse_date(datetime.utcnow().isoformat())
+
     @classmethod
     def verify(cls, public_key, content, date, signature):
         """
@@ -89,6 +95,7 @@ class Authenticator(object):
 
         # check database for user
         try:
+            user = list(User.objects.all())
             user = User.objects.get(email=email.lower())
         except User.DoesNotExist, e:
             raise InvalidUserException(e)

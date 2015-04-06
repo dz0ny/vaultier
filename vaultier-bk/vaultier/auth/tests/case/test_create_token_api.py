@@ -1,5 +1,3 @@
-import iso8601
-from datetime import datetime
 from django.test import TestCase
 from rest_framework.status import HTTP_403_FORBIDDEN, HTTP_201_CREATED, HTTP_200_OK, HTTP_401_UNAUTHORIZED
 from vaultier.auth.lib.authenticator import Authenticator
@@ -21,7 +19,7 @@ class Test(TestCase):
         email = 'jan@rclick.cz'
         privkey = private_key_fixture()
         pubkey = public_key_fixture()
-        time = iso8601.parse_date(datetime.utcnow().isoformat())
+        time = Authenticator.get_servertime()
         signature = Authenticator.sign(privkey, email,time)
 
         self.assertTrue(Authenticator.verify(pubkey, email, time, signature))

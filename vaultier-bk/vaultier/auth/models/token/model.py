@@ -1,4 +1,5 @@
 import random
+import pytz
 from datetime import datetime
 from django.db.models.base import Model
 from django.db.models.deletion import CASCADE
@@ -31,7 +32,7 @@ class Token(ChangesMixin, Model):
         if not self.token:
             self.token = self.generate_token()
         if not self.last_used_at:
-            self.last_used_at = datetime.utcnow()
+            self.last_used_at = datetime.now(pytz.utc)
         return super(Token, self).save(*args, **kwargs)
 
     def generate_token(self):

@@ -10,11 +10,9 @@ VAULTIER = {
     # (in seconds)
     'login_safe_timestamp': 15,
 
-    # token lifetime (in hours)
-    'authentication_token_lifetime': 2,
-
-    # last_used_at will be renewed after some interval (in minutes)
-    'authentication_token_renewal_interval': 1,
+    # token lifetime (in seconds)
+    # when token is not used for defined time its considered as expired, and consequently deleted
+    'authentication_token_lifetime': 60*60,
 
     # invitation lifetime (in hours)
     'invitation_lifetime': 7,

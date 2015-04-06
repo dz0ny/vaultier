@@ -1,21 +1,25 @@
 from rest_framework.exceptions import ValidationError
-from rest_framework.mixins import CreateModelMixin, DestroyModelMixin
+from rest_framework.mixins import CreateModelMixin, DestroyModelMixin, RetrieveModelMixin
 from rest_framework.response import Response
 from rest_framework.status import HTTP_403_FORBIDDEN, HTTP_201_CREATED, HTTP_500_INTERNAL_SERVER_ERROR
 from rest_framework.viewsets import GenericViewSet
+from vaultier.auth.api.token.authentication import TokenAuthentication
 from vaultier.auth.api.token.serializers import TokenSerializer, AuthSerializer
 from vaultier.auth.lib.authenticator import Authenticator, InvalidSignatureException, InvalidUserException, \
     CannotAuthenticateException, InvalidServerTimeException
 from vaultier.auth.models.token.model import Token
 from vaultier.base.utils.rest.atomictransaction import AtomicTransactionMixin
 
+# @todo: add test for token expiration, see tokenlifetime library
+# @todo: add test for token authentication
+# @todo: add test for token CanManageTokenPermission
 
 class TokenViewSet(AtomicTransactionMixin,
                    CreateModelMixin,
-                   DestroyModelMixin,
                    GenericViewSet):
     serializer_class = TokenSerializer
     model = Token
+    authentication_classes = (TokenAuthentication,)
 
     def create(self, request):
         try:
@@ -57,6 +61,4 @@ class TokenViewSet(AtomicTransactionMixin,
             }, status=HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-    def destroy(self, request, pk=None):
-        pass
 

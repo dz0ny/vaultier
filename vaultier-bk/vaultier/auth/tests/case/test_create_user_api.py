@@ -24,6 +24,8 @@ class Test(TestCase):
         self.assertEqual(response.status_code, HTTP_201_CREATED, msg=''+response_to_message(response, 'should create user'))
 
         data['id'] = 1
+        data['is_superuser'] = True
+
         self.assertEqual(response.data, data, response_to_message(response, 'should return expected data'))
 
     def test_should_not_create_user_with_duplicate_email(self):

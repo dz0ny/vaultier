@@ -1,11 +1,9 @@
-from django.utils import timezone
 from rest_framework.authentication import BaseAuthentication
 from rest_framework.exceptions import AuthenticationFailed
+from vaultier.auth.lib.token_lifetime import TokenExpiredException, update_token_last_used_at
 from vaultier.auth.models.token.model import Token
-from django.conf import settings
 
 class TokenAuthentication(BaseAuthentication):
-
     def authenticate(self, request):
         token = request.META.get('HTTP_X_VAULTIER_TOKEN')
 
@@ -13,23 +11,18 @@ class TokenAuthentication(BaseAuthentication):
             return None, None
 
         try:
-            model = Token.objects.get(token=token)
-            token_renewal_interval = settings.VAULTIER.get('authentication_token_renewal_interval')
+            token = Token.objects.get(token=token)
+            update_token_last_used_at(token)
 
-            #convert to seconds
-            token_renewal_interval *= 60
+        except TokenExpiredException, e:
+            raise AuthenticationFailed(detail='Token expired')
 
-            td = timezone.now() - model.last_used_at
-            if td.total_seconds() > token_renewal_interval:
-                model.last_used_at = timezone.now()
-                model.save()
+        except Token.DoesNotExist, e:
+            raise AuthenticationFailed(detail='Invalid token')
 
-        except Token.DoesNotExist:
-            raise AuthenticationFailed('Invalid token')
+        if not token.user.is_active:
+            raise AuthenticationFailed(detail='User is inactive')
 
-        if not model.user.is_active:
-            raise AuthenticationFailed('User inactive or deleted')
-
-        return model.user, token
+        return token.user, token
 
 

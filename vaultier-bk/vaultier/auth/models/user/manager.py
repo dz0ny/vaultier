@@ -1,7 +1,15 @@
 from django.contrib.auth.models import BaseUserManager
 from django.utils import timezone
 
+
 class UserManager(BaseUserManager):
+
+    def all_for_user(self, user):
+        if (user.is_superuser):
+            return self.all()
+        else:
+            return self.filter(id=user.id)
+
 
     def create_user(self, username, email=None, password=None, **extra_fields):
         now = timezone.now()

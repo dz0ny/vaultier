@@ -1,7 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from datetime import datetime
-import iso8601
+from vaultier.auth.lib.authenticator import Authenticator
 
 
 class ServerTimeView(APIView):
@@ -15,5 +14,5 @@ class ServerTimeView(APIView):
 
     def get(self, request):
         return Response({
-            "datetime": iso8601.parse_date(datetime.utcnow().isoformat())
+            "datetime": Authenticator.get_servertime()
         })
