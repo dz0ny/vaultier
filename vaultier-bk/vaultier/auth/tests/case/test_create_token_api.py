@@ -1,11 +1,12 @@
 from django.test import TestCase
-from rest_framework.status import HTTP_403_FORBIDDEN, HTTP_201_CREATED, HTTP_200_OK, HTTP_401_UNAUTHORIZED
+from rest_framework.status import HTTP_403_FORBIDDEN, HTTP_201_CREATED, HTTP_200_OK
+
 from vaultier.auth.lib.authenticator import Authenticator
-from vaultier.auth.tests.tool.servertime_api import get_servertime_api_call
+from vaultier.base.tests.tool.servertime_api import get_servertime_api_call
 from vaultier.auth.tests.tool.token_apy import create_token_api_call
-from vaultier.auth.tests.tool.users_api import list_users_api_call, public_key_fixture, private_key_fixture, \
+from vaultier.auth.tests.tool.users_api import public_key_fixture, private_key_fixture, \
     create_user_api_call
-from vaultier.base.utils.testtools.rest import response_to_message
+from vaultier.utils.lib.testtools.rest import response_to_message
 
 
 class Test(TestCase):

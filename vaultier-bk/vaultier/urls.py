@@ -7,4 +7,5 @@ urlpatterns = [
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^api/', include('vaultier.auth.urls')),
+    url(r'^api/', include('vaultier.base.urls')),
 ]

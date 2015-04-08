@@ -1,8 +1,11 @@
 import collections
 import types
+
 from django.test import TestCase
-from vaultier.base.utils.changes.changes import INSERT, UPDATE, DELETE, post_change
-from vaultier.base.utils.changes.models import Garage
+
+from vaultier.utils.lib.changes.changes import INSERT, UPDATE, DELETE, post_change
+from vaultier.utils.lib.changes.models import Garage
+
 
 class ChangesMixinTestCase(TestCase):
     def assertDictEqual(self, d1, d2, msg=None):  # assertEqual uses for dicts

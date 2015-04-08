@@ -1,4 +1,21 @@
 VAULTIER = {
+    # allow registration of anonymous user. When disabled only invited user can register
+    'auth_registration_allow': True,
+
+    # token lifetime (in seconds)
+    # when token is not used for defined time its considered as expired, and consequently deleted
+    'auth_token_lifetime': 60*60,
+
+
+
+
+
+
+
+    # Following are currently disabled
+
+
+
     # 1 hour in milliseconds used to calculate the expiration time
     # on api.lostkey module
     'lostkey_hash_expiration_time': 60*60*1000,
@@ -10,9 +27,8 @@ VAULTIER = {
     # (in seconds)
     'login_safe_timestamp': 15,
 
-    # token lifetime (in seconds)
-    # when token is not used for defined time its considered as expired, and consequently deleted
-    'authentication_token_lifetime': 60*60,
+
+
 
     # invitation lifetime (in hours)
     'invitation_lifetime': 7,
@@ -26,7 +42,6 @@ VAULTIER = {
     # vaults, cards, secrets, users and members
     'allow_anonymous_usage_statistics': True,
 
-    'registration_allow': True,
 
     # Vaultier blog news API endpoint. Must end with trailing slash
     'news_url': 'http://vaultier.org/api/entries/',

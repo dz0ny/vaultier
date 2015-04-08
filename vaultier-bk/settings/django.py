@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'rest_framework',
     'django_extensions',
 
+    'vaultier.utils',
     'vaultier.base',
     'vaultier.auth',
 

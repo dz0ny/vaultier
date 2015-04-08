@@ -1,10 +1,10 @@
 from django.test import TestCase
-from rest_framework.status import HTTP_403_FORBIDDEN, HTTP_201_CREATED, HTTP_200_OK
-from vaultier.auth.models.user.model import User
+from rest_framework.status import HTTP_403_FORBIDDEN, HTTP_201_CREATED
+
 from vaultier.auth.tests.tool.token_apy import create_token_api_call
-from vaultier.auth.tests.tool.users_api import list_users_api_call, create_user_api_call, update_user_api_call, \
-    destroy_user_api_call
-from vaultier.base.utils.testtools.rest import response_to_message
+from vaultier.auth.tests.tool.users_api import list_users_api_call, create_user_api_call
+from vaultier.utils.lib.testtools.rest import response_to_message
+
 
 class Test(TestCase):
     def setUp(self):

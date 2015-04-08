@@ -1,7 +1,8 @@
 from django.contrib.auth.models import AbstractBaseUser
 from django.db.models.fields import CharField, BooleanField
-from vaultier.base.utils.changes.changes import ChangesMixin
-from vaultier.base.utils.lowercasefield.lowercasefield import LowerCaseCharField
+
+from vaultier.utils.lib.changes.changes import ChangesMixin
+from vaultier.utils.lib.lowercasefield.lowercasefield import LowerCaseCharField
 from vaultier.auth.models.user.manager import UserManager
 
 

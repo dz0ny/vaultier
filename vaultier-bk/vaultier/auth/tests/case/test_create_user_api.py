@@ -1,7 +1,8 @@
 from django.test import TestCase
 from rest_framework.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST
+
 from vaultier.auth.tests.tool.users_api import create_user_api_call, public_key_fixture
-from vaultier.base.utils.testtools.rest import response_to_message
+from vaultier.utils.lib.testtools.rest import response_to_message
 
 
 class Test(TestCase):

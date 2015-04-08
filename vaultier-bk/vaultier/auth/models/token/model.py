@@ -1,12 +1,14 @@
 import random
-import pytz
 from datetime import datetime
+
+import pytz
 from django.db.models.base import Model
 from django.db.models.deletion import CASCADE
 from django.db.models.fields import CharField, DateTimeField
 from django.db.models.fields.related import ForeignKey
+
 from vaultier.auth.models.token.manager import TokenManager
-from vaultier.base.utils.changes.changes import ChangesMixin
+from vaultier.utils.lib.changes.changes import ChangesMixin
 
 
 class Token(ChangesMixin, Model):

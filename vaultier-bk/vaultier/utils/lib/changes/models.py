@@ -6,7 +6,7 @@ if len(sys.argv) >= 2 and sys.argv[1] == 'test':
     # http://code.djangoproject.com/ticket/7835
 
     from django.db import models
-    from vaultier.base.utils.changes.changes import ChangesMixin
+    from vaultier.utils.lib.changes.changes import ChangesMixin
 
     class Garage(ChangesMixin, models.Model):
         class Meta:
