@@ -15,13 +15,11 @@ from vaultier.utils.lib.rest.atomictransaction import AtomicTransactionMixin
 
 
 # @todo: add test for token expiration, see tokenlifetime library
-# @todo: add test for token authentication
-# @todo: add test for token CanManageTokenPermission
 
 class TokenViewSet(AtomicTransactionMixin,
                    CreateModelMixin,
                    GenericViewSet):
-    serializer_class = TokenSerializer
+    serializer_class = AuthSerializer
     model = Token
     authentication_classes = (TokenAuthentication,)
 
