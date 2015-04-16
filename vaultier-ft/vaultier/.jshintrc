@@ -1,6 +1,7 @@
 {
   "predef": [
     "document",
+    "debugger",
     "window",
     "-Promise"
   ],

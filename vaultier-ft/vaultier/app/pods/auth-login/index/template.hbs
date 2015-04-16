@@ -7,159 +7,112 @@
             <div class="col-md-5">
                 <div class="vlt-dialog vlt-login top-50">
                     <div class="vlt-dialog-content">
-                      {{#if registration_enforce }}
-                          <div class="vlt-login-no-users">
-                              <div class="vlt-dialog-header">
-                                  <h2>First User Registration</h2>
-                              </div>
-                              <div class="vlt-dialog-body">
-                                  <div class="alert alert-warning">
-                                      <div class="row top-15">
-                                          <div class="col-md-offset-1 col-md-10">
-                                              <p class="text-center">
-                                                  <b>
-                                                      Please, create first user account. Once you will do so, this
-                                                      option will disappear. Other people will need invitation from
-                                                      existing user.
-                                                  </b>
-                                              </p>
-                                          </div>
-                                      </div>
-
-
-                                      <div class="row top-15">
-                                          <div class="text-center">
-                                            {{#link-to 'auth-register' class="btn btn-lg btn-default" }}
-                                                Register
-                                            {{/link-to}}
-                                          </div>
-                                      </div>
-
-                                  </div>
-                              </div>
-                          </div>
-
-                      {{else}}
-                          <div class="vlt-login-form">
-                              <form class="form-horizontal" role="form">
-
-                                  <div class="vlt-dialog-header">
-                                      <h2>Login</h2>
-                                  </div>
-                                  <div class="vlt-dialog-body">
-
-                                      <div {{bind-attr class=':form-group error:has-error emailSuccess:has-success'}}>
-                                          <label for="login-form-email" class="col-md-3 control-label">Email</label>
-
-                                          <div class="col-md-9">
-                                            {{#if latestUser }}
-                                                <div class="input-group">
-                                                    <input {{ bind-attr value=email }}
-                                                            disabled type="email"
-                                                            class="form-control"
-                                                            id="login-form-email"
-                                                            placeholder="Email">
-                                                  <span class="input-group-btn">
-                                                    <a {{action switchUser}} class="vlt-login-switch btn btn-default">Switch
-                                                        user</a>
-                                                  </span>
-                                                </div>
-                                            {{else}}
-                                              {{ view Ember.TextField
-                                              elementId='login-form-email'
-                                              valueBinding='email'
-                                              class="form-control"
-                                              placeholder="Enter your email"
-                                              }}
-                                            {{/if}}
-                                          </div>
-                                      </div>
-
-                                      <div {{bind-attr class=':form-group error:has-error'}}>
-                                          <label for="login-form-key" class="col-md-3 control-label">Key</label>
-
-                                          <div class="col-md-9">
-                                            {{#if latestUser }}
-                                                <input disabled
-                                                       class="form-control"
-                                                       value="Using remebered key"
-                                                       id="login-form-key"
-                                                       placeholder="Key">
-                                            {{else}}
-                                                <div class="input-group">
-                                                    <input {{bind-attr value=filename}}
-                                                            type="text"
-                                                            class="form-control"
-                                                            readonly=""
-                                                            placeholder="Select your key">
-
-                                            <span class="vlt-login-key input-group-btn btn-file">
-                                                <a class="btn btn-default">
-                                                    Browse <input type="file">
-                                                </a>
-                                            </span>
-                                                </div>
-                                            {{/if}}
-                                              <small>
-                                                  <span class="text-muted">Lost your key?</span>
-                                                {{#link-to 'auth-lostkey' class="btn-link" }}Click
-                                                    here.{{/link-to}}
-                                              </small>
-                                          </div>
-                                      </div>
-
-                                      <div class="form-group vlt-remember">
-                                          <label for="login-form-remember"
-                                                 class="col-md-3 control-label">Remember</label>
-
-                                          <div class="col-md-7 vlt-remember-body">
-                                            {{view Ember.Select
-                                            class="form-control"
-                                            elementId="login-form-remember"
-                                            contentBinding="rememberOptions"
-                                            optionValuePath="content.ttl"
-                                            optionLabelPath="content.text"
-                                            valueBinding="ttl"
-                                            }}
-                                          </div>
-                                          <div class="col-md-1 vlt-remember-info">
-                                        <span class="glyphicon glyphicon-info-sign"
-                                              data-toggle='tooltip'
-                                              title="Your credentials will be stored for the selected period of time.
-                                                Remebering crednentials is not recommended, because your key is being
-                                                stored in the browser.">
-                                        </span>
-                                          </div>
-                                      </div>
-
-
-                                  </div>
-
-
-                                  <div class="vlt-dialog-footer">
-
-                                      <div class="pull-right vlt-right-buttons">
-                                          <button type="submit" {{ action loginUser}} class="btn btn-primary">
-                                              Login
-                                          </button>
-                                      </div>
-
-                                    {{#if registration_allow}}
-                                        <div class="vlt-right-buttons text-left">
-                                            <div>
-                                                Do not have an account yet?
-                                              {{#link-to 'auth-register' class="btn btn-default btn-sm" }}
-                                                  Create new one{{/link-to}}
+                        {{#if registrationOptions.auth_registration_enforce }}
+                            <div class="vlt-login-no-users">
+                                <div class="vlt-dialog-header">
+                                    <h2>First User Registration</h2>
+                                </div>
+                                <div class="vlt-dialog-body">
+                                        <div class="row top-15">
+                                            <div class="col-md-offset-1 col-md-10">
+                                                <p class="text-center">
+                                                    <b>
+                                                        Please, create first user account. Once you will do so, this
+                                                        option will disappear. Other people will need invitation from
+                                                        existing user.
+                                                    </b>
+                                                </p>
                                             </div>
                                         </div>
-                                    {{/if}}
 
-                                      <div class="clearfix"></div>
 
-                                  </div>
-                              </form>
-                          </div>
-                      {{/if}}
+                                        <div class="row top-15">
+                                            <div class="text-center">
+                                                {{#link-to 'auth-register' class="btn btn-lg btn-primary" }}
+                                                    Register
+                                                {{/link-to}}
+                                            </div>
+                                        </div>
+
+                                </div>
+                            </div>
+
+                        {{else}}
+                            <div class="vlt-login-form">
+                                <form class="form-horizontal" role="form">
+
+                                    <div class="vlt-dialog-header">
+                                        <h2>Login</h2>
+                                    </div>
+                                    <div class="vlt-dialog-body">
+
+                                        <div {{bind-attr class=':form-group error:has-error emailSuccess:has-success'}}>
+                                            <label for="login-form-email" class="col-md-3 control-label">Email</label>
+
+                                            <div class="col-md-9">
+                                                    {{input
+                                                        type=text
+                                                        elementId='login-form-email'
+                                                        value=email
+                                                        class="form-control"
+                                                        placeholder="Enter your email"
+                                                    }}
+                                            </div>
+                                        </div>
+
+                                        <div {{bind-attr class=':form-group error:has-error'}}>
+                                            <label for="login-form-key" class="col-md-3 control-label">Key</label>
+
+                                            <div class="col-md-9">
+                                                <div class="input-group">
+                                                    <input value="{{filename}}"
+                                                           type="text"
+                                                           class="form-control"
+                                                           readonly=""
+                                                           placeholder="Select your key">
+
+                                                    <span class="vlt-login-key input-group-btn btn-file">
+                                                        <a class="btn btn-default">
+                                                            Browse <input type="file">
+                                                        </a>
+                                                    </span>
+                                                </div>
+                                                <small>
+                                                    <span class="text-muted">Lost your key?</span>
+                                                    {{#link-to 'auth-lostkey' class="btn-link" }}Click
+                                                        here.{{/link-to}}
+                                                </small>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+
+                                    <div class="vlt-dialog-footer">
+
+                                        <div class="pull-right vlt-right-buttons">
+                                            <button type="submit" {{ action loginUser}} class="btn btn-primary">
+                                                Login
+                                            </button>
+                                        </div>
+
+                                        {{#if registrationOptions.registration_allow}}
+                                            <div class="vlt-right-buttons text-left">
+                                                <div>
+                                                    Do not have an account yet?
+                                                    {{#link-to 'auth-register' class="btn btn-default btn-sm" }}
+                                                        Create new one{{/link-to}}
+                                                </div>
+                                            </div>
+                                        {{/if}}
+
+                                        <div class="clearfix"></div>
+
+                                    </div>
+                                </form>
+                            </div>
+                        {{/if}}
                     </div>
                 </div>
 
@@ -175,38 +128,38 @@
                     <h2>Latest news (from&nbsp;<a href="http://vaultier.org/">vaultier.org</a>)</h2>
                 </div>
                 <div class="row vlt-latest-news-body">
-                  {{#if news}}
-                    {{#each news}}
-                        <div class="col-md-4">
-                            <a {{bind-attr href=link}} target="_blank">
-                                <div class="vlt-latest-news-box">
-                                    <div class="col-md-3 vlt-latest-news-box-date">
-                                        <div class="vlt-latest-news-box-date-year">
-                                          {{date published_at format='YYYY'}}
+                    {{#if news}}
+                        {{#each news}}
+                            <div class="col-md-4">
+                                <a {{bind-attr href=link}} target="_blank">
+                                    <div class="vlt-latest-news-box">
+                                        <div class="col-md-3 vlt-latest-news-box-date">
+                                            <div class="vlt-latest-news-box-date-year">
+                                                {{date published_at format='YYYY'}}
+                                            </div>
+                                            <div class="vlt-latest-news-box-date-month-and-day">
+                                                {{date published_at format='MMM D'}}
+                                            </div>
                                         </div>
-                                        <div class="vlt-latest-news-box-date-month-and-day">
-                                          {{date published_at format='MMM D'}}
+                                        <div class="col-md-9 vlt-latest-news-box-content">
+                                            {{dot-dot-dot value=title height=70 }}
                                         </div>
                                     </div>
-                                    <div class="col-md-9 vlt-latest-news-box-content">
-                                      {{dot-dot-dot value=title height=70 }}
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    {{/each}}
-                  {{else}}
-                      <p class="vlt-latest-news-none">No news yet</p>
-                  {{/if}}
+                                </a>
+                            </div>
+                        {{/each}}
+                    {{else}}
+                        <p class="vlt-latest-news-none">No news yet</p>
+                    {{/if}}
                 </div>
 
-              {{#if news}}
-                  <div class="row vlt-latest-news-footer">
-                      <a class="btn btn-default pull-right" href="http://vaultier.org/blog" target="_blank">
-                          Read more
-                      </a>
-                  </div>
-              {{/if}}
+                {{#if news}}
+                    <div class="row vlt-latest-news-footer">
+                        <a class="btn btn-default pull-right" href="http://vaultier.org/blog" target="_blank">
+                            Read more
+                        </a>
+                    </div>
+                {{/if}}
 
                 <div class="clearfix"></div>
             </div>

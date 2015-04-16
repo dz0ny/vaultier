@@ -1072,14 +1072,6 @@ textarea {
     padding-right: 0px;
 }
 
-.vlt-hp .container .vlt-dialog.vlt-login .vlt-dialog-body .vlt-remember-body {
-    padding-right: 0px;
-}
-
-.vlt-hp .container .vlt-dialog.vlt-login .vlt-dialog-body .vlt-remember-info {
-    padding-right: 0px;
-}
-
 .vlt-hp .container .vlt-dialog.vlt-login .vlt-dialog-body .glyphicon {
     font-size: 210%;
 }
@@ -1099,34 +1091,6 @@ textarea {
         padding-left: 15px;
     }
 
-    .vlt-hp .container .vlt-dialog.vlt-login .vlt-dialog-body .vlt-remember-body {
-        display: inline-block;
-        width: 89%;
-    }
-
-    .vlt-hp .container .vlt-dialog.vlt-login .vlt-dialog-body .vlt-remember-info {
-        display: inline-block;
-        width: 10%;
-        position: relative;
-        padding-left: 15px;
-        padding-right: 15px;
-        top: 8px;
-    }
-
-    .vlt-hp .container .vlt-dialog.vlt-login .vlt-dialog-body .vlt-remember-info span {
-        text-align: center;
-    }
-}
-
-@media screen and (max-width: 550px) {
-    .vlt-hp .container .vlt-dialog.vlt-login .vlt-dialog-body .vlt-remember-body {
-        display: inline-block;
-        width: 85%;
-    }
-
-    .vlt-hp .container .vlt-dialog.vlt-login .vlt-dialog-body .vlt-remember-info {
-        padding-left: 7px;
-    }
 }
 
 /*************************************************************
