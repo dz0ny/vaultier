@@ -21,6 +21,9 @@ module.exports = function(environment) {
     }
   };
 
+  // resource root of api without trailing slash
+  apiResourceRoot: '/api'
+
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;

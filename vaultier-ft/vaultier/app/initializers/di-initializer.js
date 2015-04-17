@@ -26,6 +26,9 @@ export default {
 
   initialize: function (container, app) {
 
+    return;
+
+
     //@todo: remove injects, use only lazy injections
 
     // service:store

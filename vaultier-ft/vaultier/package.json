@@ -8,6 +8,7 @@
     "test": "tests"
   },
   "scripts": {
+    "preinstall" : "npm link ember-dabl && npm link ember-utils",
     "start": "ember server",
     "build": "ember build",
     "test": "ember test"
@@ -24,7 +25,9 @@
     "broccoli-asset-rev": "^2.0.0",
     "broccoli-webpack": "^0.1.1",
     "connect-restreamer": "^1.0.1",
-    "ember-cli": "0.2.3",
+    "ember-utils" : "*",
+    "ember-dabl" : "*",
+    "ember-cli": "git://github.com/janmisek/ember-cli.git#forked-latest-stable",
     "ember-cli-app-version": "0.3.2",
     "ember-cli-babel": "^4.0.0",
     "ember-cli-dependency-checker": "0.0.8",

@@ -5,6 +5,12 @@ export default Ember.Route.extend({
 
     appConfig: inject('config:main'),
 
+    userAdapter: inject('dabl:adapter.user'),
+
+    model: function() {
+        //return this.get('userAdapter').findOneBy('id',1);
+    },
+
     setupController: function (ctrl) {
 
         var appConfig = this.get('appConfig');
